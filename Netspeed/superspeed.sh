@@ -52,6 +52,7 @@ fi
 clear
 echo "#############################################################"
 echo "# Description: Test your server's network with Speedtest    #"
+echo "# Superspeed.sh  Script                                     #"                
 echo "# Intro:  https://www.oldking.net/305.html                  #"
 echo "# Author: Oldking <oooldking@gmail.com>                     #"
 echo "# Github: https://github.com/oooldking                      #"
