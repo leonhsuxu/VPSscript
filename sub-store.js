@@ -1,4 +1,4 @@
-// sub-store.js 配置文件 (基于 v6 逻辑，已修复 RULE-SET 错误)
+// sub-store.js 配置文件 (基于 v6 逻辑，已修复规则合并错误)
 
 // ========================== 可配置区域 ==========================
 const subscriptions = [
@@ -23,7 +23,6 @@ const buckets = {
     '🇩🇪 德国': { regex: /德国|🇩🇪|\bde\b|germany/i, icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Germany.png' }
 };
 
-// 【修正】定义 rule-providers，确保规则可用
 const ruleProviders = {
     BanAD: { type: 'http', behavior: 'domain', url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list", path: './rulesets/BanAD.yaml', interval: 86400 },
     BanProgramAD: { type: 'http', behavior: 'domain', url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list", path: './rulesets/BanProgramAD.yaml', interval: 86400 },
@@ -71,7 +70,7 @@ module.exports.parse = async (raw, { axios, yaml, console }) => {
         'mode': 'rule',
         'log-level': 'info',
         'external-controller': '127.0.0.1:9090',
-        'rule-providers': ruleProviders, // 【修正】将 rule-providers 添加到配置中
+        'rule-providers': ruleProviders,
         'proxies': allProxies,
         'proxy-groups': [
             { name: '🚀 节点选择', type: 'select', proxies: ['♻️ 自动选择', '🔯 故障转移', ...nonEmptyGroups.map(([name]) => name), 'DIRECT'], icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Airport.png'},
@@ -91,11 +90,35 @@ module.exports.parse = async (raw, { axios, yaml, console }) => {
                 icon: (buckets[name] || {}).icon || 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/World_Map.png'
             }))
         ],
-        // 【修正】规则中使用名称引用，而不是 URL
+        // 【重大修正】将之前合并在一起的规则字符串，拆分为独立的数组元素。
         'rules': [
-            "DOMAIN-SUFFIX,lite.cn2gias.uk,🎬 Emby", "DOMAIN-SUFFIX,feiniu.lol,🎬 Emby", "DOMAIN-SUFFIX,ciallo.party,🎬 Emby", "DOMAIN-SUFFIX,liminalnet.com,🎬 Emby", "DOMAIN-SUFFIX,5670320.xyz,🎬 Emby",
+            "DOMAIN-SUFFIX,lite.cn2gias.uk,🎬 Emby",
+            "DOMAIN-SUFFIX,feiniu.lol,🎬 Emby",
+            "DOMAIN-SUFFIX,ciallo.party,🎬 Emby",
+            "DOMAIN-SUFFIX,liminalnet.com,🎬 Emby",
+            "DOMAIN-SUFFIX,5670320.xyz,🎬 Emby",
             "PROCESS-NAME,com.mountains.hills,DIRECT",
-            "DOMAIN-SUFFIX,10520.xyz,DIRECT", "DOMAIN-SUFFIX,jsq.vban.xyz,DIRECT", "DOMAIN-SUFFIX,coemn.com,DIRECT", "DOMAIN-SUFFIX,embycc.link,DIRECT", "DOMAIN-SUFFIX,shrekmedia.org,DIRECT", "DOMAIN-SUFFIX,wenjian.de,DIRECT", "DOMAIN-SUFFIX,hohai.eu.org,DIRECT", "DOMAIN-SUFFIX,cerda.eu.org,DIRECT", "DOMAIN-SUFFIX,seraphine.eu.org,DIRECT", "DOMAIN-SUFFIX,kowo.eu.org,DIRECT", "DOMAIN-SUFFIX,libilibi.eu.org,DIRECT", "DOMAIN-SUFFIX,nouon.eu.org,DIRECT", "DOMAIN-SUFFIX,feiyue.lol,DIRECT", "DOMAIN-SUFFIX,aliz.work,DIRECT", "DOMAIN-SUFFIX,emos.lol,DIRECT", "DOMAIN-SUFFIX,emos.movier.ink,DIRECT", "DOMAIN-SUFFIX,emos.dolby.dpdns.org,DIRECT", "DOMAIN-SUFFIX,bangumi.ca,DIRECT", "DOMAIN-SUFFIX,6666456.xyz,DIRECT", "DOMAIN-SUFFIX,191920.xyz,DIRECT", "DOMAIN-SUFFIX,nijigem.by,DIRECT",
+            "DOMAIN-SUFFIX,10520.xyz,DIRECT",
+            "DOMAIN-SUFFIX,jsq.vban.xyz,DIRECT",
+            "DOMAIN-SUFFIX,coemn.com,DIRECT",
+            "DOMAIN-SUFFIX,embycc.link,DIRECT",
+            "DOMAIN-SUFFIX,shrekmedia.org,DIRECT",
+            "DOMAIN-SUFFIX,wenjian.de,DIRECT",
+            "DOMAIN-SUFFIX,hohai.eu.org,DIRECT",
+            "DOMAIN-SUFFIX,cerda.eu.org,DIRECT",
+            "DOMAIN-SUFFIX,seraphine.eu.org,DIRECT",
+            "DOMAIN-SUFFIX,kowo.eu.org,DIRECT",
+            "DOMAIN-SUFFIX,libilibi.eu.org,DIRECT",
+            "DOMAIN-SUFFIX,nouon.eu.org,DIRECT",
+            "DOMAIN-SUFFIX,feiyue.lol,DIRECT",
+            "DOMAIN-SUFFIX,aliz.work,DIRECT",
+            "DOMAIN-SUFFIX,emos.lol,DIRECT",
+            "DOMAIN-SUFFIX,emos.movier.ink,DIRECT",
+            "DOMAIN-SUFFIX,emos.dolby.dpdns.org,DIRECT",
+            "DOMAIN-SUFFIX,bangumi.ca,DIRECT",
+            "DOMAIN-SUFFIX,6666456.xyz,DIRECT",
+            "DOMAIN-SUFFIX,191920.xyz,DIRECT",
+            "DOMAIN-SUFFIX,nijigem.by,DIRECT",
             "RULE-SET,BanAD,REJECT",
             "RULE-SET,BanProgramAD,REJECT",
             "RULE-SET,TelegramList,💬 Telegram",
