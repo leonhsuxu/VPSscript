@@ -1,7 +1,6 @@
-// sub-store.js 配置文件 (基于 v6 版本逻辑)
+// sub-store.js 配置文件 (基于 v6 逻辑，已修复 RULE-SET 错误)
 
 // ========================== 可配置区域 ==========================
-// 在这里填入您的所有订阅链接
 const subscriptions = [
   "https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A21?token=ChouLink1",
   "https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A22?token=ChouLink2",
@@ -9,16 +8,11 @@ const subscriptions = [
   "https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A24?token=ChouLink4"
 ];
 
-// 节点重命名的前缀
 const providerPrefixes = ['丑团1', '丑团2', '丑团3', '丑团4'];
-
-// 健康检查URL和间隔
 const testUrl = "http://www.gstatic.com/generate_204";
 const testInterval = 300;
 // ======================= End of 可配置区域 =======================
 
-
-// 定义地区分组的正则表达式和图标 (使用 v6 的无前缀命名)
 const buckets = {
     '🇭🇰 香港': { regex: /港|HK|Hong Kong/i, icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Hong_Kong.png' },
     '🇯🇵 日本': { regex: /日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan/i, icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Japan.png' },
@@ -29,20 +23,30 @@ const buckets = {
     '🇩🇪 德国': { regex: /德国|🇩🇪|\bde\b|germany/i, icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Germany.png' }
 };
 
-// 主处理函数
+// 【修正】定义 rule-providers，确保规则可用
+const ruleProviders = {
+    BanAD: { type: 'http', behavior: 'domain', url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list", path: './rulesets/BanAD.yaml', interval: 86400 },
+    BanProgramAD: { type: 'http', behavior: 'domain', url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list", path: './rulesets/BanProgramAD.yaml', interval: 86400 },
+    TelegramList: { type: 'http', behavior: 'domain', url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Telegram.list", path: './rulesets/TelegramList.yaml', interval: 86400 },
+    YouTubeList: { type: 'http', behavior: 'domain', url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/YouTube.list", path: './rulesets/YouTubeList.yaml', interval: 86400 },
+    ProxyGFWlist: { type: 'http', behavior: 'domain', url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyGFWlist.list", path: './rulesets/ProxyGFWlist.yaml', interval: 86400 },
+    UnBan: { type: 'http', behavior: 'domain', url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/UnBan.list", path: './rulesets/UnBan.yaml', interval: 86400 },
+    ChinaDomain: { type: 'http', behavior: 'domain', url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list", path: './rulesets/ChinaDomain.yaml', interval: 86400 },
+    ChinaCompanyIp: { type: 'http', behavior: 'ipcidr', url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list", path: './rulesets/ChinaCompanyIp.yaml', interval: 86400 },
+    Download: { type: 'http', behavior: 'domain', url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Download.list", path: './rulesets/Download.yaml', interval: 86400 }
+};
+
+
 module.exports.parse = async (raw, { axios, yaml, console }) => {
     const proxies = yaml.parse(raw).proxies;
 
-    // 1. 为来自不同订阅的节点添加前缀
     const allProxies = subscriptions.flatMap((sub, index) => {
         const prefix = providerPrefixes[index] || `Sub${index + 1}`;
         return proxies.filter(p => p.sub === sub).map(p => {
-            p.name = `[${prefix}] ${p.name}`;
-            return p;
+            p.name = `[${prefix}] ${p.name}`; return p;
         });
     });
 
-    // 2. 自动进行地区分组
     const groupedProxies = {};
     const matchedProxies = new Set();
 
@@ -56,33 +60,27 @@ module.exports.parse = async (raw, { axios, yaml, console }) => {
         }
     }
     
-    // 创建“其他”分组
     const otherProxies = allProxies.filter(p => !matchedProxies.has(p.name)).map(p => p.name);
     groupedProxies['🇺🇳 其他'] = otherProxies;
 
-    // 【动态特性】过滤掉没有节点的空分组
     const nonEmptyGroups = Object.entries(groupedProxies).filter(([, proxies]) => proxies.length > 0);
 
-    // 3. 构建完整的 Clash 配置
     const config = {
         'mixed-port': 7890,
         'allow-lan': true,
         'mode': 'rule',
         'log-level': 'info',
         'external-controller': '127.0.0.1:9090',
+        'rule-providers': ruleProviders, // 【修正】将 rule-providers 添加到配置中
         'proxies': allProxies,
         'proxy-groups': [
-            // --- 核心入口 ---
             { name: '🚀 节点选择', type: 'select', proxies: ['♻️ 自动选择', '🔯 故障转移', ...nonEmptyGroups.map(([name]) => name), 'DIRECT'], icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Airport.png'},
-            // --- 功能分组 ---
             { name: '♻️ 自动选择', type: 'url-test', proxies: allProxies.map(p => p.name), url: testUrl, interval: testInterval, tolerance: 50, lazy: true, icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Auto.png' },
             { name: '🔯 故障转移', type: 'fallback', proxies: allProxies.map(p => p.name), url: testUrl, interval: testInterval, lazy: true, icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Loop.png' },
             { name: '🌏 直连优选', type: 'fallback', proxies: ['DIRECT', '🚀 节点选择'], url: testUrl, interval: testInterval, lazy: true, icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Global.png'},
-            // --- 应用分组 ---
             { name: '🎬 Emby', type: 'select', proxies: ['DIRECT', '🚀 节点选择', ...nonEmptyGroups.map(([name]) => name)], icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Emby.png' },
             { name: '💬 Telegram', type: 'select', proxies: ['🚀 节点选择', ...nonEmptyGroups.map(([name]) => name)], icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Telegram.png' },
             { name: '📺 YouTube', type: 'select', proxies: ['🚀 节点选择', ...nonEmptyGroups.map(([name]) => name)], icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/YouTube.png' },
-            // --- 地区分组 (自动生成) ---
             ...nonEmptyGroups.map(([name, proxies]) => ({
                 name,
                 type: 'fallback',
@@ -93,24 +91,21 @@ module.exports.parse = async (raw, { axios, yaml, console }) => {
                 icon: (buckets[name] || {}).icon || 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/World_Map.png'
             }))
         ],
+        // 【修正】规则中使用名称引用，而不是 URL
         'rules': [
-            "DOMAIN-SUFFIX,lite.cn2gias.uk,🎬 Emby",
-            "DOMAIN-SUFFIX,feiniu.lol,🎬 Emby",
-            "DOMAIN-SUFFIX,ciallo.party,🎬 Emby",
-            "DOMAIN-SUFFIX,liminalnet.com,🎬 Emby",
-            "DOMAIN-SUFFIX,5670320.xyz,🎬 Emby",
+            "DOMAIN-SUFFIX,lite.cn2gias.uk,🎬 Emby", "DOMAIN-SUFFIX,feiniu.lol,🎬 Emby", "DOMAIN-SUFFIX,ciallo.party,🎬 Emby", "DOMAIN-SUFFIX,liminalnet.com,🎬 Emby", "DOMAIN-SUFFIX,5670320.xyz,🎬 Emby",
             "PROCESS-NAME,com.mountains.hills,DIRECT",
             "DOMAIN-SUFFIX,10520.xyz,DIRECT", "DOMAIN-SUFFIX,jsq.vban.xyz,DIRECT", "DOMAIN-SUFFIX,coemn.com,DIRECT", "DOMAIN-SUFFIX,embycc.link,DIRECT", "DOMAIN-SUFFIX,shrekmedia.org,DIRECT", "DOMAIN-SUFFIX,wenjian.de,DIRECT", "DOMAIN-SUFFIX,hohai.eu.org,DIRECT", "DOMAIN-SUFFIX,cerda.eu.org,DIRECT", "DOMAIN-SUFFIX,seraphine.eu.org,DIRECT", "DOMAIN-SUFFIX,kowo.eu.org,DIRECT", "DOMAIN-SUFFIX,libilibi.eu.org,DIRECT", "DOMAIN-SUFFIX,nouon.eu.org,DIRECT", "DOMAIN-SUFFIX,feiyue.lol,DIRECT", "DOMAIN-SUFFIX,aliz.work,DIRECT", "DOMAIN-SUFFIX,emos.lol,DIRECT", "DOMAIN-SUFFIX,emos.movier.ink,DIRECT", "DOMAIN-SUFFIX,emos.dolby.dpdns.org,DIRECT", "DOMAIN-SUFFIX,bangumi.ca,DIRECT", "DOMAIN-SUFFIX,6666456.xyz,DIRECT", "DOMAIN-SUFFIX,191920.xyz,DIRECT", "DOMAIN-SUFFIX,nijigem.by,DIRECT",
-            "RULE-SET,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list,REJECT",
-            "RULE-SET,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list,REJECT",
-            "RULE-SET,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Telegram.list,💬 Telegram",
-            "RULE-SET,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/YouTube.list,📺 YouTube",
-            "RULE-SET,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyGFWlist.list,🚀 节点选择",
-            "RULE-SET,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/UnBan.list,DIRECT",
+            "RULE-SET,BanAD,REJECT",
+            "RULE-SET,BanProgramAD,REJECT",
+            "RULE-SET,TelegramList,💬 Telegram",
+            "RULE-SET,YouTubeList,📺 YouTube",
+            "RULE-SET,ProxyGFWlist,🚀 节点选择",
+            "RULE-SET,UnBan,DIRECT",
             "GEOIP,LAN,DIRECT",
-            "RULE-SET,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list,DIRECT",
-            "RULE-SET,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list,DIRECT",
-            "RULE-SET,https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Download.list,DIRECT",
+            "RULE-SET,ChinaDomain,DIRECT",
+            "RULE-SET,ChinaCompanyIp,DIRECT",
+            "RULE-SET,Download,DIRECT",
             "GEOIP,CN,DIRECT",
             "MATCH,🌏 直连优选"
         ]
