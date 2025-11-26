@@ -1,0 +1,34 @@
+name: 自动更新 Clash 配置
+
+on:
+  schedule:
+    - cron: '0 */8 * * *' # 每8小时运行一次
+  workflow_dispatch: # 允许手动触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: 安装 sub-store-backend
+        run: npm install -g @tinkink/sub-store-backend
+
+      - name: 生成配置文件
+        run: |
+          sub-store -c sub-store.js > config.yaml
+      
+      - name: 上传配置文件
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: 自动更新 Clash 配置文件'
+          file_pattern: config.yaml
+          commit_user_name: 'GitHub Actions'
+          commit_user_email: 'actions@github.com'
+          commit_author: 'GitHub Actions <actions@github.com>'
