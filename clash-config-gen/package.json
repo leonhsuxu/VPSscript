@@ -1,0 +1,16 @@
+{
+  "name": "clash-config-gen",
+  "version": "1.0.0",
+  "description": "Auto-generate Clash configuration from subscriptions",
+  "main": "generateConfig.js",
+  "scripts": {
+    "generate": "node generateConfig.js"
+  },
+  "keywords": ["clash", "proxy", "config"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "js-yaml": "^4.1.0"
+  }
+}
