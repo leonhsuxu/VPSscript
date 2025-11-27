@@ -1,3 +1,4 @@
+profile-name: 丑团合集
 mixed-port: 7890
 allow-lan: true
 bind-address: '*'
@@ -664,13 +665,7 @@ proxies:
   password: c650a25235334852ab2807511fa5c623
   server: 38.180.22.154
   port: 443
-  name: 丑团 意大利-1
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 38.180.22.160
-  port: 443
-  name: 丑团 意大利-2
+  name: 丑团 意大利
 - skip-cert-verify: true
   type: trojan
   password: c650a25235334852ab2807511fa5c623
@@ -1579,6 +1574,12 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: 31f495627332474ca257de8370ca302a
+  server: 38.180.101.21
+  port: 443
+  name: 丑团 塞尔维亚-1
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
   server: 216.238.72.226
   port: 443
   name: 丑团 墨西哥-1-1
@@ -1677,13 +1678,13 @@ proxies:
   password: 31f495627332474ca257de8370ca302a
   server: 38.180.22.154
   port: 443
-  name: 丑团 意大利-1-1
+  name: 丑团 意大利-1
 - skip-cert-verify: true
   type: trojan
   password: 31f495627332474ca257de8370ca302a
   server: 38.180.22.160
   port: 443
-  name: 丑团 意大利-2-1
+  name: 丑团 意大利-2
 - skip-cert-verify: true
   type: trojan
   password: 31f495627332474ca257de8370ca302a
@@ -2588,7 +2589,7 @@ proxies:
   password: d06fe708841342cd8680c7e07edd938b
   server: 38.180.101.21
   port: 443
-  name: 丑团 塞尔维亚-1
+  name: 丑团 塞尔维亚-2
 - skip-cert-verify: true
   type: trojan
   password: d06fe708841342cd8680c7e07edd938b
@@ -2690,13 +2691,7 @@ proxies:
   password: d06fe708841342cd8680c7e07edd938b
   server: 38.180.22.154
   port: 443
-  name: 丑团 意大利-1-2
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 38.180.22.160
-  port: 443
-  name: 丑团 意大利-2-2
+  name: 丑团 意大利-1
 - skip-cert-verify: true
   type: trojan
   password: d06fe708841342cd8680c7e07edd938b
@@ -3607,7 +3602,7 @@ proxies:
   password: b04f017974b040e18e76e7b61ebadab8
   server: 38.180.101.21
   port: 443
-  name: 丑团 塞尔维亚-2
+  name: 丑团 塞尔维亚-3
 - skip-cert-verify: true
   type: trojan
   password: b04f017974b040e18e76e7b61ebadab8
@@ -3709,13 +3704,13 @@ proxies:
   password: b04f017974b040e18e76e7b61ebadab8
   server: 38.180.22.154
   port: 443
-  name: 丑团 意大利-1-3
+  name: 丑团 意大利-1-1
 - skip-cert-verify: true
   type: trojan
   password: b04f017974b040e18e76e7b61ebadab8
   server: 38.180.22.160
   port: 443
-  name: 丑团 意大利-2-3
+  name: 丑团 意大利-2-1
 - skip-cert-verify: true
   type: trojan
   password: b04f017974b040e18e76e7b61ebadab8
@@ -4195,8 +4190,7 @@ proxy-groups:
   - 丑团 德国-3
   - 丑团 德国-4
   - 丑团 德国-5
-  - 丑团 意大利-1
-  - 丑团 意大利-2
+  - 丑团 意大利
   - 丑团 捷克
   - 丑团 摩尔多瓦
   - 丑团 斯洛伐克
@@ -4347,6 +4341,7 @@ proxy-groups:
   - 丑团 土耳其-2-1
   - 丑团 土耳其-3-1
   - 丑团 埃及-1
+  - 丑团 塞尔维亚-1
   - 丑团 墨西哥-1-1
   - 丑团 墨西哥-2-1
   - 丑团 墨西哥-3-1
@@ -4363,8 +4358,8 @@ proxy-groups:
   - 丑团 德国-3-1
   - 丑团 德国-4-1
   - 丑团 德国-5-1
-  - 丑团 意大利-1-1
-  - 丑团 意大利-2-1
+  - 丑团 意大利-1
+  - 丑团 意大利-2
   - 丑团 捷克-1
   - 丑团 摩尔多瓦-1
   - 丑团 斯洛伐克-1
@@ -4514,7 +4509,7 @@ proxy-groups:
   - 丑团 土耳其-1-2
   - 丑团 土耳其-2-2
   - 丑团 土耳其-3-2
-  - 丑团 塞尔维亚-1
+  - 丑团 塞尔维亚-2
   - 丑团 墨西哥-1-2
   - 丑团 墨西哥-2-2
   - 丑团 墨西哥-3-2
@@ -4531,8 +4526,7 @@ proxy-groups:
   - 丑团 德国-3-2
   - 丑团 德国-4-2
   - 丑团 德国-5-2
-  - 丑团 意大利-1-2
-  - 丑团 意大利-2-2
+  - 丑团 意大利-1
   - 丑团 捷克-2
   - 丑团 摩尔多瓦-2
   - 丑团 斯洛伐克-2
@@ -4683,7 +4677,7 @@ proxy-groups:
   - 丑团 土耳其-2-3
   - 丑团 土耳其-3-3
   - 丑团 埃及-2
-  - 丑团 塞尔维亚-2
+  - 丑团 塞尔维亚-3
   - 丑团 墨西哥-1-3
   - 丑团 墨西哥-2-3
   - 丑团 墨西哥-3-3
@@ -4700,8 +4694,8 @@ proxy-groups:
   - 丑团 德国-3-3
   - 丑团 德国-4-3
   - 丑团 德国-5-3
-  - 丑团 意大利-1-3
-  - 丑团 意大利-2-3
+  - 丑团 意大利-1-1
+  - 丑团 意大利-2-1
   - 丑团 捷克-3
   - 丑团 摩尔多瓦-3
   - 丑团 斯洛伐克-3
@@ -4872,8 +4866,7 @@ proxy-groups:
   - 丑团 德国-3
   - 丑团 德国-4
   - 丑团 德国-5
-  - 丑团 意大利-1
-  - 丑团 意大利-2
+  - 丑团 意大利
   - 丑团 捷克
   - 丑团 摩尔多瓦
   - 丑团 斯洛伐克
@@ -5024,6 +5017,7 @@ proxy-groups:
   - 丑团 土耳其-2-1
   - 丑团 土耳其-3-1
   - 丑团 埃及-1
+  - 丑团 塞尔维亚-1
   - 丑团 墨西哥-1-1
   - 丑团 墨西哥-2-1
   - 丑团 墨西哥-3-1
@@ -5040,8 +5034,8 @@ proxy-groups:
   - 丑团 德国-3-1
   - 丑团 德国-4-1
   - 丑团 德国-5-1
-  - 丑团 意大利-1-1
-  - 丑团 意大利-2-1
+  - 丑团 意大利-1
+  - 丑团 意大利-2
   - 丑团 捷克-1
   - 丑团 摩尔多瓦-1
   - 丑团 斯洛伐克-1
@@ -5191,7 +5185,7 @@ proxy-groups:
   - 丑团 土耳其-1-2
   - 丑团 土耳其-2-2
   - 丑团 土耳其-3-2
-  - 丑团 塞尔维亚-1
+  - 丑团 塞尔维亚-2
   - 丑团 墨西哥-1-2
   - 丑团 墨西哥-2-2
   - 丑团 墨西哥-3-2
@@ -5208,8 +5202,7 @@ proxy-groups:
   - 丑团 德国-3-2
   - 丑团 德国-4-2
   - 丑团 德国-5-2
-  - 丑团 意大利-1-2
-  - 丑团 意大利-2-2
+  - 丑团 意大利-1
   - 丑团 捷克-2
   - 丑团 摩尔多瓦-2
   - 丑团 斯洛伐克-2
@@ -5360,7 +5353,7 @@ proxy-groups:
   - 丑团 土耳其-2-3
   - 丑团 土耳其-3-3
   - 丑团 埃及-2
-  - 丑团 塞尔维亚-2
+  - 丑团 塞尔维亚-3
   - 丑团 墨西哥-1-3
   - 丑团 墨西哥-2-3
   - 丑团 墨西哥-3-3
@@ -5377,8 +5370,8 @@ proxy-groups:
   - 丑团 德国-3-3
   - 丑团 德国-4-3
   - 丑团 德国-5-3
-  - 丑团 意大利-1-3
-  - 丑团 意大利-2-3
+  - 丑团 意大利-1-1
+  - 丑团 意大利-2-1
   - 丑团 捷克-3
   - 丑团 摩尔多瓦-3
   - 丑团 斯洛伐克-3
