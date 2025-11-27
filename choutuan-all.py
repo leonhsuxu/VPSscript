@@ -9,6 +9,7 @@ import requests
 import yaml
 from datetime import datetime
 import sys
+import os
 
 # ========== 订阅配置 ==========
 SUBSCRIPTION_URLS = [
@@ -18,7 +19,8 @@ SUBSCRIPTION_URLS = [
     "https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A24?token=ChouLink4",
 ]
 
-OUTPUT_FILE = "choutuan-all.yaml"
+OUTPUT_DIR = "flclashyaml"
+OUTPUT_FILE = os.path.join(OUTPUT_DIR, "choutuan-all.yaml")
 
 def download_subscription(url):
     """下载订阅"""
@@ -60,7 +62,7 @@ def generate_config(proxies):
     proxy_names = [p['name'] for p in proxies]
     
     return {
-        'profile-name': '丑团合集',  # 配置文件显示名称
+        'profile-name': '丑团合集',
         'mixed-port': 7890,
         'allow-lan': True,
         'bind-address': '*',
@@ -148,6 +150,11 @@ def main():
     print("丑团合集 - Clash 订阅合并工具")
     print(f"时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
+    
+    # 创建输出目录
+    if not os.path.exists(OUTPUT_DIR):
+        os.makedirs(OUTPUT_DIR)
+        print(f"\n✓ 创建目录: {OUTPUT_DIR}")
     
     # 下载订阅
     print(f"\n[1/3] 下载 {len(SUBSCRIPTION_URLS)} 个订阅")
