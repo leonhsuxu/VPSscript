@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-丑团 - Clash 订阅合并脚本 (v14.1 - 详尽国家名版)
+丑团 - Clash 订阅合并脚本 (v14.2 - 语法修正版)
 - 集成 Xray-core 无权限测速，筛选可用节点
 - 按延迟和地区优先级精确排序
 - 智能识别地区 (正则 + 详尽中文名映射)，匹配对应国旗
@@ -50,7 +50,6 @@ CHINESE_COUNTRY_MAP = {
     'United Kingdom': '英国', 'UK': '英国', 'CA': '加拿大', 'Canada': '加拿大', 'AU': '澳大利亚', 'Australia': '澳大利亚',
 }
 
-# --- 已更新为详尽的中文国家名 -> 国家代码 的映射表 ---
 COUNTRY_NAME_TO_CODE_MAP = {
     "阿富汗": "AF", "阿尔巴尼亚": "AL", "阿尔及利亚": "DZ", "安道尔": "AD", "安哥拉": "AO", "安圭拉": "AI", 
     "安提瓜和巴布达": "AG", "阿根廷": "AR", "亚美尼亚": "AM", "阿鲁巴": "AW", "澳大利亚": "AU", "奥地利": "AT",
@@ -195,22 +194,57 @@ def process_and_rename_proxies(proxies):
         
     return final_proxies
 
+# --- 修正后的 generate_xray_config 函数 ---
 def generate_xray_config(proxy, local_port):
-    outbound = {"protocol": proxy['type'], "settings": {}}
-    if proxy['type'] == 'vmess':
-        outbound['settings']['vnext'] = [{"address": proxy['server'], "port": proxy['port'], "users": [{"id": proxy['uuid'], "alterId": proxy['alterId'], "security": proxy.get('cipher', 'auto')}]}]
+    outbound = {"protocol": proxy.get('type'), "settings": {}}
+    
+    # VMess
+    if proxy.get('type') == 'vmess':
+        outbound['settings']['vnext'] = [{
+            "address": proxy.get('server'),
+            "port": proxy.get('port'),
+            "users": [{"id": proxy.get('uuid'), "alterId": proxy.get('alterId'), "security": proxy.get('cipher', 'auto')}]
+        }]
         stream_settings = {}
         if proxy.get('network') == 'ws':
-            stream_settings = {"network": "ws", "wsSettings": {"path": proxy.get('ws-path', '/'), "headers": {"Host": proxy.get('ws-opts', {}).get('headers', {}).get('Host', proxy['server'])}}}
+            stream_settings = {
+                "network": "ws",
+                "wsSettings": {
+                    "path": proxy.get('ws-path', '/'),
+                    "headers": {"Host": proxy.get('ws-opts', {}).get('headers', {}).get('Host', proxy.get('server'))}
+                }
+            }
         if proxy.get('tls', False):
-             stream_settings['security'] = 'tls'
-             stream_settings['tlsSettings'] = {"serverName": proxy.get('sni', proxy['server'])}
-        if stream_settings: outbound['streamSettings'] = stream_settings
-    elif proxy['type'] in ['ss', 'shadowsocks']:
+            stream_settings['security'] = 'tls'
+            stream_settings['tlsSettings'] = {"serverName": proxy.get('sni', proxy.get('server'))}
+        if stream_settings:
+            outbound['streamSettings'] = stream_settings
+    
+    # Shadowsocks
+    elif proxy.get('type') in ['ss', 'shadowsocks']:
         outbound['protocol'] = 'shadowsocks'
-        outbound['settings']['servers'] = [{"address": proxy['server'], "port": proxy['port'], "method": proxy['cipher'], "password": proxy['password']}]
-    elif proxy['type'] == 'trojan':
-        outbound['settings']['servers'] = [{"address": proxy['server'], "port": proxy['port'], "password": proxy['password']}]
-        outbound['streamSettings'] = {"network": "tcp", "security": "tls", "tlsSettings": {"serverName": proxy.get('sni', proxy['server'])}}
-    else: return None
-    return {"inbounds": [{"port": local_port, "protocol": "socks",
+        outbound['settings']['servers'] = [{
+            "address": proxy.get('server'),
+            "port": proxy.get('port'),
+            "method": proxy.get('cipher'),
+            "password": proxy.get('password')
+        }]
+        
+    # Trojan
+    elif proxy.get('type') == 'trojan':
+        outbound['settings']['servers'] = [{
+            "address": proxy.get('server'),
+            "port": proxy.get('port'),
+            "password": proxy.get('password')
+        }]
+        outbound['streamSettings'] = {
+            "network": "tcp",
+            "security": "tls",
+            "tlsSettings": {"serverName": proxy.get('sni', proxy.get('server'))}
+        }
+    
+    # 不支持的协议
+    else:
+        return None
+        
+    return {"inbounds": [{"port": local_port, "protocol": "socks", "listen": "127.0.0.1", "settings": {"udp
