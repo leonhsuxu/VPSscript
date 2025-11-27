@@ -7,12 +7,12 @@ on:
   push:
     branches:
       - main
-    # 重点：现在监控 flclashyaml 文件夹内的脚本文件
     paths:
       - 'flclashyaml/111.py'
-# 赋予工作流写入仓库内容的权限
+
 permissions:
   contents: write
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -30,31 +30,38 @@ jobs:
         python -m pip install --upgrade pip
         pip install requests pyyaml pycountry
 
-    # --- 新增步骤：下载并准备 Clash Core ---
-    - name: 下载并准备 Clash Core
+    # --- 修正后的核心下载步骤 ---
+    - name: 下载并准备 Clash.Meta Core
       run: |
-        # 定义Clash核心的下载URL和目标文件名
-        CLASH_URL="https://github.com/Dreamacro/clash/releases/download/v1.18.0/clash-linux-amd64-v1.18.0.gz"
-        CLASH_GZ="clash-linux-amd64.gz"
+        echo "正在确定最新的 Clash.Meta 版本..."
+        # 使用 GitHub API 自动获取最新的 Clash.Meta 发行版下载链接
+        # 这种方法更稳定，不会因为版本更新而失效
+        LATEST_API_URL="https://api.github.com/repos/MetaCubeX/Clash.Meta/releases/latest"
         
-        # 下载Clash核心程序
-        echo "正在下载 Clash Core..."
-        wget -q -O $CLASH_GZ $CLASH_URL
+        # 使用 curl 和 jq 工具解析 API 响应，找到适用于 amd64 Linux 的下载链接
+        DOWNLOAD_URL=$(curl -s $LATEST_API_URL | jq -r '.assets[] | select(.name | contains("linux-amd64")) | .browser_download_url')
         
-        # 解压缩
-        echo "正在解压..."
-        gunzip $CLASH_GZ
+        if [ -z "$DOWNLOAD_URL" ]; then
+            echo "错误：无法自动查找最新的 Clash.Meta 下载链接。"
+            # 如果自动查找失败，回退到使用一个固定的较新版本
+            echo "尝试使用固定的后备链接..."
+            DOWNLOAD_URL="https://github.com/MetaCubeX/Clash.Meta/releases/download/v1.18.1/clash.meta-linux-amd64-v1.18.1.gz"
+        fi
         
-        # 将解压后的文件移动到脚本所在的目录，并重命名为 'clash-core'
-        # 这是为了匹配Python脚本中 CLASH_CORE_PATH 的设置
-        CLASH_EXEC="clash-linux-amd64-v1.18.0"
-        mv $CLASH_EXEC flclashyaml/clash-core
+        echo "下载链接: $DOWNLOAD_URL"
+        wget -q -O clash.meta.gz "$DOWNLOAD_URL"
         
-        # 赋予文件执行权限
+        echo "解压缩..."
+        gunzip clash.meta.gz
+        
+        # 查找解压后的可执行文件名（它会随着版本变化），并将其重命名为脚本所需的'clash-core'
+        EXEC_NAME=$(find . -type f -name "clash.meta-linux-amd64*")
+        mv "$EXEC_NAME" flclashyaml/clash-core
+        
         echo "赋予执行权限..."
         chmod +x flclashyaml/clash-core
         
-        echo "Clash Core 准备就绪。"
+        echo "Clash.Meta Core 准备就绪。"
 
     - name: 运行合并与重命名脚本
       run: |
