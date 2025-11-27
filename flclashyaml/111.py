@@ -1,16 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-丑团 - Clash 订阅合并脚本 (v12.2 - 集成测速过滤版)
-- 脚本与输出文件位于同一目录
-- 内置权威中文库，最大限度匹配全球中文节点名
-- 按指定地区优先级排序
-- 智能清洗节点名，对未匹配节点保留并使用清洗后名称
-- 【新增】在生成配置文件前，自动进行延迟测试，过滤超时节点
-"""
 import requests
 import yaml
 import base64
+import json
+import time
 from datetime import datetime
 import sys
 import os
@@ -18,9 +12,8 @@ import re
 from collections import defaultdict
 import pycountry
 import subprocess
-import time
 import concurrent.futures
-from urllib.parse import unquote, quote as url_quote
+from urllib.parse import unquote
 
 # ========== 基础配置 ==========
 SUBSCRIPTION_URLS = [
@@ -32,15 +25,16 @@ SUBSCRIPTION_URLS = [
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_FILE = os.path.join(SCRIPT_DIR, "choutuan-111.yaml")
 
-# ========== 测速过滤配置 (新增) ==========
-ENABLE_SPEED_TEST = True  # 是否启用测速过滤功能
-CLASH_CORE_PATH = os.path.join(SCRIPT_DIR, "clash-core")
-TEMP_CONFIG_FILE = os.path.join(SCRIPT_DIR, "temp_speed_test_config.yaml")
-TEMP_API_PORT = 9091  # 临时Clash API端口，避免与正在运行的实例冲突
-SPEED_TEST_URL = 'http://www.gstatic.com/generate_204'  # 测速目标URL
-SPEED_TEST_TIMEOUT = 5000  # 测速超时时间(毫秒)
-MAX_TEST_WORKERS = 32  # 并发测速的线程数
+# ========== 测速过滤配置 (Xray版) ==========
+ENABLE_SPEED_TEST = True
+XRAY_CORE_PATH = os.path.join(SCRIPT_DIR, "xray-core")
+TEMP_CONFIG_DIR = os.path.join(SCRIPT_DIR, "xray_temp_configs") # 存放临时配置文件的目录
+BASE_SOCKS_PORT = 11000  # 本地SOCKS5代理的起始端口
+SPEED_TEST_URL = 'http://www.gstatic.com/generate_204'
+SPEED_TEST_TIMEOUT = 5  # 测速超时时间(秒)
+MAX_TEST_WORKERS = 32
 
+# (排序与命名配置部分保持不变，此处省略以节省空间)
 # ========== 排序与命名配置 ==========
 REGION_PRIORITY = ['香港', '日本', '狮城', '美国', '湾省', '韩国', '德国', '英国', '加拿大', '澳大利亚']
 JUNK_PATTERNS = re.compile(
@@ -60,193 +54,210 @@ CUSTOM_REGEX_RULES = {
     '澳大利亚': {'code': 'AU', 'pattern': r'AU|Australia|澳大利亚|澳洲|悉尼'},
 }
 
-# --- 辅助函数 ---
 
+# --- 辅助函数 (大部分不变) ---
 def get_country_flag_emoji(country_code):
-    """根据国家代码获取国旗Emoji"""
-    if not country_code or len(country_code) != 2:
-        return "❓"
+    if not country_code or len(country_code) != 2: return "❓"
     return "".join(chr(0x1F1E6 + ord(char) - ord('A')) for char in country_code.upper())
 
 def fetch_subscriptions(urls):
-    """从URL列表获取并解码所有订阅内容"""
     proxies = []
     for url in urls:
         try:
-            print(f"正在获取订阅: {url}")
-            response = requests.get(url, timeout=10)
+            response = requests.get(url, timeout=15)
             response.raise_for_status()
-            
-            content = response.text
-            # 检查是否为Base64编码
-            if re.match(r'^[a-zA-Z0-9+/=]+$', content.strip()):
-                try:
-                    content = base64.b64decode(content).decode('utf-8')
-                except Exception as e:
-                    print(f"Base64解码失败: {e}, 尝试直接解析")
-
-            # 尝试直接解析 YAML
             try:
-                data = yaml.safe_load(content)
+                data = yaml.safe_load(response.text)
                 if 'proxies' in data:
                     proxies.extend(data['proxies'])
             except yaml.YAMLError:
-                 # 如果YAML解析失败，按行分割，适用于v2ray/ss等链接
-                proxies.extend([p.strip() for p in content.splitlines() if p.strip()])
-
+                print(f"URL内容非标准YAML，尝试Base64解码: {url}")
+                try:
+                    decoded_content = base64.b64decode(response.text).decode('utf-8')
+                    data = yaml.safe_load(decoded_content)
+                    if 'proxies' in data:
+                        proxies.extend(data['proxies'])
+                except Exception as e:
+                    print(f"处理订阅源时出错 {url}: {e}")
         except requests.RequestException as e:
             print(f"获取订阅失败: {url}, 错误: {e}")
     return proxies
 
 def parse_proxies(proxy_data):
-    """解析混合格式的代理列表"""
     parsed_proxies = []
     unique_names = set()
-
     for item in proxy_data:
         if isinstance(item, dict) and 'name' in item:
-            # 已经是Clash dict格式
-            if item['name'] not in unique_names:
+            if item.get('name') not in unique_names:
                 parsed_proxies.append(item)
                 unique_names.add(item['name'])
-        # 此处可扩展支持ss://, vmess://等链接格式的解析
     return parsed_proxies
 
 def clean_and_rename_proxy(proxy):
-    """清洗并重命名节点"""
     original_name = proxy.get('name', '')
     clean_name = JUNK_PATTERNS.sub('', original_name).strip()
-    
     region_info = {'name': '未知', 'code': ''}
     for region_name, rules in CUSTOM_REGEX_RULES.items():
         if re.search(rules['pattern'], clean_name, re.IGNORECASE):
             region_info = {'name': region_name, 'code': rules['code']}
             break
-    
     flag = get_country_flag_emoji(region_info['code'])
-    # 移除地区词，避免重复
     final_name = re.sub(region_info['name'], '', clean_name, flags=re.IGNORECASE).strip()
-    if not final_name:
-        final_name = region_info['name'] # 如果移除后为空，则使用地区名
-        
+    if not final_name: final_name = region_info['name']
     new_name = f"{flag} {region_info['name']} {final_name}"
     proxy['original_name'] = original_name
     proxy['name'] = new_name
     proxy['region'] = region_info['name']
     return proxy
 
+# --- 测速逻辑重写 ---
+
+def generate_xray_config(proxy, local_port):
+    """根据Clash的proxy字典生成Xray的客户端配置"""
+    outbound = {"protocol": proxy['type'], "settings": {}}
+    
+    if proxy['type'] == 'vmess':
+        outbound['settings']['vnext'] = [{
+            "address": proxy['server'],
+            "port": proxy['port'],
+            "users": [{"id": proxy['uuid'], "alterId": proxy['alterId'], "security": proxy.get('cipher', 'auto')}]
+        }]
+        if 'network' in proxy and proxy['network'] == 'ws':
+            outbound['streamSettings'] = {
+                "network": "ws",
+                "wsSettings": {"path": proxy.get('ws-path', '/'), "headers": {"Host": proxy.get('ws-opts', {}).get('headers', {}).get('Host', proxy['server'])}}
+            }
+        if proxy.get('tls', False):
+             outbound['streamSettings'] = outbound.get('streamSettings', {})
+             outbound['streamSettings']['security'] = 'tls'
+             outbound['streamSettings']['tlsSettings'] = {"serverName": proxy.get('sni', proxy['server'])}
+
+    elif proxy['type'] in ['ss', 'shadowsocks']:
+        outbound['protocol'] = 'shadowsocks'
+        outbound['settings']['servers'] = [{
+            "address": proxy['server'],
+            "port": proxy['port'],
+            "method": proxy['cipher'],
+            "password": proxy['password']
+        }]
+
+    elif proxy['type'] == 'trojan':
+        outbound['settings']['servers'] = [{
+            "address": proxy['server'],
+            "port": proxy['port'],
+            "password": proxy['password']
+        }]
+        outbound['streamSettings'] = {
+            "network": "tcp",
+            "security": "tls",
+            "tlsSettings": {"serverName": proxy.get('sni', proxy['server'])}
+        }
+    else:
+        return None # 不支持的类型
+
+    return {
+        "inbounds": [{"port": local_port, "protocol": "socks", "listen": "127.0.0.1", "settings": {"udp": True}}],
+        "outbounds": [outbound]
+    }
+
+def test_single_proxy(proxy, index):
+    """测试单个节点延迟"""
+    local_port = BASE_SOCKS_PORT + index
+    config_path = os.path.join(TEMP_CONFIG_DIR, f"config_{index}.json")
+
+    xray_config = generate_xray_config(proxy, local_port)
+    if not xray_config:
+        # print(f"  [跳过] {proxy['name']} (不支持的类型: {proxy['type']})")
+        return None
+
+    with open(config_path, 'w') as f:
+        json.dump(xray_config, f)
+
+    process = None
+    try:
+        # 启动 xray 进程
+        process = subprocess.Popen([XRAY_CORE_PATH, "-config", config_path], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        time.sleep(0.5) # 等待 xray 启动
+
+        # 使用 SOCKS5 代理进行测速
+        proxies = {'http': f'socks5h://127.0.0.1:{local_port}', 'https': f'socks5h://127.0.0.1:{local_port}'}
+        start_time = time.time()
+        response = requests.head(SPEED_TEST_URL, proxies=proxies, timeout=SPEED_TEST_TIMEOUT)
+        latency = (time.time() - start_time) * 1000
+        
+        if response.status_code >= 200 and response.status_code < 400:
+            print(f"  [通过] {proxy['name']} - 延迟: {int(latency)}ms")
+            proxy['delay'] = int(latency)
+            return proxy
+        return None
+
+    except (requests.exceptions.ProxyError, requests.exceptions.Timeout):
+        # print(f"  [失败] {proxy['name']} (超时或代理错误)")
+        return None
+    except Exception:
+        return None
+    finally:
+        if process:
+            process.terminate()
+            process.wait()
+        if os.path.exists(config_path):
+            os.remove(config_path)
+
 def speed_test_proxies(proxies):
-    """使用Clash核心对节点进行延迟测试并过滤"""
-    if not os.path.exists(CLASH_CORE_PATH):
-        print(f"错误: Clash核心文件未找到于 '{CLASH_CORE_PATH}'。跳过测速。")
+    if not os.path.exists(XRAY_CORE_PATH):
+        print(f"错误: Xray-core 未找到于 '{XRAY_CORE_PATH}'。跳过测速。")
         return proxies
 
-    print("开始测速...")
+    if os.path.exists(TEMP_CONFIG_DIR):
+        import shutil
+        shutil.rmtree(TEMP_CONFIG_DIR)
+    os.makedirs(TEMP_CONFIG_DIR)
     
-    # 1. 生成临时测速配置文件
-    temp_config = {
-        'proxies': proxies,
-        'proxy-groups': [],
-        'rules': [],
-        'port': 7890,
-        'socks-port': 7891,
-        'allow-lan': False,
-        'mode': 'rule',
-        'log-level': 'silent',
-        'external-controller': f'127.0.0.1:{TEMP_API_PORT}',
-    }
-    with open(TEMP_CONFIG_FILE, 'w', encoding='utf-8') as f:
-        yaml.dump(temp_config, f)
-
-    # 2. 启动Clash核心进程
-    clash_process = subprocess.Popen([CLASH_CORE_PATH, '-d', SCRIPT_DIR, '-f', TEMP_CONFIG_FILE])
-    print(f"Clash核心已启动 (PID: {clash_process.pid})，等待API服务... ")
-    time.sleep(3) # 等待Clash启动
-
-    # 3. 并发测试延迟
+    print(f"开始使用 Xray-core 进行并发测速 (共 {len(proxies)} 个节点)...")
+    
     fast_proxies = []
-    
-    def test_delay(proxy):
-        proxy_name_encoded = url_quote(proxy['name'], safe='')
-        url = f'http://127.0.0.1:{TEMP_API_PORT}/proxies/{proxy_name_encoded}/delay'
-        params = {'timeout': SPEED_TEST_TIMEOUT, 'url': SPEED_TEST_URL}
-        try:
-            res = requests.get(url, params=params, timeout=SPEED_TEST_TIMEOUT / 1000 + 1)
-            if res.status_code == 200:
-                delay = res.json().get('delay', -1)
-                if 0 < delay <= SPEED_TEST_TIMEOUT:
-                    print(f"  [通过] {proxy['name']} - 延迟: {delay}ms")
-                    return proxy
-            return None
-        except requests.RequestException:
-            return None
-
     with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_TEST_WORKERS) as executor:
-        future_to_proxy = {executor.submit(test_delay, p): p for p in proxies}
+        future_to_proxy = {executor.submit(test_single_proxy, p, i): p for i, p in enumerate(proxies)}
         for future in concurrent.futures.as_completed(future_to_proxy):
             result = future.result()
             if result:
                 fast_proxies.append(result)
-
-    # 4. 关闭Clash核心进程
-    print("测速完成，正在关闭Clash核心...")
-    clash_process.terminate()
-    clash_process.wait()
-    os.remove(TEMP_CONFIG_FILE) # 清理临时文件
     
-    print(f"测速后剩余节点数量: {len(fast_proxies)}")
+    print(f"测速完成，剩余节点数量: {len(fast_proxies)}")
+    # 清理临时目录
+    import shutil
+    shutil.rmtree(TEMP_CONFIG_DIR)
     return fast_proxies
 
+
+# --- 最终配置生成（不变）---
 def generate_final_config(proxies):
-    """生成最终的Clash配置文件字典"""
     proxy_names = [p['name'] for p in proxies]
-    
-    # 创建分组
     proxy_groups = [
         {'name': 'PROXY', 'type': 'select', 'proxies': ['自动选择', '手动切换'] + proxy_names},
         {'name': '自动选择', 'type': 'url-test', 'proxies': proxy_names, 'url': 'http://www.gstatic.com/generate_204', 'interval': 300},
         {'name': '手动切换', 'type': 'select', 'proxies': proxy_names}
     ]
-    
-    # 区域分组
     region_groups = defaultdict(list)
     for p in proxies:
         region_groups[p['region']].append(p['name'])
-
     for region, names in region_groups.items():
         if region != '未知':
             proxy_groups.append({'name': region, 'type': 'select', 'proxies': names})
-            # 将区域分组添加到手动切换中
             proxy_groups[2]['proxies'].insert(0, region)
-
-    rules = [
-        "DOMAIN-SUFFIX,google.com,PROXY",
-        "DOMAIN-KEYWORD,google,PROXY",
-        "DOMAIN-SUFFIX,github.com,PROXY",
-        "DOMAIN-SUFFIX,youtube.com,PROXY",
-        "MATCH,PROXY"
-    ]
-    
-    final_config = {
-        'proxies': [{k: v for k, v in p.items() if k not in ['original_name', 'region']} for p in proxies],
-        'proxy-groups': proxy_groups,
-        'rules': rules
-    }
+    rules = ["MATCH,PROXY"]
+    # 移除脚本内部添加的字段，保持Clash配置纯净
+    clean_proxies = [{k: v for k, v in p.items() if k not in ['original_name', 'region', 'delay']} for p in proxies]
+    final_config = {'proxies': clean_proxies, 'proxy-groups': proxy_groups, 'rules': rules}
     return final_config
 
 def main():
-    """主执行函数"""
-    print("开始执行订阅合并脚本...")
-    
-    # 1. 获取和解析
+    print("开始执行订阅合并脚本 (Xray 测速版)...")
     raw_proxies = fetch_subscriptions(SUBSCRIPTION_URLS)
     parsed_proxies = parse_proxies(raw_proxies)
     print(f"共获取到 {len(parsed_proxies)} 个不重复节点。")
-    
-    # 2. 清洗和重命名
     renamed_proxies = [clean_and_rename_proxy(p) for p in parsed_proxies]
     
-    # 3. 测速过滤
     if ENABLE_SPEED_TEST:
         final_proxies = speed_test_proxies(renamed_proxies)
         if not final_proxies:
@@ -255,17 +266,16 @@ def main():
     else:
         final_proxies = renamed_proxies
         
-    # 4. 排序
     region_order = {region: i for i, region in enumerate(REGION_PRIORITY)}
-    final_proxies.sort(key=lambda p: (region_order.get(p['region'], 99), p['name']))
+    # 如果有延迟信息，则按延迟排序，否则按名称
+    sort_key = lambda p: (region_order.get(p['region'], 99), p.get('delay', 0), p['name'])
+    final_proxies.sort(key=sort_key)
     
-    # 5. 生成配置文件
     clash_config = generate_final_config(final_proxies)
     
-    # 6. 写入文件
     try:
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-            yaml.dump(clash_config, f, allow_unicode=True, sort_keys=False)
+            yaml.dump(clash_config, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
         print(f"成功！配置文件已保存至: {OUTPUT_FILE}")
     except Exception as e:
         print(f"写入文件失败: {e}")
