@@ -25,18 +25,14 @@ jobs:
       with:
         python-version: '3.11'
 
-    - name: 安装依赖和 tcping 工具
+    # --- 1. 终极简化的依赖安装 ---
+    - name: 安装依赖
       run: |
-        # 1. 安装系统工具 tcping
-        sudo apt-get update
-        sudo apt-get install -y tcping
-        
-        # 2. 安装 Python 依赖 (不再需要 PySocks)
         python -m pip install --upgrade pip
+        # 只需最基础的库，不再需要 PySocks 或任何系统工具
         pip install requests pyyaml
 
-    # --- 3. 移除 Xray-core 下载步骤 ---
-    # 由于改用 tcping，此步骤已不再需要
+    # --- 2. 所有外部工具下载步骤均已移除 ---
 
     - name: 运行合并与重命名脚本
       run: |
