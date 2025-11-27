@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-丑团 - Clash 订阅合并脚本 (v9 - 稳定命名版)
-- 去除测速和延迟排序，专注于稳定重命名
-- 按指定地区优先级排序
-- 确保在任何情况下都不会出现名称冲突
-- 支持高优先级的自定义正则表达式
-- 动态生成全球规则作为补充
-- 智能清洗节点名并保留未匹配项
+丑团 - Clash 订阅合并脚本 (v10 - 全球覆盖最终版)
+- 优先使用自定义正则，再由 pycountry 动态生成全球规则补充，最大限度匹配国旗
+- 按指定地区优先级排序，确保节点列表顺序可控
+- 智能清洗节点名，对未匹配节点保留并使用清洗后名称
+- 终极名称防冲突机制，确保配置文件绝对有效
 """
 
 import requests
@@ -32,16 +30,17 @@ OUTPUT_FILE = os.path.join(OUTPUT_DIR, "choutuan-all.yaml")
 
 # ========== 排序与命名配置 ==========
 # 一级排序：地区优先级，越靠前越优先
-REGION_PRIORITY = ['香港', '日本', '狮城', '美国', '湾省', '韩国', '德国']
+REGION_PRIORITY = ['香港', '日本', '狮城', '美国', '湾省', '韩国', '德国', '英国', '加拿大', '澳大利亚']
 
-# 名称清洗规则
+# 名称清洗规则: 在匹配国家前，从节点名中移除这些干扰词
 JUNK_PATTERNS = re.compile(
-    r'丑团|专线|IPLC|IEPL|BGP|体验|官网|'
-    r'[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*', re.IGNORECASE
+    r'丑团|专线|IPLC|IEPL|BGP|体验|官网|倍率|x\d{1,2}|Rate|'
+    r'[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*|Relay', re.IGNORECASE
 )
 
-# 高优先级自定义正则
+# 高优先级自定义正则: 在这里自由修改，拥有最高匹配优先级
 CUSTOM_REGEX_RULES = {
+    # 显示名称: { code: '两字母国家代码', pattern: r'正则表达式' }
     '香港': {'code': 'HK', 'pattern': r'港|HK|Hong Kong'},
     '日本': {'code': 'JP', 'pattern': r'日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan'},
     '狮城': {'code': 'SG', 'pattern': r'新加坡|SG|Singapore|坡|狮城'},
@@ -49,6 +48,10 @@ CUSTOM_REGEX_RULES = {
     '湾省': {'code': 'TW', 'pattern': r'台湾|TW|Taiwan|台|新北|彰化'},
     '韩国': {'code': 'KR', 'pattern': r'韩|KR|Korea|KOR|首尔|韓'},
     '德国': {'code': 'DE', 'pattern': r'德国|DE|Germany'},
+    '英国': {'code': 'GB', 'pattern': r'UK|GB|United Kingdom|England|英|英国'},
+    '加拿大': {'code': 'CA', 'pattern': r'CA|Canada|加拿大|枫叶'},
+    '澳大利亚': {'code': 'AU', 'pattern': r'AU|Australia|澳大利亚|澳洲'},
+    '俄罗斯': {'code': 'RU', 'pattern': r'RU|Russia|俄|俄罗斯|毛子'},
 }
 
 # ========== 核心功能函数 ==========
@@ -57,16 +60,29 @@ def code_to_emoji(code):
     return "".join(chr(0x1F1E6 + ord(char.upper()) - ord('A')) for char in code)
 
 def build_country_rules():
+    """动态构建混合匹配规则：自定义正则优先，pycountry 全球规则补充"""
+    print("  - 构建国家匹配规则...")
     rules = {}
-    for name, data in CUSTOM_REGEX_RULES.items():
-        rules[name] = {'emoji': code_to_emoji(data['code']), 'regex': re.compile(data['pattern'], re.IGNORECASE)}
     
+    # 1. 加载高优先级的自定义正则规则
+    for display_name, data in CUSTOM_REGEX_RULES.items():
+        rules[display_name] = {'emoji': code_to_emoji(data['code']), 'regex': re.compile(data['pattern'], re.IGNORECASE)}
+    print(f"  ✓ 加载了 {len(rules)} 条自定义高优规则。")
+    
+    # 2. 使用 pycountry 动态生成其他国家的规则作为补充
     covered_codes = {data['code'] for data in CUSTOM_REGEX_RULES.values()}
+    pycountry_added = 0
     for country in pycountry.countries:
         if country.alpha_2 in covered_codes: continue
+        
         keywords = sorted(list(set(kw for kw in [country.alpha_2, country.alpha_3, country.name.split(',')[0]] if len(kw) > 1)), key=len, reverse=True)
         if keywords:
-            rules[country.name.split(',')[0]] = {'emoji': code_to_emoji(country.alpha_2), 'regex': re.compile('|'.join(map(re.escape, keywords)), re.IGNORECASE)}
+            display_name = country.name.split(',')[0]
+            rules[display_name] = {'emoji': code_to_emoji(country.alpha_2), 'regex': re.compile('|'.join(map(re.escape, keywords)), re.IGNORECASE)}
+            pycountry_added += 1
+            
+    print(f"  ✓ 动态生成了 {pycountry_added} 条全球规则。")
+    print(f"  - 总计 {len(rules)} 条规则。")
     return rules
 
 COUNTRY_RULES = build_country_rules()
@@ -150,9 +166,7 @@ def process_and_rename_proxies(proxies):
         else:
             proxy['name'] = display_name
         
-        # 移除临时字段
-        del proxy['_display_name']
-        del proxy['_region_sort_index']
+        del proxy['_display_name'], proxy['_region_sort_index']
 
     # 步骤 4: 最终名称冲突检查 (终极保险)
     final_proxies = []
@@ -160,11 +174,10 @@ def process_and_rename_proxies(proxies):
     for proxy in proxies:
         base_name = proxy['name']
         final_name = base_name
-        counter = 2 # 从 (2) 开始
+        counter = 2
         while final_name in seen_names:
             final_name = f"{base_name} ({counter})"
             counter += 1
-        
         proxy['name'] = final_name
         seen_names.add(final_name)
         final_proxies.append(proxy)
@@ -197,7 +210,7 @@ def generate_config(proxies):
 
 def main():
     print("=" * 60)
-    print(f"丑团 - Clash 订阅合并 (v9 - 稳定命名版) @ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"丑团 - Clash 订阅合并 (v10 - 全球覆盖最终版) @ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
     
     os.makedirs(OUTPUT_DIR, exist_ok=True)
@@ -210,7 +223,6 @@ def main():
     unique_proxies = merge_and_deduplicate_proxies(subscriptions)
     if not unique_proxies: sys.exit("\n❌ 错误: 合并后没有可用的节点，任务中断。")
     
-    # 排序和重命名
     final_proxies = process_and_rename_proxies(unique_proxies)
 
     print(f"\n[4/4] 开始生成最终配置文件...")
