@@ -30,7 +30,7 @@ SUBSCRIPTION_URLS = [
     "https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A24?token=ChouLink4",
 ]
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-OUTPUT_FILE = os.path.join(SCRIPT_DIR, "choutuan-all.yaml")
+OUTPUT_FILE = os.path.join(SCRIPT_DIR, "choutuan-111.yaml")
 
 # ========== 测速过滤配置 (新增) ==========
 ENABLE_SPEED_TEST = True  # 是否启用测速过滤功能
