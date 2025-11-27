@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-丑团 - Clash 订阅合并脚本 (v10 - 全球覆盖最终版)
-- 优先使用自定义正则，再由 pycountry 动态生成全球规则补充，最大限度匹配国旗
-- 按指定地区优先级排序，确保节点列表顺序可控
+丑团 - Clash 订阅合并脚本 (v11 - 中文增强版)
+- 内置中英翻译词典，动态为全球规则注入中文关键词，大幅提升中文名匹配率
+- 优先使用自定义正则，再由 pycountry 动态生成全球规则补充
+- 按指定地区优先级排序
 - 智能清洗节点名，对未匹配节点保留并使用清洗后名称
-- 终极名称防冲突机制，确保配置文件绝对有效
 """
 
 import requests
@@ -29,18 +29,14 @@ OUTPUT_DIR = "flclashyaml"
 OUTPUT_FILE = os.path.join(OUTPUT_DIR, "choutuan-all.yaml")
 
 # ========== 排序与命名配置 ==========
-# 一级排序：地区优先级，越靠前越优先
 REGION_PRIORITY = ['香港', '日本', '狮城', '美国', '湾省', '韩国', '德国', '英国', '加拿大', '澳大利亚']
 
-# 名称清洗规则: 在匹配国家前，从节点名中移除这些干扰词
 JUNK_PATTERNS = re.compile(
     r'丑团|专线|IPLC|IEPL|BGP|体验|官网|倍率|x\d{1,2}|Rate|'
     r'[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*|Relay', re.IGNORECASE
 )
 
-# 高优先级自定义正则: 在这里自由修改，拥有最高匹配优先级
 CUSTOM_REGEX_RULES = {
-    # 显示名称: { code: '两字母国家代码', pattern: r'正则表达式' }
     '香港': {'code': 'HK', 'pattern': r'港|HK|Hong Kong'},
     '日本': {'code': 'JP', 'pattern': r'日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan'},
     '狮城': {'code': 'SG', 'pattern': r'新加坡|SG|Singapore|坡|狮城'},
@@ -54,13 +50,24 @@ CUSTOM_REGEX_RULES = {
     '俄罗斯': {'code': 'RU', 'pattern': r'RU|Russia|俄|俄罗斯|毛子'},
 }
 
+# 新增：国家/地区名称中英映射，用于增强 pycountry 的匹配能力
+COUNTRY_NAME_TRANSLATIONS = {
+    "China": "中国", "France": "法国", "India": "印度", "Indonesia": "印尼",
+    "Viet Nam": "越南", "Thailand": "泰国", "Malaysia": "马来西亚", "Philippines": "菲律宾",
+    "Turkey": "土耳其", "Italy": "意大利", "Netherlands": "荷兰", "Spain": "西班牙",
+    "Brazil": "巴西", "Argentina": "阿根廷", "Mexico": "墨西哥", "Egypt": "埃及",
+    "South Africa": "南非", "United Arab Emirates": "阿联酋", "Saudi Arabia": "沙特",
+    "Switzerland": "瑞士", "Sweden": "瑞典", "Norway": "挪威", "Finland": "芬兰",
+    "Ireland": "爱尔兰", "New Zealand": "新西兰",
+}
+
 # ========== 核心功能函数 ==========
 def code_to_emoji(code):
     if not code or len(code) != 2: return '🌐'
     return "".join(chr(0x1F1E6 + ord(char.upper()) - ord('A')) for char in code)
 
 def build_country_rules():
-    """动态构建混合匹配规则：自定义正则优先，pycountry 全球规则补充"""
+    """动态构建混合匹配规则：自定义正则优先，pycountry 全球规则（注入中文名）补充"""
     print("  - 构建国家匹配规则...")
     rules = {}
     
@@ -75,13 +82,24 @@ def build_country_rules():
     for country in pycountry.countries:
         if country.alpha_2 in covered_codes: continue
         
-        keywords = sorted(list(set(kw for kw in [country.alpha_2, country.alpha_3, country.name.split(',')[0]] if len(kw) > 1)), key=len, reverse=True)
+        # 初始关键词：国家代码、英文名
+        keywords = [country.alpha_2, country.alpha_3]
+        if hasattr(country, 'common_name'): keywords.append(country.common_name)
+        if hasattr(country, 'official_name'): keywords.append(country.official_name)
+        
+        # **核心增强：从翻译词典中注入中文关键词**
+        if country.name in COUNTRY_NAME_TRANSLATIONS:
+            keywords.append(COUNTRY_NAME_TRANSLATIONS[country.name])
+            
+        # 清理和排序关键词
+        keywords = sorted(list(set(kw for kw in keywords if len(kw) > 1)), key=len, reverse=True)
+        
         if keywords:
             display_name = country.name.split(',')[0]
             rules[display_name] = {'emoji': code_to_emoji(country.alpha_2), 'regex': re.compile('|'.join(map(re.escape, keywords)), re.IGNORECASE)}
             pycountry_added += 1
             
-    print(f"  ✓ 动态生成了 {pycountry_added} 条全球规则。")
+    print(f"  ✓ 动态生成了 {pycountry_added} 条全球规则 (已注入中文名)。")
     print(f"  - 总计 {len(rules)} 条规则。")
     return rules
 
@@ -210,7 +228,7 @@ def generate_config(proxies):
 
 def main():
     print("=" * 60)
-    print(f"丑团 - Clash 订阅合并 (v10 - 全球覆盖最终版) @ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"丑团 - Clash 订阅合并 (v11 - 中文增强版) @ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
     
     os.makedirs(OUTPUT_DIR, exist_ok=True)
