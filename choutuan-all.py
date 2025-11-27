@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-丑团 - Clash 订阅合并脚本 (v8 - 测速排序版)
+丑团 - Clash 订阅合并脚本 (v9 - 稳定命名版)
+- 去除测速和延迟排序，专注于稳定重命名
+- 按指定地区优先级排序
+- 确保在任何情况下都不会出现名称冲突
 - 支持高优先级的自定义正则表达式
 - 动态生成全球规则作为补充
-- 并发 ICMP Ping 测速
-- 按 "指定地区 > 延迟" 双重排序
 - 智能清洗节点名并保留未匹配项
 """
 
@@ -18,8 +19,6 @@ import hashlib
 import re
 from collections import defaultdict
 import pycountry
-import subprocess
-from concurrent.futures import ThreadPoolExecutor
 
 # ========== 基础配置 ==========
 SUBSCRIPTION_URLS = [
@@ -30,7 +29,6 @@ SUBSCRIPTION_URLS = [
 ]
 OUTPUT_DIR = "flclashyaml"
 OUTPUT_FILE = os.path.join(OUTPUT_DIR, "choutuan-all.yaml")
-MAX_WORKERS_SPEEDTEST = 32  # 测速线程数
 
 # ========== 排序与命名配置 ==========
 # 一级排序：地区优先级，越靠前越优先
@@ -73,47 +71,6 @@ def build_country_rules():
 
 COUNTRY_RULES = build_country_rules()
 
-def test_latency(server):
-    """使用系统 ping 命令测试服务器延迟，返回毫秒或无穷大"""
-    try:
-        # -c 1: 发送1个包, -W 2: 等待2秒超时
-        command = ['ping', '-c', '1', '-W', '2', server]
-        result = subprocess.run(command, capture_output=True, text=True, timeout=3)
-        
-        if result.returncode == 0:
-            match = re.search(r"time=([\d.]+)\s*ms", result.stdout)
-            if match:
-                return float(match.group(1))
-    except (subprocess.TimeoutExpired, FileNotFoundError):
-        pass # 命令超时或 ping 不存在
-    except Exception as e:
-        print(f"  [测速警告] {server}: {e}")
-    return float('inf')
-
-def speed_test_proxies(proxies):
-    """并发测试所有节点的延迟"""
-    print(f"\n[3/5] 开始延迟测速 (使用 {MAX_WORKERS_SPEEDTEST} 线程)...")
-    
-    with ThreadPoolExecutor(max_workers=MAX_WORKERS_SPEEDTEST) as executor:
-        # 为每个 proxy 提交一个测速任务
-        future_to_proxy = {executor.submit(test_latency, proxy.get('server')): proxy for proxy in proxies if proxy.get('server')}
-        
-        for i, future in enumerate(future_to_proxy):
-            proxy = future_to_proxy[future]
-            try:
-                latency = future.result()
-                proxy['latency'] = latency
-                # 实时打印进度
-                progress = f"({i + 1}/{len(proxies)})"
-                status = f"{latency:.2f} ms" if latency != float('inf') else "超时"
-                print(f"  {progress} 测速 {proxy.get('server')}: {status}")
-            except Exception as e:
-                proxy['latency'] = float('inf')
-                print(f"  - 测速 {proxy.get('server')} 失败: {e}")
-                
-    print("  ✓ 延迟测速完成。")
-    return proxies
-
 def download_subscription(url):
     try:
         headers = {'User-Agent': 'Clash/1.11.4 (Windows; x64)'}
@@ -145,16 +102,17 @@ def merge_and_deduplicate_proxies(subscriptions):
                 unique_proxies[proxy_key] = proxy
     return list(unique_proxies.values())
 
-def sort_and_rename_proxies(proxies):
+def process_and_rename_proxies(proxies):
     """
     核心处理函数：
     1. 识别地区并附加排序信息。
-    2. 按 "地区优先级 > 延迟" 进行排序。
+    2. 按 "地区优先级" 进行排序。
     3. 排序后生成最终名称。
+    4. 对所有最终名称进行冲突检查，确保唯一。
     """
-    print(f"\n[4/5] 开始排序和重命名节点...")
+    print(f"\n[3/4] 开始排序和重命名节点...")
     
-    # 1. 识别地区和附加排序信息
+    # 步骤 1: 识别地区并附加排序信息
     for proxy in proxies:
         original_name = proxy['name']
         cleaned_name = JUNK_PATTERNS.sub('', original_name).strip()
@@ -168,21 +126,18 @@ def sort_and_rename_proxies(proxies):
         if matched_display_name:
             proxy['_display_name'] = matched_display_name
             try:
-                # 获取地区排序优先级
                 proxy['_region_sort_index'] = REGION_PRIORITY.index(matched_display_name)
             except ValueError:
-                # 不在优先列表中的地区，统一给一个较低的优先级
                 proxy['_region_sort_index'] = len(REGION_PRIORITY)
         else:
             proxy['_display_name'] = cleaned_name if cleaned_name else original_name
-            proxy['_region_sort_index'] = len(REGION_PRIORITY) + 1 # 未匹配的地区排在更后面
+            proxy['_region_sort_index'] = len(REGION_PRIORITY) + 1
 
-    # 2. 按 "地区优先级 > 延迟" 双重排序
-    proxies.sort(key=lambda p: (p.get('_region_sort_index', 99), p.get('latency', float('inf'))))
-    print("  ✓ 节点已按 '地区优先级' 和 '延迟' 完成排序。")
+    # 步骤 2: 按 "地区优先级" 排序
+    proxies.sort(key=lambda p: p.get('_region_sort_index', 99))
+    print("  ✓ 节点已按 '地区优先级' 完成排序。")
 
-    # 3. 排序后生成最终名称
-    final_proxies = []
+    # 步骤 3: 排序后生成意向名称
     country_counters = defaultdict(int)
     for proxy in proxies:
         display_name = proxy['_display_name']
@@ -193,17 +148,28 @@ def sort_and_rename_proxies(proxies):
             seq_num = country_counters[display_name]
             proxy['name'] = f"{emoji} {display_name} - {seq_num:02d}"
         else:
-            # 对于未匹配国家/地区的节点，直接使用其（清洗后的）显示名称
             proxy['name'] = display_name
         
         # 移除临时字段
         del proxy['_display_name']
         del proxy['_region_sort_index']
-        if 'latency' in proxy: del proxy['latency']
+
+    # 步骤 4: 最终名称冲突检查 (终极保险)
+    final_proxies = []
+    seen_names = set()
+    for proxy in proxies:
+        base_name = proxy['name']
+        final_name = base_name
+        counter = 2 # 从 (2) 开始
+        while final_name in seen_names:
+            final_name = f"{base_name} ({counter})"
+            counter += 1
         
+        proxy['name'] = final_name
+        seen_names.add(final_name)
         final_proxies.append(proxy)
         
-    print(f"  ✓ 节点已完成最终命名。总计: {len(final_proxies)} 个。")
+    print(f"  ✓ 已完成最终命名和冲突检查。总计: {len(final_proxies)} 个。")
     return final_proxies
 
 
@@ -231,26 +197,23 @@ def generate_config(proxies):
 
 def main():
     print("=" * 60)
-    print(f"丑团 - Clash 订阅合并 (v8 - 测速排序版) @ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"丑团 - Clash 订阅合并 (v9 - 稳定命名版) @ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
     
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     
-    print("\n[1/5] 开始下载订阅...")
+    print("\n[1/4] 开始下载订阅...")
     subscriptions = [sub for sub in (download_subscription(url) for url in SUBSCRIPTION_URLS) if sub]
     if not subscriptions: sys.exit("\n❌ 错误: 所有订阅都下载失败，任务中断。")
     
-    print(f"\n[2/5] 开始合并与去重...")
+    print(f"\n[2/4] 开始合并与去重...")
     unique_proxies = merge_and_deduplicate_proxies(subscriptions)
     if not unique_proxies: sys.exit("\n❌ 错误: 合并后没有可用的节点，任务中断。")
     
-    # 新增的测速步骤
-    tested_proxies = speed_test_proxies(unique_proxies)
+    # 排序和重命名
+    final_proxies = process_and_rename_proxies(unique_proxies)
 
-    # 排序和重命名步骤
-    final_proxies = sort_and_rename_proxies(tested_proxies)
-
-    print(f"\n[5/5] 开始生成最终配置文件...")
+    print(f"\n[4/4] 开始生成最终配置文件...")
     config = generate_config(final_proxies)
     if not config: sys.exit("\n❌ 错误: 无法生成配置文件。")
     
