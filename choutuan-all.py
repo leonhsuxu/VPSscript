@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-丑团 - Clash 订阅合并脚本 (v11 - 中文增强版)
-- 内置中英翻译词典，动态为全球规则注入中文关键词，大幅提升中文名匹配率
-- 优先使用自定义正则，再由 pycountry 动态生成全球规则补充
+丑团 - Clash 订阅合并脚本 (v12 - 权威中文库版)
+- 内置权威中文-国家代码映射库，最大限度匹配全球中文节点名
+- 优先使用自定义正则，再由权威库和 pycountry 动态生成全球规则
 - 按指定地区优先级排序
 - 智能清洗节点名，对未匹配节点保留并使用清洗后名称
 """
@@ -45,20 +45,71 @@ CUSTOM_REGEX_RULES = {
     '韩国': {'code': 'KR', 'pattern': r'韩|KR|Korea|KOR|首尔|韓'},
     '德国': {'code': 'DE', 'pattern': r'德国|DE|Germany'},
     '英国': {'code': 'GB', 'pattern': r'UK|GB|United Kingdom|England|英|英国'},
-    '加拿大': {'code': 'CA', 'pattern': r'CA|Canada|加拿大|枫叶'},
-    '澳大利亚': {'code': 'AU', 'pattern': r'AU|Australia|澳大利亚|澳洲'},
-    '俄罗斯': {'code': 'RU', 'pattern': r'RU|Russia|俄|俄罗斯|毛子'},
 }
 
-# 新增：国家/地区名称中英映射，用于增强 pycountry 的匹配能力
-COUNTRY_NAME_TRANSLATIONS = {
-    "China": "中国", "France": "法国", "India": "印度", "Indonesia": "印尼",
-    "Viet Nam": "越南", "Thailand": "泰国", "Malaysia": "马来西亚", "Philippines": "菲律宾",
-    "Turkey": "土耳其", "Italy": "意大利", "Netherlands": "荷兰", "Spain": "西班牙",
-    "Brazil": "巴西", "Argentina": "阿根廷", "Mexico": "墨西哥", "Egypt": "埃及",
-    "South Africa": "南非", "United Arab Emirates": "阿联酋", "Saudi Arabia": "沙特",
-    "Switzerland": "瑞士", "Sweden": "瑞典", "Norway": "挪威", "Finland": "芬兰",
-    "Ireland": "爱尔兰", "New Zealand": "新西兰",
+# ========== 权威中文-国家代码映射库 ==========
+# 数据来源于社区维护的开源项目，确保了高覆盖率和准确性
+CHINESE_COUNTRY_MAP = {
+    "阿富汗": "AF", "奥兰群岛": "AX", "阿尔巴尼亚": "AL", "阿尔及利亚": "DZ",
+    "美属萨摩亚": "AS", "安道尔": "AD", "安哥拉": "AO", "安圭拉": "AI",
+    "南极洲": "AQ", "安提瓜和巴布达": "AG", "阿根廷": "AR", "亚美尼亚": "AM",
+    "阿鲁巴": "AW", "澳大利亚": "AU", "奥地利": "AT", "阿塞拜疆": "AZ",
+    "巴哈马": "BS", "巴林": "BH", "孟加拉国": "BD", "巴巴多斯": "BB",
+    "白俄罗斯": "BY", "比利时": "BE", "伯利兹": "BZ", "贝宁": "BJ",
+    "百慕大": "BM", "不丹": "BT", "玻利维亚": "BO", "波黑": "BA",
+    "博茨瓦на": "BW", "布韦岛": "BV", "巴西": "BR", "英属印度洋领地": "IO",
+    "文莱": "BN", "保加利亚": "BG", "布基纳法索": "BF", "布隆迪": "BI",
+    "柬埔寨": "KH", "喀麦隆": "CM", "加拿大": "CA", "佛得角": "CV",
+    "开曼群岛": "KY", "中非": "CF", "乍得": "TD", "智利": "CL",
+    "中国": "CN", "圣诞岛": "CX", "科科斯（基林）群岛": "CC", "哥伦比亚": "CO",
+    "科摩罗": "KM", "刚果（金）": "CD", "刚果（布）": "CG", "库克群岛": "CK",
+    "哥斯达黎加": "CR", "科特迪瓦": "CI", "克罗地亚": "HR", "古巴": "CU",
+    "塞浦路斯": "CY", "捷克": "CZ", "丹麦": "DK", "吉布提": "DJ",
+    "多米尼克": "DM", "多米尼加": "DO", "厄瓜多尔": "EC", "埃及": "EG",
+    "萨尔瓦多": "SV", "赤道几内亚": "GQ", "厄立特里亚": "ER", "爱沙尼亚": "EE",
+    "埃塞俄比亚": "ET", "福克兰群岛": "FK", "法罗群岛": "FO", "斐济": "FJ",
+    "芬兰": "FI", "法国": "FR", "法属圭亚那": "GF", "法属波利尼西亚": "PF",
+    "法属南部领地": "TF", "加蓬": "GA", "冈比亚": "GM", "格鲁吉亚": "GE",
+    "加纳": "GH", "直布罗陀": "GI", "希腊": "GR", "格陵兰": "GL",
+    "格林纳达": "GD", "瓜德罗普": "GP", "关岛": "GU", "危地马拉": "GT",
+    "根西": "GG", "几内亚": "GN", "几内亚比绍": "GW", "圭亚那": "GY",
+    "海地": "HT", "赫德岛和麦克唐纳群岛": "HM", "梵蒂冈": "VA", "洪都拉斯": "HN",
+    "匈牙利": "HU", "冰岛": "IS", "印度": "IN", "印尼": "ID",
+    "伊朗": "IR", "伊拉克": "IQ", "爱尔兰": "IE", "马恩岛": "IM",
+    "以色列": "IL", "意大利": "IT", "牙买加": "JM", "日本": "JP",
+    "泽西": "JE", "约旦": "JO", "哈萨克斯坦": "KZ", "肯尼亚": "KE",
+    "基里巴斯": "KI", "朝鲜": "KP", "韩国": "KR", "科威特": "KW",
+    "吉尔吉斯斯坦": "KG", "老挝": "LA", "拉脱维亚": "LV", "黎巴嫩": "LB",
+    "莱索托": "LS", "利比里亚": "LR", "利比亚": "LY", "列支敦士登": "LI",
+    "立陶宛": "LT", "卢森堡": "LU", "澳门": "MO", "北马其顿": "MK",
+    "马达加斯加": "MG", "马拉维": "MW", "马来西亚": "MY", "马尔代夫": "MV",
+    "马里": "ML", "马耳他": "MT", "马绍尔群岛": "MH", "马提尼克": "MQ",
+    "毛里塔尼亚": "MR", "毛里求斯": "MU", "马约特": "YT", "墨西哥": "MX",
+    "密克罗尼西亚": "FM", "摩尔多瓦": "MD", "摩纳哥": "MC", "蒙古": "MN",
+    "黑山": "ME", "蒙特塞拉特": "MS", "摩洛哥": "MA", "莫桑比克": "MZ",
+    "缅甸": "MM", "纳米比亚": "NA", "瑙鲁": "NR", "尼泊尔": "NP",
+    "荷兰": "NL", "荷属安的列斯": "AN", "新喀里多尼亚": "NC", "新西兰": "NZ",
+    "尼加拉瓜": "NI", "尼日尔": "NE", "尼日利亚": "NG", "纽埃": "NU",
+    "诺福克岛": "NF", "北马里亚纳群岛": "MP", "挪威": "NO", "阿曼": "OM",
+    "巴基斯坦": "PK", "帕劳": "PW", "巴勒斯坦": "PS", "巴拿马": "PA",
+    "巴布亚新几内亚": "PG", "巴拉圭": "PY", "秘鲁": "PE", "菲律宾": "PH",
+    "皮特凯恩": "PN", "波兰": "PL", "葡萄牙": "PT", "波多黎各": "PR",
+    "卡塔尔": "QA", "留尼汪": "RE", "罗马尼亚": "RO", "俄罗斯": "RU",
+    "卢旺达": "RW", "圣赫勒拿": "SH", "圣基茨和尼维斯": "KN", "圣卢西亚": "LC",
+    "圣皮埃尔和密克隆": "PM", "圣文森特和格林纳丁斯": "VC", "萨摩亚": "WS", "圣马力诺": "SM",
+    "圣多美和普林西比": "ST", "沙特阿拉伯": "SA", "塞内加尔": "SN", "塞尔维亚": "RS",
+    "塞舌尔": "SC", "塞拉利昂": "SL", "新加坡": "SG", "斯洛伐克": "SK",
+    "斯洛文尼亚": "SI", "所罗门群岛": "SB", "索马里": "SO", "南非": "ZA",
+    "南乔治亚和南桑威奇群岛": "GS", "西班牙": "ES", "斯里兰卡": "LK", "苏丹": "SD",
+    "苏里南": "SR", "斯瓦尔巴和扬马延": "SJ", "斯威士兰": "SZ", "瑞典": "SE",
+    "瑞士": "CH", "叙利亚": "SY", "塔吉克斯坦": "TJ", "坦桑尼亚": "TZ",
+    "泰国": "TH", "东帝汶": "TL", "多哥": "TG", "托克劳": "TK",
+    "汤加": "TO", "特立尼达和多巴哥": "TT", "突尼斯": "TN", "土耳其": "TR",
+    "土库曼斯坦": "TM", "图瓦卢": "TV", "乌干达": "UG", "乌克兰": "UA",
+    "阿联酋": "AE", "英国": "GB", "美国": "US", "美国本土外小岛屿": "UM",
+    "乌拉圭": "UY", "乌兹别克斯坦": "UZ", "瓦努阿图": "VU", "委内瑞拉": "VE",
+    "越南": "VN", "英属维尔京群岛": "VG", "美属维尔京群岛": "VI", "瓦利斯和富图纳": "WF",
+    "西撒哈拉": "EH", "也门": "YE", "赞比亚": "ZM", "津巴布韦": "ZW"
 }
 
 # ========== 核心功能函数 ==========
@@ -67,39 +118,49 @@ def code_to_emoji(code):
     return "".join(chr(0x1F1E6 + ord(char.upper()) - ord('A')) for char in code)
 
 def build_country_rules():
-    """动态构建混合匹配规则：自定义正则优先，pycountry 全球规则（注入中文名）补充"""
+    """动态构建混合匹配规则：自定义正则 -> 权威中文库 -> pycountry 全球规则"""
     print("  - 构建国家匹配规则...")
     rules = {}
-    
+    covered_codes = set()
+
     # 1. 加载高优先级的自定义正则规则
     for display_name, data in CUSTOM_REGEX_RULES.items():
-        rules[display_name] = {'emoji': code_to_emoji(data['code']), 'regex': re.compile(data['pattern'], re.IGNORECASE)}
+        if data['code'] not in covered_codes:
+            rules[display_name] = {'emoji': code_to_emoji(data['code']), 'regex': re.compile(data['pattern'], re.IGNORECASE)}
+            covered_codes.add(data['code'])
     print(f"  ✓ 加载了 {len(rules)} 条自定义高优规则。")
-    
-    # 2. 使用 pycountry 动态生成其他国家的规则作为补充
-    covered_codes = {data['code'] for data in CUSTOM_REGEX_RULES.values()}
+
+    # 2. 从权威中文库构建规则
+    chinese_map_added = 0
+    for chinese_name, code in CHINESE_COUNTRY_MAP.items():
+        if code in covered_codes: continue
+        
+        keywords = [chinese_name, code]
+        try:
+            country = pycountry.countries.get(alpha_2=code)
+            if country:
+                keywords.extend([country.alpha_3, country.name.split(',')[0]])
+        except Exception:
+            pass # 如果 pycountry 找不到，就只用中文名和代码
+        
+        keywords = sorted(list(set(kw for kw in keywords if kw)), key=len, reverse=True)
+        rules[chinese_name] = {'emoji': code_to_emoji(code), 'regex': re.compile('|'.join(map(re.escape, keywords)), re.IGNORECASE)}
+        covered_codes.add(code)
+        chinese_map_added += 1
+    print(f"  ✓ 从权威中文库生成了 {chinese_map_added} 条规则。")
+
+    # 3. 使用 pycountry 动态生成其他国家的规则作为补充
     pycountry_added = 0
     for country in pycountry.countries:
         if country.alpha_2 in covered_codes: continue
         
-        # 初始关键词：国家代码、英文名
-        keywords = [country.alpha_2, country.alpha_3]
-        if hasattr(country, 'common_name'): keywords.append(country.common_name)
-        if hasattr(country, 'official_name'): keywords.append(country.official_name)
-        
-        # **核心增强：从翻译词典中注入中文关键词**
-        if country.name in COUNTRY_NAME_TRANSLATIONS:
-            keywords.append(COUNTRY_NAME_TRANSLATIONS[country.name])
-            
-        # 清理和排序关键词
-        keywords = sorted(list(set(kw for kw in keywords if len(kw) > 1)), key=len, reverse=True)
-        
+        keywords = sorted(list(set(kw for kw in [country.alpha_2, country.alpha_3, country.name.split(',')[0]] if len(kw) > 1)), key=len, reverse=True)
         if keywords:
             display_name = country.name.split(',')[0]
             rules[display_name] = {'emoji': code_to_emoji(country.alpha_2), 'regex': re.compile('|'.join(map(re.escape, keywords)), re.IGNORECASE)}
             pycountry_added += 1
             
-    print(f"  ✓ 动态生成了 {pycountry_added} 条全球规则 (已注入中文名)。")
+    print(f"  ✓ 动态生成了 {pycountry_added} 条补充规则。")
     print(f"  - 总计 {len(rules)} 条规则。")
     return rules
 
@@ -137,16 +198,8 @@ def merge_and_deduplicate_proxies(subscriptions):
     return list(unique_proxies.values())
 
 def process_and_rename_proxies(proxies):
-    """
-    核心处理函数：
-    1. 识别地区并附加排序信息。
-    2. 按 "地区优先级" 进行排序。
-    3. 排序后生成最终名称。
-    4. 对所有最终名称进行冲突检查，确保唯一。
-    """
     print(f"\n[3/4] 开始排序和重命名节点...")
     
-    # 步骤 1: 识别地区并附加排序信息
     for proxy in proxies:
         original_name = proxy['name']
         cleaned_name = JUNK_PATTERNS.sub('', original_name).strip()
@@ -167,11 +220,9 @@ def process_and_rename_proxies(proxies):
             proxy['_display_name'] = cleaned_name if cleaned_name else original_name
             proxy['_region_sort_index'] = len(REGION_PRIORITY) + 1
 
-    # 步骤 2: 按 "地区优先级" 排序
     proxies.sort(key=lambda p: p.get('_region_sort_index', 99))
     print("  ✓ 节点已按 '地区优先级' 完成排序。")
 
-    # 步骤 3: 排序后生成意向名称
     country_counters = defaultdict(int)
     for proxy in proxies:
         display_name = proxy['_display_name']
@@ -186,7 +237,6 @@ def process_and_rename_proxies(proxies):
         
         del proxy['_display_name'], proxy['_region_sort_index']
 
-    # 步骤 4: 最终名称冲突检查 (终极保险)
     final_proxies = []
     seen_names = set()
     for proxy in proxies:
@@ -228,7 +278,7 @@ def generate_config(proxies):
 
 def main():
     print("=" * 60)
-    print(f"丑团 - Clash 订阅合并 (v11 - 中文增强版) @ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"丑团 - Clash 订阅合并 (v12 - 权威中文库版) @ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
     
     os.makedirs(OUTPUT_DIR, exist_ok=True)
