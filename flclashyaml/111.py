@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-丑团 - Clash 订阅合并脚本 (v14.2 - 语法修正版)
+丑团 - Clash 订阅合并脚本 (v14.3 - 最终修正版)
 - 集成 Xray-core 无权限测速，筛选可用节点
 - 按延迟和地区优先级精确排序
 - 智能识别地区 (正则 + 详尽中文名映射)，匹配对应国旗
@@ -171,6 +171,7 @@ def process_and_rename_proxies(proxies):
                     region_info = {'name': country_name, 'code': code}
                     break
         
+        # 使用预处理时已识别的地区信息
         proxy['region'] = region_info['name']
         flag = get_country_flag_emoji(region_info['code'])
         
@@ -180,6 +181,7 @@ def process_and_rename_proxies(proxies):
             node_feature = re.sub(pattern_to_remove, '', node_feature, flags=re.IGNORECASE)
         node_feature = node_feature.replace('-', '').strip()
         if not node_feature:
+             # 使用排序后的索引作为序号，避免重名
              seq = sum(1 for p in final_proxies if p.get('region') == region_info['name']) + 1
              node_feature = f"{seq:02d}"
 
@@ -194,57 +196,139 @@ def process_and_rename_proxies(proxies):
         
     return final_proxies
 
-# --- 修正后的 generate_xray_config 函数 ---
 def generate_xray_config(proxy, local_port):
     outbound = {"protocol": proxy.get('type'), "settings": {}}
-    
-    # VMess
     if proxy.get('type') == 'vmess':
-        outbound['settings']['vnext'] = [{
-            "address": proxy.get('server'),
-            "port": proxy.get('port'),
-            "users": [{"id": proxy.get('uuid'), "alterId": proxy.get('alterId'), "security": proxy.get('cipher', 'auto')}]
-        }]
+        outbound['settings']['vnext'] = [{"address": proxy.get('server'), "port": proxy.get('port'), "users": [{"id": proxy.get('uuid'), "alterId": proxy.get('alterId'), "security": proxy.get('cipher', 'auto')}]}]
         stream_settings = {}
         if proxy.get('network') == 'ws':
-            stream_settings = {
-                "network": "ws",
-                "wsSettings": {
-                    "path": proxy.get('ws-path', '/'),
-                    "headers": {"Host": proxy.get('ws-opts', {}).get('headers', {}).get('Host', proxy.get('server'))}
-                }
-            }
+            stream_settings = {"network": "ws", "wsSettings": {"path": proxy.get('ws-path', '/'), "headers": {"Host": proxy.get('ws-opts', {}).get('headers', {}).get('Host', proxy.get('server'))}}}
         if proxy.get('tls', False):
             stream_settings['security'] = 'tls'
             stream_settings['tlsSettings'] = {"serverName": proxy.get('sni', proxy.get('server'))}
-        if stream_settings:
-            outbound['streamSettings'] = stream_settings
-    
-    # Shadowsocks
+        if stream_settings: outbound['streamSettings'] = stream_settings
     elif proxy.get('type') in ['ss', 'shadowsocks']:
         outbound['protocol'] = 'shadowsocks'
-        outbound['settings']['servers'] = [{
-            "address": proxy.get('server'),
-            "port": proxy.get('port'),
-            "method": proxy.get('cipher'),
-            "password": proxy.get('password')
-        }]
-        
-    # Trojan
+        outbound['settings']['servers'] = [{"address": proxy.get('server'), "port": proxy.get('port'), "method": proxy.get('cipher'), "password": proxy.get('password')}]
     elif proxy.get('type') == 'trojan':
-        outbound['settings']['servers'] = [{
-            "address": proxy.get('server'),
-            "port": proxy.get('port'),
-            "password": proxy.get('password')
-        }]
-        outbound['streamSettings'] = {
-            "network": "tcp",
-            "security": "tls",
-            "tlsSettings": {"serverName": proxy.get('sni', proxy.get('server'))}
-        }
+        outbound['settings']['servers'] = [{"address": proxy.get('server'), "port": proxy.get('port'), "password": proxy.get('password')}]
+        outbound['streamSettings'] = {"network": "tcp", "security": "tls", "tlsSettings": {"serverName": proxy.get('sni', proxy.get('server'))}}
+    else: return None
+    return {"inbounds": [{"port": local_port, "protocol": "socks", "listen": "127.0.0.1", "settings": {"udp": True}}], "outbounds": [outbound]}
+
+def test_single_proxy(proxy, index):
+    local_port = BASE_SOCKS_PORT + index
+    config_path = os.path.join(TEMP_CONFIG_DIR, f"config_{index}.json")
+    xray_config = generate_xray_config(proxy, local_port)
+    if not xray_config: return None
+    with open(config_path, 'w') as f: json.dump(xray_config, f)
+    process = None
+    try:
+        process = subprocess.Popen([XRAY_CORE_PATH, "-config", config_path], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        time.sleep(0.5)
+        proxies = {'http': f'socks5h://127.0.0.1:{local_port}', 'https': f'socks5h://127.0.0.1:{local_port}'}
+        start_time = time.time()
+        response = requests.head(SPEED_TEST_URL, proxies=proxies, timeout=SPEED_TEST_TIMEOUT)
+        latency = (time.time() - start_time) * 1000
+        if 200 <= response.status_code < 400:
+            proxy['delay'] = int(latency)
+            return proxy
+    except Exception: pass
+    finally:
+        if process: process.terminate(); process.wait()
+        if os.path.exists(config_path): os.remove(config_path)
+    return None
+
+def speed_test_proxies(proxies):
+    if not os.path.exists(XRAY_CORE_PATH):
+        print(f"错误: Xray-core 未找到于 '{XRAY_CORE_PATH}'。跳过测速。")
+        return proxies
+    if os.path.exists(TEMP_CONFIG_DIR):
+        import shutil; shutil.rmtree(TEMP_CONFIG_DIR)
+    os.makedirs(TEMP_CONFIG_DIR)
+    print(f"开始使用 Xray-core 进行并发测速 (共 {len(proxies)} 个节点)...")
+    fast_proxies = []
+    with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_TEST_WORKERS) as executor:
+        future_to_proxy = {executor.submit(test_single_proxy, p.copy(), i): p for i, p in enumerate(proxies)}
+        for future in concurrent.futures.as_completed(future_to_proxy):
+            result = future.result()
+            if result:
+                # 将延迟信息附加回原始的 proxy 对象
+                original_proxy = future_to_proxy[future]
+                original_proxy['delay'] = result['delay']
+                fast_proxies.append(original_proxy)
+                print(f"  [通过] {original_proxy.get('name')} - 延迟: {result['delay']}ms")
+    print(f"测速完成，剩余可用节点: {len(fast_proxies)}")
+    import shutil; shutil.rmtree(TEMP_CONFIG_DIR)
+    return fast_proxies
+
+def generate_config(proxies):
+    if not proxies: return None
+    proxy_names = [p['name'] for p in proxies]
+    clean_proxies = [{k: v for k, v in p.items() if k not in ['region', 'delay']} for p in proxies]
+    return {
+        'mixed-port': 7890, 'allow-lan': True, 'bind-address': '*', 'mode': 'rule', 'log-level': 'info',
+        'external-controller': '127.0.0.1:9090',
+        'dns': {'enable': True, 'listen': '0.0.0.0:53', 'enhanced-mode': 'fake-ip', 'fake-ip-range': '198.18.0.1/16', 'nameserver': ['223.5.5.5', '119.29.29.29'], 'fallback': ['https://dns.google/dns-query', 'https://1.1.1.1/dns-query']},
+        'proxies': clean_proxies,
+        'proxy-groups': [
+            {'name': '🚀 节点选择', 'type': 'select', 'proxies': ['♻️ 自动选择', '🔯 故障转移', 'DIRECT'] + proxy_names},
+            {'name': '♻️ 自动选择', 'type': 'url-test', 'proxies': proxy_names, 'url': SPEED_TEST_URL, 'interval': 300},
+            {'name': '🔯 故障转移', 'type': 'fallback', 'proxies': proxy_names, 'url': SPEED_TEST_URL, 'interval': 300}],
+        'rules': ['GEOIP,CN,DIRECT', 'MATCH,🚀 节点选择']
+    }
+
+def main():
+    print("=" * 60)
+    print(f"丑团 - Clash 订阅合并 (v14.3 - 最终修正版) @ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print("=" * 60)
     
-    # 不支持的协议
+    print("\n[1/4] 下载与合并订阅...")
+    all_proxies = []
+    for url in SUBSCRIPTION_URLS: all_proxies.extend(download_subscription(url))
+    unique_proxies = merge_and_deduplicate_proxies(all_proxies)
+    if not unique_proxies: sys.exit("\n❌ 错误: 所有订阅下载失败或合并后无节点。")
+    print(f"  ✓ 合并后共 {len(unique_proxies)} 个不重复节点。")
+
+    print("\n[2/4] 测速与筛选节点...")
+    if ENABLE_SPEED_TEST:
+        available_proxies = speed_test_proxies(unique_proxies)
+        if not available_proxies:
+            print("  ⚠️ 警告: 测速后无可用节点，将使用所有节点生成配置。")
+            available_proxies = unique_proxies
     else:
-        return None
-        
-    return {"inbounds": [{"port": local_port, "protocol": "socks", "listen": "127.0.0.1", "settings": {"udp
+        print("  - 已跳过延迟测试。")
+        available_proxies = unique_proxies
+
+    print("\n[3/4] 排序与重命名节点...")
+    # --- 修正后的排序逻辑 ---
+    # 1. 先进行初步的地区识别，将结果存入 'region' 键
+    for p in available_proxies:
+        temp_name = JUNK_PATTERNS.sub('', p.get('name','')).strip()
+        for eng, chn in CHINESE_COUNTRY_MAP.items(): temp_name = re.sub(r'\b'+re.escape(eng)+r'\b', chn, temp_name, flags=re.IGNORECASE)
+        p['region'] = '未知'
+        for region, rules in CUSTOM_REGEX_RULES.items():
+            if re.search(rules['pattern'], temp_name, re.IGNORECASE): p['region'] = region; break
+        if p['region'] == '未知':
+            for country, code in COUNTRY_NAME_TO_CODE_MAP.items():
+                if country in temp_name: p['region'] = country; break
+
+    # 2. 然后根据 'region' 和 'delay' 进行排序
+    region_order = {region: i for i, region in enumerate(REGION_PRIORITY)}
+    available_proxies.sort(key=lambda p: (region_order.get(p.get('region', '未知'), 99), p.get('delay', 9999)))
+    
+    # 3. 在排序后进行最终的重命名
+    final_proxies = process_and_rename_proxies(available_proxies)
+    print(f"  ✓ 共 {len(final_proxies)} 个节点完成排序和重命名。")
+
+    print("\n[4/4] 生成最终配置文件...")
+    config = generate_config(final_proxies)
+    if not config: sys.exit("\n❌ 错误: 无法生成配置文件。")
+    
+    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
+        yaml.dump(config, f, allow_unicode=True, sort_keys=False, indent=2)
+    print(f"  ✓ 配置文件已成功保存至: {OUTPUT_FILE}")
+    print("\n✅ 任务完成！")
+
+if __name__ == '__main__':
+    main()
