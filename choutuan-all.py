@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-丑团 - Clash 订阅合并脚本 (v3 - 智能重命名版)
+丑团 - Clash 订阅合并脚本 (v5 - 保留与清洗版)
+- 智能清洗节点名，去除干扰词 (如 '丑团', '专线' 等)
+- 优先匹配国家/地区并重命名，无法匹配的节点则清洗名称后保留
+- 最终名称冲突检测，确保配置文件有效性
 - 精准去重: Server + Port + Password/UUID
-- 智能重命名: 自动识别国家/地区，并重命名为 [Emoji][地区] - [序号]
 """
 
 import requests
@@ -26,20 +28,24 @@ SUBSCRIPTION_URLS = [
 OUTPUT_DIR = "flclashyaml"
 OUTPUT_FILE = os.path.join(OUTPUT_DIR, "choutuan-all.yaml")
 
-# ========== 国家/地区匹配规则 (按顺序匹配) ==========
-# 正则表达式匹配原始节点名，以确定其地理位置
+# ========== 名称清洗规则 ==========
+JUNK_PATTERNS = re.compile(
+    r'丑团|专线|IPLC|IEPL|BGP|体验|官网|'
+    r'[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*',  # 移除各种括号、开头的 @username
+    re.IGNORECASE
+)
+
+# ========== 国家/地区匹配规则 ==========
 COUNTRY_RULES = {
-    '香港': {'emoji': '🇭🇰', 'regex': re.compile(r'HK|Hong|HONG|Kong|KONG|港|香港')},
-    '台湾': {'emoji': '🇹🇼', 'regex': re.compile(r'TW|Taiwan|TAIWAN|台|台湾|臺')},
-    '新加坡': {'emoji': '🇸🇬', 'regex': re.compile(r'SG|Singapore|SINGAPORE|狮城|坡')},
-    '日本': {'emoji': '🇯🇵', 'regex': re.compile(r'JP|Japan|JAPAN|日|日本|东京|大阪|埼玉|沪日|深日')},
+    '香港': {'emoji': '🇭🇰', 'regex': re.compile(r'HK|Hong|Kong|港|香港')},
+    '台湾': {'emoji': '🇹🇼', 'regex': re.compile(r'TW|Taiwan|台|台湾|臺')},
+    '新加坡': {'emoji': '🇸🇬', 'regex': re.compile(r'SG|Singapore|狮城|坡')},
+    '日本': {'emoji': '🇯🇵', 'regex': re.compile(r'JP|Japan|日|日本|东京|大阪|埼玉')},
     '美国': {'emoji': '🇺🇸', 'regex': re.compile(r'US|USA|United States|美|美国|亚特兰大|波特兰|达拉斯|俄勒冈|凤凰城|硅谷|拉斯维加斯|洛杉矶|圣何塞|西雅图|芝加哥')},
-    '韩国': {'emoji': '🇰🇷', 'regex': re.compile(r'KR|Korea|KOREA|韩|韩国|首尔|韓')},
+    '韩国': {'emoji': '🇰🇷', 'regex': re.compile(r'KR|Korea|韩|韩国|首尔|韓')},
     '英国': {'emoji': '🇬🇧', 'regex': re.compile(r'UK|United Kingdom|英|英国')},
-    '德国': {'emoji': '🇩🇪', 'regex': re.compile(r'DE|Germany|GERMANY|德|德国')},
-    '俄罗斯': {'emoji': '🇷🇺', 'regex': re.compile(r'RU|Russia|RUSSIA|俄|俄罗斯')},
-    # 必须放在最后，作为“未匹配”的默认选项
-    '其他': {'emoji': '🌐', 'regex': re.compile(r'.*')}
+    '德国': {'emoji': '🇩🇪', 'regex': re.compile(r'DE|Germany|德|德国')},
+    '俄罗斯': {'emoji': '🇷🇺', 'regex': re.compile(r'RU|Russia|俄|俄罗斯')},
 }
 
 
@@ -60,7 +66,7 @@ def download_subscription(url):
         return None
 
 def get_proxy_key(proxy):
-    """根据节点的关键信息 (server, port, password/uuid) 生成唯一标识"""
+    """根据节点的关键信息生成唯一标识"""
     try:
         server = proxy.get('server', '')
         port = proxy.get('port', 0)
@@ -70,59 +76,72 @@ def get_proxy_key(proxy):
         return None
 
 def merge_and_deduplicate_proxies(subscriptions):
-    """合并并使用精确规则去重，同时保留原始名称用于后续处理"""
+    """合并并使用精确规则去重"""
     unique_proxies = {}
-    total_nodes = 0
-    invalid_nodes = 0
-
     for sub in subscriptions:
         proxies_in_sub = sub.get('proxies', [])
-        if not isinstance(proxies_in_sub, list):
-            continue
+        if not isinstance(proxies_in_sub, list): continue
         for proxy in proxies_in_sub:
-            total_nodes += 1
-            if not isinstance(proxy, dict) or 'name' not in proxy:
-                invalid_nodes += 1
-                continue
-            
+            if not isinstance(proxy, dict) or 'name' not in proxy: continue
             proxy_key = get_proxy_key(proxy)
             if proxy_key and proxy_key not in unique_proxies:
                 unique_proxies[proxy_key] = proxy
-    
-    print(f"  - 共处理节点: {total_nodes}")
-    print(f"  - 无效/格式错误节点: {invalid_nodes}")
-    print(f"  - 重复节点(已合并): {total_nodes - invalid_nodes - len(unique_proxies)}")
-    
     return list(unique_proxies.values())
 
-def rename_and_sort_proxies(proxies):
-    """根据国家/地区规则对节点进行重命名和排序"""
-    renamed_proxies = []
+def process_and_rename_proxies(proxies):
+    """
+    核心处理函数：
+    1. 优先匹配国家并重命名。
+    2. 若无法匹配，则清洗名称后保留。
+    3. 最后处理所有名称冲突，确保唯一性。
+    """
+    processed_proxies = []
     country_counters = defaultdict(int)
+    unmatched_nodes_count = 0
 
+    # 步骤 1 & 2: 确定每个节点的意向名称
     for proxy in proxies:
         original_name = proxy['name']
+        cleaned_name = JUNK_PATTERNS.sub('', original_name).strip()
+        
         matched_country = None
-
         for country, rules in COUNTRY_RULES.items():
-            if rules['regex'].search(original_name):
+            if rules['regex'].search(cleaned_name) or rules['regex'].search(original_name):
                 matched_country = country
                 break
         
-        # 增加对应国家的计数器
-        country_counters[matched_country] += 1
+        if matched_country:
+            country_counters[matched_country] += 1
+            emoji = COUNTRY_RULES[matched_country]['emoji']
+            seq_num = country_counters[matched_country]
+            proxy['name'] = f"{emoji} {matched_country} - {seq_num:02d}"
+        else:
+            # 如果无法匹配国家，则使用清洗后的名称，如果清洗后为空则使用原始名称
+            proxy['name'] = cleaned_name if cleaned_name else original_name
+            unmatched_nodes_count += 1
         
-        # 生成新名称，例如：🇭🇰 香港 - 01
-        emoji = COUNTRY_RULES[matched_country]['emoji']
-        seq_num = country_counters[matched_country]
-        new_name = f"{emoji} {matched_country} - {seq_num:02d}"
+        processed_proxies.append(proxy)
+    
+    print(f"\n  - 成功匹配国家/地区的节点: {len(processed_proxies) - unmatched_nodes_count}")
+    print(f"  - 未匹配国家/地区 (已保留并清洗名称) 的节点: {unmatched_nodes_count}")
+
+    # 步骤 3: 最终名称防冲突处理
+    final_proxies = []
+    seen_names = set()
+    for proxy in processed_proxies:
+        base_name = proxy['name']
+        final_name = base_name
+        counter = 1
+        while final_name in seen_names:
+            final_name = f"{base_name} ({counter})"
+            counter += 1
         
-        # 更新节点名称
-        proxy['name'] = new_name
-        renamed_proxies.append(proxy)
+        proxy['name'] = final_name
+        seen_names.add(final_name)
+        final_proxies.append(proxy)
         
-    print(f"  ✓ 成功重命名 {len(renamed_proxies)} 个节点。")
-    return renamed_proxies
+    print(f"  ✓ 总计保留节点: {len(final_proxies)}")
+    return final_proxies
 
 
 def generate_config(proxies):
@@ -158,35 +177,28 @@ def generate_config(proxies):
 
 def main():
     print("=" * 60)
-    print(f"丑团 - Clash 订阅合并 (v3 - 智能重命名版) @ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"丑团 - Clash 订阅合并 (v5 - 保留与清洗版) @ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
     
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     
     print("\n[1/4] 开始下载订阅...")
-    subscriptions = []
-    for url in SUBSCRIPTION_URLS:
-        sub_data = download_subscription(url)
-        if sub_data:
-            subscriptions.append(sub_data)
-    
+    subscriptions = [sub for sub in (download_subscription(url) for url in SUBSCRIPTION_URLS) if sub]
     if not subscriptions:
         print("\n❌ 错误: 所有订阅都下载失败，任务中断。")
         sys.exit(1)
     
     print(f"\n[2/4] 开始合并与去重...")
     unique_proxies = merge_and_deduplicate_proxies(subscriptions)
-    
     if not unique_proxies:
         print("\n❌ 错误: 合并后没有可用的节点，任务中断。")
         sys.exit(1)
 
-    print(f"\n[3/4] 开始智能重命名节点...")
-    final_proxies = rename_and_sort_proxies(unique_proxies)
+    print(f"\n[3/4] 开始处理和重命名节点...")
+    final_proxies = process_and_rename_proxies(unique_proxies)
 
     print(f"\n[4/4] 开始生成最终配置文件...")
     config = generate_config(final_proxies)
-    
     if not config:
         sys.exit(1)
     
