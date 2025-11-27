@@ -1,0 +1,224 @@
+# Clash 单文件配置 (v6 - 终极静态优化版)
+#
+# 更新说明:
+# 1. 【核心优化】应用分组 (如 YouTube) 的代理列表已手动展开，现在包含所有地区分组，
+#    允许您为特定应用直接选择国家/地区出口，模拟了动态脚本的 "自动调用" 逻辑。
+# 2. 【功能澄清】再次明确：本配置的地区分组 (fallback 类型) 已支持故障自动切换；
+#    订阅更新时分组也会自动刷新。这些是 Clash 核心功能，无需额外配置。
+# 3. 【限制说明】"空分组自动隐藏" 无法通过静态文件实现，需借助动态订阅转换服务。
+# ========================== 可配置区域 (通常无需修改) ==========================
+tunable_variables:
+  # --- 订阅链接 ---
+  sub1_url: &sub1_url "https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A21?token=ChouLink1"
+  sub2_url: &sub2_url "https://s.winniezz.top/V7QEYQ"
+  sub3_url: &sub3_url "https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A23?token=ChouLink3"
+  sub4_url: &sub4_url "https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A24?token=ChouLink4"
+  # --- 测速配置 ---
+  test_url: &test_url "http://www.gstatic.com/generate_204"
+  test_interval: &test_interval 300
+
+# ======================= End of 可配置区域 (下方内容已配置好) =======================
+# --- 基础配置 ---
+mixed-port: 7890
+allow-lan: true
+mode: rule
+log-level: info
+external-controller: '127.0.0.1:9090'
+
+# --- 规则集定义 (Rule Providers) ---
+rule-providers:
+  BanAD: { type: http, behavior: domain, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanAD.list", path: ./rulesets/BanAD.yaml, interval: 86400 }
+  BanProgramAD: { type: http, behavior: domain, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/BanProgramAD.list", path: ./rulesets/BanProgramAD.yaml, interval: 86400 }
+  TelegramList: { type: http, behavior: domain, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Telegram.list", path: ./rulesets/TelegramList.yaml, interval: 86400 }
+  YouTubeList: { type: http, behavior: domain, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/YouTube.list", path: ./rulesets/YouTubeList.yaml, interval: 86400 }
+  ProxyGFWlist: { type: http, behavior: domain, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ProxyGFWlist.list", path: ./rulesets/ProxyGFWlist.yaml, interval: 86400 }
+  UnBan: { type: http, behavior: domain, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/UnBan.list", path: ./rulesets/UnBan.yaml, interval: 86400 }
+  ChinaDomain: { type: http, behavior: domain, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaDomain.list", path: ./rulesets/ChinaDomain.yaml, interval: 86400 }
+  ChinaCompanyIp: { type: http, behavior: ipcidr, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/ChinaCompanyIp.list", path: ./rulesets/ChinaCompanyIp.yaml, interval: 86400 }
+  Download: { type: http, behavior: domain, url: "https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/Clash/Download.list", path: ./rulesets/Download.yaml, interval: 86400 }
+
+# --- 订阅源定义 (Proxy Providers) ---
+proxy-providers:
+  sub1: { type: http, url: *sub1_url, interval: 3600, path: ./providers/sub1.yaml, health-check: { enable: true, interval: 600, url: *test_url }, parser: { script: "const provider_prefix = '丑团1'; function main(params) { return params.proxies.map(p => { p.name = `[${provider_prefix}] ${p.name}`; return p; }); }" } }
+  sub2: { type: http, url: *sub2_url, interval: 3600, path: ./providers/sub2.yaml, health-check: { enable: true, interval: 600, url: *test_url }, parser: { script: "const provider_prefix = '丑团2'; function main(params) { return params.proxies.map(p => { p.name = `[${provider_prefix}] ${p.name}`; return p; }); }" } }
+  sub3: { type: http, url: *sub3_url, interval: 3600, path: ./providers/sub3.yaml, health-check: { enable: true, interval: 600, url: *test_url }, parser: { script: "const provider_prefix = '丑团3'; function main(params) { return params.proxies.map(p => { p.name = `[${provider_prefix}] ${p.name}`; return p; }); }" } }
+  sub4: { type: http, url: *sub4_url, interval: 3600, path: ./providers/sub4.yaml, health-check: { enable: true, interval: 600, url: *test_url }, parser: { script: "const provider_prefix = '丑团4'; function main(params) { return params.proxies.map(p => { p.name = `[${provider_prefix}] ${p.name}`; return p; }); }" } }
+
+# --- 策略组定义 (Proxy Groups) ---
+proxy-groups:
+  # 1. ================== 核心入口 ==================
+  - name: '🚀 节点选择'
+    type: select
+    proxies: [ '♻️ 自动选择', '🔯 故障转移', '🇭🇰 香港', '🇯🇵 日本', '🇸🇬 狮城', '🇺🇸 美国', '🇹🇼 湾省', '🇰🇷 韩国', '🇩🇪 德国', '🇺🇳 其他', DIRECT ]
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Airport.png'
+  # 2. ================== 功能分组 ==================
+  - name: '♻️ 自动选择'
+    type: url-test
+    use: [sub1, sub2, sub3, sub4]
+    url: *test_url
+    interval: *test_interval
+    tolerance: 50
+    lazy: true
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Auto.png'
+  - name: '🔯 故障转移'
+    type: fallback
+    use: [sub1, sub2, sub3, sub4]
+    url: *test_url
+    interval: *test_interval
+    lazy: true
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Loop.png'
+  - name: '🌏 直连优选'
+    type: fallback
+    proxies: [DIRECT, '🚀 节点选择']
+    url: *test_url
+    interval: *test_interval
+    lazy: true
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Global.png'
+  # 3. ================== 应用分组 (手动展开地区) ==================
+  - name: '🎬 Emby'
+    type: select
+    proxies:
+      - DIRECT
+      - '🚀 节点选择'
+      - '🇭🇰 香港'
+      - '🇯🇵 日本'
+      - '🇸🇬 狮城'
+      - '🇺🇸 美国'
+      - '🇹🇼 湾省'
+      - '🇰🇷 韩国'
+      - '🇩🇪 德国'
+      - '🇺🇳 其他'
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Emby.png'
+  - name: '💬 Telegram'
+    type: select
+    proxies:
+      - '🚀 节点选择'
+      - '🇭🇰 香港'
+      - '🇯🇵 日本'
+      - '🇸🇬 狮城'
+      - '🇺🇸 美国'
+      - '🇹🇼 湾省'
+      - '🇰🇷 韩国'
+      - '🇩🇪 德国'
+      - '🇺🇳 其他'
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Telegram.png'
+  - name: '📺 YouTube'
+    type: select
+    proxies:
+      - '🚀 节点选择'
+      - '🇭🇰 香港'
+      - '🇯🇵 日本'
+      - '🇸🇬 狮城'
+      - '🇺🇸 美国'
+      - '🇹🇼 湾省'
+      - '🇰🇷 韩国'
+      - '🇩🇪 德国'
+      - '🇺🇳 其他'
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/YouTube.png'
+  # 4. ============ 按地区自动分组 (Fallback) ===========
+  - name: '🇭🇰 香港'
+    type: fallback
+    use: [sub1, sub2, sub3, sub4]
+    filter: '(?i)港|HK|Hong Kong'
+    url: *test_url
+    interval: *test_interval
+    lazy: true
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Hong_Kong.png'
+  - name: '🇯🇵 日本'
+    type: fallback
+    use: [sub1, sub2, sub3, sub4]
+    filter: '(?i)日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan'
+    url: *test_url
+    interval: *test_interval
+    lazy: true
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Japan.png'
+  - name: '🇸🇬 狮城'
+    type: fallback
+    use: [sub1, sub2, sub3, sub4]
+    filter: '(?i)新加坡|🇸🇬|sg|singapore|坡|狮城'
+    url: *test_url
+    interval: *test_interval
+    lazy: true
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Singapore.png'
+  - name: '🇺🇸 美国'
+    type: fallback
+    use: [sub1, sub2, sub3, sub4]
+    filter: '(?i)^(?!.*(?:aus|rus)).*(?:\b(?:us|usa|american|united states)\b|美|🇺🇸|波特兰|达拉斯|俄regon|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥)'
+    url: *test_url
+    interval: *test_interval
+    lazy: true
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/United_States.png'
+  - name: '🇹🇼 湾省'
+    type: fallback
+    use: [sub1, sub2, sub3, sub4]
+    filter: '(?i)台湾|🇹🇼|tw|taiwan|台|新北|彰化'
+    url: *test_url
+    interval: *test_interval
+    lazy: true
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Taiwan.png'
+  - name: '🇰🇷 韩国'
+    type: fallback
+    use: [sub1, sub2, sub3, sub4]
+    filter: '(?i)韩|🇰🇷|kr|korea|kor|首尔|韓'
+    url: *test_url
+    interval: *test_interval
+    lazy: true
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Korea.png'
+  - name: '🇩🇪 德国'
+    type: fallback
+    use: [sub1, sub2, sub3, sub4]
+    filter: '(?i)德国|🇩🇪|\bde\b|germany'
+    url: *test_url
+    interval: *test_interval
+    lazy: true
+    icon: 'https://raw.githubusercontent.com/Koolson/Qure/refs/heads/master/IconSet/Color/Germany.png'
+  - name: '🇺🇳 其他'
+    type: fallback
+    use: [sub1, sub2, sub3, sub4]
+    exclude-filter: '(?i)港|HK|Hong Kong|日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan|新加坡|🇸🇬|sg|singapore|坡|狮城|^(?!.*(?:aus|rus)).*(?:\b(?:us|usa|american|united states)\b|美|🇺🇸|波特兰|达拉斯|俄regon|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥)|台湾|🇹🇼|tw|taiwan|台|新北|彰化|韩|🇰🇷|kr|korea|kor|首尔|韓|德国|🇩🇪|\bde\b|germany'
+    url: *test_url
+    interval: *test_interval
+    lazy: true
+    icon: 'https://fastly.jsdelivr.net/gh/Koolson/Qure/IconSet/Color/World_Map.png'
+
+# --- 规则定义 (Rules) ---
+rules:
+  - DOMAIN-SUFFIX,lite.cn2gias.uk,🎬 Emby
+  - DOMAIN-SUFFIX,feiniu.lol,🎬 Emby
+  - DOMAIN-SUFFIX,ciallo.party,🎬 Emby
+  - DOMAIN-SUFFIX,liminalnet.com,🎬 Emby
+  - DOMAIN-SUFFIX,5670320.xyz,🎬 Emby
+  - PROCESS-NAME,com.mountains.hills,DIRECT
+  - DOMAIN-SUFFIX,10520.xyz,DIRECT
+  - DOMAIN-SUFFIX,jsq.vban.xyz,DIRECT
+  - DOMAIN-SUFFIX,coemn.com,DIRECT
+  - DOMAIN-SUFFIX,embycc.link,DIRECT
+  - DOMAIN-SUFFIX,shrekmedia.org,DIRECT
+  - DOMAIN-SUFFIX,wenjian.de,DIRECT
+  - DOMAIN-SUFFIX,hohai.eu.org,DIRECT
+  - DOMAIN-SUFFIX,cerda.eu.org,DIRECT
+  - DOMAIN-SUFFIX,seraphine.eu.org,DIRECT
+  - DOMAIN-SUFFIX,kowo.eu.org,DIRECT
+  - DOMAIN-SUFFIX,libilibi.eu.org,DIRECT
+  - DOMAIN-SUFFIX,nouon.eu.org,DIRECT
+  - DOMAIN-SUFFIX,feiyue.lol,DIRECT
+  - DOMAIN-SUFFIX,aliz.work,DIRECT
+  - DOMAIN-SUFFIX,emos.lol,DIRECT
+  - DOMAIN-SUFFIX,emos.movier.ink,DIRECT
+  - DOMAIN-SUFFIX,emos.dolby.dpdns.org,DIRECT
+  - DOMAIN-SUFFIX,bangumi.ca,DIRECT
+  - DOMAIN-SUFFIX,6666456.xyz,DIRECT
+  - DOMAIN-SUFFIX,191920.xyz,DIRECT
+  - DOMAIN-SUFFIX,nijigem.by,DIRECT
+  - RULE-SET,BanAD,REJECT
+  - RULE-SET,BanProgramAD,REJECT
+  - RULE-SET,TelegramList,💬 Telegram
+  - RULE-SET,YouTubeList,📺 YouTube
+  - RULE-SET,ProxyGFWlist,🚀 节点选择
+  - RULE-SET,UnBan,DIRECT
+  - GEOIP,LAN,DIRECT
+  - RULE-SET,ChinaDomain,DIRECT
+  - RULE-SET,ChinaCompanyIp,DIRECT
+  - RULE-SET,Download,DIRECT
+  - GEOIP,CN,DIRECT
+  - MATCH,🌏 直连优选
