@@ -3,6 +3,7 @@
 """
 丑团合集 - Clash 订阅合并脚本
 自动下载订阅，合并节点，生成配置文件
+合并规则：ip、password、server 三者完全相同才合并
 """
 
 import requests
@@ -10,6 +11,7 @@ import yaml
 from datetime import datetime
 import sys
 import os
+import hashlib
 
 # ========== 订阅配置 ==========
 SUBSCRIPTION_URLS = [
@@ -33,28 +35,62 @@ def download_subscription(url):
         print(f"  ✗ 失败: {e}")
         return None
 
+def get_proxy_key(proxy):
+    """生成代理的唯一标识 (基于 server、password、ip)"""
+    # 提取关键字段
+    server = proxy.get('server', '')
+    password = proxy.get('password', '')
+    
+    # 有些协议可能没有 password 字段，使用其他字段
+    if not password:
+        password = proxy.get('uuid', '') or proxy.get('cipher', '') or ''
+    
+    # 组合三个关键字段作为唯一标识
+    # 注意：这里的 ip 通常就是 server 字段
+    key_string = f"{server}|{password}|{server}"
+    
+    # 生成 hash 作为唯一键
+    return hashlib.md5(key_string.encode()).hexdigest()
+
 def merge_proxies(subscriptions):
-    """合并节点并去重"""
+    """
+    合并节点并去重
+    规则：server、password、ip 三者完全相同的节点会被合并（保留第一个）
+    """
+    proxy_dict = {}  # 用于去重: key -> proxy
+    proxy_names = {}  # 用于处理名称冲突: name -> count
     all_proxies = []
-    seen_names = set()
+    duplicate_count = 0
     
     for sub in subscriptions:
         if not sub or 'proxies' not in sub:
             continue
             
         for proxy in sub['proxies']:
+            # 生成唯一键
+            proxy_key = get_proxy_key(proxy)
+            
+            # 如果这个节点已存在（完全相同的 server、password、ip）
+            if proxy_key in proxy_dict:
+                duplicate_count += 1
+                print(f"  ⚠ 跳过重复节点: {proxy['name']}")
+                continue
+            
+            # 处理名称冲突（名称相同但配置不同的节点）
             original_name = proxy['name']
             name = original_name
-            counter = 1
             
-            while name in seen_names:
-                name = f"{original_name}-{counter}"
-                counter += 1
+            if name in proxy_names:
+                proxy_names[name] += 1
+                name = f"{original_name}-{proxy_names[name]}"
+            else:
+                proxy_names[name] = 0
             
             proxy['name'] = name
-            seen_names.add(name)
+            proxy_dict[proxy_key] = proxy
             all_proxies.append(proxy)
     
+    print(f"  ✓ 去重后节点数: {len(all_proxies)} (去除重复: {duplicate_count})")
     return all_proxies
 
 def generate_config(proxies):
@@ -149,6 +185,7 @@ def main():
     print("=" * 60)
     print("丑团合集 - Clash 订阅合并工具")
     print(f"时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print("合并规则: server + password + ip 完全相同才去重")
     print("=" * 60)
     
     # 创建输出目录
@@ -165,10 +202,12 @@ def main():
         print("\n❌ 错误：没有成功下载任何订阅")
         sys.exit(1)
     
+    print(f"  ✓ 成功下载 {len(subscriptions)} 个订阅")
+    
     # 合并节点
-    print(f"\n[2/3] 合并节点")
+    print(f"\n[2/3] 合并节点（智能去重）")
     proxies = merge_proxies(subscriptions)
-    print(f"  ✓ 共 {len(proxies)} 个节点")
+    print(f"  ✓ 最终节点数: {len(proxies)}")
     
     # 生成配置
     print(f"\n[3/3] 生成配置文件")
