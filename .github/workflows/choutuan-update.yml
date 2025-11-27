@@ -2,14 +2,16 @@ name: 🔄 丑团合集自动更新
 
 on:
   schedule:
-    # 每天 UTC 6:00 (北京时间 11:00) 自动运行
-    - cron: '0 6 * * *'
-  workflow_dispatch: # 允许手动触发
+    - cron: '0 3 * * *'
+  workflow_dispatch:
   push:
     branches:
       - main
     paths:
       - 'choutuan-all.py'
+
+permissions:
+  contents: write
 
 jobs:
   update:
@@ -18,6 +20,8 @@ jobs:
     steps:
     - name: 检出代码
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
       
     - name: 设置 Python
       uses: actions/setup-python@v5
@@ -26,15 +30,31 @@ jobs:
         
     - name: 安装依赖
       run: |
+        pip install --upgrade pip
         pip install requests pyyaml
         
-    - name: 运行合并脚本
+    - name: 运行脚本
       run: |
         python choutuan-all.py
         
+    - name: 检查文件
+      run: |
+        if [ -f "flclashyaml/choutuan-all.yaml" ]; then
+          echo "✓ 配置文件生成成功"
+          ls -lh flclashyaml/choutuan-all.yaml
+        else
+          echo "✗ 配置文件生成失败"
+          exit 1
+        fi
+        
     - name: 提交更新
       run: |
-        git config --local user.email "github-actions[bot]@users.noreply.github.com"
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
-        git add choutuan-all.yaml
-        git diff --quiet && git diff --staged --quiet || (git commit -m "🔄 丑团合集自动更新 $(date +'%Y-%m-%d %H:%M:%S')" && git push)
+        git add -A
+        if git diff --staged --quiet; then
+          echo "没有变化，跳过提交"
+        else
+          git commit -m "🔄 丑团合集自动更新 $(date +'%Y-%m-%d %H:%M:%S')"
+          git push
+        fi
