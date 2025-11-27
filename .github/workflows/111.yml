@@ -1,0 +1,53 @@
+name: 🔄 丑团111
+
+on:
+  schedule:
+    # 每周1/3/5 UTC 0:00 (北京时间 6:00) 自动运行
+    - cron: '0 0 * * 1,3,5'
+  workflow_dispatch: # 允许手动触发
+  push:
+    branches:
+      - main
+    # 重点：现在监控 flclashyaml 文件夹内的脚本文件
+    paths:
+      - 'flclashyaml/111.py'
+
+# 赋予工作流写入仓库内容的权限
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+      
+    - name: 设置 Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        
+    - name: 安装依赖
+      run: |
+        pip install --upgrade pip
+        pip install requests pyyaml pycountry
+        
+    - name: 运行合并与重命名脚本
+      # 重点：使用新的路径来执行脚本
+      run: |
+        python flclashyaml/choutuan-all.py
+        
+    - name: 提交更新到仓库
+      run: |
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add flclashyaml/choutuan-111.yaml
+        # 只有在文件内容发生变化时才提交
+        if ! git diff --staged --quiet; then
+          git commit -m "🔄 丑团yyy $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+          git push
+        else
+          echo "文件无变化，无需提交。"
+        fi
