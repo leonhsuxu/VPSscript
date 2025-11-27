@@ -1,8 +1,8 @@
 name: 🔄 丑团111
 on:
   schedule:
-    # 每周1/3/5 UTC 0:00 (北京时间 8:00) 自动运行
-    - cron: '0 0 * * 1,3,5'
+    # 每天 UTC 0:00 (北京时间 8:00) 自动运行
+    - cron: '0 0 * * *'
   workflow_dispatch: # 允许手动触发
   push:
     branches:
@@ -25,14 +25,18 @@ jobs:
       with:
         python-version: '3.11'
 
-    # --- 简化的依赖安装 ---
-    - name: 安装依赖
+    - name: 安装依赖和 tcping 工具
       run: |
+        # 1. 安装系统工具 tcping
+        sudo apt-get update
+        sudo apt-get install -y tcping
+        
+        # 2. 安装 Python 依赖 (不再需要 PySocks)
         python -m pip install --upgrade pip
-        # 由于不进行测速，不再需要 PySocks 依赖
-        pip install requests pyyaml pycountry
+        pip install requests pyyaml
 
-    # --- 核心下载步骤已被完全移除 ---
+    # --- 3. 移除 Xray-core 下载步骤 ---
+    # 由于改用 tcping，此步骤已不再需要
 
     - name: 运行合并与重命名脚本
       run: |
@@ -43,7 +47,6 @@ jobs:
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add flclashyaml/choutuan-111.yaml
-        # 只有在文件内容发生变化时才提交
         if ! git diff --staged --quiet; then
           git commit -m "🔄 丑团yyy $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
           git push
