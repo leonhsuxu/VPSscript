@@ -2,8 +2,6 @@
 # -*- coding: utf-8 -*-
 """
 丑团合集 - Clash 订阅合并脚本
-自动下载订阅，合并节点，生成配置文件
-合并规则：ip、password、server 三者完全相同才合并
 """
 
 import requests
@@ -13,7 +11,6 @@ import sys
 import os
 import hashlib
 
-# ========== 订阅配置 ==========
 SUBSCRIPTION_URLS = [
     "https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A21?token=ChouLink1",
     "https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A22?token=ChouLink2",
@@ -27,38 +24,42 @@ OUTPUT_FILE = os.path.join(OUTPUT_DIR, "choutuan-all.yaml")
 def download_subscription(url):
     """下载订阅"""
     try:
-        print(f"  下载: {url[:50]}...")
-        response = requests.get(url, timeout=30)
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+        }
+        response = requests.get(url, timeout=30, headers=headers)
         response.raise_for_status()
-        return yaml.safe_load(response.text)
+        content = response.text
+        
+        # 尝试解析 YAML
+        data = yaml.safe_load(content)
+        
+        if not data or 'proxies' not in data:
+            print(f"  ⚠ 警告: 订阅内容无效或无节点")
+            return None
+            
+        return data
+    except requests.exceptions.RequestException as e:
+        print(f"  ✗ 网络错误: {e}")
+        return None
+    except yaml.YAMLError as e:
+        print(f"  ✗ YAML 解析错误: {e}")
+        return None
     except Exception as e:
-        print(f"  ✗ 失败: {e}")
+        print(f"  ✗ 未知错误: {e}")
         return None
 
 def get_proxy_key(proxy):
-    """生成代理的唯一标识 (基于 server、password、ip)"""
-    # 提取关键字段
+    """生成代理唯一标识"""
     server = proxy.get('server', '')
-    password = proxy.get('password', '')
-    
-    # 有些协议可能没有 password 字段，使用其他字段
-    if not password:
-        password = proxy.get('uuid', '') or proxy.get('cipher', '') or ''
-    
-    # 组合三个关键字段作为唯一标识
-    # 注意：这里的 ip 通常就是 server 字段
-    key_string = f"{server}|{password}|{server}"
-    
-    # 生成 hash 作为唯一键
+    password = proxy.get('password', '') or proxy.get('uuid', '') or proxy.get('cipher', '') or ''
+    key_string = f"{server}|{password}"
     return hashlib.md5(key_string.encode()).hexdigest()
 
 def merge_proxies(subscriptions):
-    """
-    合并节点并去重
-    规则：server、password、ip 三者完全相同的节点会被合并（保留第一个）
-    """
-    proxy_dict = {}  # 用于去重: key -> proxy
-    proxy_names = {}  # 用于处理名称冲突: name -> count
+    """合并节点并去重"""
+    proxy_dict = {}
+    proxy_names = {}
     all_proxies = []
     duplicate_count = 0
     
@@ -67,16 +68,12 @@ def merge_proxies(subscriptions):
             continue
             
         for proxy in sub['proxies']:
-            # 生成唯一键
             proxy_key = get_proxy_key(proxy)
             
-            # 如果这个节点已存在（完全相同的 server、password、ip）
             if proxy_key in proxy_dict:
                 duplicate_count += 1
-                print(f"  ⚠ 跳过重复节点: {proxy['name']}")
                 continue
             
-            # 处理名称冲突（名称相同但配置不同的节点）
             original_name = proxy['name']
             name = original_name
             
@@ -90,15 +87,18 @@ def merge_proxies(subscriptions):
             proxy_dict[proxy_key] = proxy
             all_proxies.append(proxy)
     
-    print(f"  ✓ 去重后节点数: {len(all_proxies)} (去除重复: {duplicate_count})")
+    print(f"  ✓ 去重后: {len(all_proxies)} 个节点 (去除重复: {duplicate_count})")
     return all_proxies
 
 def generate_config(proxies):
-    """生成配置文件"""
+    """生成配置"""
+    if not proxies:
+        print("  ✗ 错误: 没有可用节点")
+        return None
+        
     proxy_names = [p['name'] for p in proxies]
     
     return {
-        'profile-name': '丑团合集',
         'mixed-port': 7890,
         'allow-lan': True,
         'bind-address': '*',
@@ -106,7 +106,6 @@ def generate_config(proxies):
         'log-level': 'info',
         'ipv6': False,
         'external-controller': '127.0.0.1:9090',
-        'external-ui': 'ui',
         
         'dns': {
             'enable': True,
@@ -140,42 +139,10 @@ def generate_config(proxies):
                 'proxies': proxy_names,
                 'url': 'http://www.gstatic.com/generate_204',
                 'interval': 300
-            },
-            {
-                'name': '🛑 广告拦截',
-                'type': 'select',
-                'proxies': ['REJECT', 'DIRECT']
             }
         ],
         
-        'rule-providers': {
-            'reject': {
-                'type': 'http',
-                'behavior': 'domain',
-                'url': 'https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/reject.txt',
-                'path': './ruleset/reject.yaml',
-                'interval': 86400
-            },
-            'proxy': {
-                'type': 'http',
-                'behavior': 'domain',
-                'url': 'https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/proxy.txt',
-                'path': './ruleset/proxy.yaml',
-                'interval': 86400
-            },
-            'direct': {
-                'type': 'http',
-                'behavior': 'domain',
-                'url': 'https://cdn.jsdelivr.net/gh/Loyalsoldier/clash-rules@release/direct.txt',
-                'path': './ruleset/direct.yaml',
-                'interval': 86400
-            }
-        },
-        
         'rules': [
-            'RULE-SET,reject,🛑 广告拦截',
-            'RULE-SET,direct,DIRECT',
-            'RULE-SET,proxy,🚀 节点选择',
             'GEOIP,CN,DIRECT',
             'MATCH,🚀 节点选择'
         ]
@@ -183,42 +150,43 @@ def generate_config(proxies):
 
 def main():
     print("=" * 60)
-    print("丑团合集 - Clash 订阅合并工具")
+    print("丑团合集 - Clash 订阅合并")
     print(f"时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print("合并规则: server + password + ip 完全相同才去重")
     print("=" * 60)
     
-    # 创建输出目录
-    if not os.path.exists(OUTPUT_DIR):
-        os.makedirs(OUTPUT_DIR)
-        print(f"\n✓ 创建目录: {OUTPUT_DIR}")
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
     
-    # 下载订阅
     print(f"\n[1/3] 下载 {len(SUBSCRIPTION_URLS)} 个订阅")
-    subscriptions = [download_subscription(url) for url in SUBSCRIPTION_URLS]
-    subscriptions = [s for s in subscriptions if s]
+    subscriptions = []
+    for i, url in enumerate(SUBSCRIPTION_URLS, 1):
+        print(f"  [{i}/{len(SUBSCRIPTION_URLS)}] 下载中...")
+        sub = download_subscription(url)
+        if sub:
+            subscriptions.append(sub)
+            print(f"  ✓ 成功")
     
     if not subscriptions:
-        print("\n❌ 错误：没有成功下载任何订阅")
+        print("\n❌ 错误: 没有成功下载任何订阅")
         sys.exit(1)
     
-    print(f"  ✓ 成功下载 {len(subscriptions)} 个订阅")
-    
-    # 合并节点
-    print(f"\n[2/3] 合并节点（智能去重）")
+    print(f"\n[2/3] 合并节点")
     proxies = merge_proxies(subscriptions)
-    print(f"  ✓ 最终节点数: {len(proxies)}")
     
-    # 生成配置
-    print(f"\n[3/3] 生成配置文件")
+    if not proxies:
+        print("\n❌ 错误: 没有可用节点")
+        sys.exit(1)
+    
+    print(f"\n[3/3] 生成配置")
     config = generate_config(proxies)
     
-    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-        yaml.dump(config, f, allow_unicode=True, sort_keys=False)
+    if not config:
+        sys.exit(1)
     
-    print(f"  ✓ 已保存: {OUTPUT_FILE}")
-    print("\n" + "=" * 60)
-    print("✅ 完成")
+    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
+        yaml.dump(config, f, allow_unicode=True, sort_keys=False, default_flow_style=False)
+    
+    print(f"  ✓ 保存: {OUTPUT_FILE}")
+    print("\n✅ 完成")
 
 if __name__ == '__main__':
     main()
