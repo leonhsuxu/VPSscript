@@ -2,14 +2,15 @@ name: 🔄 丑团自动更新
 
 on:
   schedule:
-    # 每天 UTC 3:00 (北京时间 11:00) 自动运行
-    - cron: '0 18 * * 1,3'
+    # 每周1/3/5 UTC 0:00 (北京时间 6:00) 自动运行
+    - cron: '0 0 * * 1,3,5'
   workflow_dispatch: # 允许手动触发
   push:
     branches:
       - main
+    # 重点：现在监控 flclashyaml 文件夹内的脚本文件
     paths:
-      - 'choutuan-all.py'
+      - 'flclashyaml/choutuan-all.py'
 
 # 赋予工作流写入仓库内容的权限
 permissions:
@@ -34,8 +35,9 @@ jobs:
         pip install requests pyyaml pycountry
         
     - name: 运行合并与重命名脚本
+      # 重点：使用新的路径来执行脚本
       run: |
-        python choutuan-all.py
+        python flclashyaml/choutuan-all.py
         
     - name: 提交更新到仓库
       run: |
