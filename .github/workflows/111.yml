@@ -25,27 +25,14 @@ jobs:
       with:
         python-version: '3.11'
 
+    # --- 简化的依赖安装 ---
     - name: 安装依赖
       run: |
         python -m pip install --upgrade pip
-        # 注意：增加了 PySocks 依赖，用于通过SOCKS5代理发送请求
-        pip install requests pyyaml pycountry PySocks
+        # 由于不进行测速，不再需要 PySocks 依赖
+        pip install requests pyyaml pycountry
 
-    # --- 新步骤：下载并准备 Xray-core ---
-    - name: 下载并准备 Xray-core
-      run: |
-        echo "正在下载最新的 Xray-core..."
-        # 使用官方的一键安装脚本来获取最新版本
-        bash -c "$(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)" @ install -l --version 1.8.4
-        
-        # 脚本会将 xray 安装到 /usr/local/bin/xray
-        # 我们需要把它移动到 Python 脚本期望的位置并重命名
-        mv /usr/local/bin/xray flclashyaml/xray-core
-        
-        # 赋予执行权限（虽然安装脚本通常已设置，但再次确认无妨）
-        chmod +x flclashyaml/xray-core
-        
-        echo "Xray-core 准备就绪。"
+    # --- 核心下载步骤已被完全移除 ---
 
     - name: 运行合并与重命名脚本
       run: |
@@ -56,6 +43,7 @@ jobs:
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add flclashyaml/choutuan-111.yaml
+        # 只有在文件内容发生变化时才提交
         if ! git diff --staged --quiet; then
           git commit -m "🔄 丑团yyy $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
           git push
