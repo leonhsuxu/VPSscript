@@ -1816,6 +1816,294 @@ proxies:
   name: 🇷🇺 俄罗斯 - 04
 - skip-cert-verify: true
   type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 139.84.228.27
+  port: 443
+  name: 🇿🇦 South Africa - 01
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 38.54.63.166
+  port: 443
+  name: 🇿🇦 South Africa - 02
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 139.84.133.199
+  port: 443
+  name: 🇮🇳 India - 01
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 139.84.215.236
+  port: 443
+  name: 🇮🇳 India - 02
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 65.20.67.50
+  port: 443
+  name: 🇮🇳 India - 03
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 86.107.100.36
+  port: 443
+  name: 🇮🇳 India - 04
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 103.67.79.156
+  port: 443
+  name: 🇮🇳 India - 05
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 154.205.158.41
+  port: 443
+  name: 🇮🇳 India - 06
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 216.238.72.226
+  port: 443
+  name: 🇲🇽 Mexico - 01
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 154.205.152.109
+  port: 443
+  name: 🇲🇽 Mexico - 02
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 38.180.179.132
+  port: 443
+  name: 🇲🇽 Mexico - 03
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 216.238.113.159
+  port: 443
+  name: 🇧🇷 Brazil - 01
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 38.180.16.151
+  port: 443
+  name: 🇧🇷 Brazil - 02
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 38.180.22.154
+  port: 443
+  name: 🇮🇹 Italy - 01
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 38.180.22.160
+  port: 443
+  name: 🇮🇹 Italy - 02
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 103.208.85.42
+  port: 443
+  name: 🇳🇿 New Zealand - 01
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 156.244.12.225
+  port: 443
+  name: 🇸🇦 Saudi Arabia - 01
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 154.205.134.38
+  port: 443
+  name: 🇸🇦 Saudi Arabia - 02
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 45.32.145.158
+  port: 443
+  name: 🇫🇷 France - 01
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 51.178.38.134
+  port: 443
+  name: 🇫🇷 France - 02
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 38.180.0.22
+  port: 443
+  name: 🇫🇷 France - 03
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 162.19.10.218
+  port: 443
+  name: 🇫🇷 France - 04
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 103.76.182.28
+  port: 443
+  name: 🇹🇭 Thailand - 01
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 154.90.44.133
+  port: 443
+  name: 🇹🇭 Thailand - 02
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 154.90.45.247
+  port: 443
+  name: 🇹🇭 Thailand - 03
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 38.180.152.121
+  port: 443
+  name: 🇮🇪 Ireland - 01
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 38.180.56.158
+  port: 443
+  name: 🇸🇪 Sweden - 01
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 5.183.101.251
+  port: 443
+  name: 🇸🇪 Sweden - 02
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 179.43.174.201
+  port: 443
+  name: 🇨🇭 Switzerland - 01
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 37.228.129.59
+  port: 443
+  name: 🇫🇮 Finland - 01
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 78.141.219.18
+  port: 443
+  name: 🇳🇱 Netherlands - 01
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 5.180.79.168
+  port: 443
+  name: 🇳🇱 Netherlands - 02
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 38.180.70.175
+  port: 443
+  name: 🇳🇱 Netherlands - 03
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 38.180.162.50
+  port: 443
+  name: 🇳🇱 Netherlands - 04
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 154.90.37.169
+  port: 443
+  name: 🇵🇭 Philippines - 01
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 38.54.87.215
+  port: 443
+  name: 🇵🇭 Philippines - 02
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 176.97.72.117
+  port: 443
+  name: 🇪🇸 Spain - 01
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 65.20.102.54
+  port: 443
+  name: 🇪🇸 Spain - 02
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 5.183.103.135
+  port: 443
+  name: 🇪🇸 Spain - 03
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 38.54.115.243
+  port: 443
+  name: 🇻🇳 Viet Nam - 01
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 154.205.142.184
+  port: 443
+  name: 🇻🇳 Viet Nam - 02
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 38.54.14.205
+  port: 443
+  name: 🇻🇳 Viet Nam - 03
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 38.54.15.140
+  port: 443
+  name: 🇻🇳 Viet Nam - 04
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 154.205.154.108
+  port: 443
+  name: 🇦🇷 Argentina - 01
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 38.180.26.190
+  port: 443
+  name: 🇦🇪 United Arab Emirates - 01
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 154.90.55.81
+  port: 443
+  name: 🇦🇪 United Arab Emirates - 02
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 38.60.195.223
+  port: 443
+  name: 🇲🇾 Malaysia - 01
+- skip-cert-verify: true
+  type: trojan
+  password: c650a25235334852ab2807511fa5c623
+  server: 38.54.125.152
+  port: 443
+  name: 🇲🇾 Malaysia - 02
+- skip-cert-verify: true
+  type: trojan
   password: 31f495627332474ca257de8370ca302a
   server: 46.29.161.237
   port: 443
@@ -1838,6 +2126,300 @@ proxies:
   server: 2.56.242.248
   port: 443
   name: 🇷🇺 俄罗斯 - 08
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 139.84.228.27
+  port: 443
+  name: 🇿🇦 South Africa - 03
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 38.54.63.166
+  port: 443
+  name: 🇿🇦 South Africa - 04
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 139.84.133.199
+  port: 443
+  name: 🇮🇳 India - 07
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 139.84.215.236
+  port: 443
+  name: 🇮🇳 India - 08
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 65.20.67.50
+  port: 443
+  name: 🇮🇳 India - 09
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 86.107.100.36
+  port: 443
+  name: 🇮🇳 India - 10
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 103.67.79.156
+  port: 443
+  name: 🇮🇳 India - 11
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 154.205.158.41
+  port: 443
+  name: 🇮🇳 India - 12
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 38.54.59.90
+  port: 443
+  name: 🇪🇬 Egypt - 01
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 216.238.72.226
+  port: 443
+  name: 🇲🇽 Mexico - 04
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 154.205.152.109
+  port: 443
+  name: 🇲🇽 Mexico - 05
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 38.180.179.132
+  port: 443
+  name: 🇲🇽 Mexico - 06
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 216.238.113.159
+  port: 443
+  name: 🇧🇷 Brazil - 03
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 38.180.16.151
+  port: 443
+  name: 🇧🇷 Brazil - 04
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 38.180.22.154
+  port: 443
+  name: 🇮🇹 Italy - 03
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 38.180.22.160
+  port: 443
+  name: 🇮🇹 Italy - 04
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 103.208.85.42
+  port: 443
+  name: 🇳🇿 New Zealand - 02
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 156.244.12.225
+  port: 443
+  name: 🇸🇦 Saudi Arabia - 03
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 154.205.134.38
+  port: 443
+  name: 🇸🇦 Saudi Arabia - 04
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 45.32.145.158
+  port: 443
+  name: 🇫🇷 France - 05
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 51.178.38.134
+  port: 443
+  name: 🇫🇷 France - 06
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 38.180.0.22
+  port: 443
+  name: 🇫🇷 France - 07
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 162.19.10.218
+  port: 443
+  name: 🇫🇷 France - 08
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 103.76.182.28
+  port: 443
+  name: 🇹🇭 Thailand - 04
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 154.90.44.133
+  port: 443
+  name: 🇹🇭 Thailand - 05
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 154.90.45.247
+  port: 443
+  name: 🇹🇭 Thailand - 06
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 38.180.152.121
+  port: 443
+  name: 🇮🇪 Ireland - 02
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 38.180.56.158
+  port: 443
+  name: 🇸🇪 Sweden - 03
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 5.183.101.251
+  port: 443
+  name: 🇸🇪 Sweden - 04
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 179.43.174.201
+  port: 443
+  name: 🇨🇭 Switzerland - 02
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 37.228.129.59
+  port: 443
+  name: 🇫🇮 Finland - 02
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 78.141.219.18
+  port: 443
+  name: 🇳🇱 Netherlands - 05
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 5.180.79.168
+  port: 443
+  name: 🇳🇱 Netherlands - 06
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 38.180.70.175
+  port: 443
+  name: 🇳🇱 Netherlands - 07
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 38.180.162.50
+  port: 443
+  name: 🇳🇱 Netherlands - 08
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 154.90.37.169
+  port: 443
+  name: 🇵🇭 Philippines - 03
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 38.54.87.215
+  port: 443
+  name: 🇵🇭 Philippines - 04
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 176.97.72.117
+  port: 443
+  name: 🇪🇸 Spain - 04
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 65.20.102.54
+  port: 443
+  name: 🇪🇸 Spain - 05
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 5.183.103.135
+  port: 443
+  name: 🇪🇸 Spain - 06
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 38.54.115.243
+  port: 443
+  name: 🇻🇳 Viet Nam - 05
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 154.205.142.184
+  port: 443
+  name: 🇻🇳 Viet Nam - 06
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 38.54.14.205
+  port: 443
+  name: 🇻🇳 Viet Nam - 07
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 38.54.15.140
+  port: 443
+  name: 🇻🇳 Viet Nam - 08
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 154.205.154.108
+  port: 443
+  name: 🇦🇷 Argentina - 02
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 38.180.26.190
+  port: 443
+  name: 🇦🇪 United Arab Emirates - 03
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 154.90.55.81
+  port: 443
+  name: 🇦🇪 United Arab Emirates - 04
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 38.60.195.223
+  port: 443
+  name: 🇲🇾 Malaysia - 03
+- skip-cert-verify: true
+  type: trojan
+  password: 31f495627332474ca257de8370ca302a
+  server: 38.54.125.152
+  port: 443
+  name: 🇲🇾 Malaysia - 04
 - skip-cert-verify: true
   type: trojan
   password: d06fe708841342cd8680c7e07edd938b
@@ -1864,6 +2446,300 @@ proxies:
   name: 🇷🇺 俄罗斯 - 12
 - skip-cert-verify: true
   type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 139.84.228.27
+  port: 443
+  name: 🇿🇦 South Africa - 05
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 38.54.63.166
+  port: 443
+  name: 🇿🇦 South Africa - 06
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 139.84.133.199
+  port: 443
+  name: 🇮🇳 India - 13
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 139.84.215.236
+  port: 443
+  name: 🇮🇳 India - 14
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 65.20.67.50
+  port: 443
+  name: 🇮🇳 India - 15
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 86.107.100.36
+  port: 443
+  name: 🇮🇳 India - 16
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 103.67.79.156
+  port: 443
+  name: 🇮🇳 India - 17
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 154.205.158.41
+  port: 443
+  name: 🇮🇳 India - 18
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 38.54.59.90
+  port: 443
+  name: 🇪🇬 Egypt - 02
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 216.238.72.226
+  port: 443
+  name: 🇲🇽 Mexico - 07
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 154.205.152.109
+  port: 443
+  name: 🇲🇽 Mexico - 08
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 38.180.179.132
+  port: 443
+  name: 🇲🇽 Mexico - 09
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 216.238.113.159
+  port: 443
+  name: 🇧🇷 Brazil - 05
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 38.180.16.151
+  port: 443
+  name: 🇧🇷 Brazil - 06
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 38.180.22.154
+  port: 443
+  name: 🇮🇹 Italy - 05
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 38.180.22.160
+  port: 443
+  name: 🇮🇹 Italy - 06
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 103.208.85.42
+  port: 443
+  name: 🇳🇿 New Zealand - 03
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 156.244.12.225
+  port: 443
+  name: 🇸🇦 Saudi Arabia - 05
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 154.205.134.38
+  port: 443
+  name: 🇸🇦 Saudi Arabia - 06
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 45.32.145.158
+  port: 443
+  name: 🇫🇷 France - 09
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 51.178.38.134
+  port: 443
+  name: 🇫🇷 France - 10
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 38.180.0.22
+  port: 443
+  name: 🇫🇷 France - 11
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 162.19.10.218
+  port: 443
+  name: 🇫🇷 France - 12
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 103.76.182.28
+  port: 443
+  name: 🇹🇭 Thailand - 07
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 154.90.44.133
+  port: 443
+  name: 🇹🇭 Thailand - 08
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 154.90.45.247
+  port: 443
+  name: 🇹🇭 Thailand - 09
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 38.180.152.121
+  port: 443
+  name: 🇮🇪 Ireland - 03
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 38.180.56.158
+  port: 443
+  name: 🇸🇪 Sweden - 05
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 5.183.101.251
+  port: 443
+  name: 🇸🇪 Sweden - 06
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 179.43.174.201
+  port: 443
+  name: 🇨🇭 Switzerland - 03
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 37.228.129.59
+  port: 443
+  name: 🇫🇮 Finland - 03
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 78.141.219.18
+  port: 443
+  name: 🇳🇱 Netherlands - 09
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 5.180.79.168
+  port: 443
+  name: 🇳🇱 Netherlands - 10
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 38.180.70.175
+  port: 443
+  name: 🇳🇱 Netherlands - 11
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 38.180.162.50
+  port: 443
+  name: 🇳🇱 Netherlands - 12
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 154.90.37.169
+  port: 443
+  name: 🇵🇭 Philippines - 05
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 38.54.87.215
+  port: 443
+  name: 🇵🇭 Philippines - 06
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 176.97.72.117
+  port: 443
+  name: 🇪🇸 Spain - 07
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 65.20.102.54
+  port: 443
+  name: 🇪🇸 Spain - 08
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 5.183.103.135
+  port: 443
+  name: 🇪🇸 Spain - 09
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 38.54.115.243
+  port: 443
+  name: 🇻🇳 Viet Nam - 09
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 154.205.142.184
+  port: 443
+  name: 🇻🇳 Viet Nam - 10
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 38.54.14.205
+  port: 443
+  name: 🇻🇳 Viet Nam - 11
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 38.54.15.140
+  port: 443
+  name: 🇻🇳 Viet Nam - 12
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 154.205.154.108
+  port: 443
+  name: 🇦🇷 Argentina - 03
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 38.180.26.190
+  port: 443
+  name: 🇦🇪 United Arab Emirates - 05
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 154.90.55.81
+  port: 443
+  name: 🇦🇪 United Arab Emirates - 06
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 38.60.195.223
+  port: 443
+  name: 🇲🇾 Malaysia - 05
+- skip-cert-verify: true
+  type: trojan
+  password: d06fe708841342cd8680c7e07edd938b
+  server: 38.54.125.152
+  port: 443
+  name: 🇲🇾 Malaysia - 06
+- skip-cert-verify: true
+  type: trojan
   password: b04f017974b040e18e76e7b61ebadab8
   server: 46.29.161.237
   port: 443
@@ -1886,6 +2762,300 @@ proxies:
   server: 2.56.242.248
   port: 443
   name: 🇷🇺 俄罗斯 - 16
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 139.84.228.27
+  port: 443
+  name: 🇿🇦 South Africa - 07
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 38.54.63.166
+  port: 443
+  name: 🇿🇦 South Africa - 08
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 139.84.133.199
+  port: 443
+  name: 🇮🇳 India - 19
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 139.84.215.236
+  port: 443
+  name: 🇮🇳 India - 20
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 65.20.67.50
+  port: 443
+  name: 🇮🇳 India - 21
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 86.107.100.36
+  port: 443
+  name: 🇮🇳 India - 22
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 103.67.79.156
+  port: 443
+  name: 🇮🇳 India - 23
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 154.205.158.41
+  port: 443
+  name: 🇮🇳 India - 24
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 38.54.59.90
+  port: 443
+  name: 🇪🇬 Egypt - 03
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 216.238.72.226
+  port: 443
+  name: 🇲🇽 Mexico - 10
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 154.205.152.109
+  port: 443
+  name: 🇲🇽 Mexico - 11
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 38.180.179.132
+  port: 443
+  name: 🇲🇽 Mexico - 12
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 216.238.113.159
+  port: 443
+  name: 🇧🇷 Brazil - 07
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 38.180.16.151
+  port: 443
+  name: 🇧🇷 Brazil - 08
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 38.180.22.154
+  port: 443
+  name: 🇮🇹 Italy - 07
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 38.180.22.160
+  port: 443
+  name: 🇮🇹 Italy - 08
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 103.208.85.42
+  port: 443
+  name: 🇳🇿 New Zealand - 04
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 156.244.12.225
+  port: 443
+  name: 🇸🇦 Saudi Arabia - 07
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 154.205.134.38
+  port: 443
+  name: 🇸🇦 Saudi Arabia - 08
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 45.32.145.158
+  port: 443
+  name: 🇫🇷 France - 13
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 51.178.38.134
+  port: 443
+  name: 🇫🇷 France - 14
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 38.180.0.22
+  port: 443
+  name: 🇫🇷 France - 15
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 162.19.10.218
+  port: 443
+  name: 🇫🇷 France - 16
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 103.76.182.28
+  port: 443
+  name: 🇹🇭 Thailand - 10
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 154.90.44.133
+  port: 443
+  name: 🇹🇭 Thailand - 11
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 154.90.45.247
+  port: 443
+  name: 🇹🇭 Thailand - 12
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 38.180.152.121
+  port: 443
+  name: 🇮🇪 Ireland - 04
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 38.180.56.158
+  port: 443
+  name: 🇸🇪 Sweden - 07
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 5.183.101.251
+  port: 443
+  name: 🇸🇪 Sweden - 08
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 179.43.174.201
+  port: 443
+  name: 🇨🇭 Switzerland - 04
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 37.228.129.59
+  port: 443
+  name: 🇫🇮 Finland - 04
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 78.141.219.18
+  port: 443
+  name: 🇳🇱 Netherlands - 13
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 5.180.79.168
+  port: 443
+  name: 🇳🇱 Netherlands - 14
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 38.180.70.175
+  port: 443
+  name: 🇳🇱 Netherlands - 15
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 38.180.162.50
+  port: 443
+  name: 🇳🇱 Netherlands - 16
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 154.90.37.169
+  port: 443
+  name: 🇵🇭 Philippines - 07
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 38.54.87.215
+  port: 443
+  name: 🇵🇭 Philippines - 08
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 176.97.72.117
+  port: 443
+  name: 🇪🇸 Spain - 10
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 65.20.102.54
+  port: 443
+  name: 🇪🇸 Spain - 11
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 5.183.103.135
+  port: 443
+  name: 🇪🇸 Spain - 12
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 38.54.115.243
+  port: 443
+  name: 🇻🇳 Viet Nam - 13
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 154.205.142.184
+  port: 443
+  name: 🇻🇳 Viet Nam - 14
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 38.54.14.205
+  port: 443
+  name: 🇻🇳 Viet Nam - 15
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 38.54.15.140
+  port: 443
+  name: 🇻🇳 Viet Nam - 16
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 154.205.154.108
+  port: 443
+  name: 🇦🇷 Argentina - 04
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 38.180.26.190
+  port: 443
+  name: 🇦🇪 United Arab Emirates - 07
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 154.90.55.81
+  port: 443
+  name: 🇦🇪 United Arab Emirates - 08
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 38.60.195.223
+  port: 443
+  name: 🇲🇾 Malaysia - 07
+- skip-cert-verify: true
+  type: trojan
+  password: b04f017974b040e18e76e7b61ebadab8
+  server: 38.54.125.152
+  port: 443
+  name: 🇲🇾 Malaysia - 08
 - skip-cert-verify: true
   type: trojan
   password: c650a25235334852ab2807511fa5c623
@@ -1931,18 +3101,6 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: c650a25235334852ab2807511fa5c623
-  server: 139.84.228.27
-  port: 443
-  name: 南非-1
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 38.54.63.166
-  port: 443
-  name: 南非-2
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
   server: 156.244.43.252
   port: 443
   name: 卡塔尔
@@ -1952,42 +3110,6 @@ proxies:
   server: 45.12.144.61
   port: 443
   name: 卢森堡
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 139.84.133.199
-  port: 443
-  name: 印度-1
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 139.84.215.236
-  port: 443
-  name: 印度-2
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 65.20.67.50
-  port: 443
-  name: 印度-3
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 86.107.100.36
-  port: 443
-  name: 印度-4
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 103.67.79.156
-  port: 443
-  name: 印度尼西亚-1
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 154.205.158.41
-  port: 443
-  name: 印度尼西亚-2
 - skip-cert-verify: true
   type: trojan
   password: c650a25235334852ab2807511fa5c623
@@ -2033,24 +3155,6 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: c650a25235334852ab2807511fa5c623
-  server: 216.238.72.226
-  port: 443
-  name: 墨西哥-1
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 154.205.152.109
-  port: 443
-  name: 墨西哥-2
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 38.180.179.132
-  port: 443
-  name: 墨西哥-3
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
   server: 38.180.198.167
   port: 443
   name: 奥地利
@@ -2081,33 +3185,9 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: c650a25235334852ab2807511fa5c623
-  server: 216.238.113.159
-  port: 443
-  name: 巴西-1
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 38.180.16.151
-  port: 443
-  name: 巴西-2
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
   server: 38.54.29.52
   port: 443
   name: 希腊
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 38.180.22.154
-  port: 443
-  name: 意大利-1
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 38.180.22.160
-  port: 443
-  name: 意大利-2
 - skip-cert-verify: true
   type: trojan
   password: c650a25235334852ab2807511fa5c623
@@ -2132,12 +3212,6 @@ proxies:
   server: 45.83.131.34
   port: 443
   name: 斯洛文尼亚
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 103.208.85.42
-  port: 443
-  name: 新西兰
 - skip-cert-verify: true
   type: trojan
   password: c650a25235334852ab2807511fa5c623
@@ -2177,42 +3251,6 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: c650a25235334852ab2807511fa5c623
-  server: 156.244.12.225
-  port: 443
-  name: 沙特阿拉伯-1
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 154.205.134.38
-  port: 443
-  name: 沙特阿拉伯-2
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 45.32.145.158
-  port: 443
-  name: 法国-1
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 51.178.38.134
-  port: 443
-  name: 法国-2
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 38.180.0.22
-  port: 443
-  name: 法国-3
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 162.19.10.218
-  port: 443
-  name: 法国-4
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
   server: 38.180.111.97
   port: 443
   name: 波兰-1
@@ -2231,51 +3269,9 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: c650a25235334852ab2807511fa5c623
-  server: 103.76.182.28
-  port: 443
-  name: 泰国-1
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 154.90.44.133
-  port: 443
-  name: 泰国-2
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 154.90.45.247
-  port: 443
-  name: 泰国-3
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 38.180.152.121
-  port: 443
-  name: 爱尔兰
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
   server: 38.180.163.22
   port: 443
   name: 爱沙尼亚
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 38.180.56.158
-  port: 443
-  name: 瑞典-1
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 5.183.101.251
-  port: 443
-  name: 瑞典-2
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 179.43.174.201
-  port: 443
-  name: 瑞士
 - skip-cert-verify: true
   type: trojan
   password: c650a25235334852ab2807511fa5c623
@@ -2309,90 +3305,6 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: c650a25235334852ab2807511fa5c623
-  server: 37.228.129.59
-  port: 443
-  name: 芬兰
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 78.141.219.18
-  port: 443
-  name: 荷兰-1
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 5.180.79.168
-  port: 443
-  name: 荷兰-2
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 38.180.70.175
-  port: 443
-  name: 荷兰-3
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 38.180.162.50
-  port: 443
-  name: 荷兰-4
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 154.90.37.169
-  port: 443
-  name: 菲律宾-1
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 38.54.87.215
-  port: 443
-  name: 菲律宾-2
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 176.97.72.117
-  port: 443
-  name: 西班牙-1
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 65.20.102.54
-  port: 443
-  name: 西班牙-2
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 5.183.103.135
-  port: 443
-  name: 西班牙-3
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 38.54.115.243
-  port: 443
-  name: 越南-1
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 154.205.142.184
-  port: 443
-  name: 越南-2
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 38.54.14.205
-  port: 443
-  name: 越南-3
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 38.54.15.140
-  port: 443
-  name: 越南-4
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
   server: 94.20.88.120
   port: 443
   name: 阿塞拜疆
@@ -2402,36 +3314,6 @@ proxies:
   server: 38.54.116.244
   port: 443
   name: 阿曼
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 154.205.154.108
-  port: 443
-  name: 阿根廷
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 38.180.26.190
-  port: 443
-  name: 阿联酋-1
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 154.90.55.81
-  port: 443
-  name: 阿联酋-2
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 38.60.195.223
-  port: 443
-  name: 马来西亚-1
-- skip-cert-verify: true
-  type: trojan
-  password: c650a25235334852ab2807511fa5c623
-  server: 38.54.125.152
-  port: 443
-  name: 马来西亚-2
 - skip-cert-verify: true
   type: trojan
   password: 31f495627332474ca257de8370ca302a
@@ -2477,18 +3359,6 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: 31f495627332474ca257de8370ca302a
-  server: 139.84.228.27
-  port: 443
-  name: 南非-1 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 38.54.63.166
-  port: 443
-  name: 南非-2 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
   server: 156.244.43.252
   port: 443
   name: 卡塔尔 (2)
@@ -2498,42 +3368,6 @@ proxies:
   server: 45.12.144.61
   port: 443
   name: 卢森堡 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 139.84.133.199
-  port: 443
-  name: 印度-1 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 139.84.215.236
-  port: 443
-  name: 印度-2 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 65.20.67.50
-  port: 443
-  name: 印度-3 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 86.107.100.36
-  port: 443
-  name: 印度-4 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 103.67.79.156
-  port: 443
-  name: 印度尼西亚-1 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 154.205.158.41
-  port: 443
-  name: 印度尼西亚-2 (2)
 - skip-cert-verify: true
   type: trojan
   password: 31f495627332474ca257de8370ca302a
@@ -2573,33 +3407,9 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: 31f495627332474ca257de8370ca302a
-  server: 38.54.59.90
-  port: 443
-  name: 埃及
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
   server: 38.180.101.21
   port: 443
   name: 塞尔维亚 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 216.238.72.226
-  port: 443
-  name: 墨西哥-1 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 154.205.152.109
-  port: 443
-  name: 墨西哥-2 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 38.180.179.132
-  port: 443
-  name: 墨西哥-3 (2)
 - skip-cert-verify: true
   type: trojan
   password: 31f495627332474ca257de8370ca302a
@@ -2633,33 +3443,9 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: 31f495627332474ca257de8370ca302a
-  server: 216.238.113.159
-  port: 443
-  name: 巴西-1 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 38.180.16.151
-  port: 443
-  name: 巴西-2 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
   server: 38.54.29.52
   port: 443
   name: 希腊 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 38.180.22.154
-  port: 443
-  name: 意大利-1 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 38.180.22.160
-  port: 443
-  name: 意大利-2 (2)
 - skip-cert-verify: true
   type: trojan
   password: 31f495627332474ca257de8370ca302a
@@ -2684,12 +3470,6 @@ proxies:
   server: 45.83.131.34
   port: 443
   name: 斯洛文尼亚 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 103.208.85.42
-  port: 443
-  name: 新西兰 (2)
 - skip-cert-verify: true
   type: trojan
   password: 31f495627332474ca257de8370ca302a
@@ -2729,42 +3509,6 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: 31f495627332474ca257de8370ca302a
-  server: 156.244.12.225
-  port: 443
-  name: 沙特阿拉伯-1 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 154.205.134.38
-  port: 443
-  name: 沙特阿拉伯-2 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 45.32.145.158
-  port: 443
-  name: 法国-1 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 51.178.38.134
-  port: 443
-  name: 法国-2 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 38.180.0.22
-  port: 443
-  name: 法国-3 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 162.19.10.218
-  port: 443
-  name: 法国-4 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
   server: 38.180.111.97
   port: 443
   name: 波兰-1 (2)
@@ -2783,51 +3527,9 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: 31f495627332474ca257de8370ca302a
-  server: 103.76.182.28
-  port: 443
-  name: 泰国-1 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 154.90.44.133
-  port: 443
-  name: 泰国-2 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 154.90.45.247
-  port: 443
-  name: 泰国-3 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 38.180.152.121
-  port: 443
-  name: 爱尔兰 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
   server: 38.180.163.22
   port: 443
   name: 爱沙尼亚 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 38.180.56.158
-  port: 443
-  name: 瑞典-1 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 5.183.101.251
-  port: 443
-  name: 瑞典-2 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 179.43.174.201
-  port: 443
-  name: 瑞士 (2)
 - skip-cert-verify: true
   type: trojan
   password: 31f495627332474ca257de8370ca302a
@@ -2861,90 +3563,6 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: 31f495627332474ca257de8370ca302a
-  server: 37.228.129.59
-  port: 443
-  name: 芬兰 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 78.141.219.18
-  port: 443
-  name: 荷兰-1 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 5.180.79.168
-  port: 443
-  name: 荷兰-2 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 38.180.70.175
-  port: 443
-  name: 荷兰-3 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 38.180.162.50
-  port: 443
-  name: 荷兰-4 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 154.90.37.169
-  port: 443
-  name: 菲律宾-1 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 38.54.87.215
-  port: 443
-  name: 菲律宾-2 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 176.97.72.117
-  port: 443
-  name: 西班牙-1 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 65.20.102.54
-  port: 443
-  name: 西班牙-2 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 5.183.103.135
-  port: 443
-  name: 西班牙-3 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 38.54.115.243
-  port: 443
-  name: 越南-1 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 154.205.142.184
-  port: 443
-  name: 越南-2 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 38.54.14.205
-  port: 443
-  name: 越南-3 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 38.54.15.140
-  port: 443
-  name: 越南-4 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
   server: 94.20.88.120
   port: 443
   name: 阿塞拜疆 (2)
@@ -2954,36 +3572,6 @@ proxies:
   server: 38.54.116.244
   port: 443
   name: 阿曼 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 154.205.154.108
-  port: 443
-  name: 阿根廷 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 38.180.26.190
-  port: 443
-  name: 阿联酋-1 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 154.90.55.81
-  port: 443
-  name: 阿联酋-2 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 38.60.195.223
-  port: 443
-  name: 马来西亚-1 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: 31f495627332474ca257de8370ca302a
-  server: 38.54.125.152
-  port: 443
-  name: 马来西亚-2 (2)
 - skip-cert-verify: true
   type: trojan
   password: d06fe708841342cd8680c7e07edd938b
@@ -3029,18 +3617,6 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: d06fe708841342cd8680c7e07edd938b
-  server: 139.84.228.27
-  port: 443
-  name: 南非-1 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 38.54.63.166
-  port: 443
-  name: 南非-2 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
   server: 156.244.43.252
   port: 443
   name: 卡塔尔 (3)
@@ -3050,42 +3626,6 @@ proxies:
   server: 45.12.144.61
   port: 443
   name: 卢森堡 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 139.84.133.199
-  port: 443
-  name: 印度-1 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 139.84.215.236
-  port: 443
-  name: 印度-2 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 65.20.67.50
-  port: 443
-  name: 印度-3 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 86.107.100.36
-  port: 443
-  name: 印度-4 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 103.67.79.156
-  port: 443
-  name: 印度尼西亚-1 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 154.205.158.41
-  port: 443
-  name: 印度尼西亚-2 (3)
 - skip-cert-verify: true
   type: trojan
   password: d06fe708841342cd8680c7e07edd938b
@@ -3125,33 +3665,9 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: d06fe708841342cd8680c7e07edd938b
-  server: 38.54.59.90
-  port: 443
-  name: 埃及 (2)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
   server: 38.180.101.21
   port: 443
   name: 塞尔维亚 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 216.238.72.226
-  port: 443
-  name: 墨西哥-1 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 154.205.152.109
-  port: 443
-  name: 墨西哥-2 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 38.180.179.132
-  port: 443
-  name: 墨西哥-3 (3)
 - skip-cert-verify: true
   type: trojan
   password: d06fe708841342cd8680c7e07edd938b
@@ -3185,33 +3701,9 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: d06fe708841342cd8680c7e07edd938b
-  server: 216.238.113.159
-  port: 443
-  name: 巴西-1 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 38.180.16.151
-  port: 443
-  name: 巴西-2 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
   server: 38.54.29.52
   port: 443
   name: 希腊 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 38.180.22.154
-  port: 443
-  name: 意大利-1 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 38.180.22.160
-  port: 443
-  name: 意大利-2 (3)
 - skip-cert-verify: true
   type: trojan
   password: d06fe708841342cd8680c7e07edd938b
@@ -3236,12 +3728,6 @@ proxies:
   server: 45.83.131.34
   port: 443
   name: 斯洛文尼亚 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 103.208.85.42
-  port: 443
-  name: 新西兰 (3)
 - skip-cert-verify: true
   type: trojan
   password: d06fe708841342cd8680c7e07edd938b
@@ -3281,42 +3767,6 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: d06fe708841342cd8680c7e07edd938b
-  server: 156.244.12.225
-  port: 443
-  name: 沙特阿拉伯-1 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 154.205.134.38
-  port: 443
-  name: 沙特阿拉伯-2 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 45.32.145.158
-  port: 443
-  name: 法国-1 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 51.178.38.134
-  port: 443
-  name: 法国-2 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 38.180.0.22
-  port: 443
-  name: 法国-3 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 162.19.10.218
-  port: 443
-  name: 法国-4 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
   server: 38.180.111.97
   port: 443
   name: 波兰-1 (3)
@@ -3335,51 +3785,9 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: d06fe708841342cd8680c7e07edd938b
-  server: 103.76.182.28
-  port: 443
-  name: 泰国-1 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 154.90.44.133
-  port: 443
-  name: 泰国-2 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 154.90.45.247
-  port: 443
-  name: 泰国-3 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 38.180.152.121
-  port: 443
-  name: 爱尔兰 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
   server: 38.180.163.22
   port: 443
   name: 爱沙尼亚 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 38.180.56.158
-  port: 443
-  name: 瑞典-1 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 5.183.101.251
-  port: 443
-  name: 瑞典-2 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 179.43.174.201
-  port: 443
-  name: 瑞士 (3)
 - skip-cert-verify: true
   type: trojan
   password: d06fe708841342cd8680c7e07edd938b
@@ -3413,90 +3821,6 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: d06fe708841342cd8680c7e07edd938b
-  server: 37.228.129.59
-  port: 443
-  name: 芬兰 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 78.141.219.18
-  port: 443
-  name: 荷兰-1 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 5.180.79.168
-  port: 443
-  name: 荷兰-2 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 38.180.70.175
-  port: 443
-  name: 荷兰-3 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 38.180.162.50
-  port: 443
-  name: 荷兰-4 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 154.90.37.169
-  port: 443
-  name: 菲律宾-1 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 38.54.87.215
-  port: 443
-  name: 菲律宾-2 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 176.97.72.117
-  port: 443
-  name: 西班牙-1 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 65.20.102.54
-  port: 443
-  name: 西班牙-2 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 5.183.103.135
-  port: 443
-  name: 西班牙-3 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 38.54.115.243
-  port: 443
-  name: 越南-1 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 154.205.142.184
-  port: 443
-  name: 越南-2 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 38.54.14.205
-  port: 443
-  name: 越南-3 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 38.54.15.140
-  port: 443
-  name: 越南-4 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
   server: 94.20.88.120
   port: 443
   name: 阿塞拜疆 (3)
@@ -3506,36 +3830,6 @@ proxies:
   server: 38.54.116.244
   port: 443
   name: 阿曼 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 154.205.154.108
-  port: 443
-  name: 阿根廷 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 38.180.26.190
-  port: 443
-  name: 阿联酋-1 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 154.90.55.81
-  port: 443
-  name: 阿联酋-2 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 38.60.195.223
-  port: 443
-  name: 马来西亚-1 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: d06fe708841342cd8680c7e07edd938b
-  server: 38.54.125.152
-  port: 443
-  name: 马来西亚-2 (3)
 - skip-cert-verify: true
   type: trojan
   password: b04f017974b040e18e76e7b61ebadab8
@@ -3581,18 +3875,6 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: b04f017974b040e18e76e7b61ebadab8
-  server: 139.84.228.27
-  port: 443
-  name: 南非-1 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 38.54.63.166
-  port: 443
-  name: 南非-2 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
   server: 156.244.43.252
   port: 443
   name: 卡塔尔 (4)
@@ -3602,42 +3884,6 @@ proxies:
   server: 45.12.144.61
   port: 443
   name: 卢森堡 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 139.84.133.199
-  port: 443
-  name: 印度-1 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 139.84.215.236
-  port: 443
-  name: 印度-2 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 65.20.67.50
-  port: 443
-  name: 印度-3 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 86.107.100.36
-  port: 443
-  name: 印度-4 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 103.67.79.156
-  port: 443
-  name: 印度尼西亚-1 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 154.205.158.41
-  port: 443
-  name: 印度尼西亚-2 (4)
 - skip-cert-verify: true
   type: trojan
   password: b04f017974b040e18e76e7b61ebadab8
@@ -3677,33 +3923,9 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: b04f017974b040e18e76e7b61ebadab8
-  server: 38.54.59.90
-  port: 443
-  name: 埃及 (3)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
   server: 38.180.101.21
   port: 443
   name: 塞尔维亚 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 216.238.72.226
-  port: 443
-  name: 墨西哥-1 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 154.205.152.109
-  port: 443
-  name: 墨西哥-2 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 38.180.179.132
-  port: 443
-  name: 墨西哥-3 (4)
 - skip-cert-verify: true
   type: trojan
   password: b04f017974b040e18e76e7b61ebadab8
@@ -3737,33 +3959,9 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: b04f017974b040e18e76e7b61ebadab8
-  server: 216.238.113.159
-  port: 443
-  name: 巴西-1 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 38.180.16.151
-  port: 443
-  name: 巴西-2 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
   server: 38.54.29.52
   port: 443
   name: 希腊 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 38.180.22.154
-  port: 443
-  name: 意大利-1 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 38.180.22.160
-  port: 443
-  name: 意大利-2 (4)
 - skip-cert-verify: true
   type: trojan
   password: b04f017974b040e18e76e7b61ebadab8
@@ -3788,12 +3986,6 @@ proxies:
   server: 45.83.131.34
   port: 443
   name: 斯洛文尼亚 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 103.208.85.42
-  port: 443
-  name: 新西兰 (4)
 - skip-cert-verify: true
   type: trojan
   password: b04f017974b040e18e76e7b61ebadab8
@@ -3833,42 +4025,6 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: b04f017974b040e18e76e7b61ebadab8
-  server: 156.244.12.225
-  port: 443
-  name: 沙特阿拉伯-1 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 154.205.134.38
-  port: 443
-  name: 沙特阿拉伯-2 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 45.32.145.158
-  port: 443
-  name: 法国-1 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 51.178.38.134
-  port: 443
-  name: 法国-2 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 38.180.0.22
-  port: 443
-  name: 法国-3 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 162.19.10.218
-  port: 443
-  name: 法国-4 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
   server: 38.180.111.97
   port: 443
   name: 波兰-1 (4)
@@ -3887,51 +4043,9 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: b04f017974b040e18e76e7b61ebadab8
-  server: 103.76.182.28
-  port: 443
-  name: 泰国-1 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 154.90.44.133
-  port: 443
-  name: 泰国-2 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 154.90.45.247
-  port: 443
-  name: 泰国-3 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 38.180.152.121
-  port: 443
-  name: 爱尔兰 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
   server: 38.180.163.22
   port: 443
   name: 爱沙尼亚 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 38.180.56.158
-  port: 443
-  name: 瑞典-1 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 5.183.101.251
-  port: 443
-  name: 瑞典-2 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 179.43.174.201
-  port: 443
-  name: 瑞士 (4)
 - skip-cert-verify: true
   type: trojan
   password: b04f017974b040e18e76e7b61ebadab8
@@ -3965,90 +4079,6 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: b04f017974b040e18e76e7b61ebadab8
-  server: 37.228.129.59
-  port: 443
-  name: 芬兰 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 78.141.219.18
-  port: 443
-  name: 荷兰-1 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 5.180.79.168
-  port: 443
-  name: 荷兰-2 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 38.180.70.175
-  port: 443
-  name: 荷兰-3 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 38.180.162.50
-  port: 443
-  name: 荷兰-4 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 154.90.37.169
-  port: 443
-  name: 菲律宾-1 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 38.54.87.215
-  port: 443
-  name: 菲律宾-2 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 176.97.72.117
-  port: 443
-  name: 西班牙-1 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 65.20.102.54
-  port: 443
-  name: 西班牙-2 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 5.183.103.135
-  port: 443
-  name: 西班牙-3 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 38.54.115.243
-  port: 443
-  name: 越南-1 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 154.205.142.184
-  port: 443
-  name: 越南-2 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 38.54.14.205
-  port: 443
-  name: 越南-3 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 38.54.15.140
-  port: 443
-  name: 越南-4 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
   server: 94.20.88.120
   port: 443
   name: 阿塞拜疆 (4)
@@ -4058,36 +4088,6 @@ proxies:
   server: 38.54.116.244
   port: 443
   name: 阿曼 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 154.205.154.108
-  port: 443
-  name: 阿根廷 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 38.180.26.190
-  port: 443
-  name: 阿联酋-1 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 154.90.55.81
-  port: 443
-  name: 阿联酋-2 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 38.60.195.223
-  port: 443
-  name: 马来西亚-1 (4)
-- skip-cert-verify: true
-  type: trojan
-  password: b04f017974b040e18e76e7b61ebadab8
-  server: 38.54.125.152
-  port: 443
-  name: 马来西亚-2 (4)
 proxy-groups:
 - name: 🚀 节点选择
   type: select
@@ -4391,18 +4391,213 @@ proxy-groups:
   - 🇷🇺 俄罗斯 - 02
   - 🇷🇺 俄罗斯 - 03
   - 🇷🇺 俄罗斯 - 04
+  - 🇿🇦 South Africa - 01
+  - 🇿🇦 South Africa - 02
+  - 🇮🇳 India - 01
+  - 🇮🇳 India - 02
+  - 🇮🇳 India - 03
+  - 🇮🇳 India - 04
+  - 🇮🇳 India - 05
+  - 🇮🇳 India - 06
+  - 🇲🇽 Mexico - 01
+  - 🇲🇽 Mexico - 02
+  - 🇲🇽 Mexico - 03
+  - 🇧🇷 Brazil - 01
+  - 🇧🇷 Brazil - 02
+  - 🇮🇹 Italy - 01
+  - 🇮🇹 Italy - 02
+  - 🇳🇿 New Zealand - 01
+  - 🇸🇦 Saudi Arabia - 01
+  - 🇸🇦 Saudi Arabia - 02
+  - 🇫🇷 France - 01
+  - 🇫🇷 France - 02
+  - 🇫🇷 France - 03
+  - 🇫🇷 France - 04
+  - 🇹🇭 Thailand - 01
+  - 🇹🇭 Thailand - 02
+  - 🇹🇭 Thailand - 03
+  - 🇮🇪 Ireland - 01
+  - 🇸🇪 Sweden - 01
+  - 🇸🇪 Sweden - 02
+  - 🇨🇭 Switzerland - 01
+  - 🇫🇮 Finland - 01
+  - 🇳🇱 Netherlands - 01
+  - 🇳🇱 Netherlands - 02
+  - 🇳🇱 Netherlands - 03
+  - 🇳🇱 Netherlands - 04
+  - 🇵🇭 Philippines - 01
+  - 🇵🇭 Philippines - 02
+  - 🇪🇸 Spain - 01
+  - 🇪🇸 Spain - 02
+  - 🇪🇸 Spain - 03
+  - 🇻🇳 Viet Nam - 01
+  - 🇻🇳 Viet Nam - 02
+  - 🇻🇳 Viet Nam - 03
+  - 🇻🇳 Viet Nam - 04
+  - 🇦🇷 Argentina - 01
+  - 🇦🇪 United Arab Emirates - 01
+  - 🇦🇪 United Arab Emirates - 02
+  - 🇲🇾 Malaysia - 01
+  - 🇲🇾 Malaysia - 02
   - 🇷🇺 俄罗斯 - 05
   - 🇷🇺 俄罗斯 - 06
   - 🇷🇺 俄罗斯 - 07
   - 🇷🇺 俄罗斯 - 08
+  - 🇿🇦 South Africa - 03
+  - 🇿🇦 South Africa - 04
+  - 🇮🇳 India - 07
+  - 🇮🇳 India - 08
+  - 🇮🇳 India - 09
+  - 🇮🇳 India - 10
+  - 🇮🇳 India - 11
+  - 🇮🇳 India - 12
+  - 🇪🇬 Egypt - 01
+  - 🇲🇽 Mexico - 04
+  - 🇲🇽 Mexico - 05
+  - 🇲🇽 Mexico - 06
+  - 🇧🇷 Brazil - 03
+  - 🇧🇷 Brazil - 04
+  - 🇮🇹 Italy - 03
+  - 🇮🇹 Italy - 04
+  - 🇳🇿 New Zealand - 02
+  - 🇸🇦 Saudi Arabia - 03
+  - 🇸🇦 Saudi Arabia - 04
+  - 🇫🇷 France - 05
+  - 🇫🇷 France - 06
+  - 🇫🇷 France - 07
+  - 🇫🇷 France - 08
+  - 🇹🇭 Thailand - 04
+  - 🇹🇭 Thailand - 05
+  - 🇹🇭 Thailand - 06
+  - 🇮🇪 Ireland - 02
+  - 🇸🇪 Sweden - 03
+  - 🇸🇪 Sweden - 04
+  - 🇨🇭 Switzerland - 02
+  - 🇫🇮 Finland - 02
+  - 🇳🇱 Netherlands - 05
+  - 🇳🇱 Netherlands - 06
+  - 🇳🇱 Netherlands - 07
+  - 🇳🇱 Netherlands - 08
+  - 🇵🇭 Philippines - 03
+  - 🇵🇭 Philippines - 04
+  - 🇪🇸 Spain - 04
+  - 🇪🇸 Spain - 05
+  - 🇪🇸 Spain - 06
+  - 🇻🇳 Viet Nam - 05
+  - 🇻🇳 Viet Nam - 06
+  - 🇻🇳 Viet Nam - 07
+  - 🇻🇳 Viet Nam - 08
+  - 🇦🇷 Argentina - 02
+  - 🇦🇪 United Arab Emirates - 03
+  - 🇦🇪 United Arab Emirates - 04
+  - 🇲🇾 Malaysia - 03
+  - 🇲🇾 Malaysia - 04
   - 🇷🇺 俄罗斯 - 09
   - 🇷🇺 俄罗斯 - 10
   - 🇷🇺 俄罗斯 - 11
   - 🇷🇺 俄罗斯 - 12
+  - 🇿🇦 South Africa - 05
+  - 🇿🇦 South Africa - 06
+  - 🇮🇳 India - 13
+  - 🇮🇳 India - 14
+  - 🇮🇳 India - 15
+  - 🇮🇳 India - 16
+  - 🇮🇳 India - 17
+  - 🇮🇳 India - 18
+  - 🇪🇬 Egypt - 02
+  - 🇲🇽 Mexico - 07
+  - 🇲🇽 Mexico - 08
+  - 🇲🇽 Mexico - 09
+  - 🇧🇷 Brazil - 05
+  - 🇧🇷 Brazil - 06
+  - 🇮🇹 Italy - 05
+  - 🇮🇹 Italy - 06
+  - 🇳🇿 New Zealand - 03
+  - 🇸🇦 Saudi Arabia - 05
+  - 🇸🇦 Saudi Arabia - 06
+  - 🇫🇷 France - 09
+  - 🇫🇷 France - 10
+  - 🇫🇷 France - 11
+  - 🇫🇷 France - 12
+  - 🇹🇭 Thailand - 07
+  - 🇹🇭 Thailand - 08
+  - 🇹🇭 Thailand - 09
+  - 🇮🇪 Ireland - 03
+  - 🇸🇪 Sweden - 05
+  - 🇸🇪 Sweden - 06
+  - 🇨🇭 Switzerland - 03
+  - 🇫🇮 Finland - 03
+  - 🇳🇱 Netherlands - 09
+  - 🇳🇱 Netherlands - 10
+  - 🇳🇱 Netherlands - 11
+  - 🇳🇱 Netherlands - 12
+  - 🇵🇭 Philippines - 05
+  - 🇵🇭 Philippines - 06
+  - 🇪🇸 Spain - 07
+  - 🇪🇸 Spain - 08
+  - 🇪🇸 Spain - 09
+  - 🇻🇳 Viet Nam - 09
+  - 🇻🇳 Viet Nam - 10
+  - 🇻🇳 Viet Nam - 11
+  - 🇻🇳 Viet Nam - 12
+  - 🇦🇷 Argentina - 03
+  - 🇦🇪 United Arab Emirates - 05
+  - 🇦🇪 United Arab Emirates - 06
+  - 🇲🇾 Malaysia - 05
+  - 🇲🇾 Malaysia - 06
   - 🇷🇺 俄罗斯 - 13
   - 🇷🇺 俄罗斯 - 14
   - 🇷🇺 俄罗斯 - 15
   - 🇷🇺 俄罗斯 - 16
+  - 🇿🇦 South Africa - 07
+  - 🇿🇦 South Africa - 08
+  - 🇮🇳 India - 19
+  - 🇮🇳 India - 20
+  - 🇮🇳 India - 21
+  - 🇮🇳 India - 22
+  - 🇮🇳 India - 23
+  - 🇮🇳 India - 24
+  - 🇪🇬 Egypt - 03
+  - 🇲🇽 Mexico - 10
+  - 🇲🇽 Mexico - 11
+  - 🇲🇽 Mexico - 12
+  - 🇧🇷 Brazil - 07
+  - 🇧🇷 Brazil - 08
+  - 🇮🇹 Italy - 07
+  - 🇮🇹 Italy - 08
+  - 🇳🇿 New Zealand - 04
+  - 🇸🇦 Saudi Arabia - 07
+  - 🇸🇦 Saudi Arabia - 08
+  - 🇫🇷 France - 13
+  - 🇫🇷 France - 14
+  - 🇫🇷 France - 15
+  - 🇫🇷 France - 16
+  - 🇹🇭 Thailand - 10
+  - 🇹🇭 Thailand - 11
+  - 🇹🇭 Thailand - 12
+  - 🇮🇪 Ireland - 04
+  - 🇸🇪 Sweden - 07
+  - 🇸🇪 Sweden - 08
+  - 🇨🇭 Switzerland - 04
+  - 🇫🇮 Finland - 04
+  - 🇳🇱 Netherlands - 13
+  - 🇳🇱 Netherlands - 14
+  - 🇳🇱 Netherlands - 15
+  - 🇳🇱 Netherlands - 16
+  - 🇵🇭 Philippines - 07
+  - 🇵🇭 Philippines - 08
+  - 🇪🇸 Spain - 10
+  - 🇪🇸 Spain - 11
+  - 🇪🇸 Spain - 12
+  - 🇻🇳 Viet Nam - 13
+  - 🇻🇳 Viet Nam - 14
+  - 🇻🇳 Viet Nam - 15
+  - 🇻🇳 Viet Nam - 16
+  - 🇦🇷 Argentina - 04
+  - 🇦🇪 United Arab Emirates - 07
+  - 🇦🇪 United Arab Emirates - 08
+  - 🇲🇾 Malaysia - 07
+  - 🇲🇾 Malaysia - 08
   - 丹麦
   - 以色列
   - 伊拉克
@@ -4410,16 +4605,8 @@ proxy-groups:
   - 保加利亚-2
   - 冰岛
   - 匈牙利
-  - 南非-1
-  - 南非-2
   - 卡塔尔
   - 卢森堡
-  - 印度-1
-  - 印度-2
-  - 印度-3
-  - 印度-4
-  - 印度尼西亚-1
-  - 印度尼西亚-2
   - 哈萨克斯坦-1
   - 哈萨克斯坦-2
   - 哥伦比亚
@@ -4427,73 +4614,33 @@ proxy-groups:
   - 土耳其-2
   - 土耳其-3
   - 塞尔维亚
-  - 墨西哥-1
-  - 墨西哥-2
-  - 墨西哥-3
   - 奥地利
   - 孟加拉国
   - 尼泊尔
   - 巴基斯坦
   - 巴林
-  - 巴西-1
-  - 巴西-2
   - 希腊
-  - 意大利-1
-  - 意大利-2
   - 捷克
   - 摩尔多瓦
   - 斯洛伐克
   - 斯洛文尼亚
-  - 新西兰
   - 智利-1
   - 智利-2
   - 柬埔寨-1
   - 柬埔寨-2
   - 比利时-1
   - 比利时-2
-  - 沙特阿拉伯-1
-  - 沙特阿拉伯-2
-  - 法国-1
-  - 法国-2
-  - 法国-3
-  - 法国-4
   - 波兰-1
   - 波兰-2
   - 波兰-3
-  - 泰国-1
-  - 泰国-2
-  - 泰国-3
-  - 爱尔兰
   - 爱沙尼亚
-  - 瑞典-1
-  - 瑞典-2
-  - 瑞士
   - 秘鲁
   - 立陶宛
   - 缅甸-1
   - 缅甸-2
   - 罗马尼亚
-  - 芬兰
-  - 荷兰-1
-  - 荷兰-2
-  - 荷兰-3
-  - 荷兰-4
-  - 菲律宾-1
-  - 菲律宾-2
-  - 西班牙-1
-  - 西班牙-2
-  - 西班牙-3
-  - 越南-1
-  - 越南-2
-  - 越南-3
-  - 越南-4
   - 阿塞拜疆
   - 阿曼
-  - 阿根廷
-  - 阿联酋-1
-  - 阿联酋-2
-  - 马来西亚-1
-  - 马来西亚-2
   - 丹麦 (2)
   - 以色列 (2)
   - 伊拉克 (2)
@@ -4501,91 +4648,42 @@ proxy-groups:
   - 保加利亚-2 (2)
   - 冰岛 (2)
   - 匈牙利 (2)
-  - 南非-1 (2)
-  - 南非-2 (2)
   - 卡塔尔 (2)
   - 卢森堡 (2)
-  - 印度-1 (2)
-  - 印度-2 (2)
-  - 印度-3 (2)
-  - 印度-4 (2)
-  - 印度尼西亚-1 (2)
-  - 印度尼西亚-2 (2)
   - 哈萨克斯坦-1 (2)
   - 哈萨克斯坦-2 (2)
   - 哥伦比亚 (2)
   - 土耳其-1 (2)
   - 土耳其-2 (2)
   - 土耳其-3 (2)
-  - 埃及
   - 塞尔维亚 (2)
-  - 墨西哥-1 (2)
-  - 墨西哥-2 (2)
-  - 墨西哥-3 (2)
   - 奥地利 (2)
   - 孟加拉国 (2)
   - 尼泊尔 (2)
   - 巴基斯坦 (2)
   - 巴林 (2)
-  - 巴西-1 (2)
-  - 巴西-2 (2)
   - 希腊 (2)
-  - 意大利-1 (2)
-  - 意大利-2 (2)
   - 捷克 (2)
   - 摩尔多瓦 (2)
   - 斯洛伐克 (2)
   - 斯洛文尼亚 (2)
-  - 新西兰 (2)
   - 智利-1 (2)
   - 智利-2 (2)
   - 柬埔寨-1 (2)
   - 柬埔寨-2 (2)
   - 比利时-1 (2)
   - 比利时-2 (2)
-  - 沙特阿拉伯-1 (2)
-  - 沙特阿拉伯-2 (2)
-  - 法国-1 (2)
-  - 法国-2 (2)
-  - 法国-3 (2)
-  - 法国-4 (2)
   - 波兰-1 (2)
   - 波兰-2 (2)
   - 波兰-3 (2)
-  - 泰国-1 (2)
-  - 泰国-2 (2)
-  - 泰国-3 (2)
-  - 爱尔兰 (2)
   - 爱沙尼亚 (2)
-  - 瑞典-1 (2)
-  - 瑞典-2 (2)
-  - 瑞士 (2)
   - 秘鲁 (2)
   - 立陶宛 (2)
   - 缅甸-1 (2)
   - 缅甸-2 (2)
   - 罗马尼亚 (2)
-  - 芬兰 (2)
-  - 荷兰-1 (2)
-  - 荷兰-2 (2)
-  - 荷兰-3 (2)
-  - 荷兰-4 (2)
-  - 菲律宾-1 (2)
-  - 菲律宾-2 (2)
-  - 西班牙-1 (2)
-  - 西班牙-2 (2)
-  - 西班牙-3 (2)
-  - 越南-1 (2)
-  - 越南-2 (2)
-  - 越南-3 (2)
-  - 越南-4 (2)
   - 阿塞拜疆 (2)
   - 阿曼 (2)
-  - 阿根廷 (2)
-  - 阿联酋-1 (2)
-  - 阿联酋-2 (2)
-  - 马来西亚-1 (2)
-  - 马来西亚-2 (2)
   - 丹麦 (3)
   - 以色列 (3)
   - 伊拉克 (3)
@@ -4593,91 +4691,42 @@ proxy-groups:
   - 保加利亚-2 (3)
   - 冰岛 (3)
   - 匈牙利 (3)
-  - 南非-1 (3)
-  - 南非-2 (3)
   - 卡塔尔 (3)
   - 卢森堡 (3)
-  - 印度-1 (3)
-  - 印度-2 (3)
-  - 印度-3 (3)
-  - 印度-4 (3)
-  - 印度尼西亚-1 (3)
-  - 印度尼西亚-2 (3)
   - 哈萨克斯坦-1 (3)
   - 哈萨克斯坦-2 (3)
   - 哥伦比亚 (3)
   - 土耳其-1 (3)
   - 土耳其-2 (3)
   - 土耳其-3 (3)
-  - 埃及 (2)
   - 塞尔维亚 (3)
-  - 墨西哥-1 (3)
-  - 墨西哥-2 (3)
-  - 墨西哥-3 (3)
   - 奥地利 (3)
   - 孟加拉国 (3)
   - 尼泊尔 (3)
   - 巴基斯坦 (3)
   - 巴林 (3)
-  - 巴西-1 (3)
-  - 巴西-2 (3)
   - 希腊 (3)
-  - 意大利-1 (3)
-  - 意大利-2 (3)
   - 捷克 (3)
   - 摩尔多瓦 (3)
   - 斯洛伐克 (3)
   - 斯洛文尼亚 (3)
-  - 新西兰 (3)
   - 智利-1 (3)
   - 智利-2 (3)
   - 柬埔寨-1 (3)
   - 柬埔寨-2 (3)
   - 比利时-1 (3)
   - 比利时-2 (3)
-  - 沙特阿拉伯-1 (3)
-  - 沙特阿拉伯-2 (3)
-  - 法国-1 (3)
-  - 法国-2 (3)
-  - 法国-3 (3)
-  - 法国-4 (3)
   - 波兰-1 (3)
   - 波兰-2 (3)
   - 波兰-3 (3)
-  - 泰国-1 (3)
-  - 泰国-2 (3)
-  - 泰国-3 (3)
-  - 爱尔兰 (3)
   - 爱沙尼亚 (3)
-  - 瑞典-1 (3)
-  - 瑞典-2 (3)
-  - 瑞士 (3)
   - 秘鲁 (3)
   - 立陶宛 (3)
   - 缅甸-1 (3)
   - 缅甸-2 (3)
   - 罗马尼亚 (3)
-  - 芬兰 (3)
-  - 荷兰-1 (3)
-  - 荷兰-2 (3)
-  - 荷兰-3 (3)
-  - 荷兰-4 (3)
-  - 菲律宾-1 (3)
-  - 菲律宾-2 (3)
-  - 西班牙-1 (3)
-  - 西班牙-2 (3)
-  - 西班牙-3 (3)
-  - 越南-1 (3)
-  - 越南-2 (3)
-  - 越南-3 (3)
-  - 越南-4 (3)
   - 阿塞拜疆 (3)
   - 阿曼 (3)
-  - 阿根廷 (3)
-  - 阿联酋-1 (3)
-  - 阿联酋-2 (3)
-  - 马来西亚-1 (3)
-  - 马来西亚-2 (3)
   - 丹麦 (4)
   - 以色列 (4)
   - 伊拉克 (4)
@@ -4685,91 +4734,42 @@ proxy-groups:
   - 保加利亚-2 (4)
   - 冰岛 (4)
   - 匈牙利 (4)
-  - 南非-1 (4)
-  - 南非-2 (4)
   - 卡塔尔 (4)
   - 卢森堡 (4)
-  - 印度-1 (4)
-  - 印度-2 (4)
-  - 印度-3 (4)
-  - 印度-4 (4)
-  - 印度尼西亚-1 (4)
-  - 印度尼西亚-2 (4)
   - 哈萨克斯坦-1 (4)
   - 哈萨克斯坦-2 (4)
   - 哥伦比亚 (4)
   - 土耳其-1 (4)
   - 土耳其-2 (4)
   - 土耳其-3 (4)
-  - 埃及 (3)
   - 塞尔维亚 (4)
-  - 墨西哥-1 (4)
-  - 墨西哥-2 (4)
-  - 墨西哥-3 (4)
   - 奥地利 (4)
   - 孟加拉国 (4)
   - 尼泊尔 (4)
   - 巴基斯坦 (4)
   - 巴林 (4)
-  - 巴西-1 (4)
-  - 巴西-2 (4)
   - 希腊 (4)
-  - 意大利-1 (4)
-  - 意大利-2 (4)
   - 捷克 (4)
   - 摩尔多瓦 (4)
   - 斯洛伐克 (4)
   - 斯洛文尼亚 (4)
-  - 新西兰 (4)
   - 智利-1 (4)
   - 智利-2 (4)
   - 柬埔寨-1 (4)
   - 柬埔寨-2 (4)
   - 比利时-1 (4)
   - 比利时-2 (4)
-  - 沙特阿拉伯-1 (4)
-  - 沙特阿拉伯-2 (4)
-  - 法国-1 (4)
-  - 法国-2 (4)
-  - 法国-3 (4)
-  - 法国-4 (4)
   - 波兰-1 (4)
   - 波兰-2 (4)
   - 波兰-3 (4)
-  - 泰国-1 (4)
-  - 泰国-2 (4)
-  - 泰国-3 (4)
-  - 爱尔兰 (4)
   - 爱沙尼亚 (4)
-  - 瑞典-1 (4)
-  - 瑞典-2 (4)
-  - 瑞士 (4)
   - 秘鲁 (4)
   - 立陶宛 (4)
   - 缅甸-1 (4)
   - 缅甸-2 (4)
   - 罗马尼亚 (4)
-  - 芬兰 (4)
-  - 荷兰-1 (4)
-  - 荷兰-2 (4)
-  - 荷兰-3 (4)
-  - 荷兰-4 (4)
-  - 菲律宾-1 (4)
-  - 菲律宾-2 (4)
-  - 西班牙-1 (4)
-  - 西班牙-2 (4)
-  - 西班牙-3 (4)
-  - 越南-1 (4)
-  - 越南-2 (4)
-  - 越南-3 (4)
-  - 越南-4 (4)
   - 阿塞拜疆 (4)
   - 阿曼 (4)
-  - 阿根廷 (4)
-  - 阿联酋-1 (4)
-  - 阿联酋-2 (4)
-  - 马来西亚-1 (4)
-  - 马来西亚-2 (4)
 - name: ♻️ 自动选择
   type: url-test
   proxies: &id001
@@ -5069,18 +5069,213 @@ proxy-groups:
   - 🇷🇺 俄罗斯 - 02
   - 🇷🇺 俄罗斯 - 03
   - 🇷🇺 俄罗斯 - 04
+  - 🇿🇦 South Africa - 01
+  - 🇿🇦 South Africa - 02
+  - 🇮🇳 India - 01
+  - 🇮🇳 India - 02
+  - 🇮🇳 India - 03
+  - 🇮🇳 India - 04
+  - 🇮🇳 India - 05
+  - 🇮🇳 India - 06
+  - 🇲🇽 Mexico - 01
+  - 🇲🇽 Mexico - 02
+  - 🇲🇽 Mexico - 03
+  - 🇧🇷 Brazil - 01
+  - 🇧🇷 Brazil - 02
+  - 🇮🇹 Italy - 01
+  - 🇮🇹 Italy - 02
+  - 🇳🇿 New Zealand - 01
+  - 🇸🇦 Saudi Arabia - 01
+  - 🇸🇦 Saudi Arabia - 02
+  - 🇫🇷 France - 01
+  - 🇫🇷 France - 02
+  - 🇫🇷 France - 03
+  - 🇫🇷 France - 04
+  - 🇹🇭 Thailand - 01
+  - 🇹🇭 Thailand - 02
+  - 🇹🇭 Thailand - 03
+  - 🇮🇪 Ireland - 01
+  - 🇸🇪 Sweden - 01
+  - 🇸🇪 Sweden - 02
+  - 🇨🇭 Switzerland - 01
+  - 🇫🇮 Finland - 01
+  - 🇳🇱 Netherlands - 01
+  - 🇳🇱 Netherlands - 02
+  - 🇳🇱 Netherlands - 03
+  - 🇳🇱 Netherlands - 04
+  - 🇵🇭 Philippines - 01
+  - 🇵🇭 Philippines - 02
+  - 🇪🇸 Spain - 01
+  - 🇪🇸 Spain - 02
+  - 🇪🇸 Spain - 03
+  - 🇻🇳 Viet Nam - 01
+  - 🇻🇳 Viet Nam - 02
+  - 🇻🇳 Viet Nam - 03
+  - 🇻🇳 Viet Nam - 04
+  - 🇦🇷 Argentina - 01
+  - 🇦🇪 United Arab Emirates - 01
+  - 🇦🇪 United Arab Emirates - 02
+  - 🇲🇾 Malaysia - 01
+  - 🇲🇾 Malaysia - 02
   - 🇷🇺 俄罗斯 - 05
   - 🇷🇺 俄罗斯 - 06
   - 🇷🇺 俄罗斯 - 07
   - 🇷🇺 俄罗斯 - 08
+  - 🇿🇦 South Africa - 03
+  - 🇿🇦 South Africa - 04
+  - 🇮🇳 India - 07
+  - 🇮🇳 India - 08
+  - 🇮🇳 India - 09
+  - 🇮🇳 India - 10
+  - 🇮🇳 India - 11
+  - 🇮🇳 India - 12
+  - 🇪🇬 Egypt - 01
+  - 🇲🇽 Mexico - 04
+  - 🇲🇽 Mexico - 05
+  - 🇲🇽 Mexico - 06
+  - 🇧🇷 Brazil - 03
+  - 🇧🇷 Brazil - 04
+  - 🇮🇹 Italy - 03
+  - 🇮🇹 Italy - 04
+  - 🇳🇿 New Zealand - 02
+  - 🇸🇦 Saudi Arabia - 03
+  - 🇸🇦 Saudi Arabia - 04
+  - 🇫🇷 France - 05
+  - 🇫🇷 France - 06
+  - 🇫🇷 France - 07
+  - 🇫🇷 France - 08
+  - 🇹🇭 Thailand - 04
+  - 🇹🇭 Thailand - 05
+  - 🇹🇭 Thailand - 06
+  - 🇮🇪 Ireland - 02
+  - 🇸🇪 Sweden - 03
+  - 🇸🇪 Sweden - 04
+  - 🇨🇭 Switzerland - 02
+  - 🇫🇮 Finland - 02
+  - 🇳🇱 Netherlands - 05
+  - 🇳🇱 Netherlands - 06
+  - 🇳🇱 Netherlands - 07
+  - 🇳🇱 Netherlands - 08
+  - 🇵🇭 Philippines - 03
+  - 🇵🇭 Philippines - 04
+  - 🇪🇸 Spain - 04
+  - 🇪🇸 Spain - 05
+  - 🇪🇸 Spain - 06
+  - 🇻🇳 Viet Nam - 05
+  - 🇻🇳 Viet Nam - 06
+  - 🇻🇳 Viet Nam - 07
+  - 🇻🇳 Viet Nam - 08
+  - 🇦🇷 Argentina - 02
+  - 🇦🇪 United Arab Emirates - 03
+  - 🇦🇪 United Arab Emirates - 04
+  - 🇲🇾 Malaysia - 03
+  - 🇲🇾 Malaysia - 04
   - 🇷🇺 俄罗斯 - 09
   - 🇷🇺 俄罗斯 - 10
   - 🇷🇺 俄罗斯 - 11
   - 🇷🇺 俄罗斯 - 12
+  - 🇿🇦 South Africa - 05
+  - 🇿🇦 South Africa - 06
+  - 🇮🇳 India - 13
+  - 🇮🇳 India - 14
+  - 🇮🇳 India - 15
+  - 🇮🇳 India - 16
+  - 🇮🇳 India - 17
+  - 🇮🇳 India - 18
+  - 🇪🇬 Egypt - 02
+  - 🇲🇽 Mexico - 07
+  - 🇲🇽 Mexico - 08
+  - 🇲🇽 Mexico - 09
+  - 🇧🇷 Brazil - 05
+  - 🇧🇷 Brazil - 06
+  - 🇮🇹 Italy - 05
+  - 🇮🇹 Italy - 06
+  - 🇳🇿 New Zealand - 03
+  - 🇸🇦 Saudi Arabia - 05
+  - 🇸🇦 Saudi Arabia - 06
+  - 🇫🇷 France - 09
+  - 🇫🇷 France - 10
+  - 🇫🇷 France - 11
+  - 🇫🇷 France - 12
+  - 🇹🇭 Thailand - 07
+  - 🇹🇭 Thailand - 08
+  - 🇹🇭 Thailand - 09
+  - 🇮🇪 Ireland - 03
+  - 🇸🇪 Sweden - 05
+  - 🇸🇪 Sweden - 06
+  - 🇨🇭 Switzerland - 03
+  - 🇫🇮 Finland - 03
+  - 🇳🇱 Netherlands - 09
+  - 🇳🇱 Netherlands - 10
+  - 🇳🇱 Netherlands - 11
+  - 🇳🇱 Netherlands - 12
+  - 🇵🇭 Philippines - 05
+  - 🇵🇭 Philippines - 06
+  - 🇪🇸 Spain - 07
+  - 🇪🇸 Spain - 08
+  - 🇪🇸 Spain - 09
+  - 🇻🇳 Viet Nam - 09
+  - 🇻🇳 Viet Nam - 10
+  - 🇻🇳 Viet Nam - 11
+  - 🇻🇳 Viet Nam - 12
+  - 🇦🇷 Argentina - 03
+  - 🇦🇪 United Arab Emirates - 05
+  - 🇦🇪 United Arab Emirates - 06
+  - 🇲🇾 Malaysia - 05
+  - 🇲🇾 Malaysia - 06
   - 🇷🇺 俄罗斯 - 13
   - 🇷🇺 俄罗斯 - 14
   - 🇷🇺 俄罗斯 - 15
   - 🇷🇺 俄罗斯 - 16
+  - 🇿🇦 South Africa - 07
+  - 🇿🇦 South Africa - 08
+  - 🇮🇳 India - 19
+  - 🇮🇳 India - 20
+  - 🇮🇳 India - 21
+  - 🇮🇳 India - 22
+  - 🇮🇳 India - 23
+  - 🇮🇳 India - 24
+  - 🇪🇬 Egypt - 03
+  - 🇲🇽 Mexico - 10
+  - 🇲🇽 Mexico - 11
+  - 🇲🇽 Mexico - 12
+  - 🇧🇷 Brazil - 07
+  - 🇧🇷 Brazil - 08
+  - 🇮🇹 Italy - 07
+  - 🇮🇹 Italy - 08
+  - 🇳🇿 New Zealand - 04
+  - 🇸🇦 Saudi Arabia - 07
+  - 🇸🇦 Saudi Arabia - 08
+  - 🇫🇷 France - 13
+  - 🇫🇷 France - 14
+  - 🇫🇷 France - 15
+  - 🇫🇷 France - 16
+  - 🇹🇭 Thailand - 10
+  - 🇹🇭 Thailand - 11
+  - 🇹🇭 Thailand - 12
+  - 🇮🇪 Ireland - 04
+  - 🇸🇪 Sweden - 07
+  - 🇸🇪 Sweden - 08
+  - 🇨🇭 Switzerland - 04
+  - 🇫🇮 Finland - 04
+  - 🇳🇱 Netherlands - 13
+  - 🇳🇱 Netherlands - 14
+  - 🇳🇱 Netherlands - 15
+  - 🇳🇱 Netherlands - 16
+  - 🇵🇭 Philippines - 07
+  - 🇵🇭 Philippines - 08
+  - 🇪🇸 Spain - 10
+  - 🇪🇸 Spain - 11
+  - 🇪🇸 Spain - 12
+  - 🇻🇳 Viet Nam - 13
+  - 🇻🇳 Viet Nam - 14
+  - 🇻🇳 Viet Nam - 15
+  - 🇻🇳 Viet Nam - 16
+  - 🇦🇷 Argentina - 04
+  - 🇦🇪 United Arab Emirates - 07
+  - 🇦🇪 United Arab Emirates - 08
+  - 🇲🇾 Malaysia - 07
+  - 🇲🇾 Malaysia - 08
   - 丹麦
   - 以色列
   - 伊拉克
@@ -5088,16 +5283,8 @@ proxy-groups:
   - 保加利亚-2
   - 冰岛
   - 匈牙利
-  - 南非-1
-  - 南非-2
   - 卡塔尔
   - 卢森堡
-  - 印度-1
-  - 印度-2
-  - 印度-3
-  - 印度-4
-  - 印度尼西亚-1
-  - 印度尼西亚-2
   - 哈萨克斯坦-1
   - 哈萨克斯坦-2
   - 哥伦比亚
@@ -5105,73 +5292,33 @@ proxy-groups:
   - 土耳其-2
   - 土耳其-3
   - 塞尔维亚
-  - 墨西哥-1
-  - 墨西哥-2
-  - 墨西哥-3
   - 奥地利
   - 孟加拉国
   - 尼泊尔
   - 巴基斯坦
   - 巴林
-  - 巴西-1
-  - 巴西-2
   - 希腊
-  - 意大利-1
-  - 意大利-2
   - 捷克
   - 摩尔多瓦
   - 斯洛伐克
   - 斯洛文尼亚
-  - 新西兰
   - 智利-1
   - 智利-2
   - 柬埔寨-1
   - 柬埔寨-2
   - 比利时-1
   - 比利时-2
-  - 沙特阿拉伯-1
-  - 沙特阿拉伯-2
-  - 法国-1
-  - 法国-2
-  - 法国-3
-  - 法国-4
   - 波兰-1
   - 波兰-2
   - 波兰-3
-  - 泰国-1
-  - 泰国-2
-  - 泰国-3
-  - 爱尔兰
   - 爱沙尼亚
-  - 瑞典-1
-  - 瑞典-2
-  - 瑞士
   - 秘鲁
   - 立陶宛
   - 缅甸-1
   - 缅甸-2
   - 罗马尼亚
-  - 芬兰
-  - 荷兰-1
-  - 荷兰-2
-  - 荷兰-3
-  - 荷兰-4
-  - 菲律宾-1
-  - 菲律宾-2
-  - 西班牙-1
-  - 西班牙-2
-  - 西班牙-3
-  - 越南-1
-  - 越南-2
-  - 越南-3
-  - 越南-4
   - 阿塞拜疆
   - 阿曼
-  - 阿根廷
-  - 阿联酋-1
-  - 阿联酋-2
-  - 马来西亚-1
-  - 马来西亚-2
   - 丹麦 (2)
   - 以色列 (2)
   - 伊拉克 (2)
@@ -5179,91 +5326,42 @@ proxy-groups:
   - 保加利亚-2 (2)
   - 冰岛 (2)
   - 匈牙利 (2)
-  - 南非-1 (2)
-  - 南非-2 (2)
   - 卡塔尔 (2)
   - 卢森堡 (2)
-  - 印度-1 (2)
-  - 印度-2 (2)
-  - 印度-3 (2)
-  - 印度-4 (2)
-  - 印度尼西亚-1 (2)
-  - 印度尼西亚-2 (2)
   - 哈萨克斯坦-1 (2)
   - 哈萨克斯坦-2 (2)
   - 哥伦比亚 (2)
   - 土耳其-1 (2)
   - 土耳其-2 (2)
   - 土耳其-3 (2)
-  - 埃及
   - 塞尔维亚 (2)
-  - 墨西哥-1 (2)
-  - 墨西哥-2 (2)
-  - 墨西哥-3 (2)
   - 奥地利 (2)
   - 孟加拉国 (2)
   - 尼泊尔 (2)
   - 巴基斯坦 (2)
   - 巴林 (2)
-  - 巴西-1 (2)
-  - 巴西-2 (2)
   - 希腊 (2)
-  - 意大利-1 (2)
-  - 意大利-2 (2)
   - 捷克 (2)
   - 摩尔多瓦 (2)
   - 斯洛伐克 (2)
   - 斯洛文尼亚 (2)
-  - 新西兰 (2)
   - 智利-1 (2)
   - 智利-2 (2)
   - 柬埔寨-1 (2)
   - 柬埔寨-2 (2)
   - 比利时-1 (2)
   - 比利时-2 (2)
-  - 沙特阿拉伯-1 (2)
-  - 沙特阿拉伯-2 (2)
-  - 法国-1 (2)
-  - 法国-2 (2)
-  - 法国-3 (2)
-  - 法国-4 (2)
   - 波兰-1 (2)
   - 波兰-2 (2)
   - 波兰-3 (2)
-  - 泰国-1 (2)
-  - 泰国-2 (2)
-  - 泰国-3 (2)
-  - 爱尔兰 (2)
   - 爱沙尼亚 (2)
-  - 瑞典-1 (2)
-  - 瑞典-2 (2)
-  - 瑞士 (2)
   - 秘鲁 (2)
   - 立陶宛 (2)
   - 缅甸-1 (2)
   - 缅甸-2 (2)
   - 罗马尼亚 (2)
-  - 芬兰 (2)
-  - 荷兰-1 (2)
-  - 荷兰-2 (2)
-  - 荷兰-3 (2)
-  - 荷兰-4 (2)
-  - 菲律宾-1 (2)
-  - 菲律宾-2 (2)
-  - 西班牙-1 (2)
-  - 西班牙-2 (2)
-  - 西班牙-3 (2)
-  - 越南-1 (2)
-  - 越南-2 (2)
-  - 越南-3 (2)
-  - 越南-4 (2)
   - 阿塞拜疆 (2)
   - 阿曼 (2)
-  - 阿根廷 (2)
-  - 阿联酋-1 (2)
-  - 阿联酋-2 (2)
-  - 马来西亚-1 (2)
-  - 马来西亚-2 (2)
   - 丹麦 (3)
   - 以色列 (3)
   - 伊拉克 (3)
@@ -5271,91 +5369,42 @@ proxy-groups:
   - 保加利亚-2 (3)
   - 冰岛 (3)
   - 匈牙利 (3)
-  - 南非-1 (3)
-  - 南非-2 (3)
   - 卡塔尔 (3)
   - 卢森堡 (3)
-  - 印度-1 (3)
-  - 印度-2 (3)
-  - 印度-3 (3)
-  - 印度-4 (3)
-  - 印度尼西亚-1 (3)
-  - 印度尼西亚-2 (3)
   - 哈萨克斯坦-1 (3)
   - 哈萨克斯坦-2 (3)
   - 哥伦比亚 (3)
   - 土耳其-1 (3)
   - 土耳其-2 (3)
   - 土耳其-3 (3)
-  - 埃及 (2)
   - 塞尔维亚 (3)
-  - 墨西哥-1 (3)
-  - 墨西哥-2 (3)
-  - 墨西哥-3 (3)
   - 奥地利 (3)
   - 孟加拉国 (3)
   - 尼泊尔 (3)
   - 巴基斯坦 (3)
   - 巴林 (3)
-  - 巴西-1 (3)
-  - 巴西-2 (3)
   - 希腊 (3)
-  - 意大利-1 (3)
-  - 意大利-2 (3)
   - 捷克 (3)
   - 摩尔多瓦 (3)
   - 斯洛伐克 (3)
   - 斯洛文尼亚 (3)
-  - 新西兰 (3)
   - 智利-1 (3)
   - 智利-2 (3)
   - 柬埔寨-1 (3)
   - 柬埔寨-2 (3)
   - 比利时-1 (3)
   - 比利时-2 (3)
-  - 沙特阿拉伯-1 (3)
-  - 沙特阿拉伯-2 (3)
-  - 法国-1 (3)
-  - 法国-2 (3)
-  - 法国-3 (3)
-  - 法国-4 (3)
   - 波兰-1 (3)
   - 波兰-2 (3)
   - 波兰-3 (3)
-  - 泰国-1 (3)
-  - 泰国-2 (3)
-  - 泰国-3 (3)
-  - 爱尔兰 (3)
   - 爱沙尼亚 (3)
-  - 瑞典-1 (3)
-  - 瑞典-2 (3)
-  - 瑞士 (3)
   - 秘鲁 (3)
   - 立陶宛 (3)
   - 缅甸-1 (3)
   - 缅甸-2 (3)
   - 罗马尼亚 (3)
-  - 芬兰 (3)
-  - 荷兰-1 (3)
-  - 荷兰-2 (3)
-  - 荷兰-3 (3)
-  - 荷兰-4 (3)
-  - 菲律宾-1 (3)
-  - 菲律宾-2 (3)
-  - 西班牙-1 (3)
-  - 西班牙-2 (3)
-  - 西班牙-3 (3)
-  - 越南-1 (3)
-  - 越南-2 (3)
-  - 越南-3 (3)
-  - 越南-4 (3)
   - 阿塞拜疆 (3)
   - 阿曼 (3)
-  - 阿根廷 (3)
-  - 阿联酋-1 (3)
-  - 阿联酋-2 (3)
-  - 马来西亚-1 (3)
-  - 马来西亚-2 (3)
   - 丹麦 (4)
   - 以色列 (4)
   - 伊拉克 (4)
@@ -5363,91 +5412,42 @@ proxy-groups:
   - 保加利亚-2 (4)
   - 冰岛 (4)
   - 匈牙利 (4)
-  - 南非-1 (4)
-  - 南非-2 (4)
   - 卡塔尔 (4)
   - 卢森堡 (4)
-  - 印度-1 (4)
-  - 印度-2 (4)
-  - 印度-3 (4)
-  - 印度-4 (4)
-  - 印度尼西亚-1 (4)
-  - 印度尼西亚-2 (4)
   - 哈萨克斯坦-1 (4)
   - 哈萨克斯坦-2 (4)
   - 哥伦比亚 (4)
   - 土耳其-1 (4)
   - 土耳其-2 (4)
   - 土耳其-3 (4)
-  - 埃及 (3)
   - 塞尔维亚 (4)
-  - 墨西哥-1 (4)
-  - 墨西哥-2 (4)
-  - 墨西哥-3 (4)
   - 奥地利 (4)
   - 孟加拉国 (4)
   - 尼泊尔 (4)
   - 巴基斯坦 (4)
   - 巴林 (4)
-  - 巴西-1 (4)
-  - 巴西-2 (4)
   - 希腊 (4)
-  - 意大利-1 (4)
-  - 意大利-2 (4)
   - 捷克 (4)
   - 摩尔多瓦 (4)
   - 斯洛伐克 (4)
   - 斯洛文尼亚 (4)
-  - 新西兰 (4)
   - 智利-1 (4)
   - 智利-2 (4)
   - 柬埔寨-1 (4)
   - 柬埔寨-2 (4)
   - 比利时-1 (4)
   - 比利时-2 (4)
-  - 沙特阿拉伯-1 (4)
-  - 沙特阿拉伯-2 (4)
-  - 法国-1 (4)
-  - 法国-2 (4)
-  - 法国-3 (4)
-  - 法国-4 (4)
   - 波兰-1 (4)
   - 波兰-2 (4)
   - 波兰-3 (4)
-  - 泰国-1 (4)
-  - 泰国-2 (4)
-  - 泰国-3 (4)
-  - 爱尔兰 (4)
   - 爱沙尼亚 (4)
-  - 瑞典-1 (4)
-  - 瑞典-2 (4)
-  - 瑞士 (4)
   - 秘鲁 (4)
   - 立陶宛 (4)
   - 缅甸-1 (4)
   - 缅甸-2 (4)
   - 罗马尼亚 (4)
-  - 芬兰 (4)
-  - 荷兰-1 (4)
-  - 荷兰-2 (4)
-  - 荷兰-3 (4)
-  - 荷兰-4 (4)
-  - 菲律宾-1 (4)
-  - 菲律宾-2 (4)
-  - 西班牙-1 (4)
-  - 西班牙-2 (4)
-  - 西班牙-3 (4)
-  - 越南-1 (4)
-  - 越南-2 (4)
-  - 越南-3 (4)
-  - 越南-4 (4)
   - 阿塞拜疆 (4)
   - 阿曼 (4)
-  - 阿根廷 (4)
-  - 阿联酋-1 (4)
-  - 阿联酋-2 (4)
-  - 马来西亚-1 (4)
-  - 马来西亚-2 (4)
   url: http://www.gstatic.com/generate_204
   interval: 300
 - name: 🔯 故障转移
