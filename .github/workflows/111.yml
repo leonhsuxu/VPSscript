@@ -37,7 +37,7 @@ jobs:
     - name: 运行合并与重命名脚本
       # 重点：使用新的路径来执行脚本
       run: |
-        python flclashyaml/choutuan-all.py
+        python flclashyaml/111.py
         
     - name: 提交更新到仓库
       run: |
