@@ -99,6 +99,8 @@ def generate_config(proxies):
     proxy_names = [p['name'] for p in proxies]
     
     return {
+         # FlClash 显示的配置文件名
+        'profile-name': '丑团合集',
         'mixed-port': 7890,
         'allow-lan': True,
         'bind-address': '*',
