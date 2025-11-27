@@ -34,7 +34,7 @@ ENABLE_SPEED_TEST = True
 # socket 连接超时时间(秒)
 SOCKET_TIMEOUT = 2
 # 并发测速的线程数
-MAX_TEST_WORKERS = 128 # socket 非常轻量，可以大幅增加并发数以提高速度
+MAX_TEST_WORKERS = 256 # socket 非常轻量，可以大幅增加并发数以提高速度，默认128
 
 # (命名与排序配置保持不变)
 # ========== 排序与命名配置 ==========
