@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-丑团 - Clash 订阅合并脚本 (v7 - 自定义正则版)
-- 支持高优先级的自定义正则表达式，用于精准匹配常见地区
-- 动态生成全球 ~250 个国家/地区的匹配规则作为补充
-- 智能清洗节点名，去除干扰词
-- 优先匹配国家/地区并重命名，无法匹配的则清洗名称后保留
-- 精准去重: Server + Port + Password/UUID
+丑团 - Clash 订阅合并脚本 (v8 - 测速排序版)
+- 支持高优先级的自定义正则表达式
+- 动态生成全球规则作为补充
+- 并发 ICMP Ping 测速
+- 按 "指定地区 > 延迟" 双重排序
+- 智能清洗节点名并保留未匹配项
 """
 
 import requests
@@ -18,29 +18,32 @@ import hashlib
 import re
 from collections import defaultdict
 import pycountry
+import subprocess
+from concurrent.futures import ThreadPoolExecutor
 
-# ========== 订阅配置 ==========
+# ========== 基础配置 ==========
 SUBSCRIPTION_URLS = [
     "https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A21?token=ChouLink1",
     "https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A22?token=ChouLink2",
     "https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A23?token=ChouLink3",
     "https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A24?token=ChouLink4",
 ]
-
 OUTPUT_DIR = "flclashyaml"
 OUTPUT_FILE = os.path.join(OUTPUT_DIR, "choutuan-all.yaml")
+MAX_WORKERS_SPEEDTEST = 32  # 测速线程数
 
-# ========== 名称清洗规则 ==========
+# ========== 排序与命名配置 ==========
+# 一级排序：地区优先级，越靠前越优先
+REGION_PRIORITY = ['香港', '日本', '狮城', '美国', '湾省', '韩国', '德国']
+
+# 名称清洗规则
 JUNK_PATTERNS = re.compile(
     r'丑团|专线|IPLC|IEPL|BGP|体验|官网|'
-    r'[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*',
-    re.IGNORECASE
+    r'[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*', re.IGNORECASE
 )
 
-# ========== 高优先级自定义正则规则 ==========
-# 在这里可以自由修改和添加正则表达式，它们会最先被用来匹配
+# 高优先级自定义正则
 CUSTOM_REGEX_RULES = {
-    # 显示名称: { code: '两字母国家代码', pattern: r'正则表达式' }
     '香港': {'code': 'HK', 'pattern': r'港|HK|Hong Kong'},
     '日本': {'code': 'JP', 'pattern': r'日本|川日|东京|大阪|泉日|埼玉|沪日|深日|JP|Japan'},
     '狮城': {'code': 'SG', 'pattern': r'新加坡|SG|Singapore|坡|狮城'},
@@ -50,79 +53,87 @@ CUSTOM_REGEX_RULES = {
     '德国': {'code': 'DE', 'pattern': r'德国|DE|Germany'},
 }
 
+# ========== 核心功能函数 ==========
 def code_to_emoji(code):
-    """将两字母国家代码转换为国旗 Emoji"""
     if not code or len(code) != 2: return '🌐'
     return "".join(chr(0x1F1E6 + ord(char.upper()) - ord('A')) for char in code)
 
 def build_country_rules():
-    """动态构建全球国家/地区的匹配规则"""
-    print("  - 构建国家匹配规则...")
     rules = {}
+    for name, data in CUSTOM_REGEX_RULES.items():
+        rules[name] = {'emoji': code_to_emoji(data['code']), 'regex': re.compile(data['pattern'], re.IGNORECASE)}
     
-    # 1. 加载高优先级的自定义正则规则
-    for display_name, data in CUSTOM_REGEX_RULES.items():
-        rules[display_name] = {
-            'emoji': code_to_emoji(data['code']),
-            'regex': re.compile(data['pattern'], re.IGNORECASE)
-        }
-    print(f"  ✓ 加载了 {len(rules)} 条自定义高优规则。")
-    
-    # 2. 使用 pycountry 动态生成其他国家的规则作为补充
     covered_codes = {data['code'] for data in CUSTOM_REGEX_RULES.values()}
-    pycountry_added = 0
     for country in pycountry.countries:
         if country.alpha_2 in covered_codes: continue
-        
-        keywords = [country.alpha_2, country.alpha_3]
-        if hasattr(country, 'common_name'): keywords.append(country.common_name)
-        if hasattr(country, 'official_name'): keywords.append(country.official_name)
-        
-        keywords = sorted(list(set(kw for kw in keywords if len(kw) > 1)), key=len, reverse=True)
-        
+        keywords = sorted(list(set(kw for kw in [country.alpha_2, country.alpha_3, country.name.split(',')[0]] if len(kw) > 1)), key=len, reverse=True)
         if keywords:
-            display_name = country.name.split(',')[0] # 使用更简洁的名称
-            rules[display_name] = {
-                'emoji': code_to_emoji(country.alpha_2),
-                'regex': re.compile('|'.join(map(re.escape, keywords)), re.IGNORECASE)
-            }
-            pycountry_added += 1
-            
-    print(f"  ✓ 动态生成了 {pycountry_added} 条全球规则。")
-    print(f"  - 总计 {len(rules)} 条规则。")
+            rules[country.name.split(',')[0]] = {'emoji': code_to_emoji(country.alpha_2), 'regex': re.compile('|'.join(map(re.escape, keywords)), re.IGNORECASE)}
     return rules
 
 COUNTRY_RULES = build_country_rules()
 
+def test_latency(server):
+    """使用系统 ping 命令测试服务器延迟，返回毫秒或无穷大"""
+    try:
+        # -c 1: 发送1个包, -W 2: 等待2秒超时
+        command = ['ping', '-c', '1', '-W', '2', server]
+        result = subprocess.run(command, capture_output=True, text=True, timeout=3)
+        
+        if result.returncode == 0:
+            match = re.search(r"time=([\d.]+)\s*ms", result.stdout)
+            if match:
+                return float(match.group(1))
+    except (subprocess.TimeoutExpired, FileNotFoundError):
+        pass # 命令超时或 ping 不存在
+    except Exception as e:
+        print(f"  [测速警告] {server}: {e}")
+    return float('inf')
+
+def speed_test_proxies(proxies):
+    """并发测试所有节点的延迟"""
+    print(f"\n[3/5] 开始延迟测速 (使用 {MAX_WORKERS_SPEEDTEST} 线程)...")
+    
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS_SPEEDTEST) as executor:
+        # 为每个 proxy 提交一个测速任务
+        future_to_proxy = {executor.submit(test_latency, proxy.get('server')): proxy for proxy in proxies if proxy.get('server')}
+        
+        for i, future in enumerate(future_to_proxy):
+            proxy = future_to_proxy[future]
+            try:
+                latency = future.result()
+                proxy['latency'] = latency
+                # 实时打印进度
+                progress = f"({i + 1}/{len(proxies)})"
+                status = f"{latency:.2f} ms" if latency != float('inf') else "超时"
+                print(f"  {progress} 测速 {proxy.get('server')}: {status}")
+            except Exception as e:
+                proxy['latency'] = float('inf')
+                print(f"  - 测速 {proxy.get('server')} 失败: {e}")
+                
+    print("  ✓ 延迟测速完成。")
+    return proxies
 
 def download_subscription(url):
-    """下载并解析订阅内容"""
     try:
         headers = {'User-Agent': 'Clash/1.11.4 (Windows; x64)'}
         print(f"  下载: {url[:60]}...")
         response = requests.get(url, timeout=30, headers=headers)
         response.raise_for_status()
         data = yaml.safe_load(response.text)
-        if not isinstance(data, dict) or 'proxies' not in data:
-            print("  ⚠ 警告: 订阅内容无效或无节点。")
-            return None
-        return data
-    except Exception as e:
-        print(f"  ✗ 下载或解析失败: {e}")
-        return None
+        if isinstance(data, dict) and 'proxies' in data: return data
+    except Exception as e: print(f"  ✗ 下载或解析失败: {e}")
+    return None
 
 def get_proxy_key(proxy):
-    """根据节点的关键信息生成唯一标识"""
     try:
         server = proxy.get('server', '')
         port = proxy.get('port', 0)
         password = proxy.get('password', '') or proxy.get('uuid', '')
         return hashlib.md5(f"{server}:{port}|{password}".encode('utf-8')).hexdigest()
-    except Exception:
-        return None
+    except Exception: return None
 
 def merge_and_deduplicate_proxies(subscriptions):
-    """合并并使用精确规则去重"""
     unique_proxies = {}
     for sub in subscriptions:
         proxies_in_sub = sub.get('proxies', [])
@@ -134,18 +145,16 @@ def merge_and_deduplicate_proxies(subscriptions):
                 unique_proxies[proxy_key] = proxy
     return list(unique_proxies.values())
 
-def process_and_rename_proxies(proxies):
+def sort_and_rename_proxies(proxies):
     """
     核心处理函数：
-    1. 优先使用自定义正则匹配国家并重命名。
-    2. 若无法匹配，则使用动态生成的全球规则匹配。
-    3. 若仍无法匹配，则清洗名称后保留。
-    4. 最后处理所有名称冲突，确保唯一性。
+    1. 识别地区并附加排序信息。
+    2. 按 "地区优先级 > 延迟" 进行排序。
+    3. 排序后生成最终名称。
     """
-    processed_proxies = []
-    country_counters = defaultdict(int)
-    unmatched_nodes_count = 0
-
+    print(f"\n[4/5] 开始排序和重命名节点...")
+    
+    # 1. 识别地区和附加排序信息
     for proxy in proxies:
         original_name = proxy['name']
         cleaned_name = JUNK_PATTERNS.sub('', original_name).strip()
@@ -157,54 +166,55 @@ def process_and_rename_proxies(proxies):
                 break
         
         if matched_display_name:
-            country_counters[matched_display_name] += 1
-            emoji = COUNTRY_RULES[matched_display_name]['emoji']
-            seq_num = country_counters[matched_display_name]
-            proxy['name'] = f"{emoji} {matched_display_name} - {seq_num:02d}"
+            proxy['_display_name'] = matched_display_name
+            try:
+                # 获取地区排序优先级
+                proxy['_region_sort_index'] = REGION_PRIORITY.index(matched_display_name)
+            except ValueError:
+                # 不在优先列表中的地区，统一给一个较低的优先级
+                proxy['_region_sort_index'] = len(REGION_PRIORITY)
         else:
-            proxy['name'] = cleaned_name if cleaned_name else original_name
-            unmatched_nodes_count += 1
-        
-        processed_proxies.append(proxy)
-    
-    print(f"\n  - 成功匹配国家/地区的节点: {len(processed_proxies) - unmatched_nodes_count}")
-    print(f"  - 未匹配国家/地区 (已保留并清洗名称) 的节点: {unmatched_nodes_count}")
+            proxy['_display_name'] = cleaned_name if cleaned_name else original_name
+            proxy['_region_sort_index'] = len(REGION_PRIORITY) + 1 # 未匹配的地区排在更后面
 
+    # 2. 按 "地区优先级 > 延迟" 双重排序
+    proxies.sort(key=lambda p: (p.get('_region_sort_index', 99), p.get('latency', float('inf'))))
+    print("  ✓ 节点已按 '地区优先级' 和 '延迟' 完成排序。")
+
+    # 3. 排序后生成最终名称
     final_proxies = []
-    seen_names = set()
-    for proxy in processed_proxies:
-        base_name = proxy['name']
-        final_name = base_name
-        counter = 1
-        while final_name in seen_names:
-            final_name = f"{base_name} ({counter})"
-            counter += 1
+    country_counters = defaultdict(int)
+    for proxy in proxies:
+        display_name = proxy['_display_name']
         
-        proxy['name'] = final_name
-        seen_names.add(final_name)
+        if display_name in COUNTRY_RULES:
+            country_counters[display_name] += 1
+            emoji = COUNTRY_RULES[display_name]['emoji']
+            seq_num = country_counters[display_name]
+            proxy['name'] = f"{emoji} {display_name} - {seq_num:02d}"
+        else:
+            # 对于未匹配国家/地区的节点，直接使用其（清洗后的）显示名称
+            proxy['name'] = display_name
+        
+        # 移除临时字段
+        del proxy['_display_name']
+        del proxy['_region_sort_index']
+        if 'latency' in proxy: del proxy['latency']
+        
         final_proxies.append(proxy)
         
-    print(f"  ✓ 总计保留节点: {len(final_proxies)}")
+    print(f"  ✓ 节点已完成最终命名。总计: {len(final_proxies)} 个。")
     return final_proxies
 
 
 def generate_config(proxies):
-    """根据最终的节点列表生成完整的 Clash 配置文件"""
-    if not proxies:
-        print("  ✗ 错误: 没有可用于生成配置的节点。")
-        return None
-        
+    if not proxies: return None
     proxy_names = [p['name'] for p in proxies]
     
     return {
-        'profile-name': '丑团',
-        'mixed-port': 7890,
-        'allow-lan': True,
-        'bind-address': '*',
-        'mode': 'rule',
-        'log-level': 'info',
-        'external-controller': '127.0.0.1:9090',
-        'external-ui': 'ui',
+        'profile-name': '丑团', 'mixed-port': 7890, 'allow-lan': True,
+        'bind-address': '*', 'mode': 'rule', 'log-level': 'info',
+        'external-controller': '127.0.0.1:9090', 'external-ui': 'ui',
         'dns': {
             'enable': True, 'listen': '0.0.0.0:53', 'enhanced-mode': 'fake-ip',
             'fake-ip-range': '198.18.0.1/16', 'nameserver': ['223.5.5.5', '119.29.29.29'],
@@ -221,30 +231,28 @@ def generate_config(proxies):
 
 def main():
     print("=" * 60)
-    print(f"丑团 - Clash 订阅合并 (v7 - 自定义正则版) @ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"丑团 - Clash 订阅合并 (v8 - 测速排序版) @ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
     
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     
-    print("\n[1/4] 开始下载订阅...")
+    print("\n[1/5] 开始下载订阅...")
     subscriptions = [sub for sub in (download_subscription(url) for url in SUBSCRIPTION_URLS) if sub]
-    if not subscriptions:
-        print("\n❌ 错误: 所有订阅都下载失败，任务中断。")
-        sys.exit(1)
+    if not subscriptions: sys.exit("\n❌ 错误: 所有订阅都下载失败，任务中断。")
     
-    print(f"\n[2/4] 开始合并与去重...")
+    print(f"\n[2/5] 开始合并与去重...")
     unique_proxies = merge_and_deduplicate_proxies(subscriptions)
-    if not unique_proxies:
-        print("\n❌ 错误: 合并后没有可用的节点，任务中断。")
-        sys.exit(1)
+    if not unique_proxies: sys.exit("\n❌ 错误: 合并后没有可用的节点，任务中断。")
+    
+    # 新增的测速步骤
+    tested_proxies = speed_test_proxies(unique_proxies)
 
-    print(f"\n[3/4] 开始处理和重命名节点...")
-    final_proxies = process_and_rename_proxies(unique_proxies)
+    # 排序和重命名步骤
+    final_proxies = sort_and_rename_proxies(tested_proxies)
 
-    print(f"\n[4/4] 开始生成最终配置文件...")
+    print(f"\n[5/5] 开始生成最终配置文件...")
     config = generate_config(final_proxies)
-    if not config:
-        sys.exit(1)
+    if not config: sys.exit("\n❌ 错误: 无法生成配置文件。")
     
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
         yaml.dump(config, f, allow_unicode=True, sort_keys=False, indent=2, default_flow_style=False)
