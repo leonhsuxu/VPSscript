@@ -1,8 +1,7 @@
 name: 🔄 丑团111
-
 on:
   schedule:
-    # 每周1/3/5 UTC 0:00 (北京时间 6:00) 自动运行
+    # 每周1/3/5 UTC 0:00 (北京时间 8:00) 自动运行
     - cron: '0 0 * * 1,3,5'
   workflow_dispatch: # 允许手动触发
   push:
@@ -11,40 +10,62 @@ on:
     # 重点：现在监控 flclashyaml 文件夹内的脚本文件
     paths:
       - 'flclashyaml/111.py'
-
 # 赋予工作流写入仓库内容的权限
 permissions:
   contents: write
-
 jobs:
   update:
     runs-on: ubuntu-latest
-    
     steps:
     - name: 检出代码
       uses: actions/checkout@v4
-      
+
     - name: 设置 Python 3.11
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'
-        
+
     - name: 安装依赖
       run: |
-        pip install --upgrade pip
+        python -m pip install --upgrade pip
         pip install requests pyyaml pycountry
+
+    # --- 新增步骤：下载并准备 Clash Core ---
+    - name: 下载并准备 Clash Core
+      run: |
+        # 定义Clash核心的下载URL和目标文件名
+        CLASH_URL="https://github.com/Dreamacro/clash/releases/download/v1.18.0/clash-linux-amd64-v1.18.0.gz"
+        CLASH_GZ="clash-linux-amd64.gz"
         
+        # 下载Clash核心程序
+        echo "正在下载 Clash Core..."
+        wget -q -O $CLASH_GZ $CLASH_URL
+        
+        # 解压缩
+        echo "正在解压..."
+        gunzip $CLASH_GZ
+        
+        # 将解压后的文件移动到脚本所在的目录，并重命名为 'clash-core'
+        # 这是为了匹配Python脚本中 CLASH_CORE_PATH 的设置
+        CLASH_EXEC="clash-linux-amd64-v1.18.0"
+        mv $CLASH_EXEC flclashyaml/clash-core
+        
+        # 赋予文件执行权限
+        echo "赋予执行权限..."
+        chmod +x flclashyaml/clash-core
+        
+        echo "Clash Core 准备就绪。"
+
     - name: 运行合并与重命名脚本
-      # 重点：使用新的路径来执行脚本
       run: |
         python flclashyaml/111.py
-        
+
     - name: 提交更新到仓库
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         git add flclashyaml/choutuan-111.yaml
-        # 只有在文件内容发生变化时才提交
+        # 只有在文件内容发生变化时才提交，避免空提交
         if ! git diff --staged --quiet; then
           git commit -m "🔄 丑团yyy $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
           git push
