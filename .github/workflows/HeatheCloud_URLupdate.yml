@@ -1,5 +1,5 @@
 # 工作流的名称
-name: 🔄 HeatheCloud_URL-update
+name: 🔄 HeatheCloud.URL-update
 
 # ======================================================================
 # >> URL 配置区 <<
@@ -26,7 +26,7 @@ on:
 
 # 定义工作任务
 jobs:
-  # 新增的前置任务，用于生成矩阵配置
+  # 前置任务，用于生成矩阵配置
   setup:
     runs-on: ubuntu-latest
     outputs:
@@ -43,7 +43,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
+      # ======================= 关键变更 =======================
+      # 错误在于直接将列表赋给 matrix。正确的做法是将其赋给 matrix.include。
+      matrix:
+        include: ${{ fromJson(needs.setup.outputs.matrix) }}
+      # ========================================================
     steps:
       - name: Create temporary directory and files
         run: |
@@ -77,9 +81,7 @@ jobs:
         env:
           URL_CONFIG: ${{ env.URL_CONFIG }}
         run: |
-          # 关键变更 (1)：更新目标目录路径
           TARGET_DIR="TG_HeathCloud618"
-          
           mkdir -p "$TARGET_DIR"
           find artifacts -type f -exec mv {} "$TARGET_DIR/" \;
           > expected_files.log
@@ -100,10 +102,7 @@ jobs:
         run: |
           git config --global user.name 'GitHub Action Bot'
           git config --global user.email 'actions@github.com'
-          
-          # 关键变更 (2)：更新 git add 的路径
           git add TG_HeathCloud618/
-          
           if git diff --staged --quiet && ! git ls-files --deleted | grep .; then
             echo "No changes or deletions. No commit needed."
           else
