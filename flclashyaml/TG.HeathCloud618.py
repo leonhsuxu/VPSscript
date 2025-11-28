@@ -11,6 +11,7 @@ import concurrent.futures
 import hashlib
 import subprocess
 import shutil
+
 # ========== 基础配置 ==========
 # SUBSCRIPTION_URLS 将通过从 URL.TXT 文件加载来动态填充
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -35,10 +36,12 @@ CUSTOM_REGEX_RULES = {'香港':{'code':'HK','pattern':r'港|HK|Hong Kong'},'日�
 # ===== 国旗表情正则表达式 =====
 # 匹配任意两个区域指示符符号（即国旗表情）
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
+
 # ========== 核心功能函数 ==========
 def get_country_flag_emoji(country_code):
     if not country_code or len(country_code) != 2: return "❓"
     return "".join(chr(0x1F1E6 + ord(char.upper()) - ord('A')) for char in country_code)
+
 def download_subscription(url):
     """
     尝试使用 wget 获取订阅链接内容，模拟 Clash 请求头。
@@ -92,102 +95,142 @@ def download_subscription(url):
             print(f"  ✗ {url[:60]}... 解析为 YAML 或 Base64 解码后解析为 YAML 失败。")
             return []
     return []
+
 def get_proxy_key(proxy):
     try:
-        return hashlib.md5(f"{proxy.get('server','')}:{proxy.get('port',0)}|{proxy.get('password','') or proxy.get('uuid','')} ".encode('utf-8')).hexdigest()
-    except Exception: return None
+        # 针对 VLESS, VMESS, TROJAN 等协议，使用 server:port 和 uuid/password 进行哈希
+        # 这里进行一个简单的通用哈希，但可能需要根据协议类型更细致地处理
+        identifier = f"{proxy.get('server','')}:{proxy.get('port',0)}|"
+        if 'uuid' in proxy:
+            identifier += proxy['uuid']
+        elif 'password' in proxy:
+            identifier += proxy['password']
+        else:
+            identifier += proxy.get('name', '') # 兜底，以防上述都无
+        return hashlib.md5(identifier.encode('utf-8')).hexdigest()
+    except Exception:
+        return None
+
 def merge_and_deduplicate_proxies(subscriptions_proxies):
     unique_proxies = {}
     for proxy in subscriptions_proxies:
         if not isinstance(proxy, dict) or 'name' not in proxy: continue
         proxy_key = get_proxy_key(proxy)
-        if proxy_key and proxy_key not in unique_proxies: unique_proxies[proxy_key] = proxy
+        if proxy_key and proxy_key not in unique_proxies:
+            unique_proxies[proxy_key] = proxy
+        else:
+            # 如果有重复的 key，但节点本身可能有些许差异 (例如 name 不同)，
+            # 可以选择保留第一个或者根据某种优先级合并
+            pass 
     return list(unique_proxies.values())
+
 def process_and_rename_proxies(proxies):
     country_counters = defaultdict(lambda: defaultdict(int))
     final_proxies = []
 
-    # Prepare a comprehensive list of all region-related patterns/names for aggressive stripping
-    all_region_patterns_to_strip = []
-    # Add custom regex rules patterns
-    for rules in CUSTOM_REGEX_RULES.values():
-        all_region_patterns_to_strip.append(rules['pattern'])
-    # Add all Chinese country names from the map (escaped for literal matching)
-    for chn_name in set(CHINESE_COUNTRY_MAP.values()):
-        all_region_patterns_to_strip.append(re.escape(chn_name))
-    # Add all country names from the full map (escaped for literal matching)
-    for country_name in COUNTRY_NAME_TO_CODE_MAP.keys():
-        # Avoid adding duplicates if already present from CHINESE_COUNTRY_MAP
-        if re.escape(country_name) not in all_region_patterns_to_strip:
-            all_region_patterns_to_strip.append(re.escape(country_name))
+    # 1. 构建一个全面的、用于剥离的地区/国家名称模式列表
+    all_region_patterns_for_stripping = set() # 使用set避免重复，保证唯一性
 
-    # Sort patterns by length (descending) so longer, more specific patterns are matched first
-    # This helps avoid partial matches for names like "United States" vs "States".
-    # For simplicity and robustness with a mix of regex and escaped literals, iterating is safer.
+    # 1.1 添加 CUSTOM_REGEX_RULES 中的所有模式 (这些已经是正则表达式)
+    for rules in CUSTOM_REGEX_RULES.values():
+        all_region_patterns_for_stripping.add(rules['pattern'])
+    
+    # 1.2 添加 CHINESE_COUNTRY_MAP 中的所有英文键 (例如 'US', 'United States')，需要转义
+    for eng_name in CHINESE_COUNTRY_MAP.keys():
+        all_region_patterns_for_stripping.add(re.escape(eng_name))
+
+    # 1.3 添加 CHINESE_COUNTRY_MAP 中的所有中文值 (例如 '美国', '日本')，需要转义
+    for chn_name in CHINESE_COUNTRY_MAP.values():
+        all_region_patterns_for_stripping.add(re.escape(chn_name))
+        
+    # 1.4 添加 COUNTRY_NAME_TO_CODE_MAP 中的所有中文国家名 (键)，需要转义
+    for country_name in COUNTRY_NAME_TO_CODE_MAP.keys():
+        all_region_patterns_for_stripping.add(re.escape(country_name))
+
+    # 将集合转换回列表，并按长度降序排序，确保长模式先匹配
+    # 这对于 'United States' 和 'States' 这种重叠模式很重要
+    all_region_patterns_for_stripping_list = sorted(list(all_region_patterns_for_stripping), key=len, reverse=True)
 
 
     # 第一遍循环：识别地区并存储在 'region' 字段中
     for p in proxies:
         original_name = p.get('name', '')
+        
         # 用于地区检测的名称：先移除可能的国旗，再移除垃圾信息，以便更准确地匹配地区
         temp_name_for_region_detection = FLAG_EMOJI_PATTERN.sub('', original_name)
         temp_name_for_region_detection = JUNK_PATTERNS.sub('', temp_name_for_region_detection).strip()
+        
+        # 统一将英文国家名替换为中文，提高识别准确性
         for eng, chn in CHINESE_COUNTRY_MAP.items():
+            # 使用词边界确保只替换完整的国家名，避免误伤
             temp_name_for_region_detection = re.sub(r'\b'+re.escape(eng)+r'\b', chn, temp_name_for_region_detection, flags=re.IGNORECASE)
+        
         p['region'] = '未知'
-        for region, rules in CUSTOM_REGEX_RULES.items():
+        
+        # 优先使用 CUSTOM_REGEX_RULES 进行地区匹配 (更精确)
+        for region_name, rules in CUSTOM_REGEX_RULES.items():
             if re.search(rules['pattern'], temp_name_for_region_detection, re.IGNORECASE):
-                p['region'] = region
+                p['region'] = region_name
                 break
+        
+        # 如果 CUSTOM_REGEX_RULES 未匹配，尝试使用 COUNTRY_NAME_TO_CODE_MAP
         if p['region'] == '未知':
-            for country, code in COUNTRY_NAME_TO_CODE_MAP.items():
-                # Check for country as a whole word
-                if re.search(r'\b' + re.escape(country) + r'\b', temp_name_for_region_detection, re.IGNORECASE):
-                    p['region'] = country
+            for country_chn_name, country_code in COUNTRY_NAME_TO_CODE_MAP.items():
+                # 再次使用词边界，匹配中文国家名
+                if re.search(r'\b' + re.escape(country_chn_name) + r'\b', temp_name_for_region_detection, re.IGNORECASE):
+                    # 为了和 CUSTOM_REGEX_RULES 的结果保持一致，这里也直接存储中文名称
+                    p['region'] = country_chn_name 
                     break
+
     # 第二遍循环：重命名节点，条件性添加国旗，并处理重复
     for proxy in proxies:
         original_name = proxy.get('name', '')
+        
+        # 获取地区信息，包括中文名称和国家代码
         region_info = {'name': proxy['region'], 'code': COUNTRY_NAME_TO_CODE_MAP.get(proxy['region'])}
         if not region_info['code']:
             region_info['code'] = CUSTOM_REGEX_RULES.get(region_info['name'], {}).get('code', '')
         
         chosen_flag = ""
-        # 用于提取节点特征的基准名称，首先从原始名称中移除已有的国旗
+        # 移除已有的国旗（如果有），作为提取特征的基础名称
         name_for_feature_extraction = original_name
         match_existing_flag = FLAG_EMOJI_PATTERN.search(original_name)
         if match_existing_flag:
             chosen_flag = match_existing_flag.group(0)
             name_for_feature_extraction = FLAG_EMOJI_PATTERN.sub('', original_name, 1)
         else:
+            # 如果原始名称不含国旗，则根据识别到的地区生成新的国旗
             chosen_flag = get_country_flag_emoji(region_info['code'])
-            # 如果原始名称不含国旗，name_for_feature_extraction 保持不变，以便从中提取特征
-
-        # --- 修改后的 node_feature 提取逻辑 ---
-        # 1. 替换英文国家名为中文（确保一致性）
+        
+        # --- 核心改进: node_feature 提取逻辑 ---
         node_feature = name_for_feature_extraction
+
+        # 1. 统一将英文国家名替换为中文 (再次执行，确保所有潜在的英文名都被处理)
+        # 这一步放在所有地区模式剥离之前，确保后续清理基于统一的中文名称
         for eng, chn in CHINESE_COUNTRY_MAP.items():
             node_feature = re.sub(r'\b'+re.escape(eng)+r'\b', chn, node_feature, flags=re.IGNORECASE)
 
-        # 2. 核心改进: 移除所有已知的地区名称模式和中文国家名，避免出现多个国家名
-        # 按照 `all_region_patterns_to_strip` 列表中的模式和名称进行清理
-        for pattern_to_clean in all_region_patterns_to_strip:
-            # 区分是自定义的复杂正则表达式还是需要加词边界的字面国家名
-            if any(pattern_to_clean == rules['pattern'] for rules in CUSTOM_REGEX_RULES.values()):
-                node_feature = re.sub(pattern_to_clean, '', node_feature, flags=re.IGNORECASE)
-            else:
-                node_feature = re.sub(r'\b' + pattern_to_clean + r'\b', '', node_feature, flags=re.IGNORECASE)
+        # 2. 从 node_feature 中彻底移除所有已知的地区/国家名称模式
+        # 使用之前构建的 sorted_all_region_patterns_for_stripping_list
+        for pattern_to_clean in all_region_patterns_for_stripping_list:
+            # 尝试直接作为正则表达式匹配 (适用于 CUSTOM_REGEX_RULES 中的模式)
+            try:
+                # 编译并尝试匹配，如果是非法正则则会报错，转为字面匹配
+                re.compile(pattern_to_clean) 
+                node_feature = re.sub(pattern_to_clean, ' ', node_feature, flags=re.IGNORECASE)
+            except re.error:
+                # 如果不是有效的正则，则作为字面字符串处理，添加词边界
+                node_feature = re.sub(r'\b' + pattern_to_clean + r'\b', ' ', node_feature, flags=re.IGNORECASE)
         
         # 3. 移除垃圾信息
-        node_feature = JUNK_PATTERNS.sub('', node_feature).strip()
+        node_feature = JUNK_PATTERNS.sub(' ', node_feature).strip() # 使用空格替换，避免粘连
 
         # 4. 清理可能的连字符和多余空格
-        node_feature = node_feature.replace('-', ' ').strip() # 将连字符替换为空格
         node_feature = re.sub(r'\s+', ' ', node_feature).strip() # 替换多个空格为单个空格
+        node_feature = node_feature.replace('-', ' ').strip() # 将连字符替换为空格 (再次处理，以防前面替换后又出现)
         
         # 如果节点特征仍为空，则使用序号
         if not node_feature:
-             # 计算该地区已有的节点数量，并加1作为序号
              seq = sum(1 for p_final in final_proxies if p_final.get('region') == region_info['name']) + 1
              node_feature = f"{seq:02d}"
         
@@ -203,6 +246,7 @@ def process_and_rename_proxies(proxies):
         proxy['name'] = new_name
         final_proxies.append(proxy)
     return final_proxies
+
 # --- 新的、纯 Python 的 socket 测速函数 ---
 def test_single_proxy_socket(proxy):
     """使用 socket 测试单个节点的 TCP 延迟"""
@@ -232,6 +276,7 @@ def test_single_proxy_socket(proxy):
         # 确保 socket 被关闭
         if 'sock' in locals():
             sock.close()
+
 def speed_test_proxies(proxies):
     """并发执行 socket 测速"""
     print(f"开始使用纯 Python socket 进行并发测速 (共 {len(proxies)} 个节点)...")
@@ -247,11 +292,13 @@ def speed_test_proxies(proxies):
                 fast_proxies.append(result)
     print(f"\n测速完成，剩余可用节点: {len(fast_proxies)}")
     return fast_proxies
+
 def generate_config(proxies):
     if not proxies: return None
     proxy_names = [p['name'] for p in proxies]
     clean_proxies = [{k: v for k, v in p.items() if k not in ['region', 'delay']} for p in proxies]
     return {'mixed-port':7890,'allow-lan':True,'bind-address':'*','mode':'rule','log-level':'info','external-controller':'127.0.0.1:9090','dns':{'enable':True,'listen':'0.0.0.0:53','enhanced-mode':'fake-ip','fake-ip-range':'198.18.0.1/16','nameserver':['223.5.5.5','119.29.29.29'],'fallback':['https://dns.google/dns-query','https://1.1.1.1/dns-query']},'proxies':clean_proxies,'proxy-groups':[{'name':'🚀 节点选择','type':'select','proxies':['♻️ 自动选择','🔯 故障转移','DIRECT']+proxy_names},{'name':'♻️ 自动选择','type':'url-test','proxies':proxy_names,'url':'http://www.gstatic.com/generate_204','interval':300},{'name':'🔯 故障转移','type':'fallback','proxies':proxy_names,'url':'http://www.gstatic.com/generate_204','interval':300}],'rules':['GEOIP,CN,DIRECT','MATCH,🚀 节点选择']}
+
 # 新增函数：从 URL.TXT 文件中加载订阅地址
 def load_subscription_urls_from_file(url_file_path, script_name_filter):
     """
@@ -288,6 +335,7 @@ def load_subscription_urls_from_file(url_file_path, script_name_filter):
     except Exception as e:
         print(f"读取订阅文件 {url_file_path} 时发生错误: {e}")
     return urls
+
 def main():
     print("=" * 60)
     print(f"健康中心618 - Clash 订阅合并 @ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
@@ -325,5 +373,6 @@ def main():
         yaml.dump(config, f, allow_unicode=True, sort_keys=False, indent=2)
     print(f"\n  ✓ 配置文件已成功保存至: {OUTPUT_FILE}")
     print("\n✅ 任务完成！")
+
 if __name__ == '__main__':
     main()
