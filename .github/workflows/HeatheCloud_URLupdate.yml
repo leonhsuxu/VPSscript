@@ -1,6 +1,4 @@
-# 工作流的名称
 name: 🔄 HeatheCloud.URL-update
-
 # ======================================================================
 # >> URL 配置区 <<
 # 您的配置区保持不变，依然在这里维护。
@@ -17,16 +15,12 @@ env:
         "filename": "HeathCloud618ord"
       }
     ]
-
-# 工作流的触发条件
 on:
   schedule:
     - cron: '0 22 * * *'
   workflow_dispatch:
 
-# 定义工作任务
 jobs:
-  # 前置任务，用于生成矩阵配置
   setup:
     runs-on: ubuntu-latest
     outputs:
@@ -35,37 +29,42 @@ jobs:
       - id: set-matrix
         name: Set matrix config from env
         run: |
-          echo "matrix=$(echo '${{ env.URL_CONFIG }}' | jq -c .)" >> $GITHUB_OUTPUT
+          # 直接输出紧凑JSON字符串作为矩阵include
+          matrix_json=$(echo '${{ env.URL_CONFIG }}' | jq -c .)
+          echo "matrix=$matrix_json" >> $GITHUB_OUTPUT
 
-  # 第一个核心任务：并行下载并生成文件
   sync-and-generate:
     needs: setup
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      # ======================= 关键变更 =======================
-      # 错误在于直接将列表赋给 matrix。正确的做法是将其赋给 matrix.include。
       matrix:
         include: ${{ fromJson(needs.setup.outputs.matrix) }}
-      # ========================================================
     steps:
-      - name: Create temporary directory and files
+      - name: Create directory and download source file
         run: |
-          mkdir -p ${{ matrix.filename }}
+          set -e
+          mkdir -p "${{ matrix.filename }}"
           TXT_FILE="${{ matrix.filename }}/${{ matrix.filename }}.txt"
           YML_FILE="${{ matrix.filename }}/${{ matrix.filename }}.yml"
-          curl -fsSL -o "$TXT_FILE" "${{ matrix.url }}" || { echo "Failed to download from ${{ matrix.url }}"; exit 1; }
+
+          echo "Downloading from ${{ matrix.url }} ..."
+          if ! curl -fsSL -o "$TXT_FILE" "${{ matrix.url }}"; then
+            echo "ERROR: Failed to download from ${{ matrix.url }}"
+            exit 1
+          fi
+
           echo "source_url: \"${{ matrix.url }}\"" > "$YML_FILE"
           echo "sync_timestamp: \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\"" >> "$YML_FILE"
           echo "content: |" >> "$YML_FILE"
           sed 's/^/  /' "$TXT_FILE" >> "$YML_FILE"
+
       - name: Upload artifact for ${{ matrix.filename }}
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.filename }}
           path: ${{ matrix.filename }}
 
-  # 第二个核心任务：合并、清理并提交
   commit-changes:
     needs: sync-and-generate
     runs-on: ubuntu-latest
@@ -73,37 +72,53 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Download all generated artifacts
         uses: actions/download-artifact@v4
         with:
           path: artifacts
+
       - name: Organize files and clean up obsolete ones
         env:
           URL_CONFIG: ${{ env.URL_CONFIG }}
         run: |
+          set -e
           TARGET_DIR="TG_HeathCloud618"
           mkdir -p "$TARGET_DIR"
+
+          # 移动所有artifact文件到目标目录，扁平化存储
           find artifacts -type f -exec mv {} "$TARGET_DIR/" \;
+
+          # 列出期望保留的文件（txt + yml）
           > expected_files.log
           echo "$URL_CONFIG" | jq -r '.[] | .filename' | while IFS= read -r filename; do
-              if [ -f "$TARGET_DIR/$filename.txt" ]; then
-                echo "$TARGET_DIR/$filename.txt" >> expected_files.log
-                echo "$TARGET_DIR/$filename.yml" >> expected_files.log
-              fi
+            if [ -f "$TARGET_DIR/$filename.txt" ]; then
+              echo "$TARGET_DIR/$filename.txt" >> expected_files.log
+            fi
+            if [ -f "$TARGET_DIR/$filename.yml" ]; then
+              echo "$TARGET_DIR/$filename.yml" >> expected_files.log
+            fi
           done
+
+          # 列出实际存在的文件
           find "$TARGET_DIR" -type f | sort > actual_files.log
-          comm -13 <(sort expected_files.log) <(sort actual_files.log) | while IFS= read -r file_to_delete; do
+
+          # 计算需要删除的文件（实际的减去期望的）
+          comm -23 actual_files.log expected_files.log | while IFS= read -r file_to_delete; do
             if [ -f "$file_to_delete" ]; then
               echo "Deleting obsolete file: $file_to_delete"
               git rm "$file_to_delete"
             fi
           done
+
       - name: Commit and push if changed
         run: |
           git config --global user.name 'GitHub Action Bot'
           git config --global user.email 'actions@github.com'
           git add TG_HeathCloud618/
-          if git diff --staged --quiet && ! git ls-files --deleted | grep .; then
+          
+          # 检查是否有新增/修改/删除的文件需要提交
+          if git diff --staged --quiet && [ -z "$(git ls-files --deleted)" ]; then
             echo "No changes or deletions. No commit needed."
           else
             git commit -m "Auto-update: Sync and clean up sources"
