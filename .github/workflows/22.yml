@@ -1,66 +1,11 @@
-name: Fetch and Commit Pastecode Content
-
-on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
-  schedule:
-    - cron: '0 0 * * *'
-
-jobs:
-  fetch-and-commit:
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-      
       - name: Fetch content from pastecode
         run: |
           echo "正在获取数据..."
-          curl -L \
-               -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36" \
-               -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8" \
-               -H "Accept-Language: zh-CN,zh;q=0.9,en;q=0.8" \
-               -H "Accept-Encoding: gzip, deflate, br" \
-               -H "Connection: keep-alive" \
-               --compressed \
-               "https://pastecode.dev/raw/hntbocnp/%E5%81%A5%E5%BA%B7%E4%B8%AD%E5%BF%83618ord" \
-               -o data.yaml
+          wget --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
+               --header="Accept: text/html,application/xhtml+xml,application/xml" \
+               --header="Accept-Language: zh-CN,zh;q=0.9" \
+               -O data.yaml \
+               "https://pastecode.dev/raw/hntbocnp/%E5%81%A5%E5%BA%B7%E4%B8%AD%E5%BF%83618ord"
           
-          echo "================================"
           echo "获取到的内容前30行:"
           head -n 30 data.yaml
-          echo "================================"
-          
-          if [ -f data.yaml ] && [ -s data.yaml ]; then
-            echo "✓ 数据获取成功"
-            echo "文件大小: $(wc -c < data.yaml) bytes"
-            echo "行数: $(wc -l < data.yaml) lines"
-          else
-            echo "✗ 数据获取失败或文件为空"
-            exit 1
-          fi
-      
-      - name: Commit and push changes
-        run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add data.yaml
-          git commit -m "🔄 更新数据 - $(date +'%Y-%m-%d %H:%M:%S')" || echo "无需提交"
-          git push || echo "无需推送"
-          echo "✓ 数据已更新"
-      
-      - name: Summary
-        run: |
-          echo "### 执行摘要 📊" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "- 执行时间: $(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_STEP_SUMMARY
-          echo "- 数据源: pastecode.dev" >> $GITHUB_STEP_SUMMARY
-          echo "- 输出文件: data.yaml" >> $GITHUB_STEP_SUMMARY
-          if [ -f data.yaml ]; then
-            echo "- 文件大小: $(wc -c < data.yaml) bytes" >> $GITHUB_STEP_SUMMARY
-            echo "- 文件行数: $(wc -l < data.yaml) lines" >> $GITHUB_STEP_SUMMARY
-          fi
