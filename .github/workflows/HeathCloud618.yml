@@ -1,0 +1,51 @@
+name: 🏥 TG.HeathCloud618
+on:
+  schedule:
+    # 每天 UTC 0:00 (北京时间 8:00) 自动运行
+    - cron: '0 0 * * *'
+  workflow_dispatch: # 允许手动触发
+  push:
+    branches:
+      - main
+    paths:
+      - 'flclashyaml/TG.HeathCloud618.py'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
+
+    - name: 设置 Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    # --- 1. 终极简化的依赖安装 ---
+    - name: 安装依赖
+      run: |
+        python -m pip install --upgrade pip
+        # 只需最基础的库，不再需要 PySocks 或任何系统工具
+        pip install requests pyyaml
+
+    # --- 2. 所有外部工具下载步骤均已移除 ---
+
+    - name: 运行合并与重命名脚本
+      run: |
+        python flclashyaml/TG.HeathCloud618.py
+
+    - name: 提交更新到仓库
+      run: |
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add flclashyaml/TG.HeathCloud618.yaml
+        if ! git diff --staged --quiet; then
+          git commit -m "🏥 HeathCloud618 $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+          git push
+        else
+          echo "文件无变化，无需提交。"
+        fi
