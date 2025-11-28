@@ -29,14 +29,23 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_FILE = os.path.join(SCRIPT_DIR, "choutuan-all.yaml")
 URL_FILE = os.path.join(SCRIPT_DIR, "URL.TXT") # 定义 URL.TXT 文件的路径
 
-# 定义脚本的身份名称，用于从 URL.TXT 中筛选地址。
-# 这里我们从 generate_config 的 profile-name 中获取，或者可以直接硬编码为 "丑团"。
-SCRIPT_IDENTITY_NAME = "丑团" 
+# 修改这里：动态获取脚本名作为关键词
+# 获取脚本文件名 (例如 "choutuan_script.py")
+script_filename = os.path.basename(__file__)
+# 移除文件扩展名 (例如 "choutuan_script")
+# 注意：如果你的脚本名是 "丑团.py"，那么 SCRIPT_IDENTITY_NAME 会是 "丑团"。
+# 如果你的脚本名是 "我的丑团脚本.py"，那么 SCRIPT_IDENTITY_NAME 会是 "我的丑团脚本"。
+# 请根据实际需要调整命名规则，例如如果你只想要 "丑团" 两个字，可能需要更复杂的正则。
+# 但按你目前的描述 "关键词为脚本名"，这个实现是符合的。
+SCRIPT_IDENTITY_NAME = os.path.splitext(script_filename)[0]
 
 
 # ========== 排序与命名配置 ==========
 REGION_PRIORITY = ['香港', '日本', '狮城', '美国', '湾省', '韩国', '德国', '英国', '加拿大', '澳大利亚']
 
+# 注意：JUNK_PATTERNS 中的 '丑团' 硬编码可能也需要动态化，
+# 如果 SCRIPT_IDENTITY_NAME 变化，这里可能也需要更新。
+# 暂时保持不变，因为用户只是要求 SCRIPT_IDENTITY_NAME 为脚本名。
 JUNK_PATTERNS = re.compile(
     r'丑团|专线|IPLC|IEPL|BGP|体验|官网|倍率|x\d{1,2}|Rate|'
     r'[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*|Relay', re.IGNORECASE
