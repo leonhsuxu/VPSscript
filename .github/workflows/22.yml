@@ -1,17 +1,52 @@
-name: Fetch Pastecode Content
+name: Fetch and Commit Pastecode Content
 
-on: [push, workflow_dispatch]
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
-  fetch-data:
+  fetch-and-commit:
     runs-on: ubuntu-latest
+    
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
       - name: Fetch content from pastecode
         run: |
-          curl "https://pastecode.dev/raw/hntbocnp/%E5%81%A5%E5%BA%B7%E4%B8%AD%E5%BF%83618ord" -o data.txt
-          cat data.txt
+          echo "正在获取数据..."
+          curl "https://pastecode.dev/raw/hntbocnp/%E5%81%A5%E5%BA%B7%E4%B8%AD%E5%BF%83618ord" -o data.yaml
+          
+          if [ -f data.yaml ]; then
+            echo "✓ 数据获取成功"
+            echo "文件大小: $(wc -c < data.yaml) bytes"
+            echo "行数: $(wc -l < data.yaml) lines"
+          else
+            echo "✗ 数据获取失败"
+            exit 1
+          fi
       
-      - name: Process the data
+      - name: Commit and push changes
         run: |
-          # 这里可以添加你的处理脚本
-          echo "Data fetched successfully"
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data.yaml
+          git commit -m "🔄 更新数据 - $(date +'%Y-%m-%d %H:%M:%S')" || echo "无需提交"
+          git push || echo "无需推送"
+          echo "✓ 数据已更新"
+      
+      - name: Summary
+        run: |
+          echo "### 执行摘要 📊" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- 执行时间: $(date +'%Y-%m-%d %H:%M:%S')" >> $GITHUB_STEP_SUMMARY
+          echo "- 数据源: pastecode.dev" >> $GITHUB_STEP_SUMMARY
+          echo "- 输出文件: data.yaml" >> $GITHUB_STEP_SUMMARY
+          if [ -f data.yaml ]; then
+            echo "- 文件大小: $(wc -c < data.yaml) bytes" >> $GITHUB_STEP_SUMMARY
+          fi
