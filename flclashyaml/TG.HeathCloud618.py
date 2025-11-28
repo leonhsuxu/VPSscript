@@ -30,7 +30,7 @@ SUBSCRIPTION_URLS = [
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_FILE = os.path.join(SCRIPT_DIR, "TG.HeathCloud618.yaml")
 # ========== 测速过滤配置 (纯 Python socket 版) ==========
-ENABLE_SPEED_TEST = True
+ENABLE_SPEED_TEST = False #  False为不测速，Ture为测速
 # socket 连接超时时间(秒)
 SOCKET_TIMEOUT = 3
 # 并发测速的线程数
