@@ -1,4 +1,4 @@
-name: Download YAML File
+name: Download YAML File (Windows CMD)
 
 on:
   push:
@@ -7,20 +7,25 @@ on:
 
 jobs:
   download:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest  # 使用 Windows 环境
     
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
     
-    - name: Download HeathCloud618ord.yaml
+    - name: Download using CMD
+      shell: cmd  # 指定使用 CMD
       run: |
-        curl "https://pastecode.dev/raw/hntbocnp/%E5%81%A5%E5%BA%B7%E4%B8%AD%E5%BF%83618ord" > HeathCloud618ord.yaml
+        echo 当前目录: %CD%
+        curl "https://pastecode.dev/raw/hntbocnp/健康中心618ord" > HeathCloud618ord.yaml
+        dir HeathCloud618ord.yaml
     
     - name: Display file content
-      run: cat HeathCloud618ord.yaml
+      shell: cmd
+      run: type HeathCloud618ord.yaml
     
     - name: Commit and push if changed
+      shell: cmd
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
