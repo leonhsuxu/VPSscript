@@ -1,33 +1,130 @@
-name: Download YAML File (Windows CMD)
+name: Clash Subscription Updater
 
 on:
   push:
     branches: [ main ]
   workflow_dispatch:
+  schedule:
+    - cron: '0 */12 * * *'  # 每12小时自动更新
 
 jobs:
-  download:
-    runs-on: windows-latest  # 使用 Windows 环境
+  fetch-clash-config:
+    runs-on: ubuntu-latest
     
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
     
-    - name: Download using CMD
-      shell: cmd  # 指定使用 CMD
+    - name: Fetch Clash subscription
       run: |
-        echo 当前目录: %CD%
-        curl "https://pastecode.dev/raw/hntbocnp/健康中心618ord" > HeathCloud618ord.yaml
-        dir HeathCloud618ord.yaml
+        echo "========================================"
+        echo "Clash 订阅更新器"
+        echo "========================================"
+        echo ""
+        echo "📡 正在从订阅链接获取配置..."
+        
+        # 模拟 Clash 客户端的 User-Agent
+        curl -L \
+          -H "User-Agent: clash" \
+          -H "Accept: */*" \
+          "https://pastecode.dev/raw/hntbocnp/%E5%81%A5%E5%BA%B7%E4%B8%AD%E5%BF%83618ord" \
+          -o HeathCloud618ord.yaml
+        
+        if [ $? -eq 0 ]; then
+          echo "✓ 配置文件下载成功"
+          echo ""
+          echo "文件信息:"
+          ls -lh HeathCloud618ord.yaml
+        else
+          echo "✗ 下载失败"
+          exit 1
+        fi
     
-    - name: Display file content
-      shell: cmd
-      run: type HeathCloud618ord.yaml
-    
-    - name: Commit and push if changed
-      shell: cmd
+    - name: Install YAML tools
       run: |
-        git config --local user.email "action@github.com"
-        git config --local user.name "GitHub Action"
-        git add HeathCloud618ord.yaml
-        git diff --quiet && git diff --staged --quiet || (git commit -m "Update HeathCloud618ord.yaml" && git push)
+        sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
+        sudo chmod +x /usr/local/bin/yq
+    
+    - name: Validate configuration
+      run: |
+        echo ""
+        echo "🔍 验证配置文件格式..."
+        
+        if yq eval '.' HeathCloud618ord.yaml > /dev/null 2>&1; then
+          echo "✓ YAML 格式验证通过"
+        else
+          echo "✗ YAML 格式错误"
+          exit 1
+        fi
+    
+    - name: Parse configuration (simulate Clash client)
+      run: |
+        echo ""
+        echo "========================================"
+        echo "配置文件解析结果"
+        echo "========================================"
+        echo ""
+        
+        # 端口配置
+        echo "【监听端口】"
+        PORT=$(yq eval '.port // "7890"' HeathCloud618ord.yaml)
+        SOCKS_PORT=$(yq eval '.socks-port // "7891"' HeathCloud618ord.yaml)
+        MIXED_PORT=$(yq eval '.mixed-port // "7892"' HeathCloud618ord.yaml)
+        
+        echo "  HTTP 代理端口: $PORT"
+        echo "  SOCKS5 端口: $SOCKS_PORT"
+        echo "  混合端口: $MIXED_PORT"
+        echo ""
+        
+        # 运行模式
+        echo "【运行模式】"
+        MODE=$(yq eval '.mode // "rule"' HeathCloud618ord.yaml)
+        LOG_LEVEL=$(yq eval '.log-level // "info"' HeathCloud618ord.yaml)
+        ALLOW_LAN=$(yq eval '.allow-lan // false' HeathCloud618ord.yaml)
+        
+        echo "  模式: $MODE"
+        echo "  日志级别: $LOG_LEVEL"
+        echo "  允许局域网连接: $ALLOW_LAN"
+        echo ""
+        
+        # 代理节点统计
+        echo "【代理节点】"
+        PROXY_COUNT=$(yq eval '.proxies | length' HeathCloud618ord.yaml)
+        echo "  节点总数: $PROXY_COUNT"
+        
+        if [ "$PROXY_COUNT" -gt 0 ]; then
+          echo ""
+          echo "  节点列表（前10个）:"
+          yq eval '.proxies[0:10] | .[] | "    - " + .name + " (" + .type + ")"' HeathCloud618ord.yaml
+        fi
+        echo ""
+        
+        # 代理组
+        echo "【策略组】"
+        GROUP_COUNT=$(yq eval '.proxy-groups | length' HeathCloud618ord.yaml)
+        echo "  策略组总数: $GROUP_COUNT"
+        
+        if [ "$GROUP_COUNT" -gt 0 ]; then
+          echo ""
+          echo "  策略组列表:"
+          yq eval '.proxy-groups | .[] | "    - " + .name + " [" + .type + "]"' HeathCloud618ord.yaml
+        fi
+        echo ""
+        
+        # 规则
+        echo "【分流规则】"
+        RULE_COUNT=$(yq eval '.rules | length' HeathCloud618ord.yaml)
+        echo "  规则总数: $RULE_COUNT"
+        
+        if [ "$RULE_COUNT" -gt 0 ]; then
+          echo ""
+          echo "  规则预览（前5条）:"
+          yq eval '.rules[0:5] | .[]' HeathCloud618ord.yaml | sed 's/^/    /'
+        fi
+        echo ""
+        
+        echo "========================================"
+        echo "✓ 配置解析完成"
+        echo "========================================"
+    
+    -
