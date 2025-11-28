@@ -20,14 +20,19 @@ jobs:
       - name: Fetch content from pastecode
         run: |
           echo "正在获取数据..."
-          curl "https://pastecode.dev/raw/hntbocnp/%E5%81%A5%E5%BA%B7%E4%B8%AD%E5%BF%83618ord" -o data.yaml
+          curl -L -H "User-Agent: Mozilla/5.0" \
+               "https://pastecode.dev/raw/hntbocnp/%E5%81%A5%E5%BA%B7%E4%B8%AD%E5%BF%83618ord" \
+               -o data.yaml
           
-          if [ -f data.yaml ]; then
+          echo "获取到的内容预览:"
+          head -n 20 data.yaml
+          
+          if [ -f data.yaml ] && [ -s data.yaml ]; then
             echo "✓ 数据获取成功"
             echo "文件大小: $(wc -c < data.yaml) bytes"
             echo "行数: $(wc -l < data.yaml) lines"
           else
-            echo "✗ 数据获取失败"
+            echo "✗ 数据获取失败或文件为空"
             exit 1
           fi
       
@@ -49,4 +54,9 @@ jobs:
           echo "- 输出文件: data.yaml" >> $GITHUB_STEP_SUMMARY
           if [ -f data.yaml ]; then
             echo "- 文件大小: $(wc -c < data.yaml) bytes" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "#### 内容预览" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            head -n 10 data.yaml >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
           fi
