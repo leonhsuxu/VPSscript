@@ -29,8 +29,7 @@ SUBSCRIPTION_URLS = [
 ]
 
 # pastecode.dev API Token（如果需要的话，留空则不使用）
-PASTECODE_API_TOKEN = "6im0a1l8w4p768bf6lyxa3qsl6a2r6mprfpkwzwoeztzkg16rdaoja796jg6
-"  # 在这里填入您的 API Token
+PASTECODE_API_TOKEN = "6im0a1l8w4p768bf6lyxa3qsl6a2r6mprfpkwzwoeztzkg16rdaoja796jg6"  # 在这里填入您的 API Token
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_FILE = os.path.join(SCRIPT_DIR, "TG.HeathCloud618.yaml")
