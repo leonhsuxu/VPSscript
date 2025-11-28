@@ -22,8 +22,8 @@ import hashlib
 
 # ========== 基础配置 ==========
 SUBSCRIPTION_URLS = [
-    "https://pastecode.dev/raw/ki7zml2s/健康中心618pro",
-    "https://pastecode.dev/raw/hntbocnp/健康中心618ord",
+    "https://pastecode.dev/raw/ki7zml2s/%E5%81%A5%E5%BA%B7%E4%B8%AD%E5%BF%83618pro",
+    "https://pastecode.dev/raw/hntbocnp/%E5%81%A5%E5%BA%B7%E4%B8%AD%E5%BF%83618ord",
 ]
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
