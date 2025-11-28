@@ -29,7 +29,6 @@ jobs:
       - id: set-matrix
         name: Set matrix config from env
         run: |
-          # 直接输出紧凑JSON字符串作为矩阵include
           matrix_json=$(echo '${{ env.URL_CONFIG }}' | jq -c .)
           echo "matrix=$matrix_json" >> $GITHUB_OUTPUT
 
@@ -41,15 +40,15 @@ jobs:
       matrix:
         include: ${{ fromJson(needs.setup.outputs.matrix) }}
     steps:
-      - name: Create directory and download source file
+      - name: Create temporary directory and files
         run: |
           set -e
           mkdir -p "${{ matrix.filename }}"
           TXT_FILE="${{ matrix.filename }}/${{ matrix.filename }}.txt"
           YML_FILE="${{ matrix.filename }}/${{ matrix.filename }}.yml"
 
-          echo "Downloading from ${{ matrix.url }} ..."
-          if ! curl -fsSL -o "$TXT_FILE" "${{ matrix.url }}"; then
+          echo "Downloading from ${{ matrix.url }} with browser User-Agent ..."
+          if ! curl -fsSL -H "User-Agent: Mozilla/5.0" -o "$TXT_FILE" "${{ matrix.url }}"; then
             echo "ERROR: Failed to download from ${{ matrix.url }}"
             exit 1
           fi
@@ -86,10 +85,8 @@ jobs:
           TARGET_DIR="TG_HeathCloud618"
           mkdir -p "$TARGET_DIR"
 
-          # 移动所有artifact文件到目标目录，扁平化存储
           find artifacts -type f -exec mv {} "$TARGET_DIR/" \;
 
-          # 列出期望保留的文件（txt + yml）
           > expected_files.log
           echo "$URL_CONFIG" | jq -r '.[] | .filename' | while IFS= read -r filename; do
             if [ -f "$TARGET_DIR/$filename.txt" ]; then
@@ -100,10 +97,8 @@ jobs:
             fi
           done
 
-          # 列出实际存在的文件
           find "$TARGET_DIR" -type f | sort > actual_files.log
 
-          # 计算需要删除的文件（实际的减去期望的）
           comm -23 actual_files.log expected_files.log | while IFS= read -r file_to_delete; do
             if [ -f "$file_to_delete" ]; then
               echo "Deleting obsolete file: $file_to_delete"
@@ -116,8 +111,7 @@ jobs:
           git config --global user.name 'GitHub Action Bot'
           git config --global user.email 'actions@github.com'
           git add TG_HeathCloud618/
-          
-          # 检查是否有新增/修改/删除的文件需要提交
+
           if git diff --staged --quiet && [ -z "$(git ls-files --deleted)" ]; then
             echo "No changes or deletions. No commit needed."
           else
