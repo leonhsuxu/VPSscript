@@ -1,1 +1,968 @@
-<!DOCTYPE html><html lang="en-US"><head><title>Just a moment...</title><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=Edge"><meta name="robots" content="noindex,nofollow"><meta name="viewport" content="width=device-width,initial-scale=1"><style>*{box-sizing:border-box;margin:0;padding:0}html{line-height:1.15;-webkit-text-size-adjust:100%;color:#313131;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji"}body{display:flex;flex-direction:column;height:100vh;min-height:100vh}.main-content{margin:8rem auto;padding-left:1.5rem;max-width:60rem}@media (width <= 720px){.main-content{margin-top:4rem}}.h2{line-height:2.25rem;font-size:1.5rem;font-weight:500}@media (width <= 720px){.h2{line-height:1.5rem;font-size:1.25rem}}#challenge-error-text{background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgZmlsbD0ibm9uZSI+PHBhdGggZmlsbD0iI0IyMEYwMyIgZD0iTTE2IDNhMTMgMTMgMCAxIDAgMTMgMTNBMTMuMDE1IDEzLjAxNSAwIDAgMCAxNiAzbTAgMjRhMTEgMTEgMCAxIDEgMTEtMTEgMTEuMDEgMTEuMDEgMCAwIDEtMTEgMTEiLz48cGF0aCBmaWxsPSIjQjIwRjAzIiBkPSJNMTcuMDM4IDE4LjYxNUgxNC44N0wxNC41NjMgOS41aDIuNzgzem0tMS4wODQgMS40MjdxLjY2IDAgMS4wNTcuMzg4LjQwNy4zODkuNDA3Ljk5NCAwIC41OTYtLjQwNy45ODQtLjM5Ny4zOS0xLjA1Ny4zODktLjY1IDAtMS4wNTYtLjM4OS0uMzk4LS4zODktLjM5OC0uOTg0IDAtLjU5Ny4zOTgtLjk4NS40MDYtLjM5NyAxLjA1Ni0uMzk3Ii8+PC9zdmc+");background-repeat:no-repeat;background-size:contain;padding-left:34px}@media (prefers-color-scheme: dark){body{background-color:#222;color:#d9d9d9}}</style><meta http-equiv="refresh" content="360"></head><body><div class="main-wrapper" role="main"><div class="main-content"><noscript><div class="h2"><span id="challenge-error-text">Enable JavaScript and cookies to continue</span></div></noscript></div></div><script>(function(){window._cf_chl_opt = {cvId: '3',cZone: 'pastecode.dev',cType: 'managed',cRay: '9a5803a73a131130',cH: 'e02KtIhvcCzSUfJP3gwXCGzXZ2US5NxHVx3zAQrtZRc-1764313498-1.2.1.1-EFXSNnYn.7sp0C8u2EQfm.Clp7K8GJp_XRGv_UY7Wk2Rp4u6bl9e0miVa598zTIJ',cUPMDTk:"\/raw\/hntbocnp\/%e5%81%a5%e5%ba%b7%e4%b8%ad%e5%bf%83618ord?__cf_chl_tk=9Q1egLYQ9GxXs073UJlAn.cO8UdsT15ZxEpNlfPf7ME-1764313498-1.0.1.1-LSw72m18xIeMIez5AQxdBXktVvwMNKC.G6MATqMVjok",cFPWv: 'b',cITimeS: '1764313498',cTplC:0,cTplV:5,cTplB: '0',fa:"\/raw\/hntbocnp\/%e5%81%a5%e5%ba%b7%e4%b8%ad%e5%bf%83618ord?__cf_chl_f_tk=9Q1egLYQ9GxXs073UJlAn.cO8UdsT15ZxEpNlfPf7ME-1764313498-1.0.1.1-LSw72m18xIeMIez5AQxdBXktVvwMNKC.G6MATqMVjok",md: 'DNp.Oib8hAaturkd48WkKK1GCxJuU0VBtPj_IwbhM_I-1764313498-1.2.1.1-juupxIwzTs4tAvBkFlluONsidi2uS9.hG7G4x.eTNB_kXKZcYz_bd1BIs4I04chR4.1vuYmMZv.rFCB2ba_wPg7nzar9VRl2qtDWqL5rdpgW11nYJ1nmDPxsaXqXnPcY_2kKWUNvHXm14k1EGSTxJRsO4KBPyGrD1j3aHxp6CylNGBQ5RrLhve.Cle9Su63UeTY_PIkahn_8HbeToWVmmH9tpDAWmaeouLQxEW2ubipeBLdWeYHH0gDLR6Q_DB3DG42PiUM2K6W72cR1j9Y6gioGhhWRj22RrOBiQZsA_Kz.VykNnb9eHG7QnHeyUfYfBbeG8rFNPx9fv51w5.iGHbHlPAw18qsbI7buUlUFTsKvVFStxyPa9DU_0I_LnJqzvuXfd7Y2JlQfD7yxNTXOIBBhNfYsbgsmZVClyg9xvjrbEv3csugDjQwzltPD6lbTjyj8mX8Xc__pwgGAPl3uN4cKO4tFy4yaGPd4ic8b_A8tYcd7To1uys5RP0k_88utK9gHk5Ooi4rOjCf1IcnfUl9_z5O.JHPVT5SFERbP_HvDLQIXmdyrHcsIgNlK3gIdm0grb_B7.ul_JMSU4X3CIEWvSHaoI5r8pKHF3CUQuUGDprNDNfo.1O4tsZZoR4BqV9ws04LFILcNAd6AW6BEgdGC9u7iVlCzCdixJzzkmaZBUeHBtMUvUs9Uamw6P1OL3VNhxZ449fcnavhKL7l0_ktHj64J.3TgC.33sxxKYUyQ2D5Ll9KdjLIqT7.UrBf0Km_wY8OIjCP4DKnrm4xBFogIZ9ZFM8xdSkOnvmVZpJS85JZGlUddXT3abIEi0ZBIgghTkGHVAxF.xm.nieyX.dwEbOc3SulvIVApi2TrUjw',mdrd: 'rcjJkNYDDwTEz19uSd6CkKftk_1F7KCgKmOGB9xquCA-1764313498-1.2.1.1-u0EAgRG1QLkmI2pdB27qaDZnFrhj3fJuFMn2qbsOQa.482qyDpIc9I4GF63vEf8JJ5rxrK7VM7uEG.G1If5.Ai2nyujF_zWDqxZ6RV9EYtiJeOgZC0rIdPr5j4QYEaUUOwh10.4ttBY2wVTtRVIKkhPiQtwjjRnl.QTngGT197OOhNQZ5HCDqGN8LihlsnASyoW5Z9dRFV4moKI5tjG_a2vGYYY9irwdq_qe0WBmuWoOKh1u.wH4xwaDUUXNWS3Jt5d0qvRghpCoRybQ.X48Yzoaq60I6Wy19ewLlhXmlAnOa93z8Eybh2zqWwqpdBYQPO.Zt0UDLHrg3vQ.yQ_nYXsBZq7VLgdc1Tev313pqWH3JaoaYr2wyoUSv7EhN8J1myuTA894O.s8jltzkezlliiO_SAuulvzyhTcuJEjfx2l0fm8x2EHnp6kBUdSg0wQITYlfzWSmHmk4WhLXii5F7SqEgvWBJmlIMtb_JitEu2pIbkOVJpJTtmS4rMemZPIBhWXM7fxOPmXxjaQUkORdj3IW_P6dC__nZYCF95UI3Zgqjl58KwkOg9svk1aBYcrxaeZEQwrTau3WnQW1ttFELZ_c..Da7fil3ZJApovCRUIv7PlRAXwX27fzhhcOnLcsF6mLSaxmvJbtULs5wVHxYo2tFZtpZ9UnV3FIvJepnz1Y7Fm.OOdr9f62Pe8oCjV4iT7Y5dgoImUeZGnajngqOY.40EMoaXJ041NA2MnkWSXh11yx0Z0RwMXG2s8sW3e202Tnvf0UN4msPqTEcX2nIyjATZMB0f.p2bX8llZ2Ph1sHAiUQ.WlWg9i4DrX.6gPn6mbmBwp9sTLdFjw_ChvYy4iJjd3V2pCW9L4T2QdsDKgBOH5bydiycBGlImiGJKWoMrsVQZVD9DBhP7yUHv1Z3Xk2JzrO9hzVmulqUX34nB7f7apGdvQ5ErSpNOajsOcyZfUdXmm_Qi4qeSa8qDzWiwjOzMmONBvWLGH6CTV1vZ30RM5r9R266J2LqGYGmU9TO_RUjR8yRcE5_WTiOVk3xmlM0mXdtUFRoojMkObVTY045GDVEFJ7yZOzXs0EHI4M8Mg3H8WhIrCqFT_IG0aScTalDfHmJXaOczEC5i0Pu4QbQA9WtSRqt5Oj0xCWQ6T5xLl89VodJVPLqS.mL3qiTxl.V37EWoNEXTmyez8IfEkhsD4zcnPs3dZgJCM2P2YSI3soX4x77ofbiP0fqBz27ZrtuBfB5o.3sGSEpn3GfJbIXlJXbUYAfMF3o4oqbszvLUOoJvKSWKrz8.dhqhI9EVr8qbNItQzvioJez5xXOT6J.QmmoJmdPVBbieHm5UGA6ZcPIIia4Qve._n3zFMexj5NpwYfr8lyH0d7HbP_eir0RqOjJWOXrwt5vLqVaiuPMLEZv0j5YNMWuIAa4UAwGT2cWWdSkr9z._Tbm5WCmEI5tn9bY.HYzh5Frpato3FyRRNl4_MM.Q8kKClRzJaafIo_begcX4TCmBX7fThySdlD2aFBWmRvKvUAAnMWtc_NbuSXS15AW.bcbYIEGVmhSL3Yq9WEuqSpGTh_Zhs1ZM9K85X3Ek.8EH1AkBwujAGkJbwIGaZw8u7LBSEZxYncA2O_M8iOlGKD7EyQXcwL.Fiqdt7gkyhqdL1j.AVfuYxFXukr_5p9PwKuY3jSfCZbiX_Db_5U0itoYLSt0n3XYNU0NCUNJ4U_GlEl26X803GWUQ8TJ29xwcIy5kgqXygxbP0aPmZtlOW5QVbkjLzj8_mRDmGdvR9qnncaH550Sbti7BH5tMcgMtwsTXceS616.z_rKXNKdy7dpPuu6WdmX7gpMRExcIAwbFz0Xmscuh7V84whcUguEEnt1vyZaYAjMeG5Y_sIV_9q5.J2aBENPBeHSU_2jgb6UYgUAmXQNITAFavqdMk_dbCE24wxhlqL9ULqa4PuZvZT.wN.pw6mhTD4YrrD5baYxarYusdcDypu1rYw_TpZeZvjQGY6eB6jP0cF8LVd9mlatKQeH8bmY1lzyWAT.XOivdL0PAyCYCZeKzC1ETHVXvebMEzHVBwAGUXL9PHdHSYB3CWI6P6XJ0F0cQ7tQLpFomCLO7uyByaZuSKp4cwSTVWV64pZO3OZAPOT7U.HbTHeiLLd3srKrc5vbPjoHAySOXFmNRUDLdkZT.TYUEeBV4w8FIpkoml.w17JtlvcRDA07VMqTepUG2MAvuwCg7IRudWdg8KgBi0n5f_PGOMTCTC.2VrT20b_DpnY5BVoDR.bx.LJW_h.YHZqmToargkRMZGeHf5T5GEoJxBenaeslXkWCqe9xceQ6aGjz083RfOwVNatmIiX7Hi03eeOuq64OdiyK8MNZnB6tA8iFP_3hl9o8cRzhvq4zgRy5wEKm9FHIxwRP45sUQkVPwGnrfr_PYTDhmJXmuBtoF2srSRKhPtLDe0c8_n.TBWD60QnX2j.wfhSyp6g8',};var a = document.createElement('script');a.src = '/cdn-cgi/challenge-platform/h/b/orchestrate/chl_page/v1?ray=9a5803a73a131130';window._cf_chl_opt.cOgUHash = location.hash === '' && location.href.indexOf('#') !== -1 ? '#' : location.hash;window._cf_chl_opt.cOgUQuery = location.search === '' && location.href.slice(0, location.href.length - window._cf_chl_opt.cOgUHash.length).indexOf('?') !== -1 ? '?' : location.search;if (window.history && window.history.replaceState) {var ogU = location.pathname + window._cf_chl_opt.cOgUQuery + window._cf_chl_opt.cOgUHash;history.replaceState(null, null,"\/raw\/hntbocnp\/%e5%81%a5%e5%ba%b7%e4%b8%ad%e5%bf%83618ord?__cf_chl_rt_tk=9Q1egLYQ9GxXs073UJlAn.cO8UdsT15ZxEpNlfPf7ME-1764313498-1.0.1.1-LSw72m18xIeMIez5AQxdBXktVvwMNKC.G6MATqMVjok"+ window._cf_chl_opt.cOgUHash);a.onload = function() {history.replaceState(null, null, ogU);}}document.getElementsByTagName('head')[0].appendChild(a);}());</script></body></html>
+####################################
+# 來源：এ᭄健康中心ꦿ᭄¹³¹⁴₅₂₀ 
+# 創建：𝕋𝔾@myFreeNodeChat
+# 軟體：Clash
+# 類型：618ord 💯免費嚴禁倒賣
+####################################
+mixed-port: 7890
+allow-lan: true
+mode: rule
+log-level: info
+external-controller: '0.0.0.0:9090'
+secret: ''
+dns:
+  enable: true
+  ipv6: true
+  listen: '0.0.0.0:6666'
+  enhanced-mode: fake-ip
+  fake-ip-filter:
+    - '*.lan'
+    - tg @myFreeNodeChat
+  nameserver:
+    - 'https://223.5.5.5/dns-query'
+    - 'https://doh.pub/dns-query'
+  fallback:
+    - 'https://162.159.36.1/dns-query'
+    - 'https://dns.google/dns-query'
+    - 'tls://8.8.8.8:853'
+  fallback-filter:
+    geoip: false
+    ipcidr:
+      - 0.0.0.0/8
+      - 10.0.0.0/8
+      - 100.64.0.0/10
+      - 127.0.0.0/8
+      - 169.254.0.0/16
+      - 172.16.0.0/12
+      - 192.0.0.0/24
+      - 192.0.2.0/24
+      - 192.88.99.0/24
+      - 192.168.0.0/16
+      - 198.18.0.0/15
+      - 198.51.100.0/24
+      - 203.0.113.0/24
+      - 224.0.0.0/4
+      - 240.0.0.0/4
+      - 255.255.255.255/32
+    domain:
+      - +.google.com
+      - +.facebook.com
+      - +.youtube.com
+      - +.githubusercontent.com
+proxies:
+  - {name: 🇲🇾 MY(618無限流量訂閱)💯免費𝕋𝔾myFreeNodeChat, server: 103.181.165.247, port: 35132, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇲🇾 MY(發現分享本羣解散)🏘回家𝕋𝔾myFreeNodeChat, server: 103.181.165.247, port: 35132, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇲🇾 马来①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35132, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇹🇭 泰国①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35109, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇮🇩 印尼①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35135, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇻🇳 越南①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35077, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇮🇳 印度①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35127, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇵🇭 菲律宾①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35081, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇰🇭 柬埔寨①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35083, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇧🇩 孟加拉①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35085, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇵🇰 巴基斯坦①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35130, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇩🇰 丹麦①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35140, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇿🇦 南非①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35087, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇧🇭 巴林①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35007, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇧🇷 巴西①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35129, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇬🇷 希腊①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35125, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇩🇪 德国①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35017, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇳🇴 挪威①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35092, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇨🇿 捷克①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35101, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇨🇱 智利①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35138, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇫🇷 法国①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35096, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇵🇱 波兰①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35097, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇸🇪 瑞典①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35090, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇨🇭 瑞士①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35105, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇵🇪 秘鲁①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35146, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇫🇮 芬兰①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35131, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇬🇧 英国①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35023, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇳🇱 荷兰①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35099, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇮🇱 以色列①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35136, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇷🇺 俄罗斯①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35091, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇺🇦 乌克兰①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35107, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇨🇦 加拿大①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35021, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇹🇷 土耳其①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35093, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇲🇽 墨西哥①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35139, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇦🇹 奥地利①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35122, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇮🇹 意大利①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35094, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇧🇪 比利时①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35141, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇮🇪 爱尔兰①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35142, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇱🇹 立陶宛①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35144, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇵🇹 葡萄牙①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35145, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇪🇸 西班牙①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35120, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇦🇷 阿根廷①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35116, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇧🇬 保加利亚①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35095, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇨🇴 哥伦比亚①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35118, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇱🇻 拉脱维亚①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35103, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇦🇺 澳大利亚①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35111, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇪🇪 爱沙尼亚①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35143, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇷🇴 罗马尼亚①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35137, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇴🇲 阿曼①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35128, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇦🇪 阿联酋①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35079, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇸🇦 沙特阿拉伯①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35089, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+  - {name: 🇦🇿 阿塞拜疆①𝕋𝔾myFreeNodeCha, server: 103.181.165.247, port: 35134, client-fingerprint: chrome, type: vmess, uuid: f2b94ac0-9b9f-3e13-9124-91c4360b94cd, alterId: 0, cipher: auto, tls: false, tfo: false, skip-cert-verify: true, udp: true}
+proxy-groups:
+  -
+    name: '🇲🇾健康中心'
+    type: select
+    proxies:
+      - '🚦 自動選擇'
+      - '📳 自動回退'
+    include-all-proxies: true
+  -
+    name: '🚦 自動選擇'
+    type: url-test
+    url: 'http://www.gstatic.com/generate_204'
+    interval: '28800'
+    proxies:
+    include-all-proxies: true
+  -
+    name: '📳 自動回退'
+    type: fallback
+    url: https://www.gstatic.com/generate_204
+    interval: 300
+    proxies:
+    include-all-proxies: true
+  -
+    name: '💬 tg @myFreeNodeChat'
+    type: select
+    proxies:
+      - 🇲🇾健康中心
+      - DIRECT
+
+
+rules:
+# MUGUA
+- DOMAIN-KEYWORD,muguacloud,🇲🇾健康中心
+- DOMAIN-SUFFIX,jsdelivr.net,🇲🇾健康中心
+
+# > ChatGPT
+- DOMAIN-KEYWORD,chatgpt,🇲🇾健康中心
+- DOMAIN-KEYWORD,openai,🇲🇾健康中心
+- DOMAIN-KEYWORD,openaiapi,🇲🇾健康中心
+- DOMAIN-KEYWORD,openaipublic,🇲🇾健康中心
+- DOMAIN-SUFFIX,openai.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,ai.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,openai.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,pay.openai.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,chat.openai.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,auth0.openai.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,platform.openai.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,openaicom.imgix.net,🇲🇾健康中心
+
+# (Global_TV)
+# > ABC
+- DOMAIN-SUFFIX,edgedatg.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,go.com,🇲🇾健康中心
+
+# > AbemaTV
+- DOMAIN,linear-abematv.akamaized.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,abema.io,🇲🇾健康中心
+- DOMAIN-SUFFIX,abema.tv,🇲🇾健康中心
+- DOMAIN-SUFFIX,akamaized.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,ameba.jp,🇲🇾健康中心
+- DOMAIN-SUFFIX,hayabusa.io,🇲🇾健康中心
+
+# > Amazon Prime Video
+- DOMAIN-SUFFIX,aiv-cdn.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,amazonaws.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,amazonvideo.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,llnwd.net,🇲🇾健康中心
+
+# > Bahamut
+- DOMAIN-SUFFIX,bahamut.com.tw,🇲🇾健康中心
+- DOMAIN-SUFFIX,gamer.com.tw,🇲🇾健康中心
+- DOMAIN-SUFFIX,hinet.net,🇲🇾健康中心
+
+# > BBC
+- DOMAIN-KEYWORD,bbcfmt,🇲🇾健康中心
+- DOMAIN-KEYWORD,co.uk,🇲🇾健康中心
+- DOMAIN-KEYWORD,uk-live,🇲🇾健康中心
+- DOMAIN-SUFFIX,bbc.co,🇲🇾健康中心
+- DOMAIN-SUFFIX,bbc.co.uk,🇲🇾健康中心
+- DOMAIN-SUFFIX,bbc.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,bbci.co,🇲🇾健康中心
+- DOMAIN-SUFFIX,bbci.co.uk,🇲🇾健康中心
+
+# > CHOCO TV
+- DOMAIN-SUFFIX,chocotv.com.tw,🇲🇾健康中心
+
+# > Epicgames
+- DOMAIN-KEYWORD,epicgames,🇲🇾健康中心
+- DOMAIN-SUFFIX,helpshift.com,🇲🇾健康中心
+
+# > Fox+
+- DOMAIN-KEYWORD,foxplus,🇲🇾健康中心
+- DOMAIN-SUFFIX,config.fox.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,emome.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,fox.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,foxdcg.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,foxnow.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,foxplus.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,foxplay.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,ipinfo.io,🇲🇾健康中心
+- DOMAIN-SUFFIX,mstage.io,🇲🇾健康中心
+- DOMAIN-SUFFIX,now.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,theplatform.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,urlload.net,🇲🇾健康中心
+
+# > HBO && HBO Go
+- DOMAIN-SUFFIX,execute-api.ap-southeast-1.amazonaws.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,hbo.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,hboasia.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,hbogo.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,hbogoasia.hk,🇲🇾健康中心
+
+# > Hulu
+- DOMAIN-SUFFIX,happyon.jp,🇲🇾健康中心
+- DOMAIN-SUFFIX,hulu.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,huluim.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,hulustream.com,🇲🇾健康中心
+
+# > Imkan
+- DOMAIN-SUFFIX,imkan.tv,🇲🇾健康中心
+
+# > JOOX
+- DOMAIN-SUFFIX,joox.com,🇲🇾健康中心
+
+# > MytvSUPER
+- DOMAIN-KEYWORD,nowtv100,🇲🇾健康中心
+- DOMAIN-KEYWORD,rthklive,🇲🇾健康中心
+- DOMAIN-SUFFIX,mytvsuper.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,tvb.com,🇲🇾健康中心
+
+# > Netflix
+- DOMAIN-SUFFIX,netflix.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,netflix.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,nflxext.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,nflximg.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,nflximg.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,nflxso.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,nflxvideo.net,🇲🇾健康中心
+
+# > Pandora
+- DOMAIN-SUFFIX,pandora.com,🇲🇾健康中心
+
+# > Sky GO
+- DOMAIN-SUFFIX,sky.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,skygo.co.nz,🇲🇾健康中心
+
+# > Spotify
+- DOMAIN-KEYWORD,spotify,🇲🇾健康中心
+- DOMAIN-SUFFIX,scdn.co,🇲🇾健康中心
+- DOMAIN-SUFFIX,spoti.fi,🇲🇾健康中心
+
+# > viuTV
+- DOMAIN-SUFFIX,viu.tv,🇲🇾健康中心
+
+# > Youtube
+- DOMAIN-KEYWORD,youtube,🇲🇾健康中心
+- DOMAIN-SUFFIX,googlevideo.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,gvt2.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,youtu.be,🇲🇾健康中心
+
+# (DNS Cache Pollution Protection)
+# > Google
+- DOMAIN-SUFFIX,appspot.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,blogger.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,getoutline.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,gvt0.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,gvt1.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,gvt3.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,xn--ngstr-lra8j.com,🇲🇾健康中心
+- DOMAIN-KEYWORD,google,🇲🇾健康中心
+- DOMAIN-KEYWORD,blogspot,🇲🇾健康中心
+# > Facebook
+- DOMAIN-SUFFIX,cdninstagram.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,fb.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,fb.me,🇲🇾健康中心
+- DOMAIN-SUFFIX,fbaddins.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,fbcdn.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,fbsbx.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,fbworkmail.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,instagram.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,m.me,🇲🇾健康中心
+- DOMAIN-SUFFIX,messenger.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,oculus.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,oculuscdn.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,rocksdb.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,whatsapp.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,whatsapp.net,🇲🇾健康中心
+- DOMAIN-KEYWORD,facebook,🇲🇾健康中心
+# > Twitter
+- DOMAIN-SUFFIX,pscp.tv,🇲🇾健康中心
+- DOMAIN-SUFFIX,periscope.tv,🇲🇾健康中心
+- DOMAIN-SUFFIX,t.co,🇲🇾健康中心
+- DOMAIN-SUFFIX,twimg.co,🇲🇾健康中心
+- DOMAIN-SUFFIX,twimg.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,twitpic.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,vine.co,🇲🇾健康中心
+- DOMAIN-KEYWORD,twitter,🇲🇾健康中心
+# > Telegram
+- DOMAIN-SUFFIX,t.me,🇲🇾健康中心
+- DOMAIN-SUFFIX,tdesktop.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,telegra.ph,🇲🇾健康中心
+- DOMAIN-SUFFIX,telegram.me,🇲🇾健康中心
+- DOMAIN-SUFFIX,telegram.org,🇲🇾健康中心
+# > Line
+- DOMAIN-SUFFIX,line.me,🇲🇾健康中心
+- DOMAIN-SUFFIX,line-apps.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,line-scdn.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,naver.jp,🇲🇾健康中心
+# > Other
+- DOMAIN-SUFFIX,4shared.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,881903.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,abc.net.au,🇲🇾健康中心
+- DOMAIN-SUFFIX,abebooks.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,amazon.co.jp,🇲🇾健康中心
+- DOMAIN-SUFFIX,apigee.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,apk-dl.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,apkmirror.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,apkmonk.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,apkpure.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,aptoide.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,archive.is,🇲🇾健康中心
+- DOMAIN-SUFFIX,archive.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,arte.tv,🇲🇾健康中心
+- DOMAIN-SUFFIX,ask.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,avgle.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,badoo.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,bandwagonhost.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,bbc.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,behance.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,bibox.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,biggo.com.tw,🇲🇾健康中心
+- DOMAIN-SUFFIX,binance.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,bitcointalk.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,bitfinex.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,bitmex.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,bit-z.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,bloglovin.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,bloomberg.cn,🇲🇾健康中心
+- DOMAIN-SUFFIX,bloomberg.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,book.com.tw,🇲🇾健康中心
+- DOMAIN-SUFFIX,booklive.jp,🇲🇾健康中心
+- DOMAIN-SUFFIX,books.com.tw,🇲🇾健康中心
+- DOMAIN-SUFFIX,box.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,brookings.edu,🇲🇾健康中心
+- DOMAIN-SUFFIX,businessinsider.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,bwh1.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,castbox.fm,🇲🇾健康中心
+- DOMAIN-SUFFIX,cbc.ca,🇲🇾健康中心
+- DOMAIN-SUFFIX,cdw.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,change.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,ck101.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,clarionproject.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,clyp.it,🇲🇾健康中心
+- DOMAIN-SUFFIX,cna.com.tw,🇲🇾健康中心
+- DOMAIN-SUFFIX,comparitech.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,conoha.jp,🇲🇾健康中心
+- DOMAIN-SUFFIX,crucial.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,cts.com.tw,🇲🇾健康中心
+- DOMAIN-SUFFIX,cw.com.tw,🇲🇾健康中心
+- DOMAIN-SUFFIX,cyberctm.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,dailymotion.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,dailyview.tw,🇲🇾健康中心
+- DOMAIN-SUFFIX,daum.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,daumcdn.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,dcard.tw,🇲🇾健康中心
+- DOMAIN-SUFFIX,deepdiscount.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,deezer.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,depositphotos.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,disconnect.me,🇲🇾健康中心
+- DOMAIN-SUFFIX,discordapp.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,discordapp.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,disqus.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,dns2go.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,dropbox.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,dropboxusercontent.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,duckduckgo.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,dw.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,dynu.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,earthcam.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,ebookservice.tw,🇲🇾健康中心
+- DOMAIN-SUFFIX,economist.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,edgecastcdn.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,edu,🇲🇾健康中心
+- DOMAIN-SUFFIX,elpais.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,enanyang.my,🇲🇾健康中心
+- DOMAIN-SUFFIX,euronews.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,feedly.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,files.wordpress.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,flickr.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,flitto.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,foreignpolicy.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,friday.tw,🇲🇾健康中心
+- DOMAIN-SUFFIX,gate.io,🇲🇾健康中心
+- DOMAIN-SUFFIX,getlantern.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,getsync.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,🇲🇾健康中心voices.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,goo.ne.jp,🇲🇾健康中心
+- DOMAIN-SUFFIX,goodreads.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,gov.tw,🇲🇾健康中心
+- DOMAIN-SUFFIX,gumroad.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,hbg.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,hightail.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,hk01.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,hkbf.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,hkbookcity.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,hkej.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,hket.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,hkgolden.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,hootsuite.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,hudson.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,huobi.pro,🇲🇾健康中心
+- DOMAIN-SUFFIX,initiummall.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,ipfs.io,🇲🇾健康中心
+- DOMAIN-SUFFIX,issuu.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,japantimes.co.jp,🇲🇾健康中心
+- DOMAIN-SUFFIX,jiji.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,jinx.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,jkforum.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,joinmastodon.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,kakao.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,lihkg.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,live.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,mail.ru,🇲🇾健康中心
+- DOMAIN-SUFFIX,matters.news,🇲🇾健康中心
+- DOMAIN-SUFFIX,medium.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,mega.nz,🇲🇾健康中心
+- DOMAIN-SUFFIX,mil,🇲🇾健康中心
+- DOMAIN-SUFFIX,mobile01.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,naver.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,nikkei.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,nofile.io,🇲🇾健康中心
+- DOMAIN-SUFFIX,now.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,nyt.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,nytchina.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,nytcn.me,🇲🇾健康中心
+- DOMAIN-SUFFIX,nytco.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,nytimes.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,nytimg.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,nytlog.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,nytstyle.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,ok.ru,🇲🇾健康中心
+- DOMAIN-SUFFIX,okex.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,pcloud.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,pinimg.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,pixiv.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,pornhub.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,pureapk.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,quora.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,quoracdn.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,rakuten.co.jp,🇲🇾健康中心
+- DOMAIN-SUFFIX,reddit.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,redditmedia.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,resilio.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,reuters.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,scmp.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,scribd.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,seatguru.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,shadowsocks.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,slideshare.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,soundcloud.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,startpage.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,steamcommunity.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,steemit.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,t66y.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,teco-hk.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,teco-mo.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,teddysun.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,theinitium.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,tineye.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,torproject.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,tumblr.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,turbobit.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,twitch.tv,🇲🇾健康中心
+- DOMAIN-SUFFIX,udn.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,unseen.is,🇲🇾健康中心
+- DOMAIN-SUFFIX,upmedia.mg,🇲🇾健康中心
+- DOMAIN-SUFFIX,uptodown.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,ustream.tv,🇲🇾健康中心
+- DOMAIN-SUFFIX,uwants.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,v2ray.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,viber.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,videopress.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,vimeo.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,voxer.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,vzw.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,w3schools.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,wattpad.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,whoer.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,wikimapia.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,wikipedia.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,wire.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,worldcat.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,wsj.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,wsj.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,xboxlive.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,xvideos.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,yahoo.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,yesasia.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,yes-news.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,yomiuri.co.jp,🇲🇾健康中心
+- DOMAIN-SUFFIX,you-get.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,zb.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,zello.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,zeronet.io,🇲🇾健康中心
+- DOMAIN,cdn-images.mailchimp.com,🇲🇾健康中心
+- DOMAIN,id.heroku.com,🇲🇾健康中心
+- DOMAIN-KEYWORD,github,🇲🇾健康中心
+- DOMAIN-KEYWORD,jav,🇲🇾健康中心
+- DOMAIN-KEYWORD,pinterest,🇲🇾健康中心
+- DOMAIN-KEYWORD,porn,🇲🇾健康中心
+- DOMAIN-KEYWORD,wikileaks,🇲🇾健康中心
+
+# (Region-Restricted Access Denied)
+- DOMAIN-SUFFIX,apartmentratings.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,apartments.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,bankmobilevibe.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,bing.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,booktopia.com.au,🇲🇾健康中心
+- DOMAIN-SUFFIX,centauro.com.br,🇲🇾健康中心
+- DOMAIN-SUFFIX,clearsurance.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,costco.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,crackle.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,depositphotos.cn,🇲🇾健康中心
+- DOMAIN-SUFFIX,dish.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,dmm.co.jp,🇲🇾健康中心
+- DOMAIN-SUFFIX,dmm.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,dnvod.tv,🇲🇾健康中心
+- DOMAIN-SUFFIX,esurance.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,extmatrix.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,fastpic.ru,🇲🇾健康中心
+- DOMAIN-SUFFIX,flipboard.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,fnac.be,🇲🇾健康中心
+- DOMAIN-SUFFIX,fnac.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,funkyimg.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,fxnetworks.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,gettyimages.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,jcpenney.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,kknews.cc,🇲🇾健康中心
+- DOMAIN-SUFFIX,nationwide.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,nbc.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,nordstrom.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,nordstromimage.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,nordstromrack.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,read01.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,superpages.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,target.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,thinkgeek.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,tracfone.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,uploader.jp,🇲🇾健康中心
+- DOMAIN-SUFFIX,vevo.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,viu.tv,🇲🇾健康中心
+- DOMAIN-SUFFIX,vk.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,vsco.co,🇲🇾健康中心
+- DOMAIN-SUFFIX,xfinity.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,zattoo.com,🇲🇾健康中心
+- DOMAIN,abc.com,🇲🇾健康中心
+- DOMAIN,abc.go.com,🇲🇾健康中心
+- DOMAIN,abc.net.au,🇲🇾健康中心
+- DOMAIN,wego.here.com,🇲🇾健康中心
+#USER-AGENT,Roam*,🇲🇾健康中心
+
+# (The Most Popular Sites)
+# > Apple
+# > Apple URL Shortener
+- DOMAIN-SUFFIX,appsto.re,🇲🇾健康中心
+# > TestFlight
+- DOMAIN,beta.itunes.apple.com,🇲🇾健康中心
+# > iBooks Store download
+- DOMAIN,books.itunes.apple.com,🇲🇾健康中心
+# > iTunes Store Moveis Trailers
+- DOMAIN,hls.itunes.apple.com,🇲🇾健康中心
+# App Store Preview
+- DOMAIN,itunes.apple.com,🇲🇾健康中心
+# > Spotlight
+- DOMAIN,api-glb-sea.smoot.apple.com,🇲🇾健康中心
+# > Dictionary
+- DOMAIN,lookup-api.apple.com,🇲🇾健康中心
+#PROCESS-NAME,LookupViewService,🇲🇾健康中心
+# > Apple Service
+- DOMAIN-SUFFIX,aaplimg.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,apple.co,🇲🇾健康中心
+- DOMAIN-SUFFIX,apple.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,apple.com.cn,🇲🇾健康中心
+- DOMAIN-SUFFIX,apple-cloudkit.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,appstore.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,cdn-apple.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,crashlytics.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,icloud.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,icloud.com.cn,🇲🇾健康中心
+- DOMAIN-SUFFIX,icloud-content.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,me.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,mzstatic.com,🇲🇾健康中心
+- DOMAIN,www-cdn.icloud.com.akadns.net,🇲🇾健康中心
+- IP-CIDR,17.0.0.0/8,🇲🇾健康中心
+# > Google
+- DOMAIN-SUFFIX,abc.xyz,🇲🇾健康中心
+- DOMAIN-SUFFIX,android.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,androidify.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,dialogflow.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,autodraw.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,capitalg.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,certificate-transparency.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,chrome.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,chromeexperiments.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,chromestatus.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,chromium.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,creativelab5.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,debug.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,deepmind.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,firebaseio.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,getmdl.io,🇲🇾健康中心
+- DOMAIN-SUFFIX,ggpht.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,gmail.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,gmodules.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,godoc.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,golang.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,gstatic.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,gv.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,gwtproject.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,itasoftware.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,madewithcode.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,material.io,🇲🇾健康中心
+- DOMAIN-SUFFIX,polymer-project.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,admin.recaptcha.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,recaptcha.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,shattered.io,🇲🇾健康中心
+- DOMAIN-SUFFIX,synergyse.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,tensorflow.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,tiltbrush.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,waveprotocol.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,waymo.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,webmproject.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,webrtc.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,whatbrowser.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,widevine.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,x.company,🇲🇾健康中心
+- DOMAIN-SUFFIX,youtu.be,🇲🇾健康中心
+- DOMAIN-SUFFIX,yt.be,🇲🇾健康中心
+- DOMAIN-SUFFIX,ytimg.com,🇲🇾健康中心
+# > Steam
+- DOMAIN,media.steampowered.com,🇲🇾健康中心
+- DOMAIN,store.steampowered.com,🇲🇾健康中心
+# > Other
+- DOMAIN-SUFFIX,0rz.tw,🇲🇾健康中心
+- DOMAIN-SUFFIX,4bluestones.biz,🇲🇾健康中心
+- DOMAIN-SUFFIX,9bis.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,allconnected.co,🇲🇾健康中心
+- DOMAIN-SUFFIX,amazonaws.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,aol.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,bcc.com.tw,🇲🇾健康中心
+- DOMAIN-SUFFIX,bit.ly,🇲🇾健康中心
+- DOMAIN-SUFFIX,bitshare.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,blog.jp,🇲🇾健康中心
+- DOMAIN-SUFFIX,blogimg.jp,🇲🇾健康中心
+- DOMAIN-SUFFIX,blogtd.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,broadcast.co.nz,🇲🇾健康中心
+- DOMAIN-SUFFIX,camfrog.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,cfos.de,🇲🇾健康中心
+- DOMAIN-SUFFIX,citypopulation.de,🇲🇾健康中心
+- DOMAIN-SUFFIX,cloudfront.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,ctitv.com.tw,🇲🇾健康中心
+- DOMAIN-SUFFIX,cuhk.edu.hk,🇲🇾健康中心
+- DOMAIN-SUFFIX,cusu.hk,🇲🇾健康中心
+- DOMAIN-SUFFIX,discuss.com.hk,🇲🇾健康中心
+- DOMAIN-SUFFIX,dropboxapi.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,edditstatic.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,flickriver.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,focustaiwan.tw,🇲🇾健康中心
+- DOMAIN-SUFFIX,free.fr,🇲🇾健康中心
+- DOMAIN-SUFFIX,ftchinese.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,gigacircle.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,gov,🇲🇾健康中心
+- DOMAIN-SUFFIX,hk-pub.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,hosting.co.uk,🇲🇾健康中心
+- DOMAIN-SUFFIX,hwcdn.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,jtvnw.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,linksalpha.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,manyvids.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,myactimes.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,newsblur.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,now.im,🇲🇾健康中心
+- DOMAIN-SUFFIX,redditlist.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,signal.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,sparknotes.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,streetvoice.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,ttvnw.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,tv.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,twitchcdn.net,🇲🇾健康中心
+- DOMAIN-SUFFIX,typepad.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,udnbkk.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,whispersystems.org,🇲🇾健康中心
+- DOMAIN-SUFFIX,wikia.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,wn.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,wolframalpha.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,x-art.com,🇲🇾健康中心
+- DOMAIN-SUFFIX,yimg.com,🇲🇾健康中心
+
+# > Other
+- DOMAIN-KEYWORD,paypal,🇲🇾健康中心
+- DOMAIN-KEYWORD,linkedin,🇲🇾健康中心
+- DOMAIN-KEYWORD,licdn,🇲🇾健康中心
+
+# > Telegram
+- IP-CIDR,67.198.55.0/24,🇲🇾健康中心
+- IP-CIDR,91.108.4.0/22,🇲🇾健康中心
+- IP-CIDR,91.108.8.0/22,🇲🇾健康中心
+- IP-CIDR,91.108.12.0/22,🇲🇾健康中心
+- IP-CIDR,91.108.16.0/22,🇲🇾健康中心
+- IP-CIDR,91.108.56.0/22,🇲🇾健康中心
+- IP-CIDR,109.239.140.0/24,🇲🇾健康中心
+- IP-CIDR,149.154.160.0/20,🇲🇾健康中心
+- IP-CIDR,205.172.60.0/22,🇲🇾健康中心
+
+# (Extra IP-CIRD)
+# > Google
+- IP-CIDR,35.190.247.0/24,🇲🇾健康中心
+- IP-CIDR,64.233.160.0/19,🇲🇾健康中心
+- IP-CIDR,66.102.0.0/20,🇲🇾健康中心
+- IP-CIDR,66.249.80.0/20,🇲🇾健康中心
+- IP-CIDR,72.14.192.0/18,🇲🇾健康中心
+- IP-CIDR,74.125.0.0/16,🇲🇾健康中心
+- IP-CIDR,108.177.8.0/21,🇲🇾健康中心
+- IP-CIDR,172.217.0.0/16,🇲🇾健康中心
+- IP-CIDR,173.194.0.0/16,🇲🇾健康中心
+- IP-CIDR,209.85.128.0/17,🇲🇾健康中心
+- IP-CIDR,216.58.192.0/19,🇲🇾健康中心
+- IP-CIDR,216.239.32.0/19,🇲🇾健康中心
+# > Facebook
+- IP-CIDR,31.13.24.0/21,🇲🇾健康中心
+- IP-CIDR,31.13.64.0/18,🇲🇾健康中心
+- IP-CIDR,45.64.40.0/22,🇲🇾健康中心
+- IP-CIDR,66.220.144.0/20,🇲🇾健康中心
+- IP-CIDR,69.63.176.0/20,🇲🇾健康中心
+- IP-CIDR,69.171.224.0/19,🇲🇾健康中心
+- IP-CIDR,74.119.76.0/22,🇲🇾健康中心
+- IP-CIDR,103.4.96.0/22,🇲🇾健康中心
+- IP-CIDR,129.134.0.0/17,🇲🇾健康中心
+- IP-CIDR,157.240.0.0/17,🇲🇾健康中心
+- IP-CIDR,173.252.64.0/19,🇲🇾健康中心
+- IP-CIDR,173.252.96.0/19,🇲🇾健康中心
+- IP-CIDR,179.60.192.0/22,🇲🇾健康中心
+- IP-CIDR,185.60.216.0/22,🇲🇾健康中心
+- IP-CIDR,204.15.20.0/22,🇲🇾健康中心
+# > Twitter
+- IP-CIDR,69.195.160.0/19,🇲🇾健康中心
+- IP-CIDR,104.244.42.0/21,🇲🇾健康中心
+- IP-CIDR,192.133.76.0/22,🇲🇾健康中心
+- IP-CIDR,199.16.156.0/22,🇲🇾健康中心
+- IP-CIDR,199.59.148.0/22,🇲🇾健康中心
+- IP-CIDR,199.96.56.0/21,🇲🇾健康中心
+- IP-CIDR,202.160.128.0/22,🇲🇾健康中心
+- IP-CIDR,209.237.192.0/19,🇲🇾健康中心
+
+# (Asian_TV)
+# > Bilibili
+- DOMAIN-KEYWORD,bilibili,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,acg.tv,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,acgvideo.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,b23.tv,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,biliapi.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,biliapi.net,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,bilibili.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,biligame.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,biligame.net,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,hdslb.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,im9.com,💬 tg @myFreeNodeChat
+
+# > IQIYI
+- DOMAIN-KEYWORD,qiyi,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,qy.net,💬 tg @myFreeNodeChat
+
+# > letv
+- DOMAIN-SUFFIX,api.mob.app.letv.com,💬 tg @myFreeNodeChat
+
+# > NeteaseMusic
+- DOMAIN-SUFFIX,163yun.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,music.126.net,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,music.163.com,💬 tg @myFreeNodeChat
+
+# > Tencent Video
+- DOMAIN-SUFFIX,vv.video.qq.com,💬 tg @myFreeNodeChat
+
+# China Area Network
+# > Microsoft
+- DOMAIN-SUFFIX,microsoft.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,windows.net,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,sfx.ms,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,sharepoint.com,💬 tg @myFreeNodeChat
+- DOMAIN-KEYWORD,officecdn,💬 tg @myFreeNodeChat
+# > Blizzard
+- DOMAIN-SUFFIX,blizzard.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,battle.net,💬 tg @myFreeNodeChat
+- DOMAIN,blzddist1-a.akamaihd.net,💬 tg @myFreeNodeChat
+# > Steam
+- DOMAIN-SUFFIX,steampowered.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,steam-chat.com,💬 tg @myFreeNodeChat
+- DOMAIN-KEYWORD,steamcdn,💬 tg @myFreeNodeChat
+- DOMAIN-KEYWORD,steamstore,💬 tg @myFreeNodeChat
+- DOMAIN-KEYWORD,steamuserimages,💬 tg @myFreeNodeChat
+- DOMAIN-KEYWORD,steambroadcast,💬 tg @myFreeNodeChat
+# > Tencent
+#USER-AGENT,MicroMessenger%20Client,💬 tg @myFreeNodeChat
+#USER-AGENT,WeChat*,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,qq.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,qpic.cn,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,tencent.com,💬 tg @myFreeNodeChat
+# > Alibaba
+- DOMAIN-SUFFIX,alibaba.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,alicdn.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,amap.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,dingtalk.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,taobao.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,tmall.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,ykimg.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,youku.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,xiami.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,xiami.net,💬 tg @myFreeNodeChat
+# > NetEase
+- DOMAIN-SUFFIX,163.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,126.net,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,163yun.com,💬 tg @myFreeNodeChat
+# > Sohu
+- DOMAIN-SUFFIX,sohu.com.cn,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,itc.cn,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,sohu.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,v-56.com,💬 tg @myFreeNodeChat
+# > Sina
+- DOMAIN-SUFFIX,weibo.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,weibo.cn,💬 tg @myFreeNodeChat
+# > JD
+- DOMAIN-SUFFIX,jd.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,jd.hk,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,360buyimg.com,💬 tg @myFreeNodeChat
+# > MI
+- DOMAIN-SUFFIX,duokan.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,mi-img.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,mifile.cn,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,xiaomi.com,💬 tg @myFreeNodeChat
+# > bilibili
+- DOMAIN-SUFFIX,acgvideo.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,bilibili.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,hdslb.com,💬 tg @myFreeNodeChat
+# > iQiyi
+- DOMAIN-SUFFIX,iqiyi.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,iqiyipic.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,71.am.com,💬 tg @myFreeNodeChat
+# > HunanTV
+- DOMAIN-SUFFIX,hitv.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,mgtv.com,💬 tg @myFreeNodeChat
+# > Meitu
+- DOMAIN-SUFFIX,meitu.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,meitudata.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,meipai.com,💬 tg @myFreeNodeChat
+# > YYeTs
+- DOMAIN-SUFFIX,zmzapi.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,zimuzu.tv,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,zmzfile.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,zmzapi.net,💬 tg @myFreeNodeChat
+# > 蛋蛋赞
+- DOMAIN-SUFFIX,baduziyuan.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,com-hs-hkdy.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,czybjz.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,dandanzan.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,fjhps.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,kuyunbo.club,💬 tg @myFreeNodeChat
+# > Baidu
+- DOMAIN-SUFFIX,baidu.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,baidubcr.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,bdstatic.com,💬 tg @myFreeNodeChat
+# > ChinaNet
+- DOMAIN-SUFFIX,189.cn,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,21cn.com,💬 tg @myFreeNodeChat
+# > ByteDance
+- DOMAIN-SUFFIX,bytecdn.cn,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,pstatp.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,snssdk.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,toutiao.com,💬 tg @myFreeNodeChat
+# > Content Delivery Network
+# > Akamai
+- DOMAIN-SUFFIX,akadns.net,💬 tg @myFreeNodeChat
+# - DOMAIN-SUFFIX,akamai.net,💬 tg @myFreeNodeChat
+# - DOMAIN-SUFFIX,akamaiedge.net,💬 tg @myFreeNodeChat
+# - DOMAIN-SUFFIX,akamaihd.net,💬 tg @myFreeNodeChat
+# - DOMAIN-SUFFIX,akamaistream.net,💬 tg @myFreeNodeChat
+# - DOMAIN-SUFFIX,akamaized.net,💬 tg @myFreeNodeChat
+# > ChinaNetCenter
+- DOMAIN-SUFFIX,chinanetcenter.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,wangsu.com,💬 tg @myFreeNodeChat
+# > IP Query
+- DOMAIN-SUFFIX,ipip.net,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,ip.cn,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,ip.la,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,ip-cdn.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,ipv6-test.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,test-ipv6.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,whatismyip.com,💬 tg @myFreeNodeChat
+- DOMAIN,ip.bjango.com,💬 tg @myFreeNodeChat
+# > Other
+- DOMAIN-SUFFIX,40017.cn,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,broadcasthe.net,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,cailianpress.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,chdbits.co,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,chushou.tv,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,cmbchina.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,cmbimg.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,cmct.tv,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,cmvideo.cn,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,cnlang.org,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,doubanio.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,douyu.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,douyucdn.cn,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,dxycdn.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,hicloud.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,hdchina.org,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,hdcmct.org,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,ithome.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,kkmh.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,ksosoft.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,maoyun.tv,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,meituan.net,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,mobike.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,mubu.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,myzaker.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,ourbits.club,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,passthepopcorn.me,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,privatehd.to,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,redacted.ch,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,ruguoapp.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,smzdm.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,sogou.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,teamviewer.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,totheglory.im,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,udacity.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,xmcdn.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,yangkeduo.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,zhihu.com,💬 tg @myFreeNodeChat
+- DOMAIN-SUFFIX,zhimg.com,💬 tg @myFreeNodeChat
+#USER-AGENT,NeteaseMusic*,💬 tg @myFreeNodeChat
+#USER-AGENT,%E7%BD%91%E6%98%93%E4%BA%91%E9%9F%B3%E4%B9%90*,💬 tg @myFreeNodeChat
+
+# > IQIYI
+- IP-CIDR,101.227.0.0/16,💬 tg @myFreeNodeChat
+- IP-CIDR,101.224.0.0/13,💬 tg @myFreeNodeChat
+- IP-CIDR,119.176.0.0/12,💬 tg @myFreeNodeChat
+
+# > Youku
+- IP-CIDR,106.11.0.0/16,💬 tg @myFreeNodeChat
+
+# Local Area Network
+- DOMAIN-KEYWORD,announce,DIRECT
+- DOMAIN-KEYWORD,torrent,DIRECT
+- DOMAIN-KEYWORD,tracker,DIRECT
+- DOMAIN-SUFFIX,smtp,DIRECT
+- DOMAIN-SUFFIX,local,DIRECT
+- IP-CIDR,192.168.0.0/16,DIRECT
+- IP-CIDR,10.0.0.0/8,DIRECT
+- IP-CIDR,172.16.0.0/12,DIRECT
+- IP-CIDR,127.0.0.0/8,DIRECT
+- IP-CIDR,100.64.0.0/10,DIRECT
+
+# GeoIP China
+- GEOIP,CN,💬 tg @myFreeNodeChat
+
+- MATCH,🇲🇾健康中心
