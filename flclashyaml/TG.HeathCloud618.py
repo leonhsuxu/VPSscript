@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 健康中心618 - Clash 订阅合并脚本
-- 完整模拟 Chrome 浏览器下载
+- 支持 pastecode.dev API 访问（带 Authorization）
 - 改用内置的 socket 库进行延迟测试，无任何外部依赖
 - 按延迟和地区优先级精确排序
 - 智能识别地区 (正则 + 详尽中文名映射)，匹配对应国旗
@@ -20,7 +20,6 @@ import socket
 import concurrent.futures
 import hashlib
 from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
 import random
 
 # ========== 基础配置 ==========
@@ -28,6 +27,10 @@ SUBSCRIPTION_URLS = [
     "https://pastecode.dev/raw/ki7zml2s/健康中心618pro",
     "https://pastecode.dev/raw/hntbocnp/健康中心618ord",
 ]
+
+# pastecode.dev API Token（如果需要的话，留空则不使用）
+PASTECODE_API_TOKEN = "6im0a1l8w4p768bf6lyxa3qsl6a2r6mprfpkwzwoeztzkg16rdaoja796jg6
+"  # 在这里填入您的 API Token
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_FILE = os.path.join(SCRIPT_DIR, "TG.HeathCloud618.yaml")
@@ -38,8 +41,6 @@ SOCKET_TIMEOUT = 2
 MAX_TEST_WORKERS = 256
 
 # ========== 下载配置 ==========
-MAX_RETRIES = 3
-RETRY_DELAY = 3
 DOWNLOAD_TIMEOUT = 30
 
 # ========== Chrome 浏览器配置 ==========
@@ -65,22 +66,12 @@ def create_chrome_session():
     """创建一个完全模拟 Chrome 浏览器的 Session 对象"""
     session = requests.Session()
     
-    # 配置重试策略
-    retry_strategy = Retry(
-        total=3,
-        backoff_factor=2,
-        status_forcelist=[403, 429, 500, 502, 503, 504],
-        allowed_methods=["GET", "POST"]
-    )
-    
-    adapter = HTTPAdapter(max_retries=retry_strategy, pool_connections=10, pool_maxsize=10)
+    adapter = HTTPAdapter(pool_connections=10, pool_maxsize=10)
     session.mount("http://", adapter)
     session.mount("https://", adapter)
     
-    # 随机选择一个 Chrome 版本
     chrome_version = random.choice(CHROME_VERSIONS)
     
-    # 完整的 Chrome 浏览器请求头
     session.headers.update({
         'User-Agent': f'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/{chrome_version} Safari/537.36',
         'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -131,71 +122,75 @@ def extract_proxies_from_text(content):
     return []
 
 def download_subscription(url, session=None):
-    """使用 Chrome Session 下载订阅"""
+    """使用 Chrome Session 下载订阅，支持 pastecode.dev API"""
     if session is None:
         session = create_chrome_session()
     
-    for attempt in range(MAX_RETRIES):
-        try:
-            if attempt > 0:
-                delay = RETRY_DELAY + random.uniform(0, 2)  # 添加随机延迟
-                print(f"  等待 {delay:.1f} 秒后重试...")
-                time.sleep(delay)
+    try:
+        print(f"  正在下载 {url[:50]}...")
+        
+        # 准备请求头
+        headers = {}
+        
+        # 针对 pastecode.dev 的特殊处理
+        if 'pastecode.dev' in url:
+            headers['Referer'] = 'https://pastecode.dev/'
+            # 如果有 API Token，添加 Authorization 头
+            if PASTECODE_API_TOKEN:
+                headers['Authorization'] = f'Bearer {PASTECODE_API_TOKEN}'
+                print(f"  使用 API Token 访问")
+            time.sleep(random.uniform(0.3, 0.6))
+        elif 'github' in url or 'githubusercontent' in url:
+            headers['Referer'] = 'https://github.com/'
+            time.sleep(random.uniform(0.5, 1.0))
+        
+        # 发送请求
+        response = session.get(
+            url, 
+            headers=headers,
+            timeout=DOWNLOAD_TIMEOUT,
+            allow_redirects=True,
+            verify=True
+        )
+        
+        # 检查状态码
+        if response.status_code == 200:
+            content = response.text
             
-            print(f"  尝试下载 {url[:50]}... (第 {attempt + 1}/{MAX_RETRIES} 次)")
+            # 尝试多种解析方式
+            proxies = extract_proxies_from_text(content)
+            if proxies:
+                print(f"  ✓ 成功获取 {len(proxies)} 个节点")
+                return proxies
             
-            # 模拟真实浏览器行为：添加 Referer（如果需要）
-            headers = {}
-            if 'github' in url or 'githubusercontent' in url:
-                headers['Referer'] = 'https://github.com/'
-                time.sleep(random.uniform(0.5, 1.5))  # 随机延迟
-            elif 'pastecode.dev' in url:
-                headers['Referer'] = 'https://pastecode.dev/'
-                time.sleep(random.uniform(0.3, 0.8))
-            
-            # 发送请求
-            response = session.get(
-                url, 
-                headers=headers,
-                timeout=DOWNLOAD_TIMEOUT,
-                allow_redirects=True,
-                verify=True
-            )
-            
-            # 检查状态码
-            if response.status_code == 200:
-                content = response.text
-                
-                # 尝试多种解析方式
-                proxies = extract_proxies_from_text(content)
+            # 尝试 Base64 解码
+            try:
+                decoded_content = base64.b64decode(content).decode('utf-8')
+                proxies = extract_proxies_from_text(decoded_content)
                 if proxies:
-                    print(f"  ✓ 成功获取 {len(proxies)} 个节点")
+                    print(f"  ✓ 成功获取 {len(proxies)} 个节点 (Base64)")
                     return proxies
+            except:
+                pass
+        
+        elif response.status_code == 403:
+            print(f"  ✗ 403 错误 - 访问被拒绝")
+            if 'pastecode.dev' in url and not PASTECODE_API_TOKEN:
+                print(f"  提示：您可以在脚本顶部设置 PASTECODE_API_TOKEN 来使用 API 访问")
+        elif response.status_code == 401:
+            print(f"  ✗ 401 错误 - 认证失败，请检查 API Token")
+        else:
+            print(f"  ✗ HTTP 错误 {response.status_code}")
                 
-                # 尝试 Base64 解码
-                try:
-                    decoded_content = base64.b64decode(content).decode('utf-8')
-                    proxies = extract_proxies_from_text(decoded_content)
-                    if proxies:
-                        print(f"  ✓ 成功获取 {len(proxies)} 个节点 (Base64)")
-                        return proxies
-                except:
-                    pass
-            
-            elif response.status_code == 403:
-                print(f"  ✗ 403 错误 - 访问被拒绝，尝试更换请求策略...")
-            else:
-                print(f"  ✗ HTTP 错误 {response.status_code}")
-                    
-        except requests.exceptions.Timeout:
-            print(f"  ✗ 请求超时")
-        except requests.exceptions.SSLError:
-            print(f"  ✗ SSL 证书错误")
-        except requests.exceptions.ConnectionError as e:
-            print(f"  ✗ 连接错误")
-        except Exception as e:
-            print(f"  ✗ 下载失败: {e}")
-            
+    except requests.exceptions.Timeout:
+        print(f"  ✗ 请求超时")
+    except requests.exceptions.SSLError:
+        print(f"  ✗ SSL 证书错误")
+    except requests.exceptions.ConnectionError:
+        print(f"  ✗ 连接错误")
+    except Exception as e:
+        print(f"  ✗ 下载失败: {e}")
+        
     print(f"  ✗ {url[:50]}... 下载失败")
     return []
 
@@ -305,15 +300,13 @@ def main():
     print("=" * 60)
     
     print("\n[1/4] 下载与合并订阅...")
-    # 创建持久化的 Chrome Session
     session = create_chrome_session()
     print(f"  模拟 Chrome 浏览器版本: {session.headers['User-Agent'].split('Chrome/')[1].split(' ')[0]}")
     
     all_proxies = []
     for i, url in enumerate(SUBSCRIPTION_URLS):
         if i > 0:
-            # 在不同订阅之间添加延迟，模拟人类行为
-            time.sleep(random.uniform(1, 3))
+            time.sleep(random.uniform(0.5, 1.5))
         all_proxies.extend(download_subscription(url, session))
     
     unique_proxies = merge_and_deduplicate_proxies(all_proxies)
