@@ -5,7 +5,7 @@
 - 改用内置的 socket 库进行延迟测试，无任何外部依赖，终极稳定
 - 按延迟和地区优先级精确排序
 - 智能识别地区 (正则 + 详尽中文名映射)，匹配对应国旗
-- 新增：模拟网页复制，直接提取 proxies 部分
+- 完整模拟浏览器下载
 """
 import requests
 import yaml
@@ -19,11 +19,13 @@ from collections import defaultdict
 import socket
 import concurrent.futures
 import hashlib
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 # ========== 基础配置 ==========
 SUBSCRIPTION_URLS = [
-    "https://pastecode.dev/raw/ki7zml2s/%E5%81%A5%E5%BA%B7%E4%B8%AD%E5%BF%83618pro",
-    "https://pastecode.dev/raw/hntbocnp/%E5%81%A5%E5%BA%B7%E4%B8%AD%E5%BF%83618ord",
+    "https://pastecode.dev/raw/ki7zml2s/健康中心618pro",
+    "https://pastecode.dev/raw/hntbocnp/健康中心618ord",
 ]
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -36,7 +38,8 @@ MAX_TEST_WORKERS = 256
 
 # ========== 下载配置 ==========
 MAX_RETRIES = 3
-RETRY_DELAY = 2
+RETRY_DELAY = 3
+DOWNLOAD_TIMEOUT = 30
 
 # ========== 排序与命名配置 ==========
 REGION_PRIORITY = ['香港', '日本', '狮城', '美国', '湾省', '韩国', '德国', '英国', '加拿大', '澳大利亚']
@@ -52,10 +55,43 @@ def get_country_flag_emoji(country_code):
     if not country_code or len(country_code) != 2: return "❓"
     return "".join(chr(0x1F1E6 + ord(char.upper()) - ord('A')) for char in country_code)
 
+def create_browser_session():
+    """创建一个模拟浏览器的 Session 对象"""
+    session = requests.Session()
+    
+    # 配置重试策略
+    retry_strategy = Retry(
+        total=3,
+        backoff_factor=1,
+        status_forcelist=[403, 429, 500, 502, 503, 504],
+        allowed_methods=["GET", "POST"]
+    )
+    
+    adapter = HTTPAdapter(max_retries=retry_strategy)
+    session.mount("http://", adapter)
+    session.mount("https://", adapter)
+    
+    # 完整的浏览器请求头
+    session.headers.update({
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
+        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'DNT': '1',
+        'Connection': 'keep-alive',
+        'Upgrade-Insecure-Requests': '1',
+        'Sec-Fetch-Dest': 'document',
+        'Sec-Fetch-Mode': 'navigate',
+        'Sec-Fetch-Site': 'none',
+        'Sec-Fetch-User': '?1',
+        'Cache-Control': 'max-age=0',
+    })
+    
+    return session
+
 def extract_proxies_from_text(content):
-    """从文本中提取 proxies 部分（模拟网页复制）"""
+    """从文本中提取 proxies 部分"""
     try:
-        # 方法1: 如果是完整的 YAML，直接解析
         data = yaml.safe_load(content)
         if isinstance(data, dict) and 'proxies' in data:
             return data['proxies']
@@ -63,7 +99,6 @@ def extract_proxies_from_text(content):
         pass
     
     try:
-        # 方法2: 提取 proxies: 之后的内容
         match = re.search(r'proxies:\s*\n((?:[ \t]*-.*\n?)+)', content, re.MULTILINE)
         if match:
             proxies_text = "proxies:\n" + match.group(1)
@@ -74,7 +109,6 @@ def extract_proxies_from_text(content):
         pass
     
     try:
-        # 方法3: 尝试将整个内容作为 proxies 列表解析
         if content.strip().startswith('-'):
             proxies = yaml.safe_load(content)
             if isinstance(proxies, list):
@@ -84,48 +118,60 @@ def extract_proxies_from_text(content):
     
     return []
 
-def download_subscription(url):
-    """下载订阅，支持多种解析方式"""
+def download_subscription(url, session=None):
+    """使用浏览器 Session 下载订阅"""
+    if session is None:
+        session = create_browser_session()
+    
     for attempt in range(MAX_RETRIES):
         try:
-            headers = {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
-                'Accept-Encoding': 'gzip, deflate, br',
-                'Connection': 'keep-alive',
-            }
-            
             if attempt > 0:
+                print(f"  等待 {RETRY_DELAY} 秒后重试...")
                 time.sleep(RETRY_DELAY)
             
             print(f"  尝试下载 {url[:50]}... (第 {attempt + 1}/{MAX_RETRIES} 次)")
             
-            response = requests.get(url, timeout=30, headers=headers, allow_redirects=True)
-            response.raise_for_status()
-            content = response.text
+            # 模拟浏览器行为：先访问主页（如果是 GitHub）
+            if 'github.com' in url or 'raw.githubusercontent.com' in url:
+                time.sleep(0.5)  # 短暂延迟，模拟人类行为
             
-            # 尝试多种解析方式
-            proxies = extract_proxies_from_text(content)
-            if proxies:
-                print(f"  ✓ 成功获取 {len(proxies)} 个节点")
-                return proxies
+            # 发送请求
+            response = session.get(
+                url, 
+                timeout=DOWNLOAD_TIMEOUT,
+                allow_redirects=True,
+                verify=True
+            )
             
-            # 尝试 Base64 解码
-            try:
-                decoded_content = base64.b64decode(content).decode('utf-8')
-                proxies = extract_proxies_from_text(decoded_content)
+            # 检查状态码
+            if response.status_code == 200:
+                content = response.text
+                
+                # 尝试多种解析方式
+                proxies = extract_proxies_from_text(content)
                 if proxies:
-                    print(f"  ✓ 成功获取 {len(proxies)} 个节点 (Base64)")
+                    print(f"  ✓ 成功获取 {len(proxies)} 个节点")
                     return proxies
-            except:
-                pass
-                    
-        except requests.exceptions.HTTPError as e:
-            if e.response.status_code == 403:
+                
+                # 尝试 Base64 解码
+                try:
+                    decoded_content = base64.b64decode(content).decode('utf-8')
+                    proxies = extract_proxies_from_text(decoded_content)
+                    if proxies:
+                        print(f"  ✓ 成功获取 {len(proxies)} 个节点 (Base64)")
+                        return proxies
+                except:
+                    pass
+            
+            elif response.status_code == 403:
                 print(f"  ✗ 403 错误 - 访问被拒绝")
             else:
-                print(f"  ✗ HTTP 错误 {e.response.status_code}")
+                print(f"  ✗ HTTP 错误 {response.status_code}")
+                    
+        except requests.exceptions.Timeout:
+            print(f"  ✗ 请求超时")
+        except requests.exceptions.ConnectionError:
+            print(f"  ✗ 连接错误")
         except Exception as e:
             print(f"  ✗ 下载失败: {e}")
             
@@ -238,9 +284,12 @@ def main():
     print("=" * 60)
     
     print("\n[1/4] 下载与合并订阅...")
+    # 创建持久化的浏览器 Session
+    session = create_browser_session()
+    
     all_proxies = []
     for url in SUBSCRIPTION_URLS: 
-        all_proxies.extend(download_subscription(url))
+        all_proxies.extend(download_subscription(url, session))
     
     unique_proxies = merge_and_deduplicate_proxies(all_proxies)
     if not unique_proxies: 
