@@ -27,7 +27,7 @@ SUBSCRIPTION_URLS = [
     # "https:/",
 ]
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-OUTPUT_FILE = os.path.join(SCRIPT_DIR, "TG.HeathCloud.yaml")
+OUTPUT_FILE = os.path.join(SCRIPT_DIR, "TG.HeathCloud618.yaml")
 
 # ========== 测速过滤配置 (纯 Python socket 版) ==========
 ENABLE_SPEED_TEST = True
