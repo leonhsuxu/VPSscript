@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 """
 健康中心618 - Clash 订阅合并脚本
-- 改用内置的 socket 库进行延迟测试，无任何外部依赖，终极稳定
+- 完整模拟 Chrome 浏览器下载
+- 改用内置的 socket 库进行延迟测试，无任何外部依赖
 - 按延迟和地区优先级精确排序
 - 智能识别地区 (正则 + 详尽中文名映射)，匹配对应国旗
-- 完整模拟浏览器下载
 """
 import requests
 import yaml
@@ -21,6 +21,7 @@ import concurrent.futures
 import hashlib
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
+import random
 
 # ========== 基础配置 ==========
 SUBSCRIPTION_URLS = [
@@ -41,6 +42,11 @@ MAX_RETRIES = 3
 RETRY_DELAY = 3
 DOWNLOAD_TIMEOUT = 30
 
+# ========== Chrome 浏览器配置 ==========
+CHROME_VERSIONS = [
+    "120.0.0.0", "121.0.0.0", "122.0.0.0", "123.0.0.0"
+]
+
 # ========== 排序与命名配置 ==========
 REGION_PRIORITY = ['香港', '日本', '狮城', '美国', '湾省', '韩国', '德国', '英国', '加拿大', '澳大利亚']
 CHINESE_COUNTRY_MAP = {'US':'美国','United States':'美国','USA':'美国','JP':'日本','Japan':'日本','HK':'香港','Hong Kong':'香港','SG':'狮城','Singapore':'狮城','TW':'湾省','Taiwan':'湾省','KR':'韩国','Korea':'韩国','KOR':'韩国','DE':'德国','Germany':'德国','GB':'英国','United Kingdom':'英国','UK':'英国','CA':'加拿大','Canada':'加拿大','AU':'澳大利亚','Australia':'澳大利亚',}
@@ -55,31 +61,37 @@ def get_country_flag_emoji(country_code):
     if not country_code or len(country_code) != 2: return "❓"
     return "".join(chr(0x1F1E6 + ord(char.upper()) - ord('A')) for char in country_code)
 
-def create_browser_session():
-    """创建一个模拟浏览器的 Session 对象"""
+def create_chrome_session():
+    """创建一个完全模拟 Chrome 浏览器的 Session 对象"""
     session = requests.Session()
     
     # 配置重试策略
     retry_strategy = Retry(
         total=3,
-        backoff_factor=1,
+        backoff_factor=2,
         status_forcelist=[403, 429, 500, 502, 503, 504],
         allowed_methods=["GET", "POST"]
     )
     
-    adapter = HTTPAdapter(max_retries=retry_strategy)
+    adapter = HTTPAdapter(max_retries=retry_strategy, pool_connections=10, pool_maxsize=10)
     session.mount("http://", adapter)
     session.mount("https://", adapter)
     
-    # 完整的浏览器请求头
+    # 随机选择一个 Chrome 版本
+    chrome_version = random.choice(CHROME_VERSIONS)
+    
+    # 完整的 Chrome 浏览器请求头
     session.headers.update({
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8',
-        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6',
+        'User-Agent': f'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/{chrome_version} Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+        'Accept-Language': 'zh-CN,zh;q=0.9,en;q=0.8',
         'Accept-Encoding': 'gzip, deflate, br',
         'DNT': '1',
         'Connection': 'keep-alive',
         'Upgrade-Insecure-Requests': '1',
+        'Sec-Ch-Ua': f'"Not_A Brand";v="8", "Chromium";v="{chrome_version.split(".")[0]}", "Google Chrome";v="{chrome_version.split(".")[0]}"',
+        'Sec-Ch-Ua-Mobile': '?0',
+        'Sec-Ch-Ua-Platform': '"Windows"',
         'Sec-Fetch-Dest': 'document',
         'Sec-Fetch-Mode': 'navigate',
         'Sec-Fetch-Site': 'none',
@@ -119,25 +131,32 @@ def extract_proxies_from_text(content):
     return []
 
 def download_subscription(url, session=None):
-    """使用浏览器 Session 下载订阅"""
+    """使用 Chrome Session 下载订阅"""
     if session is None:
-        session = create_browser_session()
+        session = create_chrome_session()
     
     for attempt in range(MAX_RETRIES):
         try:
             if attempt > 0:
-                print(f"  等待 {RETRY_DELAY} 秒后重试...")
-                time.sleep(RETRY_DELAY)
+                delay = RETRY_DELAY + random.uniform(0, 2)  # 添加随机延迟
+                print(f"  等待 {delay:.1f} 秒后重试...")
+                time.sleep(delay)
             
             print(f"  尝试下载 {url[:50]}... (第 {attempt + 1}/{MAX_RETRIES} 次)")
             
-            # 模拟浏览器行为：先访问主页（如果是 GitHub）
-            if 'github.com' in url or 'raw.githubusercontent.com' in url:
-                time.sleep(0.5)  # 短暂延迟，模拟人类行为
+            # 模拟真实浏览器行为：添加 Referer（如果需要）
+            headers = {}
+            if 'github' in url or 'githubusercontent' in url:
+                headers['Referer'] = 'https://github.com/'
+                time.sleep(random.uniform(0.5, 1.5))  # 随机延迟
+            elif 'pastecode.dev' in url:
+                headers['Referer'] = 'https://pastecode.dev/'
+                time.sleep(random.uniform(0.3, 0.8))
             
             # 发送请求
             response = session.get(
                 url, 
+                headers=headers,
                 timeout=DOWNLOAD_TIMEOUT,
                 allow_redirects=True,
                 verify=True
@@ -164,13 +183,15 @@ def download_subscription(url, session=None):
                     pass
             
             elif response.status_code == 403:
-                print(f"  ✗ 403 错误 - 访问被拒绝")
+                print(f"  ✗ 403 错误 - 访问被拒绝，尝试更换请求策略...")
             else:
                 print(f"  ✗ HTTP 错误 {response.status_code}")
                     
         except requests.exceptions.Timeout:
             print(f"  ✗ 请求超时")
-        except requests.exceptions.ConnectionError:
+        except requests.exceptions.SSLError:
+            print(f"  ✗ SSL 证书错误")
+        except requests.exceptions.ConnectionError as e:
             print(f"  ✗ 连接错误")
         except Exception as e:
             print(f"  ✗ 下载失败: {e}")
@@ -284,11 +305,15 @@ def main():
     print("=" * 60)
     
     print("\n[1/4] 下载与合并订阅...")
-    # 创建持久化的浏览器 Session
-    session = create_browser_session()
+    # 创建持久化的 Chrome Session
+    session = create_chrome_session()
+    print(f"  模拟 Chrome 浏览器版本: {session.headers['User-Agent'].split('Chrome/')[1].split(' ')[0]}")
     
     all_proxies = []
-    for url in SUBSCRIPTION_URLS: 
+    for i, url in enumerate(SUBSCRIPTION_URLS):
+        if i > 0:
+            # 在不同订阅之间添加延迟，模拟人类行为
+            time.sleep(random.uniform(1, 3))
         all_proxies.extend(download_subscription(url, session))
     
     unique_proxies = merge_and_deduplicate_proxies(all_proxies)
