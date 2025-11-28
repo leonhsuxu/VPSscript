@@ -296,9 +296,9 @@ def load_subscription_urls_from_file(url_file_path, script_name_to_match):
                 if not line or line.startswith('#'):
                     continue
                 
-                # 使用正则表达式匹配 '名称 ：地址' 格式，提取名称和地址
+                # 使用正则表达式匹配 '名称：地址' 格式，提取名称和地址
                 # 注意这里使用全角冒号 '：'
-                match = re.search(r'([^：]+) ：\s*(https?://\S+)', line)
+                match = re.search(r'([^：]+)：\s*(https?://\S+)', line)
                 if match:
                     entry_name = match.group(1).strip()
                     url = match.group(2)
