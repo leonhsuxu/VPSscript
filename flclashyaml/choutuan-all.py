@@ -19,12 +19,7 @@ from collections import defaultdict
 import pycountry
 
 # ========== 基础配置 ==========
-SUBSCRIPTION_URLS = [
-    "https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A21?token=ChouLink1",
-    "https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A22?token=ChouLink2",
-    "https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A23?token=ChouLink3",
-    "https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A24?token=ChouLink4",
-]
+# 移除了硬编码的 SUBSCRIPTION_URLS 列表，现在将从 URL.TXT 文件动态加载
 
 # 重点：动态获取脚本所在目录，并定义输出路径
 # __file__ 是当前脚本的路径
@@ -32,6 +27,11 @@ SUBSCRIPTION_URLS = [
 # os.path.dirname 获取该路径所在的目录
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_FILE = os.path.join(SCRIPT_DIR, "choutuan-all.yaml")
+URL_FILE = os.path.join(SCRIPT_DIR, "URL.TXT") # 定义 URL.TXT 文件的路径
+
+# 定义脚本的身份名称，用于从 URL.TXT 中筛选地址。
+# 这里我们从 generate_config 的 profile-name 中获取，或者可以直接硬编码为 "丑团"。
+SCRIPT_IDENTITY_NAME = "丑团" 
 
 
 # ========== 排序与命名配置 ==========
@@ -79,7 +79,7 @@ CHINESE_COUNTRY_MAP = {
     "哈萨克斯坦": "KZ", "肯尼亚": "KE", "基里巴斯": "KI", "科威特": "KW",
     "吉尔吉斯斯坦": "KG", "老挝": "LA", "拉脱维亚": "LV", "黎巴嫩": "LB",
     "莱索托": "LS", "利比里亚": "LR", "利比亚": "LY", "列支敦士登": "LI",
-    "立陶宛": "LT", "卢森堡": "LU", "澳门": "MO", "北马其顿": "MK",
+    "立陶宛": "LT", "卢森堡": "LU", "澳门": "MO", "北马其顿":"MK",
     "马达加斯加": "MG", "马拉维": "MW", "马来西亚": "MY", "马尔代夫": "MV",
     "马里": "ML", "马耳他": "MT", "马绍尔群岛": "MH", "毛里塔尼亚": "MR",
     "毛里求斯": "MU", "墨西哥": "MX", "密克罗尼西亚": "FM", "摩尔多瓦": "MD",
@@ -102,10 +102,6 @@ CHINESE_COUNTRY_MAP = {
     "乌兹别克斯坦": "UZ", "瓦努阿图": "VU", "委内瑞拉": "VE", "越南": "VN",
     "也门": "YE", "赞比亚": "ZM", "津巴布韦": "ZW"
 }
-
-# ... 后续的所有函数定义（code_to_emoji, build_country_rules, 等）保持不变 ...
-# 这里省略了重复的函数代码，你只需要修改上面的路径定义部分即可。
-# 为了保证完整性，下面粘贴完整的脚本，你直接复制全部即可。
 
 # ========== 核心功能函数 ==========
 def code_to_emoji(code):
@@ -252,7 +248,8 @@ def generate_config(proxies):
     proxy_names = [p['name'] for p in proxies]
     
     return {
-        'profile-name': '丑团', 'mixed-port': 7890, 'allow-lan': True,
+        'profile-name': SCRIPT_IDENTITY_NAME, # 使用定义好的脚本身份名称
+        'mixed-port': 7890, 'allow-lan': True,
         'bind-address': '*', 'mode': 'rule', 'log-level': 'info',
         'external-controller': '127.0.0.1:9090', 'external-ui': 'ui',
         'dns': {
@@ -269,15 +266,58 @@ def generate_config(proxies):
         'rules': ['GEOIP,CN,DIRECT', 'MATCH,🚀 节点选择']
     }
 
+# 新增函数：从 URL.TXT 文件中加载订阅地址，并根据脚本名称进行筛选
+def load_subscription_urls_from_file(url_file_path, script_name_to_match):
+    """
+    从指定路径的 URL.TXT 文件中读取订阅地址。
+    只提取那些其“名称”部分包含 script_name_to_match 的订阅地址。
+    文件格式为：# 名称 \n 名称 ：地址
+    """
+    urls = []
+    if not os.path.exists(url_file_path):
+        print(f"错误: 订阅文件 {url_file_path} 不存在。请确保该文件与脚本在同一目录下。")
+        return urls
+
+    print(f"正在从 {url_file_path} 读取订阅地址，筛选包含 '{script_name_to_match}' 的地址...")
+    try:
+        with open(url_file_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                line = line.strip()
+                # 跳过空行和以 # 开头的注释行
+                if not line or line.startswith('#'):
+                    continue
+                
+                # 使用正则表达式匹配 '名称 ：地址' 格式，提取名称和地址
+                # 注意这里使用全角冒号 '：'
+                match = re.search(r'([^：]+) ：\s*(https?://\S+)', line)
+                if match:
+                    entry_name = match.group(1).strip()
+                    url = match.group(2)
+                    
+                    # 检查提取的名称是否包含脚本的身份名称
+                    if script_name_to_match.lower() in entry_name.lower():
+                        urls.append(url)
+                        print(f"  ✓ 找到并载入匹配 '{script_name_to_match}' 的订阅地址: {entry_name} -> {url[:60]}...")
+                    else:
+                        print(f"  ✗ 跳过不包含 '{script_name_to_match}' 的地址: {entry_name}...")
+                else:
+                    print(f"  ✗ 跳过无法识别的行 (不符合 '名称 ：地址' 格式): {line[:60]}...")
+    except Exception as e:
+        print(f"读取订阅文件 {url_file_path} 时发生错误: {e}")
+    return urls
+
 def main():
     print("=" * 60)
-    print(f"丑团 - Clash 订阅合并 (v12.1 - 路径优化版) @ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"{SCRIPT_IDENTITY_NAME} - Clash 订阅合并 (v12.1 - 路径优化版) @ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
     
-    # 删除了 os.makedirs，因为脚本和输出在同一目录，无需创建
-    
+    # 从 URL.TXT 文件加载订阅地址，并根据脚本名称进行筛选
+    subscription_urls_from_file = load_subscription_urls_from_file(URL_FILE, SCRIPT_IDENTITY_NAME)
+    if not subscription_urls_from_file:
+        sys.exit(f"\n❌ 错误: 未能从 {URL_FILE} 文件中读取到任何有效的、包含 '{SCRIPT_IDENTITY_NAME}' 的订阅地址。请检查文件内容和格式。")
+
     print("\n[1/4] 开始下载订阅...")
-    subscriptions = [sub for sub in (download_subscription(url) for url in SUBSCRIPTION_URLS) if sub]
+    subscriptions = [sub for sub in (download_subscription(url) for url in subscription_urls_from_file) if sub]
     if not subscriptions: sys.exit("\n❌ 错误: 所有订阅都下载失败，任务中断。")
     
     print(f"\n[2/4] 开始合并与去重...")
