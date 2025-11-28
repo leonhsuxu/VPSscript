@@ -1,11 +1,28 @@
-- name: Fetch content from pastecode
-        run: |
-          echo "正在获取数据..."
-          wget --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
-               --header="Accept: text/html,application/xhtml+xml,application/xml" \
-               --header="Accept-Language: zh-CN,zh;q=0.9" \
-               -O data.yaml \
-               "https://pastecode.dev/raw/hntbocnp/%E5%81%A5%E5%BA%B7%E4%B8%AD%E5%BF%83618ord"
-          
-          echo "获取到的内容前30行:"
-          head -n 30 data.yaml
+name: Download YAML File
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+    
+    - name: Download HeathCloud618ord.yaml
+      run: |
+        curl "https://pastecode.dev/raw/hntbocnp/%E5%81%A5%E5%BA%B7%E4%B8%AD%E5%BF%83618ord" > HeathCloud618ord.yaml
+    
+    - name: Display file content
+      run: cat HeathCloud618ord.yaml
+    
+    - name: Commit and push if changed
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add HeathCloud618ord.yaml
+        git diff --quiet && git diff --staged --quiet || (git commit -m "Update HeathCloud618ord.yaml" && git push)
