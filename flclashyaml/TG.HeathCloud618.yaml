@@ -1,0 +1,86 @@
+mixed-port: 7890
+allow-lan: true
+bind-address: '*'
+mode: rule
+log-level: info
+external-controller: 127.0.0.1:9090
+dns:
+  enable: true
+  listen: 0.0.0.0:53
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  nameserver:
+  - 223.5.5.5
+  - 119.29.29.29
+  fallback:
+  - https://dns.google/dns-query
+  - https://1.1.1.1/dns-query
+proxies:
+- name: 🇯🇵 日本 🇯🇵 orc❶ˣ³𝕋𝔾myFreeNodeChat
+  server: ct.090227.xyz
+  port: 443
+  client-fingerprint: ios
+  type: vless
+  uuid: 5af3e0ba-d1fe-4503-b279-02da286ba779
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /pq/jp1
+    headers:
+      Host: jpa1.xn--ghqu5fm27b67w.com
+- name: 🇭🇰 香港 🇭🇰 三網❶ˣ³⁰𝕋𝔾myFreeNodeChat
+  server: 35016.fishnodebgp.com
+  port: 52616
+  type: ss
+  cipher: aes-128-gcm
+  password: da83b407-e4eb-4fc0-932d-2203e781ec5b
+  tfo: false
+- name: 🇯🇵 日本 🇯🇵 orc❷ˣ³𝕋𝔾myFreeNodeChat
+  server: cmcc.090227.xyz
+  port: 443
+  client-fingerprint: ios
+  type: vless
+  uuid: 5af3e0ba-d1fe-4503-b279-02da286ba779
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /pq/jp1
+    headers:
+      Host: jpa1.xn--ghqu5fm27b67w.com
+- name: 🇭🇰 香港 🇭🇰 三網❷ˣ³⁰𝕋𝔾myFreeNodeChat
+  server: 35011.fishnodebgp.com
+  port: 52611
+  type: ss
+  cipher: chacha20-ietf-poly1305
+  password: da83b407-e4eb-4fc0-932d-2203e781ec5b
+  tfo: false
+proxy-groups:
+- name: 🚀 节点选择
+  type: select
+  proxies:
+  - ♻️ 自动选择
+  - 🔯 故障转移
+  - DIRECT
+  - 🇯🇵 日本 🇯🇵 orc❶ˣ³𝕋𝔾myFreeNodeChat
+  - 🇭🇰 香港 🇭🇰 三網❶ˣ³⁰𝕋𝔾myFreeNodeChat
+  - 🇯🇵 日本 🇯🇵 orc❷ˣ³𝕋𝔾myFreeNodeChat
+  - 🇭🇰 香港 🇭🇰 三網❷ˣ³⁰𝕋𝔾myFreeNodeChat
+- name: ♻️ 自动选择
+  type: url-test
+  proxies: &id001
+  - 🇯🇵 日本 🇯🇵 orc❶ˣ³𝕋𝔾myFreeNodeChat
+  - 🇭🇰 香港 🇭🇰 三網❶ˣ³⁰𝕋𝔾myFreeNodeChat
+  - 🇯🇵 日本 🇯🇵 orc❷ˣ³𝕋𝔾myFreeNodeChat
+  - 🇭🇰 香港 🇭🇰 三網❷ˣ³⁰𝕋𝔾myFreeNodeChat
+  url: http://www.gstatic.com/generate_204
+  interval: 300
+- name: 🔯 故障转移
+  type: fallback
+  proxies: *id001
+  url: http://www.gstatic.com/generate_204
+  interval: 300
+rules:
+- GEOIP,CN,DIRECT
+- MATCH,🚀 节点选择
