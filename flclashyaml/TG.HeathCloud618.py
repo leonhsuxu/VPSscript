@@ -32,7 +32,7 @@ REGION_PRIORITY = ['香港', '日本', '狮城', '美国', '湾省', '韩国', '
 CHINESE_COUNTRY_MAP = {'US':'美国','United States':'美国','USA':'美国','JP':'日本','Japan':'日本','HK':'香港','Hong Kong':'香港','SG':'狮城','Singapore':'狮城','TW':'湾省','Taiwan':'湾省','KR':'韩国','Korea':'韩国','KOR':'韩国','DE':'德国','Germany':'德国','GB':'英国','United Kingdom':'英国','UK':'英国','CA':'加拿大','Canada':'加拿大','AU':'澳大利亚','Australia':'澳大利亚',}
 COUNTRY_NAME_TO_CODE_MAP = {"阿富汗":"AF", "阿尔巴尼亚":"AL", "阿尔及利亚":"DZ", "安道尔":"AD", "安哥拉":"AO", "安圭拉":"AI", "安提瓜和巴布达":"AG", "阿根廷":"AR", "亚美尼亚":"AM", "阿鲁巴":"AW", "澳大利亚":"AU", "奥地利":"AT", "阿塞拜疆":"AZ", "巴哈马":"BS", "巴林":"BH", "孟加拉国":"BD", "巴巴多斯":"BB", "白俄罗斯":"BY", "比利时":"BE", "伯利兹":"BZ", "贝宁":"BJ", "百慕大":"BM", "不丹":"BT", "玻利维亚":"BO", "波黑":"BA", "博茨瓦纳":"BW", "巴西":"BR", "文莱":"BN", "保加利亚":"BG", "布基纳法索":"BF", "布隆迪":"BI", "柬埔寨":"KH", "喀麦隆":"CM", "加拿大":"CA", "佛得角":"CV", "开曼群岛":"KY", "中非":"CF", "乍得":"TD", "智利":"CL", "中国":"CN", "哥伦比亚":"CO", "科摩罗":"KM", "刚果（金）":"CD", "刚果（布）":"CG", "哥斯达黎加":"CR", "科特迪瓦":"CI", "克罗地亚":"HR", "古巴":"CU", "塞浦路斯":"CY", "捷克":"CZ", "丹麦":"DK", "吉布提":"DJ", "多米尼克":"DM", "多米尼加":"DO", "厄瓜多尔":"EC", "埃及":"EG", "萨尔瓦多":"SV", "赤道几内亚":"GQ", "厄立特里亚":"ER", "爱沙尼亚":"EE", "埃塞俄比亚":"ET", "斐济":"FJ", "芬兰":"FI", "法国":"FR", "加蓬":"GA", "冈比亚":"GM", "格鲁吉亚":"GE", "加纳":"GH", "希腊":"GR", "格林纳达":"GD", "危地马拉":"GT", "几内亚":"GN", "几内亚比绍":"GW", "圭亚那":"GY", "海地":"HT", "洪都拉斯":"HN", "匈牙利":"HU", "冰岛":"IS", "印度":"IN", "印尼":"ID", "印度尼西亚":"ID", "伊朗":"IR", "伊拉克":"IQ", "爱尔兰":"IE", "以色列":"IL", "意大利":"IT", "牙买加":"JM", "日本":"JP", "约旦":"JO", "哈萨克斯坦":"KZ", "肯尼亚":"KE", "基里巴斯":"KI", "科威特":"KW", "吉尔吉斯斯坦":"KG", "老挝":"LA", "拉脱维亚":"LV", "黎巴嫩":"LB", "莱索托":"LS", "利比里亚":"LR", "利比亚":"LY", "列支敦士登":"LI", "立陶宛":"LT", "卢森堡":"LU", "澳门":"MO", "北马其顿":"MK", "马达加斯加":"MG", "马拉维":"MW", "马来西亚":"MY", "马尔代夫":"MV", "马里":"ML", "马耳他":"MT", "马绍尔群岛":"MH", "毛里塔尼亚":"MR", "毛里求斯":"MU", "墨西哥":"MX", "密克罗尼西亚":"FM", "摩尔多瓦":"MD", "摩纳哥":"MC", "蒙古":"MN", "黑山":"ME", "摩洛哥":"MA", "莫桑比克":"MZ", "缅甸":"MM", "纳米比亚":"NA", "瑙鲁":"NR", "尼泊尔":"NP", "荷兰":"NL", "新西兰":"NZ", "尼加拉瓜":"NI", "尼日尔":"NE", "尼日利亚":"NG", "挪威":"NO", "阿曼":"OM", "巴基斯坦":"PK", "帕劳":"PW", "巴勒斯坦":"PS", "巴拿马":"PA", "巴布亚新几内亚":"PG", "巴拉圭":"PY", "秘鲁":"PE", "菲律宾":"PH", "波兰":"PL", "葡萄牙":"PT", "卡塔尔":"QA", "罗马尼亚":"RO", "俄罗斯":"RU", "卢旺达":"RW", "圣马力诺":"SM", "沙特阿拉伯":"SA", "塞内加尔":"SN", "塞尔维亚":"RS", "塞舌尔":"SC", "塞拉利昂":"SL", "新加坡":"SG", "斯洛伐克":"SK", "斯洛文尼亚":"SI", "所罗门群岛":"SB", "索马里":"SO", "南非":"ZA", "西班牙":"ES", "斯里兰卡":"LK", "苏丹":"SD", "苏里南":"SR", "瑞典":"SE", "瑞士":"CH", "叙利亚":"SY", "塔吉克斯坦":"TJ", "坦桑尼亚":"TZ", "泰国":"TH", "东帝汶":"TL", "多哥":"TG", "汤加":"TO", "特立尼达和多巴哥":"TT", "突尼斯":"TN", "土耳其":"TR", "土库曼斯坦":"TM", "图瓦卢":"TV", "乌干达":"UG", "乌克兰":"UA", "阿联酋":"AE", "乌拉圭":"UY", "乌兹别克斯坦":"UZ", "瓦努阿图":"VU", "委内瑞拉":"VE", "越南":"VN", "也门":"YE", "赞比亚":"ZM", "津巴布韦":"ZW"}
 JUNK_PATTERNS = re.compile(r"(?:专线|IPLC|IEPL|BGP|体验|官网|倍率|x\d[\.\d]*|Rate|[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*|Relay|流量)|(?:(?:[\u2460-\u2473\u2776-\u277F\u2780-\u2789]|免費|回家).*?(?=,|$))", re.IGNORECASE)
-CUSTOM_REGEX_RULES = {'香港':{'code':'HK','pattern':r'港|HK|Hong Kong'},'日本':{'code':'JP','pattern':r'日本|川日|东京|大阪|泉日|沪日|深日|JP|Japan'},'狮城':{'code':'SG','pattern':r'新加坡|SG|Singapore|坡|狮城'},'美国':{'code': 'US','pattern':r'美国|美|波特兰|达拉斯|Oregon|凤凰城|硅谷|拉斯维加斯|洛杉矶|圣何塞|西雅图|芝加哥'},'湾省':{'code':'TW','pattern':r'台湾|湾省|TW|Taiwan|台|新北|彰化'},'韩国':{'code':'KR','pattern':r'韩国|韩|KR|Korea|KOR|首尔|韓'},'德国':{'code':'DE','pattern':r'德国|DE|Germany'},'英国':{'code':'GB','pattern':r'UK|GB|United Kingdom|England|英|英国'},'加拿大':{'code':'CA','pattern':r'CA|Canada|加拿大|枫叶|多伦多|温哥华|蒙特利尔'},'澳大利亚':{'code':'AU','pattern':r'AU|Australia|澳大利亚|澳洲|悉尼'},}
+CUSTOM_REGEX_RULES = {'香港':{'code':'HK','pattern':r'港|HK|Hong Kong|HKBN|HGC|PCCW|WTT'},'日本':{'code':'JP','pattern':r'日本|川日|东京|大阪|泉日|沪日|深日|JP|Japan'},'狮城':{'code':'SG','pattern':r'新加坡|SG|Singapore|坡|狮城'},'美国':{'code': 'US','pattern':r'美国|美|波特兰|达拉斯|Oregon|凤凰城|硅谷|拉斯维加斯|洛杉矶|圣何塞|西雅图|芝加哥'},'湾省':{'code':'TW','pattern':r'台湾|湾省|TW|Taiwan|台|新北|彰化'},'韩国':{'code':'KR','pattern':r'韩国|韩|KR|Korea|KOR|首尔|韓'},'德国':{'code':'DE','pattern':r'德国|DE|Germany'},'英国':{'code':'GB','pattern':r'UK|GB|United Kingdom|England|英|英国'},'加拿大':{'code':'CA','pattern':r'CA|Canada|加拿大|枫叶|多伦多|温哥华|蒙特利尔'},'澳大利亚':{'code':'AU','pattern':r'AU|Australia|澳大利亚|澳洲|悉尼'},}
 # ===== 国旗表情正则表达式 =====
 # 匹配任意两个区域指示符符号（即国旗表情）
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
@@ -98,15 +98,13 @@ def download_subscription(url):
 
 def get_proxy_key(proxy):
     try:
-        # 针对 VLESS, VMESS, TROJAN 等协议，使用 server:port 和 uuid/password 进行哈希
-        # 这里进行一个简单的通用哈希，但可能需要根据协议类型更细致地处理
         identifier = f"{proxy.get('server','')}:{proxy.get('port',0)}|"
         if 'uuid' in proxy:
             identifier += proxy['uuid']
         elif 'password' in proxy:
             identifier += proxy['password']
         else:
-            identifier += proxy.get('name', '') # 兜底，以防上述都无
+            identifier += proxy.get('name', '')
         return hashlib.md5(identifier.encode('utf-8')).hexdigest()
     except Exception:
         return None
@@ -118,10 +116,6 @@ def merge_and_deduplicate_proxies(subscriptions_proxies):
         proxy_key = get_proxy_key(proxy)
         if proxy_key and proxy_key not in unique_proxies:
             unique_proxies[proxy_key] = proxy
-        else:
-            # 如果有重复的 key，但节点本身可能有些许差异 (例如 name 不同)，
-            # 可以选择保留第一个或者根据某种优先级合并
-            pass 
     return list(unique_proxies.values())
 
 def process_and_rename_proxies(proxies):
@@ -129,9 +123,9 @@ def process_and_rename_proxies(proxies):
     final_proxies = []
 
     # 1. 构建一个全面的、用于剥离的地区/国家名称模式列表
-    all_region_patterns_for_stripping = set() # 使用set避免重复，保证唯一性
+    all_region_patterns_for_stripping = set()
 
-    # 1.1 添加 CUSTOM_REGEX_RULES 中的所有模式 (这些已经是正则表达式)
+    # 1.1 添加 CUSTOM_REGEX_RULES 中的所有模式
     for rules in CUSTOM_REGEX_RULES.values():
         all_region_patterns_for_stripping.add(rules['pattern'])
     
@@ -139,7 +133,7 @@ def process_and_rename_proxies(proxies):
     for eng_name in CHINESE_COUNTRY_MAP.keys():
         all_region_patterns_for_stripping.add(re.escape(eng_name))
 
-    # 1.3 添加 CHINESE_COUNTRY_MAP 中的所有中文值 (例如 '美国', '日本')，需要转义
+    # 1.3 添加 CHINESE_COUNTRY_MAP 中的所有中文值 (例如 '美国', '香港')，需要转义
     for chn_name in CHINESE_COUNTRY_MAP.values():
         all_region_patterns_for_stripping.add(re.escape(chn_name))
         
@@ -147,8 +141,7 @@ def process_and_rename_proxies(proxies):
     for country_name in COUNTRY_NAME_TO_CODE_MAP.keys():
         all_region_patterns_for_stripping.add(re.escape(country_name))
 
-    # 将集合转换回列表，并按长度降序排序，确保长模式先匹配
-    # 这对于 'United States' 和 'States' 这种重叠模式很重要
+    # 将集合转换回列表，并按长度降序排序，确保长模式先匹配，避免短模式干扰
     all_region_patterns_for_stripping_list = sorted(list(all_region_patterns_for_stripping), key=len, reverse=True)
 
 
@@ -156,29 +149,22 @@ def process_and_rename_proxies(proxies):
     for p in proxies:
         original_name = p.get('name', '')
         
-        # 用于地区检测的名称：先移除可能的国旗，再移除垃圾信息，以便更准确地匹配地区
         temp_name_for_region_detection = FLAG_EMOJI_PATTERN.sub('', original_name)
         temp_name_for_region_detection = JUNK_PATTERNS.sub('', temp_name_for_region_detection).strip()
         
-        # 统一将英文国家名替换为中文，提高识别准确性
         for eng, chn in CHINESE_COUNTRY_MAP.items():
-            # 使用词边界确保只替换完整的国家名，避免误伤
             temp_name_for_region_detection = re.sub(r'\b'+re.escape(eng)+r'\b', chn, temp_name_for_region_detection, flags=re.IGNORECASE)
         
         p['region'] = '未知'
         
-        # 优先使用 CUSTOM_REGEX_RULES 进行地区匹配 (更精确)
         for region_name, rules in CUSTOM_REGEX_RULES.items():
             if re.search(rules['pattern'], temp_name_for_region_detection, re.IGNORECASE):
                 p['region'] = region_name
                 break
         
-        # 如果 CUSTOM_REGEX_RULES 未匹配，尝试使用 COUNTRY_NAME_TO_CODE_MAP
         if p['region'] == '未知':
             for country_chn_name, country_code in COUNTRY_NAME_TO_CODE_MAP.items():
-                # 再次使用词边界，匹配中文国家名
                 if re.search(r'\b' + re.escape(country_chn_name) + r'\b', temp_name_for_region_detection, re.IGNORECASE):
-                    # 为了和 CUSTOM_REGEX_RULES 的结果保持一致，这里也直接存储中文名称
                     p['region'] = country_chn_name 
                     break
 
@@ -186,48 +172,51 @@ def process_and_rename_proxies(proxies):
     for proxy in proxies:
         original_name = proxy.get('name', '')
         
-        # 获取地区信息，包括中文名称和国家代码
         region_info = {'name': proxy['region'], 'code': COUNTRY_NAME_TO_CODE_MAP.get(proxy['region'])}
         if not region_info['code']:
             region_info['code'] = CUSTOM_REGEX_RULES.get(region_info['name'], {}).get('code', '')
         
         chosen_flag = ""
-        # 移除已有的国旗（如果有），作为提取特征的基础名称
         name_for_feature_extraction = original_name
         match_existing_flag = FLAG_EMOJI_PATTERN.search(original_name)
         if match_existing_flag:
             chosen_flag = match_existing_flag.group(0)
             name_for_feature_extraction = FLAG_EMOJI_PATTERN.sub('', original_name, 1)
         else:
-            # 如果原始名称不含国旗，则根据识别到的地区生成新的国旗
             chosen_flag = get_country_flag_emoji(region_info['code'])
         
         # --- 核心改进: node_feature 提取逻辑 ---
-        node_feature = name_for_feature_extraction
+        node_feature = name_for_feature_extraction # 例如: "香港aws①ˣ³𝕋𝔾myFreeNodeChat"
 
-        # 1. 统一将英文国家名替换为中文 (再次执行，确保所有潜在的英文名都被处理)
-        # 这一步放在所有地区模式剥离之前，确保后续清理基于统一的中文名称
+        # 1. 统一将英文国家名替换为中文，以便后续清理能统一处理
         for eng, chn in CHINESE_COUNTRY_MAP.items():
             node_feature = re.sub(r'\b'+re.escape(eng)+r'\b', chn, node_feature, flags=re.IGNORECASE)
 
-        # 2. 从 node_feature 中彻底移除所有已知的地区/国家名称模式
-        # 使用之前构建的 sorted_all_region_patterns_for_stripping_list
+        # 2. **最优先** 从 node_feature 中移除 *已识别的主要地区名称本身*
+        #    例如，如果识别为 "香港"，就从字符串中移除所有 "香港" 的字面出现。
+        #    使用词边界确保只移除完整的词语。
+        if region_info['name'] != '未知':
+            node_feature = re.sub(r'\b' + re.escape(region_info['name']) + r'\b', ' ', node_feature, flags=re.IGNORECASE)
+            
+            # 同时移除 CUSTOM_REGEX_RULES 中与该主要地区相关的模式，以防未被字面移除覆盖
+            primary_region_pattern = CUSTOM_REGEX_RULES.get(region_info['name'], {}).get('pattern')
+            if primary_region_pattern:
+                node_feature = re.sub(primary_region_pattern, ' ', node_feature, flags=re.IGNORECASE)
+
+        # 3. 接着移除所有其他已知的地区/国家名称模式（包括其别名、英文名等），防止其他国家名或地区别名残余
         for pattern_to_clean in all_region_patterns_for_stripping_list:
-            # 尝试直接作为正则表达式匹配 (适用于 CUSTOM_REGEX_RULES 中的模式)
             try:
-                # 编译并尝试匹配，如果是非法正则则会报错，转为字面匹配
                 re.compile(pattern_to_clean) 
                 node_feature = re.sub(pattern_to_clean, ' ', node_feature, flags=re.IGNORECASE)
             except re.error:
-                # 如果不是有效的正则，则作为字面字符串处理，添加词边界
                 node_feature = re.sub(r'\b' + pattern_to_clean + r'\b', ' ', node_feature, flags=re.IGNORECASE)
         
-        # 3. 移除垃圾信息
-        node_feature = JUNK_PATTERNS.sub(' ', node_feature).strip() # 使用空格替换，避免粘连
+        # 4. 移除垃圾信息
+        node_feature = JUNK_PATTERNS.sub(' ', node_feature).strip()
 
-        # 4. 清理可能的连字符和多余空格
-        node_feature = re.sub(r'\s+', ' ', node_feature).strip() # 替换多个空格为单个空格
-        node_feature = node_feature.replace('-', ' ').strip() # 将连字符替换为空格 (再次处理，以防前面替换后又出现)
+        # 5. 清理可能的连字符和多余空格
+        node_feature = re.sub(r'\s+', ' ', node_feature).strip()
+        node_feature = node_feature.replace('-', ' ').strip()
         
         # 如果节点特征仍为空，则使用序号
         if not node_feature:
@@ -285,7 +274,6 @@ def speed_test_proxies(proxies):
         future_to_proxy = {executor.submit(test_single_proxy_socket, p): p for p in proxies}
         for i, future in enumerate(concurrent.futures.as_completed(future_to_proxy)):
             result = future.result()
-            # 打印进度
             sys.stdout.write(f"\r  测试进度: {i+1}/{len(proxies)}")
             sys.stdout.flush()
             if result:
@@ -299,7 +287,6 @@ def generate_config(proxies):
     clean_proxies = [{k: v for k, v in p.items() if k not in ['region', 'delay']} for p in proxies]
     return {'mixed-port':7890,'allow-lan':True,'bind-address':'*','mode':'rule','log-level':'info','external-controller':'127.0.0.1:9090','dns':{'enable':True,'listen':'0.0.0.0:53','enhanced-mode':'fake-ip','fake-ip-range':'198.18.0.1/16','nameserver':['223.5.5.5','119.29.29.29'],'fallback':['https://dns.google/dns-query','https://1.1.1.1/dns-query']},'proxies':clean_proxies,'proxy-groups':[{'name':'🚀 节点选择','type':'select','proxies':['♻️ 自动选择','🔯 故障转移','DIRECT']+proxy_names},{'name':'♻️ 自动选择','type':'url-test','proxies':proxy_names,'url':'http://www.gstatic.com/generate_204','interval':300},{'name':'🔯 故障转移','type':'fallback','proxies':proxy_names,'url':'http://www.gstatic.com/generate_204','interval':300}],'rules':['GEOIP,CN,DIRECT','MATCH,🚀 节点选择']}
 
-# 新增函数：从 URL.TXT 文件中加载订阅地址
 def load_subscription_urls_from_file(url_file_path, script_name_filter):
     """
     从指定路径的 URL.TXT 文件中读取订阅地址。
@@ -315,16 +302,12 @@ def load_subscription_urls_from_file(url_file_path, script_name_filter):
         with open(url_file_path, 'r', encoding='utf-8') as f:
             for line in f:
                 line = line.strip()
-                # 跳过空行和注释行
                 if not line or line.startswith('#'):
                     continue
-                # 使用正则表达式匹配 '名称：地址' 格式，提取名称和地址
-                # 注意这里使用全角冒号 '：'
                 match = re.search(r'([^：]+)：\s*(https?://\S+)', line)
                 if match:
                     name_from_file = match.group(1).strip()
                     url = match.group(2)
-                    # 检查提取的名称是否包含当前脚本的文件名（不含扩展名）
                     if script_name_filter in name_from_file:
                         urls.append(url)
                         print(f"  ✓ 找到并匹配到订阅: '{name_from_file}' -> {url[:60]}...")
@@ -340,13 +323,11 @@ def main():
     print("=" * 60)
     print(f"健康中心618 - Clash 订阅合并 @ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
-    # 从 URL.TXT 文件加载订阅地址，并根据脚本名进行过滤
     subscription_urls_from_file = load_subscription_urls_from_file(URL_FILE, CURRENT_SCRIPT_NAME)
     if not subscription_urls_from_file:
         sys.exit(f"\n❌ 错误: 未能从 {URL_FILE} 文件中读取到任何匹配 '{CURRENT_SCRIPT_NAME}' 的有效订阅地址。请检查文件内容和格式。")
     print("\n[1/4] 下载与合并订阅...")
     all_proxies = []
-    # 遍历从文件中加载的订阅地址
     for url in subscription_urls_from_file:
         all_proxies.extend(download_subscription(url))
     unique_proxies = merge_and_deduplicate_proxies(all_proxies)
