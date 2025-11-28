@@ -1,11 +1,11 @@
 # 工作流的名称
-name: Sync URLs to Specific Folder
+name: 🔄 HeatheCloud.URL-update
 
 # 工作流的触发条件
 on:
   # 1. 定时触发：每6小时执行一次
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '0 */12 * * *'
   
   # 2. 手动触发：允许您在 GitHub Actions 页面手动点击 "Run workflow"
   workflow_dispatch:
