@@ -28,21 +28,21 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇭🇰 香港 三網❶ˣ³⁰𝕋𝔾myFreeNodeChat
+- name: 🇭🇰 香港 三網
   server: 35016.fishnodebgp.com
   port: 52616
   type: ss
   cipher: aes-128-gcm
   password: da83b407-e4eb-4fc0-932d-2203e781ec5b
   tfo: false
-- name: 🇭🇰 香港 三網❷ˣ³⁰𝕋𝔾myFreeNodeChat
+- name: 🇭🇰 香港 三網 2
   server: 35011.fishnodebgp.com
   port: 52611
   type: ss
   cipher: chacha20-ietf-poly1305
   password: da83b407-e4eb-4fc0-932d-2203e781ec5b
   tfo: false
-- name: 🇭🇰 香港 香aws①ˣ³𝕋𝔾myFreeNodeChat
+- name: 🇭🇰 香港 香aws
   server: 18.162.124.168
   port: 60001
   type: hysteria2
@@ -53,7 +53,7 @@ proxies:
   up: 1000
   down: 1000
   ports: 60000-65530
-- name: 🇭🇰 香港 香aws②ˣ³𝕋𝔾myFreeNodeChat
+- name: 🇭🇰 香港 香aws 2
   server: 43.199.71.161
   port: 60002
   type: hysteria2
@@ -64,7 +64,7 @@ proxies:
   up: 1000
   down: 1000
   ports: 60000-65530
-- name: 🇹🇼 湾省 aws①ˣ³𝕋𝔾myFreeNodeChat
+- name: 🇹🇼 湾省 aws
   server: 43.213.41.59
   port: 60003
   type: hysteria2
@@ -75,7 +75,7 @@ proxies:
   up: 1000
   down: 1000
   ports: 60000-65530
-- name: 🇯🇵 日本 aws①ˣ³𝕋𝔾myFreeNodeChat
+- name: 🇯🇵 日本 aws
   server: 18.181.88.84
   port: 60004
   type: hysteria2
@@ -86,7 +86,7 @@ proxies:
   up: 1000
   down: 1000
   ports: 60000-65530
-- name: 🇯🇵 日本 aws②ˣ³𝕋𝔾myFreeNodeChat
+- name: 🇯🇵 日本 aws 2
   server: 18.179.84.225
   port: 60005
   type: hysteria2
@@ -97,7 +97,7 @@ proxies:
   up: 1000
   down: 1000
   ports: 60000-65530
-- name: 🇰🇷 韩国 aws①ˣ³𝕋𝔾myFreeNodeChat
+- name: 🇰🇷 韩国 aws
   server: 3.38.147.175
   port: 60006
   type: hysteria2
@@ -108,7 +108,7 @@ proxies:
   up: 1000
   down: 1000
   ports: 60000-65530
-- name: 🇸🇬 狮城 aws①ˣ³𝕋𝔾myFreeNodeChat
+- name: 🇸🇬 狮城 aws
   server: 54.169.210.221
   port: 60007
   type: hysteria2
@@ -119,7 +119,7 @@ proxies:
   up: 1000
   down: 1000
   ports: 60000-65530
-- name: 🇸🇬 狮城 aws②ˣ³𝕋𝔾myFreeNodeChat
+- name: 🇸🇬 狮城 aws 2
   server: 47.129.52.44
   port: 60008
   type: hysteria2
@@ -130,7 +130,7 @@ proxies:
   up: 1000
   down: 1000
   ports: 60000-65530
-- name: 🇯🇵 日本 orc❶ˣ³𝕋𝔾myFreeNodeChat
+- name: 🇯🇵 日本 orc
   server: ct.090227.xyz
   port: 443
   client-fingerprint: ios
@@ -143,7 +143,7 @@ proxies:
     path: /pq/jp1
     headers:
       Host: jpa1.xn--ghqu5fm27b67w.com
-- name: 🇯🇵 日本 orc❷ˣ³𝕋𝔾myFreeNodeChat
+- name: 🇯🇵 日本 orc 2
   server: cmcc.090227.xyz
   port: 443
   client-fingerprint: ios
@@ -156,7 +156,7 @@ proxies:
     path: /pq/jp1
     headers:
       Host: jpa1.xn--ghqu5fm27b67w.com
-- name: 🇺🇸 美国 orc❶ˣ³𝕋𝔾myFreeNodeChat
+- name: 🇺🇸 美国 orc
   server: 69.197.177.163
   port: 32123
   client-fingerprint: chrome
@@ -167,7 +167,7 @@ proxies:
   up: 1000
   down: 1000
   ports: 30000-50000
-- name: 🇺🇸 美国 orc❷ˣ³𝕋𝔾myFreeNodeChat
+- name: 🇺🇸 美国 orc 2
   server: 173.208.220.179
   port: 38183
   client-fingerprint: chrome
@@ -178,7 +178,7 @@ proxies:
   up: 1000
   down: 1000
   ports: 30000-50000
-- name: 🇹🇭 德国 泰国①𝕋𝔾myFreeNoCha
+- name: 🇹🇭 泰国 泰国
   server: 103.181.165.247
   port: 35109
   client-fingerprint: chrome
@@ -190,7 +190,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇮🇩 德国 印尼①𝕋𝔾myFreeNoCha
+- name: 🇮🇩 印尼 印尼
   server: 103.181.165.247
   port: 35135
   client-fingerprint: chrome
@@ -202,7 +202,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇻🇳 德国 越南①𝕋𝔾myFreeNoCha
+- name: 🇻🇳 越南 越南
   server: 103.181.165.247
   port: 35077
   client-fingerprint: chrome
@@ -214,7 +214,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇮🇳 德国 印度①𝕋𝔾myFreeNoCha
+- name: 🇮🇳 印度 印度
   server: 103.181.165.247
   port: 35127
   client-fingerprint: chrome
@@ -226,7 +226,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇵🇭 德国 菲律宾①𝕋𝔾myFreeNoCha
+- name: 🇵🇭 菲律宾 菲律宾
   server: 103.181.165.247
   port: 35081
   client-fingerprint: chrome
@@ -238,7 +238,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇰🇭 德国 柬埔寨①𝕋𝔾myFreeNoCha
+- name: 🇰🇭 柬埔寨 柬埔寨
   server: 103.181.165.247
   port: 35083
   client-fingerprint: chrome
@@ -250,7 +250,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇧🇩 德国 孟加拉①𝕋𝔾myFreeNoCha
+- name: 🇧🇩 未知 孟加拉
   server: 103.181.165.247
   port: 35085
   client-fingerprint: chrome
@@ -262,7 +262,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇵🇰 德国 巴基斯坦①𝕋𝔾myFreeNoCha
+- name: 🇵🇰 巴基斯坦 巴基斯坦
   server: 103.181.165.247
   port: 35130
   client-fingerprint: chrome
@@ -274,7 +274,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇩🇰 德国 丹麦①𝕋𝔾myFreeNoCha
+- name: 🇩🇰 丹麦 丹麦
   server: 103.181.165.247
   port: 35140
   client-fingerprint: chrome
@@ -286,7 +286,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇿🇦 德国 南非①𝕋𝔾myFreeNoCha
+- name: 🇿🇦 南非 南非
   server: 103.181.165.247
   port: 35087
   client-fingerprint: chrome
@@ -298,7 +298,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇧🇭 德国 巴林①𝕋𝔾myFreeNoCha
+- name: 🇧🇭 巴林 巴林
   server: 103.181.165.247
   port: 35007
   client-fingerprint: chrome
@@ -310,7 +310,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇧🇷 德国 巴西①𝕋𝔾myFreeNoCha
+- name: 🇧🇷 巴西 巴西
   server: 103.181.165.247
   port: 35129
   client-fingerprint: chrome
@@ -322,7 +322,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇬🇷 德国 希腊①𝕋𝔾myFreeNoCha
+- name: 🇬🇷 希腊 希腊
   server: 103.181.165.247
   port: 35125
   client-fingerprint: chrome
@@ -334,7 +334,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇩🇪 德国 ①𝕋𝔾myFreeNoCha
+- name: 🇩🇪 德国 01
   server: 103.181.165.247
   port: 35017
   client-fingerprint: chrome
@@ -346,7 +346,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇳🇴 德国 挪威①𝕋𝔾myFreeNoCha
+- name: 🇳🇴 挪威 挪威
   server: 103.181.165.247
   port: 35092
   client-fingerprint: chrome
@@ -358,7 +358,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇨🇿 德国 捷克①𝕋𝔾myFreeNoCha
+- name: 🇨🇿 捷克 捷克
   server: 103.181.165.247
   port: 35101
   client-fingerprint: chrome
@@ -370,7 +370,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇨🇱 德国 智利①𝕋𝔾myFreeNoCha
+- name: 🇨🇱 智利 智利
   server: 103.181.165.247
   port: 35138
   client-fingerprint: chrome
@@ -382,7 +382,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇫🇷 德国 法国①𝕋𝔾myFreeNoCha
+- name: 🇫🇷 法国 法国
   server: 103.181.165.247
   port: 35096
   client-fingerprint: chrome
@@ -394,7 +394,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇵🇱 德国 波兰①𝕋𝔾myFreeNoCha
+- name: 🇵🇱 波兰 波兰
   server: 103.181.165.247
   port: 35097
   client-fingerprint: chrome
@@ -406,7 +406,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇸🇪 德国 瑞典①𝕋𝔾myFreeNoCha
+- name: 🇸🇪 瑞典 瑞典
   server: 103.181.165.247
   port: 35090
   client-fingerprint: chrome
@@ -418,7 +418,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇨🇭 德国 瑞士①𝕋𝔾myFreeNoCha
+- name: 🇨🇭 瑞士 瑞士
   server: 103.181.165.247
   port: 35105
   client-fingerprint: chrome
@@ -430,7 +430,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇵🇪 德国 秘鲁①𝕋𝔾myFreeNoCha
+- name: 🇵🇪 秘鲁 秘鲁
   server: 103.181.165.247
   port: 35146
   client-fingerprint: chrome
@@ -442,7 +442,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇫🇮 德国 芬兰①𝕋𝔾myFreeNoCha
+- name: 🇫🇮 芬兰 芬兰
   server: 103.181.165.247
   port: 35131
   client-fingerprint: chrome
@@ -454,7 +454,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇬🇧 德国 英国①𝕋𝔾myFreeNoCha
+- name: 🇬🇧 英国 国
   server: 103.181.165.247
   port: 35023
   client-fingerprint: chrome
@@ -466,7 +466,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇳🇱 德国 荷兰①𝕋𝔾myFreeNoCha
+- name: 🇳🇱 荷兰 荷兰
   server: 103.181.165.247
   port: 35099
   client-fingerprint: chrome
@@ -478,7 +478,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇮🇱 德国 以色列①𝕋𝔾myFreeNoCha
+- name: 🇮🇱 以色列 以色列
   server: 103.181.165.247
   port: 35136
   client-fingerprint: chrome
@@ -490,7 +490,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇷🇺 德国 俄罗斯①𝕋𝔾myFreeNoCha
+- name: 🇷🇺 俄罗斯 俄罗斯
   server: 103.181.165.247
   port: 35091
   client-fingerprint: chrome
@@ -502,7 +502,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇺🇦 德国 乌克兰①𝕋𝔾myFreeNoCha
+- name: 🇺🇦 乌克兰 乌克兰
   server: 103.181.165.247
   port: 35107
   client-fingerprint: chrome
@@ -514,7 +514,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇨🇦 德国 加拿大①𝕋𝔾myFreeNoCha
+- name: 🇨🇦 加拿大 01
   server: 103.181.165.247
   port: 35021
   client-fingerprint: chrome
@@ -526,7 +526,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇹🇷 德国 土耳其①𝕋𝔾myFreeNoCha
+- name: 🇹🇷 土耳其 土耳其
   server: 103.181.165.247
   port: 35093
   client-fingerprint: chrome
@@ -538,7 +538,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇲🇽 德国 墨西哥①𝕋𝔾myFreeNoCha
+- name: 🇲🇽 墨西哥 墨西哥
   server: 103.181.165.247
   port: 35139
   client-fingerprint: chrome
@@ -550,7 +550,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇦🇹 德国 奥地利①𝕋𝔾myFreeNoCha
+- name: 🇦🇹 奥地利 奥地利
   server: 103.181.165.247
   port: 35122
   client-fingerprint: chrome
@@ -562,7 +562,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇮🇹 德国 意大利①𝕋𝔾myFreeNoCha
+- name: 🇮🇹 意大利 意大利
   server: 103.181.165.247
   port: 35094
   client-fingerprint: chrome
@@ -574,7 +574,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇧🇪 德国 比利时①𝕋𝔾myFreeNoCha
+- name: 🇧🇪 比利时 比利时
   server: 103.181.165.247
   port: 35141
   client-fingerprint: chrome
@@ -586,7 +586,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇮🇪 德国 爱尔兰①𝕋𝔾myFreeNoCha
+- name: 🇮🇪 爱尔兰 爱尔兰
   server: 103.181.165.247
   port: 35142
   client-fingerprint: chrome
@@ -598,7 +598,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇱🇹 德国 立陶宛①𝕋𝔾myFreeNoCha
+- name: 🇱🇹 立陶宛 立陶宛
   server: 103.181.165.247
   port: 35144
   client-fingerprint: chrome
@@ -610,7 +610,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇵🇹 德国 葡萄牙①𝕋𝔾myFreeNoCha
+- name: 🇵🇹 葡萄牙 葡萄牙
   server: 103.181.165.247
   port: 35145
   client-fingerprint: chrome
@@ -622,7 +622,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇪🇸 德国 西班牙①𝕋𝔾myFreeNoCha
+- name: 🇪🇸 西班牙 西班牙
   server: 103.181.165.247
   port: 35120
   client-fingerprint: chrome
@@ -634,7 +634,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇦🇷 德国 阿根廷①𝕋𝔾myFreeNoCha
+- name: 🇦🇷 阿根廷 阿根廷
   server: 103.181.165.247
   port: 35116
   client-fingerprint: chrome
@@ -646,7 +646,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇧🇬 德国 保加利亚①𝕋𝔾myFreeNoCha
+- name: 🇧🇬 保加利亚 保加利亚
   server: 103.181.165.247
   port: 35095
   client-fingerprint: chrome
@@ -658,7 +658,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇨🇴 德国 哥伦比亚①𝕋𝔾myFreeNoCha
+- name: 🇨🇴 哥伦比亚 哥伦比亚
   server: 103.181.165.247
   port: 35118
   client-fingerprint: chrome
@@ -670,7 +670,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇱🇻 德国 拉脱维亚①𝕋𝔾myFreeNoCha
+- name: 🇱🇻 拉脱维亚 拉脱维亚
   server: 103.181.165.247
   port: 35103
   client-fingerprint: chrome
@@ -682,7 +682,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇦🇺 德国 澳大利亚①𝕋𝔾myFreeNoCha
+- name: 🇦🇺 澳大利亚 01
   server: 103.181.165.247
   port: 35111
   client-fingerprint: chrome
@@ -694,7 +694,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇪🇪 德国 爱沙尼亚①𝕋𝔾myFreeNoCha
+- name: 🇪🇪 爱沙尼亚 爱沙尼亚
   server: 103.181.165.247
   port: 35143
   client-fingerprint: chrome
@@ -706,7 +706,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇷🇴 德国 罗马尼亚①𝕋𝔾myFreeNoCha
+- name: 🇷🇴 罗马尼亚 罗马尼亚
   server: 103.181.165.247
   port: 35137
   client-fingerprint: chrome
@@ -718,7 +718,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇴🇲 德国 阿曼①𝕋𝔾myFreeNoCha
+- name: 🇴🇲 阿曼 阿曼
   server: 103.181.165.247
   port: 35128
   client-fingerprint: chrome
@@ -730,7 +730,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇦🇪 德国 阿联酋①𝕋𝔾myFreeNoCha
+- name: 🇦🇪 阿联酋 阿联酋
   server: 103.181.165.247
   port: 35079
   client-fingerprint: chrome
@@ -742,7 +742,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇸🇦 德国 沙特阿拉伯①𝕋𝔾myFreeNoCha
+- name: 🇸🇦 沙特阿拉伯 沙特阿拉伯
   server: 103.181.165.247
   port: 35089
   client-fingerprint: chrome
@@ -754,7 +754,7 @@ proxies:
   tfo: false
   skip-cert-verify: true
   udp: true
-- name: 🇦🇿 德国 阿塞拜疆①𝕋𝔾myFreeNoCha
+- name: 🇦🇿 阿塞拜疆 阿塞拜疆
   server: 103.181.165.247
   port: 35134
   client-fingerprint: chrome
@@ -774,136 +774,136 @@ proxy-groups:
   - 🔯 故障转移
   - DIRECT
   - 🇲🇾 未知 MY
-  - 🇭🇰 香港 三網❶ˣ³⁰𝕋𝔾myFreeNodeChat
-  - 🇭🇰 香港 三網❷ˣ³⁰𝕋𝔾myFreeNodeChat
-  - 🇭🇰 香港 香aws①ˣ³𝕋𝔾myFreeNodeChat
-  - 🇭🇰 香港 香aws②ˣ³𝕋𝔾myFreeNodeChat
-  - 🇹🇼 湾省 aws①ˣ³𝕋𝔾myFreeNodeChat
-  - 🇯🇵 日本 aws①ˣ³𝕋𝔾myFreeNodeChat
-  - 🇯🇵 日本 aws②ˣ³𝕋𝔾myFreeNodeChat
-  - 🇰🇷 韩国 aws①ˣ³𝕋𝔾myFreeNodeChat
-  - 🇸🇬 狮城 aws①ˣ³𝕋𝔾myFreeNodeChat
-  - 🇸🇬 狮城 aws②ˣ³𝕋𝔾myFreeNodeChat
-  - 🇯🇵 日本 orc❶ˣ³𝕋𝔾myFreeNodeChat
-  - 🇯🇵 日本 orc❷ˣ³𝕋𝔾myFreeNodeChat
-  - 🇺🇸 美国 orc❶ˣ³𝕋𝔾myFreeNodeChat
-  - 🇺🇸 美国 orc❷ˣ³𝕋𝔾myFreeNodeChat
-  - 🇹🇭 德国 泰国①𝕋𝔾myFreeNoCha
-  - 🇮🇩 德国 印尼①𝕋𝔾myFreeNoCha
-  - 🇻🇳 德国 越南①𝕋𝔾myFreeNoCha
-  - 🇮🇳 德国 印度①𝕋𝔾myFreeNoCha
-  - 🇵🇭 德国 菲律宾①𝕋𝔾myFreeNoCha
-  - 🇰🇭 德国 柬埔寨①𝕋𝔾myFreeNoCha
-  - 🇧🇩 德国 孟加拉①𝕋𝔾myFreeNoCha
-  - 🇵🇰 德国 巴基斯坦①𝕋𝔾myFreeNoCha
-  - 🇩🇰 德国 丹麦①𝕋𝔾myFreeNoCha
-  - 🇿🇦 德国 南非①𝕋𝔾myFreeNoCha
-  - 🇧🇭 德国 巴林①𝕋𝔾myFreeNoCha
-  - 🇧🇷 德国 巴西①𝕋𝔾myFreeNoCha
-  - 🇬🇷 德国 希腊①𝕋𝔾myFreeNoCha
-  - 🇩🇪 德国 ①𝕋𝔾myFreeNoCha
-  - 🇳🇴 德国 挪威①𝕋𝔾myFreeNoCha
-  - 🇨🇿 德国 捷克①𝕋𝔾myFreeNoCha
-  - 🇨🇱 德国 智利①𝕋𝔾myFreeNoCha
-  - 🇫🇷 德国 法国①𝕋𝔾myFreeNoCha
-  - 🇵🇱 德国 波兰①𝕋𝔾myFreeNoCha
-  - 🇸🇪 德国 瑞典①𝕋𝔾myFreeNoCha
-  - 🇨🇭 德国 瑞士①𝕋𝔾myFreeNoCha
-  - 🇵🇪 德国 秘鲁①𝕋𝔾myFreeNoCha
-  - 🇫🇮 德国 芬兰①𝕋𝔾myFreeNoCha
-  - 🇬🇧 德国 英国①𝕋𝔾myFreeNoCha
-  - 🇳🇱 德国 荷兰①𝕋𝔾myFreeNoCha
-  - 🇮🇱 德国 以色列①𝕋𝔾myFreeNoCha
-  - 🇷🇺 德国 俄罗斯①𝕋𝔾myFreeNoCha
-  - 🇺🇦 德国 乌克兰①𝕋𝔾myFreeNoCha
-  - 🇨🇦 德国 加拿大①𝕋𝔾myFreeNoCha
-  - 🇹🇷 德国 土耳其①𝕋𝔾myFreeNoCha
-  - 🇲🇽 德国 墨西哥①𝕋𝔾myFreeNoCha
-  - 🇦🇹 德国 奥地利①𝕋𝔾myFreeNoCha
-  - 🇮🇹 德国 意大利①𝕋𝔾myFreeNoCha
-  - 🇧🇪 德国 比利时①𝕋𝔾myFreeNoCha
-  - 🇮🇪 德国 爱尔兰①𝕋𝔾myFreeNoCha
-  - 🇱🇹 德国 立陶宛①𝕋𝔾myFreeNoCha
-  - 🇵🇹 德国 葡萄牙①𝕋𝔾myFreeNoCha
-  - 🇪🇸 德国 西班牙①𝕋𝔾myFreeNoCha
-  - 🇦🇷 德国 阿根廷①𝕋𝔾myFreeNoCha
-  - 🇧🇬 德国 保加利亚①𝕋𝔾myFreeNoCha
-  - 🇨🇴 德国 哥伦比亚①𝕋𝔾myFreeNoCha
-  - 🇱🇻 德国 拉脱维亚①𝕋𝔾myFreeNoCha
-  - 🇦🇺 德国 澳大利亚①𝕋𝔾myFreeNoCha
-  - 🇪🇪 德国 爱沙尼亚①𝕋𝔾myFreeNoCha
-  - 🇷🇴 德国 罗马尼亚①𝕋𝔾myFreeNoCha
-  - 🇴🇲 德国 阿曼①𝕋𝔾myFreeNoCha
-  - 🇦🇪 德国 阿联酋①𝕋𝔾myFreeNoCha
-  - 🇸🇦 德国 沙特阿拉伯①𝕋𝔾myFreeNoCha
-  - 🇦🇿 德国 阿塞拜疆①𝕋𝔾myFreeNoCha
+  - 🇭🇰 香港 三網
+  - 🇭🇰 香港 三網 2
+  - 🇭🇰 香港 香aws
+  - 🇭🇰 香港 香aws 2
+  - 🇹🇼 湾省 aws
+  - 🇯🇵 日本 aws
+  - 🇯🇵 日本 aws 2
+  - 🇰🇷 韩国 aws
+  - 🇸🇬 狮城 aws
+  - 🇸🇬 狮城 aws 2
+  - 🇯🇵 日本 orc
+  - 🇯🇵 日本 orc 2
+  - 🇺🇸 美国 orc
+  - 🇺🇸 美国 orc 2
+  - 🇹🇭 泰国 泰国
+  - 🇮🇩 印尼 印尼
+  - 🇻🇳 越南 越南
+  - 🇮🇳 印度 印度
+  - 🇵🇭 菲律宾 菲律宾
+  - 🇰🇭 柬埔寨 柬埔寨
+  - 🇧🇩 未知 孟加拉
+  - 🇵🇰 巴基斯坦 巴基斯坦
+  - 🇩🇰 丹麦 丹麦
+  - 🇿🇦 南非 南非
+  - 🇧🇭 巴林 巴林
+  - 🇧🇷 巴西 巴西
+  - 🇬🇷 希腊 希腊
+  - 🇩🇪 德国 01
+  - 🇳🇴 挪威 挪威
+  - 🇨🇿 捷克 捷克
+  - 🇨🇱 智利 智利
+  - 🇫🇷 法国 法国
+  - 🇵🇱 波兰 波兰
+  - 🇸🇪 瑞典 瑞典
+  - 🇨🇭 瑞士 瑞士
+  - 🇵🇪 秘鲁 秘鲁
+  - 🇫🇮 芬兰 芬兰
+  - 🇬🇧 英国 国
+  - 🇳🇱 荷兰 荷兰
+  - 🇮🇱 以色列 以色列
+  - 🇷🇺 俄罗斯 俄罗斯
+  - 🇺🇦 乌克兰 乌克兰
+  - 🇨🇦 加拿大 01
+  - 🇹🇷 土耳其 土耳其
+  - 🇲🇽 墨西哥 墨西哥
+  - 🇦🇹 奥地利 奥地利
+  - 🇮🇹 意大利 意大利
+  - 🇧🇪 比利时 比利时
+  - 🇮🇪 爱尔兰 爱尔兰
+  - 🇱🇹 立陶宛 立陶宛
+  - 🇵🇹 葡萄牙 葡萄牙
+  - 🇪🇸 西班牙 西班牙
+  - 🇦🇷 阿根廷 阿根廷
+  - 🇧🇬 保加利亚 保加利亚
+  - 🇨🇴 哥伦比亚 哥伦比亚
+  - 🇱🇻 拉脱维亚 拉脱维亚
+  - 🇦🇺 澳大利亚 01
+  - 🇪🇪 爱沙尼亚 爱沙尼亚
+  - 🇷🇴 罗马尼亚 罗马尼亚
+  - 🇴🇲 阿曼 阿曼
+  - 🇦🇪 阿联酋 阿联酋
+  - 🇸🇦 沙特阿拉伯 沙特阿拉伯
+  - 🇦🇿 阿塞拜疆 阿塞拜疆
 - name: ♻️ 自动选择
   type: url-test
   proxies: &id001
   - 🇲🇾 未知 MY
-  - 🇭🇰 香港 三網❶ˣ³⁰𝕋𝔾myFreeNodeChat
-  - 🇭🇰 香港 三網❷ˣ³⁰𝕋𝔾myFreeNodeChat
-  - 🇭🇰 香港 香aws①ˣ³𝕋𝔾myFreeNodeChat
-  - 🇭🇰 香港 香aws②ˣ³𝕋𝔾myFreeNodeChat
-  - 🇹🇼 湾省 aws①ˣ³𝕋𝔾myFreeNodeChat
-  - 🇯🇵 日本 aws①ˣ³𝕋𝔾myFreeNodeChat
-  - 🇯🇵 日本 aws②ˣ³𝕋𝔾myFreeNodeChat
-  - 🇰🇷 韩国 aws①ˣ³𝕋𝔾myFreeNodeChat
-  - 🇸🇬 狮城 aws①ˣ³𝕋𝔾myFreeNodeChat
-  - 🇸🇬 狮城 aws②ˣ³𝕋𝔾myFreeNodeChat
-  - 🇯🇵 日本 orc❶ˣ³𝕋𝔾myFreeNodeChat
-  - 🇯🇵 日本 orc❷ˣ³𝕋𝔾myFreeNodeChat
-  - 🇺🇸 美国 orc❶ˣ³𝕋𝔾myFreeNodeChat
-  - 🇺🇸 美国 orc❷ˣ³𝕋𝔾myFreeNodeChat
-  - 🇹🇭 德国 泰国①𝕋𝔾myFreeNoCha
-  - 🇮🇩 德国 印尼①𝕋𝔾myFreeNoCha
-  - 🇻🇳 德国 越南①𝕋𝔾myFreeNoCha
-  - 🇮🇳 德国 印度①𝕋𝔾myFreeNoCha
-  - 🇵🇭 德国 菲律宾①𝕋𝔾myFreeNoCha
-  - 🇰🇭 德国 柬埔寨①𝕋𝔾myFreeNoCha
-  - 🇧🇩 德国 孟加拉①𝕋𝔾myFreeNoCha
-  - 🇵🇰 德国 巴基斯坦①𝕋𝔾myFreeNoCha
-  - 🇩🇰 德国 丹麦①𝕋𝔾myFreeNoCha
-  - 🇿🇦 德国 南非①𝕋𝔾myFreeNoCha
-  - 🇧🇭 德国 巴林①𝕋𝔾myFreeNoCha
-  - 🇧🇷 德国 巴西①𝕋𝔾myFreeNoCha
-  - 🇬🇷 德国 希腊①𝕋𝔾myFreeNoCha
-  - 🇩🇪 德国 ①𝕋𝔾myFreeNoCha
-  - 🇳🇴 德国 挪威①𝕋𝔾myFreeNoCha
-  - 🇨🇿 德国 捷克①𝕋𝔾myFreeNoCha
-  - 🇨🇱 德国 智利①𝕋𝔾myFreeNoCha
-  - 🇫🇷 德国 法国①𝕋𝔾myFreeNoCha
-  - 🇵🇱 德国 波兰①𝕋𝔾myFreeNoCha
-  - 🇸🇪 德国 瑞典①𝕋𝔾myFreeNoCha
-  - 🇨🇭 德国 瑞士①𝕋𝔾myFreeNoCha
-  - 🇵🇪 德国 秘鲁①𝕋𝔾myFreeNoCha
-  - 🇫🇮 德国 芬兰①𝕋𝔾myFreeNoCha
-  - 🇬🇧 德国 英国①𝕋𝔾myFreeNoCha
-  - 🇳🇱 德国 荷兰①𝕋𝔾myFreeNoCha
-  - 🇮🇱 德国 以色列①𝕋𝔾myFreeNoCha
-  - 🇷🇺 德国 俄罗斯①𝕋𝔾myFreeNoCha
-  - 🇺🇦 德国 乌克兰①𝕋𝔾myFreeNoCha
-  - 🇨🇦 德国 加拿大①𝕋𝔾myFreeNoCha
-  - 🇹🇷 德国 土耳其①𝕋𝔾myFreeNoCha
-  - 🇲🇽 德国 墨西哥①𝕋𝔾myFreeNoCha
-  - 🇦🇹 德国 奥地利①𝕋𝔾myFreeNoCha
-  - 🇮🇹 德国 意大利①𝕋𝔾myFreeNoCha
-  - 🇧🇪 德国 比利时①𝕋𝔾myFreeNoCha
-  - 🇮🇪 德国 爱尔兰①𝕋𝔾myFreeNoCha
-  - 🇱🇹 德国 立陶宛①𝕋𝔾myFreeNoCha
-  - 🇵🇹 德国 葡萄牙①𝕋𝔾myFreeNoCha
-  - 🇪🇸 德国 西班牙①𝕋𝔾myFreeNoCha
-  - 🇦🇷 德国 阿根廷①𝕋𝔾myFreeNoCha
-  - 🇧🇬 德国 保加利亚①𝕋𝔾myFreeNoCha
-  - 🇨🇴 德国 哥伦比亚①𝕋𝔾myFreeNoCha
-  - 🇱🇻 德国 拉脱维亚①𝕋𝔾myFreeNoCha
-  - 🇦🇺 德国 澳大利亚①𝕋𝔾myFreeNoCha
-  - 🇪🇪 德国 爱沙尼亚①𝕋𝔾myFreeNoCha
-  - 🇷🇴 德国 罗马尼亚①𝕋𝔾myFreeNoCha
-  - 🇴🇲 德国 阿曼①𝕋𝔾myFreeNoCha
-  - 🇦🇪 德国 阿联酋①𝕋𝔾myFreeNoCha
-  - 🇸🇦 德国 沙特阿拉伯①𝕋𝔾myFreeNoCha
-  - 🇦🇿 德国 阿塞拜疆①𝕋𝔾myFreeNoCha
+  - 🇭🇰 香港 三網
+  - 🇭🇰 香港 三網 2
+  - 🇭🇰 香港 香aws
+  - 🇭🇰 香港 香aws 2
+  - 🇹🇼 湾省 aws
+  - 🇯🇵 日本 aws
+  - 🇯🇵 日本 aws 2
+  - 🇰🇷 韩国 aws
+  - 🇸🇬 狮城 aws
+  - 🇸🇬 狮城 aws 2
+  - 🇯🇵 日本 orc
+  - 🇯🇵 日本 orc 2
+  - 🇺🇸 美国 orc
+  - 🇺🇸 美国 orc 2
+  - 🇹🇭 泰国 泰国
+  - 🇮🇩 印尼 印尼
+  - 🇻🇳 越南 越南
+  - 🇮🇳 印度 印度
+  - 🇵🇭 菲律宾 菲律宾
+  - 🇰🇭 柬埔寨 柬埔寨
+  - 🇧🇩 未知 孟加拉
+  - 🇵🇰 巴基斯坦 巴基斯坦
+  - 🇩🇰 丹麦 丹麦
+  - 🇿🇦 南非 南非
+  - 🇧🇭 巴林 巴林
+  - 🇧🇷 巴西 巴西
+  - 🇬🇷 希腊 希腊
+  - 🇩🇪 德国 01
+  - 🇳🇴 挪威 挪威
+  - 🇨🇿 捷克 捷克
+  - 🇨🇱 智利 智利
+  - 🇫🇷 法国 法国
+  - 🇵🇱 波兰 波兰
+  - 🇸🇪 瑞典 瑞典
+  - 🇨🇭 瑞士 瑞士
+  - 🇵🇪 秘鲁 秘鲁
+  - 🇫🇮 芬兰 芬兰
+  - 🇬🇧 英国 国
+  - 🇳🇱 荷兰 荷兰
+  - 🇮🇱 以色列 以色列
+  - 🇷🇺 俄罗斯 俄罗斯
+  - 🇺🇦 乌克兰 乌克兰
+  - 🇨🇦 加拿大 01
+  - 🇹🇷 土耳其 土耳其
+  - 🇲🇽 墨西哥 墨西哥
+  - 🇦🇹 奥地利 奥地利
+  - 🇮🇹 意大利 意大利
+  - 🇧🇪 比利时 比利时
+  - 🇮🇪 爱尔兰 爱尔兰
+  - 🇱🇹 立陶宛 立陶宛
+  - 🇵🇹 葡萄牙 葡萄牙
+  - 🇪🇸 西班牙 西班牙
+  - 🇦🇷 阿根廷 阿根廷
+  - 🇧🇬 保加利亚 保加利亚
+  - 🇨🇴 哥伦比亚 哥伦比亚
+  - 🇱🇻 拉脱维亚 拉脱维亚
+  - 🇦🇺 澳大利亚 01
+  - 🇪🇪 爱沙尼亚 爱沙尼亚
+  - 🇷🇴 罗马尼亚 罗马尼亚
+  - 🇴🇲 阿曼 阿曼
+  - 🇦🇪 阿联酋 阿联酋
+  - 🇸🇦 沙特阿拉伯 沙特阿拉伯
+  - 🇦🇿 阿塞拜疆 阿塞拜疆
   url: http://www.gstatic.com/generate_204
   interval: 300
 - name: 🔯 故障转移
