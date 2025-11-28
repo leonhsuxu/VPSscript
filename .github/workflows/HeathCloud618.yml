@@ -1,31 +1,51 @@
-import requests
+name: 🏥 TG.HeathCloud618
+on:
+  schedule:
+    # 每天 UTC 0:00 (北京时间 8:00) 自动运行
+    - cron: '0 0 * * *'
+  workflow_dispatch: # 允许手动触发
+  push:
+    branches:
+      - main
+    paths:
+      - 'flclashyaml/TG.HeathCloud618.py'
 
-def download_file(url: str, filename: str):
-    headers = {
-        "User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-                       "AppleWebKit/537.36 (KHTML, like Gecko) "
-                       "Chrome/115.0.0.0 Safari/537.36"),
-        # 如果需要还可以添加
-        # "Referer": "https://example.com",
-        # "Cookie": "key=value; anotherkey=anothervalue",
-    }
+permissions:
+  contents: write
 
-    try:
-        print(f"开始下载文件: {url}")
-        response = requests.get(url, headers=headers, timeout=30)
-        response.raise_for_status()
-        with open(filename, "wb") as f:
-            f.write(response.content)
-        print(f"文件已保存到 {filename}")
-    except requests.exceptions.HTTPError as e:
-        print(f"HTTP 错误: {e.response.status_code} - {e.response.reason}")
-    except requests.exceptions.RequestException as e:
-        print(f"请求异常: {e}")
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 检出代码
+      uses: actions/checkout@v4
 
-if __name__ == "__main__":
-    # 这里替换成实际需要下载的文件 URL
-    download_url = "https://example.com/path/to/file.yaml"
-    save_path = "flclashyaml/TG.HeathCloud618.yaml"
-    download_file(download_url, save_path)
+    - name: 设置 Python 3.11
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
 
-    # 你后续的脚本合并、转换逻辑可继续写这里
+    # --- 1. 终极简化的依赖安装 ---
+    - name: 安装依赖
+      run: |
+        python -m pip install --upgrade pip
+        # 只需最基础的库，不再需要 PySocks 或任何系统工具
+        pip install requests pyyaml
+
+    # --- 2. 所有外部工具下载步骤均已移除 ---
+
+    - name: 运行合并与重命名脚本
+      run: |
+        python flclashyaml/TG.HeathCloud618.py
+
+    - name: 提交更新到仓库
+      run: |
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add flclashyaml/TG.HeathCloud618.yaml
+        if ! git diff --staged --quiet; then
+          git commit -m "🏥 HeathCloud618 $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+          git push
+        else
+          echo "文件无变化，无需提交。"
+        fi
