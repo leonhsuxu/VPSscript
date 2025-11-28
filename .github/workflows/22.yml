@@ -1,139 +1,31 @@
-name: Clash Subscription Update
+name: Get Subscription with wget
 
 on:
-  push:
-    branches: [ main ]
   workflow_dispatch:
-  schedule:
-    - cron: '0 */12 * * *'  # 每12小时自动更新一次
 
 jobs:
-  update-subscription:
+  fetch:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v3
     
-    - name: Simulate Clash fetching subscription
+    - name: GET request with wget
       run: |
-        echo "=========================================="
-        echo "Clash 订阅更新模拟器"
-        echo "=========================================="
-        echo ""
-        echo "📡 正在从订阅地址获取配置..."
-        echo "URL: https://pastecode.dev/raw/hntbocnp/健康中心618ord"
-        echo ""
+        echo "📥 使用 wget GET 请求..."
         
-        # 模拟 Clash 发送请求（带 User-Agent）
-        curl -A "Clash" \
-             -H "Accept: application/yaml" \
-             "https://pastecode.dev/raw/hntbocnp/%E5%81%A5%E5%BA%B7%E4%B8%AD%E5%BF%83618ord" \
-             > HeathCloud618ord.yaml
+        wget --header="User-Agent: Clash" \
+             --header="Accept: application/yaml" \
+             -O HeathCloud618ord.yaml \
+             "https://pastecode.dev/raw/hntbocnp/%E5%81%A5%E5%BA%B7%E4%B8%AD%E5%BF%83618ord"
         
-        if [ $? -eq 0 ]; then
-          echo "✓ 订阅更新成功"
-          echo ""
-          echo "📊 配置文件信息:"
-          ls -lh HeathCloud618ord.yaml
-          echo ""
-          FILE_SIZE=$(stat -f%z HeathCloud618ord.yaml 2>/dev/null || stat -c%s HeathCloud618ord.yaml)
-          echo "文件大小: $FILE_SIZE 字节"
-        else
-          echo "✗ 订阅更新失败"
-          exit 1
-        fi
+        echo "✓ 下载完成"
+        cat HeathCloud618ord.yaml
     
-    - name: Install YAML parser
+    - name: Commit
       run: |
-        sudo wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
-        sudo chmod +x /usr/local/bin/yq
-    
-    - name: Parse and validate config
-      run: |
-        echo "=========================================="
-        echo "配置文件解析（模拟 Clash 加载配置）"
-        echo "=========================================="
-        echo ""
-        
-        # 验证 YAML 格式
-        if ! yq eval '.' HeathCloud618ord.yaml > /dev/null 2>&1; then
-          echo "✗ YAML 格式错误，无法解析"
-          exit 1
-        fi
-        
-        echo "✓ YAML 格式验证通过"
-        echo ""
-        
-        # 读取基础配置
-        echo "【基础配置】"
-        echo "端口: $(yq eval '.port // "未设置"' HeathCloud618ord.yaml)"
-        echo "SOCKS 端口: $(yq eval '.socks-port // "未设置"' HeathCloud618ord.yaml)"
-        echo "混合端口: $(yq eval '.mixed-port // "未设置"' HeathCloud618ord.yaml)"
-        echo "模式: $(yq eval '.mode // "rule"' HeathCloud618ord.yaml)"
-        echo "日志级别: $(yq eval '.log-level // "info"' HeathCloud618ord.yaml)"
-        echo "允许局域网: $(yq eval '.allow-lan // false' HeathCloud618ord.yaml)"
-        echo ""
-        
-        # 统计节点
-        PROXY_COUNT=$(yq eval '.proxies | length' HeathCloud618ord.yaml 2>/dev/null || echo "0")
-        echo "【代理节点】"
-        echo "节点总数: $PROXY_COUNT"
-        echo ""
-        
-        if [ "$PROXY_COUNT" -gt 0 ]; then
-          echo "节点列表（前10个）:"
-          yq eval '.proxies[0:10] | .[] | .name' HeathCloud618ord.yaml 2>/dev/null | nl
-          echo ""
-        fi
-        
-        # 统计代理组
-        GROUP_COUNT=$(yq eval '.proxy-groups | length' HeathCloud618ord.yaml 2>/dev/null || echo "0")
-        echo "【代理组】"
-        echo "代理组总数: $GROUP_COUNT"
-        echo ""
-        
-        if [ "$GROUP_COUNT" -gt 0 ]; then
-          echo "代理组列表:"
-          yq eval '.proxy-groups | .[] | .name' HeathCloud618ord.yaml 2>/dev/null | nl
-          echo ""
-        fi
-        
-        # 统计规则
-        RULE_COUNT=$(yq eval '.rules | length' HeathCloud618ord.yaml 2>/dev/null || echo "0")
-        echo "【规则集】"
-        echo "规则总数: $RULE_COUNT"
-        echo ""
-        
-        echo "=========================================="
-        echo "配置加载完成 ✓"
-        echo "=========================================="
-    
-    - name: Generate update log
-      run: |
-        echo "生成更新日志..."
-        cat > update_log.txt << EOF
-        更新时间: $(date +'%Y-%m-%d %H:%M:%S')
-        订阅地址: https://pastecode.dev/raw/hntbocnp/健康中心618ord
-        配置文件: HeathCloud618ord.yaml
-        状态: 成功
-        EOF
-        
-        cat update_log.txt
-    
-    - name: Commit updated config
-      run: |
-        git config --local user.email "clash-bot@github.com"
-        git config --local user.name "Clash Bot"
-        git add HeathCloud618ord.yaml update_log.txt
-        
-        if git diff --quiet && git diff --staged --quiet; then
-          echo ""
-          echo "ℹ️  配置文件没有变化，无需更新"
-        else
-          TIMESTAMP=$(date +'%Y-%m-%d %H:%M:%S')
-          git commit -m "🔄 Update Clash subscription - $TIMESTAMP"
-          git push
-          echo ""
-          echo "✓ 配置文件已更新并推送到仓库"
-        fi
+        git config user.email "bot@github.com"
+        git config user.name "Bot"
+        git add HeathCloud618ord.yaml
+        git diff --staged --quiet || git commit -m "Update via wget"
+        git push
