@@ -1,4 +1,4 @@
-      - name: Fetch content from pastecode
+- name: Fetch content from pastecode
         run: |
           echo "正在获取数据..."
           wget --user-agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36" \
