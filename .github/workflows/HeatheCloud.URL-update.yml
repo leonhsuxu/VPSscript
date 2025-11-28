@@ -1,96 +1,97 @@
 # 工作流的名称
 name: 🔄 HeatheCloud.URL-update
 
+# ======================================================================
+# >> URL 配置区 <<
+# 在这里添加、删除或修改您的 URL 和对应的文件名。
+# 只需按照 JSON 格式添加新的对象即可。
+# ======================================================================
+env:
+  URL_CONFIG: |
+    [
+      {
+        "url": "https://pastecode.dev/raw/ki7zml2s/%E5%81%A5%E5%BA%B7%E4%B8%AD%E5%BF%83618pro",
+        "filename": "HeathCloud618pro"
+      },
+      {
+        "url": "https://pastecode.dev/raw/hntbocnp/%E5%81%A5%E5%BA%B7%E4%B8%AD%E5%BF%83618ord",
+        "filename": "HeathCloud618ord"
+      }
+    ]
+
 # 工作流的触发条件
 on:
-  # 1. 定时触发：每6小时执行一次
   schedule:
-    - cron: '0 */12 * * *'
-  
-  # 2. 手动触发：允许您在 GitHub Actions 页面手动点击 "Run workflow"
+    # 北京时间 早上 6:00 对应的是 UTC 时间的前一天晚上 22:00 (6 - 8 = -2, 即前一天的22点)
+    - cron: '0 22 * * *'
   workflow_dispatch:
 
 # 定义工作任务
 jobs:
-  # 第一个任务：并行下载并生成文件到指定目录
+  # 第一个任务：并行下载并生成文件
   sync-and-generate:
     runs-on: ubuntu-latest
-    
     strategy:
       fail-fast: false
-      matrix:
-        # !!! 您唯一需要修改的地方是这里 !!!
-        # 为您的每个源地址添加一个条目
-        include:
-          - url: "https://pastecode.dev/raw/ki7zml2s/%E5%81%A5%E5%BA%B7%E4%B8%AD%E5%BF%83618pro" # pro
-            filename: "HeathCloud618pro"
-          - url: "https://pastecode.dev/raw/hntbocnp/%E5%81%A5%E5%BA%B7%E4%B8%AD%E5%BF%83618ord" # ord
-            filename: "HeathCloud618ord"
-          - url: "https://example.com/some/data.txt" # 示例：您的第三个地址
-            filename: "source_three"
-
+      matrix: ${{ fromJson(env.URL_CONFIG) }}
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Create destination directory
-        run: mkdir -p flclashyaml/TG.HeathCloud618
-        # 'mkdir -p' 会创建所有必需的父目录，且如果目录已存在也不会报错
-
-      - name: Fetch content and create TXT file
+      - name: Create temporary directory and files
         run: |
-          # 将文件输出到指定目录下
-          curl -sL -o "flclashyaml/TG.HeathCloud618/${{ matrix.filename }}.txt" "${{ matrix.url }}"
-
-      - name: Create YML file
-        run: |
-          # 定义目标文件路径变量，使脚本更清晰
-          TXT_FILE="flclashyaml/TG.HeathCloud618/${{ matrix.filename }}.txt"
-          YML_FILE="flclashyaml/TG.HeathCloud618/${{ matrix.filename }}.yml"
-
-          # 创建 .yml 文件，并将原始内容作为 'content' 字段的值
+          mkdir -p ${{ matrix.filename }}
+          TXT_FILE="${{ matrix.filename }}/${{ matrix.filename }}.txt"
+          YML_FILE="${{ matrix.filename }}/${{ matrix.filename }}.yml"
+          curl -fsSL -o "$TXT_FILE" "${{ matrix.url }}" || { echo "Failed to download from ${{ matrix.url }}"; exit 1; }
           echo "source_url: \"${{ matrix.url }}\"" > "$YML_FILE"
           echo "sync_timestamp: \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\"" >> "$YML_FILE"
           echo "content: |" >> "$YML_FILE"
           sed 's/^/  /' "$TXT_FILE" >> "$YML_FILE"
-
-      # 将包含生成文件的整个文件夹打包，以便下一个任务使用
-      - name: Upload generated files artifact
+      - name: Upload artifact for ${{ matrix.filename }}
         uses: actions/upload-artifact@v4
         with:
-          name: generated-files
-          path: flclashyaml/
+          name: ${{ matrix.filename }}
+          path: ${{ matrix.filename }}
 
-  # 第二个任务：在所有文件生成后，统一提交
+  # 第二个任务：合并、清理并提交
   commit-changes:
     runs-on: ubuntu-latest
     needs: sync-and-generate
-    
+    if: always()
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      # 下载由上一个任务打包的整个文件夹
-      - name: Download all generated files artifact
+      - name: Download all generated artifacts
         uses: actions/download-artifact@v4
         with:
-          name: generated-files
-          # 将下载的内容放置到仓库的根目录，它会恢复 flclashyaml/ 的目录结构
-          path: .
-
+          path: artifacts
+      - name: Organize files and clean up obsolete ones
+        env:
+          URL_CONFIG: ${{ env.URL_CONFIG }}
+        run: |
+          TARGET_DIR="flclashyaml/TG.HeathCloud618"
+          mkdir -p "$TARGET_DIR"
+          find artifacts -type f -exec mv {} "$TARGET_DIR/" \;
+          > expected_files.log
+          echo "$URL_CONFIG" | jq -r '.[] | .filename' | while IFS= read -r filename; do
+              if [ -f "$TARGET_DIR/$filename.txt" ]; then
+                echo "$TARGET_DIR/$filename.txt" >> expected_files.log
+                echo "$TARGET_DIR/$filename.yml" >> expected_files.log
+              fi
+          done
+          find "$TARGET_DIR" -type f | sort > actual_files.log
+          comm -13 <(sort expected_files.log) <(sort actual_files.log) | while IFS= read -r file_to_delete; do
+            if [ -f "$file_to_delete" ]; then
+              echo "Deleting obsolete file: $file_to_delete"
+              git rm "$file_to_delete"
+            fi
+          done
       - name: Commit and push if changed
         run: |
-          # 配置 Git
           git config --global user.name 'GitHub Action Bot'
           git config --global user.email 'actions@github.com'
-          
-          # 直接添加整个目标文件夹到暂存区
           git add flclashyaml/
-          
-          # 检查是否有任何更改，如果没有则不进行提交
-          if git diff --staged --quiet; then
-            echo "Content has not changed. No commit needed."
+          if git diff --staged --quiet && ! git ls-files --deleted | grep .; then
+            echo "No changes or deletions. No commit needed."
           else
-            git commit -m "Auto-update: Sync content to flclashyaml/ folder"
+            git commit -m "Auto-update: Sync and clean up sources"
             git push
           fi
