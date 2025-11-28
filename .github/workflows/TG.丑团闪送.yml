@@ -1,4 +1,4 @@
-name: 🔄 丑团自动更新
+name: 🤡TG.丑团节点
 
 on:
   schedule:
@@ -46,7 +46,7 @@ jobs:
         git add flclashyaml/choutuan-all.yaml
         # 只有在文件内容发生变化时才提交
         if ! git diff --staged --quiet; then
-          git commit -m "🔄 丑团自动更新 $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+          git commit -m "🤡 丑团自动更新 $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
           git push
         else
           echo "文件无变化，无需提交。"
