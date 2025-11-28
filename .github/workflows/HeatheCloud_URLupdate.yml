@@ -1,5 +1,5 @@
 # 工作流的名称
-name: 🔄 HeatheCloud.URL-update
+name: 🔄 HeatheCloud_URL-update
 
 # ======================================================================
 # >> URL 配置区 <<
@@ -35,17 +35,14 @@ jobs:
       - id: set-matrix
         name: Set matrix config from env
         run: |
-          # 将多行JSON转换为单行，并设置为本任务的输出
           echo "matrix=$(echo '${{ env.URL_CONFIG }}' | jq -c .)" >> $GITHUB_OUTPUT
 
   # 第一个核心任务：并行下载并生成文件
   sync-and-generate:
-    # 依赖于前置任务的成功
     needs: setup
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      # 关键变更：从 setup 任务的输出中获取矩阵
       matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
     steps:
       - name: Create temporary directory and files
@@ -66,7 +63,6 @@ jobs:
 
   # 第二个核心任务：合并、清理并提交
   commit-changes:
-    # 依赖于下载任务
     needs: sync-and-generate
     runs-on: ubuntu-latest
     if: always()
@@ -81,7 +77,9 @@ jobs:
         env:
           URL_CONFIG: ${{ env.URL_CONFIG }}
         run: |
-          TARGET_DIR="flclashyaml/TG.HeathCloud618"
+          # 关键变更 (1)：更新目标目录路径
+          TARGET_DIR="TG_HeathCloud618"
+          
           mkdir -p "$TARGET_DIR"
           find artifacts -type f -exec mv {} "$TARGET_DIR/" \;
           > expected_files.log
@@ -102,7 +100,10 @@ jobs:
         run: |
           git config --global user.name 'GitHub Action Bot'
           git config --global user.email 'actions@github.com'
-          git add flclashyaml/
+          
+          # 关键变更 (2)：更新 git add 的路径
+          git add TG_HeathCloud618/
+          
           if git diff --staged --quiet && ! git ls-files --deleted | grep .; then
             echo "No changes or deletions. No commit needed."
           else
