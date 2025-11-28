@@ -3,8 +3,7 @@ name: 🔄 HeatheCloud.URL-update
 
 # ======================================================================
 # >> URL 配置区 <<
-# 在这里添加、删除或修改您的 URL 和对应的文件名。
-# 只需按照 JSON 格式添加新的对象即可。
+# 您的配置区保持不变，依然在这里维护。
 # ======================================================================
 env:
   URL_CONFIG: |
@@ -22,18 +21,32 @@ env:
 # 工作流的触发条件
 on:
   schedule:
-    # 北京时间 早上 6:00 对应的是 UTC 时间的前一天晚上 22:00 (6 - 8 = -2, 即前一天的22点)
     - cron: '0 22 * * *'
   workflow_dispatch:
 
 # 定义工作任务
 jobs:
-  # 第一个任务：并行下载并生成文件
+  # 新增的前置任务，用于生成矩阵配置
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - id: set-matrix
+        name: Set matrix config from env
+        run: |
+          # 将多行JSON转换为单行，并设置为本任务的输出
+          echo "matrix=$(echo '${{ env.URL_CONFIG }}' | jq -c .)" >> $GITHUB_OUTPUT
+
+  # 第一个核心任务：并行下载并生成文件
   sync-and-generate:
+    # 依赖于前置任务的成功
+    needs: setup
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson(env.URL_CONFIG) }}
+      # 关键变更：从 setup 任务的输出中获取矩阵
+      matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
     steps:
       - name: Create temporary directory and files
         run: |
@@ -51,10 +64,11 @@ jobs:
           name: ${{ matrix.filename }}
           path: ${{ matrix.filename }}
 
-  # 第二个任务：合并、清理并提交
+  # 第二个核心任务：合并、清理并提交
   commit-changes:
-    runs-on: ubuntu-latest
+    # 依赖于下载任务
     needs: sync-and-generate
+    runs-on: ubuntu-latest
     if: always()
     steps:
       - name: Checkout repository
