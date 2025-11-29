@@ -16,7 +16,7 @@ import shutil
 # SUBSCRIPTION_URLS 将通过从 URL.TXT 文件加载来动态填充
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 URL_FILE = os.path.join(SCRIPT_DIR, "URL.TXT") # 定义 URL.TXT 文件的路径
-OUTPUT_FILE = os.path.join(SCRIPT_DIR, "Github-SSRProxy.yaml")
+OUTPUT_FILE = os.path.join(SCRIPT_DIR, "TG-SSRProxy.yaml")
 # 获取当前脚本的文件名（不含扩展名），用于匹配 URL.TXT 中的名称
 CURRENT_SCRIPT_NAME = os.path.splitext(os.path.basename(__file__))[0]
 print(f"当前脚本文件名 (不含扩展名): {CURRENT_SCRIPT_NAME}")
