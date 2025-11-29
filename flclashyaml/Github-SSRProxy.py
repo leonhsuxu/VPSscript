@@ -287,7 +287,7 @@ def load_subscription_urls_from_file(url_file_path, script_name_filter):
     return urls
 def main():
     print("=" * 60)
-    print(f"健康中心618 - Clash 订阅合并 @ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print(f"Clash 订阅合并 @ {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
     subscription_urls_from_file = load_subscription_urls_from_file(URL_FILE, CURRENT_SCRIPT_NAME)
     if not subscription_urls_from_file:
