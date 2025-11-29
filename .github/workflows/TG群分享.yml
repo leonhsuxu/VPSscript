@@ -1,4 +1,4 @@
-name: 🗃️ Github.节点更新
+name: ✈️ TG群分享.节点更新
 on:
   schedule:
     # 每天 UTC 0:00 (北京时间 8:00) 自动运行
@@ -9,7 +9,7 @@ on:
       - main
     # 注意：[1]这里的路径无法使用变量，如果修改了脚本路径，需要手动同步修改此处
     paths:
-      - 'flclashyaml/Github-SSRProxy.py'
+      - 'flclashyaml/TG-SSRProxy.py'
 permissions:
   contents: write
 jobs:
@@ -17,9 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # --- 您可以在这里集中修改所有变量 ---
-      CLASH_OUTPUT_FILENAME: Github-SSRProxy.yaml         # <-- 输出的配置文件名
-      PYTHON_SCRIPT_PATH: flclashyaml/Github-SSRProxy.py  # [2]<-- 要执行的 Python 脚本路径 修改第二处
-      COMMIT_MESSAGE_PREFIX: "🗃️ Github.节点更新"           # <-- Git 提交信息的前缀
+      CLASH_OUTPUT_FILENAME: TG-SSRProxy.yaml         # <-- 输出的配置文件名
+      PYTHON_SCRIPT_PATH: flclashyaml/TG-SSRProxy.py  # [2]<-- 要执行的 Python 脚本路径 修改第二处
+      COMMIT_MESSAGE_PREFIX: "✈️ TG群分享.节点更新"           # <-- Git 提交信息的前缀
 
     steps:
     - name: 检出代码
