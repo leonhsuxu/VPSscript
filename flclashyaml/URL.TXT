@@ -14,7 +14,7 @@ Github CF：https://alipay.vavv.cn/9p6iavwf1lor69yi
 Github 公益：https://api.dler.io/sub?target=clash&url=https%3A%2F%2Fraw.githubusercontent.com%2Fgo4sharing%2Fsub%2Fmain%2Fsub.yaml&insert=false&config=https%3A%2F%2Fraw.githubusercontent.com%2FACL4SSR%2FACL4SSR%2Fmaster%2FClash%2Fconfig%2FACL4SSR_Online.ini&emoji=true&list=false&tfo=false&scv=true&fdn=true&expand=true&sort=false&new_name=true
 
 # TG.白嫖群&频道:
-[TG-G]@fq521 轩辕节点分享吧：https://xyfqzy.zone.id/yyds/auto
-[TG-G]@zzzjjjkkkoi 白嫖机场交流群：https://sub.irys.dpdns.org/auto
-[TG-C]@wxgqlfx 翻墙世界的梯子：https://zjzl.wxgqlfx.fun/wxgqlfx
-[TG-C]@go4sharing 公益机场节点：https://raw.githubusercontent.com/go4sharing/sub/main/sub.yaml
+Github-SSRProxy[TG-G]@fq521 轩辕节点分享吧：https://xyfqzy.zone.id/yyds/auto
+Github-SSRProxy[TG-G]@zzzjjjkkkoi 白嫖机场交流群：https://sub.irys.dpdns.org/auto
+Github-SSRProxy[TG-C]@wxgqlfx 翻墙世界的梯子：https://zjzl.wxgqlfx.fun/wxgqlfx
+Github-SSRProxy[TG-C]@go4sharing 公益机场节点：https://raw.githubusercontent.com/go4sharing/sub/main/sub.yaml
