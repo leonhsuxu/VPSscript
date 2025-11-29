@@ -89,13 +89,13 @@ def download_subscription(url):
         )
         content = process.stdout
     except subprocess.CalledProcessError as e:
-        print(f"  ✗ wget 下载 {url[:60]}... 失败 (错误码: {e.returncode}). 错误输出: {e.stderr.strip()}")
+        print(f"  ✗ wget 下载 {url[:60]} 失败 (错误码: {e.returncode}). 错误输出: {e.stderr.strip()}")
         return []
     except Exception as e:
-        print(f"  ✗ wget 下载 {url[:60]}... 时发生未知错误: {e}")
+        print(f"  ✗ wget 下载 {url[:60]} 时发生未知错误: {e}")
         return []
     if not content:
-        print(f"  ✗ {url[:60]}... 下载内容为空。")
+        print(f"  ✗ {url[:60]} 下载内容为空。")
         return []
     # 解析下载的内容（这部分逻辑与原始脚本保持一致）
     try:
@@ -111,7 +111,7 @@ def download_subscription(url):
                 return data['proxies']
         except Exception:
             # 如果两者都失败，打印特定消息并返回空列表
-            print(f"  ✗ {url[:60]}... 解析为 YAML 或 Base64 解码后解析为 YAML 失败。")
+            print(f"  ✗ {url[:60]} 解析为 YAML 或 Base64 解码后解析为 YAML 失败。")
             return []
     return []
 def get_proxy_key(proxy):
@@ -237,7 +237,7 @@ def test_single_proxy_socket(proxy):
             sock.close()
 def speed_test_proxies(proxies):
     """并发执行 socket 测速"""
-    print(f"开始使用纯 Python socket 进行并发测速 (共 {len(proxies)} 个节点)...")
+    print(f"开始使用纯 Python socket 进行并发测速 (共 {len(proxies)} 个节点)")
     fast_proxies = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_TEST_WORKERS) as executor:
         future_to_proxy = {executor.submit(test_single_proxy_socket, p): p for p in proxies}
@@ -264,7 +264,7 @@ def load_subscription_urls_from_file(url_file_path, script_name_filter):
     if not os.path.exists(url_file_path):
         print(f"错误: 订阅文件 {url_file_path} 不存在。请确保该文件与脚本在同一目录下。")
         return urls
-    print(f"正在从 {url_file_path} 读取订阅地址，并过滤名称包含 '{script_name_filter}' 的条目...")
+    print(f"正在从 {url_file_path} 读取订阅地址，并过滤名称包含 '{script_name_filter}' 的条目")
     try:
         with open(url_file_path, 'r', encoding='utf-8') as f:
             for line in f:
@@ -277,11 +277,11 @@ def load_subscription_urls_from_file(url_file_path, script_name_filter):
                     url = match.group(2)
                     if script_name_filter in name_from_file:
                         urls.append(url)
-                        print(f"  ✓ 找到并匹配到订阅: '{name_from_file}' -> {url[:60]}...")
+                        print(f"  ✓ 找到并匹配到订阅: '{name_from_file}' -> {url[:60]}")
                     else:
-                        print(f"  - 跳过不匹配的订阅 (名称 '{name_from_file}' 不包含 '{script_name_filter}'): {line[:60]}...")
+                        print(f"  - 跳过不匹配的订阅 (名称 '{name_from_file}' 不包含 '{script_name_filter}'): {line[:60]}")
                 else:
-                    print(f"  ✗ 跳过无法识别的行 (不符合 '名称：地址' 格式): {line[:60]}...")
+                    print(f"  ✗ 跳过无法识别的行 (不符合 '名称：地址' 格式): {line[:60]}")
     except Exception as e:
         print(f"读取订阅文件 {url_file_path} 时发生错误: {e}")
     return urls
@@ -292,14 +292,14 @@ def main():
     subscription_urls_from_file = load_subscription_urls_from_file(URL_FILE, CURRENT_SCRIPT_NAME)
     if not subscription_urls_from_file:
         sys.exit(f"\n❌ 错误: 未能从 {URL_FILE} 文件中读取到任何匹配 '{CURRENT_SCRIPT_NAME}' 的有效订阅地址。请检查文件内容和格式。")
-    print("\n[1/4] 下载与合并订阅...")
+    print("\n[1/4] 下载与合并订阅")
     all_proxies = []
     for url in subscription_urls_from_file:
         all_proxies.extend(download_subscription(url))
     unique_proxies = merge_and_deduplicate_proxies(all_proxies)
     if not unique_proxies: sys.exit("\n❌ 错误: 所有订阅下载失败或合并后无节点。")
     print(f"  ✓ 合并后共 {len(unique_proxies)} 个不重复节点。")
-    print("\n[2/4] 测速与筛选节点...")
+    print("\n[2/4] 测速与筛选节点")
     if ENABLE_SPEED_TEST:
         available_proxies = speed_test_proxies(unique_proxies)
         if not available_proxies:
@@ -308,12 +308,12 @@ def main():
     else:
         print("  - 已跳过延迟测试。")
         available_proxies = unique_proxies
-    print("\n[3/4] 排序与重命名节点...")
+    print("\n[3/4] 排序与重命名节点")
     region_order = {region: i for i, region in enumerate(REGION_PRIORITY)}
     available_proxies.sort(key=lambda p: (region_order.get(p.get('region', '未知'), 99), p.get('delay', 9999)))
     final_proxies = process_and_rename_proxies(available_proxies)
     print(f"\n  ✓ 共 {len(final_proxies)} 个节点完成排序和重命名。")
-    print("\n[4/4] 生成最终配置文件...")
+    print("\n[4/4] 生成最终配置文件")
     config = generate_config(final_proxies)
     if not config: sys.exit("\n❌ 错误: 无法生成配置文件。")
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
