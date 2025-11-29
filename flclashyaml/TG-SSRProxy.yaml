@@ -1,0 +1,2563 @@
+mixed-port: 7890
+allow-lan: true
+bind-address: '*'
+mode: rule
+log-level: info
+external-controller: 127.0.0.1:9090
+dns:
+  enable: true
+  listen: 0.0.0.0:53
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  nameserver:
+  - 223.5.5.5
+  - 119.29.29.29
+  fallback:
+  - https://dns.google/dns-query
+  - https://1.1.1.1/dns-query
+proxies:
+- name: 🇺🇸 美国 775
+  server: 104.18.2.108
+  port: 8443
+  type: trojan
+  password: slch2024
+  sni: ocost-dy.wmlefl.cc
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: '%2F'
+    headers:
+      Host: ocost-dy.wmlefl.cc
+- name: 🇺🇸 美国 0601
+  server: 104.21.65.190
+  port: 80
+  type: vmess
+  uuid: 20e89a95-cedf-4fe3-9421-517ce66be170
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /SHToRcqfiraYkzOdf
+    headers:
+      Host: pppploiu.4444936.xyz
+- name: 🇺🇸 美国 709
+  server: 46.254.92.2
+  port: 8880
+  type: vless
+  uuid: 0132166f-e702-48ed-a9e7-b07af768faf8
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: cf.d3z.net
+  network: ws
+  ws-opts:
+    path: /TelegramU0001F1E8U0001F1F3 @WangCai2 /?ed=2560
+    headers:
+      Host: cf.d3z.net
+- name: 🇺🇸 美国 408
+  server: 172.67.170.147
+  port: 443
+  type: vmess
+  uuid: ffcf7ec1-3e09-4821-b3d9-b426a107b73b
+  alterId: 0
+  cipher: auto
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /4Bp70NdrJV3xr1D40NK
+    headers:
+      Host: xcvfgt6.999854.xyz
+- name: 🇩🇪 德国 62
+  server: 104.18.26.90
+  port: 443
+  type: vless
+  uuid: b55ec078-3b17-4ed1-a697-71f464cdcaaa
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: barayeiranmahsang.sabzipolobamahi.dpdns.org
+  client-fingerprint: chrome
+  network: ws
+  ws-opts:
+    path: /Join---@MTMVPN---Join---@MTMVPN---Join---@MTMVPN---Join---@MTMVPN?ed=2560
+    headers:
+      Host: barayeiranmahsang.sabzipolobamahi.dpdns.org
+- name: 🇺🇸 美国 428
+  server: 45.135.235.216
+  port: 2096
+  type: trojan
+  password: ttfang
+  sni: ttfang.fange.me
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: Telegram%F0%9F%87%A8%F0%9F%87%B3
+    headers:
+      Host: ttfang.fange.me
+- name: 🇺🇸 美国 646
+  server: 195.26.229.156
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: Telegram-channel-WangCai2
+  network: ws
+  ws-opts:
+    path: /TelegramU0001F1E8U0001F1F3 @WangCai2 /?ed=2560
+    headers:
+      Host: Telegram-channel-WangCai2
+- name: 🇺🇸 美国 633
+  server: 45.67.215.95
+  port: 443
+  type: trojan
+  password: tg-fq521free
+  sni: torjan.xn--xhq44j.eu.org
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: '%2F'
+    headers:
+      Host: torjan.xn--xhq44j.eu.org
+- name: 🇺🇸 美国 848
+  server: 103.160.204.4
+  port: 2083
+  type: vless
+  uuid: d6b8011a-c725-435a-9fec-bf6d3530392c
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: vle.amclubsdns.dpdns.org
+  client-fingerprint: randomized
+  network: ws
+  ws-opts:
+    path: /?ed=2560&PROT_TYPE=vless&NAT64=true
+    headers:
+      Host: vle.amclubsdns.dpdns.org
+- name: 🇺🇸 美国 312
+  server: 104.129.164.39
+  port: 8880
+  type: vless
+  uuid: 583ceab3-4022-4553-9158-9bedc625ad4e
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /Telegram🇨🇳 @MxlShare @WangCai2 /?ed=2560
+    headers:
+      Host: ip.langmanshanxi.top
+- name: 🇺🇸 美国 352
+  server: 199.181.197.29
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /Telegram🇨🇳 @MxlShare @WangCai2 /?ed=2560
+    headers:
+      Host: hk.laoyoutiao.link
+- name: 🇺🇸 美国 429
+  server: 45.12.31.63
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: jp.laoyoutiao.link
+  network: ws
+  ws-opts:
+    path: /Telegram🇨🇳
+    headers:
+      Host: jp.laoyoutiao.link
+- name: 🇺🇸 美国 405
+  server: 185.162.230.213
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: jp.laoyoutiao.link
+- name: 🇺🇸 美国 241
+  server: 212.183.88.168
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: kjgx.laoyoutiao.link
+  network: ws
+  ws-opts:
+    path: /Telegram@freecodes/?ed=2560
+    headers:
+      Host: kjgx.laoyoutiao.link
+- name: 🇺🇸 美国 384
+  server: 185.162.230.168
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: kjgx.laoyoutiao.link
+  network: ws
+  ws-opts:
+    path: /Telegram@WangCai2/
+    headers:
+      Host: kjgx.laoyoutiao.link
+- name: 🇺🇸 美国 790
+  server: 198.62.62.4
+  port: 443
+  type: vless
+  uuid: d6b8011a-c725-435a-9fec-bf6d3530392c
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: vle.amclubsdns.dpdns.org
+  client-fingerprint: randomized
+  network: ws
+  ws-opts:
+    path: /?ed=2560&PROT_TYPE=vless&NAT64=true
+    headers:
+      Host: vle.amclubsdns.dpdns.org
+- name: 🇺🇸 美国 004
+  server: 188.42.88.177
+  port: 8880
+  type: vless
+  uuid: 583ceab3-4022-4553-9158-9bedc625ad4e
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: Telegram-channel-WangCai2
+  network: ws
+  ws-opts:
+    path: /TelegramU0001F1E8U0001F1F3 @WangCai2 /?ed=2560
+    headers:
+      Host: Telegram-channel-WangCai2
+- name: 🇺🇸 美国 0192
+  server: 104.21.77.149
+  port: 443
+  type: vmess
+  uuid: 20e89a95-cedf-4fe3-9421-517ce66be170
+  alterId: 0
+  cipher: auto
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /SHToRcqfiraYkzOdf
+    headers:
+      Host: dddccvvbghyu.999834.xyz
+- name: 🇺🇸 美国 036
+  server: 172.67.209.79
+  port: 443
+  type: vmess
+  uuid: 91362cdb-81f8-4fd3-9b9f-2b24a8146a25
+  alterId: 0
+  cipher: auto
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /ODznTT5fgkUw3VH0GJ
+    headers:
+      Host: ggggbbhyuuui.999834.xyz
+- name: 🇩🇪 德国 04
+  server: 104.25.254.4
+  port: 2087
+  type: vless
+  uuid: d6b8011a-c725-435a-9fec-bf6d3530392c
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: vle.amclubsapp.dpdns.org
+  client-fingerprint: randomized
+  network: ws
+  ws-opts:
+    path: /?ed=2560&PROT_TYPE=vless&NAT64=true
+    headers:
+      Host: vle.amclubsapp.dpdns.org
+- name: 🇺🇸 美国 076
+  server: 103.245.229.251
+  port: 8880
+  type: vless
+  uuid: 0132166f-e702-48ed-a9e7-b07af768faf8
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /Telegram🇨🇳 @WangCai2 /?ed=2560
+    headers:
+      Host: cf.d3z.net
+- name: 🇺🇸 美国 037
+  server: 86.38.214.20
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /TelegramU0001F1E8U0001F1F3 @MxlShare @WangCai2
+    headers:
+      Host: us.laoyoutiao.link
+- name: 🇺🇸 美国 116
+  server: 193.124.224.213
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: jp.laoyoutiao.link
+- name: 🇺🇸 美国 628
+  server: 45.149.12.186
+  port: 8880
+  type: vless
+  uuid: 583ceab3-4022-4553-9158-9bedc625ad4e
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: Telegram-channel-WangCai2
+  network: ws
+  ws-opts:
+    path: /TelegramU0001F1E8U0001F1F3 @WangCai2
+    headers:
+      Host: Telegram-channel-WangCai2
+- name: 🇳🇱 荷兰 44
+  server: 188.114.96.6
+  port: 443
+  type: vless
+  uuid: 8df60790-c903-4661-b85d-64c0009378e5
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: F1.paRsa.fiLegEar-Sg.Me
+  network: ws
+  ws-opts:
+    path: /fp=chrome
+    headers:
+      Host: F1.paRsa.fiLegEar-Sg.Me
+- name: 🇺🇸 美国 122
+  server: 141.193.213.106
+  port: 80
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: cs.laoyoutiao.link
+  network: ws
+  ws-opts:
+    path: /TelegramU0001F1E8U0001F1F3
+    headers:
+      Host: cs.laoyoutiao.link
+- name: 🇺🇸 美国 130
+  server: 45.153.7.216
+  port: 2096
+  type: trojan
+  password: ttfang
+  sni: ttfang.fange.me
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: Telegram%F0%9F%87%A8%F0%9F%87%B3
+    headers:
+      Host: ttfang.fange.me
+- name: 🇯🇵 日本 _3 | ⬇️ 1.8MB/s
+  type: trojan
+  server: 23.227.38.33
+  port: 443
+  udp: true
+  password: aff9928f-7ba3-45fb-b56d-4dec45653ca9
+  sni: z9mifq7ujufk56im.jptimecsgo.xyz
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /images
+    headers:
+      host: z9mifq7ujufk56im.jptimecsgo.xyz
+- name: 🇺🇸 美国 304
+  server: 188.42.89.251
+  port: 8880
+  type: vless
+  uuid: 0132166f-e702-48ed-a9e7-b07af768faf8
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /Telegram🇨🇳 @WangCai2 /?ed=2560fp=chrome
+    headers:
+      Host: cf.d3z.net
+- name: 🇺🇸 美国 028
+  server: 185.193.30.168
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: kjgx.laoyoutiao.link
+  network: ws
+  ws-opts:
+    path: /Telegram@WangCai2/
+    headers:
+      Host: kjgx.laoyoutiao.link
+- name: 🇺🇸 美国 27
+  server: 172.66.156.81
+  port: 80
+  type: vless
+  uuid: a01136da-5f70-4322-9947-437070163449
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy
+    headers:
+      Host: websocket.network.www.speedtest.net.flutter.dev.russia.pyt.digitalcity5.xyz.
+  udp: true
+- name: 🇺🇸 未知 _1 | ⬇️ 6.4MB/s
+  type: vless
+  server: 172.66.213.38
+  port: 443
+  uuid: 8685c59b-a192-49e7-aedc-0019c576d766
+  tls: true
+  servername: pls.v50m.eu.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+  client-fingerprint: chrome
+- name: 🇳🇱 荷兰 26
+  server: 104.21.54.114
+  port: 443
+  type: vless
+  uuid: a739ad80-0aab-40b2-9b0e-8192c74287ef
+  tls: true
+  alpn:
+  - http%2F1.1
+  tfo: false
+  skip-cert-verify: true
+  servername: faruzan.changli.ddns-ip.net
+  client-fingerprint: randomized
+  network: ws
+  ws-opts:
+    path: /proxyip=navia.shorekeeper.ir
+    headers:
+      Host: faruzan.changli.ddns-ip.net
+- name: 🇯🇵 日本 _2 | ⬇️ 3.5MB/s
+  type: trojan
+  server: 23.227.38.33
+  port: 443
+  udp: true
+  password: a544940a-2c1c-4723-96cc-d03053a95530
+  sni: z9mifq7ujufk56im.jptimecsgo.xyz
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /images
+    headers:
+      host: z9mifq7ujufk56im.jptimecsgo.xyz
+- name: 🇺🇸 美国 902
+  server: 104.21.24.195
+  port: 443
+  type: vless
+  uuid: ffcf7ec1-3e09-4821-b3d9-b426a107b73b
+  tls: true
+  alpn:
+  - http%2F1.1
+  tfo: false
+  skip-cert-verify: true
+  servername: EEefgTY6.999836.XyZ
+  client-fingerprint: chrome
+  network: ws
+  ws-opts:
+    path: /O9jlBCbIm3xr1D40NK
+    headers:
+      Host: EEefgTY6.999836.XyZ
+- name: 🇺🇸 美国 248
+  server: 141.193.213.63
+  port: 80
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: cs.laoyoutiao.link
+  network: ws
+  ws-opts:
+    path: /TelegramU0001F1E8U0001F1F3
+    headers:
+      Host: cs.laoyoutiao.link
+- name: 🇺🇸 美国 852 1A
+  server: 45.80.110.216
+  port: 2096
+  type: trojan
+  password: ttfang
+  sni: ttfang.fange.me
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: Telegram%F0%9F%87%A8%F0%9F%87%B3
+    headers:
+      Host: ttfang.fange.me
+- name: 🇺🇸 美国 287
+  server: 63.141.128.251
+  port: 8880
+  type: vless
+  uuid: 0132166f-e702-48ed-a9e7-b07af768faf8
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /Telegram🇨🇳 @WangCai2 /?ed=2560fp=chrome
+    headers:
+      Host: cf.d3z.net
+- name: 🇺🇸 美国 019
+  server: 46.254.93.29
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: hk.laoyoutiao.link
+  network: ws
+  ws-opts:
+    path: /TelegramU0001F1E8U0001F1F3
+    headers:
+      Host: hk.laoyoutiao.link
+- name: 🇬🇧 英国 06
+  server: 141.193.213.199
+  port: 443
+  type: trojan
+  password: a8a5b34d-fe46-487d-bd6a-d9f3101525fd
+  sni: 26z68w0ecxbuyf89.ukgogo202511.top
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /images
+    headers:
+      Host: 26z68w0ecxbuyf89.ukgogo202511.top
+  udp: true
+- name: 🇭🇰 香港 _2 | ⬇️ 2.8MB/s
+  type: trojan
+  server: 23.227.38.178
+  port: 443
+  udp: true
+  password: aff9928f-7ba3-45fb-b56d-4dec45653ca9
+  sni: q6clkp794liy3y90.hktimecsgo.xyz
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /images
+    headers:
+      host: q6clkp794liy3y90.hktimecsgo.xyz
+- name: 🇺🇸 美国 806
+  server: 154.83.2.54
+  port: 2096
+  type: vless
+  uuid: d6b8011a-c725-435a-9fec-bf6d3530392c
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: vle.amclubsapp.dpdns.org
+  client-fingerprint: randomized
+  network: ws
+  ws-opts:
+    path: /?ed=2560&PROT_TYPE=vless&NAT64=true
+    headers:
+      Host: vle.amclubsapp.dpdns.org
+- name: 🇺🇸 未知 _6 | ⬇️ 8.1MB/s_1
+  type: vless
+  server: 108.162.198.24
+  port: 2096
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+- name: 🇺🇸 美国 462
+  server: 103.160.204.36
+  port: 2087
+  type: vless
+  uuid: d6b8011a-c725-435a-9fec-bf6d3530392c
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: vle.amclubsdns.dpdns.org
+  client-fingerprint: randomized
+  network: ws
+  ws-opts:
+    path: /?ed=2560&PROT_TYPE=vless&NAT64=true
+    headers:
+      Host: vle.amclubsdns.dpdns.org
+- name: 🇺🇸 美国 645
+  server: 86.38.214.213
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: jp.laoyoutiao.link
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: jp.laoyoutiao.link
+- name: 🇳🇱 荷兰 28
+  server: 172.67.171.131
+  port: 443
+  type: trojan
+  password: 13253e6e-a1f7-4090-801f-a8dc2b083bef
+  sni: InvIncIbLe.fAFa20.sHop
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: '%2Ftrvd3MIkUap8awiOAm%2Fc2hpcmVuLnlhZW1pa28uZ2dmZi5uZXQ%3D%3Fed%3D2560'
+    headers:
+      Host: InvIncIbLe.fAFa20.sHop
+- name: 🇺🇸 美国 140
+  server: 195.85.23.156
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: Telegram-channel-WangCai2
+  network: ws
+  ws-opts:
+    path: /Telegram🇨🇳 @WangCai2 /
+    headers:
+      Host: Telegram-channel-WangCai2
+- name: 🇺🇸 美国 443
+  server: 104.21.10.97
+  port: 443
+  type: vless
+  uuid: 662e38ba-8427-4955-94aa-76f5347a0ce8
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: rrRRrrrRrnNNNNnnmM.222767.xyz
+  client-fingerprint: chrome
+  network: ws
+  ws-opts:
+    path: /6DuxYMYmrGrnGKRtF5UvWyyVQu
+    headers:
+      Host: rrRRrrrRrnNNNNnnmM.222767.xyz
+- name: 🇺🇸 未知 _2 | ⬇️ 5.4MB/s
+  type: vless
+  server: 193.124.18.13
+  port: 443
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+- name: 🇺🇸 未知 _23 | ⬇️ 1.1MB/s
+  type: trojan
+  server: 104.21.14.54
+  port: 443
+  udp: true
+  password: e4cbe8b8-37db-4aaa-8469-b84f34c51ebc
+  sni: 6666YHjU.777159.xYz
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /dilyfCPEmLvYr5hYXD
+- name: 🇺🇸 未知 _7 | ⬇️ 6.3MB/s_1
+  type: vless
+  server: 108.162.198.11
+  port: 2096
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+- name: 🇺🇸 美国 114
+  server: 159.112.235.29
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: hk.laoyoutiao.link
+  network: ws
+  ws-opts:
+    path: /TelegramU0001F1E8U0001F1F3
+    headers:
+      Host: hk.laoyoutiao.link
+- name: 🇺🇸 美国 101
+  server: 104.21.238.94
+  port: 443
+  type: vless
+  uuid: d88937d0-ce43-4bf8-9df6-d632810ba9ff
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: 007.xingfu.qzz.io
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: 007.xingfu.qzz.io
+- name: 🇺🇸 美国 334
+  server: 104.129.165.254
+  port: 8880
+  type: vless
+  uuid: 34c01e61-f4f3-4afb-a83b-406caf8caa33
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /Telegram🇨🇳
+    headers:
+      Host: yg.bantony199.top
+- name: 🇺🇸 美国 165
+  server: 45.85.118.216
+  port: 2096
+  type: trojan
+  password: ttfang
+  sni: ttfang.fange.me
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: Telegram%F0%9F%87%A8%F0%9F%87%B3
+    headers:
+      Host: ttfang.fange.me
+- name: 🇺🇸 美国 854
+  server: 104.17.148.22
+  port: 443
+  type: vless
+  uuid: 86c50e3a-5b87-49dd-bd20-03c7f2735e40
+  tls: true
+  alpn:
+  - h2%2Chttp%2F1.1
+  tfo: false
+  skip-cert-verify: true
+  servername: jaegbsem36.cfd
+  client-fingerprint: chrome
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: jaegbsem36.cfd
+- name: 🇺🇸 美国 594
+  server: 172.67.130.204
+  port: 443
+  type: vless
+  uuid: c226ac5d-65e9-4379-95c3-fb542bc242d8
+  tls: true
+  alpn:
+  - http/1.1
+  tfo: false
+  skip-cert-verify: true
+  servername: ddDDdDDdDDF.777198.XyZ
+  client-fingerprint: chrome
+  network: ws
+  ws-opts:
+    path: /OjdW89Bpg4ykd4O
+    headers:
+      Host: ddDDdDDdDDF.777198.XyZ
+- name: 🇺🇸 美国 155
+  server: 195.85.23.20
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /Telegram🇨🇳 @MxlShare @WangCai2 /?ed=2560
+    headers:
+      Host: us.laoyoutiao.link
+- name: 🇺🇸 美国 685
+  server: 176.124.223.213
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: jp.laoyoutiao.link
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: jp.laoyoutiao.link
+- name: 🇺🇸 美国 168
+  server: 188.42.145.143
+  port: 8880
+  type: vless
+  uuid: 34c01e61-f4f3-4afb-a83b-406caf8caa33
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: Telegram-channel-WangCai2
+  network: ws
+  ws-opts:
+    path: /Telegram🇨🇳 @WangCai2 /?ed=2560
+    headers:
+      Host: Telegram-channel-WangCai2
+- name: 🇺🇸 美国 207
+  server: 172.67.165.122
+  port: 443
+  type: vmess
+  uuid: 20e89a95-cedf-4fe3-9421-517ce66be170
+  alterId: 0
+  cipher: auto
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /SHToRcqfiraYkzOdf
+    headers:
+      Host: pppploiu.4444936.xyz
+- name: 🇺🇸 美国 331
+  server: 159.112.235.156
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: Telegram-channel-WangCai2
+  network: ws
+  ws-opts:
+    path: /Telegram🇨🇳 @WangCai2 /
+    headers:
+      Host: Telegram-channel-WangCai2
+- name: 🇺🇸 美国 484
+  server: 25.25.25.213
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: jp.laoyoutiao.link
+- name: 🇭🇰 香港 05
+  server: 23.227.38.178
+  port: 443
+  type: trojan
+  password: a8a5b34d-fe46-487d-bd6a-d9f3101525fd
+  sni: q6clkp794liy3y90.hktimecsgo.xyz
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /images
+    headers:
+      Host: q6clkp794liy3y90.hktimecsgo.xyz
+  udp: true
+- name: 🇺🇸 美国 366
+  server: 45.159.216.168
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: kjgx.laoyoutiao.link
+  network: ws
+  ws-opts:
+    path: /Telegram@WangCai2/?ed=2560
+    headers:
+      Host: kjgx.laoyoutiao.link
+- name: 🇺🇸 美国 181
+  server: 92.243.74.143
+  port: 8880
+  type: vless
+  uuid: 34c01e61-f4f3-4afb-a83b-406caf8caa33
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: Telegram-channel-WangCai2
+  network: ws
+  ws-opts:
+    path: /Telegram🇨🇳 @WangCai2 /?ed=2560
+    headers:
+      Host: Telegram-channel-WangCai2
+- name: 🇺🇸 美国 617
+  server: 104.21.24.195
+  port: 443
+  type: vless
+  uuid: a4291a2a-d62c-4eb9-ac7a-ac7355d1eda2
+  tls: true
+  alpn:
+  - http/1.1
+  tfo: false
+  skip-cert-verify: true
+  servername: 9999UUuU.999836.XYZ
+  client-fingerprint: chrome
+  network: ws
+  ws-opts:
+    path: /MIrEVIUviSe8ydvnmRKWDa8
+    headers:
+      Host: 9999UUuU.999836.XYZ
+- name: 🇺🇸 美国 009
+  server: 45.67.215.177
+  port: 8880
+  type: vless
+  uuid: 583ceab3-4022-4553-9158-9bedc625ad4e
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: ip.langmanshanxi.top
+  network: ws
+  ws-opts:
+    path: /Telegram@freecodes/?ed=2560
+    headers:
+      Host: ip.langmanshanxi.top
+- name: 🇺🇸 美国 152
+  server: 141.193.27.29
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: hk.laoyoutiao.link
+- name: 🇺🇸 美国 780
+  server: 104.16.83.8
+  port: 443
+  type: trojan
+  password: Ng35283528
+  sni: c2.validbv3528.eu.org
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: '%2F'
+    headers:
+      Host: c2.validbv3528.eu.org
+- name: 🇺🇸 美国 756
+  server: 212.183.88.188
+  port: 8880
+  type: vless
+  uuid: 583ceab3-4022-4553-9158-9bedc625ad4e
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: Telegram-channel-WangCai2
+  network: ws
+  ws-opts:
+    path: /TelegramU0001F1E8U0001F1F3 @WangCai2 /?ed=2560
+    headers:
+      Host: Telegram-channel-WangCai2
+- name: 🇺🇸 美国 084
+  server: 108.165.216.168
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: kjgx.laoyoutiao.link
+  network: ws
+  ws-opts:
+    path: /Telegram@freecodes/?ed=2560
+    headers:
+      Host: kjgx.laoyoutiao.link
+- name: 🇺🇸 美国 278
+  server: 45.131.211.216
+  port: 2096
+  type: trojan
+  password: ttfang
+  sni: ttfang.fange.me
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: Telegram%F0%9F%87%A8%F0%9F%87%B3
+    headers:
+      Host: ttfang.fange.me
+- name: 🇭🇰 香港 华为云_5
+  type: vless
+  server: www.shopify.com
+  port: 443
+  uuid: db2c8a95-f751-46e3-b05e-d2def66850fb
+  tls: true
+  servername: ayanamirei.11160321.xyz
+  network: ws
+  ws-opts:
+    path: /ed=2560
+  client-fingerprint: chrome
+- name: 🇫🇷 未知 FR_2 | ⬇️ 4.2MB/s
+  type: vless
+  server: brenna.ns.cloudflare.com
+  port: 443
+  uuid: 65a9530f-4a4e-4db1-9689-9213385e9dfb
+  tls: true
+  servername: 638996620466180706.passat-amsih.info
+  network: ws
+  ws-opts:
+    path: /dweubbws
+- name: 🇺🇸 美国 Data mp Limited 4
+  server: 82.198.246.97
+  port: 180
+  type: vmess
+  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: true
+  udp: true
+- name: 🇺🇸 美国 01
+  server: 198.46.146.14
+  port: 54441
+  type: vless
+  uuid: 8f4c811e-3af2-4753-abec-8c46fb7a78bb
+  tls: true
+  tfo: false
+  flow: xtls-rprx-vision
+  skip-cert-verify: true
+  reality-opts:
+    public-key: CT6kMvGTGqHLdBAYyTS5y7Aq7O5aUEsc05ZPLp0Edjw
+    short-id: 1a2fb818
+  servername: www.lovelive-anime.jp
+  client-fingerprint: chrome
+  network: tcp
+  udp: true
+- name: 🇺🇸 美国 226
+  server: fk31lndm4w8uj0yp1drwltdtdko6y-cu.pages.dev
+  port: 443
+  type: vless
+  uuid: 826f524a-cea1-4e44-9b49-3381d13b7593
+  tls: true
+  alpn:
+  - http%2F1.1
+  tfo: false
+  skip-cert-verify: true
+  servername: fk31lnDM4W8UJ0yP1dRwlTDTDKo6y-cU.PaGeS.DeV
+  client-fingerprint: chrome
+  network: ws
+  ws-opts:
+    path: /XHPTFMTFoBNv6IV6
+    headers:
+      Host: fk31lnDM4W8UJ0yP1dRwlTDTDKo6y-cU.PaGeS.DeV
+- name: 🇺🇸 美国 21
+  server: 23.95.75.146
+  port: 443
+  type: ss
+  cipher: chacha20-ietf-poly1305
+  password: NDRySIABARbErNIVsCNVkyYAHiBzhveT
+  udp: true
+- name: 🇺🇸 美国 852 1B
+  server: rak1ding.89060004.xyz
+  port: 2083
+  type: vmess
+  uuid: 75d96365-1229-4fc4-dbda-855717f876cf
+  alterId: 0
+  cipher: auto
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: rak1d3.988988.shop
+- name: 🇺🇸 未知 _1 | ⬇️ 1.6MB/s
+  type: vmess
+  server: 38.14.99.163
+  port: 59807
+  cipher: auto
+  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
+  alterId: 0
+  tls: false
+  skip-cert-verify: true
+  network: tcp
+- name: 🇨🇦 加拿大 05
+  server: cauyt.zippydeal.xyz
+  port: 5706
+  type: trojan
+  password: fg20mtCFHy
+  skip-cert-verify: true
+  udp: true
+- name: 🇺🇸 未知 _15 | ⬇️ 2.5MB/s
+  type: vmess
+  server: 38.14.99.179
+  port: 59807
+  cipher: auto
+  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
+  alterId: 0
+  tls: false
+  skip-cert-verify: true
+  network: tcp
+- name: 🇭🇰 香港 华为云_3
+  type: vless
+  server: store.ubi.com
+  port: 443
+  uuid: db2c8a95-f751-46e3-b05e-d2def66850fb
+  tls: true
+  servername: ayanamirei.11160321.xyz
+  network: ws
+  ws-opts:
+    path: /ed=2560
+  client-fingerprint: chrome
+- name: 🇳🇱 荷兰 55
+  server: aio.zipzap.biz.id
+  port: 443
+  type: trojan
+  password: f282b878-8711-45a1-8c69-5564172123c1
+  sni: aio.zipzap.biz.id
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: '%2Faioproxybot%2F129.150.49.58-18650'
+    headers:
+      Host: aio.zipzap.biz.id
+- name: ❓ 未知 频道 @ssltool_3
+  type: vless
+  server: 107.174.82.102.sslip.io
+  port: 443
+  uuid: bb824a22-b7ce-427b-9ed6-1adf0751da02
+  tls: true
+  servername: 107.174.82.102.sslip.io
+  network: ws
+  ws-opts:
+    path: /wZo4jgWCAEcRugowKV
+- name: 🇳🇱 荷兰 56
+  server: aio.unlimited.biz.id
+  port: 443
+  type: vmess
+  uuid: f282b878-8711-45a1-8c69-5564172123c1
+  alterId: 0
+  cipher: auto
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /aioproxybot/129.150.49.58-18650
+    headers:
+      Host: aio.unlimited.biz.id
+- name: 🇺🇸 美国 DMIT Cloud Services 2
+  server: fondly.appagent.net
+  type: trojan
+  port: 28331
+  password: RFxCa3A4zwRXcICDlYxpZR8qSS3lEN93CSYFyA3TaDIyS2aXD2leS6we5yZEOn03qcNYD
+  sni: fondly.appagent.net
+- name: 🇺🇸 美国 886
+  server: www.speedtest.net
+  port: 443
+  type: vless
+  uuid: 102e5f34-1913-4dd3-a1f2-f831d891a490
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: rAyAn-cOnFiG-TeLeGrAm-a04.tRaNeH.DpDnS.OrG
+  client-fingerprint: chrome
+  network: ws
+  ws-opts:
+    path: /@Rayan_Config
+    headers:
+      Host: rAyAn-cOnFiG-TeLeGrAm-a04.tRaNeH.DpDnS.OrG
+- name: 🇨🇷 哥斯达黎加 聖荷西 Data Miners S.A. 1
+  server: 145.14.131.37
+  type: ss
+  country: 🇨🇷CR
+  port: 989
+  password: f8f7aCzcPKbsF8p3
+  cipher: aes-256-cfb
+- name: 🇳🇱 未知 NL_2 | ⬇️ 1.2MB/s
+  type: ss
+  server: 82.38.31.218
+  port: 8080
+  password: k1dBOmOB4oqi7Ump37a1bQ
+  cipher: chacha20-ietf-poly1305
+- name: 🇳🇱 未知 NL_6 | ⬇️ 1.7MB/s
+  type: ss
+  server: 109.71.246.210
+  port: 56689
+  password: YQCSKoCF3QazW8YlvDBWA4
+  cipher: chacha20-ietf-poly1305
+- name: 🇺🇸 未知 _6 | ⬇️ 3.7MB/s
+  type: vless
+  server: 167.99.86.115
+  port: 443
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+  client-fingerprint: chrome
+- name: 🇳🇱 未知 NL_1 | ⬇️ 3.5MB/s
+  type: ss
+  server: 45.87.175.155
+  port: 8080
+  password: k1dBOmOB4oqi7Ump37a1bQ
+  cipher: chacha20-ietf-poly1305
+- name: ❓ 未知 ❓Other_4 | ⬇️ 5.9MB/s
+  type: vless
+  server: www.speedtest.net
+  port: 443
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  servername: piaz.mrconfigur.site
+  network: ws
+  ws-opts:
+    path: /
+  client-fingerprint: chrome
+- name: 🇫🇷 法国 格拉沃利讷 OVH SAS 1
+  server: 91.134.8.101
+  type: vmess
+  country: 🇫🇷FR
+  port: 443
+  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
+  alterId: 0
+  cipher: auto
+  network: ws
+  servername: fapeng.org
+  http-opts: {}
+  h2-opts: {}
+  tls: true
+  skip-cert-verify: true
+  ws-opts:
+    path: linkvws
+    headers:
+      HOST: fapeng.org
+- name: ❓ 未知 频道 @ssltool_2
+  type: ss
+  server: 195.154.119.77
+  port: 989
+  password: f8f7aCzcPKbsF8p3
+  cipher: aes-256-cfb
+- name: 🇬🇧 英国 04
+  server: 67.226.223.88
+  port: 443
+  type: vless
+  uuid: f3f892db-501c-4a33-b4ca-c0951a3c281b
+  tls: true
+  alpn:
+  - h3
+  tfo: false
+  skip-cert-verify: true
+  servername: lh7799.cs033.netlib.re
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /proxyip=sjc.o00o.ooo
+    headers:
+      Host: lh7799.cs033.netlib.re
+  udp: true
+- name: 🇺🇸 未知 _2 | ⬇️ 5.2MB/s_1
+  type: vless
+  server: 85.193.95.23
+  port: 8443
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+  client-fingerprint: chrome
+- name: ❓ 未知 荷蘭
+  type: vless
+  server: 46.17.103.204
+  port: 443
+  udp: true
+  uuid: f7312d02-d520-4e15-8266-fb2ec831ac66
+  tls: true
+  servername: www.microsoft.com
+  flow: xtls-rprx-vision
+  network: tcp
+  reality-opts:
+    public-key: CRsbpFGd_TrUqw6knw03PGXOAPByyMIeNOar9ncY-2g
+    short-id: e849c8958a546357
+  client-fingerprint: chrome
+- name: 🇺🇸 未知 _4 | ⬇️ 3.9MB/s
+  type: vless
+  server: 194.35.119.135
+  port: 2053
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+  client-fingerprint: chrome
+- name: 🇩🇪 德国 12
+  server: 130.162.220.137
+  port: 443
+  type: vless
+  uuid: dc6a6c45-b13c-4f1d-8729-19b4d8bba4aa
+  tls: true
+  tfo: false
+  flow: xtls-rprx-vision
+  skip-cert-verify: true
+  reality-opts:
+    public-key: UV34T0S_VyVcChA2Tb9MIbg4tr1mHGMr_Lw5Gvb17F8
+    short-id: 66ed2fdd
+  servername: www.lamer.com
+  client-fingerprint: safari
+  network: tcp
+  udp: true
+- name: 🇩🇪 德国 法兰克福 IPTransit B iness LTD 3
+  server: 79.110.62.72
+  type: ss
+  country: 🇺🇸US
+  port: 17844
+  password: YTJLxL9qJWPNmX_uXvNQrJBH31LhtM1o
+  cipher: chacha20-ietf-poly1305
+- name: 🇺🇸 未知 _5 | ⬇️ 1.4MB/s
+  type: vless
+  server: 89.19.211.109
+  port: 8443
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+  client-fingerprint: chrome
+- name: ❓ 未知 ❓Other_5 | ⬇️ 4.7MB/s
+  type: trojan
+  server: 77.37.96.132
+  port: 443
+  udp: true
+  password: 22dcdbbe-db22-4ebb-b2f3-ad6b6a133a99
+  sni: joss.gpj.web.id
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /Free-VPN-CF-Geo-Project/77.37.96.132=443
+- name: 🇩🇪 德国 02
+  server: 142.132.140.130
+  port: 443
+  type: vless
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: kuangbao.xiejiang.dpdns.org
+  udp: true
+- name: 🇵🇱 波兰 02
+  server: 193.124.41.29
+  port: 443
+  type: vless
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: kuangbao.xiejiang.dpdns.org
+  udp: true
+- name: 🇵🇱 波兰 01
+  server: 91.149.253.249
+  port: 443
+  type: vless
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: kuangbao.xiejiang.dpdns.org
+  udp: true
+- name: ❓ 未知 频道 @ssltool_1
+  type: vless
+  server: 188.253.21.154
+  port: 443
+  udp: true
+  uuid: 3f162dc9-28f6-44be-96ba-291105acc861
+  tls: true
+  servername: mirror.veesp.com
+  flow: xtls-rprx-vision
+  network: tcp
+  reality-opts:
+    public-key: Y9wcIIlOdKbJI1zD8vxfdEyPBmfdw4eiMUl1v0rlwio
+    short-id: f6cbdef5
+  client-fingerprint: firefox
+- name: ❓ 未知 频道 @ssltool_10
+  type: vless
+  server: 188.253.21.154
+  port: 40721
+  udp: true
+  uuid: bf3e8944-8d26-47de-8748-b9aa74cce974
+  tls: true
+  servername: yahoo.com
+  flow: xtls-rprx-vision
+  network: tcp
+  reality-opts:
+    public-key: TUZgwzcTvoROSbgnqMh3WorXVMxQNIF2zsEM39FQbyk
+    short-id: df8611c07d
+  client-fingerprint: chrome
+- name: 🇭🇰 香港 _10
+  type: vmess
+  server: 131.186.63.89
+  port: 11655
+  cipher: auto
+  uuid: 4bf075f5-4d5e-4d39-f5ab-b32a86250f0e
+  alterId: 0
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /aa
+    headers:
+      host: hk.nbee.pp.ua
+- name: 🇺🇸 未知 _20 | ⬇️ 1.7MB/s
+  type: vless
+  server: 57.180.14.97
+  port: 443
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+- name: 🇭🇰 香港 06
+  type: vless
+  server: 47.245.38.111
+  port: 443
+  udp: true
+  uuid: 86b414b6-966e-4f6d-ab16-32049ef732d3
+  tls: true
+  servername: www.autodesk.com
+  flow: xtls-rprx-vision
+  network: tcp
+  reality-opts:
+    public-key: y167aJhpgWWjltY4UCir_uu8Mj__Hkc1W4etD0QXYH4
+    short-id: 860705e716cbe6ed
+  client-fingerprint: chrome
+- name: ❓ 未知 ❓Other_1 | ⬇️ 2.3MB/s
+  type: trojan
+  server: 94.142.138.97
+  port: 8443
+  udp: true
+  password: f8eb228a-58a8-430f-ae39-f2a0ebbf8460
+  sni: joss.gpj.web.id
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /Free-VPN-CF-Geo-Project/94.142.138.97=8443
+    headers:
+      host: joss.gpj.web.id
+- name: 🇪🇸 西班牙 马德里 WorkTitans B.V. 1
+  server: 213.159.67.124
+  port: 443
+  type: ss
+  cipher: chacha20-ietf-poly1305
+  password: mbhqsStnFQT1cTZYCdsmkugGUC6GT6rp
+- name: 🇩🇰 丹麦 01
+  server: 141.227.172.96
+  port: 56089
+  type: vless
+  uuid: 2d535288-d08e-4de4-b674-fd8cb3c6e4d3
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  network: grpc
+  grpc-opts:
+    grpc-mode: gun
+    grpc-service-name: ZEDMODEON-ZEDMODEON-bia-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON
+  udp: true
+- name: 🇺🇸 未知 _11 | ⬇️ 4.4MB/s
+  type: vless
+  server: 80.90.187.190
+  port: 2053
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+  client-fingerprint: chrome
+- name: 🇲🇩 摩尔多瓦 214.0KB/s
+  type: ss
+  server: 185.153.197.5
+  port: 989
+  password: f8f7aCzcPKbsF8p3
+  cipher: aes-256-cfb
+- name: 🇭🇰 香港 华为云_4
+  type: vless
+  server: mfa.gov.ua
+  port: 443
+  uuid: db2c8a95-f751-46e3-b05e-d2def66850fb
+  tls: true
+  servername: ayanamirei.11160321.xyz
+  network: ws
+  ws-opts:
+    path: /ed=2560
+  client-fingerprint: chrome
+- name: 🇺🇸 未知 _19 | ⬇️ 5.4MB/s
+  type: vless
+  server: 146.56.99.255
+  port: 56789
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+- name: 🇰🇷 韩国 02
+  server: 222.112.191.5
+  port: 33334
+  type: vless
+  uuid: f3f892db-501c-4a33-b4ca-c0951a3c281b
+  tls: true
+  alpn:
+  - h3
+  tfo: false
+  skip-cert-verify: true
+  servername: lh7799.cs033.netlib.re
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /proxyip=sjc.o00o.ooo
+    headers:
+      Host: lh7799.cs033.netlib.re
+  udp: true
+- name: 🇭🇰 香港 华为云_6
+  type: vless
+  server: staticdelivery.nexusmods.com
+  port: 443
+  uuid: db2c8a95-f751-46e3-b05e-d2def66850fb
+  tls: true
+  servername: ayanamirei.11160321.xyz
+  network: ws
+  ws-opts:
+    path: /ed=2560
+  client-fingerprint: chrome
+- name: 🇹🇼 湾省 莫斯科 Global Cloud Ne ork LLC 1
+  server: 37.18.14.33
+  port: 443
+  type: trojan
+  password: Qzy7tgpRhu
+  sni: m.vk.com
+  skip-cert-verify: true
+- name: ❓ 未知 频道 @ssltool_5
+  type: vless
+  server: ru01-blh02.tcp-reset-club.net
+  port: 443
+  udp: true
+  uuid: 3b4d1c7f-4fd7-45bb-9251-79cd53a3e006
+  tls: true
+  servername: www.kinopoisk.ru
+  flow: xtls-rprx-vision
+  network: tcp
+  reality-opts:
+    public-key: mLmBhbVFfNuo2eUgBh6r9-5Koz9mUCn3aSzlR6IejUg
+    short-id: 86e999a2cdc2
+  client-fingerprint: chrome
+- name: 🇩🇪 德国 _9 | ⬇️ 3.7MB/s
+  type: vless
+  server: de-cdn.ultima.foundation
+  port: 443
+  udp: true
+  uuid: 2dfa740c-8069-4993-8b96-c3e5dc540593
+  tls: true
+  servername: web.max.ru
+  flow: xtls-rprx-vision
+  network: tcp
+  reality-opts:
+    public-key: FcZ6-LZS5HHqAJ8YwFV_Gu_WxrMuylqxYjBu-1CLVRI
+  client-fingerprint: chrome
+- name: 🇫🇷 法国 斯特拉斯堡 Interkvm Host SRL 3
+  server: gaming.aliusvpn.com
+  type: ss
+  country: 🇬🇧GB
+  port: 8388
+  password: YTJLxL9qJWPNmX_uXvNQrJBH31LhtM1o
+  cipher: chacha20-ietf-poly1305
+- name: 🇺🇸 未知 _25 | ⬇️ 3.2MB/s
+  type: vless
+  server: us1-1.998998.best
+  port: 443
+  uuid: 24254866-770c-41b4-9404-3f50524f425b
+  tls: true
+  servername: 24254866-770c-41b4-9404-3f50524f425b.cloudns.mom
+  network: ws
+  ws-opts:
+    path: /drsukitgreiusweqa9otrh983
+- name: 🇭🇰 香港 Dalian Yichuan Ind trial CO 3
+  server: 103.149.182.79
+  type: ss
+  country: 🇭🇰HK
+  port: 8388
+  password: asd123456
+  cipher: chacha20-ietf
+- name: 🇺🇸 未知 _7 | ⬇️ 2.6MB/s
+  type: vless
+  server: 8.217.180.234
+  port: 443
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+  client-fingerprint: chrome
+- name: 🇺🇸 未知 _9 | ⬇️ 2.3MB/s
+  type: vless
+  server: 193.123.90.82
+  port: 12648
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+  client-fingerprint: chrome
+- name: 🇺🇸 未知 _8 | ⬇️ 1.8MB/s
+  type: vless
+  server: 202.85.53.160
+  port: 7000
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+  client-fingerprint: chrome
+- name: 🇺🇸 未知 _18 | ⬇️ 1.8MB/s
+  type: vless
+  server: 158.178.247.58
+  port: 30008
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+- name: 🇦🇺 澳大利亚 01
+  server: 95.111.222.113
+  port: 443
+  type: ss
+  cipher: chacha20-ietf-poly1305
+  password: SVt6ZiWzRI1Yxeig4xBZwiJOt6ceXwGa
+  udp: true
+- name: 🇹🇼 湾省 广州市 CHINANET Guangdong province ne ork 1
+  server: 14.18.106.88
+  type: ss
+  country: 🇨🇳CN
+  port: 6100
+  password: '123'
+  cipher: aes-256-gcm
+- name: 🇱🇻 拉脱维亚 里加 WorkTitans B.V. 1
+  server: lv.vpnsparta.pro
+  type: ss
+  country: 🇲🇩MD
+  port: 57456
+  password: 8afc633eb63227e9
+  cipher: chacha20-ietf-poly1305
+- name: 🇨🇳 中国 广州市 China Mobile 2
+  server: 183.236.51.36
+  type: vmess
+  country: 🇨🇳CN
+  port: 59003
+  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
+  alterId: 64
+  cipher: auto
+  network: tcp
+  http-opts: {}
+  h2-opts: {}
+  skip-cert-verify: true
+- name: 🇭🇰 香港 23
+  server: green2.cdntencentmusic.com
+  port: 31103
+  type: trojan
+  password: 41f1fd94-aae9-46c5-9684-2a33baba3fba
+  sni: green2.cdntencentmusic.com
+  skip-cert-verify: true
+  udp: true
+- name: 🇭🇰 香港 家宽 10
+  server: 58.152.53.8
+  port: 443
+  type: trojan
+  password: BxceQaOe
+  sni: t.me%2Fripaojiedian
+  skip-cert-verify: true
+  udp: true
+- name: 🇺🇸 未知 _17 | ⬇️ 6.2MB/s
+  type: vless
+  server: 4.240.110.47
+  port: 443
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+- name: 🇭🇰 香港 14
+  server: green2.cdntencentmusic.com
+  port: 31101
+  type: trojan
+  password: 41f1fd94-aae9-46c5-9684-2a33baba3fba
+  sni: green2.cdntencentmusic.com
+  skip-cert-verify: true
+  udp: true
+- name: 🇭🇰 香港 21
+  server: green2.cdntencentmusic.com
+  port: 31102
+  type: trojan
+  password: 41f1fd94-aae9-46c5-9684-2a33baba3fba
+  sni: green2.cdntencentmusic.com
+  skip-cert-verify: true
+  udp: true
+- name: 🇻🇳 越南 Hải Dương FASTLY 16
+  server: 103.186.155.69
+  type: ss
+  country: 🇻🇳VN
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 越南 Hải Dương FASTLY 6
+  server: 103.186.155.230
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇭🇰 香港 22
+  server: green2.cdntencentmusic.com
+  port: 31102
+  type: trojan
+  password: e1fd3163-01e5-40a1-9c32-835378bdc006
+  sni: green2.cdntencentmusic.com
+  skip-cert-verify: true
+  udp: true
+- name: 🇭🇰 香港 24
+  server: green2.cdntencentmusic.com
+  port: 31103
+  type: trojan
+  password: 3977118e-f28c-4e30-b965-6bf216339552
+  sni: green2.cdntencentmusic.com
+  skip-cert-verify: true
+  udp: true
+- name: 🇻🇳 越南 Hải Dương FASTLY 21
+  server: 103.186.155.122
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 越南 Hải Dương FASTLY 20
+  server: 103.186.154.168
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 越南 Hải Dương FASTLY 9
+  server: 103.186.154.16
+  type: ss
+  port: 38388
+  udp: true
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 未知 VN_3 | ⬇️ 1.5MB/s
+  type: ss
+  server: 103.186.154.9
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 未知 VN_4 | ⬇️ 1.3MB/s
+  type: ss
+  server: 103.186.155.4
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 越南 Hải Dương FASTLY 11
+  server: 103.186.154.207
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 越南 Hải Dương FASTLY 2
+  server: 103.186.154.146
+  type: ss
+  country: 🇻🇳VN
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 越南 Hải Dương FASTLY 3
+  server: 103.186.154.210
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 越南 Hải Dương FASTLY 7
+  server: 103.186.155.135
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 未知 VN_6 | ⬇️ 1.5MB/s
+  type: ss
+  server: 103.186.154.80
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 未知 VN_1 | ⬇️ 1.8MB/s
+  type: ss
+  server: 103.186.155.222
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇭🇰 香港 20
+  server: green2.cdntencentmusic.com
+  port: 31102
+  type: trojan
+  password: 3977118e-f28c-4e30-b965-6bf216339552
+  sni: green2.cdntencentmusic.com
+  skip-cert-verify: true
+  udp: true
+- name: 🇻🇳 越南 13
+  server: 103.186.155.85
+  port: 38388
+  type: ss
+  cipher: aes-256-cfb
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  udp: true
+- name: 🇻🇳 越南 Hải Dương FASTLY 12
+  server: 103.186.154.179
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 越南 Hải Dương FASTLY 1
+  server: 103.186.154.251
+  type: ss
+  port: 38388
+  udp: true
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 越南 Hải Dương FASTLY 4
+  server: 103.186.155.125
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 越南 08
+  server: 103.186.155.29
+  port: 38388
+  type: ss
+  cipher: aes-256-cfb
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  udp: true
+- name: 🇻🇳 越南 Hải Dương FASTLY 8
+  server: 103.186.154.140
+  type: ss
+  country: 🇻🇳VN
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 越南 Hải Dương FASTLY 19
+  server: 103.186.155.15
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 未知 VN_2 | ⬇️ 1.0MB/s
+  type: ss
+  server: 103.186.154.11
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇭🇰 香港 25
+  server: green2.cdntencentmusic.com
+  port: 31103
+  type: trojan
+  password: e1fd3163-01e5-40a1-9c32-835378bdc006
+  sni: green2.cdntencentmusic.com
+  skip-cert-verify: true
+  udp: true
+- name: 🇻🇳 越南 Hải Dương FASTLY 17
+  server: 103.186.155.66
+  type: ss
+  port: 38388
+  udp: true
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 越南 Hải Dương FASTLY 22
+  server: 103.186.154.246
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 越南 Hải Dương FASTLY 14
+  server: 103.186.155.50
+  type: ss
+  port: 38388
+  udp: true
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 越南 Hải Dương FASTLY 5
+  server: 103.186.155.232
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 越南 Hải Dương FASTLY 13
+  server: 103.186.155.138
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇺🇸 未知 _12 | ⬇️ 5.2MB/s
+  type: vless
+  server: 98.70.151.190
+  port: 443
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+  client-fingerprint: chrome
+- name: 🇸🇬 狮城 04
+  server: green2.cdntencentmusic.com
+  port: 33301
+  type: trojan
+  password: e1fd3163-01e5-40a1-9c32-835378bdc006
+  sni: green2.cdntencentmusic.com
+  skip-cert-verify: true
+  udp: true
+- name: 🇸🇬 狮城 05
+  server: green2.cdntencentmusic.com
+  port: 33301
+  type: trojan
+  password: 41f1fd94-aae9-46c5-9684-2a33baba3fba
+  sni: green2.cdntencentmusic.com
+  skip-cert-verify: true
+  udp: true
+- name: 🇭🇰 香港 家宽 01
+  server: v10.hdacd.com
+  port: 30807
+  type: vmess
+  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
+  alterId: 2
+  cipher: auto
+  tls: false
+  skip-cert-verify: true
+  udp: true
+- name: 🇩🇪 德国 _7 | ⬇️ 5.2MB/s
+  type: vless
+  server: de-2.shvurgceo.online
+  port: 38395
+  udp: true
+  uuid: 0f8e2cfc-fdf2-46c7-bfcd-ce8273d5ff13
+  tls: true
+  servername: vk.com
+  flow: xtls-rprx-vision
+  network: tcp
+  reality-opts:
+    public-key: DvKMFkm82Jkp6Jk_7pXYb0fMXq1MsLMNxDeQfcCSbEA
+    short-id: ab12cd34
+  client-fingerprint: chrome
+- name: 🇺🇸 美国 31
+  server: green2.cdntencentmusic.com
+  port: 35502
+  type: trojan
+  password: e1fd3163-01e5-40a1-9c32-835378bdc006
+  sni: green2.cdntencentmusic.com
+  skip-cert-verify: true
+  udp: true
+- name: 🇷🇺 未知 RU_1 | ⬇️ 1.9MB/s
+  type: vless
+  server: ru.ufavpn.ru
+  port: 9443
+  uuid: 953bcea6-dd81-4c9a-a20a-053805f48195
+  tls: true
+  servername: ger.ufavpn.ru
+  network: ws
+  ws-opts:
+    path: /update
+- name: 🇱🇻 未知 LV_1 | ⬇️ 3.5MB/s
+  type: vless
+  server: sligvpn.isgood.host
+  port: 443
+  udp: true
+  uuid: c9798bcb-59ca-4d2a-b858-d577405cdb8b
+  tls: true
+  servername: www.microsoft.com
+  flow: xtls-rprx-vision
+  network: tcp
+  reality-opts:
+    public-key: jSx3_X_tBAcNgp7SrKSfZnr5WN0cTN2ShEJv4rHceQU
+  client-fingerprint: chrome
+- name: 🇩🇪 德国 _3 | ⬇️ 2.2MB/s
+  type: vless
+  server: at.monkeyisland.xyz
+  port: 443
+  udp: true
+  uuid: 6184fcfb-52e0-40bb-a271-bbd097b70a8e
+  tls: true
+  servername: at.monkeyisland.xyz
+  flow: xtls-rprx-vision
+  network: tcp
+  reality-opts:
+    public-key: 2AKBmK0PMf2zUMhRo1Ad-WNf_XoRk3AN-SGo6ZdhxA4
+    short-id: 83e9f5b24040c5f7
+  client-fingerprint: chrome
+- name: ❓ 未知 频道 @ssltool_8
+  type: vless
+  server: fr.monkeyisland.xyz
+  port: 443
+  udp: true
+  uuid: 6184fcfb-52e0-40bb-a271-bbd097b70a8e
+  tls: true
+  servername: fr.monkeyisland.xyz
+  flow: xtls-rprx-vision
+  network: tcp
+  reality-opts:
+    public-key: 2AKBmK0PMf2zUMhRo1Ad-WNf_XoRk3AN-SGo6ZdhxA4
+    short-id: 0dd15ad462aad7fc
+  client-fingerprint: chrome
+- name: 🇭🇰 香港 华为云_1
+  type: vless
+  server: www.visa.cn
+  port: 443
+  uuid: db2c8a95-f751-46e3-b05e-d2def66850fb
+  tls: true
+  servername: ayanamirei.11160321.xyz
+  network: ws
+  ws-opts:
+    path: /ed=2560
+  client-fingerprint: chrome
+- name: ❓ 未知 频道 @ssltool_4
+  type: vless
+  server: russia.whitenet.online
+  port: 443
+  udp: true
+  uuid: russia
+  tls: true
+  servername: vk.com
+  flow: xtls-rprx-vision
+  network: tcp
+  reality-opts:
+    public-key: xdNyDss0OLTu3z6kcdg8X2wfTOLtmDTobE2on3vKe34
+    short-id: ab1cd2
+  client-fingerprint: chrome
+- name: 🇭🇰 香港 华为云_2
+  type: vless
+  server: cloudflare-dl.byoip.top
+  port: 443
+  uuid: db2c8a95-f751-46e3-b05e-d2def66850fb
+  tls: true
+  servername: ayanamirei.11160321.xyz
+  network: ws
+  ws-opts:
+    path: /ed=2560
+  client-fingerprint: chrome
+- name: 🇭🇰 香港 华为云_7
+  type: vless
+  server: saas.sin.fan
+  port: 443
+  uuid: db2c8a95-f751-46e3-b05e-d2def66850fb
+  tls: true
+  servername: ayanamirei.11160321.xyz
+  network: ws
+  ws-opts:
+    path: /ed=2560
+  client-fingerprint: chrome
+- name: 🇭🇰 香港 华为云_8
+  type: vless
+  server: cf.tencentapp.cn
+  port: 443
+  uuid: db2c8a95-f751-46e3-b05e-d2def66850fb
+  tls: true
+  servername: ayanamirei.11160321.xyz
+  network: ws
+  ws-opts:
+    path: /ed=2560
+  client-fingerprint: chrome
+- name: 🇺🇸 美国 M247 Europe SRL 3
+  server: 185.193.48.157
+  type: ss
+  country: 🇬🇧GB
+  port: 443
+  password: zwBLM6bBE5YxvwvnKgxAq3ErXpqMYv20
+  cipher: chacha20-ietf-poly1305
+- name: 🇻🇳 越南 Hải Dương FASTLY 10
+  server: 103.186.155.55
+  type: ss
+  country: 🏁ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 越南 10
+  server: 103.186.154.75
+  port: 38388
+  type: ss
+  cipher: aes-256-cfb
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  udp: true
+- name: 🇻🇳 越南 Hải Dương FASTLY 15
+  server: 103.186.155.25
+  type: ss
+  country: 🏁 ZZ
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇺🇸 未知 _16 | ⬇️ 5.1MB/s
+  type: vless
+  server: freeyx.cloudflare88.eu.org
+  port: 2096
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+proxy-groups:
+- name: 🚀 节点选择
+  type: select
+  proxies:
+  - ♻️ 自动选择
+  - 🔯 故障转移
+  - DIRECT
+  - 🇺🇸 美国 775
+  - 🇺🇸 美国 0601
+  - 🇺🇸 美国 709
+  - 🇺🇸 美国 408
+  - 🇩🇪 德国 62
+  - 🇺🇸 美国 428
+  - 🇺🇸 美国 646
+  - 🇺🇸 美国 633
+  - 🇺🇸 美国 848
+  - 🇺🇸 美国 312
+  - 🇺🇸 美国 352
+  - 🇺🇸 美国 429
+  - 🇺🇸 美国 405
+  - 🇺🇸 美国 241
+  - 🇺🇸 美国 384
+  - 🇺🇸 美国 790
+  - 🇺🇸 美国 004
+  - 🇺🇸 美国 0192
+  - 🇺🇸 美国 036
+  - 🇩🇪 德国 04
+  - 🇺🇸 美国 076
+  - 🇺🇸 美国 037
+  - 🇺🇸 美国 116
+  - 🇺🇸 美国 628
+  - 🇳🇱 荷兰 44
+  - 🇺🇸 美国 122
+  - 🇺🇸 美国 130
+  - 🇯🇵 日本 _3 | ⬇️ 1.8MB/s
+  - 🇺🇸 美国 304
+  - 🇺🇸 美国 028
+  - 🇺🇸 美国 27
+  - 🇺🇸 未知 _1 | ⬇️ 6.4MB/s
+  - 🇳🇱 荷兰 26
+  - 🇯🇵 日本 _2 | ⬇️ 3.5MB/s
+  - 🇺🇸 美国 902
+  - 🇺🇸 美国 248
+  - 🇺🇸 美国 852 1A
+  - 🇺🇸 美国 287
+  - 🇺🇸 美国 019
+  - 🇬🇧 英国 06
+  - 🇭🇰 香港 _2 | ⬇️ 2.8MB/s
+  - 🇺🇸 美国 806
+  - 🇺🇸 未知 _6 | ⬇️ 8.1MB/s_1
+  - 🇺🇸 美国 462
+  - 🇺🇸 美国 645
+  - 🇳🇱 荷兰 28
+  - 🇺🇸 美国 140
+  - 🇺🇸 美国 443
+  - 🇺🇸 未知 _2 | ⬇️ 5.4MB/s
+  - 🇺🇸 未知 _23 | ⬇️ 1.1MB/s
+  - 🇺🇸 未知 _7 | ⬇️ 6.3MB/s_1
+  - 🇺🇸 美国 114
+  - 🇺🇸 美国 101
+  - 🇺🇸 美国 334
+  - 🇺🇸 美国 165
+  - 🇺🇸 美国 854
+  - 🇺🇸 美国 594
+  - 🇺🇸 美国 155
+  - 🇺🇸 美国 685
+  - 🇺🇸 美国 168
+  - 🇺🇸 美国 207
+  - 🇺🇸 美国 331
+  - 🇺🇸 美国 484
+  - 🇭🇰 香港 05
+  - 🇺🇸 美国 366
+  - 🇺🇸 美国 181
+  - 🇺🇸 美国 617
+  - 🇺🇸 美国 009
+  - 🇺🇸 美国 152
+  - 🇺🇸 美国 780
+  - 🇺🇸 美国 756
+  - 🇺🇸 美国 084
+  - 🇺🇸 美国 278
+  - 🇭🇰 香港 华为云_5
+  - 🇫🇷 未知 FR_2 | ⬇️ 4.2MB/s
+  - 🇺🇸 美国 Data mp Limited 4
+  - 🇺🇸 美国 01
+  - 🇺🇸 美国 226
+  - 🇺🇸 美国 21
+  - 🇺🇸 美国 852 1B
+  - 🇺🇸 未知 _1 | ⬇️ 1.6MB/s
+  - 🇨🇦 加拿大 05
+  - 🇺🇸 未知 _15 | ⬇️ 2.5MB/s
+  - 🇭🇰 香港 华为云_3
+  - 🇳🇱 荷兰 55
+  - ❓ 未知 频道 @ssltool_3
+  - 🇳🇱 荷兰 56
+  - 🇺🇸 美国 DMIT Cloud Services 2
+  - 🇺🇸 美国 886
+  - 🇨🇷 哥斯达黎加 聖荷西 Data Miners S.A. 1
+  - 🇳🇱 未知 NL_2 | ⬇️ 1.2MB/s
+  - 🇳🇱 未知 NL_6 | ⬇️ 1.7MB/s
+  - 🇺🇸 未知 _6 | ⬇️ 3.7MB/s
+  - 🇳🇱 未知 NL_1 | ⬇️ 3.5MB/s
+  - ❓ 未知 ❓Other_4 | ⬇️ 5.9MB/s
+  - 🇫🇷 法国 格拉沃利讷 OVH SAS 1
+  - ❓ 未知 频道 @ssltool_2
+  - 🇬🇧 英国 04
+  - 🇺🇸 未知 _2 | ⬇️ 5.2MB/s_1
+  - ❓ 未知 荷蘭
+  - 🇺🇸 未知 _4 | ⬇️ 3.9MB/s
+  - 🇩🇪 德国 12
+  - 🇩🇪 德国 法兰克福 IPTransit B iness LTD 3
+  - 🇺🇸 未知 _5 | ⬇️ 1.4MB/s
+  - ❓ 未知 ❓Other_5 | ⬇️ 4.7MB/s
+  - 🇩🇪 德国 02
+  - 🇵🇱 波兰 02
+  - 🇵🇱 波兰 01
+  - ❓ 未知 频道 @ssltool_1
+  - ❓ 未知 频道 @ssltool_10
+  - 🇭🇰 香港 _10
+  - 🇺🇸 未知 _20 | ⬇️ 1.7MB/s
+  - 🇭🇰 香港 06
+  - ❓ 未知 ❓Other_1 | ⬇️ 2.3MB/s
+  - 🇪🇸 西班牙 马德里 WorkTitans B.V. 1
+  - 🇩🇰 丹麦 01
+  - 🇺🇸 未知 _11 | ⬇️ 4.4MB/s
+  - 🇲🇩 摩尔多瓦 214.0KB/s
+  - 🇭🇰 香港 华为云_4
+  - 🇺🇸 未知 _19 | ⬇️ 5.4MB/s
+  - 🇰🇷 韩国 02
+  - 🇭🇰 香港 华为云_6
+  - 🇹🇼 湾省 莫斯科 Global Cloud Ne ork LLC 1
+  - ❓ 未知 频道 @ssltool_5
+  - 🇩🇪 德国 _9 | ⬇️ 3.7MB/s
+  - 🇫🇷 法国 斯特拉斯堡 Interkvm Host SRL 3
+  - 🇺🇸 未知 _25 | ⬇️ 3.2MB/s
+  - 🇭🇰 香港 Dalian Yichuan Ind trial CO 3
+  - 🇺🇸 未知 _7 | ⬇️ 2.6MB/s
+  - 🇺🇸 未知 _9 | ⬇️ 2.3MB/s
+  - 🇺🇸 未知 _8 | ⬇️ 1.8MB/s
+  - 🇺🇸 未知 _18 | ⬇️ 1.8MB/s
+  - 🇦🇺 澳大利亚 01
+  - 🇹🇼 湾省 广州市 CHINANET Guangdong province ne ork 1
+  - 🇱🇻 拉脱维亚 里加 WorkTitans B.V. 1
+  - 🇨🇳 中国 广州市 China Mobile 2
+  - 🇭🇰 香港 23
+  - 🇭🇰 香港 家宽 10
+  - 🇺🇸 未知 _17 | ⬇️ 6.2MB/s
+  - 🇭🇰 香港 14
+  - 🇭🇰 香港 21
+  - 🇻🇳 越南 Hải Dương FASTLY 16
+  - 🇻🇳 越南 Hải Dương FASTLY 6
+  - 🇭🇰 香港 22
+  - 🇭🇰 香港 24
+  - 🇻🇳 越南 Hải Dương FASTLY 21
+  - 🇻🇳 越南 Hải Dương FASTLY 20
+  - 🇻🇳 越南 Hải Dương FASTLY 9
+  - 🇻🇳 未知 VN_3 | ⬇️ 1.5MB/s
+  - 🇻🇳 未知 VN_4 | ⬇️ 1.3MB/s
+  - 🇻🇳 越南 Hải Dương FASTLY 11
+  - 🇻🇳 越南 Hải Dương FASTLY 2
+  - 🇻🇳 越南 Hải Dương FASTLY 3
+  - 🇻🇳 越南 Hải Dương FASTLY 7
+  - 🇻🇳 未知 VN_6 | ⬇️ 1.5MB/s
+  - 🇻🇳 未知 VN_1 | ⬇️ 1.8MB/s
+  - 🇭🇰 香港 20
+  - 🇻🇳 越南 13
+  - 🇻🇳 越南 Hải Dương FASTLY 12
+  - 🇻🇳 越南 Hải Dương FASTLY 1
+  - 🇻🇳 越南 Hải Dương FASTLY 4
+  - 🇻🇳 越南 08
+  - 🇻🇳 越南 Hải Dương FASTLY 8
+  - 🇻🇳 越南 Hải Dương FASTLY 19
+  - 🇻🇳 未知 VN_2 | ⬇️ 1.0MB/s
+  - 🇭🇰 香港 25
+  - 🇻🇳 越南 Hải Dương FASTLY 17
+  - 🇻🇳 越南 Hải Dương FASTLY 22
+  - 🇻🇳 越南 Hải Dương FASTLY 14
+  - 🇻🇳 越南 Hải Dương FASTLY 5
+  - 🇻🇳 越南 Hải Dương FASTLY 13
+  - 🇺🇸 未知 _12 | ⬇️ 5.2MB/s
+  - 🇸🇬 狮城 04
+  - 🇸🇬 狮城 05
+  - 🇭🇰 香港 家宽 01
+  - 🇩🇪 德国 _7 | ⬇️ 5.2MB/s
+  - 🇺🇸 美国 31
+  - 🇷🇺 未知 RU_1 | ⬇️ 1.9MB/s
+  - 🇱🇻 未知 LV_1 | ⬇️ 3.5MB/s
+  - 🇩🇪 德国 _3 | ⬇️ 2.2MB/s
+  - ❓ 未知 频道 @ssltool_8
+  - 🇭🇰 香港 华为云_1
+  - ❓ 未知 频道 @ssltool_4
+  - 🇭🇰 香港 华为云_2
+  - 🇭🇰 香港 华为云_7
+  - 🇭🇰 香港 华为云_8
+  - 🇺🇸 美国 M247 Europe SRL 3
+  - 🇻🇳 越南 Hải Dương FASTLY 10
+  - 🇻🇳 越南 10
+  - 🇻🇳 越南 Hải Dương FASTLY 15
+  - 🇺🇸 未知 _16 | ⬇️ 5.1MB/s
+- name: ♻️ 自动选择
+  type: url-test
+  proxies: &id001
+  - 🇺🇸 美国 775
+  - 🇺🇸 美国 0601
+  - 🇺🇸 美国 709
+  - 🇺🇸 美国 408
+  - 🇩🇪 德国 62
+  - 🇺🇸 美国 428
+  - 🇺🇸 美国 646
+  - 🇺🇸 美国 633
+  - 🇺🇸 美国 848
+  - 🇺🇸 美国 312
+  - 🇺🇸 美国 352
+  - 🇺🇸 美国 429
+  - 🇺🇸 美国 405
+  - 🇺🇸 美国 241
+  - 🇺🇸 美国 384
+  - 🇺🇸 美国 790
+  - 🇺🇸 美国 004
+  - 🇺🇸 美国 0192
+  - 🇺🇸 美国 036
+  - 🇩🇪 德国 04
+  - 🇺🇸 美国 076
+  - 🇺🇸 美国 037
+  - 🇺🇸 美国 116
+  - 🇺🇸 美国 628
+  - 🇳🇱 荷兰 44
+  - 🇺🇸 美国 122
+  - 🇺🇸 美国 130
+  - 🇯🇵 日本 _3 | ⬇️ 1.8MB/s
+  - 🇺🇸 美国 304
+  - 🇺🇸 美国 028
+  - 🇺🇸 美国 27
+  - 🇺🇸 未知 _1 | ⬇️ 6.4MB/s
+  - 🇳🇱 荷兰 26
+  - 🇯🇵 日本 _2 | ⬇️ 3.5MB/s
+  - 🇺🇸 美国 902
+  - 🇺🇸 美国 248
+  - 🇺🇸 美国 852 1A
+  - 🇺🇸 美国 287
+  - 🇺🇸 美国 019
+  - 🇬🇧 英国 06
+  - 🇭🇰 香港 _2 | ⬇️ 2.8MB/s
+  - 🇺🇸 美国 806
+  - 🇺🇸 未知 _6 | ⬇️ 8.1MB/s_1
+  - 🇺🇸 美国 462
+  - 🇺🇸 美国 645
+  - 🇳🇱 荷兰 28
+  - 🇺🇸 美国 140
+  - 🇺🇸 美国 443
+  - 🇺🇸 未知 _2 | ⬇️ 5.4MB/s
+  - 🇺🇸 未知 _23 | ⬇️ 1.1MB/s
+  - 🇺🇸 未知 _7 | ⬇️ 6.3MB/s_1
+  - 🇺🇸 美国 114
+  - 🇺🇸 美国 101
+  - 🇺🇸 美国 334
+  - 🇺🇸 美国 165
+  - 🇺🇸 美国 854
+  - 🇺🇸 美国 594
+  - 🇺🇸 美国 155
+  - 🇺🇸 美国 685
+  - 🇺🇸 美国 168
+  - 🇺🇸 美国 207
+  - 🇺🇸 美国 331
+  - 🇺🇸 美国 484
+  - 🇭🇰 香港 05
+  - 🇺🇸 美国 366
+  - 🇺🇸 美国 181
+  - 🇺🇸 美国 617
+  - 🇺🇸 美国 009
+  - 🇺🇸 美国 152
+  - 🇺🇸 美国 780
+  - 🇺🇸 美国 756
+  - 🇺🇸 美国 084
+  - 🇺🇸 美国 278
+  - 🇭🇰 香港 华为云_5
+  - 🇫🇷 未知 FR_2 | ⬇️ 4.2MB/s
+  - 🇺🇸 美国 Data mp Limited 4
+  - 🇺🇸 美国 01
+  - 🇺🇸 美国 226
+  - 🇺🇸 美国 21
+  - 🇺🇸 美国 852 1B
+  - 🇺🇸 未知 _1 | ⬇️ 1.6MB/s
+  - 🇨🇦 加拿大 05
+  - 🇺🇸 未知 _15 | ⬇️ 2.5MB/s
+  - 🇭🇰 香港 华为云_3
+  - 🇳🇱 荷兰 55
+  - ❓ 未知 频道 @ssltool_3
+  - 🇳🇱 荷兰 56
+  - 🇺🇸 美国 DMIT Cloud Services 2
+  - 🇺🇸 美国 886
+  - 🇨🇷 哥斯达黎加 聖荷西 Data Miners S.A. 1
+  - 🇳🇱 未知 NL_2 | ⬇️ 1.2MB/s
+  - 🇳🇱 未知 NL_6 | ⬇️ 1.7MB/s
+  - 🇺🇸 未知 _6 | ⬇️ 3.7MB/s
+  - 🇳🇱 未知 NL_1 | ⬇️ 3.5MB/s
+  - ❓ 未知 ❓Other_4 | ⬇️ 5.9MB/s
+  - 🇫🇷 法国 格拉沃利讷 OVH SAS 1
+  - ❓ 未知 频道 @ssltool_2
+  - 🇬🇧 英国 04
+  - 🇺🇸 未知 _2 | ⬇️ 5.2MB/s_1
+  - ❓ 未知 荷蘭
+  - 🇺🇸 未知 _4 | ⬇️ 3.9MB/s
+  - 🇩🇪 德国 12
+  - 🇩🇪 德国 法兰克福 IPTransit B iness LTD 3
+  - 🇺🇸 未知 _5 | ⬇️ 1.4MB/s
+  - ❓ 未知 ❓Other_5 | ⬇️ 4.7MB/s
+  - 🇩🇪 德国 02
+  - 🇵🇱 波兰 02
+  - 🇵🇱 波兰 01
+  - ❓ 未知 频道 @ssltool_1
+  - ❓ 未知 频道 @ssltool_10
+  - 🇭🇰 香港 _10
+  - 🇺🇸 未知 _20 | ⬇️ 1.7MB/s
+  - 🇭🇰 香港 06
+  - ❓ 未知 ❓Other_1 | ⬇️ 2.3MB/s
+  - 🇪🇸 西班牙 马德里 WorkTitans B.V. 1
+  - 🇩🇰 丹麦 01
+  - 🇺🇸 未知 _11 | ⬇️ 4.4MB/s
+  - 🇲🇩 摩尔多瓦 214.0KB/s
+  - 🇭🇰 香港 华为云_4
+  - 🇺🇸 未知 _19 | ⬇️ 5.4MB/s
+  - 🇰🇷 韩国 02
+  - 🇭🇰 香港 华为云_6
+  - 🇹🇼 湾省 莫斯科 Global Cloud Ne ork LLC 1
+  - ❓ 未知 频道 @ssltool_5
+  - 🇩🇪 德国 _9 | ⬇️ 3.7MB/s
+  - 🇫🇷 法国 斯特拉斯堡 Interkvm Host SRL 3
+  - 🇺🇸 未知 _25 | ⬇️ 3.2MB/s
+  - 🇭🇰 香港 Dalian Yichuan Ind trial CO 3
+  - 🇺🇸 未知 _7 | ⬇️ 2.6MB/s
+  - 🇺🇸 未知 _9 | ⬇️ 2.3MB/s
+  - 🇺🇸 未知 _8 | ⬇️ 1.8MB/s
+  - 🇺🇸 未知 _18 | ⬇️ 1.8MB/s
+  - 🇦🇺 澳大利亚 01
+  - 🇹🇼 湾省 广州市 CHINANET Guangdong province ne ork 1
+  - 🇱🇻 拉脱维亚 里加 WorkTitans B.V. 1
+  - 🇨🇳 中国 广州市 China Mobile 2
+  - 🇭🇰 香港 23
+  - 🇭🇰 香港 家宽 10
+  - 🇺🇸 未知 _17 | ⬇️ 6.2MB/s
+  - 🇭🇰 香港 14
+  - 🇭🇰 香港 21
+  - 🇻🇳 越南 Hải Dương FASTLY 16
+  - 🇻🇳 越南 Hải Dương FASTLY 6
+  - 🇭🇰 香港 22
+  - 🇭🇰 香港 24
+  - 🇻🇳 越南 Hải Dương FASTLY 21
+  - 🇻🇳 越南 Hải Dương FASTLY 20
+  - 🇻🇳 越南 Hải Dương FASTLY 9
+  - 🇻🇳 未知 VN_3 | ⬇️ 1.5MB/s
+  - 🇻🇳 未知 VN_4 | ⬇️ 1.3MB/s
+  - 🇻🇳 越南 Hải Dương FASTLY 11
+  - 🇻🇳 越南 Hải Dương FASTLY 2
+  - 🇻🇳 越南 Hải Dương FASTLY 3
+  - 🇻🇳 越南 Hải Dương FASTLY 7
+  - 🇻🇳 未知 VN_6 | ⬇️ 1.5MB/s
+  - 🇻🇳 未知 VN_1 | ⬇️ 1.8MB/s
+  - 🇭🇰 香港 20
+  - 🇻🇳 越南 13
+  - 🇻🇳 越南 Hải Dương FASTLY 12
+  - 🇻🇳 越南 Hải Dương FASTLY 1
+  - 🇻🇳 越南 Hải Dương FASTLY 4
+  - 🇻🇳 越南 08
+  - 🇻🇳 越南 Hải Dương FASTLY 8
+  - 🇻🇳 越南 Hải Dương FASTLY 19
+  - 🇻🇳 未知 VN_2 | ⬇️ 1.0MB/s
+  - 🇭🇰 香港 25
+  - 🇻🇳 越南 Hải Dương FASTLY 17
+  - 🇻🇳 越南 Hải Dương FASTLY 22
+  - 🇻🇳 越南 Hải Dương FASTLY 14
+  - 🇻🇳 越南 Hải Dương FASTLY 5
+  - 🇻🇳 越南 Hải Dương FASTLY 13
+  - 🇺🇸 未知 _12 | ⬇️ 5.2MB/s
+  - 🇸🇬 狮城 04
+  - 🇸🇬 狮城 05
+  - 🇭🇰 香港 家宽 01
+  - 🇩🇪 德国 _7 | ⬇️ 5.2MB/s
+  - 🇺🇸 美国 31
+  - 🇷🇺 未知 RU_1 | ⬇️ 1.9MB/s
+  - 🇱🇻 未知 LV_1 | ⬇️ 3.5MB/s
+  - 🇩🇪 德国 _3 | ⬇️ 2.2MB/s
+  - ❓ 未知 频道 @ssltool_8
+  - 🇭🇰 香港 华为云_1
+  - ❓ 未知 频道 @ssltool_4
+  - 🇭🇰 香港 华为云_2
+  - 🇭🇰 香港 华为云_7
+  - 🇭🇰 香港 华为云_8
+  - 🇺🇸 美国 M247 Europe SRL 3
+  - 🇻🇳 越南 Hải Dương FASTLY 10
+  - 🇻🇳 越南 10
+  - 🇻🇳 越南 Hải Dương FASTLY 15
+  - 🇺🇸 未知 _16 | ⬇️ 5.1MB/s
+  url: http://www.gstatic.com/generate_204
+  interval: 300
+- name: 🔯 故障转移
+  type: fallback
+  proxies: *id001
+  url: http://www.gstatic.com/generate_204
+  interval: 300
+rules:
+- GEOIP,CN,DIRECT
+- MATCH,🚀 节点选择
