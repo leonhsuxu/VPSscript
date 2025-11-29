@@ -70,7 +70,7 @@ def download_subscription(url):
     if not shutil.which("wget"):
         print("  ✗ 错误: wget 未安装或不在系统 PATH 中。无法使用 wget 下载订阅。")
         return []
-    print(f"  ⬇️ 尝试使用 wget 下载 {url[:60]} (模拟Clash请求头)")
+    print(f"  ⬇️ 尝试使用 wget 下载 {url[:80]} (模拟Clash请求头)")
     try:
         # 构建 wget 命令，并添加 --header 参数
         wget_command = [
@@ -89,13 +89,13 @@ def download_subscription(url):
         )
         content = process.stdout
     except subprocess.CalledProcessError as e:
-        print(f"  ✗ wget 下载 {url[:60]} 失败 (错误码: {e.returncode}). 错误输出: {e.stderr.strip()}")
+        print(f"  ✗ wget 下载 {url[:80]} 失败 (错误码: {e.returncode}). 错误输出: {e.stderr.strip()}")
         return []
     except Exception as e:
-        print(f"  ✗ wget 下载 {url[:60]} 时发生未知错误: {e}")
+        print(f"  ✗ wget 下载 {url[:80]} 时发生未知错误: {e}")
         return []
     if not content:
-        print(f"  ✗ {url[:60]} 下载内容为空。")
+        print(f"  ✗ {url[:80]} 下载内容为空。")
         return []
     # 解析下载的内容（这部分逻辑与原始脚本保持一致）
     try:
@@ -111,7 +111,7 @@ def download_subscription(url):
                 return data['proxies']
         except Exception:
             # 如果两者都失败，打印特定消息并返回空列表
-            print(f"  ✗ {url[:60]} 解析为 YAML 或 Base64 解码后解析为 YAML 失败。")
+            print(f"  ✗ {url[:80]} 解析为 YAML 或 Base64 解码后解析为 YAML 失败。")
             return []
     return []
 def get_proxy_key(proxy):
@@ -277,7 +277,7 @@ def load_subscription_urls_from_file(url_file_path, script_name_filter):
                     url = match.group(2)
                     if script_name_filter in name_from_file:
                         urls.append(url)
-                        print(f"  ✓ 找到并匹配到订阅: '{name_from_file}' -> {url[:60]}")
+                        print(f"  ✓ 找到并匹配到订阅: '{name_from_file}' -> {url[:80]}")
                     else:
                         print(f"  - 跳过不匹配的订阅 (名称 '{name_from_file}' 不包含 '{script_name_filter}'): {line[:60]}")
                 else:
