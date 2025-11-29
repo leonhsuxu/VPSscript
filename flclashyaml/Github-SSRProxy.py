@@ -21,9 +21,9 @@ OUTPUT_FILE = os.path.join(SCRIPT_DIR, "Github-SSRProxy.yaml")
 CURRENT_SCRIPT_NAME = os.path.splitext(os.path.basename(__file__))[0]
 print(f"当前脚本文件名 (不含扩展名): {CURRENT_SCRIPT_NAME}")
 # ========== 测速过滤配置 (纯 Python socket 版) ==========
-ENABLE_SPEED_TEST = False #  False为不测速，Ture为测速
+ENABLE_SPEED_TEST = True #  False为不测速，True为测速
 # socket 连接超时时间(秒)
-SOCKET_TIMEOUT = 3
+SOCKET_TIMEOUT = 5
 # 并发测速的线程数
 MAX_TEST_WORKERS = 256 # socket 非常轻量，可以大幅增加并发数以提高速度，默认128
 
