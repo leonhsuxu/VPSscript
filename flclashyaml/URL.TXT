@@ -7,6 +7,8 @@ choutuan-all-1：https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A21?toke
 choutuan-all-2：https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A22?token=ChouLink2
 choutuan-all-3：https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A23?token=ChouLink3
 choutuan-all-4：https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A24?token=ChouLink4
+choutuan-all-5：https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A25?token=ChouLink5
+
 
 # Github公益托管：
 Github-SSRProxy & dingyue center：https://alipay.vavv.cn/r6pif1rkclkvtvf1
