@@ -5,7 +5,6 @@ from telethon.sync import TelegramClient
 from telethon.tl.types import MessageMediaWebPage
 import asyncio
 from telethon.sessions import StringSession
-import pytz
 
 # 从环境变量获取配置
 API_ID = int(os.environ.get('TELEGRAM_API_ID'))
@@ -30,9 +29,9 @@ def parse_expire_time(text):
             # 解析时间字符串（假设为北京时间）
             expire_time_str = match.group(1)
             expire_time = datetime.strptime(expire_time_str, '%Y-%m-%d %H:%M:%S')
-            # 设置为北京时区
-            beijing_tz = pytz.timezone('Asia/Shanghai')
-            expire_time = beijing_tz.localize(expire_time)
+            # 北京时间是 UTC+8
+            beijing_offset = timezone(timedelta(hours=8))
+            expire_time = expire_time.replace(tzinfo=beijing_offset)
             return expire_time
         except Exception as e:
             print(f"  ⚠️ Failed to parse expire time: {e}")
@@ -47,8 +46,8 @@ def is_expire_time_valid(expire_time):
         return True  # 如果无法解析到期时间，默认允许提取
     
     # 获取当前北京时间
-    beijing_tz = pytz.timezone('Asia/Shanghai')
-    now_beijing = datetime.now(beijing_tz)
+    beijing_offset = timezone(timedelta(hours=8))
+    now_beijing = datetime.now(beijing_offset)
     
     # 计算时间差
     time_diff = expire_time - now_beijing
