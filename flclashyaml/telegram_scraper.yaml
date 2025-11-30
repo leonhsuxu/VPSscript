@@ -15,87 +15,6 @@ dns:
   - https://dns.google/dns-query
   - https://1.1.1.1/dns-query
 proxies:
-- name: 🇭🇰 香港 04|白嫖机场.ink
-  type: vmess
-  server: baipiaojichangink.huahuasuansuan.cfd
-  port: 80
-  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇭🇰 香港 04|白嫖机场.ink 2
-  type: vmess
-  server: baipiaojichangink.huahuasuansuan.cfd
-  port: 80
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇭🇰 香港 IEPL
-  type: ss
-  server: gd.bjnet2.com
-  port: 36602
-  cipher: aes-128-gcm
-  password: 84d85af8-2807-4306-a701-f784676b77c3
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇭🇰 香港 中转 02
-  type: ss
-  server: f1.idsduf.com
-  port: 41058
-  cipher: chacha20-ietf-poly1305
-  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
-  udp: true
-- name: 🇭🇰 香港 中转 03
-  type: ss
-  server: f1.idsduf.com
-  port: 41053
-  cipher: chacha20-ietf-poly1305
-  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
-  udp: true
-- name: 🇭🇰 香港 中转 04
-  type: ss
-  server: f1.idsduf.com
-  port: 41079
-  cipher: chacha20-ietf-poly1305
-  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
-  udp: true
-- name: 🇭🇰 香港 中转 06
-  type: ss
-  server: f1.idsduf.com
-  port: 41049
-  cipher: chacha20-ietf-poly1305
-  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
-  udp: true
-- name: 🇭🇰 香港 01
-  type: vmess
-  server: vm1.as7akp.cn
-  port: 23913
-  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
-  alterId: 0
-  cipher: auto
-  udp: true
-- name: 🇭🇰 香港 02
-  type: vmess
-  server: vm1.as7akp.cn
-  port: 20521
-  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
-  alterId: 0
-  cipher: auto
-  udp: true
 - name: 🇭🇰 香港 021
   type: ss
   server: hk021.jd.kunlunpx.com
@@ -195,6 +114,87 @@ proxies:
   plugin-opts:
     mode: http
     host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇭🇰 香港 中转 02
+  type: ss
+  server: f1.idsduf.com
+  port: 41058
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇭🇰 香港 中转 03
+  type: ss
+  server: f1.idsduf.com
+  port: 41053
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇭🇰 香港 中转 04
+  type: ss
+  server: f1.idsduf.com
+  port: 41079
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇭🇰 香港 中转 06
+  type: ss
+  server: f1.idsduf.com
+  port: 41049
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇭🇰 香港 01
+  type: vmess
+  server: vm1.as7akp.cn
+  port: 23913
+  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  alterId: 0
+  cipher: auto
+  udp: true
+- name: 🇭🇰 香港 02
+  type: vmess
+  server: vm1.as7akp.cn
+  port: 20521
+  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  alterId: 0
+  cipher: auto
+  udp: true
+- name: 🇭🇰 香港 04|白嫖机场.ink
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 80
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+- name: 🇭🇰 香港 IEPL
+  type: ss
+  server: gd.bjnet2.com
+  port: 36602
+  cipher: aes-128-gcm
+  password: 84d85af8-2807-4306-a701-f784676b77c3
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+- name: 🇭🇰 香港 04|白嫖机场.ink 2
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 80
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
 - name: 🇭🇰 香港 S1|v6
   type: ss
   server: v6hks1.lajichang.xyz
@@ -468,59 +468,6 @@ proxies:
     path: /5e60be5f/
     headers:
       Host: ''
-- name: 🇯🇵 日本 04|白嫖机场.ink
-  type: vmess
-  server: baipiaojichangink.huahuasuansuan.cfd
-  port: 8080
-  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇯🇵 日本 04|白嫖机场.ink 2
-  type: vmess
-  server: baipiaojichangink.huahuasuansuan.cfd
-  port: 8080
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇯🇵 日本 IEPL GPT
-  type: ss
-  server: gd.bjnet2.com
-  port: 36609
-  cipher: aes-128-gcm
-  password: 84d85af8-2807-4306-a701-f784676b77c3
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇯🇵 日本 01
-  type: vmess
-  server: vm1.as7akp.cn
-  port: 23908
-  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
-  alterId: 0
-  cipher: auto
-  udp: true
-- name: 🇯🇵 日本 02
-  type: vmess
-  server: vm1.as7akp.cn
-  port: 23919
-  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
-  alterId: 0
-  cipher: auto
-  udp: true
 - name: 🇯🇵 日本 07
   type: ss
   server: jp07.jd.kunlunpx.com
@@ -587,6 +534,59 @@ proxies:
   plugin-opts:
     mode: http
     host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇯🇵 日本 01
+  type: vmess
+  server: vm1.as7akp.cn
+  port: 23908
+  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  alterId: 0
+  cipher: auto
+  udp: true
+- name: 🇯🇵 日本 02
+  type: vmess
+  server: vm1.as7akp.cn
+  port: 23919
+  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  alterId: 0
+  cipher: auto
+  udp: true
+- name: 🇯🇵 日本 04|白嫖机场.ink
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 8080
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+- name: 🇯🇵 日本 IEPL GPT
+  type: ss
+  server: gd.bjnet2.com
+  port: 36609
+  cipher: aes-128-gcm
+  password: 84d85af8-2807-4306-a701-f784676b77c3
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+- name: 🇯🇵 日本 04|白嫖机场.ink 2
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 8080
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
 - name: 🇯🇵 日本 S1|v6
   type: ss
   server: v6jps1.lajichang.xyz
@@ -724,43 +724,61 @@ proxies:
   servername: dash.cloudflare.com
   client-fingerprint: firefox
   network: tcp
-- name: 🇸🇬 狮城 04|白嫖机场.ink
-  type: vmess
-  server: baipiaojichangink.huahuasuansuan.cfd
-  port: 8880
-  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇸🇬 狮城 04|白嫖机场.ink 2
-  type: vmess
-  server: baipiaojichangink.huahuasuansuan.cfd
-  port: 8880
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇸🇬 狮城 IEPL
+- name: 🇸🇬 狮城 057
   type: ss
-  server: gd.bjnet2.com
-  port: 36604
+  server: sg057.jd.kunlunpx.com
+  port: 45937
   cipher: aes-128-gcm
-  password: 84d85af8-2807-4306-a701-f784676b77c3
+  password: 4092a0d31011e2046687
   udp: true
   plugin: obfs
   plugin-opts:
     mode: http
-    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇸🇬 狮城 034
+  type: ss
+  server: sg034.jd.kunlunpx.com
+  port: 45918
+  cipher: aes-128-gcm
+  password: 1d8e4861b251c8c4ce78
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇸🇬 狮城 032
+  type: ss
+  server: sg032.jd.kunlunpx.com
+  port: 45917
+  cipher: aes-128-gcm
+  password: f4cd0a554e9d0558c581
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇸🇬 狮城 035
+  type: ss
+  server: sg035.jd.kunlunpx.com
+  port: 45919
+  cipher: aes-128-gcm
+  password: b4c9e286a46bd6ecca13
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇸🇬 狮城 078
+  type: ss
+  server: sg078.jd.kunlunpx.com
+  port: 45579
+  cipher: aes-128-gcm
+  password: 0722bd4137ff579e6917
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
 - name: 🇸🇬 狮城 中转 01
   type: ss
   server: f1.idsduf.com
@@ -819,61 +837,43 @@ proxies:
   alterId: 0
   cipher: auto
   udp: true
-- name: 🇸🇬 狮城 057
+- name: 🇸🇬 狮城 04|白嫖机场.ink
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 8880
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+- name: 🇸🇬 狮城 IEPL
   type: ss
-  server: sg057.jd.kunlunpx.com
-  port: 45937
+  server: gd.bjnet2.com
+  port: 36604
   cipher: aes-128-gcm
-  password: 4092a0d31011e2046687
+  password: 84d85af8-2807-4306-a701-f784676b77c3
   udp: true
   plugin: obfs
   plugin-opts:
     mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
-- name: 🇸🇬 狮城 034
-  type: ss
-  server: sg034.jd.kunlunpx.com
-  port: 45918
-  cipher: aes-128-gcm
-  password: 1d8e4861b251c8c4ce78
+    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+- name: 🇸🇬 狮城 04|白嫖机场.ink 2
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 8880
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  alterId: 0
+  cipher: auto
   udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
-- name: 🇸🇬 狮城 032
-  type: ss
-  server: sg032.jd.kunlunpx.com
-  port: 45917
-  cipher: aes-128-gcm
-  password: f4cd0a554e9d0558c581
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
-- name: 🇸🇬 狮城 035
-  type: ss
-  server: sg035.jd.kunlunpx.com
-  port: 45919
-  cipher: aes-128-gcm
-  password: b4c9e286a46bd6ecca13
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
-- name: 🇸🇬 狮城 078
-  type: ss
-  server: sg078.jd.kunlunpx.com
-  port: 45579
-  cipher: aes-128-gcm
-  password: 0722bd4137ff579e6917
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
 - name: 🇸🇬 狮城 rq
   type: vmess
   server: 210.61.97.241
@@ -993,6 +993,245 @@ proxies:
     path: /5e60be5f/
     headers:
       Host: ''
+- name: 🇺🇸 美国 084
+  type: ss
+  server: us084.jd.kunlunpx.com
+  port: 45580
+  cipher: chacha20-ietf-poly1305
+  password: e6db72e9415e60e35892
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇺🇸 美国 086
+  type: ss
+  server: us086.jd.kunlunpx.com
+  port: 45584
+  cipher: chacha20-ietf-poly1305
+  password: 4605c34b957ab8e1001b
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇺🇸 美国 038
+  type: ss
+  server: us038.jd.kunlunpx.com
+  port: 45922
+  cipher: aes-128-gcm
+  password: c1ee5895686790a383fb
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇺🇸 美国 039
+  type: ss
+  server: us039.jd.kunlunpx.com
+  port: 45923
+  cipher: aes-128-gcm
+  password: 2b7df6aadc759756b0cd
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇺🇸 美国 040
+  type: ss
+  server: us040.jd.kunlunpx.com
+  port: 45924
+  cipher: aes-128-gcm
+  password: 0a0fb8dbfb8cc2f25f02
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇺🇸 美国 067
+  type: ss
+  server: us067.jd.kunlunpx.com
+  port: 45935
+  cipher: aes-128-gcm
+  password: 8bf642be1622a09558bb
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇺🇸 美国 069
+  type: ss
+  server: us069.jd.kunlunpx.com
+  port: 45938
+  cipher: aes-128-gcm
+  password: 3938bfae997974860251
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇺🇸 美国 026
+  type: ss
+  server: us026.jd.kunlunpx.com
+  port: 45909
+  cipher: aes-128-gcm
+  password: 9d29e58723af34cad8da
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇺🇸 美国 025
+  type: ss
+  server: us025.jd.kunlunpx.com
+  port: 45908
+  cipher: aes-128-gcm
+  password: 97c3cf442df2d7099275
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇦🇺 美国 A tralia 071
+  type: ss
+  server: au071.jd.kunlunpx.com
+  port: 45934
+  cipher: aes-128-gcm
+  password: ec39dd066cc142fbb81c
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇨🇭 美国 Switzer nd 087
+  type: ss
+  server: ch087.jd.kunlunpx.com
+  port: 45582
+  cipher: chacha20-ietf-poly1305
+  password: c9fa2bcffa379937679e
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇲🇾 美国 Ma ysia 076
+  type: ss
+  server: my076.jd.kunlunpx.com
+  port: 45577
+  cipher: chacha20-ietf-poly1305
+  password: ec1a4ba66999975262e2
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇲🇾 美国 Ma ysia 075 *1.5
+  type: ss
+  server: my075.jd.kunlunpx.com
+  port: 45576
+  cipher: aes-128-gcm
+  password: fe51727afe2fca582ebf
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇹🇭 美国 Thai nd 041
+  type: ss
+  server: th041.jd.kunlunpx.com
+  port: 45925
+  cipher: aes-128-gcm
+  password: 1a402babc02465f45bea
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇷🇺 美国 R sia 046
+  type: ss
+  server: ru046.jd.kunlunpx.com
+  port: 45930
+  cipher: aes-128-gcm
+  password: 11575f448fb4021fc611
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇺🇸 美国 中转 01
+  type: ss
+  server: f1.idsduf.com
+  port: 41466
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇺🇸 美国 中转 02
+  type: ss
+  server: f1.idsduf.com
+  port: 41061
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇺🇸 美国 中转 03
+  type: ss
+  server: f1.idsduf.com
+  port: 41474
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇺🇸 美国 中转 04
+  type: ss
+  server: f1.idsduf.com
+  port: 41063
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇺🇸 美国 中转 05
+  type: ss
+  server: f1.idsduf.com
+  port: 41065
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇺🇸 美国 中转 06
+  type: ss
+  server: f1.idsduf.com
+  port: 41067
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇺🇸 美国 01
+  type: vmess
+  server: vm1.as7akp.cn
+  port: 23901
+  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  alterId: 0
+  cipher: auto
+  udp: true
+- name: 🇺🇸 美国 02
+  type: vmess
+  server: vm1.as7akp.cn
+  port: 23916
+  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  alterId: 0
+  cipher: auto
+  udp: true
+- name: 🇺🇸 美国 03
+  type: vmess
+  server: vm1.as7akp.cn
+  port: 23903
+  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  alterId: 0
+  cipher: auto
+  udp: true
+- name: 🇺🇸 美国 04
+  type: vmess
+  server: vm1.as7akp.cn
+  port: 23915
+  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  alterId: 0
+  cipher: auto
+  udp: true
 - name: 🇺🇸 美国 04|白嫖机场.ink
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
@@ -1006,30 +1245,6 @@ proxies:
     path: /
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇺🇸 美国 04|白嫖机场.ink 2
-  type: vmess
-  server: baipiaojichangink.huahuasuansuan.cfd
-  port: 2052
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇺🇸 美国 IEPL GPT
-  type: ss
-  server: gd.bjnet2.com
-  port: 36608
-  cipher: aes-128-gcm
-  password: 84d85af8-2807-4306-a701-f784676b77c3
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
 - name: 🇺🇸 美国 20
   server: bestcdn4.868863.xyz
   port: 2083
@@ -1399,245 +1614,30 @@ proxies:
   cipher: auto
   tls: false
   skip-cert-verify: false
-- name: 🇺🇸 美国 中转 01
+- name: 🇺🇸 美国 IEPL GPT
   type: ss
-  server: f1.idsduf.com
-  port: 41466
-  cipher: chacha20-ietf-poly1305
-  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  server: gd.bjnet2.com
+  port: 36608
+  cipher: aes-128-gcm
+  password: 84d85af8-2807-4306-a701-f784676b77c3
   udp: true
-- name: 🇺🇸 美国 中转 02
-  type: ss
-  server: f1.idsduf.com
-  port: 41061
-  cipher: chacha20-ietf-poly1305
-  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
-  udp: true
-- name: 🇺🇸 美国 中转 03
-  type: ss
-  server: f1.idsduf.com
-  port: 41474
-  cipher: chacha20-ietf-poly1305
-  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
-  udp: true
-- name: 🇺🇸 美国 中转 04
-  type: ss
-  server: f1.idsduf.com
-  port: 41063
-  cipher: chacha20-ietf-poly1305
-  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
-  udp: true
-- name: 🇺🇸 美国 中转 05
-  type: ss
-  server: f1.idsduf.com
-  port: 41065
-  cipher: chacha20-ietf-poly1305
-  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
-  udp: true
-- name: 🇺🇸 美国 中转 06
-  type: ss
-  server: f1.idsduf.com
-  port: 41067
-  cipher: chacha20-ietf-poly1305
-  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
-  udp: true
-- name: 🇺🇸 美国 01
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+- name: 🇺🇸 美国 04|白嫖机场.ink 2
   type: vmess
-  server: vm1.as7akp.cn
-  port: 23901
-  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 2052
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
   alterId: 0
   cipher: auto
   udp: true
-- name: 🇺🇸 美国 02
-  type: vmess
-  server: vm1.as7akp.cn
-  port: 23916
-  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
-  alterId: 0
-  cipher: auto
-  udp: true
-- name: 🇺🇸 美国 03
-  type: vmess
-  server: vm1.as7akp.cn
-  port: 23903
-  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
-  alterId: 0
-  cipher: auto
-  udp: true
-- name: 🇺🇸 美国 04
-  type: vmess
-  server: vm1.as7akp.cn
-  port: 23915
-  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
-  alterId: 0
-  cipher: auto
-  udp: true
-- name: 🇺🇸 美国 084
-  type: ss
-  server: us084.jd.kunlunpx.com
-  port: 45580
-  cipher: chacha20-ietf-poly1305
-  password: e6db72e9415e60e35892
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
-- name: 🇺🇸 美国 086
-  type: ss
-  server: us086.jd.kunlunpx.com
-  port: 45584
-  cipher: chacha20-ietf-poly1305
-  password: 4605c34b957ab8e1001b
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
-- name: 🇺🇸 美国 038
-  type: ss
-  server: us038.jd.kunlunpx.com
-  port: 45922
-  cipher: aes-128-gcm
-  password: c1ee5895686790a383fb
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
-- name: 🇺🇸 美国 039
-  type: ss
-  server: us039.jd.kunlunpx.com
-  port: 45923
-  cipher: aes-128-gcm
-  password: 2b7df6aadc759756b0cd
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
-- name: 🇺🇸 美国 040
-  type: ss
-  server: us040.jd.kunlunpx.com
-  port: 45924
-  cipher: aes-128-gcm
-  password: 0a0fb8dbfb8cc2f25f02
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
-- name: 🇺🇸 美国 067
-  type: ss
-  server: us067.jd.kunlunpx.com
-  port: 45935
-  cipher: aes-128-gcm
-  password: 8bf642be1622a09558bb
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
-- name: 🇺🇸 美国 069
-  type: ss
-  server: us069.jd.kunlunpx.com
-  port: 45938
-  cipher: aes-128-gcm
-  password: 3938bfae997974860251
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
-- name: 🇺🇸 美国 026
-  type: ss
-  server: us026.jd.kunlunpx.com
-  port: 45909
-  cipher: aes-128-gcm
-  password: 9d29e58723af34cad8da
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
-- name: 🇺🇸 美国 025
-  type: ss
-  server: us025.jd.kunlunpx.com
-  port: 45908
-  cipher: aes-128-gcm
-  password: 97c3cf442df2d7099275
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
-- name: 🇦🇺 美国 A tralia 071
-  type: ss
-  server: au071.jd.kunlunpx.com
-  port: 45934
-  cipher: aes-128-gcm
-  password: ec39dd066cc142fbb81c
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
-- name: 🇨🇭 美国 Switzer nd 087
-  type: ss
-  server: ch087.jd.kunlunpx.com
-  port: 45582
-  cipher: chacha20-ietf-poly1305
-  password: c9fa2bcffa379937679e
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
-- name: 🇲🇾 美国 Ma ysia 076
-  type: ss
-  server: my076.jd.kunlunpx.com
-  port: 45577
-  cipher: chacha20-ietf-poly1305
-  password: ec1a4ba66999975262e2
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
-- name: 🇲🇾 美国 Ma ysia 075 *1.5
-  type: ss
-  server: my075.jd.kunlunpx.com
-  port: 45576
-  cipher: aes-128-gcm
-  password: fe51727afe2fca582ebf
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
-- name: 🇹🇭 美国 Thai nd 041
-  type: ss
-  server: th041.jd.kunlunpx.com
-  port: 45925
-  cipher: aes-128-gcm
-  password: 1a402babc02465f45bea
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
-- name: 🇷🇺 美国 R sia 046
-  type: ss
-  server: ru046.jd.kunlunpx.com
-  port: 45930
-  cipher: aes-128-gcm
-  password: 11575f448fb4021fc611
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
 - name: 🇺🇸 美国 西S1|v6
   type: ss
   server: v6uss1.lajichang.xyz
@@ -1860,17 +1860,50 @@ proxies:
   servername: dash.cloudflare.com
   client-fingerprint: firefox
   network: tcp
-- name: 🇹🇼 湾省 IEPL
+- name: 🇹🇼 湾省 065
   type: ss
-  server: gd.bjnet2.com
-  port: 36603
+  server: tw065.jd.kunlunpx.com
+  port: 45916
   cipher: aes-128-gcm
-  password: 84d85af8-2807-4306-a701-f784676b77c3
+  password: cfc6f3f75f5ef7b2665c
   udp: true
   plugin: obfs
   plugin-opts:
     mode: http
-    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇹🇼 湾省 031
+  type: ss
+  server: tw031.jd.kunlunpx.com
+  port: 45915
+  cipher: aes-128-gcm
+  password: b74518fb49bd645e6ce7
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇹🇼 湾省 030
+  type: ss
+  server: tw030.jd.kunlunpx.com
+  port: 45914
+  cipher: aes-128-gcm
+  password: b270fd77db2ecb7acbc8
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇹🇼 湾省 DynamicIP
+  type: ss
+  server: tw080.jd.kunlunpx.com
+  port: 45573
+  cipher: aes-128-gcm
+  password: 3e26a8cfb09fda219b36
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
 - name: 🇨🇳 湾省 中转 01
   type: ss
   server: f1.idsduf.com
@@ -1929,50 +1962,17 @@ proxies:
   alterId: 0
   cipher: auto
   udp: true
-- name: 🇹🇼 湾省 065
+- name: 🇹🇼 湾省 IEPL
   type: ss
-  server: tw065.jd.kunlunpx.com
-  port: 45916
+  server: gd.bjnet2.com
+  port: 36603
   cipher: aes-128-gcm
-  password: cfc6f3f75f5ef7b2665c
+  password: 84d85af8-2807-4306-a701-f784676b77c3
   udp: true
   plugin: obfs
   plugin-opts:
     mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
-- name: 🇹🇼 湾省 031
-  type: ss
-  server: tw031.jd.kunlunpx.com
-  port: 45915
-  cipher: aes-128-gcm
-  password: b74518fb49bd645e6ce7
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
-- name: 🇹🇼 湾省 030
-  type: ss
-  server: tw030.jd.kunlunpx.com
-  port: 45914
-  cipher: aes-128-gcm
-  password: b270fd77db2ecb7acbc8
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
-- name: 🇹🇼 湾省 DynamicIP
-  type: ss
-  server: tw080.jd.kunlunpx.com
-  port: 45573
-  cipher: aes-128-gcm
-  password: 3e26a8cfb09fda219b36
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
+    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
 - name: 🇹🇼 湾省 1|v6
   type: vmess
   server: 2001:b030:a42d:5d01::1043
@@ -2041,6 +2041,24 @@ proxies:
     path: /5e60be5f/
     headers:
       Host: ''
+- name: 🇺🇦 韩国 raine 085
+  type: ss
+  server: ua085.jd.kunlunpx.com
+  port: 45583
+  cipher: chacha20-ietf-poly1305
+  password: 4f308f8c43ae78a779f5
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇰🇷 韩国 ss
+  type: ss
+  server: f1.idsduf.com
+  port: 41349
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
 - name: 🇰🇷 韩国 04|白嫖机场.ink
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
@@ -2067,24 +2085,6 @@ proxies:
     path: /
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇰🇷 韩国 ss
-  type: ss
-  server: f1.idsduf.com
-  port: 41349
-  cipher: chacha20-ietf-poly1305
-  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
-  udp: true
-- name: 🇺🇦 韩国 raine 085
-  type: ss
-  server: ua085.jd.kunlunpx.com
-  port: 45583
-  cipher: chacha20-ietf-poly1305
-  password: 4f308f8c43ae78a779f5
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
 - name: 🇰🇷 韩国 1|v6
   type: vmess
   server: 2603:c024:b:ed11:ca30:a4cf:af3a:d423
@@ -2153,24 +2153,29 @@ proxies:
     path: /5e60be5f/
     headers:
       Host: ''
+- name: 🇩🇪 德国 044
+  type: ss
+  server: de044.jd.kunlunpx.com
+  port: 45928
+  cipher: aes-128-gcm
+  password: bd62dac6636078647014
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇩🇪 德国 ss
+  type: ss
+  server: f1.idsduf.com
+  port: 41039
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
 - name: 🇩🇪 德国 03|白嫖机场.ink
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 2086
   uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇩🇪 德国 03|白嫖机场.ink 2
-  type: vmess
-  server: baipiaojichangink.huahuasuansuan.cfd
-  port: 2086
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
   alterId: 0
   cipher: auto
   udp: true
@@ -2190,24 +2195,19 @@ proxies:
   plugin-opts:
     mode: http
     host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇩🇪 德国 ss
-  type: ss
-  server: f1.idsduf.com
-  port: 41039
-  cipher: chacha20-ietf-poly1305
-  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+- name: 🇩🇪 德国 03|白嫖机场.ink 2
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 2086
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  alterId: 0
+  cipher: auto
   udp: true
-- name: 🇩🇪 德国 044
-  type: ss
-  server: de044.jd.kunlunpx.com
-  port: 45928
-  cipher: aes-128-gcm
-  password: bd62dac6636078647014
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: 215996dd9f1c3db1e54b.microsoft.com
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
 - name: 🇩🇪 德国 3|v6
   type: vmess
   server: 2a01:4f8:242:1d0e::1461:40
@@ -2290,15 +2290,6 @@ proxy-groups:
   - ♻️ 自动选择
   - 🔯 故障转移
   - DIRECT
-  - 🇭🇰 香港 04|白嫖机场.ink
-  - 🇭🇰 香港 04|白嫖机场.ink 2
-  - 🇭🇰 香港 IEPL
-  - 🇭🇰 香港 中转 02
-  - 🇭🇰 香港 中转 03
-  - 🇭🇰 香港 中转 04
-  - 🇭🇰 香港 中转 06
-  - 🇭🇰 香港 01
-  - 🇭🇰 香港 02
   - 🇭🇰 香港 021
   - 🇭🇰 香港 008
   - 🇭🇰 香港 077
@@ -2308,6 +2299,15 @@ proxy-groups:
   - 🇭🇰 香港 020
   - 🇭🇰 香港 019
   - 🇰🇷 香港 Sout orea 037
+  - 🇭🇰 香港 中转 02
+  - 🇭🇰 香港 中转 03
+  - 🇭🇰 香港 中转 04
+  - 🇭🇰 香港 中转 06
+  - 🇭🇰 香港 01
+  - 🇭🇰 香港 02
+  - 🇭🇰 香港 04|白嫖机场.ink
+  - 🇭🇰 香港 IEPL
+  - 🇭🇰 香港 04|白嫖机场.ink 2
   - 🇭🇰 香港 S1|v6
   - 🇭🇰 香港 S5|v6
   - 🇭🇰 香港 1|v6|
@@ -2325,17 +2325,17 @@ proxy-groups:
   - 🇭🇰 香港 16|v6
   - 🇭🇰 香港 17|v6|
   - 🇭🇰 香港 18|v6|
-  - 🇯🇵 日本 04|白嫖机场.ink
-  - 🇯🇵 日本 04|白嫖机场.ink 2
-  - 🇯🇵 日本 IEPL GPT
-  - 🇯🇵 日本 01
-  - 🇯🇵 日本 02
   - 🇯🇵 日本 07
   - 🇯🇵 日本 029
   - 🇯🇵 日本 050
   - 🇯🇵 日本 028
   - 🇯🇵 日本 083
   - 🇯🇵 日本 027
+  - 🇯🇵 日本 01
+  - 🇯🇵 日本 02
+  - 🇯🇵 日本 04|白嫖机场.ink
+  - 🇯🇵 日本 IEPL GPT
+  - 🇯🇵 日本 04|白嫖机场.ink 2
   - 🇯🇵 日本 S1|v6
   - 🇯🇵 日本 S2|v6
   - 🇯🇵 日本 1|v6
@@ -2345,9 +2345,11 @@ proxy-groups:
   - 🇯🇵 日本 尼 利亚1|v6
   - 🇯🇵 日本 X07
   - 🇯🇵 日本 X06
-  - 🇸🇬 狮城 04|白嫖机场.ink
-  - 🇸🇬 狮城 04|白嫖机场.ink 2
-  - 🇸🇬 狮城 IEPL
+  - 🇸🇬 狮城 057
+  - 🇸🇬 狮城 034
+  - 🇸🇬 狮城 032
+  - 🇸🇬 狮城 035
+  - 🇸🇬 狮城 078
   - 🇸🇬 狮城 中转 01
   - 🇸🇬 狮城 中转 02
   - 🇸🇬 狮城 中转 03
@@ -2356,11 +2358,9 @@ proxy-groups:
   - 🇸🇬 狮城 中转 06
   - 🇸🇬 狮城 01
   - 🇸🇬 狮城 02
-  - 🇸🇬 狮城 057
-  - 🇸🇬 狮城 034
-  - 🇸🇬 狮城 032
-  - 🇸🇬 狮城 035
-  - 🇸🇬 狮城 078
+  - 🇸🇬 狮城 04|白嫖机场.ink
+  - 🇸🇬 狮城 IEPL
+  - 🇸🇬 狮城 04|白嫖机场.ink 2
   - 🇸🇬 狮城 rq
   - 🇸🇬 狮城 S1|v6
   - 🇸🇬 狮城 S2|v6
@@ -2369,9 +2369,32 @@ proxy-groups:
   - 🇸🇬 狮城 3|v6
   - 🇸🇬 狮城 8|v6
   - 🇸🇬 狮城 9|v6
+  - 🇺🇸 美国 084
+  - 🇺🇸 美国 086
+  - 🇺🇸 美国 038
+  - 🇺🇸 美国 039
+  - 🇺🇸 美国 040
+  - 🇺🇸 美国 067
+  - 🇺🇸 美国 069
+  - 🇺🇸 美国 026
+  - 🇺🇸 美国 025
+  - 🇦🇺 美国 A tralia 071
+  - 🇨🇭 美国 Switzer nd 087
+  - 🇲🇾 美国 Ma ysia 076
+  - 🇲🇾 美国 Ma ysia 075 *1.5
+  - 🇹🇭 美国 Thai nd 041
+  - 🇷🇺 美国 R sia 046
+  - 🇺🇸 美国 中转 01
+  - 🇺🇸 美国 中转 02
+  - 🇺🇸 美国 中转 03
+  - 🇺🇸 美国 中转 04
+  - 🇺🇸 美国 中转 05
+  - 🇺🇸 美国 中转 06
+  - 🇺🇸 美国 01
+  - 🇺🇸 美国 02
+  - 🇺🇸 美国 03
+  - 🇺🇸 美国 04
   - 🇺🇸 美国 04|白嫖机场.ink
-  - 🇺🇸 美国 04|白嫖机场.ink 2
-  - 🇺🇸 美国 IEPL GPT
   - 🇺🇸 美国 20
   - 🇺🇸 美国 4
   - 🇺🇸 美国 18
@@ -2404,31 +2427,8 @@ proxy-groups:
   - 🇺🇸 美国 64
   - 🇺🇸 美国 65
   - 🇺🇸 美国 66
-  - 🇺🇸 美国 中转 01
-  - 🇺🇸 美国 中转 02
-  - 🇺🇸 美国 中转 03
-  - 🇺🇸 美国 中转 04
-  - 🇺🇸 美国 中转 05
-  - 🇺🇸 美国 中转 06
-  - 🇺🇸 美国 01
-  - 🇺🇸 美国 02
-  - 🇺🇸 美国 03
-  - 🇺🇸 美国 04
-  - 🇺🇸 美国 084
-  - 🇺🇸 美国 086
-  - 🇺🇸 美国 038
-  - 🇺🇸 美国 039
-  - 🇺🇸 美国 040
-  - 🇺🇸 美国 067
-  - 🇺🇸 美国 069
-  - 🇺🇸 美国 026
-  - 🇺🇸 美国 025
-  - 🇦🇺 美国 A tralia 071
-  - 🇨🇭 美国 Switzer nd 087
-  - 🇲🇾 美国 Ma ysia 076
-  - 🇲🇾 美国 Ma ysia 075 *1.5
-  - 🇹🇭 美国 Thai nd 041
-  - 🇷🇺 美国 R sia 046
+  - 🇺🇸 美国 IEPL GPT
+  - 🇺🇸 美国 04|白嫖机场.ink 2
   - 🇺🇸 美国 西S1|v6
   - 🇺🇸 美国 西S2|v6
   - 🇺🇸 美国 西1|v6
@@ -2443,7 +2443,10 @@ proxy-groups:
   - 🇺🇸 美国 西13|v6
   - 🇺🇸 美国 X01
   - 🇺🇸 美国 X02
-  - 🇹🇼 湾省 IEPL
+  - 🇹🇼 湾省 065
+  - 🇹🇼 湾省 031
+  - 🇹🇼 湾省 030
+  - 🇹🇼 湾省 DynamicIP
   - 🇨🇳 湾省 中转 01
   - 🇨🇳 湾省 中转 02
   - 🇨🇳 湾省 中转 03
@@ -2452,27 +2455,24 @@ proxy-groups:
   - 🇨🇳 湾省 中转 06
   - 🇨🇳 湾省 01
   - 🇨🇳 湾省 02
-  - 🇹🇼 湾省 065
-  - 🇹🇼 湾省 031
-  - 🇹🇼 湾省 030
-  - 🇹🇼 湾省 DynamicIP
+  - 🇹🇼 湾省 IEPL
   - 🇹🇼 湾省 1|v6
   - 🇹🇼 湾省 2|v6
   - 🇹🇼 湾省 3|v6
   - 🇹🇼 湾省 4|v6
+  - 🇺🇦 韩国 raine 085
+  - 🇰🇷 韩国 ss
   - 🇰🇷 韩国 04|白嫖机场.ink
   - 🇰🇷 韩国 04|白嫖机场.ink 2
-  - 🇰🇷 韩国 ss
-  - 🇺🇦 韩国 raine 085
   - 🇰🇷 韩国 1|v6
   - 🇰🇷 韩国 2|v6
   - 🇰🇷 韩国 3|v6
   - 🇰🇷 韩国 4|v6
-  - 🇩🇪 德国 03|白嫖机场.ink
-  - 🇩🇪 德国 03|白嫖机场.ink 2
-  - 🇩🇪 德国 IEPL
-  - 🇩🇪 德国 ss
   - 🇩🇪 德国 044
+  - 🇩🇪 德国 ss
+  - 🇩🇪 德国 03|白嫖机场.ink
+  - 🇩🇪 德国 IEPL
+  - 🇩🇪 德国 03|白嫖机场.ink 2
   - 🇩🇪 德国 3|v6
   - 🇬🇧 英国 ss
   - 🇬🇧 英国 2|v6
@@ -2483,15 +2483,6 @@ proxy-groups:
 - name: ♻️ 自动选择
   type: url-test
   proxies: &id001
-  - 🇭🇰 香港 04|白嫖机场.ink
-  - 🇭🇰 香港 04|白嫖机场.ink 2
-  - 🇭🇰 香港 IEPL
-  - 🇭🇰 香港 中转 02
-  - 🇭🇰 香港 中转 03
-  - 🇭🇰 香港 中转 04
-  - 🇭🇰 香港 中转 06
-  - 🇭🇰 香港 01
-  - 🇭🇰 香港 02
   - 🇭🇰 香港 021
   - 🇭🇰 香港 008
   - 🇭🇰 香港 077
@@ -2501,6 +2492,15 @@ proxy-groups:
   - 🇭🇰 香港 020
   - 🇭🇰 香港 019
   - 🇰🇷 香港 Sout orea 037
+  - 🇭🇰 香港 中转 02
+  - 🇭🇰 香港 中转 03
+  - 🇭🇰 香港 中转 04
+  - 🇭🇰 香港 中转 06
+  - 🇭🇰 香港 01
+  - 🇭🇰 香港 02
+  - 🇭🇰 香港 04|白嫖机场.ink
+  - 🇭🇰 香港 IEPL
+  - 🇭🇰 香港 04|白嫖机场.ink 2
   - 🇭🇰 香港 S1|v6
   - 🇭🇰 香港 S5|v6
   - 🇭🇰 香港 1|v6|
@@ -2518,17 +2518,17 @@ proxy-groups:
   - 🇭🇰 香港 16|v6
   - 🇭🇰 香港 17|v6|
   - 🇭🇰 香港 18|v6|
-  - 🇯🇵 日本 04|白嫖机场.ink
-  - 🇯🇵 日本 04|白嫖机场.ink 2
-  - 🇯🇵 日本 IEPL GPT
-  - 🇯🇵 日本 01
-  - 🇯🇵 日本 02
   - 🇯🇵 日本 07
   - 🇯🇵 日本 029
   - 🇯🇵 日本 050
   - 🇯🇵 日本 028
   - 🇯🇵 日本 083
   - 🇯🇵 日本 027
+  - 🇯🇵 日本 01
+  - 🇯🇵 日本 02
+  - 🇯🇵 日本 04|白嫖机场.ink
+  - 🇯🇵 日本 IEPL GPT
+  - 🇯🇵 日本 04|白嫖机场.ink 2
   - 🇯🇵 日本 S1|v6
   - 🇯🇵 日本 S2|v6
   - 🇯🇵 日本 1|v6
@@ -2538,9 +2538,11 @@ proxy-groups:
   - 🇯🇵 日本 尼 利亚1|v6
   - 🇯🇵 日本 X07
   - 🇯🇵 日本 X06
-  - 🇸🇬 狮城 04|白嫖机场.ink
-  - 🇸🇬 狮城 04|白嫖机场.ink 2
-  - 🇸🇬 狮城 IEPL
+  - 🇸🇬 狮城 057
+  - 🇸🇬 狮城 034
+  - 🇸🇬 狮城 032
+  - 🇸🇬 狮城 035
+  - 🇸🇬 狮城 078
   - 🇸🇬 狮城 中转 01
   - 🇸🇬 狮城 中转 02
   - 🇸🇬 狮城 中转 03
@@ -2549,11 +2551,9 @@ proxy-groups:
   - 🇸🇬 狮城 中转 06
   - 🇸🇬 狮城 01
   - 🇸🇬 狮城 02
-  - 🇸🇬 狮城 057
-  - 🇸🇬 狮城 034
-  - 🇸🇬 狮城 032
-  - 🇸🇬 狮城 035
-  - 🇸🇬 狮城 078
+  - 🇸🇬 狮城 04|白嫖机场.ink
+  - 🇸🇬 狮城 IEPL
+  - 🇸🇬 狮城 04|白嫖机场.ink 2
   - 🇸🇬 狮城 rq
   - 🇸🇬 狮城 S1|v6
   - 🇸🇬 狮城 S2|v6
@@ -2562,9 +2562,32 @@ proxy-groups:
   - 🇸🇬 狮城 3|v6
   - 🇸🇬 狮城 8|v6
   - 🇸🇬 狮城 9|v6
+  - 🇺🇸 美国 084
+  - 🇺🇸 美国 086
+  - 🇺🇸 美国 038
+  - 🇺🇸 美国 039
+  - 🇺🇸 美国 040
+  - 🇺🇸 美国 067
+  - 🇺🇸 美国 069
+  - 🇺🇸 美国 026
+  - 🇺🇸 美国 025
+  - 🇦🇺 美国 A tralia 071
+  - 🇨🇭 美国 Switzer nd 087
+  - 🇲🇾 美国 Ma ysia 076
+  - 🇲🇾 美国 Ma ysia 075 *1.5
+  - 🇹🇭 美国 Thai nd 041
+  - 🇷🇺 美国 R sia 046
+  - 🇺🇸 美国 中转 01
+  - 🇺🇸 美国 中转 02
+  - 🇺🇸 美国 中转 03
+  - 🇺🇸 美国 中转 04
+  - 🇺🇸 美国 中转 05
+  - 🇺🇸 美国 中转 06
+  - 🇺🇸 美国 01
+  - 🇺🇸 美国 02
+  - 🇺🇸 美国 03
+  - 🇺🇸 美国 04
   - 🇺🇸 美国 04|白嫖机场.ink
-  - 🇺🇸 美国 04|白嫖机场.ink 2
-  - 🇺🇸 美国 IEPL GPT
   - 🇺🇸 美国 20
   - 🇺🇸 美国 4
   - 🇺🇸 美国 18
@@ -2597,31 +2620,8 @@ proxy-groups:
   - 🇺🇸 美国 64
   - 🇺🇸 美国 65
   - 🇺🇸 美国 66
-  - 🇺🇸 美国 中转 01
-  - 🇺🇸 美国 中转 02
-  - 🇺🇸 美国 中转 03
-  - 🇺🇸 美国 中转 04
-  - 🇺🇸 美国 中转 05
-  - 🇺🇸 美国 中转 06
-  - 🇺🇸 美国 01
-  - 🇺🇸 美国 02
-  - 🇺🇸 美国 03
-  - 🇺🇸 美国 04
-  - 🇺🇸 美国 084
-  - 🇺🇸 美国 086
-  - 🇺🇸 美国 038
-  - 🇺🇸 美国 039
-  - 🇺🇸 美国 040
-  - 🇺🇸 美国 067
-  - 🇺🇸 美国 069
-  - 🇺🇸 美国 026
-  - 🇺🇸 美国 025
-  - 🇦🇺 美国 A tralia 071
-  - 🇨🇭 美国 Switzer nd 087
-  - 🇲🇾 美国 Ma ysia 076
-  - 🇲🇾 美国 Ma ysia 075 *1.5
-  - 🇹🇭 美国 Thai nd 041
-  - 🇷🇺 美国 R sia 046
+  - 🇺🇸 美国 IEPL GPT
+  - 🇺🇸 美国 04|白嫖机场.ink 2
   - 🇺🇸 美国 西S1|v6
   - 🇺🇸 美国 西S2|v6
   - 🇺🇸 美国 西1|v6
@@ -2636,7 +2636,10 @@ proxy-groups:
   - 🇺🇸 美国 西13|v6
   - 🇺🇸 美国 X01
   - 🇺🇸 美国 X02
-  - 🇹🇼 湾省 IEPL
+  - 🇹🇼 湾省 065
+  - 🇹🇼 湾省 031
+  - 🇹🇼 湾省 030
+  - 🇹🇼 湾省 DynamicIP
   - 🇨🇳 湾省 中转 01
   - 🇨🇳 湾省 中转 02
   - 🇨🇳 湾省 中转 03
@@ -2645,27 +2648,24 @@ proxy-groups:
   - 🇨🇳 湾省 中转 06
   - 🇨🇳 湾省 01
   - 🇨🇳 湾省 02
-  - 🇹🇼 湾省 065
-  - 🇹🇼 湾省 031
-  - 🇹🇼 湾省 030
-  - 🇹🇼 湾省 DynamicIP
+  - 🇹🇼 湾省 IEPL
   - 🇹🇼 湾省 1|v6
   - 🇹🇼 湾省 2|v6
   - 🇹🇼 湾省 3|v6
   - 🇹🇼 湾省 4|v6
+  - 🇺🇦 韩国 raine 085
+  - 🇰🇷 韩国 ss
   - 🇰🇷 韩国 04|白嫖机场.ink
   - 🇰🇷 韩国 04|白嫖机场.ink 2
-  - 🇰🇷 韩国 ss
-  - 🇺🇦 韩国 raine 085
   - 🇰🇷 韩国 1|v6
   - 🇰🇷 韩国 2|v6
   - 🇰🇷 韩国 3|v6
   - 🇰🇷 韩国 4|v6
-  - 🇩🇪 德国 03|白嫖机场.ink
-  - 🇩🇪 德国 03|白嫖机场.ink 2
-  - 🇩🇪 德国 IEPL
-  - 🇩🇪 德国 ss
   - 🇩🇪 德国 044
+  - 🇩🇪 德国 ss
+  - 🇩🇪 德国 03|白嫖机场.ink
+  - 🇩🇪 德国 IEPL
+  - 🇩🇪 德国 03|白嫖机场.ink 2
   - 🇩🇪 德国 3|v6
   - 🇬🇧 英国 ss
   - 🇬🇧 英国 2|v6
