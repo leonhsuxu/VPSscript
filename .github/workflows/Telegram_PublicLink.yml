@@ -1,5 +1,5 @@
 # .github/workflows/Telegram_PublicLink.yml
-name: 🟢 Telegram 节点抓取与合并
+name: ♻️ Telegram 节点抓取与合并
 
 on:
   schedule:
@@ -31,8 +31,8 @@ jobs:
         #
         TELEGRAM_CHANNEL_IDS: |
           @fqDINYUE
-          # @channel2
-          # -1001234567890
+          # 添加id或名称
+          # 添加id
         #
         # === 凭据（从 GitHub Secrets 获取）===
         #
