@@ -15,18 +15,7 @@ dns:
   - https://dns.google/dns-query
   - https://1.1.1.1/dns-query
 proxies:
-- name: 🇭🇰 香港 IEPL
-  type: ss
-  server: gd.bjnet2.com
-  port: 36602
-  cipher: aes-128-gcm
-  password: 84d85af8-2807-4306-a701-f784676b77c3
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇭🇰 香港 04|白嫖机场.ink 2
+- name: 🇭🇰 香港 04|白嫖机场.ink
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 80
@@ -39,7 +28,7 @@ proxies:
     path: /
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇭🇰 香港 04|白嫖机场.ink
+- name: 🇭🇰 香港 04|白嫖机场.ink 2
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 80
@@ -52,6 +41,655 @@ proxies:
     path: /
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
+- name: 🇭🇰 香港 IEPL
+  type: ss
+  server: gd.bjnet2.com
+  port: 36602
+  cipher: aes-128-gcm
+  password: 84d85af8-2807-4306-a701-f784676b77c3
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+- name: 🇭🇰 香港 中转 02
+  type: ss
+  server: f1.idsduf.com
+  port: 41058
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇭🇰 香港 中转 03
+  type: ss
+  server: f1.idsduf.com
+  port: 41053
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇭🇰 香港 中转 04
+  type: ss
+  server: f1.idsduf.com
+  port: 41079
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇭🇰 香港 中转 06
+  type: ss
+  server: f1.idsduf.com
+  port: 41049
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇭🇰 香港 01
+  type: vmess
+  server: vm1.as7akp.cn
+  port: 23913
+  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  alterId: 0
+  cipher: auto
+  udp: true
+- name: 🇭🇰 香港 02
+  type: vmess
+  server: vm1.as7akp.cn
+  port: 20521
+  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  alterId: 0
+  cipher: auto
+  udp: true
+- name: 🇭🇰 香港 021
+  type: ss
+  server: hk021.jd.kunlunpx.com
+  port: 45905
+  cipher: aes-128-gcm
+  password: 777bc05be0dd624959fb
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇭🇰 香港 008
+  type: ss
+  server: hk008.jd.kunlunpx.com
+  port: 45936
+  cipher: aes-128-gcm
+  password: a643f6f3733c9962851d
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇭🇰 香港 077
+  type: ss
+  server: hk077.jd.kunlunpx.com
+  port: 45578
+  cipher: chacha20-ietf-poly1305
+  password: 7243745919d6de49a5db
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇭🇰 香港 018
+  type: ss
+  server: hk018.jd.kunlunpx.com
+  port: 45902
+  cipher: aes-128-gcm
+  password: 0a74c9e4565e935cf1ac
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇭🇰 香港 016
+  type: ss
+  server: hk016.jd.kunlunpx.com
+  port: 45901
+  cipher: aes-128-gcm
+  password: 7338d988d71591d76b3f
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇭🇰 香港 017
+  type: ss
+  server: hk017.jd.kunlunpx.com
+  port: 45900
+  cipher: aes-128-gcm
+  password: 51f8c7454c93d0d83c29
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇭🇰 香港 020
+  type: ss
+  server: hk020.jd.kunlunpx.com
+  port: 45904
+  cipher: aes-128-gcm
+  password: 6113536135af69e572c6
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇭🇰 香港 019
+  type: ss
+  server: hk019.jd.kunlunpx.com
+  port: 45903
+  cipher: aes-128-gcm
+  password: b16cb18d8992f3b83b7d
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇰🇷 香港 Sout orea 037
+  type: ss
+  server: kr037.jd.kunlunpx.com
+  port: 45921
+  cipher: aes-128-gcm
+  password: d7577ca6729babe0790f
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇭🇰 香港 S1|v6
+  type: ss
+  server: v6hks1.lajichang.xyz
+  port: 25555
+  cipher: aes-128-gcm
+  password: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  udp: true
+  skip-cert-verify: true
+  tfo: false
+- name: 🇭🇰 香港 S5|v6
+  type: ss
+  server: v6hks5.lajichang.xyz
+  port: 25555
+  cipher: aes-128-gcm
+  password: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  udp: true
+  skip-cert-verify: true
+  tfo: false
+- name: 🇭🇰 香港 1|v6|
+  type: vmess
+  server: 2602:fa67:102:13::a
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇭🇰 香港 2|v6
+  type: vmess
+  server: 2401:b60:5:9c::a
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇭🇰 香港 3|v6
+  type: vmess
+  server: 2a0f:7803:fb31:a4::a
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇭🇰 香港 6|v6
+  type: vmess
+  server: 2602:fa4f:200:40aa:133b:47a2:a3ce:7fe4
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇭🇰 香港 7|v6|
+  type: vmess
+  server: 2400:e3e0:f5a9:8e0f:109b:83c8:c9e1:deda
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇭🇰 香港 8|v6|
+  type: vmess
+  server: 2400:e3e0:f5a9:177e:d9f4:2288:e161:5b42
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇭🇰 香港 9|v6
+  type: vmess
+  server: 2602:fa4f:202:5cf7:f37b:4ab4:59b2:d997
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇭🇰 香港 11|v6
+  type: vmess
+  server: 2400:8a20:112:1::687
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇭🇰 香港 12|v6
+  type: vmess
+  server: 2400:8a20:112:1::688
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇭🇰 香港 13|v6
+  type: vmess
+  server: 2400:8a20:112:1::68e
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /7e60be4f/
+    headers:
+      Host: ''
+- name: 🇭🇰 香港 14|v6|
+  type: vmess
+  server: 2400:e3e0:f5a9:8a43:265:a68a:3cec:108b
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇭🇰 香港 15|v6
+  type: vmess
+  server: 2a0c:9a40:9201:43d3::1
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇭🇰 香港 16|v6
+  type: vmess
+  server: 2a12:3fc2:ab41:69ff:c43a:1345:0:1
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇭🇰 香港 17|v6|
+  type: vmess
+  server: 2400:e3e0:f5a9:656:be38:23be:bc61:6c3f
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇭🇰 香港 18|v6|
+  type: vmess
+  server: 2400:e3e0:f5a9:6045:1249:ebc6:219d:61fe
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇯🇵 日本 04|白嫖机场.ink
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 8080
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+- name: 🇯🇵 日本 04|白嫖机场.ink 2
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 8080
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+- name: 🇯🇵 日本 IEPL GPT
+  type: ss
+  server: gd.bjnet2.com
+  port: 36609
+  cipher: aes-128-gcm
+  password: 84d85af8-2807-4306-a701-f784676b77c3
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+- name: 🇯🇵 日本 01
+  type: vmess
+  server: vm1.as7akp.cn
+  port: 23908
+  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  alterId: 0
+  cipher: auto
+  udp: true
+- name: 🇯🇵 日本 02
+  type: vmess
+  server: vm1.as7akp.cn
+  port: 23919
+  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  alterId: 0
+  cipher: auto
+  udp: true
+- name: 🇯🇵 日本 07
+  type: ss
+  server: jp07.jd.kunlunpx.com
+  port: 45572
+  cipher: aes-128-gcm
+  password: 722a54414ae6ee706ac9
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇯🇵 日本 029
+  type: ss
+  server: jp029.jd.kunlunpx.com
+  port: 45913
+  cipher: aes-128-gcm
+  password: c8960ca4a0add435fc34
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇯🇵 日本 050
+  type: ss
+  server: jp050.jd.kunlunpx.com
+  port: 45939
+  cipher: aes-128-gcm
+  password: 97b53b570db0917935e0
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇯🇵 日本 028
+  type: ss
+  server: jp028.jd.kunlunpx.com
+  port: 45912
+  cipher: aes-128-gcm
+  password: 97998add7bf4fea885ef
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇯🇵 日本 083
+  type: ss
+  server: jp083.jd.kunlunpx.com
+  port: 45581
+  cipher: aes-128-gcm
+  password: 6014caa3a323920c7fd0
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇯🇵 日本 027
+  type: ss
+  server: jp027.jd.kunlunpx.com
+  port: 45911
+  cipher: aes-128-gcm
+  password: 69dc0306f1bfb1af49a5
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇯🇵 日本 S1|v6
+  type: ss
+  server: v6jps1.lajichang.xyz
+  port: 25555
+  cipher: aes-128-gcm
+  password: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  udp: true
+  skip-cert-verify: true
+  tfo: false
+- name: 🇯🇵 日本 S2|v6
+  type: ss
+  server: v6jps2.lajichang.xyz
+  port: 25555
+  cipher: aes-128-gcm
+  password: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  udp: true
+  skip-cert-verify: true
+  tfo: false
+- name: 🇯🇵 日本 1|v6
+  type: vmess
+  server: 2a12:f8c1:50:8::513
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇯🇵 日本 3|v6
+  type: vmess
+  server: '2a12:bec0:167:1178::'
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇯🇵 日本 6|v6
+  type: vmess
+  server: 2a12:a300:3400::8f6a:163
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇯🇵 日本 7|v6
+  type: vmess
+  server: 2a12:a300:500::2925:1fc2
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇯🇵 日本 尼 利亚1|v6
+  type: vmess
+  server: '2a01:4f8:162:54d9:16a::'
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
 - name: 🇯🇵 日本 X07
   type: vless
   server: tk-x07.xiaoxiaobujidao.xyz
@@ -86,21 +724,10 @@ proxies:
   servername: dash.cloudflare.com
   client-fingerprint: firefox
   network: tcp
-- name: 🇯🇵 日本 IEPL GPT
-  type: ss
-  server: gd.bjnet2.com
-  port: 36609
-  cipher: aes-128-gcm
-  password: 84d85af8-2807-4306-a701-f784676b77c3
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇯🇵 日本 04|白嫖机场.ink 2
+- name: 🇸🇬 狮城 04|白嫖机场.ink
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
-  port: 8080
+  port: 8880
   uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
   alterId: 0
   cipher: auto
@@ -110,10 +737,10 @@ proxies:
     path: /
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇯🇵 日本 04|白嫖机场.ink
+- name: 🇸🇬 狮城 04|白嫖机场.ink 2
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
-  port: 8080
+  port: 8880
   uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
   alterId: 0
   cipher: auto
@@ -123,6 +750,130 @@ proxies:
     path: /
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
+- name: 🇸🇬 狮城 IEPL
+  type: ss
+  server: gd.bjnet2.com
+  port: 36604
+  cipher: aes-128-gcm
+  password: 84d85af8-2807-4306-a701-f784676b77c3
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+- name: 🇸🇬 狮城 中转 01
+  type: ss
+  server: f1.idsduf.com
+  port: 41043
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇸🇬 狮城 中转 02
+  type: ss
+  server: f1.idsduf.com
+  port: 41027
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇸🇬 狮城 中转 03
+  type: ss
+  server: f1.idsduf.com
+  port: 41047
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇸🇬 狮城 中转 04
+  type: ss
+  server: f1.idsduf.com
+  port: 41352
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇸🇬 狮城 中转 05
+  type: ss
+  server: f1.idsduf.com
+  port: 41353
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇸🇬 狮城 中转 06
+  type: ss
+  server: f1.idsduf.com
+  port: 43154
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇸🇬 狮城 01
+  type: vmess
+  server: vm1.as7akp.cn
+  port: 23909
+  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  alterId: 0
+  cipher: auto
+  udp: true
+- name: 🇸🇬 狮城 02
+  type: vmess
+  server: vm1.as7akp.cn
+  port: 23910
+  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  alterId: 0
+  cipher: auto
+  udp: true
+- name: 🇸🇬 狮城 057
+  type: ss
+  server: sg057.jd.kunlunpx.com
+  port: 45937
+  cipher: aes-128-gcm
+  password: 4092a0d31011e2046687
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇸🇬 狮城 034
+  type: ss
+  server: sg034.jd.kunlunpx.com
+  port: 45918
+  cipher: aes-128-gcm
+  password: 1d8e4861b251c8c4ce78
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇸🇬 狮城 032
+  type: ss
+  server: sg032.jd.kunlunpx.com
+  port: 45917
+  cipher: aes-128-gcm
+  password: f4cd0a554e9d0558c581
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇸🇬 狮城 035
+  type: ss
+  server: sg035.jd.kunlunpx.com
+  port: 45919
+  cipher: aes-128-gcm
+  password: b4c9e286a46bd6ecca13
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇸🇬 狮城 078
+  type: ss
+  server: sg078.jd.kunlunpx.com
+  port: 45579
+  cipher: aes-128-gcm
+  password: 0722bd4137ff579e6917
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
 - name: 🇸🇬 狮城 rq
   type: vmess
   server: 210.61.97.241
@@ -139,21 +890,113 @@ proxies:
   sni: nf.k8s.now.cc
   grpc-opts:
     grpc-service-name: yydsnf
-- name: 🇸🇬 狮城 IEPL
+- name: 🇸🇬 狮城 S1|v6
   type: ss
-  server: gd.bjnet2.com
-  port: 36604
+  server: v6sgs1.lajichang.xyz
+  port: 25555
   cipher: aes-128-gcm
-  password: 84d85af8-2807-4306-a701-f784676b77c3
+  password: 3cebc7fb-a486-4698-8998-41d15ca62ccc
   udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇸🇬 狮城 04|白嫖机场.ink 2
+  skip-cert-verify: true
+  tfo: false
+- name: 🇸🇬 狮城 S2|v6
+  type: ss
+  server: v6sgs2.lajichang.xyz
+  port: 25555
+  cipher: aes-128-gcm
+  password: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  udp: true
+  skip-cert-verify: true
+  tfo: false
+- name: 🇸🇬 狮城 1|v6
+  type: vmess
+  server: 2a0e:97c0:7d4:ff05::a
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇸🇬 狮城 2|v6
+  type: vmess
+  server: 2a0e:97c0:7d4:ff3c::a
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇸🇬 狮城 3|v6
+  type: vmess
+  server: 2a02:6ea0:d14a::cdf0:54bf
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇸🇬 狮城 8|v6
+  type: vmess
+  server: 2605:e440:16::281
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇸🇬 狮城 9|v6
+  type: vmess
+  server: 2605:e440:16::346
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇺🇸 美国 04|白嫖机场.ink
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
-  port: 8880
+  port: 2052
   uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
   alterId: 0
   cipher: auto
@@ -163,10 +1006,10 @@ proxies:
     path: /
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇸🇬 狮城 04|白嫖机场.ink
+- name: 🇺🇸 美国 04|白嫖机场.ink 2
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
-  port: 8880
+  port: 2052
   uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
   alterId: 0
   cipher: auto
@@ -176,50 +1019,209 @@ proxies:
     path: /
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇺🇸 美国 46
-  server: 38.14.99.179
-  port: 59807
-  type: vmess
-  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
-  alterId: 0
-  cipher: auto
-  tls: false
-  skip-cert-verify: false
-- name: 🇺🇸 美国 48
-  server: 38.14.99.163
-  port: 59807
-  type: vmess
-  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
-  alterId: 0
-  cipher: auto
-  tls: false
-  skip-cert-verify: false
-- name: 🇺🇸 美国 40
-  server: 82.198.246.97
-  port: 180
-  type: vmess
-  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
-  alterId: 0
-  cipher: auto
-  tls: false
-  skip-cert-verify: false
-- name: 🇺🇸 美国 X02
-  type: vless
-  server: px-x02.xiaoxiaobujidao.xyz
-  port: 12345
-  uuid: 1f05a69e-1dfb-340a-8a6b-117a59ed7e7f
-  encryption: none
+- name: 🇺🇸 美国 IEPL GPT
+  type: ss
+  server: gd.bjnet2.com
+  port: 36608
+  cipher: aes-128-gcm
+  password: 84d85af8-2807-4306-a701-f784676b77c3
   udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+- name: 🇺🇸 美国 20
+  server: bestcdn4.868863.xyz
+  port: 2083
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248834335.206355.xyz
   skip-cert-verify: false
-  tfo: false
-  flow: xtls-rprx-vision
-  tls: true
-  reality-opts:
-    public-key: _zJXh1QBg7D0lcPUFPrxPh7Zfqu1wK0sX8W0AQNIRg0
-    short-id: ''
-  servername: dash.cloudflare.com
-  client-fingerprint: firefox
-  network: tcp
+  network: ws
+  ws-opts:
+    path: /videomuaawe
+    headers:
+      Host: 17642248834335.206355.xyz
+- name: 🇺🇸 美国 4
+  server: bestcdn4.868863.xyz
+  port: 2087
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248839754.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248839754.796813.xyz
+- name: 🇺🇸 美国 18
+  server: bestcdn4.868863.xyz
+  port: 2096
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248833097.796812.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agraeabtegrrh
+    headers:
+      Host: 17642248833097.796812.xyz
+- name: 🇺🇸 美国 19
+  server: bestcdn4.868863.xyz
+  port: 8443
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248839907.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248839907.796813.xyz
+- name: 🇺🇸 美国 8
+  server: bestcdn4.868863.xyz
+  port: 2053
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248832420.796812.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agraeabtegrrh
+    headers:
+      Host: 17642248832420.796812.xyz
+- name: 🇺🇸 美国 9
+  server: bestcdn1.868863.xyz
+  port: 2053
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248831496.796812.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agraeabtegrrh
+    headers:
+      Host: 17642248831496.796812.xyz
+- name: 🇺🇸 美国 10
+  server: bestcdn1.868863.xyz
+  port: 2096
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248832011.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248832011.796813.xyz
+- name: 🇺🇸 美国 11
+  server: bestcdn1.868863.xyz
+  port: 2087
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248838532.206355.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /videomuaawe
+    headers:
+      Host: 17642248838532.206355.xyz
+- name: 🇺🇸 美国 12
+  server: bestcdn2.868863.xyz
+  port: 2083
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248838279.796812.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agraeabtegrrh
+    headers:
+      Host: 17642248838279.796812.xyz
+- name: 🇺🇸 美国 13
+  server: bestcdn2.868863.xyz
+  port: 2087
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248832844.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248832844.796813.xyz
+- name: 🇺🇸 美国 14
+  server: bestcdn2.868863.xyz
+  port: 2096
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248837494.206355.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /videomuaawe
+    headers:
+      Host: 17642248837494.206355.xyz
+- name: 🇺🇸 美国 15
+  server: bestcdn3.868863.xyz
+  port: 2087
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248835602.796812.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agraeabtegrrh
+    headers:
+      Host: 17642248835602.796812.xyz
+- name: 🇺🇸 美国 16
+  server: bestcdn3.868863.xyz
+  port: 2083
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248832588.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248832588.796813.xyz
+- name: 🇺🇸 美国 17
+  server: bestcdn3.868863.xyz
+  port: 2053
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248833842.206355.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /videomuaawe
+    headers:
+      Host: 17642248833842.206355.xyz
+- name: 🇺🇸 美国 23
+  server: bestcdn5.868863.xyz
+  port: 8443
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248833040.206355.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /videomuaawe
+    headers:
+      Host: 17642248833040.206355.xyz
+- name: 🇺🇸 美国 22
+  server: bestcdn5.868863.xyz
+  port: 2053
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248832331.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248832331.796813.xyz
 - name: 🇺🇸 美国 62
   server: www.zhoubowen.vip
   port: 443
@@ -234,23 +1236,68 @@ proxies:
     path: /biutefor.icu
     headers:
       Host: www.zhoubowen.vip
-- name: 🇺🇸 美国 X01
-  type: vless
-  server: px-x01.xiaoxiaobujidao.xyz
-  port: 23456
-  uuid: 1f05a69e-1dfb-340a-8a6b-117a59ed7e7f
-  encryption: none
-  udp: true
-  skip-cert-verify: false
-  tfo: false
-  flow: xtls-rprx-vision
+- name: 🇺🇸 美国 44
+  server: singapore02.zgjok.com
+  port: 443
+  type: vmess
+  uuid: 780c7671-e8c8-45ab-922b-4fdfc4310aa0
+  alterId: 0
+  cipher: auto
   tls: true
-  reality-opts:
-    public-key: _zJXh1QBg7D0lcPUFPrxPh7Zfqu1wK0sX8W0AQNIRg0
-    short-id: ''
-  servername: dash.cloudflare.com
-  client-fingerprint: firefox
-  network: tcp
+  skip-cert-verify: false
+  servername: singapore02.zgjok.com
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: singapore02.zgjok.com
+- name: 🇺🇸 美国 49
+  server: seoul02.zgjok.com
+  port: 443
+  type: vmess
+  uuid: 1a1e5196-eab4-4772-9012-65c27f19a524
+  alterId: 0
+  cipher: auto
+  tls: true
+  skip-cert-verify: false
+  servername: seoul02.zgjok.com
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: seoul02.zgjok.com
+- name: 🇺🇸 美国 40
+  server: 82.198.246.97
+  port: 180
+  type: vmess
+  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+- name: 🇺🇸 美国 58
+  server: 152.70.92.69
+  port: 80
+  type: vmess
+  uuid: bb9c3993-a4b9-4dad-aeb9-ac86371ae68b
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+- name: 🇺🇸 美国 39
+  server: tokyo01.zgjok.com
+  port: 443
+  type: vmess
+  uuid: e6d5d668-2091-41d9-9bff-df0a1c5107ec
+  alterId: 0
+  cipher: auto
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: tokyo01.zgjok.com
 - name: 🇺🇸 美国 41
   server: 107.174.82.102.sslip.io
   port: 443
@@ -265,15 +1312,39 @@ proxies:
     path: /Ov7HrgwlEcRugowKV
     headers:
       Host: 107.174.82.102.sslip.io
-- name: 🇺🇸 美国 58
-  server: 152.70.92.69
-  port: 80
+- name: 🇺🇸 美国 48
+  server: 38.14.99.163
+  port: 59807
   type: vmess
-  uuid: bb9c3993-a4b9-4dad-aeb9-ac86371ae68b
+  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
   alterId: 0
   cipher: auto
   tls: false
   skip-cert-verify: false
+- name: 🇺🇸 美国 46
+  server: 38.14.99.179
+  port: 59807
+  type: vmess
+  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+- name: 🇺🇸 美国 56
+  server: fn.130519.xyz
+  port: 8443
+  type: vmess
+  uuid: 19aebb35-b458-4d0c-b767-2adb39e6bb02
+  alterId: 0
+  cipher: auto
+  tls: true
+  skip-cert-verify: false
+  servername: deji.186507.xyz
+  network: ws
+  ws-opts:
+    path: /19aebb35-b458-4d0c-b767-2adb39e6bb02-vm
+    headers:
+      Host: deji.186507.xyz
 - name: 🇺🇸 美国 61
   server: 47.243.69.126
   port: 31904
@@ -301,250 +1372,494 @@ proxies:
   cipher: auto
   tls: false
   skip-cert-verify: false
-- name: 🇺🇸 美国 14
-  server: bestcdn2.868863.xyz
-  port: 2096
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248837494.206355.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248837494.206355.xyz
-- name: 🇺🇸 美国 13
-  server: bestcdn2.868863.xyz
-  port: 2087
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832844.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248832844.796813.xyz
-- name: 🇺🇸 美国 12
-  server: bestcdn2.868863.xyz
-  port: 2083
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248838279.796812.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      Host: 17642248838279.796812.xyz
-- name: 🇺🇸 美国 56
-  server: fn.130519.xyz
-  port: 8443
+- name: 🇺🇸 美国 64
+  server: v12.hdacd.com
+  port: 30812
   type: vmess
-  uuid: 19aebb35-b458-4d0c-b767-2adb39e6bb02
+  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
   alterId: 0
   cipher: auto
-  tls: true
+  tls: false
   skip-cert-verify: false
-  servername: deji.186507.xyz
-  network: ws
-  ws-opts:
-    path: /19aebb35-b458-4d0c-b767-2adb39e6bb02-vm
-    headers:
-      Host: deji.186507.xyz
-- name: 🇺🇸 美国 23
-  server: bestcdn5.868863.xyz
-  port: 8443
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248833040.206355.xyz
+- name: 🇺🇸 美国 65
+  server: 144.48.180.187
+  port: 30812
+  type: vmess
+  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
+  alterId: 0
+  cipher: auto
+  tls: false
   skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248833040.206355.xyz
-- name: 🇺🇸 美国 22
-  server: bestcdn5.868863.xyz
-  port: 2053
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832331.796813.xyz
+- name: 🇺🇸 美国 66
+  server: v30.hdacd.com
+  port: 30830
+  type: vmess
+  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
+  alterId: 0
+  cipher: auto
+  tls: false
   skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248832331.796813.xyz
-- name: 🇺🇸 美国 IEPL GPT
+- name: 🇺🇸 美国 中转 01
   type: ss
-  server: gd.bjnet2.com
-  port: 36608
-  cipher: aes-128-gcm
-  password: 84d85af8-2807-4306-a701-f784676b77c3
+  server: f1.idsduf.com
+  port: 41466
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇺🇸 美国 中转 02
+  type: ss
+  server: f1.idsduf.com
+  port: 41061
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇺🇸 美国 中转 03
+  type: ss
+  server: f1.idsduf.com
+  port: 41474
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇺🇸 美国 中转 04
+  type: ss
+  server: f1.idsduf.com
+  port: 41063
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇺🇸 美国 中转 05
+  type: ss
+  server: f1.idsduf.com
+  port: 41065
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇺🇸 美国 中转 06
+  type: ss
+  server: f1.idsduf.com
+  port: 41067
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇺🇸 美国 01
+  type: vmess
+  server: vm1.as7akp.cn
+  port: 23901
+  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  alterId: 0
+  cipher: auto
+  udp: true
+- name: 🇺🇸 美国 02
+  type: vmess
+  server: vm1.as7akp.cn
+  port: 23916
+  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  alterId: 0
+  cipher: auto
+  udp: true
+- name: 🇺🇸 美国 03
+  type: vmess
+  server: vm1.as7akp.cn
+  port: 23903
+  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  alterId: 0
+  cipher: auto
+  udp: true
+- name: 🇺🇸 美国 04
+  type: vmess
+  server: vm1.as7akp.cn
+  port: 23915
+  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  alterId: 0
+  cipher: auto
+  udp: true
+- name: 🇺🇸 美国 084
+  type: ss
+  server: us084.jd.kunlunpx.com
+  port: 45580
+  cipher: chacha20-ietf-poly1305
+  password: e6db72e9415e60e35892
   udp: true
   plugin: obfs
   plugin-opts:
     mode: http
-    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇺🇸 美国 04|白嫖机场.ink 2
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇺🇸 美国 086
+  type: ss
+  server: us086.jd.kunlunpx.com
+  port: 45584
+  cipher: chacha20-ietf-poly1305
+  password: 4605c34b957ab8e1001b
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇺🇸 美国 038
+  type: ss
+  server: us038.jd.kunlunpx.com
+  port: 45922
+  cipher: aes-128-gcm
+  password: c1ee5895686790a383fb
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇺🇸 美国 039
+  type: ss
+  server: us039.jd.kunlunpx.com
+  port: 45923
+  cipher: aes-128-gcm
+  password: 2b7df6aadc759756b0cd
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇺🇸 美国 040
+  type: ss
+  server: us040.jd.kunlunpx.com
+  port: 45924
+  cipher: aes-128-gcm
+  password: 0a0fb8dbfb8cc2f25f02
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇺🇸 美国 067
+  type: ss
+  server: us067.jd.kunlunpx.com
+  port: 45935
+  cipher: aes-128-gcm
+  password: 8bf642be1622a09558bb
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇺🇸 美国 069
+  type: ss
+  server: us069.jd.kunlunpx.com
+  port: 45938
+  cipher: aes-128-gcm
+  password: 3938bfae997974860251
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇺🇸 美国 026
+  type: ss
+  server: us026.jd.kunlunpx.com
+  port: 45909
+  cipher: aes-128-gcm
+  password: 9d29e58723af34cad8da
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇺🇸 美国 025
+  type: ss
+  server: us025.jd.kunlunpx.com
+  port: 45908
+  cipher: aes-128-gcm
+  password: 97c3cf442df2d7099275
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇦🇺 美国 A tralia 071
+  type: ss
+  server: au071.jd.kunlunpx.com
+  port: 45934
+  cipher: aes-128-gcm
+  password: ec39dd066cc142fbb81c
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇨🇭 美国 Switzer nd 087
+  type: ss
+  server: ch087.jd.kunlunpx.com
+  port: 45582
+  cipher: chacha20-ietf-poly1305
+  password: c9fa2bcffa379937679e
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇲🇾 美国 Ma ysia 076
+  type: ss
+  server: my076.jd.kunlunpx.com
+  port: 45577
+  cipher: chacha20-ietf-poly1305
+  password: ec1a4ba66999975262e2
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇲🇾 美国 Ma ysia 075 *1.5
+  type: ss
+  server: my075.jd.kunlunpx.com
+  port: 45576
+  cipher: aes-128-gcm
+  password: fe51727afe2fca582ebf
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇹🇭 美国 Thai nd 041
+  type: ss
+  server: th041.jd.kunlunpx.com
+  port: 45925
+  cipher: aes-128-gcm
+  password: 1a402babc02465f45bea
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇷🇺 美国 R sia 046
+  type: ss
+  server: ru046.jd.kunlunpx.com
+  port: 45930
+  cipher: aes-128-gcm
+  password: 11575f448fb4021fc611
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇺🇸 美国 西S1|v6
+  type: ss
+  server: v6uss1.lajichang.xyz
+  port: 25555
+  cipher: aes-128-gcm
+  password: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  udp: true
+  skip-cert-verify: true
+  tfo: false
+- name: 🇺🇸 美国 西S2|v6
+  type: ss
+  server: v6uss2.lajichang.xyz
+  port: 25555
+  cipher: aes-128-gcm
+  password: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  udp: true
+  skip-cert-verify: true
+  tfo: false
+- name: 🇺🇸 美国 西1|v6
   type: vmess
-  server: baipiaojichangink.huahuasuansuan.cfd
-  port: 2052
-  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  server: 2607:f130:0:ee:ff:ff:13b4:61b5
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
   alterId: 0
   cipher: auto
+  tls: false
+  skip-cert-verify: false
   udp: true
   network: ws
+  aead: true
+  tfo: false
   ws-opts:
-    path: /
+    path: /5e60be5f/
     headers:
-      Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇺🇸 美国 04|白嫖机场.ink
+      Host: ''
+- name: 🇺🇸 美国 西2|v6
   type: vmess
-  server: baipiaojichangink.huahuasuansuan.cfd
-  port: 2052
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  server: 2607:f130:0:ee:ff:ff:18b6:98fe
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
   alterId: 0
   cipher: auto
+  tls: false
+  skip-cert-verify: false
   udp: true
   network: ws
+  aead: true
+  tfo: false
   ws-opts:
-    path: /
+    path: /5e60be5f/
     headers:
-      Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇺🇸 美国 10
-  server: bestcdn1.868863.xyz
-  port: 2096
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832011.796813.xyz
+      Host: ''
+- name: 🇺🇸 美国 西4|v6
+  type: vmess
+  server: 2602:f947:0:1b::842d
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
   skip-cert-verify: false
+  udp: true
   network: ws
+  aead: true
+  tfo: false
   ws-opts:
-    path: /agrbniuh
+    path: /5e60be5f/
     headers:
-      Host: 17642248832011.796813.xyz
-- name: 🇺🇸 美国 11
-  server: bestcdn1.868863.xyz
-  port: 2087
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248838532.206355.xyz
+      Host: ''
+- name: 🇺🇸 美国 西6|v6
+  type: vmess
+  server: 2605:6400:5245::1
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
   skip-cert-verify: false
+  udp: true
   network: ws
+  aead: true
+  tfo: false
   ws-opts:
-    path: /videomuaawe
+    path: /5e60be5f/
     headers:
-      Host: 17642248838532.206355.xyz
-- name: 🇺🇸 美国 8
-  server: bestcdn4.868863.xyz
-  port: 2053
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832420.796812.xyz
+      Host: ''
+- name: 🇺🇸 美国 西7|v6
+  type: vmess
+  server: 2607:f130:0:f3:ff:ff:184b:9520
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
   skip-cert-verify: false
+  udp: true
   network: ws
+  aead: true
+  tfo: false
   ws-opts:
-    path: /agraeabtegrrh
+    path: /5e60be5f/
     headers:
-      Host: 17642248832420.796812.xyz
-- name: 🇺🇸 美国 9
-  server: bestcdn1.868863.xyz
-  port: 2053
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248831496.796812.xyz
+      Host: ''
+- name: 🇺🇸 美国 西8|v6
+  type: vmess
+  server: 2602:fa4f:900:2d88:4d53:b6e3:502e:383c
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
   skip-cert-verify: false
+  udp: true
   network: ws
+  aead: true
+  tfo: false
   ws-opts:
-    path: /agraeabtegrrh
+    path: /5e60be5f/
     headers:
-      Host: 17642248831496.796812.xyz
-- name: 🇺🇸 美国 18
-  server: bestcdn4.868863.xyz
-  port: 2096
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248833097.796812.xyz
+      Host: ''
+- name: 🇺🇸 美国 西9|v6
+  type: vmess
+  server: 2602:fa4f:900:1491:486e:8067:6be1:2ccf
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
   skip-cert-verify: false
+  udp: true
   network: ws
+  aead: true
+  tfo: false
   ws-opts:
-    path: /agraeabtegrrh
+    path: /5e60be5f/
     headers:
-      Host: 17642248833097.796812.xyz
-- name: 🇺🇸 美国 19
-  server: bestcdn4.868863.xyz
-  port: 8443
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248839907.796813.xyz
+      Host: ''
+- name: 🇺🇸 美国 西10|v6
+  type: vmess
+  server: 2607:f130:0:f3:ff:ff:2ce9:86f5
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
   skip-cert-verify: false
+  udp: true
   network: ws
+  aead: true
+  tfo: false
   ws-opts:
-    path: /agrbniuh
+    path: /5e60be5f/
     headers:
-      Host: 17642248839907.796813.xyz
-- name: 🇺🇸 美国 20
-  server: bestcdn4.868863.xyz
-  port: 2083
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248834335.206355.xyz
+      Host: ''
+- name: 🇺🇸 美国 西11|v6
+  type: vmess
+  server: '2605:52c0:1001:5ce::'
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
   skip-cert-verify: false
+  udp: true
   network: ws
+  aead: true
+  tfo: false
   ws-opts:
-    path: /videomuaawe
+    path: /5e60be5f/
     headers:
-      Host: 17642248834335.206355.xyz
-- name: 🇺🇸 美国 4
-  server: bestcdn4.868863.xyz
-  port: 2087
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248839754.796813.xyz
+      Host: ''
+- name: 🇺🇸 美国 西13|v6
+  type: vmess
+  server: 2607:f130:0:144::4a8b:fab5
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
   skip-cert-verify: false
+  udp: true
   network: ws
+  aead: true
+  tfo: false
   ws-opts:
-    path: /agrbniuh
+    path: /5e60be5f/
     headers:
-      Host: 17642248839754.796813.xyz
-- name: 🇺🇸 美国 17
-  server: bestcdn3.868863.xyz
-  port: 2053
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248833842.206355.xyz
+      Host: ''
+- name: 🇺🇸 美国 X01
+  type: vless
+  server: px-x01.xiaoxiaobujidao.xyz
+  port: 23456
+  uuid: 1f05a69e-1dfb-340a-8a6b-117a59ed7e7f
+  encryption: none
+  udp: true
   skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248833842.206355.xyz
-- name: 🇺🇸 美国 15
-  server: bestcdn3.868863.xyz
-  port: 2087
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248835602.796812.xyz
+  tfo: false
+  flow: xtls-rprx-vision
+  tls: true
+  reality-opts:
+    public-key: _zJXh1QBg7D0lcPUFPrxPh7Zfqu1wK0sX8W0AQNIRg0
+    short-id: ''
+  servername: dash.cloudflare.com
+  client-fingerprint: firefox
+  network: tcp
+- name: 🇺🇸 美国 X02
+  type: vless
+  server: px-x02.xiaoxiaobujidao.xyz
+  port: 12345
+  uuid: 1f05a69e-1dfb-340a-8a6b-117a59ed7e7f
+  encryption: none
+  udp: true
   skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      Host: 17642248835602.796812.xyz
-- name: 🇺🇸 美国 16
-  server: bestcdn3.868863.xyz
-  port: 2083
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832588.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248832588.796813.xyz
+  tfo: false
+  flow: xtls-rprx-vision
+  tls: true
+  reality-opts:
+    public-key: _zJXh1QBg7D0lcPUFPrxPh7Zfqu1wK0sX8W0AQNIRg0
+    short-id: ''
+  servername: dash.cloudflare.com
+  client-fingerprint: firefox
+  network: tcp
 - name: 🇹🇼 湾省 IEPL
   type: ss
   server: gd.bjnet2.com
@@ -556,7 +1871,177 @@ proxies:
   plugin-opts:
     mode: http
     host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇰🇷 韩国 04|白嫖机场.ink 2
+- name: 🇨🇳 湾省 中转 01
+  type: ss
+  server: f1.idsduf.com
+  port: 41759
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇨🇳 湾省 中转 02
+  type: ss
+  server: f1.idsduf.com
+  port: 41056
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇨🇳 湾省 中转 03
+  type: ss
+  server: f1.idsduf.com
+  port: 41173
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇨🇳 湾省 中转 04
+  type: ss
+  server: f1.idsduf.com
+  port: 41069
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇨🇳 湾省 中转 05
+  type: ss
+  server: f1.idsduf.com
+  port: 41869
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇨🇳 湾省 中转 06
+  type: ss
+  server: f1.idsduf.com
+  port: 41870
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇨🇳 湾省 01
+  type: vmess
+  server: vm1.as7akp.cn
+  port: 23921
+  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  alterId: 0
+  cipher: auto
+  udp: true
+- name: 🇨🇳 湾省 02
+  type: vmess
+  server: vm1.as7akp.cn
+  port: 20559
+  uuid: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  alterId: 0
+  cipher: auto
+  udp: true
+- name: 🇹🇼 湾省 065
+  type: ss
+  server: tw065.jd.kunlunpx.com
+  port: 45916
+  cipher: aes-128-gcm
+  password: cfc6f3f75f5ef7b2665c
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇹🇼 湾省 031
+  type: ss
+  server: tw031.jd.kunlunpx.com
+  port: 45915
+  cipher: aes-128-gcm
+  password: b74518fb49bd645e6ce7
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇹🇼 湾省 030
+  type: ss
+  server: tw030.jd.kunlunpx.com
+  port: 45914
+  cipher: aes-128-gcm
+  password: b270fd77db2ecb7acbc8
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇹🇼 湾省 DynamicIP
+  type: ss
+  server: tw080.jd.kunlunpx.com
+  port: 45573
+  cipher: aes-128-gcm
+  password: 3e26a8cfb09fda219b36
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇹🇼 湾省 1|v6
+  type: vmess
+  server: 2001:b030:a42d:5d01::1043
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇹🇼 湾省 2|v6
+  type: vmess
+  server: 2400:70e0:b000:0:8ac:4fff:fe14:7e0
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇹🇼 湾省 3|v6
+  type: vmess
+  server: 2406:8dc0:6001::12c5
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇹🇼 湾省 4|v6
+  type: vmess
+  server: 2406:8dc0:600a::13
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇰🇷 韩国 04|白嫖机场.ink
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 2082
@@ -569,10 +2054,122 @@ proxies:
     path: /
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇰🇷 韩国 04|白嫖机场.ink
+- name: 🇰🇷 韩国 04|白嫖机场.ink 2
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 2082
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+- name: 🇰🇷 韩国 ss
+  type: ss
+  server: f1.idsduf.com
+  port: 41349
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇺🇦 韩国 raine 085
+  type: ss
+  server: ua085.jd.kunlunpx.com
+  port: 45583
+  cipher: chacha20-ietf-poly1305
+  password: 4f308f8c43ae78a779f5
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇰🇷 韩国 1|v6
+  type: vmess
+  server: 2603:c024:b:ed11:ca30:a4cf:af3a:d423
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇰🇷 韩国 2|v6
+  type: vmess
+  server: 2603:c024:b:ed11:1a52:82c9:e0fb:ee1d
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇰🇷 韩国 3|v6
+  type: vmess
+  server: 2603:c024:b:ed11:aaa9:2a92:768c:55a2
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇰🇷 韩国 4|v6
+  type: vmess
+  server: 2603:c024:b:ed11:bbba:dec7:f562:3ead
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
+- name: 🇩🇪 德国 03|白嫖机场.ink
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 2086
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+- name: 🇩🇪 德国 03|白嫖机场.ink 2
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 2086
   uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
   alterId: 0
   cipher: auto
@@ -593,32 +2190,82 @@ proxies:
   plugin-opts:
     mode: http
     host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇩🇪 德国 03|白嫖机场.ink 2
+- name: 🇩🇪 德国 ss
+  type: ss
+  server: f1.idsduf.com
+  port: 41039
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇩🇪 德国 044
+  type: ss
+  server: de044.jd.kunlunpx.com
+  port: 45928
+  cipher: aes-128-gcm
+  password: bd62dac6636078647014
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 215996dd9f1c3db1e54b.microsoft.com
+- name: 🇩🇪 德国 3|v6
   type: vmess
-  server: baipiaojichangink.huahuasuansuan.cfd
-  port: 2086
-  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  server: 2a01:4f8:242:1d0e::1461:40
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
   alterId: 0
   cipher: auto
+  tls: false
+  skip-cert-verify: false
   udp: true
   network: ws
+  aead: true
+  tfo: false
   ws-opts:
-    path: /
+    path: /5e60be5f/
     headers:
-      Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇩🇪 德国 03|白嫖机场.ink
+      Host: ''
+- name: 🇬🇧 英国 ss
+  type: ss
+  server: f1.idsduf.com
+  port: 41381
+  cipher: chacha20-ietf-poly1305
+  password: 2fd2a7bc-0b9d-4c06-a163-52e6c24ef974
+  udp: true
+- name: 🇬🇧 英国 2|v6
   type: vmess
-  server: baipiaojichangink.huahuasuansuan.cfd
-  port: 2086
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  server: 2a01:a500:1087:1:31::1
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
   alterId: 0
   cipher: auto
+  tls: false
+  skip-cert-verify: false
   udp: true
   network: ws
+  aead: true
+  tfo: false
   ws-opts:
-    path: /
+    path: /5e60be5f/
     headers:
-      Host: baipiaoyyds.huahuasuansuan.cfd
+      Host: ''
+- name: 🇬🇧 英国 3|v6
+  type: vmess
+  server: 2a0c:9a40:9211:1:ec07:6ff:fe0f:27b9
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  udp: true
+  network: ws
+  aead: true
+  tfo: false
+  ws-opts:
+    path: /5e60be5f/
+    headers:
+      Host: ''
 - name: 🇬🇧 英国 X01
   type: vless
   server: uk-001.xiaoxiaobujidao.xyz
@@ -643,168 +2290,397 @@ proxy-groups:
   - ♻️ 自动选择
   - 🔯 故障转移
   - DIRECT
-  - 🇭🇰 香港 IEPL
-  - 🇭🇰 香港 04|白嫖机场.ink 2
   - 🇭🇰 香港 04|白嫖机场.ink
+  - 🇭🇰 香港 04|白嫖机场.ink 2
+  - 🇭🇰 香港 IEPL
+  - 🇭🇰 香港 中转 02
+  - 🇭🇰 香港 中转 03
+  - 🇭🇰 香港 中转 04
+  - 🇭🇰 香港 中转 06
+  - 🇭🇰 香港 01
+  - 🇭🇰 香港 02
+  - 🇭🇰 香港 021
+  - 🇭🇰 香港 008
+  - 🇭🇰 香港 077
+  - 🇭🇰 香港 018
+  - 🇭🇰 香港 016
+  - 🇭🇰 香港 017
+  - 🇭🇰 香港 020
+  - 🇭🇰 香港 019
+  - 🇰🇷 香港 Sout orea 037
+  - 🇭🇰 香港 S1|v6
+  - 🇭🇰 香港 S5|v6
+  - 🇭🇰 香港 1|v6|
+  - 🇭🇰 香港 2|v6
+  - 🇭🇰 香港 3|v6
+  - 🇭🇰 香港 6|v6
+  - 🇭🇰 香港 7|v6|
+  - 🇭🇰 香港 8|v6|
+  - 🇭🇰 香港 9|v6
+  - 🇭🇰 香港 11|v6
+  - 🇭🇰 香港 12|v6
+  - 🇭🇰 香港 13|v6
+  - 🇭🇰 香港 14|v6|
+  - 🇭🇰 香港 15|v6
+  - 🇭🇰 香港 16|v6
+  - 🇭🇰 香港 17|v6|
+  - 🇭🇰 香港 18|v6|
+  - 🇯🇵 日本 04|白嫖机场.ink
+  - 🇯🇵 日本 04|白嫖机场.ink 2
+  - 🇯🇵 日本 IEPL GPT
+  - 🇯🇵 日本 01
+  - 🇯🇵 日本 02
+  - 🇯🇵 日本 07
+  - 🇯🇵 日本 029
+  - 🇯🇵 日本 050
+  - 🇯🇵 日本 028
+  - 🇯🇵 日本 083
+  - 🇯🇵 日本 027
+  - 🇯🇵 日本 S1|v6
+  - 🇯🇵 日本 S2|v6
+  - 🇯🇵 日本 1|v6
+  - 🇯🇵 日本 3|v6
+  - 🇯🇵 日本 6|v6
+  - 🇯🇵 日本 7|v6
+  - 🇯🇵 日本 尼 利亚1|v6
   - 🇯🇵 日本 X07
   - 🇯🇵 日本 X06
-  - 🇯🇵 日本 IEPL GPT
-  - 🇯🇵 日本 04|白嫖机场.ink 2
-  - 🇯🇵 日本 04|白嫖机场.ink
-  - 🇸🇬 狮城 rq
-  - 🇸🇬 狮城 IEPL
-  - 🇸🇬 狮城 04|白嫖机场.ink 2
   - 🇸🇬 狮城 04|白嫖机场.ink
-  - 🇺🇸 美国 46
-  - 🇺🇸 美国 48
-  - 🇺🇸 美国 40
-  - 🇺🇸 美国 X02
+  - 🇸🇬 狮城 04|白嫖机场.ink 2
+  - 🇸🇬 狮城 IEPL
+  - 🇸🇬 狮城 中转 01
+  - 🇸🇬 狮城 中转 02
+  - 🇸🇬 狮城 中转 03
+  - 🇸🇬 狮城 中转 04
+  - 🇸🇬 狮城 中转 05
+  - 🇸🇬 狮城 中转 06
+  - 🇸🇬 狮城 01
+  - 🇸🇬 狮城 02
+  - 🇸🇬 狮城 057
+  - 🇸🇬 狮城 034
+  - 🇸🇬 狮城 032
+  - 🇸🇬 狮城 035
+  - 🇸🇬 狮城 078
+  - 🇸🇬 狮城 rq
+  - 🇸🇬 狮城 S1|v6
+  - 🇸🇬 狮城 S2|v6
+  - 🇸🇬 狮城 1|v6
+  - 🇸🇬 狮城 2|v6
+  - 🇸🇬 狮城 3|v6
+  - 🇸🇬 狮城 8|v6
+  - 🇸🇬 狮城 9|v6
+  - 🇺🇸 美国 04|白嫖机场.ink
+  - 🇺🇸 美国 04|白嫖机场.ink 2
+  - 🇺🇸 美国 IEPL GPT
+  - 🇺🇸 美国 20
+  - 🇺🇸 美国 4
+  - 🇺🇸 美国 18
+  - 🇺🇸 美国 19
+  - 🇺🇸 美国 8
+  - 🇺🇸 美国 9
+  - 🇺🇸 美国 10
+  - 🇺🇸 美国 11
+  - 🇺🇸 美国 12
+  - 🇺🇸 美国 13
+  - 🇺🇸 美国 14
+  - 🇺🇸 美国 15
+  - 🇺🇸 美国 16
+  - 🇺🇸 美国 17
+  - 🇺🇸 美国 23
+  - 🇺🇸 美国 22
   - 🇺🇸 美国 62
-  - 🇺🇸 美国 X01
-  - 🇺🇸 美国 41
+  - 🇺🇸 美国 44
+  - 🇺🇸 美国 49
+  - 🇺🇸 美国 40
   - 🇺🇸 美国 58
+  - 🇺🇸 美国 39
+  - 🇺🇸 美国 41
+  - 🇺🇸 美国 48
+  - 🇺🇸 美国 46
+  - 🇺🇸 美国 56
   - 🇺🇸 美国 61
   - 🇺🇸 美国 52
   - 🇺🇸 美国 57
-  - 🇺🇸 美国 14
-  - 🇺🇸 美国 13
-  - 🇺🇸 美国 12
-  - 🇺🇸 美国 56
-  - 🇺🇸 美国 23
-  - 🇺🇸 美国 22
-  - 🇺🇸 美国 IEPL GPT
-  - 🇺🇸 美国 04|白嫖机场.ink 2
-  - 🇺🇸 美国 04|白嫖机场.ink
-  - 🇺🇸 美国 10
-  - 🇺🇸 美国 11
-  - 🇺🇸 美国 8
-  - 🇺🇸 美国 9
-  - 🇺🇸 美国 18
-  - 🇺🇸 美国 19
-  - 🇺🇸 美国 20
-  - 🇺🇸 美国 4
-  - 🇺🇸 美国 17
-  - 🇺🇸 美国 15
-  - 🇺🇸 美国 16
+  - 🇺🇸 美国 64
+  - 🇺🇸 美国 65
+  - 🇺🇸 美国 66
+  - 🇺🇸 美国 中转 01
+  - 🇺🇸 美国 中转 02
+  - 🇺🇸 美国 中转 03
+  - 🇺🇸 美国 中转 04
+  - 🇺🇸 美国 中转 05
+  - 🇺🇸 美国 中转 06
+  - 🇺🇸 美国 01
+  - 🇺🇸 美国 02
+  - 🇺🇸 美国 03
+  - 🇺🇸 美国 04
+  - 🇺🇸 美国 084
+  - 🇺🇸 美国 086
+  - 🇺🇸 美国 038
+  - 🇺🇸 美国 039
+  - 🇺🇸 美国 040
+  - 🇺🇸 美国 067
+  - 🇺🇸 美国 069
+  - 🇺🇸 美国 026
+  - 🇺🇸 美国 025
+  - 🇦🇺 美国 A tralia 071
+  - 🇨🇭 美国 Switzer nd 087
+  - 🇲🇾 美国 Ma ysia 076
+  - 🇲🇾 美国 Ma ysia 075 *1.5
+  - 🇹🇭 美国 Thai nd 041
+  - 🇷🇺 美国 R sia 046
+  - 🇺🇸 美国 西S1|v6
+  - 🇺🇸 美国 西S2|v6
+  - 🇺🇸 美国 西1|v6
+  - 🇺🇸 美国 西2|v6
+  - 🇺🇸 美国 西4|v6
+  - 🇺🇸 美国 西6|v6
+  - 🇺🇸 美国 西7|v6
+  - 🇺🇸 美国 西8|v6
+  - 🇺🇸 美国 西9|v6
+  - 🇺🇸 美国 西10|v6
+  - 🇺🇸 美国 西11|v6
+  - 🇺🇸 美国 西13|v6
+  - 🇺🇸 美国 X01
+  - 🇺🇸 美国 X02
   - 🇹🇼 湾省 IEPL
-  - 🇰🇷 韩国 04|白嫖机场.ink 2
+  - 🇨🇳 湾省 中转 01
+  - 🇨🇳 湾省 中转 02
+  - 🇨🇳 湾省 中转 03
+  - 🇨🇳 湾省 中转 04
+  - 🇨🇳 湾省 中转 05
+  - 🇨🇳 湾省 中转 06
+  - 🇨🇳 湾省 01
+  - 🇨🇳 湾省 02
+  - 🇹🇼 湾省 065
+  - 🇹🇼 湾省 031
+  - 🇹🇼 湾省 030
+  - 🇹🇼 湾省 DynamicIP
+  - 🇹🇼 湾省 1|v6
+  - 🇹🇼 湾省 2|v6
+  - 🇹🇼 湾省 3|v6
+  - 🇹🇼 湾省 4|v6
   - 🇰🇷 韩国 04|白嫖机场.ink
-  - 🇩🇪 德国 IEPL
-  - 🇩🇪 德国 03|白嫖机场.ink 2
+  - 🇰🇷 韩国 04|白嫖机场.ink 2
+  - 🇰🇷 韩国 ss
+  - 🇺🇦 韩国 raine 085
+  - 🇰🇷 韩国 1|v6
+  - 🇰🇷 韩国 2|v6
+  - 🇰🇷 韩国 3|v6
+  - 🇰🇷 韩国 4|v6
   - 🇩🇪 德国 03|白嫖机场.ink
+  - 🇩🇪 德国 03|白嫖机场.ink 2
+  - 🇩🇪 德国 IEPL
+  - 🇩🇪 德国 ss
+  - 🇩🇪 德国 044
+  - 🇩🇪 德国 3|v6
+  - 🇬🇧 英国 ss
+  - 🇬🇧 英国 2|v6
+  - 🇬🇧 英国 3|v6
   - 🇬🇧 英国 X01
   url: http://www.gstatic.com/generate_204
   interval: 300
 - name: ♻️ 自动选择
   type: url-test
-  proxies:
-  - 🇭🇰 香港 IEPL
-  - 🇭🇰 香港 04|白嫖机场.ink 2
+  proxies: &id001
   - 🇭🇰 香港 04|白嫖机场.ink
+  - 🇭🇰 香港 04|白嫖机场.ink 2
+  - 🇭🇰 香港 IEPL
+  - 🇭🇰 香港 中转 02
+  - 🇭🇰 香港 中转 03
+  - 🇭🇰 香港 中转 04
+  - 🇭🇰 香港 中转 06
+  - 🇭🇰 香港 01
+  - 🇭🇰 香港 02
+  - 🇭🇰 香港 021
+  - 🇭🇰 香港 008
+  - 🇭🇰 香港 077
+  - 🇭🇰 香港 018
+  - 🇭🇰 香港 016
+  - 🇭🇰 香港 017
+  - 🇭🇰 香港 020
+  - 🇭🇰 香港 019
+  - 🇰🇷 香港 Sout orea 037
+  - 🇭🇰 香港 S1|v6
+  - 🇭🇰 香港 S5|v6
+  - 🇭🇰 香港 1|v6|
+  - 🇭🇰 香港 2|v6
+  - 🇭🇰 香港 3|v6
+  - 🇭🇰 香港 6|v6
+  - 🇭🇰 香港 7|v6|
+  - 🇭🇰 香港 8|v6|
+  - 🇭🇰 香港 9|v6
+  - 🇭🇰 香港 11|v6
+  - 🇭🇰 香港 12|v6
+  - 🇭🇰 香港 13|v6
+  - 🇭🇰 香港 14|v6|
+  - 🇭🇰 香港 15|v6
+  - 🇭🇰 香港 16|v6
+  - 🇭🇰 香港 17|v6|
+  - 🇭🇰 香港 18|v6|
+  - 🇯🇵 日本 04|白嫖机场.ink
+  - 🇯🇵 日本 04|白嫖机场.ink 2
+  - 🇯🇵 日本 IEPL GPT
+  - 🇯🇵 日本 01
+  - 🇯🇵 日本 02
+  - 🇯🇵 日本 07
+  - 🇯🇵 日本 029
+  - 🇯🇵 日本 050
+  - 🇯🇵 日本 028
+  - 🇯🇵 日本 083
+  - 🇯🇵 日本 027
+  - 🇯🇵 日本 S1|v6
+  - 🇯🇵 日本 S2|v6
+  - 🇯🇵 日本 1|v6
+  - 🇯🇵 日本 3|v6
+  - 🇯🇵 日本 6|v6
+  - 🇯🇵 日本 7|v6
+  - 🇯🇵 日本 尼 利亚1|v6
   - 🇯🇵 日本 X07
   - 🇯🇵 日本 X06
-  - 🇯🇵 日本 IEPL GPT
-  - 🇯🇵 日本 04|白嫖机场.ink 2
-  - 🇯🇵 日本 04|白嫖机场.ink
-  - 🇸🇬 狮城 rq
-  - 🇸🇬 狮城 IEPL
-  - 🇸🇬 狮城 04|白嫖机场.ink 2
   - 🇸🇬 狮城 04|白嫖机场.ink
-  - 🇺🇸 美国 46
-  - 🇺🇸 美国 48
-  - 🇺🇸 美国 40
-  - 🇺🇸 美国 X02
+  - 🇸🇬 狮城 04|白嫖机场.ink 2
+  - 🇸🇬 狮城 IEPL
+  - 🇸🇬 狮城 中转 01
+  - 🇸🇬 狮城 中转 02
+  - 🇸🇬 狮城 中转 03
+  - 🇸🇬 狮城 中转 04
+  - 🇸🇬 狮城 中转 05
+  - 🇸🇬 狮城 中转 06
+  - 🇸🇬 狮城 01
+  - 🇸🇬 狮城 02
+  - 🇸🇬 狮城 057
+  - 🇸🇬 狮城 034
+  - 🇸🇬 狮城 032
+  - 🇸🇬 狮城 035
+  - 🇸🇬 狮城 078
+  - 🇸🇬 狮城 rq
+  - 🇸🇬 狮城 S1|v6
+  - 🇸🇬 狮城 S2|v6
+  - 🇸🇬 狮城 1|v6
+  - 🇸🇬 狮城 2|v6
+  - 🇸🇬 狮城 3|v6
+  - 🇸🇬 狮城 8|v6
+  - 🇸🇬 狮城 9|v6
+  - 🇺🇸 美国 04|白嫖机场.ink
+  - 🇺🇸 美国 04|白嫖机场.ink 2
+  - 🇺🇸 美国 IEPL GPT
+  - 🇺🇸 美国 20
+  - 🇺🇸 美国 4
+  - 🇺🇸 美国 18
+  - 🇺🇸 美国 19
+  - 🇺🇸 美国 8
+  - 🇺🇸 美国 9
+  - 🇺🇸 美国 10
+  - 🇺🇸 美国 11
+  - 🇺🇸 美国 12
+  - 🇺🇸 美国 13
+  - 🇺🇸 美国 14
+  - 🇺🇸 美国 15
+  - 🇺🇸 美国 16
+  - 🇺🇸 美国 17
+  - 🇺🇸 美国 23
+  - 🇺🇸 美国 22
   - 🇺🇸 美国 62
-  - 🇺🇸 美国 X01
-  - 🇺🇸 美国 41
+  - 🇺🇸 美国 44
+  - 🇺🇸 美国 49
+  - 🇺🇸 美国 40
   - 🇺🇸 美国 58
+  - 🇺🇸 美国 39
+  - 🇺🇸 美国 41
+  - 🇺🇸 美国 48
+  - 🇺🇸 美国 46
+  - 🇺🇸 美国 56
   - 🇺🇸 美国 61
   - 🇺🇸 美国 52
   - 🇺🇸 美国 57
-  - 🇺🇸 美国 14
-  - 🇺🇸 美国 13
-  - 🇺🇸 美国 12
-  - 🇺🇸 美国 56
-  - 🇺🇸 美国 23
-  - 🇺🇸 美国 22
-  - 🇺🇸 美国 IEPL GPT
-  - 🇺🇸 美国 04|白嫖机场.ink 2
-  - 🇺🇸 美国 04|白嫖机场.ink
-  - 🇺🇸 美国 10
-  - 🇺🇸 美国 11
-  - 🇺🇸 美国 8
-  - 🇺🇸 美国 9
-  - 🇺🇸 美国 18
-  - 🇺🇸 美国 19
-  - 🇺🇸 美国 20
-  - 🇺🇸 美国 4
-  - 🇺🇸 美国 17
-  - 🇺🇸 美国 15
-  - 🇺🇸 美国 16
+  - 🇺🇸 美国 64
+  - 🇺🇸 美国 65
+  - 🇺🇸 美国 66
+  - 🇺🇸 美国 中转 01
+  - 🇺🇸 美国 中转 02
+  - 🇺🇸 美国 中转 03
+  - 🇺🇸 美国 中转 04
+  - 🇺🇸 美国 中转 05
+  - 🇺🇸 美国 中转 06
+  - 🇺🇸 美国 01
+  - 🇺🇸 美国 02
+  - 🇺🇸 美国 03
+  - 🇺🇸 美国 04
+  - 🇺🇸 美国 084
+  - 🇺🇸 美国 086
+  - 🇺🇸 美国 038
+  - 🇺🇸 美国 039
+  - 🇺🇸 美国 040
+  - 🇺🇸 美国 067
+  - 🇺🇸 美国 069
+  - 🇺🇸 美国 026
+  - 🇺🇸 美国 025
+  - 🇦🇺 美国 A tralia 071
+  - 🇨🇭 美国 Switzer nd 087
+  - 🇲🇾 美国 Ma ysia 076
+  - 🇲🇾 美国 Ma ysia 075 *1.5
+  - 🇹🇭 美国 Thai nd 041
+  - 🇷🇺 美国 R sia 046
+  - 🇺🇸 美国 西S1|v6
+  - 🇺🇸 美国 西S2|v6
+  - 🇺🇸 美国 西1|v6
+  - 🇺🇸 美国 西2|v6
+  - 🇺🇸 美国 西4|v6
+  - 🇺🇸 美国 西6|v6
+  - 🇺🇸 美国 西7|v6
+  - 🇺🇸 美国 西8|v6
+  - 🇺🇸 美国 西9|v6
+  - 🇺🇸 美国 西10|v6
+  - 🇺🇸 美国 西11|v6
+  - 🇺🇸 美国 西13|v6
+  - 🇺🇸 美国 X01
+  - 🇺🇸 美国 X02
   - 🇹🇼 湾省 IEPL
-  - 🇰🇷 韩国 04|白嫖机场.ink 2
+  - 🇨🇳 湾省 中转 01
+  - 🇨🇳 湾省 中转 02
+  - 🇨🇳 湾省 中转 03
+  - 🇨🇳 湾省 中转 04
+  - 🇨🇳 湾省 中转 05
+  - 🇨🇳 湾省 中转 06
+  - 🇨🇳 湾省 01
+  - 🇨🇳 湾省 02
+  - 🇹🇼 湾省 065
+  - 🇹🇼 湾省 031
+  - 🇹🇼 湾省 030
+  - 🇹🇼 湾省 DynamicIP
+  - 🇹🇼 湾省 1|v6
+  - 🇹🇼 湾省 2|v6
+  - 🇹🇼 湾省 3|v6
+  - 🇹🇼 湾省 4|v6
   - 🇰🇷 韩国 04|白嫖机场.ink
-  - 🇩🇪 德国 IEPL
-  - 🇩🇪 德国 03|白嫖机场.ink 2
+  - 🇰🇷 韩国 04|白嫖机场.ink 2
+  - 🇰🇷 韩国 ss
+  - 🇺🇦 韩国 raine 085
+  - 🇰🇷 韩国 1|v6
+  - 🇰🇷 韩国 2|v6
+  - 🇰🇷 韩国 3|v6
+  - 🇰🇷 韩国 4|v6
   - 🇩🇪 德国 03|白嫖机场.ink
+  - 🇩🇪 德国 03|白嫖机场.ink 2
+  - 🇩🇪 德国 IEPL
+  - 🇩🇪 德国 ss
+  - 🇩🇪 德国 044
+  - 🇩🇪 德国 3|v6
+  - 🇬🇧 英国 ss
+  - 🇬🇧 英国 2|v6
+  - 🇬🇧 英国 3|v6
   - 🇬🇧 英国 X01
   url: http://www.gstatic.com/generate_204
   interval: 300
+  tolerance: 50
+  lazy: true
 - name: 🔯 故障转移
   type: fallback
-  proxies:
-  - 🇭🇰 香港 IEPL
-  - 🇭🇰 香港 04|白嫖机场.ink 2
-  - 🇭🇰 香港 04|白嫖机场.ink
-  - 🇯🇵 日本 X07
-  - 🇯🇵 日本 X06
-  - 🇯🇵 日本 IEPL GPT
-  - 🇯🇵 日本 04|白嫖机场.ink 2
-  - 🇯🇵 日本 04|白嫖机场.ink
-  - 🇸🇬 狮城 rq
-  - 🇸🇬 狮城 IEPL
-  - 🇸🇬 狮城 04|白嫖机场.ink 2
-  - 🇸🇬 狮城 04|白嫖机场.ink
-  - 🇺🇸 美国 46
-  - 🇺🇸 美国 48
-  - 🇺🇸 美国 40
-  - 🇺🇸 美国 X02
-  - 🇺🇸 美国 62
-  - 🇺🇸 美国 X01
-  - 🇺🇸 美国 41
-  - 🇺🇸 美国 58
-  - 🇺🇸 美国 61
-  - 🇺🇸 美国 52
-  - 🇺🇸 美国 57
-  - 🇺🇸 美国 14
-  - 🇺🇸 美国 13
-  - 🇺🇸 美国 12
-  - 🇺🇸 美国 56
-  - 🇺🇸 美国 23
-  - 🇺🇸 美国 22
-  - 🇺🇸 美国 IEPL GPT
-  - 🇺🇸 美国 04|白嫖机场.ink 2
-  - 🇺🇸 美国 04|白嫖机场.ink
-  - 🇺🇸 美国 10
-  - 🇺🇸 美国 11
-  - 🇺🇸 美国 8
-  - 🇺🇸 美国 9
-  - 🇺🇸 美国 18
-  - 🇺🇸 美国 19
-  - 🇺🇸 美国 20
-  - 🇺🇸 美国 4
-  - 🇺🇸 美国 17
-  - 🇺🇸 美国 15
-  - 🇺🇸 美国 16
-  - 🇹🇼 湾省 IEPL
-  - 🇰🇷 韩国 04|白嫖机场.ink 2
-  - 🇰🇷 韩国 04|白嫖机场.ink
-  - 🇩🇪 德国 IEPL
-  - 🇩🇪 德国 03|白嫖机场.ink 2
-  - 🇩🇪 德国 03|白嫖机场.ink
-  - 🇬🇧 英国 X01
+  proxies: *id001
   url: http://www.gstatic.com/generate_204
   interval: 300
+  lazy: true
 rules:
 - GEOIP,CN,DIRECT
 - MATCH,🚀 节点选择
