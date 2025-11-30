@@ -1,5 +1,16 @@
 # 文件名: TelegramNode/telegram_publiclink.py
 # -*- coding: utf-8 -*-
+# ============================================================================
+# Clash 订阅自动生成脚本 V1.R1
+# 
+# 版本历史:
+# V1.R1 (20251130) - 初始版本
+#   - TCP 连接测速（兼容所有协议）
+#   - FlClash 配置兼容（使用 http://www.gstatic.com/generate_204）
+#   - 智能地区识别和节点重命名
+#   - 失败保护机制（测速全部失败时保留所有节点）
+# ============================================================================
+
 import os
 import re
 import asyncio
@@ -9,12 +20,11 @@ import time
 from datetime import datetime, timedelta, timezone
 import sys
 from collections import defaultdict
+import socket
 import concurrent.futures
 import hashlib
 import subprocess
 import shutil
-import urllib.request
-import urllib.error
 # --- Telethon ---
 from telethon.sync import TelegramClient
 from telethon.tl.types import MessageMediaWebPage
@@ -38,46 +48,75 @@ ENABLE_SPEED_TEST = True  # 是否启用节点测速功能 (True: 启用, False:
 SOCKET_TIMEOUT = 8      # 节点测速时的 TCP 连接超时时间，单位为秒
 MAX_TEST_WORKERS = 128  # 并发测速的最大线程数，可根据运行环境性能调整
 
-# --- 测速配置（FlClash 方式）---
-TEST_URL = 'http://www.gstatic.com/generate_204'  # FlClash 标准测速地址
+# --- 测速配置（FlClash 兼容）---
+TEST_URL = 'http://www.gstatic.com/generate_204'  # FlClash 标准测速地址（配置文件中使用）
 TEST_INTERVAL = 300  # 测速间隔（秒）
 
 # --- 地区、命名和过滤配置 (已优化) ---
 # ========== 地区过滤配置 ==========
-ALLOWED_REGIONS = {'香港', '日本', '狮城', '美国', '湾省', '韩国', '德国', '英国'}
+ALLOWED_REGIONS = {'香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国', '印度', '菲律宾', '印度尼西亚', '越南', '美国', '加拿大', '法国', '英国', '德国', '俄罗斯', '意大利', '巴西', '阿根廷', '土耳其', '澳大利亚'}
 
 # ========== 排序优先级配置 ==========
-REGION_PRIORITY = ['香港', '日本', '狮城', '美国', '湾省', '韩国', '德国', '英国']
+REGION_PRIORITY = ['香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国', '印度', '菲律宾', '印度尼西亚', '越南', '美国', '加拿大', '法国', '英国', '德国', '俄罗斯', '意大利', '巴西', '阿根廷', '土耳其', '澳大利亚']
 
 # ========== 国家/地区映射表 ==========
 CHINESE_COUNTRY_MAP = {
+    'HK': '香港', 'Hong Kong': '香港', 'HongKong': '香港',
+    'TW': '台湾', 'Taiwan': '台湾', 'TWN': '台湾', 'Taipei': '台湾',
+    'JP': '日本', 'Japan': '日本', 'Tokyo': '日本', 'Osaka': '日本',
+    'SG': '新加坡', 'Singapore': '新加坡', 'SGP': '新加坡',
+    'KR': '韩国', 'Korea': '韩国', 'KOR': '韩国', 'Seoul': '韩国', 'South Korea': '韩国',
+    'MY': '马来西亚', 'Malaysia': '马来西亚',
+    'TH': '泰国', 'Thailand': '泰国',
+    'IN': '印度', 'India': '印度',
+    'PH': '菲律宾', 'Philippines': '菲律宾',
+    'ID': '印度尼西亚', 'Indonesia': '印度尼西亚',
+    'VN': '越南', 'Vietnam': '越南',
     'US': '美国', 'United States': '美国', 'USA': '美国', 'America': '美国',
-    'JP': '日本', 'Japan': '日本', 'Tokyo': '日本', 'Osaka': '日本',    
-    'HK': '香港', 'Hong Kong': '香港', 'HongKong': '香港',    
-    'SG': '狮城', 'Singapore': '狮城', 'SGP': '狮城',   
-    'TW': '湾省', 'Taiwan': '湾省', 'TWN': '湾省', 'Taipei': '湾省',    
-    'KR': '韩国', 'Korea': '韩国', 'KOR': '韩国', 'Seoul': '韩国',   
-    'DE': '德国', 'Germany': '德国', 'Frankfurt': '德国', 'Munich': '德国', 'Berlin': '德国',    
+    'CA': '加拿大', 'Canada': '加拿大',
+    'FR': '法国', 'France': '法国',
     'GB': '英国', 'United Kingdom': '英国', 'UK': '英国', 'England': '英国', 'London': '英国',
+    'DE': '德国', 'Germany': '德国', 'Frankfurt': '德国', 'Munich': '德国', 'Berlin': '德国',
+    'RU': '俄罗斯', 'Russia': '俄罗斯',
+    'IT': '意大利', 'Italy': '意大利',
+    'BR': '巴西', 'Brazil': '巴西',
+    'AR': '阿根廷', 'Argentina': '阿根廷',
+    'TR': '土耳其', 'Turkey': '土耳其',
+    'AU': '澳大利亚', 'Australia': '澳大利亚'
 }
 
 # ========== 国家代码映射表 ==========
 COUNTRY_NAME_TO_CODE_MAP = {
-    "美国": "US", "日本": "JP", "香港": "HK", "狮城": "SG",
-    "新加坡": "SG", "湾省": "TW", "台湾": "TW", "韩国": "KR",
-    "德国": "DE", "英国": "GB"
+    "香港": "HK", "台湾": "TW", "日本": "JP", "新加坡": "SG", "韩国": "KR",
+    "马来西亚": "MY", "泰国": "TH", "印度": "IN", "菲律宾": "PH", "印度尼西亚": "ID", "越南": "VN",
+    "美国": "US", "加拿大": "CA", "法国": "FR", "英国": "GB", "德国": "DE", "俄罗斯": "RU", "意大利": "IT",
+    "巴西": "BR", "阿根廷": "AR", "土耳其": "TR", "澳大利亚": "AU"
 }
 
 # ========== 地区识别正则规则 ==========
 CUSTOM_REGEX_RULES = {
     '香港': {'code': 'HK', 'pattern': r'香港|港|HK|Hong\s*Kong|HongKong|HKBN|HGC|PCCW|WTT|HKT|九龙|沙田|屯门|荃湾|深水埗|油尖旺'},
+    '台湾': {'code': 'TW', 'pattern': r'台湾|湾省|台|TW|Taiwan|TWN|台北|Taipei|台中|Taichung|高雄|Kaohsiung|新北|彰化|Hinet|中华电信'},
     '日本': {'code': 'JP', 'pattern': r'日本|日|川日|东京|大阪|泉日|沪日|深日|京日|广日|JP|Japan|Tokyo|Osaka|Saitama|埼玉|名古屋|Nagoya|福冈|Fukuoka|横滨|Yokohama|NTT|IIJ|GMO|Linode'},
-    '狮城': {'code': 'SG', 'pattern': r'新加坡|坡|狮城|狮|新|SG|Singapore|SG\d+|SGP|星|狮子城'},
+    '新加坡': {'code': 'SG', 'pattern': r'新加坡|坡|狮城|狮|新|SG|Singapore|SG\d+|SGP|星|狮子城'},
+    '韩国': {'code': 'KR', 'pattern': r'韩国|韩|南朝鲜|首尔|釜山|仁川|KR|Korea|KOR|韓|Seoul|Busan|KT|SK|LG|South\s*Korea'},
+    '马来西亚': {'code': 'MY', 'pattern': r'马来西亚|马来|MY|Malaysia|吉隆坡|Kuala\s*Lumpur'},
+    '泰国': {'code': 'TH', 'pattern': r'泰国|泰|TH|Thailand|曼谷|Bangkok'},
+    '印度': {'code': 'IN', 'pattern': r'印度|IN|India|孟买|Mumbai|新德里|Delhi'},
+    '菲律宾': {'code': 'PH', 'pattern': r'菲律宾|菲|PH|Philippines|马尼拉|Manila'},
+    '印度尼西亚': {'code': 'ID', 'pattern': r'印度尼西亚|印尼|ID|Indonesia|雅加达|Jakarta'},
+    '越南': {'code': 'VN', 'pattern': r'越南|越|VN|Vietnam|胡志明|Ho\s*Chi\s*Minh|河内|Hanoi'},
     '美国': {'code': 'US', 'pattern': r'美国|美|波特兰|达拉斯|Oregon|俄勒冈|凤凰城|硅谷|拉斯维加斯|洛杉矶|圣何塞|西雅图|芝加哥|纽约|迈阿密|亚特兰大|US|USA|United\s*States|America|LA|NYC|SF|San\s*Francisco|Washington|华盛顿|Kansas|堪萨斯|Denver|丹佛|Phoenix|Seattle|Chicago|Boston|波士顿|Atlanta|Miami|Las\s*Vegas'},
-    '湾省': {'code': 'TW', 'pattern': r'台湾|湾省|台|TW|Taiwan|TWN|台北|Taipei|台中|Taichung|高雄|Kaohsiung|新北|彰化|Hinet|中华电信'},
-    '韩国': {'code': 'KR', 'pattern': r'韩国|韩|南朝鲜|首尔|釜山|仁川|KR|Korea|KOR|韓|Seoul|Busan|KT|SK|LG'},
-    '德国': {'code': 'DE', 'pattern': r'德国|德|法兰克福|慕尼黑|柏林|DE|Germany|Frankfurt|Munich|Berlin|Hetzner'},
+    '加拿大': {'code': 'CA', 'pattern': r'加拿大|加|CA|Canada|多伦多|Toronto|温哥华|Vancouver'},
+    '法国': {'code': 'FR', 'pattern': r'法国|法|FR|France|巴黎|Paris'},
     '英国': {'code': 'GB', 'pattern': r'英国|英|伦敦|曼彻斯特|UK|GB|United\s*Kingdom|Britain|England|London|Manchester'},
+    '德国': {'code': 'DE', 'pattern': r'德国|德|法兰克福|慕尼黑|柏林|DE|Germany|Frankfurt|Munich|Berlin|Hetzner'},
+    '俄罗斯': {'code': 'RU', 'pattern': r'俄罗斯|俄|RU|Russia|莫斯科|Moscow|圣彼得堡|Petersburg'},
+    '意大利': {'code': 'IT', 'pattern': r'意大利|意|IT|Italy|罗马|Rome|米兰|Milan'},
+    '巴西': {'code': 'BR', 'pattern': r'巴西|BR|Brazil|圣保罗|Sao\s*Paulo|里约|Rio'},
+    '阿根廷': {'code': 'AR', 'pattern': r'阿根廷|AR|Argentina|布宜诺斯艾利斯|Buenos\s*Aires'},
+    '土耳其': {'code': 'TR', 'pattern': r'土耳其|土|TR|Turkey|伊斯坦布尔|Istanbul'},
+    '澳大利亚': {'code': 'AU', 'pattern': r'澳大利亚|澳洲|澳|AU|Australia|悉尼|Sydney|墨尔本|Melbourne'},
 }
 
 JUNK_PATTERNS = re.compile(r"(?:专线|IPLC|IEPL|BGP|体验|官网|倍率|x\d[\.\d]*|Rate|[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*|Relay|流量)", re.IGNORECASE)
@@ -234,28 +273,17 @@ def process_proxies(proxies):
     
     return final
 
-def test_single_proxy_http(proxy):
-    """使用 HTTP 请求测速（FlClash 方式）"""
+def test_single_proxy_tcp(proxy):
+    """使用 TCP 连接测速（兼容所有协议）"""
     try:
-        # 构建代理 URL（注意：这里简化处理，实际代理协议可能需要更复杂的配置）
-        proxy_url = f"http://{proxy['server']}:{proxy['port']}"
-        proxy_handler = urllib.request.ProxyHandler({
-            'http': proxy_url,
-            'https': proxy_url
-        })
-        opener = urllib.request.build_opener(proxy_handler)
-        
-        # 测速
         start = time.time()
-        req = urllib.request.Request(TEST_URL, headers={'User-Agent': 'Clash'})
-        response = opener.open(req, timeout=SOCKET_TIMEOUT)
-        
-        # 验证响应状态
-        if response.status == 204:
-            proxy['delay'] = int((time.time() - start) * 1000)
-            return proxy
-        else:
-            return None
+        sock = socket.create_connection(
+            (proxy['server'], proxy['port']), 
+            timeout=SOCKET_TIMEOUT
+        )
+        sock.close()
+        proxy['delay'] = int((time.time() - start) * 1000)
+        return proxy
     except Exception:
         return None
 
@@ -315,7 +343,7 @@ def generate_config(proxies):
 
 async def main():
     """主函数"""
-    print("=" * 60 + f"\nClash 订阅自动生成脚本 (HTTP测速版) @ {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S %Z')}\n" + "=" * 60)
+    print("=" * 60 + f"\nClash 订阅自动生成脚本 V1.R1 @ {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S %Z')}\n" + "=" * 60)
     preprocess_regex_rules()
     
     print("\n[1/4] 从 Telegram 抓取、下载并合并节点...")
@@ -333,12 +361,12 @@ async def main():
     if not processed: 
         sys.exit("\n❌ 过滤后无任何可用节点，脚本终止。")
     
-    print("\n[3/4] HTTP 测速与最终排序...")
+    print("\n[3/4] TCP 测速与最终排序...")
     final = processed
     if ENABLE_SPEED_TEST:
-        print(f"  - 开始 HTTP 测速 (目标: {TEST_URL})...")
+        print(f"  - 开始 TCP 连接测速（超时: {SOCKET_TIMEOUT}秒）...")
         with concurrent.futures.ThreadPoolExecutor(MAX_TEST_WORKERS) as executor:
-            tested = list(executor.map(test_single_proxy_http, processed))
+            tested = list(executor.map(test_single_proxy_tcp, processed))
         final = [p for p in tested if p]
         print(f"  - 测速完成, {len(final)} / {len(processed)} 个节点可用。")
         if not final: 
