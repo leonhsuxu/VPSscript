@@ -44,21 +44,13 @@ REGION_PRIORITY = ['香港', '日本', '狮城', '美国', '湾省', '韩国', '
 
 # ========== 国家/地区映射表 ==========
 CHINESE_COUNTRY_MAP = {
-    # 美国
     'US': '美国', 'United States': '美国', 'USA': '美国', 'America': '美国',
-    # 日本
-    'JP': '日本', 'Japan': '日本', 'Tokyo': '日本', 'Osaka': '日本',
-    # 香港
-    'HK': '香港', 'Hong Kong': '香港', 'HongKong': '香港',
-    # 新加坡
-    'SG': '狮城', 'Singapore': '狮城', 'SGP': '狮城',
-    # 台湾
-    'TW': '湾省', 'Taiwan': '湾省', 'TWN': '湾省', 'Taipei': '湾省',
-    # 韩国
-    'KR': '韩国', 'Korea': '韩国', 'KOR': '韩国', 'Seoul': '韩国',
-    # 德国
-    'DE': '德国', 'Germany': '德国', 'Frankfurt': '德国', 'Munich': '德国', 'Berlin': '德国',
-    # 英国
+    'JP': '日本', 'Japan': '日本', 'Tokyo': '日本', 'Osaka': '日本',    
+    'HK': '香港', 'Hong Kong': '香港', 'HongKong': '香港',    
+    'SG': '狮城', 'Singapore': '狮城', 'SGP': '狮城',   
+    'TW': '湾省', 'Taiwan': '湾省', 'TWN': '湾省', 'Taipei': '湾省',    
+    'KR': '韩国', 'Korea': '韩国', 'KOR': '韩国', 'Seoul': '韩国',   
+    'DE': '德国', 'Germany': '德国', 'Frankfurt': '德国', 'Munich': '德国', 'Berlin': '德国',    
     'GB': '英国', 'United Kingdom': '英国', 'UK': '英国', 'England': '英国', 'London': '英国',
 }
 
