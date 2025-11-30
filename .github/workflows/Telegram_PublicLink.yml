@@ -1,4 +1,4 @@
-# .github/workflows/telegram_public.yml
+# .github/workflows/Telegram_PublicLink.yml
 name: 🆘 TelegramLink 抓取
 
 on:
