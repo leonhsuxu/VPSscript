@@ -15,7 +15,7 @@ TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS')
 OUTPUT_FILE = 'flclashyaml/telegram_publiclink.txt'  # 输出文件路径
 TIME_WINDOW_HOURS = 48  # 过去48小时内的消息
 LINK_PREFIX = "telegram_publiclink："  # 链接前缀，注意是中文冒号
-MIN_EXPIRE_HOURS = 6  # 最小剩余时间（小时）
+MIN_EXPIRE_HOURS = 7  # 最小剩余时间（小时）
 
 def parse_expire_time(text):
     """
