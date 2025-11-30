@@ -1,0 +1,53 @@
+# .github/workflows/telegram_public.yml
+name: 🆘 TelegramLink 抓取
+
+on:
+  schedule:
+    - cron: '0 */4 * * *' # 每4小时运行一次 (UTC时间)
+  workflow_dispatch: # 允许手动触发工作流
+
+jobs:
+  scrape_telegram_links:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install telethon
+
+    - name: Run Telegram scraper script
+      env:
+        #
+        # === 以下是频道/群组ID列表，请在此处修改 ===
+        # 每个ID占一行，可以是用户名（例如 @mychannel）或数字ID（例如 -1001234567890）。
+        # 如果是数字ID，确保您的Telegram账户是该频道/群组的成员。
+        # 默认示例已包含您提供的 ID 和其他两个占位符。
+        #
+        TELEGRAM_CHANNEL_IDS: |
+          -1002452753229
+          #-1002452754444 # 示例：新增频道1
+          #-1002452754445 # 示例：新增频道2
+          # 在此处添加更多频道ID，每个一行
+        #
+        # === 频道/群组ID列表结束 ===
+        #
+        TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
+        TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
+        TELEGRAM_STRING_SESSION: ${{ secrets.TELEGRAM_STRING_SESSION }}
+      run: |
+        python TelegramNode/telegram_publiclink.py
+
+    - name: Commit and push changes
+      uses: stefanzweifel/git-auto-commit-action@v5
+      with:
+        commit_message: "自动更新：Telegram 频道订阅链接"
+        file_pattern: "flclashyaml/telegram_publiclink.txt"
