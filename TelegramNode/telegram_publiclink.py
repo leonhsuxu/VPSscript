@@ -15,7 +15,7 @@ STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')
 TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS')
 
 OUTPUT_FILE = 'flclashyaml/telegram_publiclink.txt' # 输出文件路径
-TIME_WINDOW_HOURS = 2 # 过去2小时内的消息
+TIME_WINDOW_HOURS = 4 # 过去X小时内的消息
 LINK_PREFIX = "telegram_publiclink：" # 链接前缀，注意是中文冒号
 
 async def main():
