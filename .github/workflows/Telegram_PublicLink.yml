@@ -47,5 +47,5 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
         commit_message: "自动更新：合并 Telegram 节点"
-        # 修正 2：匹配 Python 脚本的实际输出文件名
         file_pattern: "flclashyaml/telegram_scraper.yaml"
+        pull_options: '--rebase'
