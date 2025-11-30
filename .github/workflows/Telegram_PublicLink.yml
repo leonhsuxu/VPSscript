@@ -13,6 +13,14 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    #
+    # --- 新增的修正步骤 ---
+    # 在执行任何操作之前，先拉取远程分支的最新更改并变基。
+    # 这会同步本地工作区，从而避免 "non-fast-forward" 错误。
+    #
+    - name: Pull and Rebase
+      run: git pull --rebase
+
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
@@ -21,26 +29,17 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        # 修正 1：同时安装 telethon 和 pyyaml
         pip install telethon pyyaml
 
     - name: Run Python script
       env:
-        #
-        # === 在此处修改要抓取的 Telegram 频道/群组 ID 列表 ===
-        #
         TELEGRAM_CHANNEL_IDS: |
           @fqDINYUE
-          # 添加id或名称
-          # 添加id
-        #
-        # === 凭据（从 GitHub Secrets 获取）===
-        #
+          # 在此添加更多频道...
         TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
         TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
         TELEGRAM_STRING_SESSION: ${{ secrets.TELEGRAM_STRING_SESSION }}
       run: |
-        # 确认脚本路径正确
         python TelegramNode/telegram_publiclink.py
 
     - name: Commit and push changes
@@ -48,4 +47,3 @@ jobs:
       with:
         commit_message: "自动更新：合并 Telegram 节点"
         file_pattern: "flclashyaml/telegram_scraper.yaml"
-        pull_options: '--rebase'
