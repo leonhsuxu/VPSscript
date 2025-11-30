@@ -37,40 +37,6 @@ proxies:
   plugin-opts:
     mode: http
     host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇯🇵 日本 X07
-  type: vless
-  server: tk-x07.xiaoxiaobujidao.xyz
-  port: 12443
-  uuid: 1f05a69e-1dfb-340a-8a6b-117a59ed7e7f
-  encryption: none
-  udp: true
-  skip-cert-verify: false
-  tfo: false
-  flow: xtls-rprx-vision
-  tls: true
-  reality-opts:
-    public-key: _zJXh1QBg7D0lcPUFPrxPh7Zfqu1wK0sX8W0AQNIRg0
-    short-id: ''
-  servername: dash.cloudflare.com
-  client-fingerprint: firefox
-  network: tcp
-- name: 🇯🇵 日本 X06
-  type: vless
-  server: tk-x06.xiaoxiaobujidao.xyz
-  port: 18443
-  uuid: 1f05a69e-1dfb-340a-8a6b-117a59ed7e7f
-  encryption: none
-  udp: true
-  skip-cert-verify: false
-  tfo: false
-  flow: xtls-rprx-vision
-  tls: true
-  reality-opts:
-    public-key: _zJXh1QBg7D0lcPUFPrxPh7Zfqu1wK0sX8W0AQNIRg0
-    short-id: ''
-  servername: dash.cloudflare.com
-  client-fingerprint: firefox
-  network: tcp
 - name: 🇯🇵 日本 IEPL GPT
   type: ss
   server: gd.bjnet2.com
@@ -82,22 +48,6 @@ proxies:
   plugin-opts:
     mode: http
     host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇸🇬 新加坡 rq
-  type: vmess
-  server: 210.61.97.241
-  port: 81
-  uuid: 2f38f848-a899-4c87-9807-207a41615e3c
-  alterId: 0
-  cipher: auto
-  tls: true
-  skip-cert-verify: false
-  udp: true
-  network: grpc
-  aead: true
-  tfo: false
-  sni: nf.k8s.now.cc
-  grpc-opts:
-    grpc-service-name: yydsnf
 - name: 🇸🇬 新加坡 IEPL
   type: ss
   server: gd.bjnet2.com
@@ -145,28 +95,11 @@ proxies:
     path: /biutefor.icu
     headers:
       Host: www.zhoubowen.vip
-- name: 🇺🇸 美国 X02
-  type: vless
-  server: px-x02.xiaoxiaobujidao.xyz
-  port: 12345
-  uuid: 1f05a69e-1dfb-340a-8a6b-117a59ed7e7f
-  encryption: none
-  udp: true
-  skip-cert-verify: false
-  tfo: false
-  flow: xtls-rprx-vision
-  tls: true
-  reality-opts:
-    public-key: _zJXh1QBg7D0lcPUFPrxPh7Zfqu1wK0sX8W0AQNIRg0
-    short-id: ''
-  servername: dash.cloudflare.com
-  client-fingerprint: firefox
-  network: tcp
-- name: 🇺🇸 美国 40
-  server: 82.198.246.97
-  port: 180
+- name: 🇺🇸 美国 48
+  server: 38.14.99.163
+  port: 59807
   type: vmess
-  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
+  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
   alterId: 0
   cipher: auto
   tls: false
@@ -180,37 +113,11 @@ proxies:
   cipher: auto
   tls: false
   skip-cert-verify: false
-- name: 🇺🇸 美国 48
-  server: 38.14.99.163
-  port: 59807
+- name: 🇺🇸 美国 40
+  server: 82.198.246.97
+  port: 180
   type: vmess
-  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
-  alterId: 0
-  cipher: auto
-  tls: false
-  skip-cert-verify: false
-- name: 🇺🇸 美国 X01
-  type: vless
-  server: px-x01.xiaoxiaobujidao.xyz
-  port: 23456
-  uuid: 1f05a69e-1dfb-340a-8a6b-117a59ed7e7f
-  encryption: none
-  udp: true
-  skip-cert-verify: false
-  tfo: false
-  flow: xtls-rprx-vision
-  tls: true
-  reality-opts:
-    public-key: _zJXh1QBg7D0lcPUFPrxPh7Zfqu1wK0sX8W0AQNIRg0
-    short-id: ''
-  servername: dash.cloudflare.com
-  client-fingerprint: firefox
-  network: tcp
-- name: 🇺🇸 美国 57
-  server: 45.136.244.201
-  port: 49934
-  type: vmess
-  uuid: 90afa47d-341a-497d-ae25-1d81258804d5
+  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
   alterId: 0
   cipher: auto
   tls: false
@@ -224,30 +131,24 @@ proxies:
   cipher: auto
   tls: false
   skip-cert-verify: false
-- name: 🇺🇸 美国 23
-  server: bestcdn5.868863.xyz
-  port: 8443
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248833040.206355.xyz
+- name: 🇺🇸 美国 57
+  server: 45.136.244.201
+  port: 49934
+  type: vmess
+  uuid: 90afa47d-341a-497d-ae25-1d81258804d5
+  alterId: 0
+  cipher: auto
+  tls: false
   skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248833040.206355.xyz
-- name: 🇺🇸 美国 22
-  server: bestcdn5.868863.xyz
-  port: 2053
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832331.796813.xyz
+- name: 🇺🇸 美国 52
+  server: dd.openaccessnode.com
+  port: 5230
+  type: vmess
+  uuid: 77238c49-bd20-e407-f05e-0c073ad08fdb
+  alterId: 0
+  cipher: auto
+  tls: false
   skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248832331.796813.xyz
 - name: 🇺🇸 美国 56
   server: fn.130519.xyz
   port: 8443
@@ -274,114 +175,44 @@ proxies:
   plugin-opts:
     mode: http
     host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇺🇸 美国 12
-  server: bestcdn2.868863.xyz
-  port: 2083
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248838279.796812.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      Host: 17642248838279.796812.xyz
-- name: 🇺🇸 美国 14
-  server: bestcdn2.868863.xyz
-  port: 2096
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248837494.206355.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248837494.206355.xyz
-- name: 🇺🇸 美国 13
-  server: bestcdn2.868863.xyz
-  port: 2087
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832844.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248832844.796813.xyz
-- name: 🇺🇸 美国 8
-  server: bestcdn4.868863.xyz
-  port: 2053
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832420.796812.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      Host: 17642248832420.796812.xyz
-- name: 🇺🇸 美国 20
-  server: bestcdn4.868863.xyz
-  port: 2083
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248834335.206355.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248834335.206355.xyz
-- name: 🇺🇸 美国 4
-  server: bestcdn4.868863.xyz
-  port: 2087
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248839754.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248839754.796813.xyz
-- name: 🇺🇸 美国 18
-  server: bestcdn4.868863.xyz
-  port: 2096
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248833097.796812.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      Host: 17642248833097.796812.xyz
-- name: 🇺🇸 美国 19
-  server: bestcdn4.868863.xyz
+- name: 🇺🇸 美国 23
+  server: bestcdn5.868863.xyz
   port: 8443
   type: trojan
   password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248839907.796813.xyz
+  sni: 17642248833040.206355.xyz
   skip-cert-verify: false
   network: ws
   ws-opts:
-    path: /agrbniuh
+    path: /videomuaawe
     headers:
-      Host: 17642248839907.796813.xyz
-- name: 🇺🇸 美国 10
-  server: bestcdn1.868863.xyz
-  port: 2096
+      Host: 17642248833040.206355.xyz
+- name: 🇺🇸 美国 22
+  server: bestcdn5.868863.xyz
+  port: 2053
   type: trojan
   password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832011.796813.xyz
+  sni: 17642248832331.796813.xyz
   skip-cert-verify: false
   network: ws
   ws-opts:
     path: /agrbniuh
     headers:
-      Host: 17642248832011.796813.xyz
+      Host: 17642248832331.796813.xyz
+- name: 🇺🇸 美国 41
+  server: 107.174.82.102.sslip.io
+  port: 443
+  type: vmess
+  uuid: bb824a22-b7ce-427b-9ed6-1adf0751da02
+  alterId: 0
+  cipher: auto
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /Ov7HrgwlEcRugowKV
+    headers:
+      Host: 107.174.82.102.sslip.io
 - name: 🇺🇸 美国 9
   server: bestcdn1.868863.xyz
   port: 2053
@@ -406,32 +237,114 @@ proxies:
     path: /videomuaawe
     headers:
       Host: 17642248838532.206355.xyz
-- name: 🇺🇸 美国 41
-  server: 107.174.82.102.sslip.io
-  port: 443
-  type: vmess
-  uuid: bb824a22-b7ce-427b-9ed6-1adf0751da02
-  alterId: 0
-  cipher: auto
-  tls: true
+- name: 🇺🇸 美国 8
+  server: bestcdn4.868863.xyz
+  port: 2053
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248832420.796812.xyz
   skip-cert-verify: false
   network: ws
   ws-opts:
-    path: /Ov7HrgwlEcRugowKV
+    path: /agraeabtegrrh
     headers:
-      Host: 107.174.82.102.sslip.io
-- name: 🇺🇸 美国 16
-  server: bestcdn3.868863.xyz
-  port: 2083
+      Host: 17642248832420.796812.xyz
+- name: 🇺🇸 美国 10
+  server: bestcdn1.868863.xyz
+  port: 2096
   type: trojan
   password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832588.796813.xyz
+  sni: 17642248832011.796813.xyz
   skip-cert-verify: false
   network: ws
   ws-opts:
     path: /agrbniuh
     headers:
-      Host: 17642248832588.796813.xyz
+      Host: 17642248832011.796813.xyz
+- name: 🇺🇸 美国 19
+  server: bestcdn4.868863.xyz
+  port: 8443
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248839907.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248839907.796813.xyz
+- name: 🇺🇸 美国 20
+  server: bestcdn4.868863.xyz
+  port: 2083
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248834335.206355.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /videomuaawe
+    headers:
+      Host: 17642248834335.206355.xyz
+- name: 🇺🇸 美国 18
+  server: bestcdn4.868863.xyz
+  port: 2096
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248833097.796812.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agraeabtegrrh
+    headers:
+      Host: 17642248833097.796812.xyz
+- name: 🇺🇸 美国 4
+  server: bestcdn4.868863.xyz
+  port: 2087
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248839754.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248839754.796813.xyz
+- name: 🇺🇸 美国 12
+  server: bestcdn2.868863.xyz
+  port: 2083
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248838279.796812.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agraeabtegrrh
+    headers:
+      Host: 17642248838279.796812.xyz
+- name: 🇺🇸 美国 13
+  server: bestcdn2.868863.xyz
+  port: 2087
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248832844.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248832844.796813.xyz
+- name: 🇺🇸 美国 14
+  server: bestcdn2.868863.xyz
+  port: 2096
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248837494.206355.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /videomuaawe
+    headers:
+      Host: 17642248837494.206355.xyz
 - name: 🇺🇸 美国 17
   server: bestcdn3.868863.xyz
   port: 2053
@@ -456,23 +369,18 @@ proxies:
     path: /agraeabtegrrh
     headers:
       Host: 17642248835602.796812.xyz
-- name: 🇬🇧 英国 X01
-  type: vless
-  server: uk-001.xiaoxiaobujidao.xyz
-  port: 443
-  uuid: 1f05a69e-1dfb-340a-8a6b-117a59ed7e7f
-  encryption: none
-  udp: true
+- name: 🇺🇸 美国 16
+  server: bestcdn3.868863.xyz
+  port: 2083
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248832588.796813.xyz
   skip-cert-verify: false
-  tfo: false
-  flow: xtls-rprx-vision
-  tls: true
-  reality-opts:
-    public-key: vMHW4_fx7bd_4bFZN9ecx58xSjv6SLg0wRYrdI62yUo
-    short-id: ''
-  servername: dash.cloudflare.com
-  client-fingerprint: firefox
-  network: tcp
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248832588.796813.xyz
 - name: 🇩🇪 德国 IEPL
   type: ss
   server: gd.bjnet2.com
@@ -484,6 +392,19 @@ proxies:
   plugin-opts:
     mode: http
     host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+- name: 🇮🇹 意大利 ojan real y
+  type: trojan
+  server: 107.148.225.121
+  port: 24552
+  password: 522fbf87-eb01-4a96-9be0-7040f565280c
+  tls: true
+  sni: www.microsoft.com
+  network: tcp
+  reality-opts:
+    public-key: omnvcbYUmxWuxu01064-LwDOoExs059Desd5skiphiM
+    short-id: eb034c8bd4454961
+  tfo: false
+  skip-cert-verify: true
 - name: 🇮🇹 意大利 vless grpc real y
   type: vless
   server: 107.148.225.121
@@ -498,19 +419,6 @@ proxies:
     short-id: eb034c8bd4454961
   grpc-opts:
     grpc-service-name: grpc
-  tfo: false
-  skip-cert-verify: true
-- name: 🇮🇹 意大利 ojan real y
-  type: trojan
-  server: 107.148.225.121
-  port: 24552
-  password: 522fbf87-eb01-4a96-9be0-7040f565280c
-  tls: true
-  sni: www.microsoft.com
-  network: tcp
-  reality-opts:
-    public-key: omnvcbYUmxWuxu01064-LwDOoExs059Desd5skiphiM
-    short-id: eb034c8bd4454961
   tfo: false
   skip-cert-verify: true
 - name: 🇮🇹 意大利 vless real y
@@ -537,44 +445,39 @@ proxy-groups:
   - DIRECT
   - 🇭🇰 香港 IEPL
   - 🇹🇼 台湾 IEPL
-  - 🇯🇵 日本 X07
-  - 🇯🇵 日本 X06
   - 🇯🇵 日本 IEPL GPT
-  - 🇸🇬 新加坡 rq
   - 🇸🇬 新加坡 IEPL
   - 🇮🇩 印度尼西亚 IEPL
   - 🇻🇳 越南 IEPL
   - 🇺🇸 美国 62
-  - 🇺🇸 美国 X02
-  - 🇺🇸 美国 40
-  - 🇺🇸 美国 46
   - 🇺🇸 美国 48
-  - 🇺🇸 美国 X01
-  - 🇺🇸 美国 57
+  - 🇺🇸 美国 46
+  - 🇺🇸 美国 40
   - 🇺🇸 美国 58
-  - 🇺🇸 美国 23
-  - 🇺🇸 美国 22
+  - 🇺🇸 美国 57
+  - 🇺🇸 美国 52
   - 🇺🇸 美国 56
   - 🇺🇸 美国 IEPL GPT
-  - 🇺🇸 美国 12
-  - 🇺🇸 美国 14
-  - 🇺🇸 美国 13
-  - 🇺🇸 美国 8
-  - 🇺🇸 美国 20
-  - 🇺🇸 美国 4
-  - 🇺🇸 美国 18
-  - 🇺🇸 美国 19
-  - 🇺🇸 美国 10
+  - 🇺🇸 美国 23
+  - 🇺🇸 美国 22
+  - 🇺🇸 美国 41
   - 🇺🇸 美国 9
   - 🇺🇸 美国 11
-  - 🇺🇸 美国 41
-  - 🇺🇸 美国 16
+  - 🇺🇸 美国 8
+  - 🇺🇸 美国 10
+  - 🇺🇸 美国 19
+  - 🇺🇸 美国 20
+  - 🇺🇸 美国 18
+  - 🇺🇸 美国 4
+  - 🇺🇸 美国 12
+  - 🇺🇸 美国 13
+  - 🇺🇸 美国 14
   - 🇺🇸 美国 17
   - 🇺🇸 美国 15
-  - 🇬🇧 英国 X01
+  - 🇺🇸 美国 16
   - 🇩🇪 德国 IEPL
-  - 🇮🇹 意大利 vless grpc real y
   - 🇮🇹 意大利 ojan real y
+  - 🇮🇹 意大利 vless grpc real y
   - 🇮🇹 意大利 vless real y
   url: http://www.gstatic.com/generate_204
   interval: 300
@@ -583,44 +486,39 @@ proxy-groups:
   proxies: &id001
   - 🇭🇰 香港 IEPL
   - 🇹🇼 台湾 IEPL
-  - 🇯🇵 日本 X07
-  - 🇯🇵 日本 X06
   - 🇯🇵 日本 IEPL GPT
-  - 🇸🇬 新加坡 rq
   - 🇸🇬 新加坡 IEPL
   - 🇮🇩 印度尼西亚 IEPL
   - 🇻🇳 越南 IEPL
   - 🇺🇸 美国 62
-  - 🇺🇸 美国 X02
-  - 🇺🇸 美国 40
-  - 🇺🇸 美国 46
   - 🇺🇸 美国 48
-  - 🇺🇸 美国 X01
-  - 🇺🇸 美国 57
+  - 🇺🇸 美国 46
+  - 🇺🇸 美国 40
   - 🇺🇸 美国 58
-  - 🇺🇸 美国 23
-  - 🇺🇸 美国 22
+  - 🇺🇸 美国 57
+  - 🇺🇸 美国 52
   - 🇺🇸 美国 56
   - 🇺🇸 美国 IEPL GPT
-  - 🇺🇸 美国 12
-  - 🇺🇸 美国 14
-  - 🇺🇸 美国 13
-  - 🇺🇸 美国 8
-  - 🇺🇸 美国 20
-  - 🇺🇸 美国 4
-  - 🇺🇸 美国 18
-  - 🇺🇸 美国 19
-  - 🇺🇸 美国 10
+  - 🇺🇸 美国 23
+  - 🇺🇸 美国 22
+  - 🇺🇸 美国 41
   - 🇺🇸 美国 9
   - 🇺🇸 美国 11
-  - 🇺🇸 美国 41
-  - 🇺🇸 美国 16
+  - 🇺🇸 美国 8
+  - 🇺🇸 美国 10
+  - 🇺🇸 美国 19
+  - 🇺🇸 美国 20
+  - 🇺🇸 美国 18
+  - 🇺🇸 美国 4
+  - 🇺🇸 美国 12
+  - 🇺🇸 美国 13
+  - 🇺🇸 美国 14
   - 🇺🇸 美国 17
   - 🇺🇸 美国 15
-  - 🇬🇧 英国 X01
+  - 🇺🇸 美国 16
   - 🇩🇪 德国 IEPL
-  - 🇮🇹 意大利 vless grpc real y
   - 🇮🇹 意大利 ojan real y
+  - 🇮🇹 意大利 vless grpc real y
   - 🇮🇹 意大利 vless real y
   url: http://www.gstatic.com/generate_204
   interval: 300
