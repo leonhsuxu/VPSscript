@@ -15,7 +15,7 @@ STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')
 TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS')
 
 OUTPUT_FILE = 'flclashyaml/telegram_publiclink.txt' # 输出文件路径
-TIME_WINDOW_HOURS = 36 # 过去X小时内的消息
+TIME_WINDOW_HOURS = 36 # 过去X 小时内的消息
 LINK_PREFIX = "telegram_publiclink：" # 链接前缀，注意是中文冒号
 
 async def main():
@@ -25,14 +25,12 @@ async def main():
         print("Please check your GitHub Secrets and the TELEGRAM_CHANNEL_IDS in your workflow file.")
         return
 
-    # --- 改进的频道ID解析逻辑 ---
+    # 改进的频道ID解析逻辑
     TARGET_CHANNELS = []
     for line in TELEGRAM_CHANNEL_IDS_STR.split('\n'):
-        # 移除行内注释（# 及其后面的所有内容）
         clean_line = line.split('#', 1)[0].strip()
-        if clean_line: # 如果清理后不为空，则添加
+        if clean_line:
             TARGET_CHANNELS.append(clean_line)
-    # --- 解析逻辑结束 ---
 
     if not TARGET_CHANNELS:
         print("Error: No valid Telegram channel IDs found in TELEGRAM_CHANNEL_IDS environment variable after cleaning.")
@@ -63,13 +61,9 @@ async def main():
     for current_channel_identifier in TARGET_CHANNELS:
         print(f"\n--- Processing channel: {current_channel_identifier} (posted after {target_time} UTC) ---")
         try:
-            # 获取频道实体
             entity = await client.get_entity(current_channel_identifier)
 
-            # 遍历频道消息
-            # limit 参数可以限制获取的消息数量，以提高效率。
             async for message in client.iter_messages(entity, limit=500):
-                # 检查消息日期是否在目标时间之前，如果是，则停止遍历
                 if message.date < target_time:
                     print(f"  Reached messages older than {TIME_WINDOW_HOURS} hours for {current_channel_identifier}. Stopping.")
                     break
@@ -82,14 +76,19 @@ async def main():
                         if url:
                             all_links.add(url)
 
+                # --- 关键修改部分开始 ---
                 # 提取消息媒体（例如网页预览）中的 URL
-                if message.media and isinstance(message.media, MessageMediaWebPage) and message.media.url:
-                    if message.media.url:
-                        all_links.add(message.media.url)
+                # 增加检查以确保 message.media.web_page 存在且有 url 属性
+                if message.media and \
+                   isinstance(message.media, MessageMediaWebPage) and \
+                   hasattr(message.media, 'web_page') and \
+                   hasattr(message.media.web_page, 'url') and \
+                   message.media.web_page.url: # 确保 url 属性存在且不为空
+                    all_links.add(message.media.web_page.url)
+                # --- 关键修改部分结束 ---
 
         except Exception as e:
             print(f"Error fetching messages from channel '{current_channel_identifier}': {e}")
-            # 如果某个频道获取失败，不应中断整个脚本，而是继续处理下一个频道
 
     # 断开 Telegram 连接
     await client.disconnect()
@@ -104,7 +103,7 @@ async def main():
     # 将所有唯一链接写入文件，覆盖旧内容
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
         for link in sorted(list(all_links)):
-            f.write(f"{LINK_PREFIX}{link}\n") # 添加前缀并写入文件
+            f.write(f"{LINK_PREFIX}{link}\n")
 
     print(f"Found {len(all_links)} unique links from the last {TIME_WINDOW_HOURS} hours and saved to {OUTPUT_FILE}.")
 
