@@ -155,7 +155,21 @@ def process_proxies(proxies):
     master_pattern = re.compile('|'.join(sorted([p for r in CUSTOM_REGEX_RULES.values() for p in r['pattern'].split('|')], key=len, reverse=True)), re.IGNORECASE)
     for p in identified:
         info = p['region_info']
-        flag = (FLAG_EMOJI_PATTERN.search(p['name']) or {'group': lambda: get_country_flag_emoji(info['code'])})['group'](0)
+        
+        #
+        # === 代码修正处 ===
+        #
+        # 将原来复杂易错的单行代码，替换为下面清晰的 if/else 逻辑
+        #
+        match = FLAG_EMOJI_PATTERN.search(p['name'])
+        if match:
+            flag = match.group(0)
+        else:
+            flag = get_country_flag_emoji(info['code'])
+        #
+        # === 修正结束 ===
+        #
+        
         feature = re.sub(r'\s+', ' ', master_pattern.sub(' ', FLAG_EMOJI_PATTERN.sub('', p['name'], 1)).replace('-', ' ')).strip() or f"{sum(1 for fp in final if fp['region_info']['name'] == info['name']) + 1:02d}"
         new_name = f"{flag} {info['name']} {feature}".strip()
         counters[info['name']][new_name] += 1
@@ -190,6 +204,7 @@ async def main():
     urls = await scrape_telegram_links()
     if not urls: sys.exit("\n❌ 未找到任何有效订阅链接，脚本终止。")
     proxies = {get_proxy_key(p): p for url in urls for p in download_subscription(url) if p}
+    if not proxies: sys.exit("\n❌ 下载和解析后，无有效节点，脚本终止。")
     print(f"✅ 合并去重后共 {len(proxies)} 个节点。")
 
     print("\n[2/4] 过滤与重命名节点...")
