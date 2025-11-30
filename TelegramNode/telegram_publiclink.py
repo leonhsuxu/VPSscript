@@ -18,27 +18,29 @@ import shutil
 from telethon.sync import TelegramClient
 from telethon.tl.types import MessageMediaWebPage
 from telethon.sessions import StringSession
-
 # =================================================================================
 # Part 1: 配置
 # =================================================================================
 # --- Telegram 抓取器配置 ---
-API_ID = os.environ.get('TELEGRAM_API_ID')                         # 从 GitHub Secrets 获取的 Telegram 应用 API ID
-API_HASH = os.environ.get('TELEGRAM_API_HASH')                     # 从 GitHub Secrets 获取的 Telegram 应用 API HASH
-STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')         # 从 GitHub Secrets 获取的 Telethon 字符串会话，用于登录
+API_ID = os.environ.get('TELEGRAM_API_ID')  # 从 GitHub Secrets 获取的 Telegram 应用 API ID
+API_HASH = os.environ.get('TELEGRAM_API_HASH')  # 从 GitHub Secrets 获取的 Telegram 应用 API HASH
+STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')  # 从 GitHub Secrets 获取的 Telethon 字符串会话，用于登录
 TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS')  # 从 GitHub Actions 环境变量获取的频道/群组 ID 列表字符串
-TIME_WINDOW_HOURS = 72                             # 设置抓取消息的时间窗口，单位为小时 (例如: 48 表示只抓取最近48小时内的消息)
-MIN_EXPIRE_HOURS = 7                               # 设置订阅链接的最小剩余有效期，单位为小时 (例如: 7 表示过滤掉7小时内将过期的链接)
+TIME_WINDOW_HOURS = 48  # 设置抓取消息的时间窗口，单位为小时 (例如: 48 表示只抓取最近48小时内的消息)
+MIN_EXPIRE_HOURS = 7    # 设置订阅链接的最小剩余有效期，单位为小时 (例如: 7 表示过滤掉7小时内将过期的链接)
 # --- Clash 配置生成器配置 ---
 OUTPUT_FILE = 'flclashyaml/telegram_scraper.yaml'  # 最终生成的 Clash 配置文件的输出路径和文件名
-ENABLE_SPEED_TEST = False                           # 是否启用节点测速功能 (True: 启用, False: 禁用)
-SOCKET_TIMEOUT = 5                                 # 节点测速时的 TCP 连接超时时间，单位为秒
-MAX_TEST_WORKERS = 256                             # 并发测速的最大线程数，可根据运行环境性能调整
+ENABLE_SPEED_TEST = False  # 是否启用节点测速功能 (True: 启用, False: 禁用)
+SOCKET_TIMEOUT = 5      # 节点测速时的 TCP 连接超时时间，单位为秒
+MAX_TEST_WORKERS = 256  # 并发测速的最大线程数，可根据运行环境性能调整
 
 # --- 地区、命名和过滤配置 (已优化) ---
 
 ALLOWED_REGIONS = {'香港', '日本', '狮城', '美国', '湾省', '韩国', '德国', '英国'}
+
+
 REGION_PRIORITY = ['香港', '日本', '狮城', '美国', '湾省', '韩国', '德国', '英国']
+
 
 CHINESE_COUNTRY_MAP = {
     'US': '美国', 'United States': '美国', 'USA': '美国',
@@ -50,6 +52,7 @@ CHINESE_COUNTRY_MAP = {
     'DE': '德国', 'Germany': '德国',
     'GB': '英国', 'United Kingdom': '英国', 'UK': '英国',
 }
+
 
 CUSTOM_REGEX_RULES = {
     '香港': {'code': 'HK', 'pattern': r'香港|港|HK|Hong Kong|HKBN|HGC|PCCW|WTT'},
@@ -64,7 +67,6 @@ CUSTOM_REGEX_RULES = {
 
 JUNK_PATTERNS = re.compile(r"(?:专线|IPLC|IEPL|BGP|体验|官网|倍率|x\d[\.\d]*|Rate|[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*|Relay|流量)", re.IGNORECASE)
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
-
 # =================================================================================
 # Part 2: 函数定义
 # =================================================================================
@@ -169,4 +171,40 @@ def generate_config(proxies):
     clean = [{k: v for k, v in p.items() if k not in ['region_info', 'delay']} for p in proxies]
     groups = [{'name': n, 'type': t, 'proxies': (['♻️ 自动选择', '🔯 故障转移', 'DIRECT'] if t == 'select' else []) + names, 'url': 'http://www.gstatic.com/generate_204', 'interval': 300}
               for n, t in [('🚀 节点选择', 'select'), ('♻️ 自动选择', 'url-test'), ('🔯 故障转移', 'fallback')]]
-    return {'mixed-port':
+    return {'mixed-port': 7890, 'allow-lan': True, 'mode': 'rule', 'log-level': 'info', 'external-controller': '127.0.0.1:9090',
+            'dns': {'enable': True, 'listen': '0.0.0.0:53', 'enhanced-mode': 'fake-ip', 'fake-ip-range': '198.18.0.1/16',
+                    'nameserver': ['223.5.5.5', '119.29.29.29'], 'fallback': ['https://dns.google/dns-query', 'https://1.1.1.1/dns-query']},
+            'proxies': clean, 'proxy-groups': groups, 'rules': ['GEOIP,CN,DIRECT', 'MATCH,🚀 节点选择']}
+async def main():
+    # *** 修正 ***：修复了之前版本中的语法错误
+    print("=" * 60 + f"\nClash 订阅自动生成脚本 @ {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S %Z')}\n" + "=" * 60)
+    preprocess_regex_rules()
+    print("\n[1/4] 从 Telegram 抓取、下载并合并节点...")
+    urls = await scrape_telegram_links()
+    if not urls: sys.exit("\n❌ 未找到任何有效订阅链接，脚本终止。")
+    proxies = {get_proxy_key(p): p for url in urls for p in download_subscription(url) if p}
+    if not proxies: sys.exit("\n❌ 下载和解析后，无有效节点，脚本终止。")
+    print(f"✅ 合并去重后共 {len(proxies)} 个节点。")
+    print("\n[2/4] 过滤与重命名节点...")
+    processed = process_proxies(list(proxies.values()))
+    if not processed: sys.exit("\n❌ 过滤后无任何可用节点，脚本终止。")
+    print("\n[3/4] 测速与最终排序...")
+    final = processed
+    if ENABLE_SPEED_TEST:
+        with concurrent.futures.ThreadPoolExecutor(MAX_TEST_WORKERS) as executor:
+            tested = list(executor.map(test_single_proxy, processed))
+        final = [p for p in tested if p]
+        print(f"  - 测速完成, {len(final)} / {len(processed)} 个节点可用。")
+        if not final: print("\n  ⚠️ 警告: 测速后无可用节点，将使用所有过滤后的节点。"); final = processed
+    final.sort(key=lambda p: (REGION_PRIORITY.index(p['region_info']['name']), p.get('delay', 9999)))
+    print(f"✅ 最终处理完成 {len(final)} 个节点。")
+    print("\n[4/4] 生成最终配置文件...")
+    config = generate_config(final)
+    if not config: sys.exit("\n❌ 无法生成配置文件。")
+    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
+    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
+        yaml.dump(config, f, allow_unicode=True, sort_keys=False, indent=2)
+    print(f"✅ 配置文件已成功保存至: {OUTPUT_FILE}\n\n🎉 任务全部完成！")
+
+if __name__ == '__main__':
+    asyncio.run(main())
