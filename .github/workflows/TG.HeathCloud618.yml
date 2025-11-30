@@ -1,8 +1,8 @@
 name: 🏥 TG.HeathCloud618
 on:
   schedule:
-    # 每天 UTC 0:00 (北京时间 8:00) 自动运行
-    - cron: '0 0 * * *'
+    # 每天 UTC 0:00等于 (北京时间 8:00) 自动运行
+    - cron: '50 22 * * *'
   workflow_dispatch: # 允许手动触发
   push:
     branches:
