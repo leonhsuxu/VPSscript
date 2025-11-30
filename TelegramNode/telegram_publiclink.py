@@ -26,7 +26,7 @@ API_ID = os.environ.get('TELEGRAM_API_ID')  # 从 GitHub Secrets 获取的 Teleg
 API_HASH = os.environ.get('TELEGRAM_API_HASH')  # 从 GitHub Secrets 获取的 Telegram 应用 API HASH
 STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')  # 从 GitHub Secrets 获取的 Telethon 字符串会话，用于登录
 TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS')  # 从 GitHub Actions 环境变量获取的频道/群组 ID 列表字符串
-TIME_WINDOW_HOURS = 48  # 设置抓取消息的时间窗口，单位为小时 (例如: 48 表示只抓取最近48小时内的消息)
+TIME_WINDOW_HOURS = 72  # 设置抓取消息的时间窗口，单位为小时 (例如: 48 表示只抓取最近48小时内的消息)
 MIN_EXPIRE_HOURS = 7    # 设置订阅链接的最小剩余有效期，单位为小时 (例如: 7 表示过滤掉7小时内将过期的链接)
 # --- Clash 配置生成器配置 ---
 OUTPUT_FILE = 'flclashyaml/telegram_scraper.yaml'  # 最终生成的 Clash 配置文件的输出路径和文件名
