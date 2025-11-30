@@ -25,6 +25,7 @@ SUBSCRIPTION_URLS = [
     "https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A22?token=ChouLink2",
     "https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A23?token=ChouLink3",
     "https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A24?token=ChouLink4",
+    "https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A25?token=ChouLink5",
 ]
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 OUTPUT_FILE = os.path.join(SCRIPT_DIR, "choutuan-111.yaml")
