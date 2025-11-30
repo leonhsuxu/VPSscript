@@ -3,7 +3,7 @@ import os
 import re
 from datetime import datetime, timedelta, timezone
 from telethon.sync import TelegramClient
-from telethon.tl.types import MessageMediaWebPage
+from telethon.tl.types import MessageMediaWebPage # 即使不直接用，也保留
 import asyncio
 from telethon.sessions import StringSession
 
@@ -15,7 +15,7 @@ STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')
 TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS')
 
 OUTPUT_FILE = 'flclashyaml/telegram_publiclink.txt' # 输出文件路径
-TIME_WINDOW_HOURS = 36 # 过去X 小时内的消息
+TIME_WINDOW_HOURS = 2 # 过去2小时内的消息
 LINK_PREFIX = "telegram_publiclink：" # 链接前缀，注意是中文冒号
 
 async def main():
@@ -28,11 +28,11 @@ async def main():
     # 改进的频道ID解析逻辑
     TARGET_CHANNELS = []
     for line in TELEGRAM_CHANNEL_IDS_STR.split('\n'):
-        clean_line = line.split('#', 1)[0].strip()
+        clean_line = line.split('#', 1).strip()
         if clean_line:
             TARGET_CHANNELS.append(clean_line)
 
-    if not TARGET_CHANNELS:
+    if not TARGET_CHANNALS:
         print("Error: No valid Telegram channel IDs found in TELEGRAM_CHANNEL_IDS environment variable after cleaning.")
         return
 
@@ -57,6 +57,11 @@ async def main():
     target_time = datetime.now(timezone.utc) - timedelta(hours=TIME_WINDOW_HOURS)
     all_links = set() # 使用集合存储链接以自动去重
 
+    # 定义新的正则表达式，用于匹配“订阅链接:”后的URL
+    # 这个正则会匹配“订阅链接:”后面直到行尾的非空白字符，并捕获URL本身
+    # 同时在捕获后，我们会手动移除URL末尾的'`'
+    SUBSCRIBE_LINK_PATTERN = re.compile(r'订阅链接:\s*(https?://[^\s`]+)')
+
     # 遍历每个目标频道
     for current_channel_identifier in TARGET_CHANNELS:
         print(f"\n--- Processing channel: {current_channel_identifier} (posted after {target_time} UTC) ---")
@@ -68,24 +73,24 @@ async def main():
                     print(f"  Reached messages older than {TIME_WINDOW_HOURS} hours for {current_channel_identifier}. Stopping.")
                     break
 
-                # 提取消息文本中的 URL
                 if message.text:
-                    urls = re.findall(r'https?://[^\s<>"]+|www\.[^\s<>"]+', message.text)
-                    for url in urls:
-                        url = url.strip().strip('.,')
-                        if url:
-                            all_links.add(url)
+                    # 遍历消息文本的每一行
+                    for line in message.text.split('\n'):
+                        match = SUBSCRIBE_LINK_PATTERN.search(line)
+                        if match:
+                            extracted_url = match.group(1).strip()
+                            # 移除URL末尾可能多余的'`'字符
+                            if extracted_url.endswith('`'):
+                                extracted_url = extracted_url[:-1]
+                            all_links.add(extracted_url)
 
-                # --- 关键修改部分开始 ---
-                # 提取消息媒体（例如网页预览）中的 URL
-                # 增加检查以确保 message.media.web_page 存在且有 url 属性
-                if message.media and \
-                   isinstance(message.media, MessageMediaWebPage) and \
-                   hasattr(message.media, 'web_page') and \
-                   hasattr(message.media.web_page, 'url') and \
-                   message.media.web_page.url: # 确保 url 属性存在且不为空
-                    all_links.add(message.media.web_page.url)
-                # --- 关键修改部分结束 ---
+                # 不再从 MessageMediaWebPage 提取，因为需求是只提取“订阅链接:”行
+                # if message.media and \
+                #    isinstance(message.media, MessageMediaWebPage) and \
+                #    hasattr(message.media, 'web_page') and \
+                #    hasattr(message.media.web_page, 'url') and \
+                #    message.media.web_page.url:
+                #     all_links.add(message.media.web_page.url)
 
         except Exception as e:
             print(f"Error fetching messages from channel '{current_channel_identifier}': {e}")
