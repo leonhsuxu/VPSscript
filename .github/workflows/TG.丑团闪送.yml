@@ -2,8 +2,8 @@ name: 🤡 TG.丑团节点
 
 on:
   schedule:
-    # 每周1/3/5 UTC 0:00 (北京时间 6:00) 自动运行
-    - cron: '0 0 * * 1,3,5'
+    # 每天 UTC 0:00 (北京时间 6:00) 自动运行
+    - cron: '0 0 * * *'
   workflow_dispatch: # 允许手动触发
   push:
     branches:
