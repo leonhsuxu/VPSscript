@@ -30,39 +30,79 @@ TIME_WINDOW_HOURS = 48  # 设置抓取消息的时间窗口，单位为小时 (�
 MIN_EXPIRE_HOURS = 7    # 设置订阅链接的最小剩余有效期，单位为小时 (例如: 7 表示过滤掉7小时内将过期的链接)
 # --- Clash 配置生成器配置 ---
 OUTPUT_FILE = 'flclashyaml/telegram_scraper.yaml'  # 最终生成的 Clash 配置文件的输出路径和文件名
-ENABLE_SPEED_TEST = False  # 是否启用节点测速功能 (True: 启用, False: 禁用)
-SOCKET_TIMEOUT = 5      # 节点测速时的 TCP 连接超时时间，单位为秒
-MAX_TEST_WORKERS = 256  # 并发测速的最大线程数，可根据运行环境性能调整
+ENABLE_SPEED_TEST = True  # 是否启用节点测速功能 (True: 启用, False: 禁用)
+SOCKET_TIMEOUT = 8      # 节点测速时的 TCP 连接超时时间，单位为秒
+MAX_TEST_WORKERS = 128  # 并发测速的最大线程数，可根据运行环境性能调整
 
 # --- 地区、命名和过滤配置 (已优化) ---
 
+# ========== 地区过滤配置 ==========
 ALLOWED_REGIONS = {'香港', '日本', '狮城', '美国', '湾省', '韩国', '德国', '英国'}
 
-
+# ========== 排序优先级配置 ==========
 REGION_PRIORITY = ['香港', '日本', '狮城', '美国', '湾省', '韩国', '德国', '英国']
 
-
+# ========== 国家/地区映射表 ==========
 CHINESE_COUNTRY_MAP = {
-    'US': '美国', 'United States': '美国', 'USA': '美国',
-    'JP': '日本', 'Japan': '日本',
-    'HK': '香港', 'Hong Kong': '香港',
-    'SG': '狮城', 'Singapore': '狮城',
-    'TW': '湾省', 'Taiwan': '湾省',
-    'KR': '韩国', 'Korea': '韩国', 'KOR': '韩国',
-    'DE': '德国', 'Germany': '德国',
-    'GB': '英国', 'United Kingdom': '英国', 'UK': '英国',
+    # 美国
+    'US': '美国', 'United States': '美国', 'USA': '美国', 'America': '美国',
+    # 日本
+    'JP': '日本', 'Japan': '日本', 'Tokyo': '日本', 'Osaka': '日本',
+    # 香港
+    'HK': '香港', 'Hong Kong': '香港', 'HongKong': '香港',
+    # 新加坡
+    'SG': '狮城', 'Singapore': '狮城', 'SGP': '狮城',
+    # 台湾
+    'TW': '湾省', 'Taiwan': '湾省', 'TWN': '湾省', 'Taipei': '湾省',
+    # 韩国
+    'KR': '韩国', 'Korea': '韩国', 'KOR': '韩国', 'Seoul': '韩国',
+    # 德国
+    'DE': '德国', 'Germany': '德国', 'Frankfurt': '德国', 'Munich': '德国', 'Berlin': '德国',
+    # 英国
+    'GB': '英国', 'United Kingdom': '英国', 'UK': '英国', 'England': '英国', 'London': '英国',
 }
 
+# ========== 国家代码映射表 ==========
+COUNTRY_NAME_TO_CODE_MAP = {
+    "美国": "US", "日本": "JP", "香港": "HK", "狮城": "SG",
+    "新加坡": "SG", "湾省": "TW", "台湾": "TW", "韩国": "KR",
+    "德国": "DE", "英国": "GB"
+}
 
+# ========== 地区识别正则规则 ==========
 CUSTOM_REGEX_RULES = {
-    '香港': {'code': 'HK', 'pattern': r'香港|港|HK|Hong Kong|HKBN|HGC|PCCW|WTT'},
-    '日本': {'code': 'JP', 'pattern': r'日本|川日|东京|大阪|泉日|沪日|深日|JP|Japan'},
-    '狮城': {'code': 'SG', 'pattern': r'新加坡|坡|狮城|SG|Singapore'},
-    '美国': {'code': 'US', 'pattern': r'美国|美|波特兰|达拉斯|Oregon|凤凰城|硅谷|拉斯维加斯|洛杉矶|圣何塞|西雅图|芝加哥'},
-    '湾省': {'code': 'TW', 'pattern': r'台湾|湾省|台|新北|彰化|TW|Taiwan'},
-    '韩国': {'code': 'KR', 'pattern': r'韩国|韩|首尔|KR|Korea|KOR|韓'},
-    '德国': {'code': 'DE', 'pattern': r'德国|德|DE|Germany'},
-    '英国': {'code': 'GB', 'pattern': r'英国|英|UK|GB|United Kingdom|England'},
+    '香港': {
+        'code': 'HK',
+        'pattern': r'香港|港|HK|Hong\s*Kong|HongKong|HKBN|HGC|PCCW|WTT|HKT|九龙|沙田|屯门|荃湾|深水埗|油尖旺'
+    },
+    '日本': {
+        'code': 'JP',
+        'pattern': r'日本|日|川日|东京|大阪|泉日|沪日|深日|京日|广日|JP|Japan|Tokyo|Osaka|Saitama|埼玉|名古屋|Nagoya|福冈|Fukuoka|横滨|Yokohama|NTT|IIJ|GMO|Linode'
+    },
+    '狮城': {
+        'code': 'SG',
+        'pattern': r'新加坡|坡|狮城|狮|新|SG|Singapore|SG\d+|SGP|星|狮子城'
+    },
+    '美国': {
+        'code': 'US',
+        'pattern': r'美国|美|波特兰|达拉斯|Oregon|俄勒冈|凤凰城|硅谷|拉斯维加斯|洛杉矶|圣何塞|西雅图|芝加哥|纽约|迈阿密|亚特兰大|US|USA|United\s*States|America|LA|NYC|SF|San\s*Francisco|Washington|华盛顿|Kansas|堪萨斯|Denver|丹佛|Phoenix|Seattle|Chicago|Boston|波士顿|Atlanta|Miami|Las\s*Vegas'
+    },
+    '湾省': {
+        'code': 'TW',
+        'pattern': r'台湾|湾省|台|TW|Taiwan|TWN|台北|Taipei|台中|Taichung|高雄|Kaohsiung|新北|彰化|Hinet|中华电信'
+    },
+    '韩国': {
+        'code': 'KR',
+        'pattern': r'韩国|韩|南朝鲜|首尔|釜山|仁川|KR|Korea|KOR|韓|Seoul|Busan|KT|SK|LG'
+    },
+    '德国': {
+        'code': 'DE',
+        'pattern': r'德国|德|法兰克福|慕尼黑|柏林|DE|Germany|Frankfurt|Munich|Berlin|Hetzner'
+    },
+    '英国': {
+        'code': 'GB',
+        'pattern': r'英国|英|伦敦|曼彻斯特|UK|GB|United\s*Kingdom|Britain|England|London|Manchester'
+    },
 }
 
 JUNK_PATTERNS = re.compile(r"(?:专线|IPLC|IEPL|BGP|体验|官网|倍率|x\d[\.\d]*|Rate|[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*|Relay|流量)", re.IGNORECASE)
