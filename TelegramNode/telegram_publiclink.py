@@ -15,7 +15,7 @@ STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')
 TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS')
 
 OUTPUT_FILE = 'flclashyaml/telegram_publiclink.txt' # 输出文件路径
-TIME_WINDOW_HOURS = 4 # 过去X小时内的消息
+TIME_WINDOW_HOURS = 6 # 过去2小时内的消息
 LINK_PREFIX = "telegram_publiclink：" # 链接前缀，注意是中文冒号
 
 async def main():
@@ -25,16 +25,17 @@ async def main():
         print("Please check your GitHub Secrets and the TELEGRAM_CHANNEL_IDS in your workflow file.")
         return
 
-    # 解析 TELEGRAM_CHANNEL_IDS_STR 为列表
-    # 过滤掉空行，并去除每个ID字符串两端的空白
-    TARGET_CHANNELS = [
-        channel_id.strip()
-        for channel_id in TELEGRAM_CHANNEL_IDS_STR.split('\n')
-        if channel_id.strip()
-    ]
+    # --- 改进的频道ID解析逻辑 ---
+    TARGET_CHANNELS = []
+    for line in TELEGRAM_CHANNEL_IDS_STR.split('\n'):
+        # 移除行内注释（# 及其后面的所有内容）
+        clean_line = line.split('#', 1)[0].strip()
+        if clean_line: # 如果清理后不为空，则添加
+            TARGET_CHANNELS.append(clean_line)
+    # --- 解析逻辑结束 ---
 
     if not TARGET_CHANNELS:
-        print("Error: No valid Telegram channel IDs found in TELEGRAM_CHANNEL_IDS environment variable.")
+        print("Error: No valid Telegram channel IDs found in TELEGRAM_CHANNEL_IDS environment variable after cleaning.")
         return
 
     print(f"Configured to scrape {len(TARGET_CHANNELS)} channels/groups: {TARGET_CHANNELS}")
@@ -88,6 +89,7 @@ async def main():
 
         except Exception as e:
             print(f"Error fetching messages from channel '{current_channel_identifier}': {e}")
+            # 如果某个频道获取失败，不应中断整个脚本，而是继续处理下一个频道
 
     # 断开 Telegram 连接
     await client.disconnect()
