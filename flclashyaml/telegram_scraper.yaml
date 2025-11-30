@@ -26,11 +26,11 @@ proxies:
   plugin-opts:
     mode: http
     host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇭🇰 香港 04|白嫖机场.ink 2
+- name: 🇭🇰 香港 04|白嫖机场.ink
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 80
-  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
   alterId: 0
   cipher: auto
   udp: true
@@ -39,11 +39,11 @@ proxies:
     path: /
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇭🇰 香港 04|白嫖机场.ink
+- name: 🇭🇰 香港 04|白嫖机场.ink 2
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 80
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
   alterId: 0
   cipher: auto
   udp: true
@@ -63,11 +63,11 @@ proxies:
   plugin-opts:
     mode: http
     host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇯🇵 日本 04|白嫖机场.ink 2
+- name: 🇯🇵 日本 04|白嫖机场.ink
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 8080
-  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
   alterId: 0
   cipher: auto
   udp: true
@@ -76,11 +76,11 @@ proxies:
     path: /
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇯🇵 日本 04|白嫖机场.ink
+- name: 🇯🇵 日本 04|白嫖机场.ink 2
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 8080
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
   alterId: 0
   cipher: auto
   udp: true
@@ -137,11 +137,11 @@ proxies:
   plugin-opts:
     mode: http
     host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇺🇸 美国 04|白嫖机场.ink 2
+- name: 🇺🇸 美国 04|白嫖机场.ink
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 2052
-  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
   alterId: 0
   cipher: auto
   udp: true
@@ -150,11 +150,11 @@ proxies:
     path: /
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇺🇸 美国 04|白嫖机场.ink
+- name: 🇺🇸 美国 04|白嫖机场.ink 2
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 2052
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
   alterId: 0
   cipher: auto
   udp: true
@@ -211,11 +211,11 @@ proxies:
   plugin-opts:
     mode: http
     host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇩🇪 德国 03|白嫖机场.ink 2
+- name: 🇩🇪 德国 03|白嫖机场.ink
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 2086
-  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
   alterId: 0
   cipher: auto
   udp: true
@@ -224,11 +224,11 @@ proxies:
     path: /
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇩🇪 德国 03|白嫖机场.ink
+- name: 🇩🇪 德国 03|白嫖机场.ink 2
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 2086
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
   alterId: 0
   cipher: auto
   udp: true
@@ -245,69 +245,69 @@ proxy-groups:
   - 🔯 故障转移
   - DIRECT
   - 🇭🇰 香港 IEPL
-  - 🇭🇰 香港 04|白嫖机场.ink 2
   - 🇭🇰 香港 04|白嫖机场.ink
+  - 🇭🇰 香港 04|白嫖机场.ink 2
   - 🇯🇵 日本 IEPL GPT
-  - 🇯🇵 日本 04|白嫖机场.ink 2
   - 🇯🇵 日本 04|白嫖机场.ink
+  - 🇯🇵 日本 04|白嫖机场.ink 2
   - 🇸🇬 狮城 IEPL
   - 🇸🇬 狮城 04|白嫖机场.ink 2
   - 🇸🇬 狮城 04|白嫖机场.ink
   - 🇺🇸 美国 IEPL GPT
-  - 🇺🇸 美国 04|白嫖机场.ink 2
   - 🇺🇸 美国 04|白嫖机场.ink
+  - 🇺🇸 美国 04|白嫖机场.ink 2
   - 🇹🇼 湾省 IEPL
   - 🇰🇷 韩国 04|白嫖机场.ink 2
   - 🇰🇷 韩国 04|白嫖机场.ink
   - 🇩🇪 德国 IEPL
-  - 🇩🇪 德国 03|白嫖机场.ink 2
   - 🇩🇪 德国 03|白嫖机场.ink
+  - 🇩🇪 德国 03|白嫖机场.ink 2
   url: http://www.gstatic.com/generate_204
   interval: 300
 - name: ♻️ 自动选择
   type: url-test
   proxies:
   - 🇭🇰 香港 IEPL
-  - 🇭🇰 香港 04|白嫖机场.ink 2
   - 🇭🇰 香港 04|白嫖机场.ink
+  - 🇭🇰 香港 04|白嫖机场.ink 2
   - 🇯🇵 日本 IEPL GPT
-  - 🇯🇵 日本 04|白嫖机场.ink 2
   - 🇯🇵 日本 04|白嫖机场.ink
+  - 🇯🇵 日本 04|白嫖机场.ink 2
   - 🇸🇬 狮城 IEPL
   - 🇸🇬 狮城 04|白嫖机场.ink 2
   - 🇸🇬 狮城 04|白嫖机场.ink
   - 🇺🇸 美国 IEPL GPT
-  - 🇺🇸 美国 04|白嫖机场.ink 2
   - 🇺🇸 美国 04|白嫖机场.ink
+  - 🇺🇸 美国 04|白嫖机场.ink 2
   - 🇹🇼 湾省 IEPL
   - 🇰🇷 韩国 04|白嫖机场.ink 2
   - 🇰🇷 韩国 04|白嫖机场.ink
   - 🇩🇪 德国 IEPL
-  - 🇩🇪 德国 03|白嫖机场.ink 2
   - 🇩🇪 德国 03|白嫖机场.ink
+  - 🇩🇪 德国 03|白嫖机场.ink 2
   url: http://www.gstatic.com/generate_204
   interval: 300
 - name: 🔯 故障转移
   type: fallback
   proxies:
   - 🇭🇰 香港 IEPL
-  - 🇭🇰 香港 04|白嫖机场.ink 2
   - 🇭🇰 香港 04|白嫖机场.ink
+  - 🇭🇰 香港 04|白嫖机场.ink 2
   - 🇯🇵 日本 IEPL GPT
-  - 🇯🇵 日本 04|白嫖机场.ink 2
   - 🇯🇵 日本 04|白嫖机场.ink
+  - 🇯🇵 日本 04|白嫖机场.ink 2
   - 🇸🇬 狮城 IEPL
   - 🇸🇬 狮城 04|白嫖机场.ink 2
   - 🇸🇬 狮城 04|白嫖机场.ink
   - 🇺🇸 美国 IEPL GPT
-  - 🇺🇸 美国 04|白嫖机场.ink 2
   - 🇺🇸 美国 04|白嫖机场.ink
+  - 🇺🇸 美国 04|白嫖机场.ink 2
   - 🇹🇼 湾省 IEPL
   - 🇰🇷 韩国 04|白嫖机场.ink 2
   - 🇰🇷 韩国 04|白嫖机场.ink
   - 🇩🇪 德国 IEPL
-  - 🇩🇪 德国 03|白嫖机场.ink 2
   - 🇩🇪 德国 03|白嫖机场.ink
+  - 🇩🇪 德国 03|白嫖机场.ink 2
   url: http://www.gstatic.com/generate_204
   interval: 300
 rules:
