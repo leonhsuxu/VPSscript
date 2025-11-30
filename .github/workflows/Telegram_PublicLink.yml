@@ -33,9 +33,7 @@ jobs:
         # 默认示例已包含您提供的 ID 和其他两个占位符。
         #
         TELEGRAM_CHANNEL_IDS: |
-          @Telegram # 官方Telegram频道
-          @durov   # Telegram创始人Durov的频道
-          @permissions  #-1002452753229
+          @fqDINYUE  #-1002452753229
           #-1002452754444 # 示例：新增频道1
           #-1002452754445 # 示例：新增频道2
           # 在此处添加更多频道ID，每个一行
