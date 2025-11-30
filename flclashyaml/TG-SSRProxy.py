@@ -23,7 +23,7 @@ print(f"当前脚本文件名 (不含扩展名): {CURRENT_SCRIPT_NAME}")
 # ========== 测速过滤配置 (纯 Python socket 版) ==========
 ENABLE_SPEED_TEST = True #  False为不测速，True为测速
 # socket 连接超时时间(秒)
-SOCKET_TIMEOUT = 5
+SOCKET_TIMEOUT = 10
 # 并发测速的线程数
 MAX_TEST_WORKERS = 256 # socket 非常轻量，可以大幅增加并发数以提高速度，默认128
 
