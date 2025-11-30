@@ -9,11 +9,12 @@ import time
 from datetime import datetime, timedelta, timezone
 import sys
 from collections import defaultdict
-import socket
 import concurrent.futures
 import hashlib
 import subprocess
 import shutil
+import urllib.request
+import urllib.error
 # --- Telethon ---
 from telethon.sync import TelegramClient
 from telethon.tl.types import MessageMediaWebPage
@@ -37,8 +38,8 @@ ENABLE_SPEED_TEST = True  # 是否启用节点测速功能 (True: 启用, False:
 SOCKET_TIMEOUT = 8      # 节点测速时的 TCP 连接超时时间，单位为秒
 MAX_TEST_WORKERS = 128  # 并发测速的最大线程数，可根据运行环境性能调整
 
-# --- 测速配置（FlClash 兼容）---
-TEST_URL = 'http://www.gstatic.com/generate_204'  # FlClash 标准测速地址（配置文件中使用）
+# --- 测速配置（FlClash 方式）---
+TEST_URL = 'http://www.gstatic.com/generate_204'  # FlClash 标准测速地址
 TEST_INTERVAL = 300  # 测速间隔（秒）
 
 # --- 地区、命名和过滤配置 (已优化) ---
@@ -233,17 +234,28 @@ def process_proxies(proxies):
     
     return final
 
-def test_single_proxy_tcp(proxy):
-    """使用 TCP 连接测速（兼容所有协议）"""
+def test_single_proxy_http(proxy):
+    """使用 HTTP 请求测速（FlClash 方式）"""
     try:
+        # 构建代理 URL（注意：这里简化处理，实际代理协议可能需要更复杂的配置）
+        proxy_url = f"http://{proxy['server']}:{proxy['port']}"
+        proxy_handler = urllib.request.ProxyHandler({
+            'http': proxy_url,
+            'https': proxy_url
+        })
+        opener = urllib.request.build_opener(proxy_handler)
+        
+        # 测速
         start = time.time()
-        sock = socket.create_connection(
-            (proxy['server'], proxy['port']), 
-            timeout=SOCKET_TIMEOUT
-        )
-        sock.close()
-        proxy['delay'] = int((time.time() - start) * 1000)
-        return proxy
+        req = urllib.request.Request(TEST_URL, headers={'User-Agent': 'Clash'})
+        response = opener.open(req, timeout=SOCKET_TIMEOUT)
+        
+        # 验证响应状态
+        if response.status == 204:
+            proxy['delay'] = int((time.time() - start) * 1000)
+            return proxy
+        else:
+            return None
     except Exception:
         return None
 
@@ -303,7 +315,7 @@ def generate_config(proxies):
 
 async def main():
     """主函数"""
-    print("=" * 60 + f"\nClash 订阅自动生成脚本 (TCP测速版) @ {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S %Z')}\n" + "=" * 60)
+    print("=" * 60 + f"\nClash 订阅自动生成脚本 (HTTP测速版) @ {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S %Z')}\n" + "=" * 60)
     preprocess_regex_rules()
     
     print("\n[1/4] 从 Telegram 抓取、下载并合并节点...")
@@ -321,12 +333,12 @@ async def main():
     if not processed: 
         sys.exit("\n❌ 过滤后无任何可用节点，脚本终止。")
     
-    print("\n[3/4] TCP 测速与最终排序...")
+    print("\n[3/4] HTTP 测速与最终排序...")
     final = processed
     if ENABLE_SPEED_TEST:
-        print(f"  - 开始 TCP 连接测速（超时: {SOCKET_TIMEOUT}秒）...")
+        print(f"  - 开始 HTTP 测速 (目标: {TEST_URL})...")
         with concurrent.futures.ThreadPoolExecutor(MAX_TEST_WORKERS) as executor:
-            tested = list(executor.map(test_single_proxy_tcp, processed))
+            tested = list(executor.map(test_single_proxy_http, processed))
         final = [p for p in tested if p]
         print(f"  - 测速完成, {len(final)} / {len(processed)} 个节点可用。")
         if not final: 
