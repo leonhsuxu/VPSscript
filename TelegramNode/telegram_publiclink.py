@@ -18,30 +18,28 @@ import shutil
 from telethon.sync import TelegramClient
 from telethon.tl.types import MessageMediaWebPage
 from telethon.sessions import StringSession
+
 # =================================================================================
 # Part 1: 配置
 # =================================================================================
 # --- Telegram 抓取器配置 ---
-API_ID = os.environ.get('TELEGRAM_API_ID')  # 从 GitHub Secrets 获取的 Telegram 应用 API ID
-API_HASH = os.environ.get('TELEGRAM_API_HASH')  # 从 GitHub Secrets 获取的 Telegram 应用 API HASH
-STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')  # 从 GitHub Secrets 获取的 Telethon 字符串会话，用于登录
+API_ID = os.environ.get('TELEGRAM_API_ID')                         # 从 GitHub Secrets 获取的 Telegram 应用 API ID
+API_HASH = os.environ.get('TELEGRAM_API_HASH')                     # 从 GitHub Secrets 获取的 Telegram 应用 API HASH
+STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')         # 从 GitHub Secrets 获取的 Telethon 字符串会话，用于登录
 TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS')  # 从 GitHub Actions 环境变量获取的频道/群组 ID 列表字符串
-TIME_WINDOW_HOURS = 48  # 设置抓取消息的时间窗口，单位为小时 (例如: 48 表示只抓取最近48小时内的消息)
-MIN_EXPIRE_HOURS = 7    # 设置订阅链接的最小剩余有效期，单位为小时 (例如: 7 表示过滤掉7小时内将过期的链接)
+TIME_WINDOW_HOURS = 72                             # 设置抓取消息的时间窗口，单位为小时 (例如: 48 表示只抓取最近48小时内的消息)
+MIN_EXPIRE_HOURS = 7                               # 设置订阅链接的最小剩余有效期，单位为小时 (例如: 7 表示过滤掉7小时内将过期的链接)
 # --- Clash 配置生成器配置 ---
 OUTPUT_FILE = 'flclashyaml/telegram_scraper.yaml'  # 最终生成的 Clash 配置文件的输出路径和文件名
-ENABLE_SPEED_TEST = True  # 是否启用节点测速功能 (True: 启用, False: 禁用)
-SOCKET_TIMEOUT = 5      # 节点测速时的 TCP 连接超时时间，单位为秒
-MAX_TEST_WORKERS = 256  # 并发测速的最大线程数，可根据运行环境性能调整
+ENABLE_SPEED_TEST = False                           # 是否启用节点测速功能 (True: 启用, False: 禁用)
+SOCKET_TIMEOUT = 5                                 # 节点测速时的 TCP 连接超时时间，单位为秒
+MAX_TEST_WORKERS = 256                             # 并发测速的最大线程数，可根据运行环境性能调整
 
 # --- 地区、命名和过滤配置 (已优化) ---
-# *** 修改 ***：增加了 '德国', '英国'
-ALLOWED_REGIONS = {'香港', '日本', '狮城', '美国', '湾省', '韩国', '德国', '英国'}
 
-# *** 修改 ***：增加了 '德国', '英国'
+ALLOWED_REGIONS = {'香港', '日本', '狮城', '美国', '湾省', '韩国', '德国', '英国'}
 REGION_PRIORITY = ['香港', '日本', '狮城', '美国', '湾省', '韩国', '德国', '英国']
 
-# *** 修改 ***：增加了德国和英国的映射
 CHINESE_COUNTRY_MAP = {
     'US': '美国', 'United States': '美国', 'USA': '美国',
     'JP': '日本', 'Japan': '日本',
@@ -53,7 +51,6 @@ CHINESE_COUNTRY_MAP = {
     'GB': '英国', 'United Kingdom': '英国', 'UK': '英国',
 }
 
-# *** 修改 ***：增加了德国和英国的匹配规则
 CUSTOM_REGEX_RULES = {
     '香港': {'code': 'HK', 'pattern': r'香港|港|HK|Hong Kong|HKBN|HGC|PCCW|WTT'},
     '日本': {'code': 'JP', 'pattern': r'日本|川日|东京|大阪|泉日|沪日|深日|JP|Japan'},
@@ -67,6 +64,7 @@ CUSTOM_REGEX_RULES = {
 
 JUNK_PATTERNS = re.compile(r"(?:专线|IPLC|IEPL|BGP|体验|官网|倍率|x\d[\.\d]*|Rate|[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*|Relay|流量)", re.IGNORECASE)
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
+
 # =================================================================================
 # Part 2: 函数定义
 # =================================================================================
