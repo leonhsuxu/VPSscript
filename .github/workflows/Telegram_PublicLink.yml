@@ -34,7 +34,13 @@ jobs:
     - name: Run Python script
       env:
         TELEGRAM_CHANNEL_IDS: |
-          @fqDINYUE
+          @fqDINYUE # 订阅转发-频道
+          @freeyule # 白嫖订阅&节点分享群
+          @ccbaohe # CC宝盒
+          @duangvpsfs # Duang VPS交流群
+          @XuKong11 # 虚空新手村
+          @zzzjjjkkkoi # 白嫖机场交流群
+          @xmdexw # M麦当劳 全家桶
           # 在此添加更多频道...
         TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
         TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
