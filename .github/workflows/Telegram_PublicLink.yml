@@ -54,7 +54,13 @@ jobs:
           
           # M麦当劳 全家桶
           @xmdexw
+          
+          # v2clash 免费分享中心
           @v2v2clash
+          
+          # 订阅分享中心
+          @dingyue_Center
+
 
           # 在此添加更多频道...
         TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
