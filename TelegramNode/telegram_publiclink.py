@@ -6,9 +6,9 @@
 # 版本历史:
 # V1.R1 (20251130) - 初始版本
 # V1.R2 (20251201) - 增加多种下载方式，优先使用 wget
-# V1.R3 (20251202) - 支持解析Base64编码，可以处理其他文本格式
-# V1.R4 (20251210) - 增加对 Trojan、Hysteria 和 Hysteria2 协议的支持
-# V1.R5 (20251210) - 持续增量写入 telegram_scraper.yaml 文件，写入后节点去重，并进行TCP测速
+# V1.R3 (20251201) - 支持解析Base64编码，可以处理其他文本格式
+# V1.R4 (20251201) - 增加对 Trojan、Hysteria 和 Hysteria2 协议的支持
+# V1.R5 (20251201) - 持续增量写入 telegram_scraper.yaml 文件，写入后节点去重，并进行TCP测速
 # ============================================================================
 import os
 import re
@@ -50,10 +50,12 @@ TEST_INTERVAL = 300  # 测速间隔，单位为秒
 ALLOWED_REGIONS = {'香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国',
                    '印度', '菲律宾', '印度尼西亚', '越南', '美国', '加拿大', '法国',
                    '英国', '德国', '俄罗斯', '意大利', '巴西', '阿根廷', '土耳其', '澳大利亚'}
+
 # ========== 排序优先级配置 ==========
 REGION_PRIORITY = ['香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国', '印度', '菲律宾',
                    '印度尼西亚', '越南', '美国', '加拿大', '法国', '英国', '德国', '俄罗斯', '意大利',
                    '巴西', '阿根廷', '土耳其', '澳大利亚']
+
 # ========== 国家/地区映射表 ==========
 CHINESE_COUNTRY_MAP = {
     'HK': '香港', 'TW': '台湾', 'JP': '日本', 'SG': '新加坡', 'KR': '韩国', 'MY': '马来西亚',
@@ -61,6 +63,7 @@ CHINESE_COUNTRY_MAP = {
     'CA': '加拿大', 'FR': '法国', 'GB': '英国', 'DE': '德国', 'RU': '俄罗斯', 'IT': '意大利',
     'BR': '巴西', 'AR': '阿根廷', 'TR': '土耳其', 'AU': '澳大利亚'
 }
+
 # ========== 地区识别正则规则 ==========
 CUSTOM_REGEX_RULES = {
     '香港': {'code': 'HK', 'pattern': r'香港|港|HK|Hong\s*Kong'},
@@ -86,12 +89,15 @@ CUSTOM_REGEX_RULES = {
     '土耳其': {'code': 'TR', 'pattern': r'土耳其|TR|Turkey'},
     '澳大利亚': {'code': 'AU', 'pattern': r'澳大利亚|AU|Australia'},
 }
+
 # 正则用于过滤含有一些无用信息的模式
 JUNK_PATTERNS = re.compile(r"(?:专线|IPLC|体验|官网|倍率|x\d[\.\d]*|[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*|Relay|流量)", re.IGNORECASE)
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
+
 # =================================================================================
 # Part 2: 函数定义
 # =================================================================================
+
 def parse_expire_time(text):
     """解析消息中的到期时间"""
     match = re.search(r'到期时间[:：]\s*(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})', text)
@@ -117,12 +123,15 @@ async def scrape_telegram_links():
     if not all([API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS_STR]):
         print("❌ 错误: 缺少必要的环境变量 (API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS)。")
         return []
+
     # 处理频道 ID 列表
     TARGET_CHANNELS = [line.strip() for line in TELEGRAM_CHANNEL_IDS_STR.split('\n') if line.strip() and not line.strip().startswith('#')]
     if not TARGET_CHANNELS:
         print("❌ 错误: TELEGRAM_CHANNEL_IDS 中未找到有效频道 ID。")
         return []
+
     print(f"▶️ 配置抓取 {len(TARGET_CHANNELS)} 个频道: {TARGET_CHANNELS}")
+
     try:
         client = TelegramClient(StringSession(STRING_SESSION), API_ID, API_HASH)
         await client.connect()
@@ -131,10 +140,10 @@ async def scrape_telegram_links():
     except Exception as e:
         print(f"❌ 错误: 连接 Telegram 时出错: {e}")
         return []
-    
+
     target_time = datetime.now(timezone.utc) - timedelta(hours=TIME_WINDOW_HOURS)
     all_links = set()
-    
+
     for channel_id in TARGET_CHANNELS:
         print(f"\n--- 正在处理频道: {channel_id} ---")
         try:
@@ -142,14 +151,14 @@ async def scrape_telegram_links():
                 if message.date < target_time:
                     break
                 if message.text and is_expire_time_valid(parse_expire_time(message.text)):
-                    for url in re.findall(r'订阅链接[:：]\`]*\s*(https?://[^\s<>"*`]+)', message.text):
+                    for url in re.findall(r'订阅链接[:：]`]*\s*(https?://[^\s<>"*`]+)', message.text):
                         cleaned_url = url.strip().strip('.,*`')
                         if cleaned_url:
                             all_links.add(cleaned_url)
                             print(f"  ✅ 找到链接: {cleaned_url[:70]}...")
         except Exception as e:
             print(f"❌ 错误: 从频道 '{channel_id}' 获取消息时出错: {e}")
-    
+
     await client.disconnect()
     print(f"\n✅ 抓取完成, 共找到 {len(all_links)} 个不重复的有效链接。")
     return list(all_links)
@@ -174,11 +183,11 @@ def attempt_download_using_wget(url):
     try:
         content = subprocess.run(
             ["wget", "-O", "-", "--timeout=30", "--header=User-Agent: Clash", url],
-            capture_output=True, text=True, check=True
+            capture_output=True, text=True, check=True, encoding='utf-8', errors='ignore'
         ).stdout
         return content if content else None
     except subprocess.CalledProcessError as e:
-        print(f"  ✗ wget 下载失败: {e}")
+        print(f"  ✗ wget 下载失败: {e.stderr}")
         return None
 
 def attempt_download_using_requests(url):
@@ -188,6 +197,7 @@ def attempt_download_using_requests(url):
         headers = {'User-Agent': 'Clash'}
         response = requests.get(url, headers=headers, timeout=30)
         response.raise_for_status()
+        response.encoding = response.apparent_encoding or 'utf-8'
         return response.text
     except requests.RequestException as e:
         print(f"  ✗ requests 下载失败: {e}")
@@ -197,301 +207,343 @@ def parse_proxies_from_content(content):
     """从下载的内容中解析代理节点"""
     try:
         # 尝试解析 YAML 内容
-        proxies = yaml.safe_load(content)
-        if isinstance(proxies, dict):
-            return proxies.get('proxies', [])
-        elif isinstance(proxies, list):
-            return proxies  # 如果 content 是一个直接的代理列表
+        data = yaml.safe_load(content)
+        if isinstance(data, dict):
+            proxies = data.get('proxies', [])
+            return proxies if isinstance(proxies, list) else []
+        elif isinstance(data, list):
+            return data  # 如果 content 是一个直接的代理列表
         else:
-            print(f"警告: 解析的内容不是有效的 proxies 格式: {content[:100]}")
+            print(f"  - 警告: 解析的内容不是有效的 proxies 格式: {str(content)[:100]}")
             return []
-    except yaml.YAMLError as e:
-        print(f"YAML 解析错误: {e}")
+    except (yaml.YAMLError, AttributeError) as e:
+        print(f"  - YAML 解析错误: {e}")
         return []
     except Exception as e:
-        print(f"解析内容时其他错误: {e}")
+        print(f"  - 解析内容时其他错误: {e}")
         return []
+
 
 def is_base64(string):
     """检查字符串是否是有效的 Base64 编码"""
     try:
-        if isinstance(string, str):
-            # 检查长度是否符合 Base64 格式
-            if len(string) % 4 == 0:
-                base64.b64decode(string, validate=True)
-                return True
+        # 移除所有空白字符
+        s = ''.join(string.split())
+        if not s or len(s) % 4 != 0:
+            return False
+        # 检查是否只包含Base64字符
+        if not re.match(r'^[A-Za-z0-9+/=]+$', s):
+            return False
+        base64.b64decode(s, validate=True)
+        return True
     except Exception:
         return False
-    return False
+
 
 def decode_base64_and_parse(base64_str):
     """解码 Base64 并解析为 Clash 格式的节点"""
     try:
-        decoded_content = base64.b64decode(base64_str).decode('utf-8')
+        # 移除所有空白字符后再解码
+        decoded_content = base64.b64decode(''.join(base64_str.split())).decode('utf-8', errors='ignore')
         proxies = []
         for line in decoded_content.splitlines():
             line = line.strip()
+            proxy = None
             if line.startswith('vless://'):
-                proxies.append(parse_vless_node(line))
+                proxy = parse_vless_node(line)
             elif line.startswith('vmess://'):
-                proxies.append(parse_vmess_node(line))
+                proxy = parse_vmess_node(line)
             elif line.startswith('ssr://'):
-                proxies.append(parse_ssr_node(line))
+                proxy = parse_ssr_node(line)
             elif line.startswith('ss://'):
-                proxies.append(parse_ss_node(line))
+                proxy = parse_ss_node(line)
             elif line.startswith('trojan://'):
-                proxies.append(parse_trojan_node(line))
+                proxy = parse_trojan_node(line)
             elif line.startswith('hysteria://'):
-                proxies.append(parse_hysteria_node(line))
+                proxy = parse_hysteria_node(line)
             elif line.startswith('hysteria2://'):
-                proxies.append(parse_hysteria2_node(line))
-            else:
-                print(f"警告: 未支持的节点格式: {line[:100]}")
-        return proxies
+                proxy = parse_hysteria2_node(line)
+            
+            if proxy:
+                proxies.append(proxy)
+        return [p for p in proxies if p]
     except Exception as e:
-        print(f"解码 Base64 并解析时出错: {e}")
+        print(f"  - 解码 Base64 并解析时出错: {e}")
         return []
+
+def parse_vless_node(node_str):
+    # 此函数在原代码中缺失，此处补充一个基本实现
+    try:
+        from urllib.parse import urlparse, parse_qs
+        uri = urlparse(node_str)
+        params = parse_qs(uri.query)
+        
+        proxy = {
+            "name": uri.fragment or f"VLESS {uri.hostname}:{uri.port}",
+            "type": "vless",
+            "server": uri.hostname,
+            "port": int(uri.port),
+            "uuid": uri.username,
+            "tls": params.get('security', ['none'])[0] == 'tls',
+            "network": params.get('type', ['tcp'])[0],
+            "servername": params.get('sni', [uri.hostname])[0],
+        }
+        return proxy
+    except Exception as e:
+        print(f"  - 解析 VLESS 节点时发生错误: {e}")
+        return {}
 
 def parse_ssr_node(node_str):
     """解析 SSR 节点字符串并转换为 Clash 格式"""
     try:
-        decoded = base64.urlsafe_b64decode(node_str[5:]).decode('utf-8')
-        params = decoded.split(':')
-        cipher = params[0]
-        password = params[1]
-        host = params[2]
-        port = params[3]
-        obfs = params[4]  # 可选字段
-        protocol = params[5]  # 可选字段
-        # 组装 Clash 节点格式
+        # SSR链接需要特殊处理，因为它的base64不是标准格式
+        node_str = node_str[6:]
+        missing_padding = len(node_str) % 4
+        if missing_padding:
+            node_str += '=' * (4 - missing_padding)
+        decoded = base64.urlsafe_b64decode(node_str).decode('utf-8')
+        
+        parts = decoded.split('/?')
+        main_part, params_part = parts[0], parts[1] if len(parts) > 1 else ''
+        
+        main_params = main_part.split(':')
+        server = main_params[0]
+        port = main_params[1]
+        protocol = main_params[2]
+        method = main_params[3]
+        obfs = main_params[4]
+        password_encoded = main_params[5]
+        
+        password = base64.urlsafe_b64decode(password_encoded + '=' * (-len(password_encoded) % 4)).decode('utf-8')
+
         proxy = {
-            "name": f"SSR {host}:{port}",
+            "name": f"SSR {server}:{port}",
             "type": "ssr",
-            "server": host,
+            "server": server,
             "port": int(port),
             "password": password,
-            "cipher": cipher,
+            "cipher": method,
             "obfs": obfs,
             "protocol": protocol,
         }
         return proxy
     except Exception as e:
-        print(f"解析 SSR 节点时发生错误: {e}")
+        print(f"  - 解析 SSR 节点时发生错误: {e}")
         return {}
 
 def parse_vmess_node(node_str):
     """解析 Vmess 节点字符串并转换为 Clash 格式"""
     try:
-        decoded = base64.urlsafe_b64decode(node_str[8:]).decode('utf-8')
-        json_data = json.loads(decoded)
-        # 组装 Clash 节点格式
+        # Vmess链接的base64部分可能没有padding
+        base64_str = node_str[8:]
+        decoded_str = base64.urlsafe_b64decode(base64_str + '=' * (-len(base64_str) % 4)).decode('utf-8')
+        json_data = json.loads(decoded_str)
+
         proxy = {
             "name": json_data.get('ps', f"Vmess {json_data.get('add')}:{json_data.get('port')}"),
             "type": "vmess",
             "server": json_data.get('add'),
             "port": int(json_data.get('port')),
             "uuid": json_data.get('id'),
-            "alterId": json_data.get('aid'),
-            "cipher": json_data.get('net', "none"),
-            "tls": (json_data.get('tls') == "tls"),
+            "alterId": int(json_data.get('aid')),
+            "cipher": json_data.get('scy', "auto"),
+            "tls": json_data.get('tls') == "tls",
+            "network": json_data.get('net'),
+            "ws-opts": {"path": json_data.get('path'), "headers": {"Host": json_data.get('host')}} if json_data.get('net') == 'ws' else None,
+            "servername": json_data.get('sni', json_data.get('host')),
         }
+        # 清理None值
+        if proxy["ws-opts"]:
+            proxy["ws-opts"] = {k: v for k, v in proxy["ws-opts"].items() if v}
+        proxy = {k: v for k, v in proxy.items() if v is not None}
         return proxy
     except Exception as e:
-        print(f"解析 Vmess 节点时发生错误: {e}")
+        print(f"  - 解析 Vmess 节点时发生错误: {e}")
         return {}
+
 
 def parse_ss_node(node_str):
     """解析 SS 节点字符串并转换为 Clash 格式"""
     try:
-        decoded = base64.urlsafe_b64decode(node_str[5:]).decode('utf-8')
-        params = decoded.split(':')
-        if len(params) < 3:
-            print(f"警告: SS 节点格式不正确: {node_str}")
-            return {}
-        server, port, password_and_method = params[0], int(params[1]), params[2]
-        method = password_and_method.split('/')[0]  # 取加密方式
-        password = '/'.join(password_and_method.split('/')[1:])  # 剩余为密码
+        from urllib.parse import urlparse, unquote
+        uri = urlparse(node_str)
+        
+        # Base64部分在userinfo
+        userinfo_decoded = base64.urlsafe_b64decode(uri.userinfo + '=' * (-len(uri.userinfo) % 4)).decode('utf-8')
+        cipher, password = userinfo_decoded.split(':', 1)
+
         proxy = {
-            "name": f"SS {server}:{port}",
+            "name": unquote(uri.fragment) if uri.fragment else f"SS {uri.hostname}:{uri.port}",
             "type": "ss",
-            "server": server,
-            "port": port,
+            "server": uri.hostname,
+            "port": int(uri.port),
             "password": password,
-            "cipher": method
+            "cipher": cipher
         }
         return proxy
     except Exception as e:
-        print(f"解析 SS 节点时发生错误: {e}")
-        return {}
+        # 尝试旧版解析
+        try:
+            # ss://method:password@server:port#name
+            parts = node_str[5:].split('#')
+            main_part = parts[0]
+            name = unquote(parts[1]) if len(parts) > 1 else None
+
+            at_parts = main_part.split('@')
+            cred, server_info = at_parts[0], at_parts[1]
+            
+            cred_decoded = base64.urlsafe_b64decode(cred + '=' * (-len(cred) % 4)).decode('utf-8')
+            cipher, password = cred_decoded.split(':', 1)
+            
+            server, port = server_info.split(':')
+            
+            proxy = {
+                "name": name or f"SS {server}:{port}",
+                "type": "ss",
+                "server": server,
+                "port": int(port),
+                "password": password,
+                "cipher": cipher
+            }
+            return proxy
+        except Exception as e_inner:
+            print(f"  - 解析 SS 节点时发生错误 (两种方法均失败): {e_inner}")
+            return {}
 
 def parse_trojan_node(node_str):
     """解析 Trojan 节点字符串并转换为 Clash 格式"""
     try:
-        if node_str.startswith("trojan://"):
-            decoded = base64.urlsafe_b64decode(node_str[8:]).decode('utf-8')
-            params = decoded.split('#')
-            if len(params) < 2:
-                print(f"警告: Trojan 节点格式不正确: {node_str}")
-                return {}
-            details = params[0].split('@')
-            password = details[0]
-            host_port = details[1].split(':')
-            host = host_port[0]
-            port = host_port[1]
-            proxy = {
-                "name": f"Trojan {host}:{port}",
-                "type": "trojan",
-                "server": host,
-                "port": int(port),
-                "password": password,
-                "cipher": "aes-128-gcm"  # 默认加密方式，可以根据需要修改
-            }
-            return proxy
+        from urllib.parse import urlparse, parse_qs, unquote
+        uri = urlparse(node_str)
+        params = parse_qs(uri.query)
+
+        proxy = {
+            "name": unquote(uri.fragment) if uri.fragment else f"Trojan {uri.hostname}:{uri.port}",
+            "type": "trojan",
+            "server": uri.hostname,
+            "port": int(uri.port),
+            "password": uri.username,
+            "sni": params.get('sni', [uri.hostname])[0],
+            "alpn": params.get('alpn', [None])[0],
+        }
+        if proxy.get('alpn'):
+             proxy['alpn'] = proxy['alpn'].split(',')
+        proxy = {k: v for k, v in proxy.items() if v is not None}
+        return proxy
     except Exception as e:
-        print(f"解析 Trojan 节点时发生错误: {e}")
-    return {}
+        print(f"  - 解析 Trojan 节点时发生错误: {e}")
+        return {}
+
 
 def parse_hysteria_node(node_str):
     """解析 Hysteria 节点字符串并转换为 Clash 格式"""
     try:
-        if node_str.startswith("hysteria://"):
-            # 剔除前缀
-            decoded = base64.urlsafe_b64decode(node_str[10:]).decode('utf-8')
-            params = decoded.split('@')
-            if len(params) != 2:
-                print(f"警告: Hysteria 节点格式不正确: {node_str}")
-                return {}
-            # 提取密码和目标地址
-            password = params[0]
-            host_port = params[1].split(':')
-            if len(host_port) != 2:
-                print(f"警告: Hysteria 节点地址格式不正确: {params[1]}")
-                return {}
+        from urllib.parse import urlparse, parse_qs
+        uri = urlparse(node_str)
+        params = parse_qs(uri.query)
 
-            host = host_port[0]
-            port = int(host_port[1])
-            # 提取可选的参数
-            obfs = None  # 默认为空
-            tls = False  # 默认为不使用TLS
-
-            # 检查URI中的查询参数
-            if '?' in params[1]:
-                query = params[1].split('?')[1]
-                query_params = query.split('&')
-                for qp in query_params:
-                    key, value = qp.split('=')
-                    if key == 'obfs':
-                        obfs = value
-                    elif key == 'tls':
-                        tls = (value.lower() == 'true')
-
-            proxy = {
-                "name": f"Hysteria {host}:{port}",
-                "type": "hysteria",
-                "server": host,
-                "port": port,
-                "password": password,
-                "obfs": obfs,
-                "tls": tls
-            }
-            return proxy
+        proxy = {
+            "name": uri.fragment or f"Hysteria {uri.hostname}:{uri.port}",
+            "type": "hysteria",
+            "server": uri.hostname,
+            "port": int(uri.port),
+            "auth_str": params.get('auth', [None])[0] or uri.username,
+            "up": int(params['up_mbps'][0]),
+            "down": int(params['down_mbps'][0]),
+            "protocol": params.get('protocol', ['udp'])[0],
+            "sni": params.get('sni', [uri.hostname])[0],
+            "insecure": params.get('insecure', ['0'])[0] == '1',
+            "obfs": params.get('obfs', [None])[0],
+        }
+        proxy = {k: v for k, v in proxy.items() if v is not None}
+        return proxy
     except Exception as e:
-        print(f"解析 Hysteria 节点时发生错误: {e}")
-    return {}
+        print(f"  - 解析 Hysteria 节点时发生错误: {e}")
+        return {}
+
 
 def parse_hysteria2_node(node_str):
     """解析 Hysteria2 节点字符串并转换为 Clash 格式"""
     try:
-        if node_str.startswith("hysteria2://"):
-            # 剔除前缀
-            decoded = base64.urlsafe_b64decode(node_str[12:]).decode('utf-8')
-            params = decoded.split('@')
-            if len(params) != 2:
-                print(f"警告: Hysteria2 节点格式不正确: {node_str}")
-                return {}
-            # 提取密码和目标地址
-            password = params[0]
-            host_port = params[1].split(':')
-            if len(host_port) != 2:
-                print(f"警告: Hysteria2 节点地址格式不正确: {params[1]}")
-                return {}
+        from urllib.parse import urlparse, parse_qs, unquote
+        uri = urlparse(node_str)
+        params = parse_qs(uri.query)
 
-            host = host_port[0]
-            port = int(host_port[1])
-            # 提取可选的参数
-            obfs = None  # 默认为空
-            tls = False  # 默认为不使用TLS
-
-            # 检查URI中的查询参数
-            if '?' in params[1]:
-                query = params[1].split('?')[1]
-                query_params = query.split('&')
-                for qp in query_params:
-                    key, value = qp.split('=')
-                    if key == 'obfs':
-                        obfs = value
-                    elif key == 'tls':
-                        tls = (value.lower() == 'true')
-
-            proxy = {
-                "name": f"Hysteria2 {host}:{port}",
-                "type": "hysteria2",
-                "server": host,
-                "port": port,
-                "password": password,
-                "obfs": obfs,
-                "tls": tls
-            }
-            return proxy
+        proxy = {
+            "name": unquote(uri.fragment) if uri.fragment else f"Hysteria2 {uri.hostname}:{uri.port}",
+            "type": "hysteria2",
+            "server": uri.hostname,
+            "port": int(uri.port),
+            "password": uri.username,
+            "sni": params.get('sni', [uri.hostname])[0],
+            "insecure": params.get('insecure', ['0'])[0] == '1',
+            "obfs": params.get('obfs', [None])[0],
+            "obfs-password": params.get('obfs-password', [None])[0],
+        }
+        proxy = {k: v for k, v in proxy.items() if v is not None}
+        return proxy
     except Exception as e:
-        print(f"解析 Hysteria2 节点时发生错误: {e}")
-    return {}
+        print(f"  - 解析 Hysteria2 节点时发生错误: {e}")
+        return {}
+
 
 def download_subscription(url):
     """下载并解析订阅链接，优先使用 wget，失败后尝试 requests"""
     content = attempt_download_using_wget(url)
     if content is None:
         content = attempt_download_using_requests(url)
+
     if content is None:
         print(f"  ❌ 两种下载方式均失败，跳过链接: {url}")
         return []
-    print(f"  下载内容长度: {len(content)}, 内容示例: {content[:100]}")  # 添加调试输出
-    # 判断内容是否为 Base64 编码
+
+    print(f"  - 下载内容长度: {len(content)}")
+    
+    # 尝试直接解析为YAML
+    proxies = parse_proxies_from_content(content)
+    if proxies:
+        return proxies
+
+    # 如果YAML解析失败或为空，再检查是否为Base64
     if is_base64(content):
+        print("  - 内容识别为 Base64，正在解码...")
         return decode_base64_and_parse(content)
-    return parse_proxies_from_content(content)
+        
+    print("  - 警告: 内容既不是有效的 YAML/JSON proxies 格式，也不是 Base64 编码。")
+    return []
 
 def test_single_proxy_tcp(proxy):
     """使用 TCP 连接测速（兼容所有协议）"""
     try:
         start = time.time()
-        sock = socket.create_connection(
-            (proxy['server'], proxy['port']),
-            timeout=SOCKET_TIMEOUT
-        )
-        sock.close()
-        proxy['delay'] = int((time.time() - start) * 1000)
-        return proxy
+        with socket.create_connection((proxy['server'], proxy['port']), timeout=SOCKET_TIMEOUT) as sock:
+            end = time.time()
+            proxy['delay'] = int((end - start) * 1000)
+            return proxy
     except Exception:
         return None
 
 def get_proxy_key(p):
     """生成代理节点的唯一标识"""
+    # 优先使用 uuid/password，然后是 server/port 组合
+    unique_part = p.get('uuid') or p.get('password') or ''
     return hashlib.md5(
-        f"{p.get('server','')}:{p.get('port',0)}|{p.get('uuid') or p.get('password') or ''}".encode()
+        f"{p.get('server','')}:{p.get('port',0)}|{unique_part}".encode()
     ).hexdigest()
 
 def is_valid_proxy(proxy):
     """验证代理节点的协议格式和有效性"""
+    if not isinstance(proxy, dict):
+        return False
     required_keys = ['name', 'server', 'port', 'type']
     if not all(key in proxy for key in required_keys):
         return False
     # 进一步检查协议类型
-    allowed_types = {'http', 'socks5', 'trojan', 'v2ray', 'ss', 'vmess', 'ssr', 'hysteria', 'hysteria2'}
+    allowed_types = {'http', 'socks5', 'trojan', 'vless', 'ss', 'vmess', 'ssr', 'hysteria', 'hysteria2'}
     if 'type' in proxy and proxy['type'] not in allowed_types:
         return False
     # 确保端口范围在有效范围内
-    if not (1 <= proxy['port'] <= 65535):
+    if not isinstance(proxy['port'], int) or not (1 <= proxy['port'] <= 65535):
         return False
     return True
 
@@ -500,7 +552,7 @@ def process_proxies(proxies):
     identified = []
     for p in proxies:
         if not is_valid_proxy(p):
-            print(f"  ❌ 无效节点被过滤: {p.get('name', '未知')}")
+            # print(f"  - 过滤无效节点: {p.get('name', '未知')}")
             continue
         name = JUNK_PATTERNS.sub('', FLAG_EMOJI_PATTERN.sub('', p.get('name', ''))).strip()
         for eng, chn in CHINESE_COUNTRY_MAP.items():
@@ -510,69 +562,55 @@ def process_proxies(proxies):
                 p['region_info'] = {'name': r_name, 'code': rules['code']}
                 identified.append(p)
                 break
+
     print(f"  - 节点过滤: 原始 {len(proxies)} -> 识别并保留 {len(identified)}")
+    
     final, counters = [], defaultdict(lambda: defaultdict(int))
     master_pattern = re.compile(
         '|'.join(sorted([p for r in CUSTOM_REGEX_RULES.values() for p in r['pattern'].split('|')], key=len, reverse=True)),
         re.IGNORECASE
     )
+    
     for p in identified:
         info = p['region_info']
         match = FLAG_EMOJI_PATTERN.search(p['name'])
-        if match:
-            flag = match.group(0)
-        else:
-            flag = get_country_flag_emoji(info['code'])
-        feature = re.sub(r'\s+', ' ', master_pattern.sub(' ', FLAG_EMOJI_PATTERN.sub('', p['name'], 1)).replace('-', ' ')).strip() or f"{sum(1 for fp in final if fp['region_info']['name'] == info['name']) + 1:02d}"
+        flag = match.group(0) if match else get_country_flag_emoji(info['code'])
+        
+        # 清理名称以提取特征
+        clean_name = master_pattern.sub('', FLAG_EMOJI_PATTERN.sub('', p['name'], 1)).strip()
+        clean_name = re.sub(r'^\W+|\W+$', '', clean_name) # 移除开头和结尾的非字母数字字符
+        feature = re.sub(r'\s+', ' ', clean_name).strip() or f"{info['code']}{sum(1 for fp in final if fp['region_info']['name'] == info['name']) + 1:02d}"
+        
         new_name = f"{flag} {info['name']} {feature}".strip()
         counters[info['name']][new_name] += 1
         if counters[info['name']][new_name] > 1:
             new_name += f" {counters[info['name']][new_name]}"
+        
         p['name'] = new_name
         final.append(p)
     return final
 
 def delete_old_yaml():
     """每周一晚上23:00删除旧的 YAML 文件"""
-    # 获取当前时间
     now = datetime.now(timezone(timedelta(hours=8)))  # 北京时间
-    if now.weekday() == 0 and now.hour == 23 and now.minute == 0:  # 周一23:00
+    # 周一(weekday()==0), 23:00-23:59
+    if now.weekday() == 0 and now.hour == 23:
         if os.path.exists(OUTPUT_FILE):
-            os.remove(OUTPUT_FILE)
-            print(f"✅ 已删除旧的配置文件: {OUTPUT_FILE}")
+            try:
+                os.remove(OUTPUT_FILE)
+                print(f"✅ 已根据计划删除旧的配置文件: {OUTPUT_FILE}")
+            except OSError as e:
+                print(f"❌ 删除旧配置文件时出错: {e}")
 
-def write_proxies_to_yaml(proxies):
-    """将代理节点写入 YAML 文件，并去重"""
+def generate_config(proxies):
+    """根据代理节点列表生成完整的 Clash 配置字典"""
     if not proxies:
-        return
-    if os.path.exists(OUTPUT_FILE):
-        with open(OUTPUT_FILE, 'r', encoding='utf-8') as f:
-            existing_data = yaml.safe_load(f) or []
-            existing_keys = {get_proxy_key(p) for p in existing_data}  # 基于唯一键去重
-            new_proxies = [p for p in proxies if get_proxy_key(p) not in existing_keys]
-    else:
-        new_proxies = proxies
-
-    # 测速原有节点
-    if ENABLE_SPEED_TEST:
-        print("🔍 开始测速原有节点...")
-        tested_existing_nodes = []
-        with concurrent.futures.ThreadPoolExecutor(MAX_TEST_WORKERS) as executor:
-            tested_existing_nodes = list(executor.map(test_single_proxy_tcp, existing_data))
-        
-        # 过滤测速后有效的节点
-        valid_existing_nodes = [p for p in tested_existing_nodes if p]
-        print(f"📊 测试完成，{len(valid_existing_nodes)} / {len(existing_data)} 原有节点有效。")
-        
-        # 合并新节点与有效的原有节点
-        proxies = valid_existing_nodes + new_proxies
-
-    if new_proxies:
-        with open(OUTPUT_FILE, 'a', encoding='utf-8') as f:  # 持续增量写入
-            yaml.dump(new_proxies, f, allow_unicode=True, sort_keys=False, indent=2)
-        print(f"✅ 已增量写入 {len(new_proxies)} 个新节点到 {OUTPUT_FILE}。")
-    else:
-        print("📌 无新增节点，跳过写入。")
+        return None
+    # 仅包含proxies键，使其成为一个有效的Clash代理提供者文件
+    config = {
+        'proxies': proxies,
+    }
+    return config
 
 async def main():
     """主函数"""
@@ -582,44 +620,88 @@ async def main():
     # 周一删除旧文件
     delete_old_yaml()
 
-    print("\n[1/4] 从 Telegram 抓取、下载并合并节点...")
+    # --- 步骤 1: 从 Telegram 抓取新节点 ---
+    print("\n[1/5] 从 Telegram 抓取新节点...")
     urls = await scrape_telegram_links()
-    if not urls:
-        sys.exit("\n❌ 未找到任何有效订阅链接，脚本终止。")
+    new_proxies_list = [p for url in urls for p in download_subscription(url) if p] if urls else []
     
-    proxies = {get_proxy_key(p): p for url in urls for p in download_subscription(url) if p}
-    if not proxies:
-        sys.exit("\n❌ 下载和解析后，无有效节点，脚本终止。")
+    # 去重抓取到的新节点
+    new_proxies_map = {}
+    for p in new_proxies_list:
+        key = get_proxy_key(p)
+        if key not in new_proxies_map:
+            new_proxies_map[key] = p
+    print(f"✅ 从 Telegram 抓取并去重后，获得 {len(new_proxies_map)} 个新节点。")
     
-    print(f"✅ 合并去重后共 {len(proxies)} 个节点。")
-    write_proxies_to_yaml(list(proxies.values()))  # 写入YAML文件
+    # --- 步骤 2: 读取现有节点 ---
+    print("\n[2/5] 读取现有节点...")
+    existing_proxies = []
+    if os.path.exists(OUTPUT_FILE):
+        try:
+            with open(OUTPUT_FILE, 'r', encoding='utf-8') as f:
+                loaded_yaml = yaml.safe_load(f)
+                if isinstance(loaded_yaml, dict) and 'proxies' in loaded_yaml:
+                    # 确保读取的是一个列表
+                    if isinstance(loaded_yaml['proxies'], list):
+                        existing_proxies = [p for p in loaded_yaml['proxies'] if isinstance(p, dict)]
+                        print(f"  - 成功读取 {len(existing_proxies)} 个现有节点。")
+                elif isinstance(loaded_yaml, list): # 兼容旧的纯列表格式
+                    existing_proxies = [p for p in loaded_yaml if isinstance(p, dict)]
+                    print(f"  - 成功读取 {len(existing_proxies)} 个现有节点 (来自旧的列表格式)。")
+        except Exception as e:
+            print(f"  - 警告: 读取或解析 {OUTPUT_FILE} 失败: {e}。")
 
-    print("\n[2/4] 过滤与重命名节点...")
-    processed = process_proxies(list(proxies.values()))
+    # --- 步骤 3: 合并并去重所有节点 ---
+    print("\n[3/5] 合并并去重节点...")
+    all_proxies_map = {get_proxy_key(p): p for p in existing_proxies}
+    added_count = 0
+    for key, p in new_proxies_map.items():
+        if key not in all_proxies_map:
+            all_proxies_map[key] = p
+            added_count += 1
+    
+    all_proxies_list = list(all_proxies_map.values())
+    print(f"✅ 合并完成: 新增 {added_count} 个节点，总计 {len(all_proxies_list)} 个不重复节点。")
+    
+    if not all_proxies_list:
+        sys.exit("\n❌ 无任何可用节点，脚本终止。")
+    
+    # --- 步骤 4: 过滤、重命名、测速与排序 ---
+    print("\n[4/5] 处理、测速与排序节点...")
+    processed = process_proxies(all_proxies_list)
     if not processed:
-        sys.exit("\n❌ 过滤后无任何可用节点，脚本终止。")
-    print("\n[3/4] TCP 测速与最终排序...")
+        sys.exit("\n❌ 过滤和重命名后无任何可用节点，脚本终止。")
+
     final = processed
     if ENABLE_SPEED_TEST:
-        print(f"  - 开始 TCP 连接测速（超时: {SOCKET_TIMEOUT}秒）...")
+        print(f"  - 开始 TCP 连接测速（超时: {SOCKET_TIMEOUT}秒, 并发: {MAX_TEST_WORKERS}）...")
         with concurrent.futures.ThreadPoolExecutor(MAX_TEST_WORKERS) as executor:
             tested = list(executor.map(test_single_proxy_tcp, processed))
+        
         final = [p for p in tested if p]
         print(f"  - 测速完成, {len(final)} / {len(processed)} 个节点可用。")
+        
         if not final:
             print("\n  ⚠️ 警告: 测速后无可用节点，将使用所有过滤后的节点。")
             final = processed
-    final.sort(key=lambda p: (REGION_PRIORITY.index(p['region_info']['name']), p.get('delay', 9999)))
+    
+    # 排序
+    final.sort(key=lambda p: (REGION_PRIORITY.index(p['region_info']['name']) if p['region_info']['name'] in REGION_PRIORITY else 99, p.get('delay', 9999)))
     print(f"✅ 最终处理完成 {len(final)} 个节点。")
-    print("\n[4/4] 生成最终配置文件...")
+    
+    # --- 步骤 5: 生成并写入最终配置文件 ---
+    print("\n[5/5] 生成最终配置文件...")
     config = generate_config(final)
     if not config:
         sys.exit("\n❌ 无法生成配置文件。")
-    
+
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
-    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-        yaml.dump(config, f, allow_unicode=True, sort_keys=False, indent=2)
-    print(f"✅ 配置文件已成功保存至: {OUTPUT_FILE}\n\n🎉 任务全部完成！")
+    try:
+        with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
+            yaml.dump(config, f, allow_unicode=True, sort_keys=False, indent=2)
+        print(f"✅ 配置文件已成功保存至: {OUTPUT_FILE}\n\n🎉 任务全部完成！")
+    except Exception as e:
+        print(f"❌ 写入最终配置文件时出错: {e}")
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    asyncio.run(main())```
