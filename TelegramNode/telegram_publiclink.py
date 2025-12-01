@@ -1,17 +1,16 @@
 # 文件名: TelegramNode/telegram_publiclink.py
 # -*- coding: utf-8 -*-
 # ============================================================================
-# Clash 订阅自动生成脚本 V1.R5
+# Clash 订阅自动生成脚本 V1.R6
 #
 # 版本历史:
-# V1.R5 (20251201) - 终极健壮性修复
-#   - 新增对 REALITY short-id 的十六进制内容验证，彻底杜绝无效 short-id 引发的异常。
+# V1.R6 (20251201) - 终极修复
+#   - 在节点验证中增加对 UUID 格式的正则表达式校验，彻底解决因 uuid 格式错误导致的异常。
+#   - 增强订阅解码能力，兼容多重 Base64 编码。
+# V1.R5 (20251201) - 健壮性修复
+#   - 新增对 REALITY short-id 的十六进制内容验证。
 # V1.R4 (20251201) - 全面验证修复
 #   - 新增全面的节点验证与净化函数 (is_proxy_valid_and_sanitize)。
-#   - 对所有节点进行严格的格式和数据类型检查，从根本上杜绝解析错误。
-# V1.R3 (20251201) - 健壮性修复 & 逻辑优化
-#   - 强化 REALITY 节点验证，处理 short-id 为空格或类型错误等边缘情况。
-#   - 修正重命名逻辑，确保生成的旗帜 Emoji 与识别出的地区严格一致。
 # ============================================================================
 import os
 import re
@@ -115,6 +114,9 @@ CUSTOM_REGEX_RULES = {
 
 JUNK_PATTERNS = re.compile(r"(?:专线|IPLC|IEPL|BGP|体验|官网|倍率|x\d[\.\d]*|Rate|[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*|Relay|流量)", re.IGNORECASE)
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
+# 终极修复：增加 UUID 格式的正则表达式
+UUID_REGEX = re.compile(r'^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$')
+
 
 # =================================================================================
 # Part 2: 函数定义
@@ -190,35 +192,42 @@ def get_country_flag_emoji(code):
     return "".join(chr(0x1F1E6 + ord(c.upper()) - ord('A')) for c in code) if code and len(code) == 2 else "❓"
 
 def download_subscription(url):
-    """下载并解析订阅链接"""
+    """下载并解析订阅链接，增强对多重编码的兼容性"""
     print(f"  ⬇️ 正在下载: {url[:80]}...")
     if not shutil.which("wget"):
         print("  ✗ 错误: wget 未安装。")
         return []
     try:
-        content = subprocess.run(
+        content_bytes = subprocess.run(
             ["wget", "-O", "-", "--timeout=30", "--header=User-Agent: Clash", url],
-            capture_output=True, text=True, check=True
+            capture_output=True, check=True
         ).stdout
-        if not content:
+        if not content_bytes:
             print("  ✗ 下载内容为空。")
             return []
+
+        decoded_content = None
+        # 尝试直接解析
         try:
-            return yaml.safe_load(content).get('proxies', [])
-        except yaml.YAMLError:
-            try:
-                # 兼容性处理，某些订阅链接可能需要多次 b64decode
-                decoded_content = content
-                for _ in range(3): # 最多尝试解码3次
+            return yaml.safe_load(content_bytes).get('proxies', [])
+        except (yaml.YAMLError, UnicodeDecodeError):
+            # 尝试 Base64 解码
+            temp_content = content_bytes
+            for _ in range(3): # 最多尝试解码3次
+                try:
+                    temp_content = base64.b64decode(temp_content, validate=True)
                     try:
-                        decoded_content = base64.b64decode(decoded_content).decode('utf-8')
+                        # 尝试将解码后的 bytes 转为 utf-8 string
+                        decoded_content = temp_content.decode('utf-8')
+                        # 如果解码后的内容看起来像一个配置文件，就使用它
                         if 'proxies' in decoded_content:
-                            break # 如果解码后内容包含 proxies 关键词，可能就是 yaml 了
-                    except Exception:
-                        break # 如果解码失败，跳出循环
-                return yaml.safe_load(decoded_content).get('proxies', [])
-            except Exception:
-                return [] # 各种解码和解析都失败
+                            return yaml.safe_load(decoded_content).get('proxies', [])
+                    except UnicodeDecodeError:
+                        continue # 解码成字符串失败，但可能下一次 base64 解码后可以
+                except Exception:
+                    # 解码失败，说明不是有效的 base64，或已解码完成
+                    break
+        return [] # 所有尝试都失败
     except Exception as e:
         print(f"  ✗ 下载或解析时出错: {e}")
         return []
@@ -226,7 +235,9 @@ def download_subscription(url):
 def get_proxy_key(p):
     """生成代理节点的唯一标识"""
     port_str = str(p.get('port', 0))
-    return hashlib.md5(f"{p.get('server','')}:{port_str}|{p.get('uuid') or p.get('password') or ''}".encode()).hexdigest()
+    # 为vless/vmess添加uuid，为trojan/ss添加password以确保唯一性
+    unique_part = p.get('uuid') or str(p.get('password'))
+    return hashlib.md5(f"{p.get('server','')}:{port_str}|{unique_part}".encode()).hexdigest()
 
 def is_proxy_valid_and_sanitize(p):
     """
@@ -248,11 +259,14 @@ def is_proxy_valid_and_sanitize(p):
     # 3. 协议特定字段验证
     proxy_type = p.get('type')
     if proxy_type in ['vless', 'vmess']:
-        if not p.get('uuid') or not isinstance(p.get('uuid'), str): return False
+        # 终极修复：验证UUID是否存在、为字符串，并符合标准格式
+        uuid = p.get('uuid')
+        if not uuid or not isinstance(uuid, str) or not UUID_REGEX.match(uuid):
+            return False
     elif proxy_type in ['ss', 'trojan']:
         if 'password' not in p: return False
     
-    # 4. REALITY 配置验证 (最关键的修复)
+    # 4. REALITY 配置验证
     if 'reality-opts' in p:
         if proxy_type not in ['vless', 'trojan']: return False
         
@@ -260,13 +274,11 @@ def is_proxy_valid_and_sanitize(p):
         if not isinstance(reality_opts, dict) or 'public-key' not in reality_opts: return False
 
         short_id = reality_opts.get('short-id')
-        # 4a. 验证 short_id: 必须存在, 是字符串, 且去除空格后不为空
         if not short_id or not isinstance(short_id, str) or not short_id.strip(): return False
-        # 4b. 终极验证: short_id 必须是有效的十六进制字符串
         try:
             int(short_id, 16)
         except ValueError:
-            return False # 包含非十六进制字符，无效
+            return False # short-id 包含非十六进制字符
 
     return True
 
@@ -339,7 +351,7 @@ def generate_config(proxies):
 
 async def main():
     """主函数"""
-    print("=" * 60 + f"\nClash 订阅自动生成脚本 V1.R5 @ {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S %Z')}\n" + "=" * 60)
+    print("=" * 60 + f"\nClash 订阅自动生成脚本 V1.R6 @ {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S %Z')}\n" + "=" * 60)
     preprocess_regex_rules()
     
     print("\n[1/4] 从 Telegram 抓取、下载并合并节点...")
