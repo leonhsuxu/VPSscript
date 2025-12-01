@@ -15,22 +15,6 @@ dns:
   - https://dns.google/dns-query
   - https://1.1.1.1/dns-query
 proxies:
-- name: 🇭🇰 香港 _110
-  type: vmess
-  server: ae709d15-sv0xs0-svim0o-1slop.hk3.p5pv.com
-  port: 80
-  uuid: 520b9126-9870-11ef-81b0-f23c9164ca5d
-  alterId: '2'
-  cipher: ws
-  tls: false
-- name: 🇭🇰 香港 _114
-  type: vmess
-  server: 73cc68dd-sv0xs0-t76x2i-wj6v.hk3.p5pv.com
-  port: 80
-  uuid: 847c03b2-0a9d-11eb-a8bf-f23c91cfbbc9
-  alterId: '2'
-  cipher: ws
-  tls: false
 - name: 🇭🇰 香港 _3 | ⬇️ 1.0MB/s
   type: trojan
   server: 58.152.18.95
@@ -40,115 +24,6 @@ proxies:
   sni: t.me/ripaojiedian
   skip-cert-verify: true
   network: tcp
-- name: 🇭🇰 香港 _102
-  type: vmess
-  server: 486a4149-t0bog0-t14dgl-duku.hk3.p5pv.com
-  port: 80
-  uuid: 8e0f8ef2-5fe3-11ec-a8bf-f23c91cfbbc9
-  alterId: '2'
-  cipher: ws
-  tls: false
-- name: 🇭🇰 香港 _215
-  type: vmess
-  server: 6bbeaaf6-sv4n40-t8tsp0-1szmi.hk3.p5pv.com
-  port: 80
-  uuid: ba151628-b3a2-11ef-bdb9-f23c91cfbbc9
-  alterId: '2'
-  cipher: ws
-  tls: false
-- name: 🇭🇰 香港 _218
-  type: vmess
-  server: 7f074f62-sv6hs0-tdh9w7-ahsb.hk3.p5pv.com
-  port: 80
-  uuid: 2e42c1ee-aaaa-11ec-bb74-f23c9164ca5d
-  alterId: '2'
-  cipher: ws
-  tls: false
-- name: 🇭🇰 香港 _125
-  type: vmess
-  server: 28044739-sv2sg0-t1jamc-1fvdh.hk3.p5pv.com
-  port: 80
-  uuid: 9e1ddc04-073b-11ed-bd7c-f23c913c8d2b
-  alterId: '2'
-  cipher: ws
-  tls: false
-- name: 🇭🇰 香港 _101
-  type: vmess
-  server: aeb50015-t02f40-t9byd7-1jfvb.hk3.p5pv.com
-  port: 80
-  uuid: 06b2ac52-fcc6-11ec-bb74-f23c9164ca5d
-  alterId: '2'
-  cipher: ws
-  tls: false
-- name: 🇭🇰 香港 _187
-  type: vmess
-  server: c22fc613-sv2sg0-t4qa9y-g43g.hk3.p5pv.com
-  port: 80
-  uuid: 6ddb6a68-d5f5-ca30-3943-cf0c9876d50c
-  alterId: '2'
-  cipher: ws
-  tls: false
-- name: 🇭🇰 香港 _65
-  type: vmess
-  server: 4cdbea97-t53wg0-to8xn3-l4nv.hk3.p5pv.com
-  port: 80
-  uuid: 1469e09e-027c-11ec-a0fc-f23c913c8d2b
-  alterId: '2'
-  cipher: ws
-  tls: false
-- name: 🇭🇰 香港 IEPL
-  type: ss
-  server: gd.bjnet2.com
-  port: 36602
-  cipher: aes-128-gcm
-  password: 84d85af8-2807-4306-a701-f784676b77c3
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇭🇰 香港 04|白嫖机场. k 2
-  type: vmess
-  server: baipiaojichangink.huahuasuansuan.cfd
-  port: 80
-  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇭🇰 香港 04|白嫖机场. k
-  type: vmess
-  server: baipiaojichangink.huahuasuansuan.cfd
-  port: 80
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇭🇰 香港 _197
-  type: vmess
-  server: f92a4a6b-sv2sg0-swkmdk-1imi4.hk3.p5pv.com
-  port: 80
-  uuid: 40fb1315-191a-11ed-b0ca-f23c91cfbbc9
-  alterId: '2'
-  cipher: ws
-  tls: false
-- name: 🇭🇰 香港 _120
-  type: vmess
-  server: 2bc8c2b4-sv0xs0-tcr97d-2b2n.hk3.p5pv.com
-  port: 80
-  uuid: fcd39788-ca23-11ed-86e2-f23c913c8d2b
-  alterId: '2'
-  cipher: ws
-  tls: false
 - name: 🇭🇰 香港 _136
   type: vmess
   server: 0afadb4a-sv4n40-tc61cs-1tja8.hk3.p5pv.com
@@ -165,11 +40,83 @@ proxies:
   alterId: '2'
   cipher: ws
   tls: false
-- name: 🇭🇰 香港 _109
+- name: 🇭🇰 香港 _218
   type: vmess
-  server: 14269f63-t049s0-t1kmeg-mv7m.hk3.p5pv.com
+  server: 7f074f62-sv6hs0-tdh9w7-ahsb.hk3.p5pv.com
   port: 80
-  uuid: 94d40708-8273-11ea-8fc9-f23c913c8d2b
+  uuid: 2e42c1ee-aaaa-11ec-bb74-f23c9164ca5d
+  alterId: '2'
+  cipher: ws
+  tls: false
+- name: 🇭🇰 香港 _120
+  type: vmess
+  server: 2bc8c2b4-sv0xs0-tcr97d-2b2n.hk3.p5pv.com
+  port: 80
+  uuid: fcd39788-ca23-11ed-86e2-f23c913c8d2b
+  alterId: '2'
+  cipher: ws
+  tls: false
+- name: 🇭🇰 香港 _65
+  type: vmess
+  server: 4cdbea97-t53wg0-to8xn3-l4nv.hk3.p5pv.com
+  port: 80
+  uuid: 1469e09e-027c-11ec-a0fc-f23c913c8d2b
+  alterId: '2'
+  cipher: ws
+  tls: false
+- name: 🇭🇰 香港 _114
+  type: vmess
+  server: 73cc68dd-sv0xs0-t76x2i-wj6v.hk3.p5pv.com
+  port: 80
+  uuid: 847c03b2-0a9d-11eb-a8bf-f23c91cfbbc9
+  alterId: '2'
+  cipher: ws
+  tls: false
+- name: 🇭🇰 香港 _101
+  type: vmess
+  server: aeb50015-t02f40-t9byd7-1jfvb.hk3.p5pv.com
+  port: 80
+  uuid: 06b2ac52-fcc6-11ec-bb74-f23c9164ca5d
+  alterId: '2'
+  cipher: ws
+  tls: false
+- name: 🇭🇰 香港 _197
+  type: vmess
+  server: f92a4a6b-sv2sg0-swkmdk-1imi4.hk3.p5pv.com
+  port: 80
+  uuid: 40fb1315-191a-11ed-b0ca-f23c91cfbbc9
+  alterId: '2'
+  cipher: ws
+  tls: false
+- name: 🇭🇰 香港 _110
+  type: vmess
+  server: ae709d15-sv0xs0-svim0o-1slop.hk3.p5pv.com
+  port: 80
+  uuid: 520b9126-9870-11ef-81b0-f23c9164ca5d
+  alterId: '2'
+  cipher: ws
+  tls: false
+- name: 🇭🇰 香港 _215
+  type: vmess
+  server: 6bbeaaf6-sv4n40-t8tsp0-1szmi.hk3.p5pv.com
+  port: 80
+  uuid: ba151628-b3a2-11ef-bdb9-f23c91cfbbc9
+  alterId: '2'
+  cipher: ws
+  tls: false
+- name: 🇭🇰 香港 _192
+  type: vmess
+  server: bb9bfc22-svc1s0-szegoe-12hj8.hk3.p5pv.com
+  port: 80
+  uuid: 5acc7a7c-d7ea-11eb-8673-f23c9164ca5d
+  alterId: '2'
+  cipher: ws
+  tls: false
+- name: 🇭🇰 香港 _187
+  type: vmess
+  server: c22fc613-sv2sg0-t4qa9y-g43g.hk3.p5pv.com
+  port: 80
+  uuid: 6ddb6a68-d5f5-ca30-3943-cf0c9876d50c
   alterId: '2'
   cipher: ws
   tls: false
@@ -189,11 +136,64 @@ proxies:
   alterId: '2'
   cipher: ws
   tls: false
-- name: 🇭🇰 香港 _192
+- name: 🇭🇰 香港 IEPL
+  type: ss
+  server: gd.bjnet2.com
+  port: 36602
+  cipher: aes-128-gcm
+  password: 84d85af8-2807-4306-a701-f784676b77c3
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+- name: 🇭🇰 香港 04|白嫖机场. k 2
   type: vmess
-  server: bb9bfc22-svc1s0-szegoe-12hj8.hk3.p5pv.com
+  server: baipiaojichangink.huahuasuansuan.cfd
   port: 80
-  uuid: 5acc7a7c-d7ea-11eb-8673-f23c9164ca5d
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+- name: 🇭🇰 香港 04|白嫖机场. k
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 80
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+- name: 🇭🇰 香港 _125
+  type: vmess
+  server: 28044739-sv2sg0-t1jamc-1fvdh.hk3.p5pv.com
+  port: 80
+  uuid: 9e1ddc04-073b-11ed-bd7c-f23c913c8d2b
+  alterId: '2'
+  cipher: ws
+  tls: false
+- name: 🇭🇰 香港 _109
+  type: vmess
+  server: 14269f63-t049s0-t1kmeg-mv7m.hk3.p5pv.com
+  port: 80
+  uuid: 94d40708-8273-11ea-8fc9-f23c913c8d2b
+  alterId: '2'
+  cipher: ws
+  tls: false
+- name: 🇭🇰 香港 _130
+  type: vmess
+  server: b8ffcda3-sv2sg0-sv37gm-81nv.hk3.p5pv.com
+  port: 80
+  uuid: 47e91fb6-25b8-df52-bc18-3cdc8548192f
   alterId: '2'
   cipher: ws
   tls: false
@@ -205,11 +205,11 @@ proxies:
   alterId: '2'
   cipher: ws
   tls: false
-- name: 🇭🇰 香港 _130
+- name: 🇭🇰 香港 _102
   type: vmess
-  server: b8ffcda3-sv2sg0-sv37gm-81nv.hk3.p5pv.com
+  server: 486a4149-t0bog0-t14dgl-duku.hk3.p5pv.com
   port: 80
-  uuid: 47e91fb6-25b8-df52-bc18-3cdc8548192f
+  uuid: 8e0f8ef2-5fe3-11ec-a8bf-f23c91cfbbc9
   alterId: '2'
   cipher: ws
   tls: false
@@ -224,12 +224,6 @@ proxies:
   plugin-opts:
     mode: http
     host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇯🇵 日本 _3 | ⬇️ 1.4MB/s
-  type: ss
-  server: 45.83.22.118
-  port: 5223
-  password: NS8BriBL9gcPEHTXiN66aT
-  cipher: chacha20-ietf-poly1305
 - name: 🇯🇵 日本 _4 | ⬇️ 2.3MB/s
   type: trojan
   server: 37.202.200.19
@@ -239,6 +233,12 @@ proxies:
   sni: 37.202.200.19
   skip-cert-verify: true
   network: tcp
+- name: 🇯🇵 日本 _3 | ⬇️ 1.4MB/s
+  type: ss
+  server: 45.83.22.118
+  port: 5223
+  password: NS8BriBL9gcPEHTXiN66aT
+  cipher: chacha20-ietf-poly1305
 - name: 🇯🇵 日本 IEPL GPT
   type: ss
   server: gd.bjnet2.com
@@ -254,7 +254,7 @@ proxies:
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 8080
-  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
   alterId: 0
   cipher: auto
   udp: true
@@ -267,7 +267,7 @@ proxies:
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 8080
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
   alterId: 0
   cipher: auto
   udp: true
@@ -291,7 +291,7 @@ proxies:
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 8880
-  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
   alterId: 0
   cipher: auto
   udp: true
@@ -304,7 +304,7 @@ proxies:
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 8880
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
   alterId: 0
   cipher: auto
   udp: true
@@ -317,7 +317,7 @@ proxies:
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 2082
-  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
   alterId: 0
   cipher: auto
   udp: true
@@ -330,7 +330,7 @@ proxies:
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 2082
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
   alterId: 0
   cipher: auto
   udp: true
@@ -343,7 +343,7 @@ proxies:
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 2086
-  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
   alterId: 0
   cipher: auto
   udp: true
@@ -353,6 +353,19 @@ proxies:
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
 - name: 🇺🇸 印度 04|白嫖机场. k 2
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 2052
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+- name: 🇺🇸 印度 04|白嫖机场. k
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 2052
@@ -369,20 +382,7 @@ proxies:
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 2086
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇺🇸 印度 04|白嫖机场. k
-  type: vmess
-  server: baipiaojichangink.huahuasuansuan.cfd
-  port: 2052
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
   alterId: 0
   cipher: auto
   udp: true
@@ -402,15 +402,27 @@ proxies:
   plugin-opts:
     mode: http
     host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇻🇳 越南 _2 | ⬇️ 1.6MB/s
-  type: ss
-  server: 103.186.155.64
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
 - name: 🇻🇳 越南 _1 | ⬇️ 1.3MB/s
   type: ss
   server: 103.186.154.195
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 越南 _2 | ⬇️ 1.4MB/s
+  type: ss
+  server: 103.186.154.56
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 越南 _3 | ⬇️ 1.4MB/s
+  type: ss
+  server: 103.186.154.188
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 越南 _2 | ⬇️ 1.6MB/s
+  type: ss
+  server: 103.186.155.64
   port: 38388
   password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
   cipher: aes-256-cfb
@@ -432,18 +444,6 @@ proxies:
   port: 38388
   password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
   cipher: aes-256-cfb
-- name: 🇻🇳 越南 _3 | ⬇️ 1.4MB/s
-  type: ss
-  server: 103.186.154.188
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 🇻🇳 越南 _2 | ⬇️ 1.4MB/s
-  type: ss
-  server: 103.186.154.56
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
 - name: 🇻🇳 越南 IEPL
   type: ss
   server: gd.bjnet2.com
@@ -455,50 +455,6 @@ proxies:
   plugin-opts:
     mode: http
     host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇺🇸 美国 _27 | ⬇️ 2.9MB/s
-  type: vmess
-  server: 82.198.246.97
-  port: 180
-  cipher: auto
-  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
-  alterId: 0
-  tls: false
-  skip-cert-verify: true
-  servername: ''
-  network: tcp
-- name: 🇺🇸 美国 48
-  server: 38.14.99.163
-  port: 59807
-  type: vmess
-  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
-  alterId: 0
-  cipher: auto
-  tls: false
-  skip-cert-verify: false
-- name: 🇺🇸 美国 46
-  server: 38.14.99.179
-  port: 59807
-  type: vmess
-  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
-  alterId: 0
-  cipher: auto
-  tls: false
-  skip-cert-verify: false
-- name: 🇺🇸 美国 _26 | ⬇️ 6.2MB/s
-  type: vmess
-  server: 74.117.196.232
-  port: 37934
-  cipher: auto
-  uuid: 6d600864-32da-49fd-baf4-7df051762454
-  alterId: 0
-  tls: true
-  skip-cert-verify: true
-  servername: imafake.locker
-  network: ws
-  ws-opts:
-    path: /speedtest
-    headers:
-      host: imafake.locker
 - name: 🇺🇸 美国 _30 | ⬇️ 5.1MB/s
   type: vmess
   server: 74.117.196.232
@@ -514,118 +470,42 @@ proxies:
     path: /speedtest
     headers:
       host: imafake.locker
-- name: 🇺🇸 美国 41
-  server: 107.174.82.102.sslip.io
-  port: 443
+- name: 🇺🇸 美国 _26 | ⬇️ 6.2MB/s
   type: vmess
-  uuid: bb824a22-b7ce-427b-9ed6-1adf0751da02
-  alterId: 0
+  server: 74.117.196.232
+  port: 37934
   cipher: auto
+  uuid: 6d600864-32da-49fd-baf4-7df051762454
+  alterId: 0
   tls: true
-  skip-cert-verify: false
+  skip-cert-verify: true
+  servername: imafake.locker
   network: ws
   ws-opts:
-    path: /Ov7HrgwlEcRugowKV
+    path: /speedtest
     headers:
-      Host: 107.174.82.102.sslip.io
-- name: 🇺🇸 美国 | |@x|53
+      host: imafake.locker
+- name: 🇺🇸 美国 (mibei77.com 米贝节点分享) 16
+  server: pupas-shirting-unsung.freesocks.work
+  port: 443
   type: ss
+  cipher: chacha20-ietf-poly1305
+  password: p78naCf2EfOlRSLTX0wFVx
+  udp: true
+- name: 🇺🇸 美国 (mibei77.com 米贝节点分享) 19
   server: 23.95.75.146
   port: 443
-  password: NDRySIABARbErNIVsCNVkyYAHiBzhveT
+  type: ss
   cipher: chacha20-ietf-poly1305
-- name: 🇺🇸 美国 58
-  server: 152.70.92.69
-  port: 80
-  type: vmess
-  uuid: bb9c3993-a4b9-4dad-aeb9-ac86371ae68b
-  alterId: 0
-  cipher: auto
-  tls: false
-  skip-cert-verify: false
-- name: 🇺🇸 美国 61
-  server: 47.243.69.126
-  port: 31904
-  type: vmess
-  uuid: 22550b74-3ebf-49b5-ea36-3078b5d47ed9
-  alterId: 0
-  cipher: auto
-  tls: false
-  skip-cert-verify: false
-- name: 🇺🇸 美国 62
-  server: www.zhoubowen.vip
+  password: NDRySIABARbErNIVsCNVkyYAHiBzhveT
+  udp: true
+- name: 🇺🇸 美国 (mibei77.com 米贝节点分享) 8
+  server: 103.106.3.82
   port: 443
-  type: vmess
-  uuid: 71b2655e-07d9-4dad-a770-a2b08275142b
-  alterId: 0
-  cipher: auto
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /biutefor.icu
-    headers:
-      Host: www.zhoubowen.vip
-- name: 🇺🇸 美国 56
-  server: fn.130519.xyz
-  port: 8443
-  type: vmess
-  uuid: 19aebb35-b458-4d0c-b767-2adb39e6bb02
-  alterId: 0
-  cipher: auto
-  tls: true
-  skip-cert-verify: false
-  servername: deji.186507.xyz
-  network: ws
-  ws-opts:
-    path: /19aebb35-b458-4d0c-b767-2adb39e6bb02-vm
-    headers:
-      Host: deji.186507.xyz
-- name: 🇺🇸 美国 52
-  server: dd.openaccessnode.com
-  port: 5230
-  type: vmess
-  uuid: 77238c49-bd20-e407-f05e-0c073ad08fdb
-  alterId: 0
-  cipher: auto
-  tls: false
-  skip-cert-verify: false
-- name: 🇺🇸 美国 12
-  server: bestcdn2.868863.xyz
-  port: 2083
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248838279.796812.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      Host: 17642248838279.796812.xyz
-- name: 🇺🇸 美国 13
-  server: bestcdn2.868863.xyz
-  port: 2087
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832844.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248832844.796813.xyz
-- name: 🇺🇸 美国 14
-  server: bestcdn2.868863.xyz
-  port: 2096
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248837494.206355.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248837494.206355.xyz
+  type: ss
+  cipher: chacha20-ietf-poly1305
+  password: 4SaCIazlgumYkM8FkPzlmwjpyWBDZFBk
+  udp: true
 - name: 🇺🇸 美国 (mibei77.com 米贝节点分享) 12
   server: switcher-nick-croquet.freesocks.work
   port: 443
@@ -640,37 +520,6 @@ proxies:
   cipher: chacha20-ietf-poly1305
   password: 9tqhMdIrTkgQ46PvhyAtMH
   udp: true
-- name: 🇺🇸 美国 22
-  server: bestcdn5.868863.xyz
-  port: 2053
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832331.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248832331.796813.xyz
-- name: 🇺🇸 美国 23
-  server: bestcdn5.868863.xyz
-  port: 8443
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248833040.206355.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248833040.206355.xyz
-- name: 🇺🇸 美国 (mibei77.com 米贝节点分享) 16
-  server: pupas-shirting-unsung.freesocks.work
-  port: 443
-  type: ss
-  cipher: chacha20-ietf-poly1305
-  password: p78naCf2EfOlRSLTX0wFVx
-  udp: true
 - name: 🇺🇸 美国 IEPL GPT
   type: ss
   server: gd.bjnet2.com
@@ -682,66 +531,6 @@ proxies:
   plugin-opts:
     mode: http
     host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇺🇸 美国 8
-  server: bestcdn4.868863.xyz
-  port: 2053
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832420.796812.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      Host: 17642248832420.796812.xyz
-- name: 🇺🇸 美国 20
-  server: bestcdn4.868863.xyz
-  port: 2083
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248834335.206355.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248834335.206355.xyz
-- name: 🇺🇸 美国 19
-  server: bestcdn4.868863.xyz
-  port: 8443
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248839907.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248839907.796813.xyz
-- name: 🇺🇸 美国 4
-  server: bestcdn4.868863.xyz
-  port: 2087
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248839754.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248839754.796813.xyz
-- name: 🇺🇸 美国 18
-  server: bestcdn4.868863.xyz
-  port: 2096
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248833097.796812.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      Host: 17642248833097.796812.xyz
 - name: 🇺🇸 美国 (mibei77.com 米贝节点分享) 2
   server: 89.46.233.148
   port: 443
@@ -749,78 +538,16 @@ proxies:
   cipher: chacha20-ietf-poly1305
   password: XeGAcwaviWxXzg87AwvnE6gWbhHHGwwB
   udp: true
-- name: 🇺🇸 美国 9
-  server: bestcdn1.868863.xyz
-  port: 2053
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248831496.796812.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      Host: 17642248831496.796812.xyz
-- name: 🇺🇸 美国 10
-  server: bestcdn1.868863.xyz
-  port: 2096
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832011.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248832011.796813.xyz
-- name: 🇺🇸 美国 11
-  server: bestcdn1.868863.xyz
-  port: 2087
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248838532.206355.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248838532.206355.xyz
-- name: 🇺🇸 美国 17
-  server: bestcdn3.868863.xyz
-  port: 2053
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248833842.206355.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248833842.206355.xyz
-- name: 🇺🇸 美国 15
-  server: bestcdn3.868863.xyz
-  port: 2087
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248835602.796812.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      Host: 17642248835602.796812.xyz
-- name: 🇺🇸 美国 16
-  server: bestcdn3.868863.xyz
-  port: 2083
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832588.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248832588.796813.xyz
+- name: 🇬🇧 英国 (mibei77.com 米贝节点分享) 4
+  server: 82.198.246.97
+  port: 180
+  type: vmess
+  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: true
+  udp: true
 - name: 🇬🇧 英国 (mibei77.com 米贝节点分享)
   server: 146.19.49.251
   port: 443
@@ -846,6 +573,20 @@ proxies:
   plugin-opts:
     mode: http
     host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+- name: 🇷🇺 俄罗斯 (mibei77.com 米贝节点分享)
+  server: 109.71.246.210
+  port: 56689
+  type: ss
+  cipher: chacha20-ietf-poly1305
+  password: YQCSKoCF3QazW8YlvDBWA4
+  udp: true
+- name: 🇷🇺 俄罗斯 (mibei77.com 米贝节点分享) 2
+  server: 213.159.67.124
+  port: 443
+  type: ss
+  cipher: chacha20-ietf-poly1305
+  password: mbhqsStnFQT1cTZYCdsmkugGUC6GT6rp
+  udp: true
 - name: 🇮🇹 意大利 ojan real y
   type: trojan
   server: 107.148.225.121
@@ -873,32 +614,32 @@ proxy-groups:
   - ♻️ 自动选择
   - 🔯 故障转移
   - DIRECT
-  - 🇭🇰 香港 _110
-  - 🇭🇰 香港 _114
   - 🇭🇰 香港 _3 | ⬇️ 1.0MB/s
-  - 🇭🇰 香港 _102
-  - 🇭🇰 香港 _215
+  - 🇭🇰 香港 _136
+  - 🇭🇰 香港 _118
   - 🇭🇰 香港 _218
-  - 🇭🇰 香港 _125
-  - 🇭🇰 香港 _101
-  - 🇭🇰 香港 _187
+  - 🇭🇰 香港 _120
   - 🇭🇰 香港 _65
+  - 🇭🇰 香港 _114
+  - 🇭🇰 香港 _101
+  - 🇭🇰 香港 _197
+  - 🇭🇰 香港 _110
+  - 🇭🇰 香港 _215
+  - 🇭🇰 香港 _192
+  - 🇭🇰 香港 _187
+  - 🇭🇰 香港 _123
+  - 🇭🇰 香港 _67
   - 🇭🇰 香港 IEPL
   - 🇭🇰 香港 04|白嫖机场. k 2
   - 🇭🇰 香港 04|白嫖机场. k
-  - 🇭🇰 香港 _197
-  - 🇭🇰 香港 _120
-  - 🇭🇰 香港 _136
-  - 🇭🇰 香港 _118
+  - 🇭🇰 香港 _125
   - 🇭🇰 香港 _109
-  - 🇭🇰 香港 _123
-  - 🇭🇰 香港 _67
-  - 🇭🇰 香港 _192
-  - 🇭🇰 香港 _138
   - 🇭🇰 香港 _130
+  - 🇭🇰 香港 _138
+  - 🇭🇰 香港 _102
   - 🇹🇼 台湾 IEPL
-  - 🇯🇵 日本 _3 | ⬇️ 1.4MB/s
   - 🇯🇵 日本 _4 | ⬇️ 2.3MB/s
+  - 🇯🇵 日本 _3 | ⬇️ 1.4MB/s
   - 🇯🇵 日本 IEPL GPT
   - 🇯🇵 日本 04|白嫖机场. k 2
   - 🇯🇵 日本 04|白嫖机场. k
@@ -909,53 +650,32 @@ proxy-groups:
   - 🇰🇷 韩国 04|白嫖机场. k
   - 🇩🇪 印度 03|白嫖机场. k 2
   - 🇺🇸 印度 04|白嫖机场. k 2
-  - 🇩🇪 印度 03|白嫖机场. k
   - 🇺🇸 印度 04|白嫖机场. k
+  - 🇩🇪 印度 03|白嫖机场. k
   - 🇮🇩 印度尼西亚 IEPL
-  - 🇻🇳 越南 _2 | ⬇️ 1.6MB/s
   - 🇻🇳 越南 _1 | ⬇️ 1.3MB/s
+  - 🇻🇳 越南 _2 | ⬇️ 1.4MB/s
+  - 🇻🇳 越南 _3 | ⬇️ 1.4MB/s
+  - 🇻🇳 越南 _2 | ⬇️ 1.6MB/s
   - 🇻🇳 越南 _6 | ⬇️ 1.2MB/s
   - 🇻🇳 越南 _4 | ⬇️ 1.0MB/s
   - 🇻🇳 越南 _5 | ⬇️ 1.1MB/s
-  - 🇻🇳 越南 _3 | ⬇️ 1.4MB/s
-  - 🇻🇳 越南 _2 | ⬇️ 1.4MB/s
   - 🇻🇳 越南 IEPL
-  - 🇺🇸 美国 _27 | ⬇️ 2.9MB/s
-  - 🇺🇸 美国 48
-  - 🇺🇸 美国 46
-  - 🇺🇸 美国 _26 | ⬇️ 6.2MB/s
   - 🇺🇸 美国 _30 | ⬇️ 5.1MB/s
-  - 🇺🇸 美国 41
-  - 🇺🇸 美国 | |@x|53
-  - 🇺🇸 美国 58
-  - 🇺🇸 美国 61
-  - 🇺🇸 美国 62
-  - 🇺🇸 美国 56
-  - 🇺🇸 美国 52
-  - 🇺🇸 美国 12
-  - 🇺🇸 美国 13
-  - 🇺🇸 美国 14
+  - 🇺🇸 美国 _26 | ⬇️ 6.2MB/s
+  - 🇺🇸 美国 (mibei77.com 米贝节点分享) 16
+  - 🇺🇸 美国 (mibei77.com 米贝节点分享) 19
+  - 🇺🇸 美国 (mibei77.com 米贝节点分享) 8
   - 🇺🇸 美国 (mibei77.com 米贝节点分享) 12
   - 🇺🇸 美国 (mibei77.com 米贝节点分享) 11
-  - 🇺🇸 美国 22
-  - 🇺🇸 美国 23
-  - 🇺🇸 美国 (mibei77.com 米贝节点分享) 16
   - 🇺🇸 美国 IEPL GPT
-  - 🇺🇸 美国 8
-  - 🇺🇸 美国 20
-  - 🇺🇸 美国 19
-  - 🇺🇸 美国 4
-  - 🇺🇸 美国 18
   - 🇺🇸 美国 (mibei77.com 米贝节点分享) 2
-  - 🇺🇸 美国 9
-  - 🇺🇸 美国 10
-  - 🇺🇸 美国 11
-  - 🇺🇸 美国 17
-  - 🇺🇸 美国 15
-  - 🇺🇸 美国 16
+  - 🇬🇧 英国 (mibei77.com 米贝节点分享) 4
   - 🇬🇧 英国 (mibei77.com 米贝节点分享)
   - 🇬🇧 英国 (mibei77.com 米贝节点分享) 2
   - 🇩🇪 德国 IEPL
+  - 🇷🇺 俄罗斯 (mibei77.com 米贝节点分享)
+  - 🇷🇺 俄罗斯 (mibei77.com 米贝节点分享) 2
   - 🇮🇹 意大利 ojan real y
   - 🇦🇺 澳大利亚 (mibei77.com 米贝节点分享) 2
   url: http://www.gstatic.com/generate_204
@@ -963,32 +683,32 @@ proxy-groups:
 - name: ♻️ 自动选择
   type: url-test
   proxies: &id001
-  - 🇭🇰 香港 _110
-  - 🇭🇰 香港 _114
   - 🇭🇰 香港 _3 | ⬇️ 1.0MB/s
-  - 🇭🇰 香港 _102
-  - 🇭🇰 香港 _215
+  - 🇭🇰 香港 _136
+  - 🇭🇰 香港 _118
   - 🇭🇰 香港 _218
-  - 🇭🇰 香港 _125
-  - 🇭🇰 香港 _101
-  - 🇭🇰 香港 _187
+  - 🇭🇰 香港 _120
   - 🇭🇰 香港 _65
+  - 🇭🇰 香港 _114
+  - 🇭🇰 香港 _101
+  - 🇭🇰 香港 _197
+  - 🇭🇰 香港 _110
+  - 🇭🇰 香港 _215
+  - 🇭🇰 香港 _192
+  - 🇭🇰 香港 _187
+  - 🇭🇰 香港 _123
+  - 🇭🇰 香港 _67
   - 🇭🇰 香港 IEPL
   - 🇭🇰 香港 04|白嫖机场. k 2
   - 🇭🇰 香港 04|白嫖机场. k
-  - 🇭🇰 香港 _197
-  - 🇭🇰 香港 _120
-  - 🇭🇰 香港 _136
-  - 🇭🇰 香港 _118
+  - 🇭🇰 香港 _125
   - 🇭🇰 香港 _109
-  - 🇭🇰 香港 _123
-  - 🇭🇰 香港 _67
-  - 🇭🇰 香港 _192
-  - 🇭🇰 香港 _138
   - 🇭🇰 香港 _130
+  - 🇭🇰 香港 _138
+  - 🇭🇰 香港 _102
   - 🇹🇼 台湾 IEPL
-  - 🇯🇵 日本 _3 | ⬇️ 1.4MB/s
   - 🇯🇵 日本 _4 | ⬇️ 2.3MB/s
+  - 🇯🇵 日本 _3 | ⬇️ 1.4MB/s
   - 🇯🇵 日本 IEPL GPT
   - 🇯🇵 日本 04|白嫖机场. k 2
   - 🇯🇵 日本 04|白嫖机场. k
@@ -999,53 +719,32 @@ proxy-groups:
   - 🇰🇷 韩国 04|白嫖机场. k
   - 🇩🇪 印度 03|白嫖机场. k 2
   - 🇺🇸 印度 04|白嫖机场. k 2
-  - 🇩🇪 印度 03|白嫖机场. k
   - 🇺🇸 印度 04|白嫖机场. k
+  - 🇩🇪 印度 03|白嫖机场. k
   - 🇮🇩 印度尼西亚 IEPL
-  - 🇻🇳 越南 _2 | ⬇️ 1.6MB/s
   - 🇻🇳 越南 _1 | ⬇️ 1.3MB/s
+  - 🇻🇳 越南 _2 | ⬇️ 1.4MB/s
+  - 🇻🇳 越南 _3 | ⬇️ 1.4MB/s
+  - 🇻🇳 越南 _2 | ⬇️ 1.6MB/s
   - 🇻🇳 越南 _6 | ⬇️ 1.2MB/s
   - 🇻🇳 越南 _4 | ⬇️ 1.0MB/s
   - 🇻🇳 越南 _5 | ⬇️ 1.1MB/s
-  - 🇻🇳 越南 _3 | ⬇️ 1.4MB/s
-  - 🇻🇳 越南 _2 | ⬇️ 1.4MB/s
   - 🇻🇳 越南 IEPL
-  - 🇺🇸 美国 _27 | ⬇️ 2.9MB/s
-  - 🇺🇸 美国 48
-  - 🇺🇸 美国 46
-  - 🇺🇸 美国 _26 | ⬇️ 6.2MB/s
   - 🇺🇸 美国 _30 | ⬇️ 5.1MB/s
-  - 🇺🇸 美国 41
-  - 🇺🇸 美国 | |@x|53
-  - 🇺🇸 美国 58
-  - 🇺🇸 美国 61
-  - 🇺🇸 美国 62
-  - 🇺🇸 美国 56
-  - 🇺🇸 美国 52
-  - 🇺🇸 美国 12
-  - 🇺🇸 美国 13
-  - 🇺🇸 美国 14
+  - 🇺🇸 美国 _26 | ⬇️ 6.2MB/s
+  - 🇺🇸 美国 (mibei77.com 米贝节点分享) 16
+  - 🇺🇸 美国 (mibei77.com 米贝节点分享) 19
+  - 🇺🇸 美国 (mibei77.com 米贝节点分享) 8
   - 🇺🇸 美国 (mibei77.com 米贝节点分享) 12
   - 🇺🇸 美国 (mibei77.com 米贝节点分享) 11
-  - 🇺🇸 美国 22
-  - 🇺🇸 美国 23
-  - 🇺🇸 美国 (mibei77.com 米贝节点分享) 16
   - 🇺🇸 美国 IEPL GPT
-  - 🇺🇸 美国 8
-  - 🇺🇸 美国 20
-  - 🇺🇸 美国 19
-  - 🇺🇸 美国 4
-  - 🇺🇸 美国 18
   - 🇺🇸 美国 (mibei77.com 米贝节点分享) 2
-  - 🇺🇸 美国 9
-  - 🇺🇸 美国 10
-  - 🇺🇸 美国 11
-  - 🇺🇸 美国 17
-  - 🇺🇸 美国 15
-  - 🇺🇸 美国 16
+  - 🇬🇧 英国 (mibei77.com 米贝节点分享) 4
   - 🇬🇧 英国 (mibei77.com 米贝节点分享)
   - 🇬🇧 英国 (mibei77.com 米贝节点分享) 2
   - 🇩🇪 德国 IEPL
+  - 🇷🇺 俄罗斯 (mibei77.com 米贝节点分享)
+  - 🇷🇺 俄罗斯 (mibei77.com 米贝节点分享) 2
   - 🇮🇹 意大利 ojan real y
   - 🇦🇺 澳大利亚 (mibei77.com 米贝节点分享) 2
   url: http://www.gstatic.com/generate_204
