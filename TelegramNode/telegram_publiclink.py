@@ -13,6 +13,7 @@ import re
 import asyncio
 import yaml
 import base64
+import json
 import time
 import requests  # 引入 requests 库
 from datetime import datetime, timedelta, timezone
@@ -119,15 +120,15 @@ async def scrape_telegram_links():
     if not all([API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS_STR]):
         print("❌ 错误: 缺少必要的环境变量 (API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS)。")
         return []
-    
+
     TARGET_CHANNELS = [line.strip() for line in TELEGRAM_CHANNEL_IDS_STR.split('\n') if line.strip() and not line.strip().startswith('#')]
     
     if not TARGET_CHANNELS:
         print("❌ 错误: TELEGRAM_CHANNEL_IDS 中未找到有效频道 ID。")
         return []
-    
+
     print(f"▶️ 配置抓取 {len(TARGET_CHANNELS)} 个频道: {TARGET_CHANNELS}")
-    
+
     try:
         client = TelegramClient(StringSession(STRING_SESSION), API_ID, API_HASH)
         await client.connect()
@@ -136,7 +137,7 @@ async def scrape_telegram_links():
     except Exception as e:
         print(f"❌ 错误: 连接 Telegram 时出错: {e}")
         return []
-    
+
     target_time = datetime.now(timezone.utc) - timedelta(hours=TIME_WINDOW_HOURS)
     all_links = set()
 
@@ -217,6 +218,87 @@ def parse_proxies_from_content(content):
         print(f"解析内容时其他错误: {e}")
         return []
 
+def is_base64(string):
+    """检查字符串是否是 Base64 编码"""
+    try:
+        if isinstance(string, str):
+            base64.b64decode(string, validate=True)
+            return True
+    except Exception:
+        return False
+    return False
+
+def decode_base64_and_parse(base64_str):
+    """解码 Base64 并解析为 Clash 格式的节点"""
+    try:
+        decoded_content = base64.b64decode(base64_str).decode('utf-8')
+        proxies = []
+        
+        for line in decoded_content.splitlines():
+            line = line.strip()
+            if line.startswith('vless://') or line.startswith('vmess://'):
+                proxies.append(parse_vmess_node(line))
+            elif line.startswith('ssr://'):
+                proxies.append(parse_ssr_node(line))
+            elif line.startswith('ss://'):
+                proxies.append(parse_ss_node(line))
+            else:
+                print(f"警告: 未支持的节点格式: {line[:100]}")
+        
+        return proxies
+    except Exception as e:
+        print(f"解码 Base64 并解析时出错: {e}")
+        return []
+
+def parse_ssr_node(node_str):
+    """解析 SSR 节点字符串并转换为 Clash 格式"""
+    try:
+        decoded = base64.urlsafe_b64decode(node_str[5:]).decode('utf-8')
+        params = decoded.split(':')
+        cipher = params[0]
+        password = params[1]
+        host = params[2]
+        port = params[3]
+        obfs = params[4]  # 可选字段
+        protocol = params[5]  # 可选字段
+        # 组装 Clash 节点格式
+        proxy = {
+            "name": f"SSR {host}:{port}",
+            "type": "ssr",
+            "server": host,
+            "port": int(port),
+            "password": password,
+            "cipher": cipher,
+            "obfs": obfs,  # 根据SSR配置取值
+            "protocol": protocol,  # 根据SSR配置取值
+        }
+        return proxy
+    except Exception as e:
+        print(f"解析 SSR 节点时发生错误: {e}")
+        return {}
+
+def parse_vmess_node(node_str):
+    """解析 Vmess 节点字符串并转换为 Clash 格式"""
+    try:
+        decoded = base64.urlsafe_b64decode(node_str[8:]).decode('utf-8')
+        json_data = json.loads(decoded)
+
+        # 组装 Clash 节点格式
+        proxy = {
+            "name": json_data.get('ps', f"Vmess {json_data.get('add')}:{json_data.get('port')}"),
+            "type": "vmess",
+            "server": json_data.get('add'),
+            "port": int(json_data.get('port')),
+            "uuid": json_data.get('id'),
+            "alterId": json_data.get('aid'),
+            "cipher": json_data.get('net', "none"),
+            "tls": (json_data.get('tls') == "tls"),
+        }
+        return proxy
+    except Exception as e:
+        print(f"解析 Vmess 节点时发生错误: {e}")
+        return {}
+
 def download_subscription(url):
     """下载并解析订阅链接，优先使用 wget，失败后尝试 requests"""
     content = attempt_download_using_wget(url)
@@ -229,6 +311,11 @@ def download_subscription(url):
         return []
 
     print(f"  下载内容长度: {len(content)}, 内容示例: {content[:100]}")  # 添加调试输出
+
+    # 判断内容是否为 Base64 编码
+    if is_base64(content):
+        return decode_base64_and_parse(content)
+
     return parse_proxies_from_content(content)
 
 def get_proxy_key(p):
@@ -244,7 +331,7 @@ def is_valid_proxy(proxy):
         return False
 
     # 进一步检查协议类型
-    allowed_types = {'http', 'socks5', 'trojan', 'v2ray', 'ss', 'vmess'}
+    allowed_types = {'http', 'socks5', 'trojan', 'v2ray', 'ss', 'vmess', 'ssr'}
     if 'type' in proxy and proxy['type'] not in allowed_types:
         return False
 
