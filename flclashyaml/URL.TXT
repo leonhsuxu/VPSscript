@@ -13,6 +13,7 @@ choutuan-all-5：https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A25?toke
 # Github公益托管：
 Github-SSRProxy & dingyue center：https://alipay.vavv.cn/r6pif1rkclkvtvf1
 Github-SSRProxy CF：https://alipay.vavv.cn/9p6iavwf1lor69yi
+Github-SSRProxy 抓取：https://raw.githubusercontent.com/ripaojiedian/freenode/main/clash
 Github-SSRProxy 公益：https://api.dler.io/sub?target=clash&url=https%3A%2F%2Fraw.githubusercontent.com%2Fgo4sharing%2Fsub%2Fmain%2Fsub.yaml&insert=false&config=https%3A%2F%2Fraw.githubusercontent.com%2FACL4SSR%2FACL4SSR%2Fmaster%2FClash%2Fconfig%2FACL4SSR_Online.ini&emoji=true&list=false&tfo=false&scv=true&fdn=true&expand=true&sort=false&new_name=true
 
 # TG.白嫖群&频道:
@@ -26,3 +27,4 @@ TG-SSRProxy[TG-C]@wxgqlfx 翻墙世界的梯子：https://zjzl.wxgqlfx.fun/wxgql
 TG-SSRProxy[TG-C]@go4sharing 公益机场节点：https://raw.githubusercontent.com/go4sharing/sub/main/sub.yaml
 TG-SSRProxy[TG-C]@mm8686_bot：https://pastecode.dev/raw/070syyrm/token=007
 TG-SSRProxy[TG-G]@myFreeNodeChat：https://pastecode.dev/raw/s4tmrvfd/token=myFreeNodeChat
+TG-SSRProxy[TG-G]@dingyue_center：https://proxypool.dmit.dpdns.org/clash/proxies?c=CN,HK,TW,SG,JP,KR,VN,US&type=vmess
