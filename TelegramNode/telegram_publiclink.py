@@ -45,13 +45,13 @@ TEST_URL = 'http://www.gstatic.com/generate_204'
 TEST_INTERVAL = 300
 
 # ========== 地区过滤配置 ==========
-ALLOWED_REGIONS = {'香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国', 
-                   '印度', '菲律宾', '印度尼西亚', '越南', '美国', '加拿大', '法国', 
+ALLOWED_REGIONS = {'香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国',
+                   '印度', '菲律宾', '印度尼西亚', '越南', '美国', '加拿大', '法国',
                    '英国', '德国', '俄罗斯', '意大利', '巴西', '阿根廷', '土耳其', '澳大利亚'}
 
 # ========== 排序优先级配置 ==========
-REGION_PRIORITY = ['香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国', '印度', '菲律宾', 
-                   '印度尼西亚', '越南', '美国', '加拿大', '法国', '英国', '德国', '俄罗斯', '意大利', 
+REGION_PRIORITY = ['香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国', '印度', '菲律宾',
+                   '印度尼西亚', '越南', '美国', '加拿大', '法国', '英国', '德国', '俄罗斯', '意大利',
                    '巴西', '阿根廷', '土耳其', '澳大利亚']
 
 # ========== 国家/地区映射表 ==========
@@ -119,6 +119,7 @@ async def scrape_telegram_links():
     if not all([API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS_STR]):
         print("❌ 错误: 缺少必要的环境变量 (API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS)。")
         return []
+    
     TARGET_CHANNELS = [line.strip() for line in TELEGRAM_CHANNEL_IDS_STR.split('\n') if line.strip() and not line.strip().startswith('#')]
     
     if not TARGET_CHANNELS:
@@ -126,6 +127,7 @@ async def scrape_telegram_links():
         return []
     
     print(f"▶️ 配置抓取 {len(TARGET_CHANNELS)} 个频道: {TARGET_CHANNELS}")
+    
     try:
         client = TelegramClient(StringSession(STRING_SESSION), API_ID, API_HASH)
         await client.connect()
@@ -134,7 +136,7 @@ async def scrape_telegram_links():
     except Exception as e:
         print(f"❌ 错误: 连接 Telegram 时出错: {e}")
         return []
-
+    
     target_time = datetime.now(timezone.utc) - timedelta(hours=TIME_WINDOW_HOURS)
     all_links = set()
 
@@ -174,7 +176,6 @@ def attempt_download_using_wget(url):
     if not shutil.which("wget"):
         print("  ✗ 错误: wget 未安装，无法执行下载。")
         return None
-    
     try:
         content = subprocess.run(
             ["wget", "-O", "-", "--timeout=30", "--header=User-Agent: Clash", url],
@@ -201,15 +202,20 @@ def parse_proxies_from_content(content):
     """从下载的内容中解析代理节点"""
     try:
         # 尝试解析 YAML 内容
-        return yaml.safe_load(content).get('proxies', [])
-    except yaml.YAMLError:
-        # 尝试解析 Base64 编码内容
-        try:
-            decoded_content = base64.b64decode(content).decode('utf-8')
-            return yaml.safe_load(decoded_content).get('proxies', [])
-        except Exception as e:
-            print(f"  ✗ 解析内容时出错: {e}")
+        proxies = yaml.safe_load(content)
+        if isinstance(proxies, dict):
+            return proxies.get('proxies', [])
+        elif isinstance(proxies, list):
+            return proxies  # 如果 content 是一个直接的代理列表
+        else:
+            print(f"警告: 解析的内容不是有效的 proxies 格式: {content[:100]}")
             return []
+    except yaml.YAMLError as e:
+        print(f"YAML 解析错误: {e}")
+        return []
+    except Exception as e:
+        print(f"解析内容时其他错误: {e}")
+        return []
 
 def download_subscription(url):
     """下载并解析订阅链接，优先使用 wget，失败后尝试 requests"""
@@ -222,7 +228,7 @@ def download_subscription(url):
         print(f"  ❌ 两种下载方式均失败，跳过链接: {url}")
         return []
 
-    # 尝试解析代理节点
+    print(f"  下载内容长度: {len(content)}, 内容示例: {content[:100]}")  # 添加调试输出
     return parse_proxies_from_content(content)
 
 def get_proxy_key(p):
@@ -272,7 +278,7 @@ def process_proxies(proxies):
         '|'.join(sorted([p for r in CUSTOM_REGEX_RULES.values() for p in r['pattern'].split('|')], key=len, reverse=True)),
         re.IGNORECASE
     )
-    
+
     for p in identified:
         info = p['region_info']
         match = FLAG_EMOJI_PATTERN.search(p['name'])
@@ -280,7 +286,7 @@ def process_proxies(proxies):
             flag = match.group(0)
         else:
             flag = get_country_flag_emoji(info['code'])
-        
+
         feature = re.sub(r'\s+', ' ', master_pattern.sub(' ', FLAG_EMOJI_PATTERN.sub('', p['name'], 1)).replace('-', ' ')).strip() or f"{sum(1 for fp in final if fp['region_info']['name'] == info['name']) + 1:02d}"
         new_name = f"{flag} {info['name']} {feature}".strip()
         counters[info['name']][new_name] += 1
@@ -340,7 +346,7 @@ def generate_config(proxies):
             'lazy': True
         }
     ]
-    
+
     return {
         'mixed-port': 7890,
         'allow-lan': True,
@@ -365,6 +371,7 @@ async def main():
     print("=" * 60 + f"\nClash 订阅自动生成脚本 V1.R3 @ {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S %Z')}\n" + "=" * 60)
     preprocess_regex_rules()
     print("\n[1/4] 从 Telegram 抓取、下载并合并节点...")
+    
     urls = await scrape_telegram_links()
     
     if not urls:
@@ -377,6 +384,7 @@ async def main():
     
     print(f"✅ 合并去重后共 {len(proxies)} 个节点。")
     print("\n[2/4] 过滤与重命名节点...")
+    
     processed = process_proxies(list(proxies.values()))
     
     if not processed:
@@ -387,6 +395,7 @@ async def main():
     
     if ENABLE_SPEED_TEST:
         print(f"  - 开始 TCP 连接测速（超时: {SOCKET_TIMEOUT}秒）...")
+        
         with concurrent.futures.ThreadPoolExecutor(MAX_TEST_WORKERS) as executor:
             tested = list(executor.map(test_single_proxy_tcp, processed))
         
@@ -402,10 +411,12 @@ async def main():
     print("\n[4/4] 生成最终配置文件...")
     
     config = generate_config(final)
+    
     if not config:
         sys.exit("\n❌ 无法生成配置文件。")
     
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
+    
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
         yaml.dump(config, f, allow_unicode=True, sort_keys=False, indent=2)
     
