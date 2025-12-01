@@ -1,9 +1,12 @@
 # 文件名: TelegramNode/telegram_publiclink.py
 # -*- coding: utf-8 -*-
 # ============================================================================
-# Clash 订阅自动生成脚本 V1.R2
+# Clash 订阅自动生成脚本 V1.R3
 #
 # 版本历史:
+# V1.R3 (20251201) - 健壮性修复 & 逻辑优化
+#   - 强化 REALITY 节点验证，处理 short-id 为空格或类型错误等边缘情况。
+#   - 修正重命名逻辑，确保生成的旗帜 Emoji 与识别出的地区严格一致。
 # V1.R2 (20251201) - 修复 & 优化
 #   - 增加了对 REALITY 节点的验证，自动过滤 short-id 无效的节点。
 # V1.R1 (20251130) - 初始版本
@@ -248,13 +251,13 @@ def process_proxies(proxies):
 
     for p in identified:
         info = p['region_info']
-        match = FLAG_EMOJI_PATTERN.search(p['name'])
-        if match:
-            flag = match.group(0)
-        else:
-            flag = get_country_flag_emoji(info['code'])
+        
+        # --- 修复: 始终根据识别出的地区代码生成旗帜，确保一致性 ---
+        flag = get_country_flag_emoji(info['code'])
 
-        feature = re.sub(r'\s+', ' ', master_pattern.sub(' ', FLAG_EMOJI_PATTERN.sub('', p['name'], 1)).replace('-', ' ')).strip() or f"{sum(1 for fp in final if fp['region_info']['name'] == info['name']) + 1:02d}"
+        # 从原始名称中移除旗帜和地区关键词，以提取特征
+        name_no_flag = FLAG_EMOJI_PATTERN.sub('', p['name'], 1).strip()
+        feature = re.sub(r'\s+', ' ', master_pattern.sub(' ', name_no_flag).replace('-', ' ')).strip() or f"{sum(1 for fp in final if fp['region_info']['name'] == info['name']) + 1:02d}"
         new_name = f"{flag} {info['name']} {feature}".strip()
 
         counters[info['name']][new_name] += 1
@@ -333,7 +336,7 @@ def generate_config(proxies):
 
 async def main():
     """主函数"""
-    print("=" * 60 + f"\nClash 订阅自动生成脚本 V1.R2 @ {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S %Z')}\n" + "=" * 60)
+    print("=" * 60 + f"\nClash 订阅自动生成脚本 V1.R3 @ {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S %Z')}\n" + "=" * 60)
     preprocess_regex_rules()
     
     print("\n[1/4] 从 Telegram 抓取、下载并合并节点...")
@@ -341,29 +344,36 @@ async def main():
     if not urls:
         sys.exit("\n❌ 未找到任何有效订阅链接，脚本终止。")
     
-    # 步骤 1: 下载并初步解析所有节点
     all_downloaded_proxies = [p for url in urls for p in download_subscription(url) if p]
     if not all_downloaded_proxies:
         sys.exit("\n❌ 下载和解析后，无有效节点，脚本终止。")
 
-    # 步骤 2: 去重和 REALITY 节点验证
     print("\n[*] 验证节点并进行去重...")
     proxies = {}
     invalid_reality_count = 0
     for p in all_downloaded_proxies:
-        # --- 修复: 增加 REALITY 节点验证逻辑 ---
-        if p.get('type') == 'vless' and p.get('reality-opts'):
-            if not p.get('reality-opts', {}).get('short-id'):
-                # print(f"  - 过滤无效 REALITY 节点 (空 short-id): {p.get('name', 'N/A')}")
+        # --- 修复: 强化 REALITY 节点验证逻辑 ---
+        if 'reality-opts' in p:
+            node_type = p.get('type')
+            reality_opts = p.get('reality-opts', {})
+
+            # REALITY 在 Clash Meta 中主要被 vless 和 trojan 支持
+            if node_type not in ['vless', 'trojan']:
                 invalid_reality_count += 1
-                continue # 跳过这个无效节点
+                continue
+
+            short_id = reality_opts.get('short-id')
+            # 验证 short_id: 必须存在, 是字符串, 且去除空格后不为空
+            if not short_id or not isinstance(short_id, str) or not short_id.strip():
+                invalid_reality_count += 1
+                continue
         
         proxy_key = get_proxy_key(p)
         if proxy_key not in proxies:
             proxies[proxy_key] = p
             
     if invalid_reality_count > 0:
-        print(f"  - 已过滤 {invalid_reality_count} 个无效的 REALITY 节点 (缺少或 short-id 为空)。")
+        print(f"  - 已过滤 {invalid_reality_count} 个无效的 REALITY 节点 (short-id 无效或节点类型不支持)。")
 
     if not proxies:
         sys.exit("\n❌ 验证和去重后，无有效节点，脚本终止。")
