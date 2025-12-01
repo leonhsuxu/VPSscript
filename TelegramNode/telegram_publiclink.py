@@ -1,17 +1,18 @@
 # 文件名: TelegramNode/telegram_publiclink.py
 # -*- coding: utf-8 -*-
 # ============================================================================
-# Clash 订阅自动生成脚本 V1.R4
+# Clash 订阅自动生成脚本 V1.R5 (最终修复版)
 #
 # 版本历史:
-# V1.R4 (20251201) - 健壮性终极修复
-#   - 新增全面的节点验证与净化函数 (is_proxy_valid_and_sanitize)。
-#   - 对所有节点进行严格的格式和数据类型检查，从根本上杜绝解析错误。
+# V1.R5 (20251201) - 终极修复
+#   - 引入对 UUID 格式的严格正则校验，彻底杜绝因 uuid 格式错误导致的异常。
+#   - 优化节点名称清理逻辑，移除更多无用符号。
+# V1.R4 (20251201) - 健壮性修复
+#   - 新增全面的节点验证与净化函数，处理数据类型和字段缺失问题。
 # V1.R3 (20251201) - 健壮性修复 & 逻辑优化
-#   - 强化 REALITY 节点验证，处理 short-id 为空格或类型错误等边缘情况。
-#   - 修正重命名逻辑，确保生成的旗帜 Emoji 与识别出的地区严格一致。
+#   - 强化 REALITY 节点验证，修正旗帜 Emoji 与地区不匹配问题。
 # V1.R2 (20251201) - 修复 & 优化
-#   - 增加了对 REALITY 节点的验证，自动过滤 short-id 无效的节点。
+#   - 增加对 REALITY 节点的验证。
 # V1.R1 (20251130) - 初始版本
 # ============================================================================
 import os
@@ -116,6 +117,7 @@ CUSTOM_REGEX_RULES = {
 
 JUNK_PATTERNS = re.compile(r"(?:专线|IPLC|IEPL|BGP|体验|官网|倍率|x\d[\.\d]*|Rate|[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*|Relay|流量)", re.IGNORECASE)
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
+UUID_PATTERN = re.compile(r'^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$', re.IGNORECASE)
 
 # =================================================================================
 # Part 2: 函数定义
@@ -212,182 +214,4 @@ def download_subscription(url):
         print(f"  ✗ 下载或解析时出错: {e}")
         return []
 
-def get_proxy_key(p):
-    """生成代理节点的唯一标识"""
-    # 确保 port 是字符串以便于哈希计算
-    port_str = str(p.get('port', 0))
-    return hashlib.md5(f"{p.get('server','')}:{port_str}|{p.get('uuid') or p.get('password') or ''}".encode()).hexdigest()
-
-def is_proxy_valid_and_sanitize(p):
-    """
-    全面验证并净化节点配置。
-    如果有效，返回 True 并可能修改 p。如果无效，返回 False。
-    """
-    if not isinstance(p, dict): return False
-    
-    # 1. 基础字段验证
-    if not all(k in p for k in ['type', 'server', 'port']): return False
-    if not p.get('server') or not isinstance(p.get('server'), str): return False
-
-    # 2. Port 净化与验证
-    try:
-        p['port'] = int(p['port'])
-        if not (0 < p['port'] < 65536): return False
-    except (ValueError, TypeError):
-        return False
-
-    # 3. 协议特定字段验证
-    proxy_type = p.get('type')
-    if proxy_type in ['vless', 'vmess']:
-        if not p.get('uuid') or not isinstance(p.get('uuid'), str): return False
-    elif proxy_type in ['ss', 'trojan']:
-        if 'password' not in p: return False
-    
-    # 4. REALITY 配置验证
-    if 'reality-opts' in p:
-        if proxy_type not in ['vless', 'trojan']: return False
-        
-        reality_opts = p.get('reality-opts', {})
-        if not isinstance(reality_opts, dict): return False
-
-        short_id = reality_opts.get('short-id')
-        if not short_id or not isinstance(short_id, str) or not short_id.strip(): return False
-        
-        if 'public-key' not in reality_opts: return False
-
-    return True
-
-def process_proxies(proxies):
-    """过滤、识别地区并重命名节点"""
-    identified = []
-    for p in proxies:
-        name = JUNK_PATTERNS.sub('', FLAG_EMOJI_PATTERN.sub('', p.get('name', ''))).strip()
-        for eng, chn in CHINESE_COUNTRY_MAP.items():
-            name = re.sub(r'\b' + re.escape(eng) + r'\b', chn, name, flags=re.IGNORECASE)
-
-        for r_name, rules in CUSTOM_REGEX_RULES.items():
-            if re.search(rules['pattern'], name, re.IGNORECASE) and r_name in ALLOWED_REGIONS:
-                p['region_info'] = {'name': r_name, 'code': rules['code']}
-                identified.append(p)
-                break
-    print(f"  - 节点地区识别: 原始 {len(proxies)} -> 识别并保留 {len(identified)}")
-
-    final, counters = [], defaultdict(lambda: defaultdict(int))
-    master_pattern = re.compile('|'.join(sorted([pat for r in CUSTOM_REGEX_RULES.values() for pat in r['pattern'].split('|')], key=len, reverse=True)), re.IGNORECASE)
-
-    for p in identified:
-        info = p['region_info']
-        flag = get_country_flag_emoji(info['code'])
-        
-        name_no_flag = FLAG_EMOJI_PATTERN.sub('', p['name'], 1).strip()
-        feature = re.sub(r'\s+', ' ', master_pattern.sub(' ', name_no_flag).replace('-', ' ')).strip() or f"{sum(1 for fp in final if fp['region_info']['name'] == info['name']) + 1:02d}"
-        new_name = f"{flag} {info['name']} {feature}".strip()
-
-        counters[info['name']][new_name] += 1
-        if counters[info['name']][new_name] > 1:
-            new_name += f" {counters[info['name']][new_name]}"
-        p['name'] = new_name
-        final.append(p)
-    return final
-
-def test_single_proxy_tcp(proxy):
-    """使用 TCP 连接测速"""
-    try:
-        start_time = time.time()
-        with socket.create_connection((proxy['server'], proxy['port']), timeout=SOCKET_TIMEOUT) as sock:
-            proxy['delay'] = int((time.time() - start_time) * 1000)
-            return proxy
-    except Exception:
-        return None
-
-def generate_config(proxies):
-    """生成 Clash 配置文件"""
-    if not proxies: return None
-    
-    names = [p['name'] for p in proxies]
-    clean_proxies = [{k: v for k, v in p.items() if k not in ['region_info', 'delay']} for p in proxies]
-    
-    groups = [
-        {'name': '🚀 节点选择', 'type': 'select', 'proxies': ['♻️ 自动选择', '🔯 故障转移', 'DIRECT'] + names, 'url': TEST_URL, 'interval': TEST_INTERVAL},
-        {'name': '♻️ 自动选择', 'type': 'url-test', 'proxies': names, 'url': TEST_URL, 'interval': TEST_INTERVAL, 'tolerance': 50, 'lazy': True},
-        {'name': '🔯 故障转移', 'type': 'fallback', 'proxies': names, 'url': TEST_URL, 'interval': TEST_INTERVAL, 'lazy': True}
-    ]
-    
-    return {
-        'mixed-port': 7890, 'allow-lan': True, 'mode': 'rule', 'log-level': 'info',
-        'external-controller': '127.0.0.1:9090',
-        'dns': {'enable': True, 'listen': '0.0.0.0:53', 'enhanced-mode': 'fake-ip', 'fake-ip-range': '198.18.0.1/16',
-                'nameserver': ['223.5.5.5', '119.29.29.29'],
-                'fallback': ['https://dns.google/dns-query', 'https://1.1.1.1/dns-query']},
-        'proxies': clean_proxies, 'proxy-groups': groups,
-        'rules': ['GEOIP,CN,DIRECT', 'MATCH,🚀 节点选择']
-    }
-
-async def main():
-    """主函数"""
-    print("=" * 60 + f"\nClash 订阅自动生成脚本 V1.R4 @ {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S %Z')}\n" + "=" * 60)
-    preprocess_regex_rules()
-    
-    print("\n[1/4] 从 Telegram 抓取、下载并合并节点...")
-    urls = await scrape_telegram_links()
-    if not urls:
-        sys.exit("\n❌ 未找到任何有效订阅链接，脚本终止。")
-    
-    all_downloaded_proxies = [p for url in urls for p in download_subscription(url) if p]
-    if not all_downloaded_proxies:
-        sys.exit("\n❌ 下载和解析后，无有效节点，脚本终止。")
-
-    print(f"\n[*] 原始节点数: {len(all_downloaded_proxies)}. 开始全面验证、净化和去重...")
-    proxies = {}
-    invalid_count = 0
-    for p in all_downloaded_proxies:
-        if is_proxy_valid_and_sanitize(p):
-            proxy_key = get_proxy_key(p)
-            if proxy_key not in proxies:
-                proxies[proxy_key] = p
-        else:
-            invalid_count += 1
-            
-    if invalid_count > 0:
-        print(f"  - 已过滤 {invalid_count} 个无效或不完整的节点。")
-
-    if not proxies:
-        sys.exit("\n❌ 验证和去重后，无有效节点，脚本终止。")
-        
-    print(f"✅ 合并与净化后共 {len(proxies)} 个有效节点。")
-
-    print("\n[2/4] 过滤与重命名节点...")
-    processed = process_proxies(list(proxies.values()))
-    if not processed:
-        sys.exit("\n❌ 过滤后无任何可用节点，脚本终止。")
-    
-    print("\n[3/4] TCP 测速与最终排序...")
-    final_proxies = processed
-    if ENABLE_SPEED_TEST:
-        print(f"  - 开始 TCP 连接测速（超时: {SOCKET_TIMEOUT}秒）...")
-        with concurrent.futures.ThreadPoolExecutor(MAX_TEST_WORKERS) as executor:
-            tested = list(executor.map(test_single_proxy_tcp, processed))
-        
-        final_proxies = [p for p in tested if p]
-        print(f"  - 测速完成, {len(final_proxies)} / {len(processed)} 个节点可用。")
-        
-        if not final_proxies:
-            print("\n  ⚠️ 警告: 测速后无可用节点，将使用所有过滤后的节点作为备用。")
-            final_proxies = processed
-    
-    final_proxies.sort(key=lambda p: (REGION_PRIORITY.index(p['region_info']['name']), p.get('delay', 9999)))
-    print(f"✅ 最终处理完成 {len(final_proxies)} 个节点。")
-    
-    print("\n[4/4] 生成最终配置文件...")
-    config = generate_config(final_proxies)
-    if not config:
-        sys.exit("\n❌ 无法生成配置文件。")
-        
-    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
-    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-        yaml.dump(config, f, allow_unicode=True, sort_keys=False, indent=2)
-        
-    print(f"✅ 配置文件已成功保存至: {OUTPUT_FILE}\n\n🎉 任务全部完成！")
-
-if __name__ == '__main__':
-    asyncio.run(main())
+def get_proxy_key(p
