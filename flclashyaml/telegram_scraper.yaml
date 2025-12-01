@@ -46,6 +46,12 @@ proxies:
   plugin-opts:
     mode: http
     host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+- name: 🇯🇵 日本 _3 | ⬇️ 1.4MB/s
+  type: ss
+  server: 45.83.22.118
+  port: 5223
+  password: NS8BriBL9gcPEHTXiN66aT
+  cipher: chacha20-ietf-poly1305
 - name: 🇯🇵 日本 _4 | ⬇️ 2.3MB/s
   type: trojan
   server: 37.202.200.19
@@ -55,25 +61,6 @@ proxies:
   sni: 37.202.200.19
   skip-cert-verify: true
   network: tcp
-- name: 🇯🇵 日本 _3 | ⬇️ 1.4MB/s
-  type: ss
-  server: 45.83.22.118
-  port: 5223
-  password: NS8BriBL9gcPEHTXiN66aT
-  cipher: chacha20-ietf-poly1305
-- name: 🇯🇵 日本 _2 | ⬇️ 2.0MB/s
-  type: vless
-  server: 203.239.249.99
-  port: 10927
-  uuid: 00000000-0000-4000-8000-000000000000
-  tls: true
-  servername: mot.gike.dpdns.org
-  network: ws
-  ws-opts:
-    path: /@Marisa_kristi
-    headers:
-      host: mot.gike.dpdns.org
-  client-fingerprint: chrome
 - name: 🇯🇵 日本 IEPL GPT
   type: ss
   server: gd.bjnet2.com
@@ -111,6 +98,19 @@ proxies:
     path: /
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
+- name: 🇯🇵 日本 _2 | ⬇️ 2.0MB/s
+  type: vless
+  server: 203.239.249.99
+  port: 10927
+  uuid: 00000000-0000-4000-8000-000000000000
+  tls: true
+  servername: mot.gike.dpdns.org
+  network: ws
+  ws-opts:
+    path: /@Marisa_kristi
+    headers:
+      host: mot.gike.dpdns.org
+  client-fingerprint: chrome
 - name: 🇸🇬 新加坡 IEPL
   type: ss
   server: gd.bjnet2.com
@@ -148,11 +148,11 @@ proxies:
     path: /
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇰🇷 韩国 01|白嫖机场. k
+- name: 🇰🇷 韩国 01|白嫖机场. k 2
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 2082
-  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
   alterId: 0
   cipher: auto
   udp: true
@@ -161,11 +161,11 @@ proxies:
     path: /
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇰🇷 韩国 01|白嫖机场. k 2
+- name: 🇰🇷 韩国 01|白嫖机场. k
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 2082
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
   alterId: 0
   cipher: auto
   udp: true
@@ -187,11 +187,11 @@ proxies:
     path: /
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇮🇳 印度 01|白嫖机场. k 2
+- name: 🇮🇳 印度 01|白嫖机场. k 3
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
-  port: 2086
-  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  port: 2052
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
   alterId: 0
   cipher: auto
   udp: true
@@ -200,11 +200,11 @@ proxies:
     path: /
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇮🇳 印度 01|白嫖机场. k 3
+- name: 🇮🇳 印度 01|白嫖机场. k 2
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
-  port: 2052
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  port: 2086
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
   alterId: 0
   cipher: auto
   udp: true
@@ -237,18 +237,6 @@ proxies:
   plugin-opts:
     mode: http
     host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇻🇳 越南 _5 | ⬇️ 1.1MB/s
-  type: ss
-  server: 103.186.155.81
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 🇻🇳 越南 _1 | ⬇️ 1.3MB/s
-  type: ss
-  server: 103.186.154.195
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
 - name: 🇻🇳 越南 _3 | ⬇️ 1.4MB/s
   type: ss
   server: 103.186.154.188
@@ -267,9 +255,21 @@ proxies:
   port: 38388
   password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
   cipher: aes-256-cfb
+- name: 🇻🇳 越南 _5 | ⬇️ 1.1MB/s
+  type: ss
+  server: 103.186.155.81
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
 - name: 🇻🇳 越南 _4 | ⬇️ 1.0MB/s
   type: ss
   server: 103.186.155.12
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 越南 _1 | ⬇️ 1.3MB/s
+  type: ss
+  server: 103.186.154.195
   port: 38388
   password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
   cipher: aes-256-cfb
@@ -290,30 +290,18 @@ proxies:
   plugin-opts:
     mode: http
     host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇺🇸 美国 _5 | ⬇️ 5.1MB/s
+- name: 🇺🇸 美国 _24 | ⬇️ 5.2MB/s
   type: vless
-  server: 193.124.18.13
-  port: 443
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
-  tls: true
-  servername: kuangbao.xiejiang.dpdns.org
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      host: kuangbao.xiejiang.dpdns.org
-- name: 🇺🇸 美国 _12 | ⬇️ 3.7MB/s
-  type: vless
-  server: 108.162.198.24
+  server: 94.140.0.39
   port: 2096
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  uuid: d342d11e-d424-4583-b36e-524ab1f0afa4
   tls: true
-  servername: kuangbao.xiejiang.dpdns.org
+  servername: sni.001316.xyz
   network: ws
   ws-opts:
-    path: /?ed=2560
+    path: /Telegram🇨🇳
     headers:
-      host: kuangbao.xiejiang.dpdns.org
+      host: sni.001316.xyz
 - name: 🇺🇸 美国 _43 | ⬇️ 5.2MB/s
   type: vless
   server: 172.66.213.38
@@ -367,30 +355,6 @@ proxies:
     path: /Telegram🇨🇳
     headers:
       host: sni.001316.xyz
-- name: 🇺🇸 美国 _23 | ⬇️ 5.7MB/s
-  type: vless
-  server: 109.176.239.39
-  port: 2096
-  uuid: d342d11e-d424-4583-b36e-524ab1f0afa4
-  tls: true
-  servername: sni.001316.xyz
-  network: ws
-  ws-opts:
-    path: /Telegram🇨🇳
-    headers:
-      host: sni.001316.xyz
-- name: 🇺🇸 美国 _24 | ⬇️ 5.2MB/s
-  type: vless
-  server: 94.140.0.39
-  port: 2096
-  uuid: d342d11e-d424-4583-b36e-524ab1f0afa4
-  tls: true
-  servername: sni.001316.xyz
-  network: ws
-  ws-opts:
-    path: /Telegram🇨🇳
-    headers:
-      host: sni.001316.xyz
 - name: 🇺🇸 美国 _28 | ⬇️ 4.1MB/s
   type: vless
   server: 108.162.198.11
@@ -403,6 +367,42 @@ proxies:
     path: /?ed=2560
     headers:
       host: kuangbao.xiejiang.dpdns.org
+- name: 🇺🇸 美国 _5 | ⬇️ 5.1MB/s
+  type: vless
+  server: 193.124.18.13
+  port: 443
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      host: kuangbao.xiejiang.dpdns.org
+- name: 🇺🇸 美国 _12 | ⬇️ 3.7MB/s
+  type: vless
+  server: 108.162.198.24
+  port: 2096
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      host: kuangbao.xiejiang.dpdns.org
+- name: 🇺🇸 美国 _23 | ⬇️ 5.7MB/s
+  type: vless
+  server: 109.176.239.39
+  port: 2096
+  uuid: d342d11e-d424-4583-b36e-524ab1f0afa4
+  tls: true
+  servername: sni.001316.xyz
+  network: ws
+  ws-opts:
+    path: /Telegram🇨🇳
+    headers:
+      host: sni.001316.xyz
 - name: 🇺🇸 美国 _25 | ⬇️ 6.5MB/s
   type: vless
   server: openai.com
@@ -416,15 +416,6 @@ proxies:
     headers:
       host: freedom.pusytroller.cf
   client-fingerprint: randomized
-- name: 🇺🇸 美国 27
-  server: 82.198.246.97
-  port: 180
-  type: vmess
-  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
-  alterId: 0
-  cipher: auto
-  tls: false
-  skip-cert-verify: false
 - name: 🇺🇸 美国 _31 | ⬇️ 4.8MB/s
   type: vless
   server: www.npmjs.com
@@ -437,21 +428,25 @@ proxies:
     path: /
     headers:
       host: snippets.pusytroller.cf
-- name: 🇺🇸 美国 _26 | ⬇️ 6.2MB/s
-  type: vmess
-  server: 74.117.196.232
-  port: 37934
-  cipher: auto
-  uuid: 6d600864-32da-49fd-baf4-7df051762454
-  alterId: 0
+- name: 🇺🇸 美国 _18 | ⬇️ 5.6MB/s
+  type: vless
+  server: us2.candyfans.win
+  port: 443
+  uuid: efe47594-d246-4823-9bb8-d828160720ab
   tls: true
-  skip-cert-verify: true
-  servername: imafake.locker
+  servername: us2.candyfans.win
   network: ws
   ws-opts:
-    path: /speedtest
+    path: /ndhfws
     headers:
-      host: imafake.locker
+      host: us2.candyfans.win
+  client-fingerprint: chrome
+- name: 🇺🇸 美国 | |@x|53
+  type: ss
+  server: 23.95.75.146
+  port: 443
+  password: NDRySIABARbErNIVsCNVkyYAHiBzhveT
+  cipher: chacha20-ietf-poly1305
 - name: 🇺🇸 美国 _28 | ⬇️ 6.2MB/s
   type: vless
   server: developers.cloudflare.com
@@ -464,12 +459,60 @@ proxies:
     path: /
     headers:
       host: freedom.pusytroller.cf
+- name: 🇺🇸 美国 24
+  server: www.zhoubowen.vip
+  port: 443
+  type: vmess
+  uuid: 71b2655e-07d9-4dad-a770-a2b08275142b
+  alterId: 0
+  cipher: auto
+  tls: true
+  skip-cert-verify: false
+  servername: www.zhoubowen.vip
+  network: ws
+  ws-opts:
+    path: /biutefor.icu
+    headers:
+      Host: www.zhoubowen.vip
+- name: 🇺🇸 美国 27
+  server: 82.198.246.97
+  port: 180
+  type: vmess
+  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
 - name: 🇺🇸 美国 _30 | ⬇️ 5.1MB/s
   type: vmess
   server: 74.117.196.232
   port: 37934
   cipher: auto
   uuid: 12929592-a7bd-41eb-ab4d-d804f76c4ff9
+  alterId: 0
+  tls: true
+  skip-cert-verify: true
+  servername: imafake.locker
+  network: ws
+  ws-opts:
+    path: /speedtest
+    headers:
+      host: imafake.locker
+- name: 🇺🇸 美国 43
+  server: 38.14.99.179
+  port: 59807
+  type: vmess
+  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+- name: 🇺🇸 美国 _26 | ⬇️ 6.2MB/s
+  type: vmess
+  server: 74.117.196.232
+  port: 37934
+  cipher: auto
+  uuid: 6d600864-32da-49fd-baf4-7df051762454
   alterId: 0
   tls: true
   skip-cert-verify: true
@@ -488,53 +531,105 @@ proxies:
   cipher: auto
   tls: false
   skip-cert-verify: false
-- name: 🇺🇸 美国 43
-  server: 38.14.99.179
-  port: 59807
+- name: 🇺🇸 美国 _33 | ⬇️ 3.0MB/s
+  type: vless
+  server: us1-1.998998.best
+  port: 443
+  uuid: 24254866-770c-41b4-9404-3f50524f425b
+  tls: true
+  servername: 24254866-770c-41b4-9404-3f50524f425b.cloudns.mom
+  network: ws
+  ws-opts:
+    path: /drsukitgreiusweqa9otrh983
+    headers:
+      host: 24254866-770c-41b4-9404-3f50524f425b.cloudns.mom
+- name: 🇺🇸 美国 _3 | ⬇️ 1.7MB/s
+  type: vless
+  server: 206.189.25.65
+  port: 443
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      host: kuangbao.xiejiang.dpdns.org
+- name: 🇺🇸 美国 _5 | ⬇️ 1.2MB/s
+  type: vless
+  server: 185.103.252.54
+  port: 2053
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      host: kuangbao.xiejiang.dpdns.org
+  client-fingerprint: chrome
+- name: 🇺🇸 美国 _4 | ⬇️ 2.2MB/s
+  type: vless
+  server: 77.221.157.32
+  port: 443
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      host: kuangbao.xiejiang.dpdns.org
+- name: 🇺🇸 美国 _14 | ⬇️ 1.1MB/s
+  type: vless
+  server: 194.35.119.135
+  port: 2053
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      host: kuangbao.xiejiang.dpdns.org
+  client-fingerprint: chrome
+- name: 🇺🇸 美国 _27 | ⬇️ 5.5MB/s
+  type: vless
+  server: itarmy.com.ua
+  port: 2095
+  uuid: 86c50e3a-5b87-49dd-bd20-03c7f2735e40
+  tls: false
+  servername: snippets.pusytroller.cf
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      host: snippets.pusytroller.cf
+- name: 🇺🇸 美国 _7 | ⬇️ 2.1MB/s
+  type: vless
+  server: 213.142.149.3
+  port: 8443
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      host: kuangbao.xiejiang.dpdns.org
+  client-fingerprint: chrome
+- name: 🇺🇸 美国 53
+  server: 45.136.244.201
+  port: 49934
   type: vmess
-  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
+  uuid: 90afa47d-341a-497d-ae25-1d81258804d5
   alterId: 0
   cipher: auto
   tls: false
   skip-cert-verify: false
-- name: 🇺🇸 美国 | |@x|53
-  type: ss
-  server: 23.95.75.146
-  port: 443
-  password: NDRySIABARbErNIVsCNVkyYAHiBzhveT
-  cipher: chacha20-ietf-poly1305
-- name: 🇺🇸 美国 24
-  server: www.zhoubowen.vip
-  port: 443
-  type: vmess
-  uuid: 71b2655e-07d9-4dad-a770-a2b08275142b
-  alterId: 0
-  cipher: auto
-  tls: true
-  skip-cert-verify: false
-  servername: www.zhoubowen.vip
-  network: ws
-  ws-opts:
-    path: /biutefor.icu
-    headers:
-      Host: www.zhoubowen.vip
-- name: 🇺🇸 美国 41
-  server: 107.174.82.102.sslip.io
-  port: 443
-  type: vmess
-  uuid: bb824a22-b7ce-427b-9ed6-1adf0751da02
-  alterId: 0
-  cipher: auto
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /Ov7HrgwlEcRugowKV
-    headers:
-      Host: 107.174.82.102.sslip.io
-- name: 🇺🇸 美国 _3 | ⬇️ 1.7MB/s
+- name: 🇺🇸 美国 _33 | ⬇️ 7.9MB/s
   type: vless
-  server: 206.189.25.65
+  server: 57.180.14.97
   port: 443
   uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
   tls: true
@@ -568,44 +663,6 @@ proxies:
     path: /?ed=2560
     headers:
       host: kuangbao.xiejiang.dpdns.org
-- name: 🇺🇸 美国 _33 | ⬇️ 7.9MB/s
-  type: vless
-  server: 57.180.14.97
-  port: 443
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
-  tls: true
-  servername: kuangbao.xiejiang.dpdns.org
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      host: kuangbao.xiejiang.dpdns.org
-- name: 🇺🇸 美国 _14 | ⬇️ 1.1MB/s
-  type: vless
-  server: 194.35.119.135
-  port: 2053
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
-  tls: true
-  servername: kuangbao.xiejiang.dpdns.org
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      host: kuangbao.xiejiang.dpdns.org
-  client-fingerprint: chrome
-- name: 🇺🇸 美国 _5 | ⬇️ 1.2MB/s
-  type: vless
-  server: 185.103.252.54
-  port: 2053
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
-  tls: true
-  servername: kuangbao.xiejiang.dpdns.org
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      host: kuangbao.xiejiang.dpdns.org
-  client-fingerprint: chrome
 - name: 🇺🇸 美国 _19 | ⬇️ 3.9MB/s
   type: vless
   server: www.speedtest.net
@@ -618,9 +675,9 @@ proxies:
     path: /@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy
     headers:
       host: websocket.network.www.speedtest.net.flutter.dev.russia.pyt.digitalcity5.xyz.
-- name: 🇺🇸 美国 _4 | ⬇️ 2.2MB/s
+- name: 🇺🇸 美国 _34 | ⬇️ 2.6MB/s
   type: vless
-  server: 77.221.157.32
+  server: 139.185.34.131
   port: 443
   uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
   tls: true
@@ -630,10 +687,10 @@ proxies:
     path: /?ed=2560
     headers:
       host: kuangbao.xiejiang.dpdns.org
-- name: 🇺🇸 美国 _7 | ⬇️ 2.1MB/s
+- name: 🇺🇸 美国 _38 | ⬇️ 2.0MB/s
   type: vless
-  server: 213.142.149.3
-  port: 8443
+  server: 139.185.50.5
+  port: 14594
   uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
   tls: true
   servername: kuangbao.xiejiang.dpdns.org
@@ -642,7 +699,6 @@ proxies:
     path: /?ed=2560
     headers:
       host: kuangbao.xiejiang.dpdns.org
-  client-fingerprint: chrome
 - name: 🇺🇸 美国 28
   server: 152.70.92.69
   port: 80
@@ -652,11 +708,11 @@ proxies:
   cipher: auto
   tls: false
   skip-cert-verify: false
-- name: 🇺🇸 美国 53
-  server: 45.136.244.201
-  port: 49934
+- name: 🇺🇸 美国 52
+  server: dd.openaccessnode.com
+  port: 5230
   type: vmess
-  uuid: 90afa47d-341a-497d-ae25-1d81258804d5
+  uuid: 77238c49-bd20-e407-f05e-0c073ad08fdb
   alterId: 0
   cipher: auto
   tls: false
@@ -695,42 +751,9 @@ proxies:
     headers:
       host: kuangbao.xiejiang.dpdns.org
   client-fingerprint: chrome
-- name: 🇺🇸 美国 _34 | ⬇️ 2.6MB/s
+- name: 🇺🇸 美国 _30 | ⬇️ 3.5MB/s
   type: vless
-  server: 139.185.34.131
-  port: 443
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
-  tls: true
-  servername: kuangbao.xiejiang.dpdns.org
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      host: kuangbao.xiejiang.dpdns.org
-- name: 🇺🇸 美国 _38 | ⬇️ 2.0MB/s
-  type: vless
-  server: 139.185.50.5
-  port: 14594
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
-  tls: true
-  servername: kuangbao.xiejiang.dpdns.org
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      host: kuangbao.xiejiang.dpdns.org
-- name: 🇺🇸 美国 52
-  server: dd.openaccessnode.com
-  port: 5230
-  type: vmess
-  uuid: 77238c49-bd20-e407-f05e-0c073ad08fdb
-  alterId: 0
-  cipher: auto
-  tls: false
-  skip-cert-verify: false
-- name: 🇺🇸 美国 _37 | ⬇️ 4.5MB/s
-  type: vless
-  server: 98.70.151.190
+  server: 98.70.1.250
   port: 443
   uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
   tls: true
@@ -753,126 +776,20 @@ proxies:
     headers:
       host: kuangbao.xiejiang.dpdns.org
   client-fingerprint: chrome
-- name: 🇺🇸 美国 _30 | ⬇️ 3.5MB/s
-  type: vless
-  server: 98.70.1.250
+- name: 🇺🇸 美国 41
+  server: 107.174.82.102.sslip.io
   port: 443
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  type: vmess
+  uuid: bb824a22-b7ce-427b-9ed6-1adf0751da02
+  alterId: 0
+  cipher: auto
   tls: true
-  servername: kuangbao.xiejiang.dpdns.org
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      host: kuangbao.xiejiang.dpdns.org
-- name: 🇺🇸 美国 _33 | ⬇️ 3.0MB/s
-  type: vless
-  server: us1-1.998998.best
-  port: 443
-  uuid: 24254866-770c-41b4-9404-3f50524f425b
-  tls: true
-  servername: 24254866-770c-41b4-9404-3f50524f425b.cloudns.mom
-  network: ws
-  ws-opts:
-    path: /drsukitgreiusweqa9otrh983
-    headers:
-      host: 24254866-770c-41b4-9404-3f50524f425b.cloudns.mom
-- name: 🇺🇸 美国 _18 | ⬇️ 5.6MB/s
-  type: vless
-  server: us2.candyfans.win
-  port: 443
-  uuid: efe47594-d246-4823-9bb8-d828160720ab
-  tls: true
-  servername: us2.candyfans.win
-  network: ws
-  ws-opts:
-    path: /ndhfws
-    headers:
-      host: us2.candyfans.win
-  client-fingerprint: chrome
-- name: 🇺🇸 美国 _27 | ⬇️ 5.5MB/s
-  type: vless
-  server: itarmy.com.ua
-  port: 2095
-  uuid: 86c50e3a-5b87-49dd-bd20-03c7f2735e40
-  tls: false
-  servername: snippets.pusytroller.cf
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      host: snippets.pusytroller.cf
-- name: 🇺🇸 美国 12
-  server: bestcdn2.868863.xyz
-  port: 2083
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248838279.796812.xyz
   skip-cert-verify: false
   network: ws
   ws-opts:
-    path: /agraeabtegrrh
+    path: /Ov7HrgwlEcRugowKV
     headers:
-      Host: 17642248838279.796812.xyz
-- name: 🇺🇸 美国 14
-  server: bestcdn2.868863.xyz
-  port: 2096
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248837494.206355.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248837494.206355.xyz
-- name: 🇺🇸 美国 13
-  server: bestcdn2.868863.xyz
-  port: 2087
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832844.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248832844.796813.xyz
-- name: 🇺🇸 美国 IEPL GPT
-  type: ss
-  server: gd.bjnet2.com
-  port: 36608
-  cipher: aes-128-gcm
-  password: 84d85af8-2807-4306-a701-f784676b77c3
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇺🇸 美国 22
-  server: bestcdn5.868863.xyz
-  port: 2053
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832331.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248832331.796813.xyz
-- name: 🇺🇸 美国 21
-  server: bestcdn5.868863.xyz
-  port: 8443
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248834476.796812.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      Host: 17642248834476.796812.xyz
+      Host: 107.174.82.102.sslip.io
 - name: 🇺🇸 美国 50
   server: fn.130519.xyz
   port: 8443
@@ -887,10 +804,10 @@ proxies:
     path: /19aebb35-b458-4d0c-b767-2adb39e6bb02-vm
     headers:
       Host: deji.186507.xyz
-- name: 🇺🇸 美国 _16 | ⬇️ 4.0MB/s
+- name: 🇺🇸 美国 _37 | ⬇️ 4.5MB/s
   type: vless
-  server: freeyx.cloudflare88.eu.org
-  port: 2096
+  server: 98.70.151.190
+  port: 443
   uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
   tls: true
   servername: kuangbao.xiejiang.dpdns.org
@@ -899,90 +816,89 @@ proxies:
     path: /?ed=2560
     headers:
       host: kuangbao.xiejiang.dpdns.org
-- name: 🇺🇸 美国 9
-  server: bestcdn1.868863.xyz
-  port: 2053
+- name: 🇺🇸 美国 21
+  server: bestcdn5.868863.xyz
+  port: 8443
   type: trojan
   password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248831496.796812.xyz
+  sni: 17642248834476.796812.xyz
   skip-cert-verify: false
   network: ws
   ws-opts:
     path: /agraeabtegrrh
     headers:
-      Host: 17642248831496.796812.xyz
-- name: 🇺🇸 美国 11
-  server: bestcdn1.868863.xyz
-  port: 2087
+      Host: 17642248834476.796812.xyz
+- name: 🇺🇸 美国 22
+  server: bestcdn5.868863.xyz
+  port: 2053
   type: trojan
   password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248838532.206355.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248838532.206355.xyz
-- name: 🇺🇸 美国 10
-  server: bestcdn1.868863.xyz
-  port: 2096
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832011.796813.xyz
+  sni: 17642248832331.796813.xyz
   skip-cert-verify: false
   network: ws
   ws-opts:
     path: /agrbniuh
     headers:
-      Host: 17642248832011.796813.xyz
-- name: 🇺🇸 美国 17
-  server: bestcdn3.868863.xyz
-  port: 2053
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248833842.206355.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248833842.206355.xyz
-- name: 🇺🇸 美国 15
-  server: bestcdn3.868863.xyz
-  port: 2087
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248835602.796812.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      Host: 17642248835602.796812.xyz
-- name: 🇺🇸 美国 16
-  server: bestcdn3.868863.xyz
+      Host: 17642248832331.796813.xyz
+- name: 🇺🇸 美国 IEPL GPT
+  type: ss
+  server: gd.bjnet2.com
+  port: 36608
+  cipher: aes-128-gcm
+  password: 84d85af8-2807-4306-a701-f784676b77c3
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+- name: 🇺🇸 美国 12
+  server: bestcdn2.868863.xyz
   port: 2083
   type: trojan
   password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832588.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248832588.796813.xyz
-- name: 🇺🇸 美国 8
-  server: bestcdn4.868863.xyz
-  port: 2053
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832420.796812.xyz
+  sni: 17642248838279.796812.xyz
   skip-cert-verify: false
   network: ws
   ws-opts:
     path: /agraeabtegrrh
     headers:
-      Host: 17642248832420.796812.xyz
+      Host: 17642248838279.796812.xyz
+- name: 🇺🇸 美国 13
+  server: bestcdn2.868863.xyz
+  port: 2087
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248832844.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248832844.796813.xyz
+- name: 🇺🇸 美国 14
+  server: bestcdn2.868863.xyz
+  port: 2096
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248837494.206355.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /videomuaawe
+    headers:
+      Host: 17642248837494.206355.xyz
+- name: 🇺🇸 美国 4
+  server: bestcdn4.868863.xyz
+  port: 2087
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248839754.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248839754.796813.xyz
 - name: 🇺🇸 美国 5
   server: bestcdn4.868863.xyz
   port: 2096
@@ -1007,7 +923,55 @@ proxies:
     path: /agraeabtegrrh
     headers:
       Host: 17642248839786.796812.xyz
-- name: 🇺🇸 美国 01
+- name: 🇺🇸 美国 8
+  server: bestcdn4.868863.xyz
+  port: 2053
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248832420.796812.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agraeabtegrrh
+    headers:
+      Host: 17642248832420.796812.xyz
+- name: 🇺🇸 美国 9
+  server: bestcdn1.868863.xyz
+  port: 2053
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248831496.796812.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agraeabtegrrh
+    headers:
+      Host: 17642248831496.796812.xyz
+- name: 🇺🇸 美国 10
+  server: bestcdn1.868863.xyz
+  port: 2096
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248832011.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248832011.796813.xyz
+- name: 🇺🇸 美国 11
+  server: bestcdn1.868863.xyz
+  port: 2087
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248838532.206355.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /videomuaawe
+    headers:
+      Host: 17642248838532.206355.xyz
+- name: 🇺🇸 美国 02
   server: bestcdn4.868863.xyz
   port: 2083
   type: trojan
@@ -1019,18 +983,54 @@ proxies:
     path: /agrbniuh
     headers:
       Host: 17642248834136.796813.xyz
-- name: 🇺🇸 美国 4
-  server: bestcdn4.868863.xyz
+- name: 🇺🇸 美国 15
+  server: bestcdn3.868863.xyz
   port: 2087
   type: trojan
   password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248839754.796813.xyz
+  sni: 17642248835602.796812.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agraeabtegrrh
+    headers:
+      Host: 17642248835602.796812.xyz
+- name: 🇺🇸 美国 17
+  server: bestcdn3.868863.xyz
+  port: 2053
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248833842.206355.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /videomuaawe
+    headers:
+      Host: 17642248833842.206355.xyz
+- name: 🇺🇸 美国 16
+  server: bestcdn3.868863.xyz
+  port: 2083
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248832588.796813.xyz
   skip-cert-verify: false
   network: ws
   ws-opts:
     path: /agrbniuh
     headers:
-      Host: 17642248839754.796813.xyz
+      Host: 17642248832588.796813.xyz
+- name: 🇺🇸 美国 _16 | ⬇️ 4.0MB/s
+  type: vless
+  server: freeyx.cloudflare88.eu.org
+  port: 2096
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  servername: kuangbao.xiejiang.dpdns.org
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      host: kuangbao.xiejiang.dpdns.org
 - name: 🇨🇦 加拿大 _1 | ⬇️ 4.4MB/s
   type: vless
   server: 81.19.140.202
@@ -1058,6 +1058,18 @@ proxies:
     headers:
       host: 639000411272217052.swift-amsin.info
   client-fingerprint: chrome
+- name: 🇫🇷 法国 _3 | ⬇️ 6.1MB/s
+  type: vless
+  server: www.visaeurope.at
+  port: 2082
+  uuid: cb213db5-803d-49dd-a7e2-46d938af0751
+  tls: false
+  servername: amiroo-l43dac88-v2.amiroo-d8b.workers.dev
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      host: amiroo-l43dac88-v2.amiroo-d8b.workers.dev
 - name: 🇫🇷 法国 _4 | ⬇️ 4.4MB/s
   type: vless
   server: paris.fonixapp.org
@@ -1072,26 +1084,6 @@ proxies:
     public-key: fRZMLYqVbApbA09ZzsuErrLw_ED_HeegUtq7okVRvmY
     short-id: '78'
   client-fingerprint: chrome
-- name: 🇫🇷 法国 _3 | ⬇️ 6.1MB/s
-  type: vless
-  server: www.visaeurope.at
-  port: 2082
-  uuid: cb213db5-803d-49dd-a7e2-46d938af0751
-  tls: false
-  servername: amiroo-l43dac88-v2.amiroo-d8b.workers.dev
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      host: amiroo-l43dac88-v2.amiroo-d8b.workers.dev
-- name: 🇬🇧 英国 _3 | ⬇️ 3.0MB/s
-  type: vless
-  server: 94.182.137.12
-  port: 20532
-  uuid: 8496c102-4094-4dd3-ad63-7bb7a35cbaee
-  tls: false
-  servername: Telewebion.com
-  network: http
 - name: 🇬🇧 英国 _1 | ⬇️ 6.8MB/s
   type: vless
   server: www.visa.com.sg
@@ -1104,6 +1096,28 @@ proxies:
     path: /?ed=2560
     headers:
       host: assistantdonkeyryfn-5zfnjz.assistant-donkey-ryfn.workers.dev
+- name: 🇬🇧 英国 _3 | ⬇️ 3.0MB/s
+  type: vless
+  server: 94.182.137.12
+  port: 20532
+  uuid: 8496c102-4094-4dd3-ad63-7bb7a35cbaee
+  tls: false
+  servername: Telewebion.com
+  network: http
+- name: 🇩🇪 德国 _5 | ⬇️ 2.7MB/s
+  type: vless
+  server: 85.192.24.131
+  port: 443
+  udp: true
+  uuid: 07e0d9f5-6ed1-4bfb-8c19-311a312cba7d
+  tls: true
+  servername: web.max.ru
+  flow: xtls-rprx-vision
+  network: tcp
+  reality-opts:
+    public-key: i3AAHIiAZOk2-3BFfQlPN5eRBfBpLt53M3p0JKuE0Cw
+    short-id: 0d680ba281cb229b
+  client-fingerprint: chrome
 - name: 🇩🇪 德国 _4 | ⬇️ 5.1MB/s
   type: vless
   server: 62.60.148.21
@@ -1117,34 +1131,6 @@ proxies:
   reality-opts:
     public-key: BkAG_uWeUj7BCHqYjrz1JyH0TMvO_KywubV7WJN17ho
     short-id: ee6f3e8f44b1f0b6
-  client-fingerprint: chrome
-- name: 🇩🇪 德国 _5 | ⬇️ 8.6MB/s
-  type: vless
-  server: antimage.fonixapp.org
-  port: 48138
-  udp: true
-  uuid: cd1bd810-ae03-4af8-a9cf-e39fb3220533
-  tls: true
-  servername: deepl.com
-  flow: xtls-rprx-vision
-  network: tcp
-  reality-opts:
-    public-key: lbo1jWRdkDrMcBkRcVXUBGoEbOun23CERmtkOWDS7Go
-    short-id: a941df4328
-  client-fingerprint: chrome
-- name: 🇩🇪 德国 _6 | ⬇️ 6.0MB/s
-  type: vless
-  server: dwarvensniper.fonixapp.org
-  port: 25375
-  udp: true
-  uuid: a226ddd3-cc5c-41c3-ad7c-1e7cfd20357a
-  tls: true
-  servername: stackoverflow.com
-  flow: xtls-rprx-vision
-  network: tcp
-  reality-opts:
-    public-key: RZax6slpjvfUJ46gHwIfIBApUSapP7i7yPz1f1WwBXE
-    short-id: a193
   client-fingerprint: chrome
 - name: 🇩🇪 德国 _7 | ⬇️ 2.8MB/s
   type: vless
@@ -1160,6 +1146,20 @@ proxies:
     public-key: II6xvXxpAqNrzZgYqKKHsg30aeLm--kf7LV35n5jzH8
     short-id: ce
   client-fingerprint: chrome
+- name: 🇩🇪 德国 _6 | ⬇️ 6.0MB/s
+  type: vless
+  server: dwarvensniper.fonixapp.org
+  port: 25375
+  udp: true
+  uuid: a226ddd3-cc5c-41c3-ad7c-1e7cfd20357a
+  tls: true
+  servername: stackoverflow.com
+  flow: xtls-rprx-vision
+  network: tcp
+  reality-opts:
+    public-key: RZax6slpjvfUJ46gHwIfIBApUSapP7i7yPz1f1WwBXE
+    short-id: a193
+  client-fingerprint: chrome
 - name: 🇩🇪 德国 _1 | ⬇️ 7.5MB/s
   type: vless
   server: graygoat.fonixapp.org
@@ -1174,6 +1174,20 @@ proxies:
     public-key: R-p92Ot1K9sL-_biDhao1v-0SVbi89Di7r65CzZQURk
     short-id: 3fd623
   client-fingerprint: chrome
+- name: 🇩🇪 德国 _5 | ⬇️ 8.6MB/s
+  type: vless
+  server: antimage.fonixapp.org
+  port: 48138
+  udp: true
+  uuid: cd1bd810-ae03-4af8-a9cf-e39fb3220533
+  tls: true
+  servername: deepl.com
+  flow: xtls-rprx-vision
+  network: tcp
+  reality-opts:
+    public-key: lbo1jWRdkDrMcBkRcVXUBGoEbOun23CERmtkOWDS7Go
+    short-id: a941df4328
+  client-fingerprint: chrome
 - name: 🇩🇪 德国 IEPL
   type: ss
   server: gd.bjnet2.com
@@ -1185,6 +1199,20 @@ proxies:
   plugin-opts:
     mode: http
     host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+- name: 🇷🇺 俄罗斯 _3 | ⬇️ 4.2MB/s
+  type: vless
+  server: yt.connect-iskra.ru
+  port: 8443
+  udp: true
+  uuid: fdc3a9ca-1b77-4b06-869c-43982db07c9f
+  tls: true
+  servername: shiftline.xyz
+  flow: xtls-rprx-vision
+  network: tcp
+  reality-opts:
+    public-key: QjcIcRxF6rLpMImGD9wUYmeftFwpkuwLKm9nChbD50A
+    short-id: 60a0c1f0f4c9ca63
+  client-fingerprint: qq
 - name: 🇷🇺 俄罗斯 _2 | ⬇️ 7.5MB/s
   type: vless
   server: russia.whitenet.online
@@ -1213,20 +1241,6 @@ proxies:
     public-key: xdNyDss0OLTu3z6kcdg8X2wfTOLtmDTobE2on3vKe34
     short-id: ab1cd2
   client-fingerprint: chrome
-- name: 🇷🇺 俄罗斯 _3 | ⬇️ 4.2MB/s
-  type: vless
-  server: yt.connect-iskra.ru
-  port: 8443
-  udp: true
-  uuid: fdc3a9ca-1b77-4b06-869c-43982db07c9f
-  tls: true
-  servername: shiftline.xyz
-  flow: xtls-rprx-vision
-  network: tcp
-  reality-opts:
-    public-key: QjcIcRxF6rLpMImGD9wUYmeftFwpkuwLKm9nChbD50A
-    short-id: 60a0c1f0f4c9ca63
-  client-fingerprint: qq
 - name: 🇷🇺 俄罗斯 _4 | ⬇️ 6.0MB/s
   type: vless
   server: wolfy.ufavpn.ru
@@ -1241,6 +1255,21 @@ proxies:
     public-key: 5Z8mktBAXgz88xCibv79NncelOS-3WAunfZNKnJRdUM
     short-id: 08
   client-fingerprint: chrome
+- name: 🇮🇹 意大利 vless real y
+  type: vless
+  server: 107.148.225.121
+  port: 29346
+  uuid: 522fbf87-eb01-4a96-9be0-7040f565280c
+  tls: true
+  client-fingerprint: chrome
+  servername: www.microsoft.com
+  network: tcp
+  reality-opts:
+    public-key: omnvcbYUmxWuxu01064-LwDOoExs059Desd5skiphiM
+    short-id: eb034c8bd4454961
+  tfo: false
+  skip-cert-verify: true
+  flow: xtls-rprx-vision
 - name: 🇮🇹 意大利 vless grpc real y
   type: vless
   server: 107.148.225.121
@@ -1270,21 +1299,6 @@ proxies:
     short-id: eb034c8bd4454961
   tfo: false
   skip-cert-verify: true
-- name: 🇮🇹 意大利 vless real y
-  type: vless
-  server: 107.148.225.121
-  port: 29346
-  uuid: 522fbf87-eb01-4a96-9be0-7040f565280c
-  tls: true
-  client-fingerprint: chrome
-  servername: www.microsoft.com
-  network: tcp
-  reality-opts:
-    public-key: omnvcbYUmxWuxu01064-LwDOoExs059Desd5skiphiM
-    short-id: eb034c8bd4454961
-  tfo: false
-  skip-cert-verify: true
-  flow: xtls-rprx-vision
 - name: 🇮🇹 意大利 _1 | ⬇️ 4.9MB/s
   type: vless
   server: cdi.chekino.ir
@@ -1337,111 +1351,112 @@ proxy-groups:
   - 🇭🇰 香港 | |@x|138
   - 🇭🇰 香港 IEPL
   - 🇹🇼 台湾 IEPL
-  - 🇯🇵 日本 _4 | ⬇️ 2.3MB/s
   - 🇯🇵 日本 _3 | ⬇️ 1.4MB/s
-  - 🇯🇵 日本 _2 | ⬇️ 2.0MB/s
+  - 🇯🇵 日本 _4 | ⬇️ 2.3MB/s
   - 🇯🇵 日本 IEPL GPT
   - 🇯🇵 日本 01|白嫖机场. k 2
   - 🇯🇵 日本 01|白嫖机场. k
+  - 🇯🇵 日本 _2 | ⬇️ 2.0MB/s
   - 🇸🇬 新加坡 IEPL
   - 🇸🇬 新加坡 01|白嫖机场. k 2
   - 🇸🇬 新加坡 01|白嫖机场. k
-  - 🇰🇷 韩国 01|白嫖机场. k
   - 🇰🇷 韩国 01|白嫖机场. k 2
+  - 🇰🇷 韩国 01|白嫖机场. k
   - 🇮🇳 印度 01|白嫖机场. k 4
-  - 🇮🇳 印度 01|白嫖机场. k 2
   - 🇮🇳 印度 01|白嫖机场. k 3
+  - 🇮🇳 印度 01|白嫖机场. k 2
   - 🇮🇳 印度 01|白嫖机场. k
   - 🇮🇩 印度尼西亚 IEPL
-  - 🇻🇳 越南 _5 | ⬇️ 1.1MB/s
-  - 🇻🇳 越南 _1 | ⬇️ 1.3MB/s
   - 🇻🇳 越南 _3 | ⬇️ 1.4MB/s
   - 🇻🇳 越南 _6 | ⬇️ 1.2MB/s
   - 🇻🇳 越南 _2 | ⬇️ 1.4MB/s
+  - 🇻🇳 越南 _5 | ⬇️ 1.1MB/s
   - 🇻🇳 越南 _4 | ⬇️ 1.0MB/s
+  - 🇻🇳 越南 _1 | ⬇️ 1.3MB/s
   - 🇻🇳 越南 _2 | ⬇️ 1.6MB/s
   - 🇻🇳 越南 IEPL
-  - 🇺🇸 美国 _5 | ⬇️ 5.1MB/s
-  - 🇺🇸 美国 _12 | ⬇️ 3.7MB/s
+  - 🇺🇸 美国 _24 | ⬇️ 5.2MB/s
   - 🇺🇸 美国 _43 | ⬇️ 5.2MB/s
   - 🇺🇸 美国 _20 | ⬇️ 5.9MB/s
   - 🇺🇸 美国 _21 | ⬇️ 6.3MB/s
   - 🇺🇸 美国 _22 | ⬇️ 4.8MB/s
-  - 🇺🇸 美国 _23 | ⬇️ 5.7MB/s
-  - 🇺🇸 美国 _24 | ⬇️ 5.2MB/s
   - 🇺🇸 美国 _28 | ⬇️ 4.1MB/s
+  - 🇺🇸 美国 _5 | ⬇️ 5.1MB/s
+  - 🇺🇸 美国 _12 | ⬇️ 3.7MB/s
+  - 🇺🇸 美国 _23 | ⬇️ 5.7MB/s
   - 🇺🇸 美国 _25 | ⬇️ 6.5MB/s
-  - 🇺🇸 美国 27
   - 🇺🇸 美国 _31 | ⬇️ 4.8MB/s
-  - 🇺🇸 美国 _26 | ⬇️ 6.2MB/s
-  - 🇺🇸 美国 _28 | ⬇️ 6.2MB/s
-  - 🇺🇸 美国 _30 | ⬇️ 5.1MB/s
-  - 🇺🇸 美国 42
-  - 🇺🇸 美国 43
+  - 🇺🇸 美国 _18 | ⬇️ 5.6MB/s
   - 🇺🇸 美国 | |@x|53
+  - 🇺🇸 美国 _28 | ⬇️ 6.2MB/s
   - 🇺🇸 美国 24
-  - 🇺🇸 美国 41
+  - 🇺🇸 美国 27
+  - 🇺🇸 美国 _30 | ⬇️ 5.1MB/s
+  - 🇺🇸 美国 43
+  - 🇺🇸 美国 _26 | ⬇️ 6.2MB/s
+  - 🇺🇸 美国 42
+  - 🇺🇸 美国 _33 | ⬇️ 3.0MB/s
   - 🇺🇸 美国 _3 | ⬇️ 1.7MB/s
+  - 🇺🇸 美国 _5 | ⬇️ 1.2MB/s
+  - 🇺🇸 美国 _4 | ⬇️ 2.2MB/s
+  - 🇺🇸 美国 _14 | ⬇️ 1.1MB/s
+  - 🇺🇸 美国 _27 | ⬇️ 5.5MB/s
+  - 🇺🇸 美国 _7 | ⬇️ 2.1MB/s
+  - 🇺🇸 美国 53
+  - 🇺🇸 美国 _33 | ⬇️ 7.9MB/s
   - 🇺🇸 美国 _16 | ⬇️ 15.0MB/s
   - 🇺🇸 美国 _2 | ⬇️ 10.1MB/s
-  - 🇺🇸 美国 _33 | ⬇️ 7.9MB/s
-  - 🇺🇸 美国 _14 | ⬇️ 1.1MB/s
-  - 🇺🇸 美国 _5 | ⬇️ 1.2MB/s
   - 🇺🇸 美国 _19 | ⬇️ 3.9MB/s
-  - 🇺🇸 美国 _4 | ⬇️ 2.2MB/s
-  - 🇺🇸 美国 _7 | ⬇️ 2.1MB/s
+  - 🇺🇸 美国 _34 | ⬇️ 2.6MB/s
+  - 🇺🇸 美国 _38 | ⬇️ 2.0MB/s
   - 🇺🇸 美国 28
-  - 🇺🇸 美国 53
+  - 🇺🇸 美国 52
   - 🇺🇸 美国 _32 | ⬇️ 2.5MB/s
   - 🇺🇸 美国 51
   - 🇺🇸 美国 _10 | ⬇️ 12.6MB/s
-  - 🇺🇸 美国 _34 | ⬇️ 2.6MB/s
-  - 🇺🇸 美国 _38 | ⬇️ 2.0MB/s
-  - 🇺🇸 美国 52
-  - 🇺🇸 美国 _37 | ⬇️ 4.5MB/s
-  - 🇺🇸 美国 _12 | ⬇️ 3.8MB/s
   - 🇺🇸 美国 _30 | ⬇️ 3.5MB/s
-  - 🇺🇸 美国 _33 | ⬇️ 3.0MB/s
-  - 🇺🇸 美国 _18 | ⬇️ 5.6MB/s
-  - 🇺🇸 美国 _27 | ⬇️ 5.5MB/s
-  - 🇺🇸 美国 12
-  - 🇺🇸 美国 14
-  - 🇺🇸 美国 13
-  - 🇺🇸 美国 IEPL GPT
-  - 🇺🇸 美国 22
-  - 🇺🇸 美国 21
+  - 🇺🇸 美国 _12 | ⬇️ 3.8MB/s
+  - 🇺🇸 美国 41
   - 🇺🇸 美国 50
-  - 🇺🇸 美国 _16 | ⬇️ 4.0MB/s
-  - 🇺🇸 美国 9
-  - 🇺🇸 美国 11
-  - 🇺🇸 美国 10
-  - 🇺🇸 美国 17
-  - 🇺🇸 美国 15
-  - 🇺🇸 美国 16
-  - 🇺🇸 美国 8
+  - 🇺🇸 美国 _37 | ⬇️ 4.5MB/s
+  - 🇺🇸 美国 21
+  - 🇺🇸 美国 22
+  - 🇺🇸 美国 IEPL GPT
+  - 🇺🇸 美国 12
+  - 🇺🇸 美国 13
+  - 🇺🇸 美国 14
+  - 🇺🇸 美国 4
   - 🇺🇸 美国 5
   - 🇺🇸 美国 6
-  - 🇺🇸 美国 01
-  - 🇺🇸 美国 4
+  - 🇺🇸 美国 8
+  - 🇺🇸 美国 9
+  - 🇺🇸 美国 10
+  - 🇺🇸 美国 11
+  - 🇺🇸 美国 02
+  - 🇺🇸 美国 15
+  - 🇺🇸 美国 17
+  - 🇺🇸 美国 16
+  - 🇺🇸 美国 _16 | ⬇️ 4.0MB/s
   - 🇨🇦 加拿大 _1 | ⬇️ 4.4MB/s
   - 🇫🇷 法国 _5 | ⬇️ 2.6MB/s
-  - 🇫🇷 法国 _4 | ⬇️ 4.4MB/s
   - 🇫🇷 法国 _3 | ⬇️ 6.1MB/s
-  - 🇬🇧 英国 _3 | ⬇️ 3.0MB/s
+  - 🇫🇷 法国 _4 | ⬇️ 4.4MB/s
   - 🇬🇧 英国 _1 | ⬇️ 6.8MB/s
+  - 🇬🇧 英国 _3 | ⬇️ 3.0MB/s
+  - 🇩🇪 德国 _5 | ⬇️ 2.7MB/s
   - 🇩🇪 德国 _4 | ⬇️ 5.1MB/s
-  - 🇩🇪 德国 _5 | ⬇️ 8.6MB/s
-  - 🇩🇪 德国 _6 | ⬇️ 6.0MB/s
   - 🇩🇪 德国 _7 | ⬇️ 2.8MB/s
+  - 🇩🇪 德国 _6 | ⬇️ 6.0MB/s
   - 🇩🇪 德国 _1 | ⬇️ 7.5MB/s
+  - 🇩🇪 德国 _5 | ⬇️ 8.6MB/s
   - 🇩🇪 德国 IEPL
+  - 🇷🇺 俄罗斯 _3 | ⬇️ 4.2MB/s
   - 🇷🇺 俄罗斯 _2 | ⬇️ 7.5MB/s
   - 🇷🇺 俄罗斯 _2 | ⬇️ 6.0MB/s
-  - 🇷🇺 俄罗斯 _3 | ⬇️ 4.2MB/s
   - 🇷🇺 俄罗斯 _4 | ⬇️ 6.0MB/s
+  - 🇮🇹 意大利 vless real y
   - 🇮🇹 意大利 vless grpc real y
   - 🇮🇹 意大利 ojan real y
-  - 🇮🇹 意大利 vless real y
   - 🇮🇹 意大利 _1 | ⬇️ 4.9MB/s
   - 🇹🇷 土耳其 _2 | ⬇️ 3.4MB/s
   - 🇹🇷 土耳其 _1 | ⬇️ 2.6MB/s
@@ -1453,111 +1468,112 @@ proxy-groups:
   - 🇭🇰 香港 | |@x|138
   - 🇭🇰 香港 IEPL
   - 🇹🇼 台湾 IEPL
-  - 🇯🇵 日本 _4 | ⬇️ 2.3MB/s
   - 🇯🇵 日本 _3 | ⬇️ 1.4MB/s
-  - 🇯🇵 日本 _2 | ⬇️ 2.0MB/s
+  - 🇯🇵 日本 _4 | ⬇️ 2.3MB/s
   - 🇯🇵 日本 IEPL GPT
   - 🇯🇵 日本 01|白嫖机场. k 2
   - 🇯🇵 日本 01|白嫖机场. k
+  - 🇯🇵 日本 _2 | ⬇️ 2.0MB/s
   - 🇸🇬 新加坡 IEPL
   - 🇸🇬 新加坡 01|白嫖机场. k 2
   - 🇸🇬 新加坡 01|白嫖机场. k
-  - 🇰🇷 韩国 01|白嫖机场. k
   - 🇰🇷 韩国 01|白嫖机场. k 2
+  - 🇰🇷 韩国 01|白嫖机场. k
   - 🇮🇳 印度 01|白嫖机场. k 4
-  - 🇮🇳 印度 01|白嫖机场. k 2
   - 🇮🇳 印度 01|白嫖机场. k 3
+  - 🇮🇳 印度 01|白嫖机场. k 2
   - 🇮🇳 印度 01|白嫖机场. k
   - 🇮🇩 印度尼西亚 IEPL
-  - 🇻🇳 越南 _5 | ⬇️ 1.1MB/s
-  - 🇻🇳 越南 _1 | ⬇️ 1.3MB/s
   - 🇻🇳 越南 _3 | ⬇️ 1.4MB/s
   - 🇻🇳 越南 _6 | ⬇️ 1.2MB/s
   - 🇻🇳 越南 _2 | ⬇️ 1.4MB/s
+  - 🇻🇳 越南 _5 | ⬇️ 1.1MB/s
   - 🇻🇳 越南 _4 | ⬇️ 1.0MB/s
+  - 🇻🇳 越南 _1 | ⬇️ 1.3MB/s
   - 🇻🇳 越南 _2 | ⬇️ 1.6MB/s
   - 🇻🇳 越南 IEPL
-  - 🇺🇸 美国 _5 | ⬇️ 5.1MB/s
-  - 🇺🇸 美国 _12 | ⬇️ 3.7MB/s
+  - 🇺🇸 美国 _24 | ⬇️ 5.2MB/s
   - 🇺🇸 美国 _43 | ⬇️ 5.2MB/s
   - 🇺🇸 美国 _20 | ⬇️ 5.9MB/s
   - 🇺🇸 美国 _21 | ⬇️ 6.3MB/s
   - 🇺🇸 美国 _22 | ⬇️ 4.8MB/s
-  - 🇺🇸 美国 _23 | ⬇️ 5.7MB/s
-  - 🇺🇸 美国 _24 | ⬇️ 5.2MB/s
   - 🇺🇸 美国 _28 | ⬇️ 4.1MB/s
+  - 🇺🇸 美国 _5 | ⬇️ 5.1MB/s
+  - 🇺🇸 美国 _12 | ⬇️ 3.7MB/s
+  - 🇺🇸 美国 _23 | ⬇️ 5.7MB/s
   - 🇺🇸 美国 _25 | ⬇️ 6.5MB/s
-  - 🇺🇸 美国 27
   - 🇺🇸 美国 _31 | ⬇️ 4.8MB/s
-  - 🇺🇸 美国 _26 | ⬇️ 6.2MB/s
-  - 🇺🇸 美国 _28 | ⬇️ 6.2MB/s
-  - 🇺🇸 美国 _30 | ⬇️ 5.1MB/s
-  - 🇺🇸 美国 42
-  - 🇺🇸 美国 43
+  - 🇺🇸 美国 _18 | ⬇️ 5.6MB/s
   - 🇺🇸 美国 | |@x|53
+  - 🇺🇸 美国 _28 | ⬇️ 6.2MB/s
   - 🇺🇸 美国 24
-  - 🇺🇸 美国 41
+  - 🇺🇸 美国 27
+  - 🇺🇸 美国 _30 | ⬇️ 5.1MB/s
+  - 🇺🇸 美国 43
+  - 🇺🇸 美国 _26 | ⬇️ 6.2MB/s
+  - 🇺🇸 美国 42
+  - 🇺🇸 美国 _33 | ⬇️ 3.0MB/s
   - 🇺🇸 美国 _3 | ⬇️ 1.7MB/s
+  - 🇺🇸 美国 _5 | ⬇️ 1.2MB/s
+  - 🇺🇸 美国 _4 | ⬇️ 2.2MB/s
+  - 🇺🇸 美国 _14 | ⬇️ 1.1MB/s
+  - 🇺🇸 美国 _27 | ⬇️ 5.5MB/s
+  - 🇺🇸 美国 _7 | ⬇️ 2.1MB/s
+  - 🇺🇸 美国 53
+  - 🇺🇸 美国 _33 | ⬇️ 7.9MB/s
   - 🇺🇸 美国 _16 | ⬇️ 15.0MB/s
   - 🇺🇸 美国 _2 | ⬇️ 10.1MB/s
-  - 🇺🇸 美国 _33 | ⬇️ 7.9MB/s
-  - 🇺🇸 美国 _14 | ⬇️ 1.1MB/s
-  - 🇺🇸 美国 _5 | ⬇️ 1.2MB/s
   - 🇺🇸 美国 _19 | ⬇️ 3.9MB/s
-  - 🇺🇸 美国 _4 | ⬇️ 2.2MB/s
-  - 🇺🇸 美国 _7 | ⬇️ 2.1MB/s
+  - 🇺🇸 美国 _34 | ⬇️ 2.6MB/s
+  - 🇺🇸 美国 _38 | ⬇️ 2.0MB/s
   - 🇺🇸 美国 28
-  - 🇺🇸 美国 53
+  - 🇺🇸 美国 52
   - 🇺🇸 美国 _32 | ⬇️ 2.5MB/s
   - 🇺🇸 美国 51
   - 🇺🇸 美国 _10 | ⬇️ 12.6MB/s
-  - 🇺🇸 美国 _34 | ⬇️ 2.6MB/s
-  - 🇺🇸 美国 _38 | ⬇️ 2.0MB/s
-  - 🇺🇸 美国 52
-  - 🇺🇸 美国 _37 | ⬇️ 4.5MB/s
-  - 🇺🇸 美国 _12 | ⬇️ 3.8MB/s
   - 🇺🇸 美国 _30 | ⬇️ 3.5MB/s
-  - 🇺🇸 美国 _33 | ⬇️ 3.0MB/s
-  - 🇺🇸 美国 _18 | ⬇️ 5.6MB/s
-  - 🇺🇸 美国 _27 | ⬇️ 5.5MB/s
-  - 🇺🇸 美国 12
-  - 🇺🇸 美国 14
-  - 🇺🇸 美国 13
-  - 🇺🇸 美国 IEPL GPT
-  - 🇺🇸 美国 22
-  - 🇺🇸 美国 21
+  - 🇺🇸 美国 _12 | ⬇️ 3.8MB/s
+  - 🇺🇸 美国 41
   - 🇺🇸 美国 50
-  - 🇺🇸 美国 _16 | ⬇️ 4.0MB/s
-  - 🇺🇸 美国 9
-  - 🇺🇸 美国 11
-  - 🇺🇸 美国 10
-  - 🇺🇸 美国 17
-  - 🇺🇸 美国 15
-  - 🇺🇸 美国 16
-  - 🇺🇸 美国 8
+  - 🇺🇸 美国 _37 | ⬇️ 4.5MB/s
+  - 🇺🇸 美国 21
+  - 🇺🇸 美国 22
+  - 🇺🇸 美国 IEPL GPT
+  - 🇺🇸 美国 12
+  - 🇺🇸 美国 13
+  - 🇺🇸 美国 14
+  - 🇺🇸 美国 4
   - 🇺🇸 美国 5
   - 🇺🇸 美国 6
-  - 🇺🇸 美国 01
-  - 🇺🇸 美国 4
+  - 🇺🇸 美国 8
+  - 🇺🇸 美国 9
+  - 🇺🇸 美国 10
+  - 🇺🇸 美国 11
+  - 🇺🇸 美国 02
+  - 🇺🇸 美国 15
+  - 🇺🇸 美国 17
+  - 🇺🇸 美国 16
+  - 🇺🇸 美国 _16 | ⬇️ 4.0MB/s
   - 🇨🇦 加拿大 _1 | ⬇️ 4.4MB/s
   - 🇫🇷 法国 _5 | ⬇️ 2.6MB/s
-  - 🇫🇷 法国 _4 | ⬇️ 4.4MB/s
   - 🇫🇷 法国 _3 | ⬇️ 6.1MB/s
-  - 🇬🇧 英国 _3 | ⬇️ 3.0MB/s
+  - 🇫🇷 法国 _4 | ⬇️ 4.4MB/s
   - 🇬🇧 英国 _1 | ⬇️ 6.8MB/s
+  - 🇬🇧 英国 _3 | ⬇️ 3.0MB/s
+  - 🇩🇪 德国 _5 | ⬇️ 2.7MB/s
   - 🇩🇪 德国 _4 | ⬇️ 5.1MB/s
-  - 🇩🇪 德国 _5 | ⬇️ 8.6MB/s
-  - 🇩🇪 德国 _6 | ⬇️ 6.0MB/s
   - 🇩🇪 德国 _7 | ⬇️ 2.8MB/s
+  - 🇩🇪 德国 _6 | ⬇️ 6.0MB/s
   - 🇩🇪 德国 _1 | ⬇️ 7.5MB/s
+  - 🇩🇪 德国 _5 | ⬇️ 8.6MB/s
   - 🇩🇪 德国 IEPL
+  - 🇷🇺 俄罗斯 _3 | ⬇️ 4.2MB/s
   - 🇷🇺 俄罗斯 _2 | ⬇️ 7.5MB/s
   - 🇷🇺 俄罗斯 _2 | ⬇️ 6.0MB/s
-  - 🇷🇺 俄罗斯 _3 | ⬇️ 4.2MB/s
   - 🇷🇺 俄罗斯 _4 | ⬇️ 6.0MB/s
+  - 🇮🇹 意大利 vless real y
   - 🇮🇹 意大利 vless grpc real y
   - 🇮🇹 意大利 ojan real y
-  - 🇮🇹 意大利 vless real y
   - 🇮🇹 意大利 _1 | ⬇️ 4.9MB/s
   - 🇹🇷 土耳其 _2 | ⬇️ 3.4MB/s
   - 🇹🇷 土耳其 _1 | ⬇️ 2.6MB/s
