@@ -11,7 +11,7 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 66
+  delay: 33
 - name: 🇺🇸 美国 46
   server: 38.14.99.179
   port: 59807
@@ -24,7 +24,7 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 67
+  delay: 42
 - name: 🇺🇸 美国 48
   server: 38.14.99.163
   port: 59807
@@ -37,20 +37,25 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 70
-- name: 🇺🇸 美国 52
-  server: dd.openaccessnode.com
-  port: 5230
+  delay: 43
+- name: 🇺🇸 美国 41
+  server: 107.174.82.102.sslip.io
+  port: 443
   type: vmess
-  uuid: 77238c49-bd20-e407-f05e-0c073ad08fdb
+  uuid: bb824a22-b7ce-427b-9ed6-1adf0751da02
   alterId: 0
   cipher: auto
-  tls: false
+  tls: true
   skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /Ov7HrgwlEcRugowKV
+    headers:
+      Host: 107.174.82.102.sslip.io
   region_info:
     name: 美国
     code: US
-  delay: 187
+  delay: 90
 - name: 🇺🇸 美国 58
   server: 152.70.92.69
   port: 80
@@ -63,12 +68,30 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 200
-- name: 🇺🇸 美国 61
-  server: 47.243.69.126
-  port: 31904
+  delay: 163
+- name: 🇺🇸 美国 62
+  server: www.zhoubowen.vip
+  port: 443
   type: vmess
-  uuid: 22550b74-3ebf-49b5-ea36-3078b5d47ed9
+  uuid: 71b2655e-07d9-4dad-a770-a2b08275142b
+  alterId: 0
+  cipher: auto
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /biutefor.icu
+    headers:
+      Host: www.zhoubowen.vip
+  region_info:
+    name: 美国
+    code: US
+  delay: 219
+- name: 🇺🇸 美国 52
+  server: dd.openaccessnode.com
+  port: 5230
+  type: vmess
+  uuid: 77238c49-bd20-e407-f05e-0c073ad08fdb
   alterId: 0
   cipher: auto
   tls: false
@@ -76,7 +99,55 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 207
+  delay: 231
+- name: 🇺🇸 美国 12
+  server: bestcdn2.868863.xyz
+  port: 2083
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248838279.796812.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agraeabtegrrh
+    headers:
+      Host: 17642248838279.796812.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 764
+- name: 🇺🇸 美国 13
+  server: bestcdn2.868863.xyz
+  port: 2087
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248832844.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248832844.796813.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 764
+- name: 🇺🇸 美国 14
+  server: bestcdn2.868863.xyz
+  port: 2096
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248837494.206355.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /videomuaawe
+    headers:
+      Host: 17642248837494.206355.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 764
 - name: 🇺🇸 美国 56
   server: fn.130519.xyz
   port: 8443
@@ -95,187 +166,7 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 266
-- name: 🇺🇸 美国 22
-  server: bestcdn5.868863.xyz
-  port: 2053
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832331.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248832331.796813.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 318
-- name: 🇺🇸 美国 23
-  server: bestcdn5.868863.xyz
-  port: 8443
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248833040.206355.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248833040.206355.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 319
-- name: 🇺🇸 美国 12
-  server: bestcdn2.868863.xyz
-  port: 2083
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248838279.796812.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      Host: 17642248838279.796812.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 353
-- name: 🇺🇸 美国 13
-  server: bestcdn2.868863.xyz
-  port: 2087
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832844.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248832844.796813.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 353
-- name: 🇺🇸 美国 14
-  server: bestcdn2.868863.xyz
-  port: 2096
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248837494.206355.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248837494.206355.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 353
-- name: 🇺🇸 美国 41
-  server: 107.174.82.102.sslip.io
-  port: 443
-  type: vmess
-  uuid: bb824a22-b7ce-427b-9ed6-1adf0751da02
-  alterId: 0
-  cipher: auto
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /Ov7HrgwlEcRugowKV
-    headers:
-      Host: 107.174.82.102.sslip.io
-  region_info:
-    name: 美国
-    code: US
-  delay: 592
-- name: 🇺🇸 美国 62
-  server: www.zhoubowen.vip
-  port: 443
-  type: vmess
-  uuid: 71b2655e-07d9-4dad-a770-a2b08275142b
-  alterId: 0
-  cipher: auto
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /biutefor.icu
-    headers:
-      Host: www.zhoubowen.vip
-  region_info:
-    name: 美国
-    code: US
-  delay: 598
-- name: 🇺🇸 美国 19
-  server: bestcdn4.868863.xyz
-  port: 8443
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248839907.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248839907.796813.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 690
-- name: 🇺🇸 美国 9
-  server: bestcdn1.868863.xyz
-  port: 2053
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248831496.796812.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      Host: 17642248831496.796812.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 690
-- name: 🇺🇸 美国 10
-  server: bestcdn1.868863.xyz
-  port: 2096
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832011.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248832011.796813.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 690
-- name: 🇺🇸 美国 20
-  server: bestcdn4.868863.xyz
-  port: 2083
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248834335.206355.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248834335.206355.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 691
+  delay: 765
 - name: 🇺🇸 美国 8
   server: bestcdn4.868863.xyz
   port: 2053
@@ -291,23 +182,7 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 691
-- name: 🇺🇸 美国 4
-  server: bestcdn4.868863.xyz
-  port: 2087
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248839754.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248839754.796813.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 691
+  delay: 781
 - name: 🇺🇸 美国 18
   server: bestcdn4.868863.xyz
   port: 2096
@@ -323,7 +198,7 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 691
+  delay: 781
 - name: 🇺🇸 美国 11
   server: bestcdn1.868863.xyz
   port: 2087
@@ -339,7 +214,119 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 691
+  delay: 781
+- name: 🇺🇸 美国 9
+  server: bestcdn1.868863.xyz
+  port: 2053
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248831496.796812.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agraeabtegrrh
+    headers:
+      Host: 17642248831496.796812.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 782
+- name: 🇺🇸 美国 20
+  server: bestcdn4.868863.xyz
+  port: 2083
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248834335.206355.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /videomuaawe
+    headers:
+      Host: 17642248834335.206355.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 782
+- name: 🇺🇸 美国 4
+  server: bestcdn4.868863.xyz
+  port: 2087
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248839754.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248839754.796813.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 782
+- name: 🇺🇸 美国 19
+  server: bestcdn4.868863.xyz
+  port: 8443
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248839907.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248839907.796813.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 783
+- name: 🇺🇸 美国 10
+  server: bestcdn1.868863.xyz
+  port: 2096
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248832011.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248832011.796813.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 783
+- name: 🇺🇸 美国 22
+  server: bestcdn5.868863.xyz
+  port: 2053
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248832331.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248832331.796813.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 1315
+- name: 🇺🇸 美国 23
+  server: bestcdn5.868863.xyz
+  port: 8443
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248833040.206355.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /videomuaawe
+    headers:
+      Host: 17642248833040.206355.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 1315
 - name: 🇺🇸 美国 17
   server: bestcdn3.868863.xyz
   port: 2053
@@ -355,7 +342,7 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 1164
+  delay: 2254
 - name: 🇺🇸 美国 15
   server: bestcdn3.868863.xyz
   port: 2087
@@ -371,7 +358,7 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 1164
+  delay: 2254
 - name: 🇺🇸 美国 16
   server: bestcdn3.868863.xyz
   port: 2083
@@ -387,4 +374,4 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 1165
+  delay: 2254
