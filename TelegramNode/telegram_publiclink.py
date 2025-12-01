@@ -1,16 +1,17 @@
 # 文件名: TelegramNode/telegram_publiclink.py
 # -*- coding: utf-8 -*-
 # ============================================================================
-# Clash 订阅自动生成脚本 V1.R1
-# 
+# Clash 订阅自动生成脚本 V1.R2
+#
 # 版本历史:
+# V1.R2 (20251201) - 修复 & 优化
+#   - 增加了对 REALITY 节点的验证，自动过滤 short-id 无效的节点。
 # V1.R1 (20251130) - 初始版本
 #   - TCP 连接测速（兼容所有协议）
 #   - FlClash 配置兼容（使用 http://www.gstatic.com/generate_204）
 #   - 智能地区识别和节点重命名
 #   - 失败保护机制（测速全部失败时保留所有节点）
 # ============================================================================
-
 import os
 import re
 import asyncio
@@ -33,7 +34,6 @@ from telethon.sessions import StringSession
 # =================================================================================
 # Part 1: 配置
 # =================================================================================
-
 # --- Telegram 抓取器配置 ---
 API_ID = os.environ.get('TELEGRAM_API_ID')  # 从 GitHub Secrets 获取的 Telegram 应用 API ID
 API_HASH = os.environ.get('TELEGRAM_API_HASH')  # 从 GitHub Secrets 获取的 Telegram 应用 API HASH
@@ -125,20 +125,19 @@ FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
 # =================================================================================
 # Part 2: 函数定义
 # =================================================================================
-
 def parse_expire_time(text):
     """解析消息中的到期时间"""
     match = re.search(r'到期时间[:：]\s*(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})', text)
     if match:
-        try: 
+        try:
             return datetime.strptime(match.group(1), '%Y-%m-%d %H:%M:%S').replace(tzinfo=timezone(timedelta(hours=8)))
-        except: 
+        except:
             return None
     return None
 
 def is_expire_time_valid(expire_time):
     """检查订阅链接是否在有效期内"""
-    if expire_time is None: 
+    if expire_time is None:
         return True
     hours_remaining = (expire_time - datetime.now(timezone(timedelta(hours=8)))).total_seconds() / 3600
     if hours_remaining < MIN_EXPIRE_HOURS:
@@ -151,14 +150,11 @@ async def scrape_telegram_links():
     if not all([API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS_STR]):
         print("❌ 错误: 缺少必要的环境变量 (API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS)。")
         return []
-    
     TARGET_CHANNELS = [line.strip() for line in TELEGRAM_CHANNEL_IDS_STR.split('\n') if line.strip() and not line.strip().startswith('#')]
     if not TARGET_CHANNELS:
         print("❌ 错误: TELEGRAM_CHANNEL_IDS 中未找到有效频道 ID。")
         return []
-    
     print(f"▶️ 配置抓取 {len(TARGET_CHANNELS)} 个频道: {TARGET_CHANNELS}")
-    
     try:
         client = TelegramClient(StringSession(STRING_SESSION), API_ID, API_HASH)
         await client.connect()
@@ -167,25 +163,24 @@ async def scrape_telegram_links():
     except Exception as e:
         print(f"❌ 错误: 连接 Telegram 时出错: {e}")
         return []
-    
+
     target_time = datetime.now(timezone.utc) - timedelta(hours=TIME_WINDOW_HOURS)
     all_links = set()
-    
     for channel_id in TARGET_CHANNELS:
         print(f"\n--- 正在处理频道: {channel_id} ---")
         try:
             async for message in client.iter_messages(await client.get_entity(channel_id), limit=500):
-                if message.date < target_time: 
+                if message.date < target_time:
                     break
                 if message.text and is_expire_time_valid(parse_expire_time(message.text)):
-                    for url in re.findall(r'订阅链接[:：]\s*[`]*\s*(https?://[^\s<>"*`]+)', message.text):
+                    for url in re.findall(r'订阅链接[:：]\s*`]*\s*(https?://[^\s<>"*`]+)', message.text):
                         cleaned_url = url.strip().strip('.,*`')
                         if cleaned_url:
                             all_links.add(cleaned_url)
                             print(f"  ✅ 找到链接: {cleaned_url[:70]}...")
         except Exception as e:
             print(f"❌ 错误: 从频道 '{channel_id}' 获取消息时出错: {e}")
-    
+
     await client.disconnect()
     print(f"\n✅ 抓取完成, 共找到 {len(all_links)} 个不重复的有效链接。")
     return list(all_links)
@@ -204,23 +199,20 @@ def get_country_flag_emoji(code):
 def download_subscription(url):
     """下载并解析订阅链接"""
     print(f"  ⬇️ 正在下载: {url[:80]}...")
-    if not shutil.which("wget"): 
+    if not shutil.which("wget"):
         print("  ✗ 错误: wget 未安装。")
         return []
-    
     try:
         content = subprocess.run(
-            ["wget", "-O", "-", "--timeout=30", "--header=User-Agent: Clash", url], 
+            ["wget", "-O", "-", "--timeout=30", "--header=User-Agent: Clash", url],
             capture_output=True, text=True, check=True
         ).stdout
-        
-        if not content: 
+        if not content:
             print("  ✗ 下载内容为空。")
             return []
-        
-        try: 
+        try:
             return yaml.safe_load(content).get('proxies', [])
-        except yaml.YAMLError: 
+        except yaml.YAMLError:
             return yaml.safe_load(base64.b64decode(content)).get('proxies', [])
     except Exception as e:
         print(f"  ✗ 下载或解析时出错: {e}")
@@ -237,23 +229,23 @@ def process_proxies(proxies):
     identified = []
     for p in proxies:
         name = JUNK_PATTERNS.sub('', FLAG_EMOJI_PATTERN.sub('', p.get('name', ''))).strip()
-        for eng, chn in CHINESE_COUNTRY_MAP.items(): 
+        for eng, chn in CHINESE_COUNTRY_MAP.items():
             name = re.sub(r'\b' + re.escape(eng) + r'\b', chn, name, flags=re.IGNORECASE)
-        
+
         for r_name, rules in CUSTOM_REGEX_RULES.items():
             if re.search(rules['pattern'], name, re.IGNORECASE) and r_name in ALLOWED_REGIONS:
                 p['region_info'] = {'name': r_name, 'code': rules['code']}
                 identified.append(p)
                 break
-    
+
     print(f"  - 节点过滤: 原始 {len(proxies)} -> 识别并保留 {len(identified)}")
-    
+
     final, counters = [], defaultdict(lambda: defaultdict(int))
     master_pattern = re.compile(
-        '|'.join(sorted([p for r in CUSTOM_REGEX_RULES.values() for p in r['pattern'].split('|')], key=len, reverse=True)), 
+        '|'.join(sorted([p for r in CUSTOM_REGEX_RULES.values() for p in r['pattern'].split('|')], key=len, reverse=True)),
         re.IGNORECASE
     )
-    
+
     for p in identified:
         info = p['region_info']
         match = FLAG_EMOJI_PATTERN.search(p['name'])
@@ -261,16 +253,17 @@ def process_proxies(proxies):
             flag = match.group(0)
         else:
             flag = get_country_flag_emoji(info['code'])
-        
+
         feature = re.sub(r'\s+', ' ', master_pattern.sub(' ', FLAG_EMOJI_PATTERN.sub('', p['name'], 1)).replace('-', ' ')).strip() or f"{sum(1 for fp in final if fp['region_info']['name'] == info['name']) + 1:02d}"
         new_name = f"{flag} {info['name']} {feature}".strip()
+
         counters[info['name']][new_name] += 1
-        if counters[info['name']][new_name] > 1: 
+        if counters[info['name']][new_name] > 1:
             new_name += f" {counters[info['name']][new_name]}"
-        
+
         p['name'] = new_name
         final.append(p)
-    
+
     return final
 
 def test_single_proxy_tcp(proxy):
@@ -278,7 +271,7 @@ def test_single_proxy_tcp(proxy):
     try:
         start = time.time()
         sock = socket.create_connection(
-            (proxy['server'], proxy['port']), 
+            (proxy['server'], proxy['port']),
             timeout=SOCKET_TIMEOUT
         )
         sock.close()
@@ -289,23 +282,21 @@ def test_single_proxy_tcp(proxy):
 
 def generate_config(proxies):
     """生成 Clash 配置文件"""
-    if not proxies: 
+    if not proxies:
         return None
-    
     names = [p['name'] for p in proxies]
     clean = [{k: v for k, v in p.items() if k not in ['region_info', 'delay']} for p in proxies]
-    
     groups = [
         {
-            'name': '🚀 节点选择', 
-            'type': 'select', 
+            'name': '🚀 节点选择',
+            'type': 'select',
             'proxies': ['♻️ 自动选择', '🔯 故障转移', 'DIRECT'] + names,
             'url': TEST_URL,
             'interval': TEST_INTERVAL
         },
         {
-            'name': '♻️ 自动选择', 
-            'type': 'url-test', 
+            'name': '♻️ 自动选择',
+            'type': 'url-test',
             'proxies': names,
             'url': TEST_URL,
             'interval': TEST_INTERVAL,
@@ -313,52 +304,75 @@ def generate_config(proxies):
             'lazy': True
         },
         {
-            'name': '🔯 故障转移', 
-            'type': 'fallback', 
+            'name': '🔯 故障转移',
+            'type': 'fallback',
             'proxies': names,
             'url': TEST_URL,
             'interval': TEST_INTERVAL,
             'lazy': True
         }
     ]
-    
     return {
-        'mixed-port': 7890, 
-        'allow-lan': True, 
-        'mode': 'rule', 
-        'log-level': 'info', 
+        'mixed-port': 7890,
+        'allow-lan': True,
+        'mode': 'rule',
+        'log-level': 'info',
         'external-controller': '127.0.0.1:9090',
         'dns': {
-            'enable': True, 
-            'listen': '0.0.0.0:53', 
-            'enhanced-mode': 'fake-ip', 
+            'enable': True,
+            'listen': '0.0.0.0:53',
+            'enhanced-mode': 'fake-ip',
             'fake-ip-range': '198.18.0.1/16',
-            'nameserver': ['223.5.5.5', '119.29.29.29'], 
+            'nameserver': ['223.5.5.5', '119.29.29.29'],
             'fallback': ['https://dns.google/dns-query', 'https://1.1.1.1/dns-query']
         },
-        'proxies': clean, 
-        'proxy-groups': groups, 
+        'proxies': clean,
+        'proxy-groups': groups,
         'rules': ['GEOIP,CN,DIRECT', 'MATCH,🚀 节点选择']
     }
 
 async def main():
     """主函数"""
-    print("=" * 60 + f"\nClash 订阅自动生成脚本 V1.R1 @ {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S %Z')}\n" + "=" * 60)
+    print("=" * 60 + f"\nClash 订阅自动生成脚本 V1.R2 @ {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S %Z')}\n" + "=" * 60)
     preprocess_regex_rules()
     
     print("\n[1/4] 从 Telegram 抓取、下载并合并节点...")
     urls = await scrape_telegram_links()
-    if not urls: 
+    if not urls:
         sys.exit("\n❌ 未找到任何有效订阅链接，脚本终止。")
     
-    proxies = {get_proxy_key(p): p for url in urls for p in download_subscription(url) if p}
-    if not proxies: 
+    # 步骤 1: 下载并初步解析所有节点
+    all_downloaded_proxies = [p for url in urls for p in download_subscription(url) if p]
+    if not all_downloaded_proxies:
         sys.exit("\n❌ 下载和解析后，无有效节点，脚本终止。")
-    print(f"✅ 合并去重后共 {len(proxies)} 个节点。")
-    
+
+    # 步骤 2: 去重和 REALITY 节点验证
+    print("\n[*] 验证节点并进行去重...")
+    proxies = {}
+    invalid_reality_count = 0
+    for p in all_downloaded_proxies:
+        # --- 修复: 增加 REALITY 节点验证逻辑 ---
+        if p.get('type') == 'vless' and p.get('reality-opts'):
+            if not p.get('reality-opts', {}).get('short-id'):
+                # print(f"  - 过滤无效 REALITY 节点 (空 short-id): {p.get('name', 'N/A')}")
+                invalid_reality_count += 1
+                continue # 跳过这个无效节点
+        
+        proxy_key = get_proxy_key(p)
+        if proxy_key not in proxies:
+            proxies[proxy_key] = p
+            
+    if invalid_reality_count > 0:
+        print(f"  - 已过滤 {invalid_reality_count} 个无效的 REALITY 节点 (缺少或 short-id 为空)。")
+
+    if not proxies:
+        sys.exit("\n❌ 验证和去重后，无有效节点，脚本终止。")
+        
+    print(f"✅ 合并去重后共 {len(proxies)} 个有效节点。")
+
     print("\n[2/4] 过滤与重命名节点...")
     processed = process_proxies(list(proxies.values()))
-    if not processed: 
+    if not processed:
         sys.exit("\n❌ 过滤后无任何可用节点，脚本终止。")
     
     print("\n[3/4] TCP 测速与最终排序...")
@@ -369,7 +383,7 @@ async def main():
             tested = list(executor.map(test_single_proxy_tcp, processed))
         final = [p for p in tested if p]
         print(f"  - 测速完成, {len(final)} / {len(processed)} 个节点可用。")
-        if not final: 
+        if not final:
             print("\n  ⚠️ 警告: 测速后无可用节点，将使用所有过滤后的节点。")
             final = processed
     
@@ -378,12 +392,13 @@ async def main():
     
     print("\n[4/4] 生成最终配置文件...")
     config = generate_config(final)
-    if not config: 
+    if not config:
         sys.exit("\n❌ 无法生成配置文件。")
-    
+        
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
         yaml.dump(config, f, allow_unicode=True, sort_keys=False, indent=2)
+        
     print(f"✅ 配置文件已成功保存至: {OUTPUT_FILE}\n\n🎉 任务全部完成！")
 
 if __name__ == '__main__':
