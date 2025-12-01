@@ -8,6 +8,7 @@
 # V1.R2 (20251201) - 增加多种下载方式，优先使用 wget
 # V1.R3 (20251202) - 支持解析Base64编码，可以处理其他文本格式
 # ============================================================================
+
 import os
 import re
 import asyncio
@@ -29,21 +30,19 @@ from telethon.sync import TelegramClient
 from telethon.tl.types import MessageMediaWebPage
 from telethon.sessions import StringSession
 
-# =================================================================================
-# Part 1: 配置
-# =================================================================================
-API_ID = os.environ.get('TELEGRAM_API_ID')
-API_HASH = os.environ.get('TELEGRAM_API_HASH')
-STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')
-TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS')
-TIME_WINDOW_HOURS = 72
-MIN_EXPIRE_HOURS = 7
-OUTPUT_FILE = 'flclashyaml/telegram_scraper.yaml'
-ENABLE_SPEED_TEST = True
-SOCKET_TIMEOUT = 8
-MAX_TEST_WORKERS = 128
-TEST_URL = 'http://www.gstatic.com/generate_204'
-TEST_INTERVAL = 300
+# ========================== 配置区 ==========================
+API_ID = os.environ.get('TELEGRAM_API_ID')  # 获取 Telegram API ID
+API_HASH = os.environ.get('TELEGRAM_API_HASH')  # 获取 Telegram API HASH
+STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')  # 获取 Telegram 会话字符串
+TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS')  # 获取 Telegram 频道 ID
+TIME_WINDOW_HOURS = 72  # 抓取消息的时间窗口，单位为小时
+MIN_EXPIRE_HOURS = 7  # 订阅链接的最小剩余有效期，单位为小时
+OUTPUT_FILE = 'flclashyaml/telegram_scraper.yaml'  # 输出的 YAML 配置文件路径
+ENABLE_SPEED_TEST = True  # 是否启用节点测速功能
+SOCKET_TIMEOUT = 8  # 节点测速的 TCP 连接超时时间，单位为秒
+MAX_TEST_WORKERS = 128  # 最大并发测速线程数
+TEST_URL = 'http://www.gstatic.com/generate_204'  # 测速的 URL
+TEST_INTERVAL = 300  # 测速间隔，单位为秒
 
 # ========== 地区过滤配置 ==========
 ALLOWED_REGIONS = {'香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国',
@@ -89,6 +88,7 @@ CUSTOM_REGEX_RULES = {
     '澳大利亚': {'code': 'AU', 'pattern': r'澳大利亚|AU|Australia'},
 }
 
+# 正则用于过滤含有一些无用信息的模式
 JUNK_PATTERNS = re.compile(r"(?:专线|IPLC|体验|官网|倍率|x\d[\.\d]*|[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*|Relay|流量)", re.IGNORECASE)
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
 
@@ -121,6 +121,7 @@ async def scrape_telegram_links():
         print("❌ 错误: 缺少必要的环境变量 (API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS)。")
         return []
 
+    # 处理频道 ID 列表
     TARGET_CHANNELS = [line.strip() for line in TELEGRAM_CHANNEL_IDS_STR.split('\n') if line.strip() and not line.strip().startswith('#')]
     
     if not TARGET_CHANNELS:
@@ -148,7 +149,7 @@ async def scrape_telegram_links():
                 if message.date < target_time:
                     break
                 if message.text and is_expire_time_valid(parse_expire_time(message.text)):
-                    for url in re.findall(r'订阅链接[:：]\s*`]*\s*(https?://[^\s<>"*`]+)', message.text):
+                    for url in re.findall(r'订阅链接[:：]\s`]*\s*(https?://[^\s<>"*`]+)', message.text):
                         cleaned_url = url.strip().strip('.,*`')
                         if cleaned_url:
                             all_links.add(cleaned_url)
@@ -219,11 +220,13 @@ def parse_proxies_from_content(content):
         return []
 
 def is_base64(string):
-    """检查字符串是否是 Base64 编码"""
+    """检查字符串是否是有效的 Base64 编码"""
     try:
         if isinstance(string, str):
-            base64.b64decode(string, validate=True)
-            return True
+            # 检查长度是否符合 Base64 格式
+            if len(string) % 4 == 0:
+                base64.b64decode(string, validate=True)
+                return True
     except Exception:
         return False
     return False
@@ -269,8 +272,8 @@ def parse_ssr_node(node_str):
             "port": int(port),
             "password": password,
             "cipher": cipher,
-            "obfs": obfs,  # 根据SSR配置取值
-            "protocol": protocol,  # 根据SSR配置取值
+            "obfs": obfs,
+            "protocol": protocol,
         }
         return proxy
     except Exception as e:
@@ -379,7 +382,6 @@ def process_proxies(proxies):
         counters[info['name']][new_name] += 1
         if counters[info['name']][new_name] > 1:
             new_name += f" {counters[info['name']][new_name]}"
-        
         p['name'] = new_name
         final.append(p)
 
