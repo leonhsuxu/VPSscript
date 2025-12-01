@@ -1,14 +1,14 @@
 # 文件名: TelegramNode/telegram_publiclink.py
 # -*- coding: utf-8 -*-
 # ============================================================================
-# Clash 订阅自动生成脚本 V1.R3
+# Clash 订阅自动生成脚本 V1.R4
 #
 # 版本历史:
 # V1.R1 (20251130) - 初始版本
 # V1.R2 (20251201) - 增加多种下载方式，优先使用 wget
 # V1.R3 (20251202) - 支持解析Base64编码，可以处理其他文本格式
+# V1.R4 (20251210) - 增加对 Trojan、Hysteria 和 Hysteria2 协议的支持
 # ============================================================================
-
 import os
 import re
 import asyncio
@@ -29,7 +29,6 @@ import shutil
 from telethon.sync import TelegramClient
 from telethon.tl.types import MessageMediaWebPage
 from telethon.sessions import StringSession
-
 # ========================== 配置区 ==========================
 API_ID = os.environ.get('TELEGRAM_API_ID')  # 获取 Telegram API ID
 API_HASH = os.environ.get('TELEGRAM_API_HASH')  # 获取 Telegram API HASH
@@ -43,17 +42,14 @@ SOCKET_TIMEOUT = 8  # 节点测速的 TCP 连接超时时间，单位为秒
 MAX_TEST_WORKERS = 128  # 最大并发测速线程数
 TEST_URL = 'http://www.gstatic.com/generate_204'  # 测速的 URL
 TEST_INTERVAL = 300  # 测速间隔，单位为秒
-
 # ========== 地区过滤配置 ==========
 ALLOWED_REGIONS = {'香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国',
                    '印度', '菲律宾', '印度尼西亚', '越南', '美国', '加拿大', '法国',
                    '英国', '德国', '俄罗斯', '意大利', '巴西', '阿根廷', '土耳其', '澳大利亚'}
-
 # ========== 排序优先级配置 ==========
 REGION_PRIORITY = ['香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国', '印度', '菲律宾',
                    '印度尼西亚', '越南', '美国', '加拿大', '法国', '英国', '德国', '俄罗斯', '意大利',
                    '巴西', '阿根廷', '土耳其', '澳大利亚']
-
 # ========== 国家/地区映射表 ==========
 CHINESE_COUNTRY_MAP = {
     'HK': '香港', 'TW': '台湾', 'JP': '日本', 'SG': '新加坡', 'KR': '韩国', 'MY': '马来西亚',
@@ -61,7 +57,6 @@ CHINESE_COUNTRY_MAP = {
     'CA': '加拿大', 'FR': '法国', 'GB': '英国', 'DE': '德国', 'RU': '俄罗斯', 'IT': '意大利',
     'BR': '巴西', 'AR': '阿根廷', 'TR': '土耳其', 'AU': '澳大利亚'
 }
-
 # ========== 地区识别正则规则 ==========
 CUSTOM_REGEX_RULES = {
     '香港': {'code': 'HK', 'pattern': r'香港|港|HK|Hong\s*Kong'},
@@ -87,11 +82,9 @@ CUSTOM_REGEX_RULES = {
     '土耳其': {'code': 'TR', 'pattern': r'土耳其|TR|Turkey'},
     '澳大利亚': {'code': 'AU', 'pattern': r'澳大利亚|AU|Australia'},
 }
-
 # 正则用于过滤含有一些无用信息的模式
 JUNK_PATTERNS = re.compile(r"(?:专线|IPLC|体验|官网|倍率|x\d[\.\d]*|[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*|Relay|流量)", re.IGNORECASE)
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
-
 # =================================================================================
 # Part 2: 函数定义
 # =================================================================================
@@ -120,16 +113,12 @@ async def scrape_telegram_links():
     if not all([API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS_STR]):
         print("❌ 错误: 缺少必要的环境变量 (API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS)。")
         return []
-
     # 处理频道 ID 列表
     TARGET_CHANNELS = [line.strip() for line in TELEGRAM_CHANNEL_IDS_STR.split('\n') if line.strip() and not line.strip().startswith('#')]
-    
     if not TARGET_CHANNELS:
         print("❌ 错误: TELEGRAM_CHANNEL_IDS 中未找到有效频道 ID。")
         return []
-
     print(f"▶️ 配置抓取 {len(TARGET_CHANNELS)} 个频道: {TARGET_CHANNELS}")
-
     try:
         client = TelegramClient(StringSession(STRING_SESSION), API_ID, API_HASH)
         await client.connect()
@@ -138,10 +127,10 @@ async def scrape_telegram_links():
     except Exception as e:
         print(f"❌ 错误: 连接 Telegram 时出错: {e}")
         return []
-
+    
     target_time = datetime.now(timezone.utc) - timedelta(hours=TIME_WINDOW_HOURS)
     all_links = set()
-
+    
     for channel_id in TARGET_CHANNELS:
         print(f"\n--- 正在处理频道: {channel_id} ---")
         try:
@@ -149,14 +138,14 @@ async def scrape_telegram_links():
                 if message.date < target_time:
                     break
                 if message.text and is_expire_time_valid(parse_expire_time(message.text)):
-                    for url in re.findall(r'订阅链接[:：]\s`]*\s*(https?://[^\s<>"*`]+)', message.text):
+                    for url in re.findall(r'订阅链接[:：]\`]*\s*(https?://[^\s<>"*`]+)', message.text):
                         cleaned_url = url.strip().strip('.,*`')
                         if cleaned_url:
                             all_links.add(cleaned_url)
                             print(f"  ✅ 找到链接: {cleaned_url[:70]}...")
         except Exception as e:
             print(f"❌ 错误: 从频道 '{channel_id}' 获取消息时出错: {e}")
-
+    
     await client.disconnect()
     print(f"\n✅ 抓取完成, 共找到 {len(all_links)} 个不重复的有效链接。")
     return list(all_links)
@@ -236,18 +225,24 @@ def decode_base64_and_parse(base64_str):
     try:
         decoded_content = base64.b64decode(base64_str).decode('utf-8')
         proxies = []
-        
         for line in decoded_content.splitlines():
             line = line.strip()
-            if line.startswith('vless://') or line.startswith('vmess://'):
+            if line.startswith('vless://'):
+                proxies.append(parse_vless_node(line))
+            elif line.startswith('vmess://'):
                 proxies.append(parse_vmess_node(line))
             elif line.startswith('ssr://'):
                 proxies.append(parse_ssr_node(line))
             elif line.startswith('ss://'):
                 proxies.append(parse_ss_node(line))
+            elif line.startswith('trojan://'):
+                proxies.append(parse_trojan_node(line))
+            elif line.startswith('hysteria://'):
+                proxies.append(parse_hysteria_node(line))
+            elif line.startswith('hysteria2://'):
+                proxies.append(parse_hysteria2_node(line))
             else:
                 print(f"警告: 未支持的节点格式: {line[:100]}")
-        
         return proxies
     except Exception as e:
         print(f"解码 Base64 并解析时出错: {e}")
@@ -285,7 +280,6 @@ def parse_vmess_node(node_str):
     try:
         decoded = base64.urlsafe_b64decode(node_str[8:]).decode('utf-8')
         json_data = json.loads(decoded)
-
         # 组装 Clash 节点格式
         proxy = {
             "name": json_data.get('ps', f"Vmess {json_data.get('add')}:{json_data.get('port')}"),
@@ -302,23 +296,79 @@ def parse_vmess_node(node_str):
         print(f"解析 Vmess 节点时发生错误: {e}")
         return {}
 
+def parse_ss_node(node_str):
+    """解析 SS 节点字符串并转换为 Clash 格式"""
+    try:
+        decoded = base64.urlsafe_b64decode(node_str[5:]).decode('utf-8')
+        params = decoded.split(':')
+        if len(params) < 3:
+            print(f"警告: SS 节点格式不正确: {node_str}")
+            return {}
+        server, port, password_and_method = params[0], int(params[1]), params[2]
+        method = password_and_method.split('/')[0]  # 取加密方式
+        password = '/'.join(password_and_method.split('/')[1:])  # 剩余为密码
+        proxy = {
+            "name": f"SS {server}:{port}",
+            "type": "ss",
+            "server": server,
+            "port": port,
+            "password": password,
+            "cipher": method
+        }
+        return proxy
+    except Exception as e:
+        print(f"解析 SS 节点时发生错误: {e}")
+        return {}
+
+def parse_trojan_node(node_str):
+    """解析 Trojan 节点字符串并转换为 Clash 格式"""
+    try:
+        if node_str.startswith("trojan://"):
+            decoded = base64.urlsafe_b64decode(node_str[8:]).decode('utf-8')
+            params = decoded.split('#')
+            if len(params) < 2:
+                print(f"警告: Trojan 节点格式不正确: {node_str}")
+                return {}
+            details = params[0].split('@')
+            password = details[0]
+            host_port = details[1].split(':')
+            host = host_port[0]
+            port = host_port[1]
+            proxy = {
+                "name": f"Trojan {host}:{port}",
+                "type": "trojan",
+                "server": host,
+                "port": int(port),
+                "password": password,
+                "cipher": "aes-128-gcm"  # 默认加密方式，可以根据需要修改
+            }
+            return proxy
+    except Exception as e:
+        print(f"解析 Trojan 节点时发生错误: {e}")
+    return {}
+
+def parse_hysteria_node(node_str):
+    """解析 Hysteria 节点字符串并转换为 Clash 格式（示例）"""
+    # TODO: 实现解析逻辑（需要具体的 Hysteria 节点格式文档）
+    return {}
+
+def parse_hysteria2_node(node_str):
+    """解析 Hysteria2 节点字符串并转换为 Clash 格式（示例）"""
+    # TODO: 实现解析逻辑（需要具体的 Hysteria2 节点格式文档）
+    return {}
+
 def download_subscription(url):
     """下载并解析订阅链接，优先使用 wget，失败后尝试 requests"""
     content = attempt_download_using_wget(url)
-    
     if content is None:
         content = attempt_download_using_requests(url)
-
     if content is None:
         print(f"  ❌ 两种下载方式均失败，跳过链接: {url}")
         return []
-
     print(f"  下载内容长度: {len(content)}, 内容示例: {content[:100]}")  # 添加调试输出
-
     # 判断内容是否为 Base64 编码
     if is_base64(content):
         return decode_base64_and_parse(content)
-
     return parse_proxies_from_content(content)
 
 def get_proxy_key(p):
@@ -332,16 +382,13 @@ def is_valid_proxy(proxy):
     required_keys = ['name', 'server', 'port', 'type']
     if not all(key in proxy for key in required_keys):
         return False
-
     # 进一步检查协议类型
     allowed_types = {'http', 'socks5', 'trojan', 'v2ray', 'ss', 'vmess', 'ssr'}
     if 'type' in proxy and proxy['type'] not in allowed_types:
         return False
-
     # 确保端口范围在有效范围内
     if not (1 <= proxy['port'] <= 65535):
         return False
-
     return True
 
 def process_proxies(proxies):
@@ -351,24 +398,20 @@ def process_proxies(proxies):
         if not is_valid_proxy(p):
             print(f"  ❌ 无效节点被过滤: {p.get('name', '未知')}")
             continue
-
         name = JUNK_PATTERNS.sub('', FLAG_EMOJI_PATTERN.sub('', p.get('name', ''))).strip()
         for eng, chn in CHINESE_COUNTRY_MAP.items():
             name = re.sub(r'\b' + re.escape(eng) + r'\b', chn, name, flags=re.IGNORECASE)
-        
         for r_name, rules in CUSTOM_REGEX_RULES.items():
             if re.search(rules['pattern'], name, re.IGNORECASE) and r_name in ALLOWED_REGIONS:
                 p['region_info'] = {'name': r_name, 'code': rules['code']}
                 identified.append(p)
                 break
-
     print(f"  - 节点过滤: 原始 {len(proxies)} -> 识别并保留 {len(identified)}")
     final, counters = [], defaultdict(lambda: defaultdict(int))
     master_pattern = re.compile(
         '|'.join(sorted([p for r in CUSTOM_REGEX_RULES.values() for p in r['pattern'].split('|')], key=len, reverse=True)),
         re.IGNORECASE
     )
-
     for p in identified:
         info = p['region_info']
         match = FLAG_EMOJI_PATTERN.search(p['name'])
@@ -376,7 +419,6 @@ def process_proxies(proxies):
             flag = match.group(0)
         else:
             flag = get_country_flag_emoji(info['code'])
-
         feature = re.sub(r'\s+', ' ', master_pattern.sub(' ', FLAG_EMOJI_PATTERN.sub('', p['name'], 1)).replace('-', ' ')).strip() or f"{sum(1 for fp in final if fp['region_info']['name'] == info['name']) + 1:02d}"
         new_name = f"{flag} {info['name']} {feature}".strip()
         counters[info['name']][new_name] += 1
@@ -384,7 +426,6 @@ def process_proxies(proxies):
             new_name += f" {counters[info['name']][new_name]}"
         p['name'] = new_name
         final.append(p)
-
     return final
 
 def test_single_proxy_tcp(proxy):
@@ -405,10 +446,8 @@ def generate_config(proxies):
     """生成 Clash 配置文件"""
     if not proxies:
         return None
-    
     names = [p['name'] for p in proxies]
     clean = [{k: v for k, v in p.items() if k not in ['region_info', 'delay']} for p in proxies]
-    
     groups = [
         {
             'name': '🚀 节点选择',
@@ -435,7 +474,6 @@ def generate_config(proxies):
             'lazy': True
         }
     ]
-
     return {
         'mixed-port': 7890,
         'allow-lan': True,
@@ -457,58 +495,40 @@ def generate_config(proxies):
 
 async def main():
     """主函数"""
-    print("=" * 60 + f"\nClash 订阅自动生成脚本 V1.R3 @ {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S %Z')}\n" + "=" * 60)
+    print("=" * 60 + f"\nClash 订阅自动生成脚本 V1.R4 @ {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S %Z')}\n" + "=" * 60)
     preprocess_regex_rules()
     print("\n[1/4] 从 Telegram 抓取、下载并合并节点...")
-    
     urls = await scrape_telegram_links()
-    
     if not urls:
         sys.exit("\n❌ 未找到任何有效订阅链接，脚本终止。")
-    
     proxies = {get_proxy_key(p): p for url in urls for p in download_subscription(url) if p}
-    
     if not proxies:
         sys.exit("\n❌ 下载和解析后，无有效节点，脚本终止。")
-    
     print(f"✅ 合并去重后共 {len(proxies)} 个节点。")
     print("\n[2/4] 过滤与重命名节点...")
-    
     processed = process_proxies(list(proxies.values()))
-    
     if not processed:
         sys.exit("\n❌ 过滤后无任何可用节点，脚本终止。")
-    
     print("\n[3/4] TCP 测速与最终排序...")
     final = processed
-    
     if ENABLE_SPEED_TEST:
         print(f"  - 开始 TCP 连接测速（超时: {SOCKET_TIMEOUT}秒）...")
-        
         with concurrent.futures.ThreadPoolExecutor(MAX_TEST_WORKERS) as executor:
             tested = list(executor.map(test_single_proxy_tcp, processed))
-        
         final = [p for p in tested if p]
         print(f"  - 测速完成, {len(final)} / {len(processed)} 个节点可用。")
-        
         if not final:
             print("\n  ⚠️ 警告: 测速后无可用节点，将使用所有过滤后的节点。")
             final = processed
-    
     final.sort(key=lambda p: (REGION_PRIORITY.index(p['region_info']['name']), p.get('delay', 9999)))
     print(f"✅ 最终处理完成 {len(final)} 个节点。")
     print("\n[4/4] 生成最终配置文件...")
-    
     config = generate_config(final)
-    
     if not config:
         sys.exit("\n❌ 无法生成配置文件。")
-    
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
-    
     with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
         yaml.dump(config, f, allow_unicode=True, sort_keys=False, indent=2)
-    
     print(f"✅ 配置文件已成功保存至: {OUTPUT_FILE}\n\n🎉 任务全部完成！")
 
 if __name__ == '__main__':
