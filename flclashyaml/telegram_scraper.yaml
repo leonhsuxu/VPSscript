@@ -200,11 +200,11 @@ proxies:
     path: /
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇺🇸 印度 04|白嫖机场. k 2
+- name: 🇩🇪 印度 03|白嫖机场. k
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
-  port: 2052
-  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  port: 2086
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
   alterId: 0
   cipher: auto
   udp: true
@@ -213,11 +213,11 @@ proxies:
     path: /
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
-- name: 🇩🇪 印度 03|白嫖机场. k
+- name: 🇺🇸 印度 04|白嫖机场. k 2
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
-  port: 2086
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  port: 2052
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
   alterId: 0
   cipher: auto
   udp: true
@@ -250,9 +250,15 @@ proxies:
   plugin-opts:
     mode: http
     host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇻🇳 越南 _3 | ⬇️ 1.4MB/s
+- name: 🇻🇳 越南 _2 | ⬇️ 1.4MB/s
   type: ss
-  server: 103.186.154.188
+  server: 103.186.154.56
+  port: 38388
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  cipher: aes-256-cfb
+- name: 🇻🇳 越南 _2 | ⬇️ 1.6MB/s
+  type: ss
+  server: 103.186.155.64
   port: 38388
   password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
   cipher: aes-256-cfb
@@ -262,15 +268,15 @@ proxies:
   port: 38388
   password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
   cipher: aes-256-cfb
-- name: 🇻🇳 越南 _5 | ⬇️ 1.1MB/s
+- name: 🇻🇳 越南 _3 | ⬇️ 1.4MB/s
   type: ss
-  server: 103.186.155.81
+  server: 103.186.154.188
   port: 38388
   password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
   cipher: aes-256-cfb
-- name: 🇻🇳 越南 _2 | ⬇️ 1.6MB/s
+- name: 🇻🇳 越南 _5 | ⬇️ 1.1MB/s
   type: ss
-  server: 103.186.155.64
+  server: 103.186.155.81
   port: 38388
   password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
   cipher: aes-256-cfb
@@ -283,12 +289,6 @@ proxies:
 - name: 🇻🇳 越南 _6 | ⬇️ 1.2MB/s
   type: ss
   server: 103.186.154.57
-  port: 38388
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  cipher: aes-256-cfb
-- name: 🇻🇳 越南 _2 | ⬇️ 1.4MB/s
-  type: ss
-  server: 103.186.154.56
   port: 38388
   password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
   cipher: aes-256-cfb
@@ -309,55 +309,15 @@ proxies:
   port: 443
   password: NDRySIABARbErNIVsCNVkyYAHiBzhveT
   cipher: chacha20-ietf-poly1305
-- name: 🇺🇸 美国 62
-  server: www.zhoubowen.vip
-  port: 443
-  type: vmess
-  uuid: 71b2655e-07d9-4dad-a770-a2b08275142b
-  alterId: 0
-  cipher: auto
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /biutefor.icu
-    headers:
-      Host: www.zhoubowen.vip
-- name: 🇺🇸 美国 _27 | ⬇️ 2.9MB/s
-  type: vmess
+- name: 🇺🇸 美国 40
   server: 82.198.246.97
   port: 180
-  cipher: auto
-  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
-  alterId: 0
-  tls: false
-  skip-cert-verify: true
-  servername: ''
-  network: tcp
-- name: 🇺🇸 美国 46
-  server: 38.14.99.179
-  port: 59807
   type: vmess
-  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
+  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
   alterId: 0
   cipher: auto
   tls: false
   skip-cert-verify: false
-- name: 🇺🇸 美国 _26 | ⬇️ 6.2MB/s
-  type: vmess
-  server: 74.117.196.232
-  port: 37934
-  cipher: auto
-  uuid: 6d600864-32da-49fd-baf4-7df051762454
-  alterId: 0
-  tls: true
-  skip-cert-verify: true
-  servername: imafake.locker
-  network: ws
-  ws-opts:
-    path: /speedtest
-    headers:
-      host: imafake.locker
 - name: 🇺🇸 美国 _30 | ⬇️ 5.1MB/s
   type: vmess
   server: 74.117.196.232
@@ -382,29 +342,26 @@ proxies:
   cipher: auto
   tls: false
   skip-cert-verify: false
-- name: 🇺🇸 美国 52
-  server: dd.openaccessnode.com
-  port: 5230
+- name: 🇺🇸 美国 _26 | ⬇️ 6.2MB/s
   type: vmess
-  uuid: 77238c49-bd20-e407-f05e-0c073ad08fdb
-  alterId: 0
+  server: 74.117.196.232
+  port: 37934
   cipher: auto
-  tls: false
-  skip-cert-verify: false
-- name: 🇺🇸 美国 61
-  server: 47.243.69.126
-  port: 31904
-  type: vmess
-  uuid: 22550b74-3ebf-49b5-ea36-3078b5d47ed9
+  uuid: 6d600864-32da-49fd-baf4-7df051762454
   alterId: 0
-  cipher: auto
-  tls: false
-  skip-cert-verify: false
-- name: 🇺🇸 美国 58
-  server: 152.70.92.69
-  port: 80
+  tls: true
+  skip-cert-verify: true
+  servername: imafake.locker
+  network: ws
+  ws-opts:
+    path: /speedtest
+    headers:
+      host: imafake.locker
+- name: 🇺🇸 美国 46
+  server: 38.14.99.179
+  port: 59807
   type: vmess
-  uuid: bb9c3993-a4b9-4dad-aeb9-ac86371ae68b
+  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
   alterId: 0
   cipher: auto
   tls: false
@@ -423,29 +380,71 @@ proxies:
     path: /Ov7HrgwlEcRugowKV
     headers:
       Host: 107.174.82.102.sslip.io
-- name: 🇺🇸 美国 IEPL GPT
-  type: ss
-  server: gd.bjnet2.com
-  port: 36608
-  cipher: aes-128-gcm
-  password: 84d85af8-2807-4306-a701-f784676b77c3
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-- name: 🇺🇸 美国 12
-  server: bestcdn2.868863.xyz
-  port: 2083
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248838279.796812.xyz
+- name: 🇺🇸 美国 52
+  server: dd.openaccessnode.com
+  port: 5230
+  type: vmess
+  uuid: 77238c49-bd20-e407-f05e-0c073ad08fdb
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+- name: 🇺🇸 美国 58
+  server: 152.70.92.69
+  port: 80
+  type: vmess
+  uuid: bb9c3993-a4b9-4dad-aeb9-ac86371ae68b
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+- name: 🇺🇸 美国 61
+  server: 47.243.69.126
+  port: 31904
+  type: vmess
+  uuid: 22550b74-3ebf-49b5-ea36-3078b5d47ed9
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+- name: 🇺🇸 美国 62
+  server: www.zhoubowen.vip
+  port: 443
+  type: vmess
+  uuid: 71b2655e-07d9-4dad-a770-a2b08275142b
+  alterId: 0
+  cipher: auto
+  tls: true
   skip-cert-verify: false
   network: ws
   ws-opts:
-    path: /agraeabtegrrh
+    path: /biutefor.icu
     headers:
-      Host: 17642248838279.796812.xyz
+      Host: www.zhoubowen.vip
+- name: 🇺🇸 美国 22
+  server: bestcdn5.868863.xyz
+  port: 2053
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248832331.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248832331.796813.xyz
+- name: 🇺🇸 美国 23
+  server: bestcdn5.868863.xyz
+  port: 8443
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248833040.206355.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /videomuaawe
+    headers:
+      Host: 17642248833040.206355.xyz
 - name: 🇺🇸 美国 13
   server: bestcdn2.868863.xyz
   port: 2087
@@ -470,6 +469,44 @@ proxies:
     path: /videomuaawe
     headers:
       Host: 17642248837494.206355.xyz
+- name: 🇺🇸 美国 12
+  server: bestcdn2.868863.xyz
+  port: 2083
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248838279.796812.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agraeabtegrrh
+    headers:
+      Host: 17642248838279.796812.xyz
+- name: 🇺🇸 美国 56
+  server: fn.130519.xyz
+  port: 8443
+  type: vmess
+  uuid: 19aebb35-b458-4d0c-b767-2adb39e6bb02
+  alterId: 0
+  cipher: auto
+  tls: true
+  skip-cert-verify: false
+  servername: deji.186507.xyz
+  network: ws
+  ws-opts:
+    path: /19aebb35-b458-4d0c-b767-2adb39e6bb02-vm
+    headers:
+      Host: deji.186507.xyz
+- name: 🇺🇸 美国 IEPL GPT
+  type: ss
+  server: gd.bjnet2.com
+  port: 36608
+  cipher: aes-128-gcm
+  password: 84d85af8-2807-4306-a701-f784676b77c3
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
 - name: 🇺🇸 美国 9
   server: bestcdn1.868863.xyz
   port: 2053
@@ -506,30 +543,6 @@ proxies:
     path: /videomuaawe
     headers:
       Host: 17642248838532.206355.xyz
-- name: 🇺🇸 美国 20
-  server: bestcdn4.868863.xyz
-  port: 2083
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248834335.206355.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248834335.206355.xyz
-- name: 🇺🇸 美国 4
-  server: bestcdn4.868863.xyz
-  port: 2087
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248839754.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248839754.796813.xyz
 - name: 🇺🇸 美国 18
   server: bestcdn4.868863.xyz
   port: 2096
@@ -566,45 +579,42 @@ proxies:
     path: /agraeabtegrrh
     headers:
       Host: 17642248832420.796812.xyz
-- name: 🇺🇸 美国 56
-  server: fn.130519.xyz
-  port: 8443
-  type: vmess
-  uuid: 19aebb35-b458-4d0c-b767-2adb39e6bb02
-  alterId: 0
-  cipher: auto
-  tls: true
-  skip-cert-verify: false
-  servername: deji.186507.xyz
-  network: ws
-  ws-opts:
-    path: /19aebb35-b458-4d0c-b767-2adb39e6bb02-vm
-    headers:
-      Host: deji.186507.xyz
-- name: 🇺🇸 美国 23
-  server: bestcdn5.868863.xyz
-  port: 8443
+- name: 🇺🇸 美国 20
+  server: bestcdn4.868863.xyz
+  port: 2083
   type: trojan
   password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248833040.206355.xyz
+  sni: 17642248834335.206355.xyz
   skip-cert-verify: false
   network: ws
   ws-opts:
     path: /videomuaawe
     headers:
-      Host: 17642248833040.206355.xyz
-- name: 🇺🇸 美国 22
-  server: bestcdn5.868863.xyz
-  port: 2053
+      Host: 17642248834335.206355.xyz
+- name: 🇺🇸 美国 4
+  server: bestcdn4.868863.xyz
+  port: 2087
   type: trojan
   password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832331.796813.xyz
+  sni: 17642248839754.796813.xyz
   skip-cert-verify: false
   network: ws
   ws-opts:
     path: /agrbniuh
     headers:
-      Host: 17642248832331.796813.xyz
+      Host: 17642248839754.796813.xyz
+- name: 🇺🇸 美国 17
+  server: bestcdn3.868863.xyz
+  port: 2053
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248833842.206355.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /videomuaawe
+    headers:
+      Host: 17642248833842.206355.xyz
 - name: 🇺🇸 美国 15
   server: bestcdn3.868863.xyz
   port: 2087
@@ -629,18 +639,6 @@ proxies:
     path: /agrbniuh
     headers:
       Host: 17642248832588.796813.xyz
-- name: 🇺🇸 美国 17
-  server: bestcdn3.868863.xyz
-  port: 2053
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248833842.206355.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248833842.206355.xyz
 - name: 🇩🇪 德国 IEPL
   type: ss
   server: gd.bjnet2.com
@@ -688,47 +686,47 @@ proxy-groups:
   - 🇰🇷 韩国 04|白嫖机场. k 2
   - 🇰🇷 韩国 04|白嫖机场. k
   - 🇩🇪 印度 03|白嫖机场. k 2
-  - 🇺🇸 印度 04|白嫖机场. k 2
   - 🇩🇪 印度 03|白嫖机场. k
+  - 🇺🇸 印度 04|白嫖机场. k 2
   - 🇺🇸 印度 04|白嫖机场. k
   - 🇮🇩 印度尼西亚 IEPL
-  - 🇻🇳 越南 _3 | ⬇️ 1.4MB/s
-  - 🇻🇳 越南 _4 | ⬇️ 1.0MB/s
-  - 🇻🇳 越南 _5 | ⬇️ 1.1MB/s
+  - 🇻🇳 越南 _2 | ⬇️ 1.4MB/s
   - 🇻🇳 越南 _2 | ⬇️ 1.6MB/s
+  - 🇻🇳 越南 _4 | ⬇️ 1.0MB/s
+  - 🇻🇳 越南 _3 | ⬇️ 1.4MB/s
+  - 🇻🇳 越南 _5 | ⬇️ 1.1MB/s
   - 🇻🇳 越南 _1 | ⬇️ 1.3MB/s
   - 🇻🇳 越南 _6 | ⬇️ 1.2MB/s
-  - 🇻🇳 越南 _2 | ⬇️ 1.4MB/s
   - 🇻🇳 越南 IEPL
   - 🇺🇸 美国 | |@x|53
-  - 🇺🇸 美国 62
-  - 🇺🇸 美国 _27 | ⬇️ 2.9MB/s
-  - 🇺🇸 美国 46
-  - 🇺🇸 美国 _26 | ⬇️ 6.2MB/s
+  - 🇺🇸 美国 40
   - 🇺🇸 美国 _30 | ⬇️ 5.1MB/s
   - 🇺🇸 美国 48
-  - 🇺🇸 美国 52
-  - 🇺🇸 美国 61
-  - 🇺🇸 美国 58
+  - 🇺🇸 美国 _26 | ⬇️ 6.2MB/s
+  - 🇺🇸 美国 46
   - 🇺🇸 美国 41
-  - 🇺🇸 美国 IEPL GPT
-  - 🇺🇸 美国 12
+  - 🇺🇸 美国 52
+  - 🇺🇸 美国 58
+  - 🇺🇸 美国 61
+  - 🇺🇸 美国 62
+  - 🇺🇸 美国 22
+  - 🇺🇸 美国 23
   - 🇺🇸 美国 13
   - 🇺🇸 美国 14
+  - 🇺🇸 美国 12
+  - 🇺🇸 美国 56
+  - 🇺🇸 美国 IEPL GPT
   - 🇺🇸 美国 9
   - 🇺🇸 美国 10
   - 🇺🇸 美国 11
-  - 🇺🇸 美国 20
-  - 🇺🇸 美国 4
   - 🇺🇸 美国 18
   - 🇺🇸 美国 19
   - 🇺🇸 美国 8
-  - 🇺🇸 美国 56
-  - 🇺🇸 美国 23
-  - 🇺🇸 美国 22
+  - 🇺🇸 美国 20
+  - 🇺🇸 美国 4
+  - 🇺🇸 美国 17
   - 🇺🇸 美国 15
   - 🇺🇸 美国 16
-  - 🇺🇸 美国 17
   - 🇩🇪 德国 IEPL
   - 🇮🇹 意大利 ojan real y
   url: http://www.gstatic.com/generate_204
@@ -752,47 +750,47 @@ proxy-groups:
   - 🇰🇷 韩国 04|白嫖机场. k 2
   - 🇰🇷 韩国 04|白嫖机场. k
   - 🇩🇪 印度 03|白嫖机场. k 2
-  - 🇺🇸 印度 04|白嫖机场. k 2
   - 🇩🇪 印度 03|白嫖机场. k
+  - 🇺🇸 印度 04|白嫖机场. k 2
   - 🇺🇸 印度 04|白嫖机场. k
   - 🇮🇩 印度尼西亚 IEPL
-  - 🇻🇳 越南 _3 | ⬇️ 1.4MB/s
-  - 🇻🇳 越南 _4 | ⬇️ 1.0MB/s
-  - 🇻🇳 越南 _5 | ⬇️ 1.1MB/s
+  - 🇻🇳 越南 _2 | ⬇️ 1.4MB/s
   - 🇻🇳 越南 _2 | ⬇️ 1.6MB/s
+  - 🇻🇳 越南 _4 | ⬇️ 1.0MB/s
+  - 🇻🇳 越南 _3 | ⬇️ 1.4MB/s
+  - 🇻🇳 越南 _5 | ⬇️ 1.1MB/s
   - 🇻🇳 越南 _1 | ⬇️ 1.3MB/s
   - 🇻🇳 越南 _6 | ⬇️ 1.2MB/s
-  - 🇻🇳 越南 _2 | ⬇️ 1.4MB/s
   - 🇻🇳 越南 IEPL
   - 🇺🇸 美国 | |@x|53
-  - 🇺🇸 美国 62
-  - 🇺🇸 美国 _27 | ⬇️ 2.9MB/s
-  - 🇺🇸 美国 46
-  - 🇺🇸 美国 _26 | ⬇️ 6.2MB/s
+  - 🇺🇸 美国 40
   - 🇺🇸 美国 _30 | ⬇️ 5.1MB/s
   - 🇺🇸 美国 48
-  - 🇺🇸 美国 52
-  - 🇺🇸 美国 61
-  - 🇺🇸 美国 58
+  - 🇺🇸 美国 _26 | ⬇️ 6.2MB/s
+  - 🇺🇸 美国 46
   - 🇺🇸 美国 41
-  - 🇺🇸 美国 IEPL GPT
-  - 🇺🇸 美国 12
+  - 🇺🇸 美国 52
+  - 🇺🇸 美国 58
+  - 🇺🇸 美国 61
+  - 🇺🇸 美国 62
+  - 🇺🇸 美国 22
+  - 🇺🇸 美国 23
   - 🇺🇸 美国 13
   - 🇺🇸 美国 14
+  - 🇺🇸 美国 12
+  - 🇺🇸 美国 56
+  - 🇺🇸 美国 IEPL GPT
   - 🇺🇸 美国 9
   - 🇺🇸 美国 10
   - 🇺🇸 美国 11
-  - 🇺🇸 美国 20
-  - 🇺🇸 美国 4
   - 🇺🇸 美国 18
   - 🇺🇸 美国 19
   - 🇺🇸 美国 8
-  - 🇺🇸 美国 56
-  - 🇺🇸 美国 23
-  - 🇺🇸 美国 22
+  - 🇺🇸 美国 20
+  - 🇺🇸 美国 4
+  - 🇺🇸 美国 17
   - 🇺🇸 美国 15
   - 🇺🇸 美国 16
-  - 🇺🇸 美国 17
   - 🇩🇪 德国 IEPL
   - 🇮🇹 意大利 ojan real y
   url: http://www.gstatic.com/generate_204
