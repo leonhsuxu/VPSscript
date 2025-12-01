@@ -1,11 +1,12 @@
 # 文件名: TelegramNode/telegram_publiclink.py
 # -*- coding: utf-8 -*-
 # ============================================================================
-# Clash 订阅自动生成脚本 V1.R2
+# Clash 订阅自动生成脚本 V1.R3
 #
 # 版本历史:
 # V1.R1 (20251130) - 初始版本
 # V1.R2 (20251201) - 增加多种下载方式，优先使用 wget
+# V1.R3 (20251202) - 支持解析Base64编码，可以处理其他文本格式
 # ============================================================================
 import os
 import re
@@ -63,7 +64,7 @@ CHINESE_COUNTRY_MAP = {
 
 # ========== 地区识别正则规则 ==========
 CUSTOM_REGEX_RULES = {
-    '香港': {'code': 'HK', 'pattern': r'香港|港|HK|Hong\s*Kong|HongKong'},
+    '香港': {'code': 'HK', 'pattern': r'香港|港|HK|Hong\s*Kong'},
     '台湾': {'code': 'TW', 'pattern': r'台湾|台|TW|Taiwan'},
     '日本': {'code': 'JP', 'pattern': r'日本|日|JP|Japan'},
     '新加坡': {'code': 'SG', 'pattern': r'新加坡|SG|Singapore'},
@@ -196,6 +197,20 @@ def attempt_download_using_requests(url):
         print(f"  ✗ requests 下载失败: {e}")
         return None
 
+def parse_proxies_from_content(content):
+    """从下载的内容中解析代理节点"""
+    try:
+        # 尝试解析 YAML 内容
+        return yaml.safe_load(content).get('proxies', [])
+    except yaml.YAMLError:
+        # 尝试解析 Base64 编码内容
+        try:
+            decoded_content = base64.b64decode(content).decode('utf-8')
+            return yaml.safe_load(decoded_content).get('proxies', [])
+        except Exception as e:
+            print(f"  ✗ 解析内容时出错: {e}")
+            return []
+
 def download_subscription(url):
     """下载并解析订阅链接，优先使用 wget，失败后尝试 requests"""
     content = attempt_download_using_wget(url)
@@ -207,11 +222,8 @@ def download_subscription(url):
         print(f"  ❌ 两种下载方式均失败，跳过链接: {url}")
         return []
 
-    # 尝试解析 YAML 内容
-    try:
-        return yaml.safe_load(content).get('proxies', [])
-    except yaml.YAMLError:
-        return yaml.safe_load(base64.b64decode(content)).get('proxies', [])
+    # 尝试解析代理节点
+    return parse_proxies_from_content(content)
 
 def get_proxy_key(p):
     """生成代理节点的唯一标识"""
@@ -350,7 +362,7 @@ def generate_config(proxies):
 
 async def main():
     """主函数"""
-    print("=" * 60 + f"\nClash 订阅自动生成脚本 V1.R2 @ {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S %Z')}\n" + "=" * 60)
+    print("=" * 60 + f"\nClash 订阅自动生成脚本 V1.R3 @ {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S %Z')}\n" + "=" * 60)
     preprocess_regex_rules()
     print("\n[1/4] 从 Telegram 抓取、下载并合并节点...")
     urls = await scrape_telegram_links()
