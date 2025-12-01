@@ -27,6 +27,8 @@ jobs:
         TELEGRAM_CHANNEL_IDS: |
          # 订阅转发-频道
          @fqDINYUE
+         # 机场订阅节点VPN分享社 
+         @wxdy666
          # 白嫖订阅&节点分享群
          @freeyule
          # CC宝盒
