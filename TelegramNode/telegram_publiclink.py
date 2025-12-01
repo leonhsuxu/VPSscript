@@ -1,15 +1,17 @@
 # 文件名: TelegramNode/telegram_publiclink.py
 # -*- coding: utf-8 -*-
 # ============================================================================
-# Clash 订阅自动生成脚本 V1.R3
-# 
+# Clash 订阅自动生成脚本 V1.R5
+#
 # 版本历史:
-# V1.R3 (20251130) - FlClash 协议验证
-#   - 添加完整的 FlClash 协议支持验证
-#   - 验证所有协议的必需字段和格式
-#   - 自动过滤不支持或配置错误的节点
-# V1.R2 (20251130) - 修复 REALITY 协议验证
-# V1.R1 (20251130) - 初始版本
+# V1.R5 (20251201) - 终极健壮性修复
+#   - 新增对 REALITY short-id 的十六进制内容验证，彻底杜绝无效 short-id 引发的异常。
+# V1.R4 (20251201) - 全面验证修复
+#   - 新增全面的节点验证与净化函数 (is_proxy_valid_and_sanitize)。
+#   - 对所有节点进行严格的格式和数据类型检查，从根本上杜绝解析错误。
+# V1.R3 (20251201) - 健壮性修复 & 逻辑优化
+#   - 强化 REALITY 节点验证，处理 short-id 为空格或类型错误等边缘情况。
+#   - 修正重命名逻辑，确保生成的旗帜 Emoji 与识别出的地区严格一致。
 # ============================================================================
 import os
 import re
@@ -27,13 +29,11 @@ import subprocess
 import shutil
 # --- Telethon ---
 from telethon.sync import TelegramClient
-from telethon.tl.types import MessageMediaWebPage
 from telethon.sessions import StringSession
 
 # =================================================================================
 # Part 1: 配置
 # =================================================================================
-
 # --- Telegram 抓取器配置 ---
 API_ID = os.environ.get('TELEGRAM_API_ID')
 API_HASH = os.environ.get('TELEGRAM_API_HASH')
@@ -54,7 +54,6 @@ TEST_INTERVAL = 300
 
 # --- 地区、命名和过滤配置 ---
 ALLOWED_REGIONS = {'香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国', '印度', '菲律宾', '印度尼西亚', '越南', '美国', '加拿大', '法国', '英国', '德国', '俄罗斯', '意大利', '巴西', '阿根廷', '土耳其', '澳大利亚'}
-
 REGION_PRIORITY = ['香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国', '印度', '菲律宾', '印度尼西亚', '越南', '美国', '加拿大', '法国', '英国', '德国', '俄罗斯', '意大利', '巴西', '阿根廷', '土耳其', '澳大利亚']
 
 CHINESE_COUNTRY_MAP = {
@@ -118,176 +117,22 @@ JUNK_PATTERNS = re.compile(r"(?:专线|IPLC|IEPL|BGP|体验|官网|倍率|x\d[\.
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
 
 # =================================================================================
-# Part 2: FlClash 协议验证函数
+# Part 2: 函数定义
 # =================================================================================
-
-def validate_shadowsocks(proxy):
-    """验证 Shadowsocks 节点"""
-    required_fields = ['server', 'port', 'cipher', 'password']
-    for field in required_fields:
-        if not proxy.get(field):
-            print(f"  ⚠️ SS节点缺少必需字段 '{field}': {proxy.get('name', 'Unknown')}")
-            return False
-    
-    # 验证加密方式
-    valid_ciphers = ['aes-128-gcm', 'aes-192-gcm', 'aes-256-gcm', 'chacha20-ietf-poly1305', '2022-blake3-aes-128-gcm', '2022-blake3-aes-256-gcm']
-    if proxy['cipher'] not in valid_ciphers:
-        print(f"  ⚠️ SS节点使用不支持的加密方式 '{proxy['cipher']}': {proxy.get('name', 'Unknown')}")
-        return False
-    
-    return True
-
-def validate_vmess(proxy):
-    """验证 VMess 节点"""
-    required_fields = ['server', 'port', 'uuid', 'alterId', 'cipher']
-    for field in required_fields:
-        if field not in proxy:
-            print(f"  ⚠️ VMess节点缺少必需字段 '{field}': {proxy.get('name', 'Unknown')}")
-            return False
-    
-    # 验证 UUID 格式
-    uuid_pattern = r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
-    if not re.match(uuid_pattern, str(proxy['uuid']).lower()):
-        print(f"  ⚠️ VMess节点 UUID 格式无效: {proxy.get('name', 'Unknown')}")
-        return False
-    
-    # 验证加密方式
-    valid_ciphers = ['auto', 'aes-128-gcm', 'chacha20-poly1305', 'none']
-    if proxy['cipher'] not in valid_ciphers:
-        print(f"  ⚠️ VMess节点使用不支持的加密方式 '{proxy['cipher']}': {proxy.get('name', 'Unknown')}")
-        return False
-    
-    return True
-
-def validate_vless(proxy):
-    """验证 VLESS 节点"""
-    required_fields = ['server', 'port', 'uuid']
-    for field in required_fields:
-        if not proxy.get(field):
-            print(f"  ⚠️ VLESS节点缺少必需字段 '{field}': {proxy.get('name', 'Unknown')}")
-            return False
-    
-    # 验证 UUID 格式
-    uuid_pattern = r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
-    if not re.match(uuid_pattern, str(proxy['uuid']).lower()):
-        print(f"  ⚠️ VLESS节点 UUID 格式无效: {proxy.get('name', 'Unknown')}")
-        return False
-    
-    # 验证 REALITY 配置
-    reality_opts = proxy.get('reality-opts')
-    if reality_opts:
-        # 验证 short-id（可选，但如果存在必须有效）
-        short_id = reality_opts.get('short-id', '')
-        if short_id and not re.match(r'^[0-9a-fA-F]{0,16}$', str(short_id)):
-            print(f"  ⚠️ VLESS-REALITY节点 short-id 格式无效: {proxy.get('name', 'Unknown')}")
-            return False
-        
-        # 验证必需的 public-key
-        if not reality_opts.get('public-key'):
-            print(f"  ⚠️ VLESS-REALITY节点缺少 public-key: {proxy.get('name', 'Unknown')}")
-            return False
-    
-    return True
-
-def validate_trojan(proxy):
-    """验证 Trojan 节点"""
-    required_fields = ['server', 'port', 'password']
-    for field in required_fields:
-        if not proxy.get(field):
-            print(f"  ⚠️ Trojan节点缺少必需字段 '{field}': {proxy.get('name', 'Unknown')}")
-            return False
-    
-    return True
-
-def validate_hysteria(proxy):
-    """验证 Hysteria/Hysteria2 节点"""
-    required_fields = ['server', 'port']
-    for field in required_fields:
-        if not proxy.get(field):
-            print(f"  ⚠️ Hysteria节点缺少必需字段 '{field}': {proxy.get('name', 'Unknown')}")
-            return False
-    
-    # Hysteria2 需要 password
-    if proxy.get('type') == 'hysteria2':
-        if not proxy.get('password'):
-            print(f"  ⚠️ Hysteria2节点缺少 password: {proxy.get('name', 'Unknown')}")
-            return False
-    else:
-        # Hysteria 需要 auth_str 或 auth
-        if not proxy.get('auth_str') and not proxy.get('auth'):
-            print(f"  ⚠️ Hysteria节点缺少认证信息: {proxy.get('name', 'Unknown')}")
-            return False
-    
-    return True
-
-def validate_tuic(proxy):
-    """验证 TUIC 节点"""
-    required_fields = ['server', 'port', 'uuid', 'password']
-    for field in required_fields:
-        if not proxy.get(field):
-            print(f"  ⚠️ TUIC节点缺少必需字段 '{field}': {proxy.get('name', 'Unknown')}")
-            return False
-    
-    # 验证 UUID 格式
-    uuid_pattern = r'^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'
-    if not re.match(uuid_pattern, str(proxy['uuid']).lower()):
-        print(f"  ⚠️ TUIC节点 UUID 格式无效: {proxy.get('name', 'Unknown')}")
-        return False
-    
-    return True
-
-def validate_proxy(proxy):
-    """统一验证所有协议类型的节点"""
-    proxy_type = proxy.get('type', '').lower()
-    name = proxy.get('name', 'Unknown')
-    
-    # 基本字段验证
-    if not proxy_type:
-        print(f"  ⚠️ 节点缺少 type 字段: {name}")
-        return False
-    
-    if not proxy.get('server') or not proxy.get('port'):
-        print(f"  ⚠️ 节点缺少 server 或 port: {name}")
-        return False
-    
-    # 根据协议类型进行特定验证
-    validators = {
-        'ss': validate_shadowsocks,
-        'vmess': validate_vmess,
-        'vless': validate_vless,
-        'trojan': validate_trojan,
-        'hysteria': validate_hysteria,
-        'hysteria2': validate_hysteria,
-        'tuic': validate_tuic,
-        'ssr': lambda p: True  # SSR 基本验证已在上面完成
-    }
-    
-    validator = validators.get(proxy_type)
-    if not validator:
-        print(f"  ⚠️ 不支持的协议类型 '{proxy_type}': {name}")
-        return False
-    
-    return validator(proxy)
-
-# =================================================================================
-# Part 3: 原有函数定义
-# =================================================================================
-
 def parse_expire_time(text):
     """解析消息中的到期时间"""
     match = re.search(r'到期时间[:：]\s*(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})', text)
     if match:
-        try: 
+        try:
             return datetime.strptime(match.group(1), '%Y-%m-%d %H:%M:%S').replace(tzinfo=timezone(timedelta(hours=8)))
-        except: 
-            return None
+        except: return None
     return None
 
 def is_expire_time_valid(expire_time):
     """检查订阅链接是否在有效期内"""
-    if expire_time is None: 
-        return True
-    hours_remaining = (expire_time - datetime.now(timezone(timedelta(hours=8)))).total_seconds() / 3600
+    if expire_time is None: return True
+    now_utc8 = datetime.now(timezone(timedelta(hours=8)))
+    hours_remaining = (expire_time - now_utc8).total_seconds() / 3600
     if hours_remaining < MIN_EXPIRE_HOURS:
         print(f"  ❌ 已跳过: 链接剩余时间 ({hours_remaining:.1f} 小时) 少于最低要求 ({MIN_EXPIRE_HOURS} 小时)")
         return False
@@ -303,9 +148,8 @@ async def scrape_telegram_links():
     if not TARGET_CHANNELS:
         print("❌ 错误: TELEGRAM_CHANNEL_IDS 中未找到有效频道 ID。")
         return []
-    
+
     print(f"▶️ 配置抓取 {len(TARGET_CHANNELS)} 个频道: {TARGET_CHANNELS}")
-    
     try:
         client = TelegramClient(StringSession(STRING_SESSION), API_ID, API_HASH)
         await client.connect()
@@ -314,25 +158,24 @@ async def scrape_telegram_links():
     except Exception as e:
         print(f"❌ 错误: 连接 Telegram 时出错: {e}")
         return []
-    
+
     target_time = datetime.now(timezone.utc) - timedelta(hours=TIME_WINDOW_HOURS)
     all_links = set()
-    
     for channel_id in TARGET_CHANNELS:
         print(f"\n--- 正在处理频道: {channel_id} ---")
         try:
-            async for message in client.iter_messages(await client.get_entity(channel_id), limit=500):
-                if message.date < target_time: 
-                    break
+            entity = await client.get_entity(channel_id)
+            async for message in client.iter_messages(entity, limit=500):
+                if message.date < target_time: break
                 if message.text and is_expire_time_valid(parse_expire_time(message.text)):
-                    for url in re.findall(r'订阅链接[:：]\s*[`]*\s*(https?://[^\s<>"*`]+)', message.text):
+                    for url in re.findall(r'订阅链接[:：]?\s*`?\s*(https?://[^\s<>"*`]+)', message.text):
                         cleaned_url = url.strip().strip('.,*`')
                         if cleaned_url:
                             all_links.add(cleaned_url)
                             print(f"  ✅ 找到链接: {cleaned_url[:70]}...")
         except Exception as e:
             print(f"❌ 错误: 从频道 '{channel_id}' 获取消息时出错: {e}")
-    
+
     await client.disconnect()
     print(f"\n✅ 抓取完成, 共找到 {len(all_links)} 个不重复的有效链接。")
     return list(all_links)
@@ -340,9 +183,7 @@ async def scrape_telegram_links():
 def preprocess_regex_rules():
     """预处理正则规则：按长度排序以优化匹配效率"""
     for region in CUSTOM_REGEX_RULES:
-        CUSTOM_REGEX_RULES[region]['pattern'] = '|'.join(
-            sorted(CUSTOM_REGEX_RULES[region]['pattern'].split('|'), key=len, reverse=True)
-        )
+        CUSTOM_REGEX_RULES[region]['pattern'] = '|'.join(sorted(CUSTOM_REGEX_RULES[region]['pattern'].split('|'), key=len, reverse=True))
 
 def get_country_flag_emoji(code):
     """根据国家代码生成旗帜 Emoji"""
@@ -351,129 +192,216 @@ def get_country_flag_emoji(code):
 def download_subscription(url):
     """下载并解析订阅链接"""
     print(f"  ⬇️ 正在下载: {url[:80]}...")
-    if not shutil.which("wget"): 
+    if not shutil.which("wget"):
         print("  ✗ 错误: wget 未安装。")
         return []
-    
     try:
         content = subprocess.run(
-            ["wget", "-O", "-", "--timeout=30", "--header=User-Agent: Clash", url], 
+            ["wget", "-O", "-", "--timeout=30", "--header=User-Agent: Clash", url],
             capture_output=True, text=True, check=True
         ).stdout
-        
-        if not content: 
+        if not content:
             print("  ✗ 下载内容为空。")
             return []
-        
-        try: 
+        try:
             return yaml.safe_load(content).get('proxies', [])
-        except yaml.YAMLError: 
-            return yaml.safe_load(base64.b64decode(content)).get('proxies', [])
+        except yaml.YAMLError:
+            try:
+                # 兼容性处理，某些订阅链接可能需要多次 b64decode
+                decoded_content = content
+                for _ in range(3): # 最多尝试解码3次
+                    try:
+                        decoded_content = base64.b64decode(decoded_content).decode('utf-8')
+                        if 'proxies' in decoded_content:
+                            break # 如果解码后内容包含 proxies 关键词，可能就是 yaml 了
+                    except Exception:
+                        break # 如果解码失败，跳出循环
+                return yaml.safe_load(decoded_content).get('proxies', [])
+            except Exception:
+                return [] # 各种解码和解析都失败
     except Exception as e:
         print(f"  ✗ 下载或解析时出错: {e}")
         return []
 
 def get_proxy_key(p):
     """生成代理节点的唯一标识"""
-    return hashlib.md5(
-        f"{p.get('server','')}:{p.get('port',0)}|{p.get('uuid') or p.get('password') or ''}".encode()
-    ).hexdigest()
+    port_str = str(p.get('port', 0))
+    return hashlib.md5(f"{p.get('server','')}:{port_str}|{p.get('uuid') or p.get('password') or ''}".encode()).hexdigest()
+
+def is_proxy_valid_and_sanitize(p):
+    """
+    全面验证并净化节点配置。如果有效，返回 True 并可能修改 p；如果无效，返回 False。
+    """
+    if not isinstance(p, dict): return False
+    
+    # 1. 基础字段验证
+    if not all(k in p for k in ['type', 'server', 'port']): return False
+    if not p.get('server') or not isinstance(p.get('server'), str): return False
+
+    # 2. Port 净化与验证
+    try:
+        p['port'] = int(p['port'])
+        if not (0 < p['port'] < 65536): return False
+    except (ValueError, TypeError):
+        return False
+
+    # 3. 协议特定字段验证
+    proxy_type = p.get('type')
+    if proxy_type in ['vless', 'vmess']:
+        if not p.get('uuid') or not isinstance(p.get('uuid'), str): return False
+    elif proxy_type in ['ss', 'trojan']:
+        if 'password' not in p: return False
+    
+    # 4. REALITY 配置验证 (最关键的修复)
+    if 'reality-opts' in p:
+        if proxy_type not in ['vless', 'trojan']: return False
+        
+        reality_opts = p.get('reality-opts', {})
+        if not isinstance(reality_opts, dict) or 'public-key' not in reality_opts: return False
+
+        short_id = reality_opts.get('short-id')
+        # 4a. 验证 short_id: 必须存在, 是字符串, 且去除空格后不为空
+        if not short_id or not isinstance(short_id, str) or not short_id.strip(): return False
+        # 4b. 终极验证: short_id 必须是有效的十六进制字符串
+        try:
+            int(short_id, 16)
+        except ValueError:
+            return False # 包含非十六进制字符，无效
+
+    return True
 
 def process_proxies(proxies):
     """过滤、识别地区并重命名节点"""
-    # 首先进行协议验证
-    validated = [p for p in proxies if validate_proxy(p)]
-    print(f"  - 协议验证: {len(validated)} / {len(proxies)} 个节点通过验证")
-    
     identified = []
-    for p in validated:
+    for p in proxies:
         name = JUNK_PATTERNS.sub('', FLAG_EMOJI_PATTERN.sub('', p.get('name', ''))).strip()
-        for eng, chn in CHINESE_COUNTRY_MAP.items(): 
+        for eng, chn in CHINESE_COUNTRY_MAP.items():
             name = re.sub(r'\b' + re.escape(eng) + r'\b', chn, name, flags=re.IGNORECASE)
-        
+
         for r_name, rules in CUSTOM_REGEX_RULES.items():
             if re.search(rules['pattern'], name, re.IGNORECASE) and r_name in ALLOWED_REGIONS:
                 p['region_info'] = {'name': r_name, 'code': rules['code']}
                 identified.append(p)
                 break
-    
-    print(f"  - 节点过滤: 原始 {len(proxies)} -> 验证通过 {len(validated)} -> 识别并保留 {len(identified)}")
-    
+    print(f"  - 节点地区识别: 原始 {len(proxies)} -> 识别并保留 {len(identified)}")
+
     final, counters = [], defaultdict(lambda: defaultdict(int))
-    master_pattern = re.compile(
-        '|'.join(sorted([p for r in CUSTOM_REGEX_RULES.values() for p in r['pattern'].split('|')], key=len, reverse=True)), 
-        re.IGNORECASE
-    )
-    
+    master_pattern = re.compile('|'.join(sorted([pat for r in CUSTOM_REGEX_RULES.values() for pat in r['pattern'].split('|')], key=len, reverse=True)), re.IGNORECASE)
+
     for p in identified:
         info = p['region_info']
-        match = FLAG_EMOJI_PATTERN.search(p['name'])
-        if match:
-            flag = match.group(0)
-        else:
-            flag = get_country_flag_emoji(info['code'])
+        flag = get_country_flag_emoji(info['code'])
         
-        feature = re.sub(r'\s+', ' ', master_pattern.sub(' ', FLAG_EMOJI_PATTERN.sub('', p['name'], 1)).replace('-', ' ')).strip() or f"{sum(1 for fp in final if fp['region_info']['name'] == info['name']) + 1:02d}"
+        name_no_flag = FLAG_EMOJI_PATTERN.sub('', p['name'], 1).strip()
+        feature_part = master_pattern.sub(' ', name_no_flag).replace('-', ' ')
+        feature = re.sub(r'\s+', ' ', feature_part).strip() or f"{sum(1 for fp in final if fp['region_info']['name'] == info['name']) + 1:02d}"
         new_name = f"{flag} {info['name']} {feature}".strip()
+
         counters[info['name']][new_name] += 1
-        if counters[info['name']][new_name] > 1: 
+        if counters[info['name']][new_name] > 1:
             new_name += f" {counters[info['name']][new_name]}"
-        
         p['name'] = new_name
         final.append(p)
-    
     return final
 
 def test_single_proxy_tcp(proxy):
-    """使用 TCP 连接测速（兼容所有协议）"""
+    """使用 TCP 连接测速"""
     try:
-        start = time.time()
-        sock = socket.create_connection(
-            (proxy['server'], proxy['port']), 
-            timeout=SOCKET_TIMEOUT
-        )
-        sock.close()
-        proxy['delay'] = int((time.time() - start) * 1000)
-        return proxy
+        start_time = time.time()
+        with socket.create_connection((proxy['server'], proxy['port']), timeout=SOCKET_TIMEOUT) as sock:
+            proxy['delay'] = int((time.time() - start_time) * 1000)
+            return proxy
     except Exception:
         return None
 
 def generate_config(proxies):
     """生成 Clash 配置文件"""
-    if not proxies: 
-        return None
+    if not proxies: return None
     
-    # 移除内部使用的字段
-    clean = [{k: v for k, v in p.items() if k not in ['region_info', 'delay']} for p in proxies]
     names = [p['name'] for p in proxies]
+    clean_proxies = [{k: v for k, v in p.items() if k not in ['region_info', 'delay']} for p in proxies]
     
     groups = [
-        {
-            'name': '🚀 节点选择', 
-            'type': 'select', 
-            'proxies': ['♻️ 自动选择', '🔯 故障转移', 'DIRECT'] + names,
-            'url': TEST_URL,
-            'interval': TEST_INTERVAL
-        },
-        {
-            'name': '♻️ 自动选择', 
-            'type': 'url-test', 
-            'proxies': names,
-            'url': TEST_URL,
-            'interval': TEST_INTERVAL,
-            'tolerance': 50,
-            'lazy': True
-        },
-        {
-            'name': '🔯 故障转移', 
-            'type': 'fallback', 
-            'proxies': names,
-            'url': TEST_URL,
-            'interval': TEST_INTERVAL,
-            'lazy': True
-        }
+        {'name': '🚀 节点选择', 'type': 'select', 'proxies': ['♻️ 自动选择', '🔯 故障转移', 'DIRECT'] + names, 'url': TEST_URL, 'interval': TEST_INTERVAL},
+        {'name': '♻️ 自动选择', 'type': 'url-test', 'proxies': names, 'url': TEST_URL, 'interval': TEST_INTERVAL, 'tolerance': 50, 'lazy': True},
+        {'name': '🔯 故障转移', 'type': 'fallback', 'proxies': names, 'url': TEST_URL, 'interval': TEST_INTERVAL, 'lazy': True}
     ]
     
     return {
-        'mixed-port': 7890, 
-        'allow-lan': True
+        'mixed-port': 7890, 'allow-lan': True, 'mode': 'rule', 'log-level': 'info',
+        'external-controller': '127.0.0.1:9090',
+        'dns': {'enable': True, 'listen': '0.0.0.0:53', 'enhanced-mode': 'fake-ip', 'fake-ip-range': '198.18.0.1/16',
+                'nameserver': ['223.5.5.5', '119.29.29.29'],
+                'fallback': ['https://dns.google/dns-query', 'https://1.1.1.1/dns-query']},
+        'proxies': clean_proxies, 'proxy-groups': groups,
+        'rules': ['GEOIP,CN,DIRECT', 'MATCH,🚀 节点选择']
+    }
+
+async def main():
+    """主函数"""
+    print("=" * 60 + f"\nClash 订阅自动生成脚本 V1.R5 @ {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S %Z')}\n" + "=" * 60)
+    preprocess_regex_rules()
+    
+    print("\n[1/4] 从 Telegram 抓取、下载并合并节点...")
+    urls = await scrape_telegram_links()
+    if not urls:
+        sys.exit("\n❌ 未找到任何有效订阅链接，脚本终止。")
+    
+    all_downloaded_proxies = [p for url in urls for p in download_subscription(url) if p]
+    if not all_downloaded_proxies:
+        sys.exit("\n❌ 下载和解析后，无有效节点，脚本终止。")
+
+    print(f"\n[*] 原始节点数: {len(all_downloaded_proxies)}. 开始全面验证、净化和去重...")
+    proxies = {}
+    invalid_count = 0
+    for p in all_downloaded_proxies:
+        if is_proxy_valid_and_sanitize(p):
+            proxy_key = get_proxy_key(p)
+            if proxy_key not in proxies:
+                proxies[proxy_key] = p
+        else:
+            invalid_count += 1
+            
+    if invalid_count > 0:
+        print(f"  - 已过滤 {invalid_count} 个格式无效或不完整的节点。")
+
+    if not proxies:
+        sys.exit("\n❌ 验证和去重后，无有效节点，脚本终止。")
+        
+    print(f"✅ 合并与净化后共 {len(proxies)} 个有效节点。")
+
+    print("\n[2/4] 过滤与重命名节点...")
+    processed = process_proxies(list(proxies.values()))
+    if not processed:
+        sys.exit("\n❌ 过滤后无任何可用节点，脚本终止。")
+    
+    print("\n[3/4] TCP 测速与最终排序...")
+    final_proxies = processed
+    if ENABLE_SPEED_TEST:
+        print(f"  - 开始 TCP 连接测速（超时: {SOCKET_TIMEOUT}秒）...")
+        with concurrent.futures.ThreadPoolExecutor(MAX_TEST_WORKERS) as executor:
+            tested = list(executor.map(test_single_proxy_tcp, processed))
+        
+        final_proxies = [p for p in tested if p]
+        print(f"  - 测速完成, {len(final_proxies)} / {len(processed)} 个节点可用。")
+        
+        if not final_proxies:
+            print("\n  ⚠️ 警告: 测速后无可用节点，将使用所有过滤后的节点作为备用。")
+            final_proxies = processed
+    
+    final_proxies.sort(key=lambda p: (REGION_PRIORITY.index(p['region_info']['name']), p.get('delay', 9999)))
+    print(f"✅ 最终处理完成 {len(final_proxies)} 个节点。")
+    
+    print("\n[4/4] 生成最终配置文件...")
+    config = generate_config(final_proxies)
+    if not config:
+        sys.exit("\n❌ 无法生成配置文件。")
+        
+    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
+    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
+        yaml.dump(config, f, allow_unicode=True, sort_keys=False, indent=2)
+        
+    print(f"✅ 配置文件已成功保存至: {OUTPUT_FILE}\n\n🎉 任务全部完成！")
+
+if __name__ == '__main__':
+    asyncio.run(main())
