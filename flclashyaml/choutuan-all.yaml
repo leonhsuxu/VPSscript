@@ -953,506 +953,476 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: 45c9617fd4634e41845088abba726771
-  server: 80.251.210.247
+  server: 194.33.45.157
   port: 443
   name: 🇺🇸 美国 - 08
 - skip-cert-verify: true
   type: trojan
   password: 45c9617fd4634e41845088abba726771
-  server: 194.33.45.157
+  server: 38.180.60.168
   port: 443
   name: 🇺🇸 美国 - 09
 - skip-cert-verify: true
   type: trojan
   password: 45c9617fd4634e41845088abba726771
-  server: 38.180.60.168
-  port: 443
-  name: 🇺🇸 美国 - 10
-- skip-cert-verify: true
-  type: trojan
-  password: 45c9617fd4634e41845088abba726771
   server: 15.204.56.75
   port: 443
-  name: 🇺🇸 美国 - 11
+  name: 🇺🇸 美国 - 10
 - skip-cert-verify: true
   sni: cn2.lgjf.top
   type: trojan
   password: 45c9617fd4634e41845088abba726771
   server: cn2.lgjf.top
+  port: 443
+  name: 🇺🇸 美国 - 11
+- skip-cert-verify: true
+  type: trojan
+  password: 45c9617fd4634e41845088abba726771
+  server: 109.166.39.77
   port: 443
   name: 🇺🇸 美国 - 12
 - skip-cert-verify: true
   type: trojan
   password: 45c9617fd4634e41845088abba726771
-  server: 109.166.39.77
+  server: 149.248.39.92
   port: 443
   name: 🇺🇸 美国 - 13
 - skip-cert-verify: true
   type: trojan
   password: 45c9617fd4634e41845088abba726771
-  server: 149.248.39.92
+  server: 109.166.39.52
   port: 443
   name: 🇺🇸 美国 - 14
 - skip-cert-verify: true
   type: trojan
   password: 45c9617fd4634e41845088abba726771
-  server: 109.166.39.52
+  server: 109.166.39.8
   port: 443
   name: 🇺🇸 美国 - 15
 - skip-cert-verify: true
   type: trojan
   password: 45c9617fd4634e41845088abba726771
-  server: 109.166.39.8
+  server: 38.180.141.48
   port: 443
   name: 🇺🇸 美国 - 16
 - skip-cert-verify: true
   type: trojan
   password: 45c9617fd4634e41845088abba726771
-  server: 38.180.141.48
+  server: 40.160.29.83
   port: 443
   name: 🇺🇸 美国 - 17
 - skip-cert-verify: true
   type: trojan
-  password: 45c9617fd4634e41845088abba726771
-  server: 40.160.29.83
+  password: 71f50670d3cf4121b022f30b596ace40
+  server: 15.204.237.191
   port: 443
   name: 🇺🇸 美国 - 18
 - skip-cert-verify: true
   type: trojan
   password: 71f50670d3cf4121b022f30b596ace40
-  server: 15.204.237.191
+  server: 45.76.234.159
   port: 443
   name: 🇺🇸 美国 - 19
 - skip-cert-verify: true
   type: trojan
   password: 71f50670d3cf4121b022f30b596ace40
-  server: 45.76.234.159
+  server: 15.204.108.89
   port: 443
   name: 🇺🇸 美国 - 20
 - skip-cert-verify: true
   type: trojan
   password: 71f50670d3cf4121b022f30b596ace40
-  server: 15.204.108.89
+  server: 208.83.232.190
   port: 443
   name: 🇺🇸 美国 - 21
 - skip-cert-verify: true
   type: trojan
   password: 71f50670d3cf4121b022f30b596ace40
-  server: 208.83.232.190
+  server: 104.234.0.139
   port: 443
   name: 🇺🇸 美国 - 22
 - skip-cert-verify: true
   type: trojan
   password: 71f50670d3cf4121b022f30b596ace40
-  server: 104.234.0.139
+  server: 104.234.0.162
   port: 443
   name: 🇺🇸 美国 - 23
 - skip-cert-verify: true
   type: trojan
   password: 71f50670d3cf4121b022f30b596ace40
-  server: 104.234.0.162
+  server: 77.247.126.137
   port: 443
   name: 🇺🇸 美国 - 24
 - skip-cert-verify: true
   type: trojan
   password: 71f50670d3cf4121b022f30b596ace40
-  server: 77.247.126.137
+  server: 194.33.45.157
   port: 443
   name: 🇺🇸 美国 - 25
 - skip-cert-verify: true
   type: trojan
   password: 71f50670d3cf4121b022f30b596ace40
-  server: 80.251.210.247
+  server: 38.180.60.168
   port: 443
   name: 🇺🇸 美国 - 26
 - skip-cert-verify: true
   type: trojan
   password: 71f50670d3cf4121b022f30b596ace40
-  server: 194.33.45.157
+  server: 15.204.56.75
   port: 443
   name: 🇺🇸 美国 - 27
 - skip-cert-verify: true
+  sni: cn2.lgjf.top
   type: trojan
   password: 71f50670d3cf4121b022f30b596ace40
-  server: 38.180.60.168
+  server: cn2.lgjf.top
   port: 443
   name: 🇺🇸 美国 - 28
 - skip-cert-verify: true
   type: trojan
   password: 71f50670d3cf4121b022f30b596ace40
-  server: 15.204.56.75
+  server: 109.166.39.77
   port: 443
   name: 🇺🇸 美国 - 29
 - skip-cert-verify: true
-  sni: cn2.lgjf.top
   type: trojan
   password: 71f50670d3cf4121b022f30b596ace40
-  server: cn2.lgjf.top
+  server: 149.248.39.92
   port: 443
   name: 🇺🇸 美国 - 30
 - skip-cert-verify: true
   type: trojan
   password: 71f50670d3cf4121b022f30b596ace40
-  server: 109.166.39.77
+  server: 109.166.39.52
   port: 443
   name: 🇺🇸 美国 - 31
 - skip-cert-verify: true
   type: trojan
   password: 71f50670d3cf4121b022f30b596ace40
-  server: 149.248.39.92
+  server: 109.166.39.8
   port: 443
   name: 🇺🇸 美国 - 32
 - skip-cert-verify: true
   type: trojan
   password: 71f50670d3cf4121b022f30b596ace40
-  server: 109.166.39.52
+  server: 38.180.141.48
   port: 443
   name: 🇺🇸 美国 - 33
 - skip-cert-verify: true
   type: trojan
   password: 71f50670d3cf4121b022f30b596ace40
-  server: 109.166.39.8
+  server: 40.160.29.83
   port: 443
   name: 🇺🇸 美国 - 34
 - skip-cert-verify: true
   type: trojan
-  password: 71f50670d3cf4121b022f30b596ace40
-  server: 38.180.141.48
+  password: e831f39a79d6450499955efda44e7102
+  server: 15.204.237.191
   port: 443
   name: 🇺🇸 美国 - 35
 - skip-cert-verify: true
   type: trojan
-  password: 71f50670d3cf4121b022f30b596ace40
-  server: 40.160.29.83
+  password: e831f39a79d6450499955efda44e7102
+  server: 45.76.234.159
   port: 443
   name: 🇺🇸 美国 - 36
 - skip-cert-verify: true
   type: trojan
   password: e831f39a79d6450499955efda44e7102
-  server: 15.204.237.191
+  server: 15.204.108.89
   port: 443
   name: 🇺🇸 美国 - 37
 - skip-cert-verify: true
   type: trojan
   password: e831f39a79d6450499955efda44e7102
-  server: 45.76.234.159
+  server: 208.83.232.190
   port: 443
   name: 🇺🇸 美国 - 38
 - skip-cert-verify: true
   type: trojan
   password: e831f39a79d6450499955efda44e7102
-  server: 15.204.108.89
+  server: 104.234.0.139
   port: 443
   name: 🇺🇸 美国 - 39
 - skip-cert-verify: true
   type: trojan
   password: e831f39a79d6450499955efda44e7102
-  server: 208.83.232.190
+  server: 104.234.0.162
   port: 443
   name: 🇺🇸 美国 - 40
 - skip-cert-verify: true
   type: trojan
   password: e831f39a79d6450499955efda44e7102
-  server: 104.234.0.139
+  server: 77.247.126.137
   port: 443
   name: 🇺🇸 美国 - 41
 - skip-cert-verify: true
   type: trojan
   password: e831f39a79d6450499955efda44e7102
-  server: 104.234.0.162
+  server: 194.33.45.157
   port: 443
   name: 🇺🇸 美国 - 42
 - skip-cert-verify: true
   type: trojan
   password: e831f39a79d6450499955efda44e7102
-  server: 77.247.126.137
+  server: 38.180.60.168
   port: 443
   name: 🇺🇸 美国 - 43
 - skip-cert-verify: true
   type: trojan
   password: e831f39a79d6450499955efda44e7102
-  server: 80.251.210.247
+  server: 15.204.56.75
   port: 443
   name: 🇺🇸 美国 - 44
 - skip-cert-verify: true
+  sni: cn2.lgjf.top
   type: trojan
   password: e831f39a79d6450499955efda44e7102
-  server: 194.33.45.157
+  server: cn2.lgjf.top
   port: 443
   name: 🇺🇸 美国 - 45
 - skip-cert-verify: true
   type: trojan
   password: e831f39a79d6450499955efda44e7102
-  server: 38.180.60.168
+  server: 109.166.39.77
   port: 443
   name: 🇺🇸 美国 - 46
 - skip-cert-verify: true
   type: trojan
   password: e831f39a79d6450499955efda44e7102
-  server: 15.204.56.75
+  server: 149.248.39.92
   port: 443
   name: 🇺🇸 美国 - 47
 - skip-cert-verify: true
-  sni: cn2.lgjf.top
   type: trojan
   password: e831f39a79d6450499955efda44e7102
-  server: cn2.lgjf.top
+  server: 109.166.39.52
   port: 443
   name: 🇺🇸 美国 - 48
 - skip-cert-verify: true
   type: trojan
   password: e831f39a79d6450499955efda44e7102
-  server: 109.166.39.77
+  server: 109.166.39.8
   port: 443
   name: 🇺🇸 美国 - 49
 - skip-cert-verify: true
   type: trojan
   password: e831f39a79d6450499955efda44e7102
-  server: 149.248.39.92
+  server: 38.180.141.48
   port: 443
   name: 🇺🇸 美国 - 50
 - skip-cert-verify: true
   type: trojan
   password: e831f39a79d6450499955efda44e7102
-  server: 109.166.39.52
+  server: 40.160.29.83
   port: 443
   name: 🇺🇸 美国 - 51
 - skip-cert-verify: true
   type: trojan
-  password: e831f39a79d6450499955efda44e7102
-  server: 109.166.39.8
+  password: 602e143cf50e4b288366769728a94c86
+  server: 15.204.237.191
   port: 443
   name: 🇺🇸 美国 - 52
 - skip-cert-verify: true
   type: trojan
-  password: e831f39a79d6450499955efda44e7102
-  server: 38.180.141.48
+  password: 602e143cf50e4b288366769728a94c86
+  server: 45.76.234.159
   port: 443
   name: 🇺🇸 美国 - 53
 - skip-cert-verify: true
   type: trojan
-  password: e831f39a79d6450499955efda44e7102
-  server: 40.160.29.83
+  password: 602e143cf50e4b288366769728a94c86
+  server: 15.204.108.89
   port: 443
   name: 🇺🇸 美国 - 54
 - skip-cert-verify: true
   type: trojan
   password: 602e143cf50e4b288366769728a94c86
-  server: 15.204.237.191
+  server: 208.83.232.190
   port: 443
   name: 🇺🇸 美国 - 55
 - skip-cert-verify: true
   type: trojan
   password: 602e143cf50e4b288366769728a94c86
-  server: 45.76.234.159
+  server: 104.234.0.139
   port: 443
   name: 🇺🇸 美国 - 56
 - skip-cert-verify: true
   type: trojan
   password: 602e143cf50e4b288366769728a94c86
-  server: 15.204.108.89
+  server: 104.234.0.162
   port: 443
   name: 🇺🇸 美国 - 57
 - skip-cert-verify: true
   type: trojan
   password: 602e143cf50e4b288366769728a94c86
-  server: 208.83.232.190
+  server: 77.247.126.137
   port: 443
   name: 🇺🇸 美国 - 58
 - skip-cert-verify: true
   type: trojan
   password: 602e143cf50e4b288366769728a94c86
-  server: 104.234.0.139
+  server: 194.33.45.157
   port: 443
   name: 🇺🇸 美国 - 59
 - skip-cert-verify: true
   type: trojan
   password: 602e143cf50e4b288366769728a94c86
-  server: 104.234.0.162
+  server: 38.180.60.168
   port: 443
   name: 🇺🇸 美国 - 60
 - skip-cert-verify: true
   type: trojan
   password: 602e143cf50e4b288366769728a94c86
-  server: 77.247.126.137
+  server: 15.204.56.75
   port: 443
   name: 🇺🇸 美国 - 61
 - skip-cert-verify: true
+  sni: cn2.lgjf.top
   type: trojan
   password: 602e143cf50e4b288366769728a94c86
-  server: 80.251.210.247
+  server: cn2.lgjf.top
   port: 443
   name: 🇺🇸 美国 - 62
 - skip-cert-verify: true
   type: trojan
   password: 602e143cf50e4b288366769728a94c86
-  server: 194.33.45.157
+  server: 109.166.39.77
   port: 443
   name: 🇺🇸 美国 - 63
 - skip-cert-verify: true
   type: trojan
   password: 602e143cf50e4b288366769728a94c86
-  server: 38.180.60.168
+  server: 149.248.39.92
   port: 443
   name: 🇺🇸 美国 - 64
 - skip-cert-verify: true
   type: trojan
   password: 602e143cf50e4b288366769728a94c86
-  server: 15.204.56.75
+  server: 109.166.39.52
   port: 443
   name: 🇺🇸 美国 - 65
 - skip-cert-verify: true
-  sni: cn2.lgjf.top
   type: trojan
   password: 602e143cf50e4b288366769728a94c86
-  server: cn2.lgjf.top
+  server: 109.166.39.8
   port: 443
   name: 🇺🇸 美国 - 66
 - skip-cert-verify: true
   type: trojan
   password: 602e143cf50e4b288366769728a94c86
-  server: 109.166.39.77
+  server: 38.180.141.48
   port: 443
   name: 🇺🇸 美国 - 67
 - skip-cert-verify: true
   type: trojan
   password: 602e143cf50e4b288366769728a94c86
-  server: 149.248.39.92
-  port: 443
-  name: 🇺🇸 美国 - 68
-- skip-cert-verify: true
-  type: trojan
-  password: 602e143cf50e4b288366769728a94c86
-  server: 109.166.39.52
-  port: 443
-  name: 🇺🇸 美国 - 69
-- skip-cert-verify: true
-  type: trojan
-  password: 602e143cf50e4b288366769728a94c86
-  server: 109.166.39.8
-  port: 443
-  name: 🇺🇸 美国 - 70
-- skip-cert-verify: true
-  type: trojan
-  password: 602e143cf50e4b288366769728a94c86
-  server: 38.180.141.48
-  port: 443
-  name: 🇺🇸 美国 - 71
-- skip-cert-verify: true
-  type: trojan
-  password: 602e143cf50e4b288366769728a94c86
   server: 40.160.29.83
   port: 443
-  name: 🇺🇸 美国 - 72
+  name: 🇺🇸 美国 - 68
 - skip-cert-verify: true
   type: trojan
   password: 25dcc522eb6a4a5ab1dbd08fdd9e6cf8
   server: 15.204.237.191
   port: 443
-  name: 🇺🇸 美国 - 73
+  name: 🇺🇸 美国 - 69
 - skip-cert-verify: true
   type: trojan
   password: 25dcc522eb6a4a5ab1dbd08fdd9e6cf8
   server: 45.76.234.159
   port: 443
-  name: 🇺🇸 美国 - 74
+  name: 🇺🇸 美国 - 70
 - skip-cert-verify: true
   type: trojan
   password: 25dcc522eb6a4a5ab1dbd08fdd9e6cf8
   server: 15.204.108.89
   port: 443
-  name: 🇺🇸 美国 - 75
+  name: 🇺🇸 美国 - 71
 - skip-cert-verify: true
   type: trojan
   password: 25dcc522eb6a4a5ab1dbd08fdd9e6cf8
   server: 208.83.232.190
   port: 443
-  name: 🇺🇸 美国 - 76
+  name: 🇺🇸 美国 - 72
 - skip-cert-verify: true
   type: trojan
   password: 25dcc522eb6a4a5ab1dbd08fdd9e6cf8
   server: 104.234.0.139
   port: 443
-  name: 🇺🇸 美国 - 77
+  name: 🇺🇸 美国 - 73
 - skip-cert-verify: true
   type: trojan
   password: 25dcc522eb6a4a5ab1dbd08fdd9e6cf8
   server: 104.234.0.162
   port: 443
-  name: 🇺🇸 美国 - 78
+  name: 🇺🇸 美国 - 74
 - skip-cert-verify: true
   type: trojan
   password: 25dcc522eb6a4a5ab1dbd08fdd9e6cf8
   server: 77.247.126.137
   port: 443
-  name: 🇺🇸 美国 - 79
-- skip-cert-verify: true
-  type: trojan
-  password: 25dcc522eb6a4a5ab1dbd08fdd9e6cf8
-  server: 80.251.210.247
-  port: 443
-  name: 🇺🇸 美国 - 80
+  name: 🇺🇸 美国 - 75
 - skip-cert-verify: true
   type: trojan
   password: 25dcc522eb6a4a5ab1dbd08fdd9e6cf8
   server: 194.33.45.157
   port: 443
-  name: 🇺🇸 美国 - 81
+  name: 🇺🇸 美国 - 76
 - skip-cert-verify: true
   type: trojan
   password: 25dcc522eb6a4a5ab1dbd08fdd9e6cf8
   server: 38.180.60.168
   port: 443
-  name: 🇺🇸 美国 - 82
+  name: 🇺🇸 美国 - 77
 - skip-cert-verify: true
   type: trojan
   password: 25dcc522eb6a4a5ab1dbd08fdd9e6cf8
   server: 15.204.56.75
   port: 443
-  name: 🇺🇸 美国 - 83
+  name: 🇺🇸 美国 - 78
 - skip-cert-verify: true
   sni: cn2.lgjf.top
   type: trojan
   password: 25dcc522eb6a4a5ab1dbd08fdd9e6cf8
   server: cn2.lgjf.top
   port: 443
-  name: 🇺🇸 美国 - 84
+  name: 🇺🇸 美国 - 79
 - skip-cert-verify: true
   type: trojan
   password: 25dcc522eb6a4a5ab1dbd08fdd9e6cf8
   server: 109.166.39.77
   port: 443
-  name: 🇺🇸 美国 - 85
+  name: 🇺🇸 美国 - 80
 - skip-cert-verify: true
   type: trojan
   password: 25dcc522eb6a4a5ab1dbd08fdd9e6cf8
   server: 149.248.39.92
   port: 443
-  name: 🇺🇸 美国 - 86
+  name: 🇺🇸 美国 - 81
 - skip-cert-verify: true
   type: trojan
   password: 25dcc522eb6a4a5ab1dbd08fdd9e6cf8
   server: 109.166.39.52
   port: 443
-  name: 🇺🇸 美国 - 87
+  name: 🇺🇸 美国 - 82
 - skip-cert-verify: true
   type: trojan
   password: 25dcc522eb6a4a5ab1dbd08fdd9e6cf8
   server: 109.166.39.8
   port: 443
-  name: 🇺🇸 美国 - 88
+  name: 🇺🇸 美国 - 83
 - skip-cert-verify: true
   type: trojan
   password: 25dcc522eb6a4a5ab1dbd08fdd9e6cf8
   server: 38.180.141.48
   port: 443
-  name: 🇺🇸 美国 - 89
+  name: 🇺🇸 美国 - 84
 - skip-cert-verify: true
   type: trojan
   password: 25dcc522eb6a4a5ab1dbd08fdd9e6cf8
   server: 40.160.29.83
   port: 443
-  name: 🇺🇸 美国 - 90
+  name: 🇺🇸 美国 - 85
 - skip-cert-verify: true
   type: trojan
   password: 45c9617fd4634e41845088abba726771
@@ -2440,15 +2410,9 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: 45c9617fd4634e41845088abba726771
-  server: 38.180.22.154
-  port: 443
-  name: 🇮🇹 意大利 - 01
-- skip-cert-verify: true
-  type: trojan
-  password: 45c9617fd4634e41845088abba726771
   server: 38.180.22.160
   port: 443
-  name: 🇮🇹 意大利 - 02
+  name: 🇮🇹 意大利 - 01
 - skip-cert-verify: true
   type: trojan
   password: 45c9617fd4634e41845088abba726771
@@ -3012,7 +2976,7 @@ proxies:
   password: 71f50670d3cf4121b022f30b596ace40
   server: 38.180.22.160
   port: 443
-  name: 🇮🇹 意大利 - 03
+  name: 🇮🇹 意大利 - 02
 - skip-cert-verify: true
   type: trojan
   password: 71f50670d3cf4121b022f30b596ace40
@@ -3574,15 +3538,9 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: e831f39a79d6450499955efda44e7102
-  server: 38.180.22.154
-  port: 443
-  name: 🇮🇹 意大利 - 04
-- skip-cert-verify: true
-  type: trojan
-  password: e831f39a79d6450499955efda44e7102
   server: 38.180.22.160
   port: 443
-  name: 🇮🇹 意大利 - 05
+  name: 🇮🇹 意大利 - 03
 - skip-cert-verify: true
   type: trojan
   password: e831f39a79d6450499955efda44e7102
@@ -4144,15 +4102,9 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: 602e143cf50e4b288366769728a94c86
-  server: 38.180.22.154
-  port: 443
-  name: 🇮🇹 意大利 - 06
-- skip-cert-verify: true
-  type: trojan
-  password: 602e143cf50e4b288366769728a94c86
   server: 38.180.22.160
   port: 443
-  name: 🇮🇹 意大利 - 07
+  name: 🇮🇹 意大利 - 04
 - skip-cert-verify: true
   type: trojan
   password: 602e143cf50e4b288366769728a94c86
@@ -4714,15 +4666,9 @@ proxies:
 - skip-cert-verify: true
   type: trojan
   password: 25dcc522eb6a4a5ab1dbd08fdd9e6cf8
-  server: 38.180.22.154
-  port: 443
-  name: 🇮🇹 意大利 - 08
-- skip-cert-verify: true
-  type: trojan
-  password: 25dcc522eb6a4a5ab1dbd08fdd9e6cf8
   server: 38.180.22.160
   port: 443
-  name: 🇮🇹 意大利 - 09
+  name: 🇮🇹 意大利 - 05
 - skip-cert-verify: true
   type: trojan
   password: 25dcc522eb6a4a5ab1dbd08fdd9e6cf8
@@ -5284,11 +5230,6 @@ proxy-groups:
   - 🇺🇸 美国 - 83
   - 🇺🇸 美国 - 84
   - 🇺🇸 美国 - 85
-  - 🇺🇸 美国 - 86
-  - 🇺🇸 美国 - 87
-  - 🇺🇸 美国 - 88
-  - 🇺🇸 美国 - 89
-  - 🇺🇸 美国 - 90
   - 🇹🇼 湾省 - 01
   - 🇹🇼 湾省 - 02
   - 🇹🇼 湾省 - 03
@@ -5454,7 +5395,6 @@ proxy-groups:
   - 🇧🇷 巴西 - 02
   - 🇬🇷 希腊 - 01
   - 🇮🇹 意大利 - 01
-  - 🇮🇹 意大利 - 02
   - 🇨🇿 捷克 - 01
   - 🇲🇩 摩尔多瓦 - 01
   - 🇸🇰 斯洛伐克 - 01
@@ -5548,7 +5488,7 @@ proxy-groups:
   - 🇧🇷 巴西 - 03
   - 🇧🇷 巴西 - 04
   - 🇬🇷 希腊 - 02
-  - 🇮🇹 意大利 - 03
+  - 🇮🇹 意大利 - 02
   - 🇨🇿 捷克 - 02
   - 🇲🇩 摩尔多瓦 - 02
   - 🇸🇰 斯洛伐克 - 02
@@ -5642,8 +5582,7 @@ proxy-groups:
   - 🇧🇷 巴西 - 05
   - 🇧🇷 巴西 - 06
   - 🇬🇷 希腊 - 03
-  - 🇮🇹 意大利 - 04
-  - 🇮🇹 意大利 - 05
+  - 🇮🇹 意大利 - 03
   - 🇨🇿 捷克 - 03
   - 🇲🇩 摩尔多瓦 - 03
   - 🇸🇰 斯洛伐克 - 03
@@ -5737,8 +5676,7 @@ proxy-groups:
   - 🇧🇷 巴西 - 07
   - 🇧🇷 巴西 - 08
   - 🇬🇷 希腊 - 04
-  - 🇮🇹 意大利 - 06
-  - 🇮🇹 意大利 - 07
+  - 🇮🇹 意大利 - 04
   - 🇨🇿 捷克 - 04
   - 🇲🇩 摩尔多瓦 - 04
   - 🇸🇰 斯洛伐克 - 04
@@ -5832,8 +5770,7 @@ proxy-groups:
   - 🇧🇷 巴西 - 09
   - 🇧🇷 巴西 - 10
   - 🇬🇷 希腊 - 05
-  - 🇮🇹 意大利 - 08
-  - 🇮🇹 意大利 - 09
+  - 🇮🇹 意大利 - 05
   - 🇨🇿 捷克 - 05
   - 🇲🇩 摩尔多瓦 - 05
   - 🇸🇰 斯洛伐克 - 05
@@ -6121,11 +6058,6 @@ proxy-groups:
   - 🇺🇸 美国 - 83
   - 🇺🇸 美国 - 84
   - 🇺🇸 美国 - 85
-  - 🇺🇸 美国 - 86
-  - 🇺🇸 美国 - 87
-  - 🇺🇸 美国 - 88
-  - 🇺🇸 美国 - 89
-  - 🇺🇸 美国 - 90
   - 🇹🇼 湾省 - 01
   - 🇹🇼 湾省 - 02
   - 🇹🇼 湾省 - 03
@@ -6291,7 +6223,6 @@ proxy-groups:
   - 🇧🇷 巴西 - 02
   - 🇬🇷 希腊 - 01
   - 🇮🇹 意大利 - 01
-  - 🇮🇹 意大利 - 02
   - 🇨🇿 捷克 - 01
   - 🇲🇩 摩尔多瓦 - 01
   - 🇸🇰 斯洛伐克 - 01
@@ -6385,7 +6316,7 @@ proxy-groups:
   - 🇧🇷 巴西 - 03
   - 🇧🇷 巴西 - 04
   - 🇬🇷 希腊 - 02
-  - 🇮🇹 意大利 - 03
+  - 🇮🇹 意大利 - 02
   - 🇨🇿 捷克 - 02
   - 🇲🇩 摩尔多瓦 - 02
   - 🇸🇰 斯洛伐克 - 02
@@ -6479,8 +6410,7 @@ proxy-groups:
   - 🇧🇷 巴西 - 05
   - 🇧🇷 巴西 - 06
   - 🇬🇷 希腊 - 03
-  - 🇮🇹 意大利 - 04
-  - 🇮🇹 意大利 - 05
+  - 🇮🇹 意大利 - 03
   - 🇨🇿 捷克 - 03
   - 🇲🇩 摩尔多瓦 - 03
   - 🇸🇰 斯洛伐克 - 03
@@ -6574,8 +6504,7 @@ proxy-groups:
   - 🇧🇷 巴西 - 07
   - 🇧🇷 巴西 - 08
   - 🇬🇷 希腊 - 04
-  - 🇮🇹 意大利 - 06
-  - 🇮🇹 意大利 - 07
+  - 🇮🇹 意大利 - 04
   - 🇨🇿 捷克 - 04
   - 🇲🇩 摩尔多瓦 - 04
   - 🇸🇰 斯洛伐克 - 04
@@ -6669,8 +6598,7 @@ proxy-groups:
   - 🇧🇷 巴西 - 09
   - 🇧🇷 巴西 - 10
   - 🇬🇷 希腊 - 05
-  - 🇮🇹 意大利 - 08
-  - 🇮🇹 意大利 - 09
+  - 🇮🇹 意大利 - 05
   - 🇨🇿 捷克 - 05
   - 🇲🇩 摩尔多瓦 - 05
   - 🇸🇰 斯洛伐克 - 05
