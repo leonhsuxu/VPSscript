@@ -150,7 +150,7 @@ async def scrape_telegram_links():
                 if message.date < target_time:
                     break
                 if message.text and is_expire_time_valid(parse_expire_time(message.text)):
-                    for url in re.findall(r'订阅链接[:：]`]*\s*(https?://[^\s<>"*`]+)', message.text):
+                    for url in re.findall(r'(?:订阅链接|订阅地址|订阅|链接)[\s:：]*\s*(https?://[^\s<>"*`]+)', message.text):
                         cleaned_url = url.strip().strip('.,*`')
                         if cleaned_url:
                             all_links.add(cleaned_url)
