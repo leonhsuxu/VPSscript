@@ -17,7 +17,7 @@ dns:
   - https://1.1.1.1/dns-query
 proxies:
 - name: 🇯🇵日本-1
-  server: ct.090227.xyz
+  server: cmcc.090227.xyz
   port: 443
   client-fingerprint: ios
   type: vless
@@ -30,7 +30,7 @@ proxies:
     headers:
       Host: jpa1.xn--ghqu5fm27b67w.com
 - name: 🇯🇵日本-2
-  server: cmcc.090227.xyz
+  server: ct.090227.xyz
   port: 443
   client-fingerprint: ios
   type: vless
