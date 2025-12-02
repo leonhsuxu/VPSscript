@@ -1,4 +1,4 @@
-name: ✈️ TG群分享.节点更新
+name: 🛩️ TG群分享.节点更新
 on:
   schedule:
     # 每天 (北京时间 6:30) 自动运行
@@ -19,7 +19,7 @@ jobs:
       # --- 您可以在这里集中修改所有变量 ---
       CLASH_OUTPUT_FILENAME: TG-SSRProxy.yaml         # <-- 输出的配置文件名
       PYTHON_SCRIPT_PATH: flclashyaml/TG-SSRProxy.py  # [2]<-- 要执行的 Python 脚本路径 修改第二处
-      COMMIT_MESSAGE_PREFIX: "✈️ TG群分享.节点更新"           # <-- Git 提交信息的前缀
+      COMMIT_MESSAGE_PREFIX: "🛩️ TG群分享.节点更新"           # <-- Git 提交信息的前缀
 
     steps:
     - name: 检出代码
