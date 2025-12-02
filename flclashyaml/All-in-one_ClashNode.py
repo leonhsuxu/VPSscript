@@ -13,12 +13,10 @@ FlClash节点获取脚本 V1.r3 多区块批处理
 7. 按地区优先级及测速结果排序节点；
 8. 为每个区块生成独立的 Clash 配置 YAML 文件，文件保存在 output_yaml 目录中。
 
-
 使用说明：
 - 在 URL.TXT 中添加订阅，使用“# 区块名称:”格式划分多个区块，每块下方为相关订阅链接列表
 - 运行脚本，即可在 output_yaml 目录中得到分块生成的 YAML 配置文件
 """
-
 
 import os
 import re
@@ -32,6 +30,7 @@ import hashlib
 import subprocess
 import requests
 import concurrent.futures
+import time
 from datetime import datetime
 from collections import defaultdict
 from urllib.parse import urlparse, parse_qs, unquote
@@ -49,6 +48,7 @@ MAX_TEST_WORKERS = 256  # 执行测速时的最大并发工作线程数
 
 # ========== 区域映射与规则 ==========
 REGION_PRIORITY = ['香港', '日本', '狮城', '美国', '湾省', '韩国', '德国', '英国', '加拿大', '澳大利亚']
+
 CHINESE_COUNTRY_MAP = {
     'US': '美国', 'United States': '美国', 'USA': '美国',
     'JP': '日本', 'Japan': '日本',
@@ -63,13 +63,26 @@ CHINESE_COUNTRY_MAP = {
 }
 
 COUNTRY_NAME_TO_CODE_MAP = {
-    "阿根廷": "AR", "澳大利亚": "AU", "奥地利": "AT", "孟加拉国": "BD", "比利时": "BE", "巴西": "BR", "保加利亚": "BG", "加拿大": "CA", "智利": "CL", "哥伦比亚": "CO", "克罗地亚": "HR", "捷克": "CZ", "丹麦": "DK", "埃及": "EG", "爱沙尼亚": "EE", "芬兰": "FI", "法国": "FR", "德国": "DE", "希腊": "GR", "香港": "HK", "匈牙利": "HU", "冰岛": "IS", "印度": "IN", "印度尼西亚": "ID", "爱尔兰": "IE", "以色列": "IL", "意大利": "IT", "日本": "JP", "哈萨克斯坦": "KZ", "韩国": "KR", "拉脱维亚": "LV", "立陶宛": "LT", "卢森堡": "LU", "澳门": "MO", "马来西亚": "MY", "墨西哥": "MX", "摩尔多瓦": "MD", "荷兰": "NL", "新西兰": "NZ", "尼日利亚": "NG", "挪威": "NO", "巴基斯坦": "PK", "菲律宾": "PH", "波兰": "PL", "葡萄牙": "PT", "罗马尼亚": "RO", "俄罗斯": "RU", "沙特阿拉伯": "SA", "塞尔维亚": "RS", "新加坡": "SG", "斯洛伐克": "SK", "斯洛文尼亚": "SI", "南非": "ZA", "西班牙": "ES", "瑞典": "SE", "瑞士": "CH", "台湾": "TW", "泰国": "TH", "土耳其": "TR", "乌克兰": "UA", "阿联酋": "AE", "英国": "GB", "美国": "US", "越南": "VN"
+    "阿根廷": "AR", "澳大利亚": "AU", "奥地利": "AT", "孟加拉国": "BD", "比利时": "BE",
+    "巴西": "BR", "保加利亚": "BG", "加拿大": "CA", "智利": "CL", "哥伦比亚": "CO",
+    "克罗地亚": "HR", "捷克": "CZ", "丹麦": "DK", "埃及": "EG", "爱沙尼亚": "EE",
+    "芬兰": "FI", "法国": "FR", "德国": "DE", "希腊": "GR", "香港": "HK", "匈牙利": "HU",
+    "冰岛": "IS", "印度": "IN", "印度尼西亚": "ID", "爱尔兰": "IE", "以色列": "IL",
+    "意大利": "IT", "日本": "JP", "哈萨克斯坦": "KZ", "韩国": "KR", "拉脱维亚": "LV",
+    "立陶宛": "LT", "卢森堡": "LU", "澳门": "MO", "马来西亚": "MY", "墨西哥": "MX",
+    "摩尔多瓦": "MD", "荷兰": "NL", "新西兰": "NZ", "尼日利亚": "NG", "挪威": "NO",
+    "巴基斯坦": "PK", "菲律宾": "PH", "波兰": "PL", "葡萄牙": "PT", "罗马尼亚": "RO",
+    "俄罗斯": "RU", "沙特阿拉伯": "SA", "塞尔维亚": "RS", "新加坡": "SG", "斯洛伐克": "SK",
+    "斯洛文尼亚": "SI", "南非": "ZA", "西班牙": "ES", "瑞典": "SE", "瑞士": "CH",
+    "台湾": "TW", "泰国": "TH", "土耳其": "TR", "乌克兰": "UA", "阿联酋": "AE",
+    "英国": "GB", "美国": "US", "越南": "VN"
 }
 
 JUNK_PATTERNS = re.compile(
-    r"(专线|IPLC|IEPL|BGP|体验|官网|倍率|x\d[\.\d]*|Rate|流量|Relay|[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*)",
+    r"(?:专线|IPLC|IEPL|BGP|体验|官网|倍率|x\d[\.\d]*|Rate|[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*|Relay|流量)|(?:(?:[\u2460-\u2473\u2776-\u277F\u2780-\u2789]|免費|回家).*?(?=,|$))", ,
     re.IGNORECASE
 )
+
 CUSTOM_REGEX_RULES = {
     '香港': {'code': 'HK', 'pattern': r'香港|港|HK|Hong Kong|HKBN|HGC|PCCW|WTT'},
     '日本': {'code': 'JP', 'pattern': r'日本|川日|东京|大阪|泉日|沪日|深日|JP|Japan'},
@@ -82,7 +95,9 @@ CUSTOM_REGEX_RULES = {
     '加拿大': {'code': 'CA', 'pattern': r'加拿大|枫叶|多伦多|温哥华|蒙特利尔|CA|Canada'},
     '澳大利亚': {'code': 'AU', 'pattern': r'澳大利亚|澳洲|悉尼|AU|Australia'},
 }
+
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
+
 
 def preprocess_regex_rules():
     for region, rules in CUSTOM_REGEX_RULES.items():
@@ -90,32 +105,29 @@ def preprocess_regex_rules():
         sorted_parts = sorted(parts, key=len, reverse=True)
         escaped_parts = [re.escape(p) for p in sorted_parts]
         CUSTOM_REGEX_RULES[region]['pattern'] = '|'.join(escaped_parts)
+
+
 preprocess_regex_rules()
 
-def sanitize_filename(name: str) -> str:
-    """
-    严格清理文件名，去除中英文冒号、空格和所有非法字符，
-    用下划线替代空格和冒号，避免文件名不合法。
-    """
-    import re
 
-    # 尝试匹配 # 和第一个中英文冒号之间的内容作为标题
+def sanitize_filename(name: str) -> str:
+    import re
     match = re.match(r"#\s*(.*?)\s*[:：]", name, re.IGNORECASE)
     if match:
         title = match.group(1)
     else:
-        # 如果找不到冒号，去除开头#，并去除尾部中英文冒号和空格
         title = name.lstrip('#').strip()
         title = re.sub(r'[:：]+$', '', title).strip()
-
     title = re.sub(r'[\\/:*?"<>|\s：]+', '_', title)
     title = title.strip('_')
     return title or 'default'
+
 
 def get_country_flag_emoji(country_code):
     if not country_code or len(country_code) != 2:
         return "❓"
     return "".join(chr(0x1F1E6 + ord(c.upper()) - ord('A')) for c in country_code)
+
 
 def safe_b64decode(data):
     data = data.encode() if isinstance(data, str) else data
@@ -123,7 +135,8 @@ def safe_b64decode(data):
     data += b'=' * missing_padding
     return base64.urlsafe_b64decode(data)
 
-# ----- 下载函数 -----
+
+# ----- 下载相关 -----
 def attempt_download_using_wget(url):
     print(f"  ⬇️ wget 下载: {url[:80]}")
     if not shutil.which("wget"):
@@ -139,6 +152,7 @@ def attempt_download_using_wget(url):
         print(f"  ✗ wget 失败: {e.stderr.strip()}")
         return None
 
+
 def attempt_download_using_requests(url):
     print(f"  ⬇️ requests 下载: {url[:80]}")
     try:
@@ -151,15 +165,18 @@ def attempt_download_using_requests(url):
         print(f"  ✗ requests 失败: {e}")
         return None
 
+
 def download_subscription(url):
     content = attempt_download_using_wget(url)
     if content is None:
         content = attempt_download_using_requests(url)
     if content is None:
         return []
+
     proxies = parse_proxies_from_content(content)
     if proxies:
         return proxies
+
     if is_base64(content):
         proxies = decode_base64_and_parse(content)
         if proxies:
@@ -169,7 +186,8 @@ def download_subscription(url):
         print("  - 内容非 Base64")
     return []
 
-# ----- 解析函数 -----
+
+# ----- 解析相关 -----
 def parse_proxies_from_content(content):
     try:
         data = yaml.safe_load(content)
@@ -183,6 +201,7 @@ def parse_proxies_from_content(content):
         pass
     return []
 
+
 def is_base64(text):
     try:
         s = ''.join(text.split())
@@ -194,6 +213,7 @@ def is_base64(text):
         return True
     except Exception:
         return False
+
 
 def decode_base64_and_parse(content):
     try:
@@ -223,7 +243,16 @@ def decode_base64_and_parse(content):
         print(f"  - Base64 解码解析异常: {e}")
         return []
 
-# ---- 协议解析函数 -- 同上文，请确保实现 ----
+
+# TODO: 你需要实现下面这些协议解析函数：
+def parse_vmess_node(line): pass
+def parse_vless_node(line): pass
+def parse_ssr_node(line): pass
+def parse_ss_node(line): pass
+def parse_trojan_node(line): pass
+def parse_hysteria_node(line): pass
+def parse_hysteria2_node(line): pass
+
 
 # ----- 合并去重 -----
 def get_proxy_key(proxy):
@@ -239,6 +268,7 @@ def get_proxy_key(proxy):
     except:
         return None
 
+
 def merge_and_deduplicate_proxies(proxies):
     unique = {}
     for proxy in proxies:
@@ -249,68 +279,89 @@ def merge_and_deduplicate_proxies(proxies):
             unique[k] = proxy
     return list(unique.values())
 
+
 # ----- 重命名排序 -----
 def process_and_rename_proxies(proxies):
     country_counters = defaultdict(lambda: defaultdict(int))
     final_proxies = []
-    all_names = set()
+
+    all_region_names_for_stripping = set()
     for rules in CUSTOM_REGEX_RULES.values():
-        all_names.update(rules['pattern'].split('|'))
+        all_region_names_for_stripping.update(rules['pattern'].split('|'))
     for k, v in CHINESE_COUNTRY_MAP.items():
-        all_names.add(k)
-        all_names.add(v)
-    for k in COUNTRY_NAME_TO_CODE_MAP.keys():
-        all_names.add(k)
-    sorted_names = sorted(all_names, key=len, reverse=True)
-    master_pattern = re.compile('|'.join(map(re.escape, sorted_names)), re.IGNORECASE)
-    
+        all_region_names_for_stripping.add(k)
+        all_region_names_for_stripping.add(v)
+    all_region_names_for_stripping.update(COUNTRY_NAME_TO_CODE_MAP.keys())
+    sorted_region_names = sorted(list(all_region_names_for_stripping), key=len, reverse=True)
+
+    master_region_pattern = re.compile('|'.join(map(re.escape, sorted_region_names)), re.IGNORECASE)
+
+    # 第一遍识别 region，未匹配到时使用原节点名作为 region
     for p in proxies:
-        name_orig = p.get('name', '')
-        name_clean = FLAG_EMOJI_PATTERN.sub('', name_orig)
-        name_clean = JUNK_PATTERNS.sub('', name_clean).strip()
+        original_name = p.get('name', '').strip()
+        name_for_region_detect = FLAG_EMOJI_PATTERN.sub('', original_name)
+        name_for_region_detect = JUNK_PATTERNS.sub('', name_for_region_detect).strip()
+
         for eng, chn in CHINESE_COUNTRY_MAP.items():
-            name_clean = re.sub(r'\b' + re.escape(eng) + r'\b', chn, name_clean, flags=re.IGNORECASE)
-        p['region'] = '未知'
+            pattern = re.compile(r'\b' + re.escape(eng) + r'\b', re.IGNORECASE)
+            name_for_region_detect = pattern.sub(chn, name_for_region_detect)
+
+        p['region'] = None
+        # 自定义正则匹配
         for region_name, rules in CUSTOM_REGEX_RULES.items():
-            if re.search(rules['pattern'], name_clean, re.IGNORECASE):
+            if re.search(rules['pattern'], name_for_region_detect, re.IGNORECASE):
                 p['region'] = region_name
                 break
-        if p['region'] == '未知':
-            for cname in COUNTRY_NAME_TO_CODE_MAP.keys():
-                if re.search(r'\b' + re.escape(cname) + r'\b', name_clean, re.IGNORECASE):
-                    p['region'] = cname
+
+        if p['region'] is None:
+            matched_region = None
+            # 国家中文名匹配
+            for country_chn_name in COUNTRY_NAME_TO_CODE_MAP.keys():
+                pattern = re.compile(r'\b' + re.escape(country_chn_name) + r'\b', re.IGNORECASE)
+                if pattern.search(name_for_region_detect):
+                    matched_region = country_chn_name
                     break
+            if matched_region:
+                p['region'] = matched_region
+            else:
+                # 都没匹配到，则用原节点名称做region，保证一定有地区名
+                p['region'] = original_name if original_name else '未知'
 
-    for p in proxies:
-        orig_name = p.get('name', '')
-        region = p.get('region', '未知')
-        region_code = COUNTRY_NAME_TO_CODE_MAP.get(region) or CUSTOM_REGEX_RULES.get(region, {}).get('code', '')
-        flag = ""
-        mf = FLAG_EMOJI_PATTERN.search(orig_name)
-        if mf:
-            flag = mf.group(0)
-            feature_name = FLAG_EMOJI_PATTERN.sub('', orig_name, 1)
+    # 第二遍循环重命名
+    for proxy in proxies:
+        original_name = proxy.get('name', '')
+        region_name = proxy.get('region', '未知')
+        region_code = COUNTRY_NAME_TO_CODE_MAP.get(region_name) or CUSTOM_REGEX_RULES.get(region_name, {}).get('code', '')
+
+        match_flag = FLAG_EMOJI_PATTERN.search(original_name)
+        if match_flag:
+            chosen_flag = match_flag.group(0)
+            name_for_feature = FLAG_EMOJI_PATTERN.sub('', original_name, count=1)
         else:
-            flag = get_country_flag_emoji(region_code)
-            feature_name = orig_name
-        
-        feature_name = master_pattern.sub(' ', feature_name)
-        feature_name = JUNK_PATTERNS.sub(' ', feature_name)
-        feature_name = feature_name.replace('-', ' ').strip()
-        feature_name = re.sub(r'\s+', ' ', feature_name).strip()
-        if not feature_name:
-            idx = sum(1 for fp in final_proxies if fp.get('region') == region) + 1
-            feature_name = f"{idx:02d}"
+            chosen_flag = get_country_flag_emoji(region_code)
+            name_for_feature = original_name
 
-        new_name = f"{flag} {region} {feature_name}".strip()
-        country_counters[region][new_name] += 1
-        c = country_counters[region][new_name]
+        node_feature = master_region_pattern.sub(' ', name_for_feature)
+        node_feature = JUNK_PATTERNS.sub(' ', node_feature)
+        node_feature = node_feature.replace('-', ' ')
+        node_feature = re.sub(r'\s+', ' ', node_feature).strip()
+
+        if not node_feature:
+            seq = sum(1 for p_final in final_proxies if p_final.get('region') == region_name) + 1
+            node_feature = f"{seq:02d}"
+
+        new_name = f"{chosen_flag} {region_name} {node_feature}".strip()
+
+        country_counters[region_name][new_name] += 1
+        c = country_counters[region_name][new_name]
         if c > 1:
             new_name = f"{new_name} {c}"
-        p['name'] = new_name
-        final_proxies.append(p)
+
+        proxy['name'] = new_name
+        final_proxies.append(proxy)
 
     return final_proxies
+
 
 # ----- 测速 -----
 def test_single_proxy_socket(proxy):
@@ -332,6 +383,7 @@ def test_single_proxy_socket(proxy):
         if 'sock' in locals():
             sock.close()
 
+
 def speed_test_proxies(proxies):
     print(f"开始测速: 共 {len(proxies)} 个节点")
     fast_proxies = []
@@ -347,6 +399,7 @@ def speed_test_proxies(proxies):
     print()
     print(f"测速完成: 有效节点 {len(fast_proxies)}")
     return fast_proxies
+
 
 # ----- 配置文件生成 -----
 def generate_config(proxies):
@@ -371,36 +424,40 @@ def generate_config(proxies):
         },
         'proxies': clean_proxies,
         'proxy-groups': [
-            {'name': '🚀 节点选择', 'type': 'select', 'proxies': ['♻️ 自动选择', '🔯 故障转移', 'DIRECT'] + proxy_names},
-            {'name': '♻️ 自动选择', 'type': 'url-test', 'proxies': proxy_names, 'url': 'http://www.gstatic.com/generate_204', 'interval': 300},
-            {'name': '🔯 故障转移', 'type': 'fallback', 'proxies': proxy_names, 'url': 'http://www.gstatic.com/generate_204', 'interval': 300}
-        ],
+            {'name': '🚀 节点选择', 'type': 'select',
+             'proxies': ['♻️ 自动选择', '🔯 故障转移', 'DIRECT'] + proxy_names},
+            {'name': '♻️ 自动选择', 'type': 'url-test', 'proxies': proxy_names,
+             'url': 'http://www.gstatic.com/generate_204', 'interval': 300},
+            {'name': '🔯 故障转移', 'type': 'fallback', 'proxies': proxy_names,
+             'url': 'http://www.gstatic.com/generate_204', 'interval': 300}],
         'rules': ['GEOIP,CN,DIRECT', 'MATCH,🚀 节点选择']
     }
 
-# ------------------ 多区块读取与处理 ------------------
 
+# ------------------ 多区块读取与处理 ------------------
 def parse_url_txt_to_blocks():
     if not os.path.exists(URL_FILE):
         print(f"文件未找到: {URL_FILE}")
         return []
-
     with open(URL_FILE, 'r', encoding='utf-8') as f:
         lines = f.readlines()
-
     blocks = []
     current_block = {'title': None, 'lines': []}
     for line in lines:
         stripped = line.strip()
         if stripped.startswith('#'):
+            # 保存前一个块
             if current_block['title']:
                 blocks.append(current_block)
             current_block = {'title': stripped, 'lines': []}
         else:
-            current_block['lines'].append(stripped)
+            if stripped:
+                current_block['lines'].append(stripped)
+    # 保存最后一个块
     if current_block['title']:
         blocks.append(current_block)
     return blocks
+
 
 def extract_urls_from_lines(lines):
     url_pattern = re.compile(r'https?://[^\s]+', re.IGNORECASE)
@@ -409,6 +466,7 @@ def extract_urls_from_lines(lines):
         urls.extend(url_pattern.findall(line))
     return urls
 
+
 def process_block_to_yaml(block):
     title = block['title']
     lines = block['lines']
@@ -416,19 +474,14 @@ def process_block_to_yaml(block):
     if not urls:
         print(f"{title} 区块无有效订阅，跳过。")
         return
-
     print(f"\n处理区块：{title} | {len(urls)} 个订阅链接")
-
     all_proxies = []
     for url in urls:
         all_proxies.extend(download_subscription(url))
-
     if not all_proxies:
         print(f"{title} 订阅下载失败或无节点，跳过。")
         return
-
     unique_proxies = merge_and_deduplicate_proxies(all_proxies)
-
     if ENABLE_SPEED_TEST:
         tested_proxies = speed_test_proxies(unique_proxies)
         if not tested_proxies:
@@ -441,7 +494,6 @@ def process_block_to_yaml(block):
     tested_proxies.sort(key=lambda p: (region_order.get(p.get('region', '未知'), 999), p.get('delay', 9999)))
 
     final_proxies = process_and_rename_proxies(tested_proxies)
-
     config = generate_config(final_proxies)
     if not config:
         print(f"{title} 配置生成失败，跳过。")
@@ -449,27 +501,24 @@ def process_block_to_yaml(block):
 
     filename = sanitize_filename(title) + ".yaml"
     filepath = os.path.join(OUTPUT_DIR, filename)
-
     with open(filepath, 'w', encoding='utf-8') as f:
         yaml.dump(config, f, allow_unicode=True, sort_keys=False, indent=2)
-
     print(f"{title} 配置已生成：{filepath}，节点数：{len(final_proxies)}")
 
-def main():
-    print("="*60)
-    print("FlClash节点获取脚本 V1.r2 多区块批处理")
-    print(f"时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    print("="*60)
 
+def main():
+    print("=" * 60)
+    print("FlClash节点获取脚本 V1.r3 多区块批处理")
+    print(f"时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print("=" * 60)
     blocks = parse_url_txt_to_blocks()
     if not blocks:
         print("未检测到有效区块，退出。")
         return
-
     for block in blocks:
         process_block_to_yaml(block)
-
     print(f"\n全部区块处理完成，配置文件存放于：{OUTPUT_DIR}")
+
 
 if __name__ == "__main__":
     main()
