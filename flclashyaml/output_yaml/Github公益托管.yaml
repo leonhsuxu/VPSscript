@@ -17,7 +17,35 @@ dns:
   - https://1.1.1.1/dns-query
 proxies:
 - encryption: none
-  name: 🇺🇸美国-1|1.0MB/s
+  name: 🇺🇸美国-1|671KB/s
+  network: ws
+  port: '80'
+  server: 162.159.16.180
+  type: vless
+  udp: true
+  uuid: df301b32-1152-4526-9a63-beedd93d3156
+  ws-opts:
+    headers:
+      Host: vl.dalazhi.cloudns.biz
+      User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like
+        Gecko) Chrome/45.0.2454.85 Safari/537.36
+    path: '%2F%3Fed%3D2048'
+  xudp: true
+- encryption: none
+  name: 🇺🇸美国-2|4.8MB/s
+  network: ws
+  port: 2096
+  server: 108.162.198.24
+  servername: kuangbao.xiejiang.dpdns.org
+  tls: true
+  type: vless
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  ws-opts:
+    headers:
+      Host: kuangbao.xiejiang.dpdns.org
+    path: /?ed=2560
+- encryption: none
+  name: 🇺🇸美国-3|1.0MB/s
   network: ws
   port: '80'
   server: 104.16.75.70
@@ -32,7 +60,7 @@ proxies:
     path: '%2F%3Fed%3D2048'
   xudp: true
 - encryption: none
-  name: 🇺🇸美国-2|4.6MB/s
+  name: 🇺🇸美国-4|4.6MB/s
   network: ws
   port: '80'
   server: 108.162.195.200
@@ -62,7 +90,7 @@ proxies:
     path: '%2F%3Fed%3D2048'
   xudp: true
 - encryption: none
-  name: 🇺🇸美国-3|4.1MB/s
+  name: 🇺🇸美国-5|4.1MB/s
   network: ws
   port: '80'
   server: 104.17.129.186
@@ -76,35 +104,7 @@ proxies:
         Gecko) Chrome/47.0.2526.106 Safari/537.36
     path: '%2F%3Fed%3D2048'
   xudp: true
-- encryption: none
-  name: 🇺🇸美国-4|671KB/s
-  network: ws
-  port: '80'
-  server: 162.159.16.180
-  type: vless
-  udp: true
-  uuid: df301b32-1152-4526-9a63-beedd93d3156
-  ws-opts:
-    headers:
-      Host: vl.dalazhi.cloudns.biz
-      User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like
-        Gecko) Chrome/45.0.2454.85 Safari/537.36
-    path: '%2F%3Fed%3D2048'
-  xudp: true
-- encryption: none
-  name: 🇺🇸美国-5|4.8MB/s
-  network: ws
-  port: 2096
-  server: 108.162.198.24
-  servername: kuangbao.xiejiang.dpdns.org
-  tls: true
-  type: vless
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
-  ws-opts:
-    headers:
-      Host: kuangbao.xiejiang.dpdns.org
-    path: /?ed=2560
-- name: ❓未知-1|4.2MB/s
+- name: ❓Other_22|4.2MB/s
   network: ws
   password: e9bc7ffe-04fa-448c-813e-f3f730989d4c
   port: 443
@@ -117,6 +117,24 @@ proxies:
     headers:
       Host: ni5qwas2a6ysde23.usgogo202510.top
     path: /images
+- alterId: 0
+  cipher: auto
+  country: 🇺🇸US
+  h2-opts: {}
+  http-opts: {}
+  name: ❓Other_13|3.1MB/s
+  network: ws
+  port: 37934
+  server: 74.117.196.232
+  servername: imafake.locker
+  skip-cert-verify: true
+  tls: true
+  type: vmess
+  uuid: 54a0bf6d-f2b5-4b2a-942c-798fb129527e
+  ws-opts:
+    headers:
+      HOST: imafake.locker
+    path: /speedtest
 - name: 🇺🇸美国-6|6.7MB/s
   password: tzjz55
   port: 8443
@@ -129,25 +147,7 @@ proxies:
   country: 🇺🇸US
   h2-opts: {}
   http-opts: {}
-  name: ❓未知-2|3.8MB/s
-  network: ws
-  port: 37934
-  server: 74.117.196.232
-  servername: imafake.locker
-  skip-cert-verify: true
-  tls: true
-  type: vmess
-  uuid: d0e97ee2-c6de-48f8-bd4a-8e63a9cd9e89
-  ws-opts:
-    headers:
-      HOST: imafake.locker
-    path: /speedtest
-- alterId: 0
-  cipher: auto
-  country: 🇺🇸US
-  h2-opts: {}
-  http-opts: {}
-  name: ❓未知-3|3.2MB/s
+  name: ❓Other_12|3.2MB/s
   network: ws
   port: 37934
   server: 74.117.196.232
@@ -165,25 +165,7 @@ proxies:
   country: 🇺🇸US
   h2-opts: {}
   http-opts: {}
-  name: ❓未知-4|3.1MB/s
-  network: ws
-  port: 37934
-  server: 74.117.196.232
-  servername: imafake.locker
-  skip-cert-verify: true
-  tls: true
-  type: vmess
-  uuid: 54a0bf6d-f2b5-4b2a-942c-798fb129527e
-  ws-opts:
-    headers:
-      HOST: imafake.locker
-    path: /speedtest
-- alterId: 0
-  cipher: auto
-  country: 🇺🇸US
-  h2-opts: {}
-  http-opts: {}
-  name: ❓未知-5|3.9MB/s
+  name: ❓Other_14|3.9MB/s|GPT
   network: ws
   port: 37934
   server: 74.117.196.232
@@ -196,18 +178,43 @@ proxies:
     headers:
       HOST: imafake.locker
     path: /speedtest
+- alterId: 0
+  cipher: auto
+  country: 🇺🇸US
+  h2-opts: {}
+  http-opts: {}
+  name: ❓Other_16|3.8MB/s
+  network: ws
+  port: 37934
+  server: 74.117.196.232
+  servername: imafake.locker
+  skip-cert-verify: true
+  tls: true
+  type: vmess
+  uuid: d0e97ee2-c6de-48f8-bd4a-8e63a9cd9e89
+  ws-opts:
+    headers:
+      HOST: imafake.locker
+    path: /speedtest
 - cipher: chacha20-ietf-poly1305
-  name: ❓未知-6|2.3MB/s
+  name: 🇳🇱NL_4|2.2MB/s
+  password: k1dBOmOB4oqi7Ump37a1bQ
+  port: '8080'
+  server: 82.38.31.208
+  type: ss
+  udp: true
+- cipher: chacha20-ietf-poly1305
+  name: 🇳🇱NL_5|2.3MB/s|GPT
   password: k1dBOmOB4oqi7Ump37a1bQ
   port: '8080'
   server: 82.38.31.205
   type: ss
   udp: true
 - cipher: chacha20-ietf-poly1305
-  name: ❓未知-7|2.2MB/s
-  password: k1dBOmOB4oqi7Ump37a1bQ
-  port: '8080'
-  server: 82.38.31.208
+  name: 🇳🇱NL_1|5.4MB/s|GPT
+  password: 741kWqe81Pp8YTsXxter6g
+  port: '6462'
+  server: 93.183.91.172
   type: ss
   udp: true
 - client-fingerprint: randomized
@@ -225,13 +232,39 @@ proxies:
       User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like
         Gecko) Chrome/36.0.1985.143 Safari/537.36
     path: /Free-VPN-CF-Geo-Project/95.164.62.196=443
+- encryption: none
+  name: 🇩🇪德国-1|6.8MB/s
+  network: ws
+  port: 8443
+  server: 51.195.43.174
+  servername: kuangbao.xiejiang.dpdns.org
+  tls: true
+  type: vless
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  ws-opts:
+    headers:
+      Host: kuangbao.xiejiang.dpdns.org
+    path: /?ed=2560
 - cipher: chacha20-ietf-poly1305
-  name: ❓未知-8|5.4MB/s
-  password: 741kWqe81Pp8YTsXxter6g
-  port: '6462'
-  server: 93.183.91.172
+  country: 🇷🇺RU
+  name: 🇳🇱NL_3|3.7MB/s
+  password: HWNsKy61qPyoDtrEYEtZuk
+  port: 6403
+  server: 5.129.214.186
   type: ss
-  udp: true
+- encryption: none
+  name: 🇩🇪德国-2|6.3MB/s
+  network: ws
+  port: 443
+  server: 49.12.210.182
+  servername: kuangbao.xiejiang.dpdns.org
+  tls: true
+  type: vless
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  ws-opts:
+    headers:
+      Host: kuangbao.xiejiang.dpdns.org
+    path: /?ed=2560
 - name: 🇺🇸美国-8|2.9MB/s
   network: ws
   port: 2053
@@ -241,19 +274,6 @@ proxies:
   tls: true
   type: vless
   udp: true
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
-  ws-opts:
-    headers:
-      Host: kuangbao.xiejiang.dpdns.org
-    path: /?ed=2560
-- encryption: none
-  name: 🇩🇪德国-1|6.8MB/s
-  network: ws
-  port: 8443
-  server: 51.195.43.174
-  servername: kuangbao.xiejiang.dpdns.org
-  tls: true
-  type: vless
   uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
   ws-opts:
     headers:
@@ -272,53 +292,9 @@ proxies:
     headers:
       Host: kuangbao.xiejiang.dpdns.org
     path: /?ed=2560
-- encryption: none
-  name: 🇩🇪德国-2|6.3MB/s
-  network: ws
-  port: 443
-  server: 49.12.210.182
-  servername: kuangbao.xiejiang.dpdns.org
-  tls: true
-  type: vless
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
-  ws-opts:
-    headers:
-      Host: kuangbao.xiejiang.dpdns.org
-    path: /?ed=2560
-- cipher: chacha20-ietf-poly1305
-  country: 🇷🇺RU
-  name: ❓未知-9|3.7MB/s
-  password: HWNsKy61qPyoDtrEYEtZuk
-  port: 6403
-  server: 5.129.214.186
-  type: ss
-- alterId: '0'
-  cipher: zero
-  name: ❓未知-10|3.9MB/s
-  network: ws
-  port: '443'
-  server: 81.91.214.85
-  servername: vm.gpj1.web.id
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  udp: true
-  uuid: f282b878-8711-45a1-8c69-5564172123c1
-  ws-opts:
-    headers:
-      Host: vm.gpj1.web.id
-    path: /Geo-Project/81.91.214.85-443
-  xudp: true
-- cipher: chacha20-ietf-poly1305
-  name: ❓未知-11|1.7MB/s
-  password: yo6h9qkhwz8UJoTZCRtoSi
-  port: '34094'
-  server: 78.40.116.178
-  type: ss
-  udp: true
 - client-fingerprint: chrome
   encryption: none
-  name: ❓未知-12|2.3MB/s
+  name: ❓Other_21|2.3MB/s
   network: ws
   port: '443'
   server: 81.91.214.85
@@ -334,26 +310,38 @@ proxies:
         Gecko) Chrome/48.0.2564.109 Safari/537.36
     path: /Free-VPN-CF-Geo-Project/81.91.214.85=443
   xudp: true
-- name: ❓未知-13|563KB/s
+- alterId: '0'
+  cipher: zero
+  name: ❓Other_7|3.9MB/s
+  network: ws
+  port: '443'
+  server: 81.91.214.85
+  servername: vm.gpj1.web.id
+  skip-cert-verify: false
+  tls: true
+  type: vmess
+  udp: true
+  uuid: f282b878-8711-45a1-8c69-5564172123c1
+  ws-opts:
+    headers:
+      Host: vm.gpj1.web.id
+    path: /Geo-Project/81.91.214.85-443
+  xudp: true
+- name: ❓Other_15|563KB/s
   password: ''
   port: '1080'
   server: 185.149.240.155
   skip-cert-verify: true
   type: socks5
   username: ''
-- name: ❓未知-14|2.9MB/s
-  network: ws
-  password: 0a477acf-1f95-47cb-b4a5-a627b4c57de3
-  port: 443
-  server: 34.22.190.30
-  sni: joss.gpj1.web.id
-  tls: true
-  type: trojan
-  ws-opts:
-    headers:
-      Host: joss.gpj1.web.id
-    path: /Free-VPN-CF-Geo-Project/34.22.190.30=443
-- name: ❓未知-15|4.1MB/s
+- cipher: chacha20-ietf-poly1305
+  name: 🇪🇸ES_1|512KB/s|GPT
+  password: mbhqsStnFQT1cTZYCdsmkugGUC6GT6rp
+  port: '443'
+  server: 213.159.67.124
+  type: ss
+  udp: true
+- name: ❓Other_2|4.1MB/s
   network: ws
   password: a69221dc-069f-4526-b137-de487c746ec9
   port: 2053
@@ -365,15 +353,8 @@ proxies:
     headers:
       Host: joss.gpj1.web.id
     path: /Free-VPN-CF-Geo-Project/65.109.211.85=2053
-- cipher: chacha20-ietf-poly1305
-  name: ❓未知-16|512KB/s
-  password: mbhqsStnFQT1cTZYCdsmkugGUC6GT6rp
-  port: '443'
-  server: 213.159.67.124
-  type: ss
-  udp: true
 - client-fingerprint: randomized
-  name: ❓未知-17|3.3MB/s
+  name: ❓Other_10|3.3MB/s
   network: ws
   password: d60629cc-621b-4f9e-ab16-84a7feacf58a
   port: '443'
@@ -387,10 +368,32 @@ proxies:
       User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
         like Gecko) Chrome/68.0.3440.106 Safari/537.36
     path: /Free-VPN-CF-Geo-Project/188.225.34.155=443
+- http-opts:
+    headers:
+      Host:
+      - varzesh3.ir
+    method: GET
+    path:
+    - /
+  name: 🇫🇮FI_1|3.0MB/s|GPT
+  network: http
+  port: 33801
+  server: m86a.vip784.com
+  tls: false
+  type: vless
+  udp: true
+  uuid: 346a072d-36d8-427f-912c-8756c1c53e1b
+- cipher: chacha20-ietf-poly1305
+  name: 🇸🇪SE_1|1.7MB/s
+  password: yo6h9qkhwz8UJoTZCRtoSi
+  port: '34094'
+  server: 78.40.116.178
+  type: ss
+  udp: true
 - client-fingerprint: chrome
   encryption: none
   flow: xtls-rprx-vision
-  name: ❓未知-18|5.7MB/s
+  name: 🇷🇺RU_1|5.7MB/s
   network: tcp
   port: '443'
   reality-opts:
@@ -403,6 +406,20 @@ proxies:
   udp: true
   uuid: bca5cfe1-3d2a-45dc-b66a-96298e0051f5
   xudp: true
+- name: 🇯🇵日本-1|5.0MB/s
+  password: 2cf6d686799e6fa95316394064f26c0a
+  port: 3169
+  server: 160.16.57.238
+  skip-cert-verify: false
+  sni: www.nintendogames.net
+  type: trojan
+- name: 🇸🇬新加坡-1
+  server: 160.16.81.84
+  port: 2760
+  type: trojan
+  password: 79314e99f0a473fe86efc7827942ad00
+  sni: www.nintendogames.net
+  skip-cert-verify: false
 - name: 🇺🇸美国-10|5.0MB/s
   password: 2cf6d686799e6fa95316394064f26c0a
   port: 4054
@@ -410,69 +427,35 @@ proxies:
   skip-cert-verify: false
   sni: www.nintendogames.net
   type: trojan
-- name: 🇸🇬新加坡-1
-  server: 160.16.124.55
-  port: 2760
-  type: trojan
-  password: 79314e99f0a473fe86efc7827942ad00
-  sni: www.nintendogames.net
-  skip-cert-verify: false
-- name: 🇯🇵日本-1
-  server: 160.16.236.32
-  port: 3093
-  type: trojan
-  password: 79314e99f0a473fe86efc7827942ad00
-  sni: www.nintendogames.net
-  skip-cert-verify: false
-- name: 🇯🇵日本-2
-  server: 160.16.138.24
-  port: 1331
-  type: trojan
-  password: 79314e99f0a473fe86efc7827942ad00
-  sni: www.nintendogames.net
-  skip-cert-verify: false
-- name: 🇺🇸美国-11
-  server: 160.16.81.84
-  port: 4054
-  type: trojan
-  password: 79314e99f0a473fe86efc7827942ad00
-  sni: www.nintendogames.net
-  skip-cert-verify: false
-- encryption: none
-  name: 🇺🇸美国-12|7.4MB/s
-  network: ws
-  port: 443
-  server: 54.95.79.44
-  servername: kuangbao.xiejiang.dpdns.org
-  tls: true
-  type: vless
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
-  ws-opts:
-    headers:
-      Host: kuangbao.xiejiang.dpdns.org
-    path: /?ed=2560
-- name: 🇺🇸美国-13
-  server: 160.16.236.32
-  port: 4054
-  type: trojan
-  password: 79314e99f0a473fe86efc7827942ad00
-  sni: www.nintendogames.net
-  skip-cert-verify: false
 - name: 🇸🇬新加坡-2
-  server: 160.16.81.84
-  port: 2760
-  type: trojan
-  password: 79314e99f0a473fe86efc7827942ad00
-  sni: www.nintendogames.net
-  skip-cert-verify: false
-- name: 🇸🇬新加坡-3
   server: 52.199.79.149
   port: 1196
   type: trojan
   password: BxceQaOe
   sni: t.me%2Fripaojiedian
   skip-cert-verify: true
+- name: 🇯🇵日本-2|2.9MB/s
+  password: 2cf6d686799e6fa95316394064f26c0a
+  port: 3093
+  server: 160.16.144.208
+  skip-cert-verify: false
+  sni: www.nintendogames.net
+  type: trojan
 - name: 🇯🇵日本-3
+  server: 52.195.176.26
+  port: 5156
+  type: trojan
+  password: BxceQaOe
+  sni: t.me%2Fripaojiedian
+  skip-cert-verify: true
+- name: 🇯🇵日本-4
+  server: 160.16.236.32
+  port: 3093
+  type: trojan
+  password: 79314e99f0a473fe86efc7827942ad00
+  sni: www.nintendogames.net
+  skip-cert-verify: false
+- name: 🇯🇵日本-5
   server: 172.237.6.53
   port: 2377
   type: ss
@@ -482,20 +465,20 @@ proxies:
   plugin-opts:
     mode: tls
     host: e2322f9:87491
-- name: 🇸🇬新加坡-4|3.0MB/s
+- name: 🇸🇬新加坡-3|3.0MB/s
   password: 2cf6d686799e6fa95316394064f26c0a
   port: 2760
   server: 160.16.236.32
   skip-cert-verify: false
   sni: www.nintendogames.net
   type: trojan
-- name: 🇯🇵日本-4|5.0MB/s
-  password: 2cf6d686799e6fa95316394064f26c0a
-  port: 3169
-  server: 160.16.57.238
-  skip-cert-verify: false
-  sni: www.nintendogames.net
+- name: 🇸🇬新加坡-4
+  server: 160.16.124.55
+  port: 2760
   type: trojan
+  password: 79314e99f0a473fe86efc7827942ad00
+  sni: www.nintendogames.net
+  skip-cert-verify: false
 - alpn:
   - ''
   alterId: '0'
@@ -506,7 +489,7 @@ proxies:
       - parsabr.com
     path:
     - /api/register/new/name/dav/response/cmV0aXJlZCBoZWxsbyBob3cgYXJlIHlvdSB0aGlzIGlzIG15IG5ldyBoZWFkZXIgd
-  name: ❓未知-19|3.5MB/s
+  name: ❓Other_11|3.5MB/s
   network: http
   port: '2040'
   server: 89.44.242.249
@@ -516,33 +499,20 @@ proxies:
   udp: true
   uuid: 553f15c3-d864-4d33-8c4d-4bdc1bc483ad
   xudp: true
-- name: 🇯🇵日本-5|2.9MB/s
-  password: 2cf6d686799e6fa95316394064f26c0a
-  port: 3093
-  server: 160.16.144.208
-  skip-cert-verify: false
-  sni: www.nintendogames.net
-  type: trojan
 - name: 🇯🇵日本-6
-  server: 52.195.176.26
-  port: 5156
+  server: 160.16.138.24
+  port: 1331
   type: trojan
-  password: BxceQaOe
-  sni: t.me%2Fripaojiedian
-  skip-cert-verify: true
-- encryption: none
-  name: ❓未知-20|4.6MB/s
-  network: ws
-  port: 12648
-  server: 193.123.90.82
-  servername: kuangbao.xiejiang.dpdns.org
-  tls: true
-  type: vless
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
-  ws-opts:
-    headers:
-      Host: kuangbao.xiejiang.dpdns.org
-    path: /?ed=2560
+  password: 79314e99f0a473fe86efc7827942ad00
+  sni: www.nintendogames.net
+  skip-cert-verify: false
+- name: 🇺🇸美国-11
+  server: 160.16.236.32
+  port: 4054
+  type: trojan
+  password: 79314e99f0a473fe86efc7827942ad00
+  sni: www.nintendogames.net
+  skip-cert-verify: false
 - client-fingerprint: chrome
   encryption: none
   name: 🇯🇵日本-7|2.6MB/s
@@ -558,25 +528,43 @@ proxies:
   udp: true
   uuid: e0aafde7-37e2-486b-eb30-efa71166bf7e
   xudp: true
+- name: 🇺🇸美国-12
+  server: 160.16.81.84
+  port: 4054
+  type: trojan
+  password: 79314e99f0a473fe86efc7827942ad00
+  sni: www.nintendogames.net
+  skip-cert-verify: false
 - encryption: none
-  name: ❓未知-21|4.2MB/s
+  name: 🇺🇸美国-13|7.4MB/s
   network: ws
-  port: '80'
-  server: vl.dalazhi.cloudns.biz
+  port: 443
+  server: 54.95.79.44
+  servername: kuangbao.xiejiang.dpdns.org
+  tls: true
   type: vless
-  udp: true
-  uuid: df301b32-1152-4526-9a63-beedd93d3156
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
   ws-opts:
     headers:
-      Host: vl.dalazhi.cloudns.biz
-      User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
-        like Gecko) Chrome/58.0.3029.110 Safari/537.36
-    path: '%2F%3Fed%3D2048'
-  xudp: true
+      Host: kuangbao.xiejiang.dpdns.org
+    path: /?ed=2560
+- encryption: none
+  name: ❓Other_1|4.6MB/s
+  network: ws
+  port: 12648
+  server: 193.123.90.82
+  servername: kuangbao.xiejiang.dpdns.org
+  tls: true
+  type: vless
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  ws-opts:
+    headers:
+      Host: kuangbao.xiejiang.dpdns.org
+    path: /?ed=2560
 - client-fingerprint: chrome
   encryption: none
   flow: xtls-rprx-vision
-  name: ❓未知-22|3.7MB/s
+  name: ❓Other_20|3.7MB/s
   network: tcp
   port: '443'
   reality-opts:
@@ -609,6 +597,18 @@ proxies:
         (KHTML, like Gecko) Chrome/58.0.3029.83 Mobile Safari/537.36
     path: /proxyip=tw.sni2025.netlib.re
   xudp: true
+- name: ❓Other_4|2.9MB/s
+  network: ws
+  password: 0a477acf-1f95-47cb-b4a5-a627b4c57de3
+  port: 443
+  server: 34.22.190.30
+  sni: joss.gpj1.web.id
+  tls: true
+  type: trojan
+  ws-opts:
+    headers:
+      Host: joss.gpj1.web.id
+    path: /Free-VPN-CF-Geo-Project/34.22.190.30=443
 - alpn:
   - h3
   client-fingerprint: chrome
@@ -645,94 +645,23 @@ proxies:
         like Gecko) Chrome/65.0.3325.181 Safari/537.36
     path: /proxyip=tw.sni2025.netlib.re
   xudp: true
-- http-opts:
-    headers:
-      Host:
-      - varzesh3.ir
-    method: GET
-    path:
-    - /
-  name: ❓未知-23|3.0MB/s
-  network: http
-  port: 33801
-  server: m86a.vip784.com
-  tls: false
-  type: vless
-  udp: true
-  uuid: 346a072d-36d8-427f-912c-8756c1c53e1b
-- alpn:
-  - h3
-  client-fingerprint: chrome
-  encryption: none
-  name: 🇺🇸美国-15|4.4MB/s
-  network: ws
-  port: '33143'
-  server: 222.104.213.148
-  servername: s3.sni565.netlib.re
-  tls: true
-  type: vless
-  udp: true
-  uuid: 69228a95-e9cb-b1ff-40d2-7315d9d4b9b7
-  ws-opts:
-    headers:
-      Host: s3.sni565.netlib.re
-      User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like
-        Gecko) Chrome/51.0.2704.106 Safari/537.36
-    path: /proxyip=tw.sni2025.netlib.re
-  xudp: true
-- name: 🇭🇰香港-2
-  server: 47.243.69.126
-  port: 31904
-  type: vmess
-  uuid: 22550b74-3ebf-49b5-ea36-3078b5d47ed9
-  alterId: 0
-  cipher: auto
-  tls: false
-  skip-cert-verify: false
-- client-fingerprint: random
-  name: 🇸🇬新加坡-5|3.0MB/s
-  network: ws
-  port: 26666
-  server: 43.154.124.136
-  servername: 0857fd70.ba73fe85.netlib.re
-  skip-cert-verify: true
-  tfo: false
-  tls: true
-  type: vless
-  uuid: d342d11e-d424-4583-b36e-524ab1f0afa4
-  ws-opts:
-    headers:
-      Host: 0857fd70.ba73fe85.netlib.re
-    path: /
-- name: 🇺🇸美国-16
-  server: 116.49.237.130
-  port: 1112
-  type: trojan
-  password: BxceQaOe
-  sni: t.me%2Fripaojiedian
-  skip-cert-verify: true
-- cipher: chacha20-ietf
-  name: 🇭🇰香港-3|739KB/s
-  password: asd123456
-  port: 8388
-  server: 103.149.182.79
-  type: ss
-- name: 🇭🇰香港-4
-  server: 58.152.30.175
-  port: 443
-  type: trojan
-  password: BxceQaOe
-  sni: t.me%2Fripaojiedian
-  skip-cert-verify: true
-- name: 🇭🇰香港-5
-  server: 58.152.18.192
-  port: 443
-  type: trojan
-  password: 79314e99f0a473fe86efc7827942ad00
-  sni: www.nintendogames.net
-  skip-cert-verify: false
 - encryption: none
-  name: 🇺🇸美国-17|4.2MB/s
+  name: ❓Other_18|4.2MB/s
+  network: ws
+  port: '80'
+  server: vl.dalazhi.cloudns.biz
+  type: vless
+  udp: true
+  uuid: df301b32-1152-4526-9a63-beedd93d3156
+  ws-opts:
+    headers:
+      Host: vl.dalazhi.cloudns.biz
+      User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,
+        like Gecko) Chrome/58.0.3029.110 Safari/537.36
+    path: '%2F%3Fed%3D2048'
+  xudp: true
+- encryption: none
+  name: 🇺🇸美国-15|4.2MB/s
   network: ws
   port: 7000
   server: 202.85.53.160
@@ -744,18 +673,24 @@ proxies:
     headers:
       Host: kuangbao.xiejiang.dpdns.org
     path: /?ed=2560
-- name: 🇭🇰香港-6
-  server: 58.152.25.20
+- encryption: none
+  name: 🇺🇸美国-16|2.3MB/s
+  network: ws
   port: 443
-  type: trojan
-  password: BxceQaOe
-  sni: t.me%2Fripaojiedian
-  skip-cert-verify: true
+  server: 8.217.180.234
+  servername: kuangbao.xiejiang.dpdns.org
+  tls: true
+  type: vless
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  ws-opts:
+    headers:
+      Host: kuangbao.xiejiang.dpdns.org
+    path: /?ed=2560
 - alpn:
   - h3
   client-fingerprint: chrome
   encryption: none
-  name: 🇭🇰香港-7|7.6MB/s
+  name: 🇭🇰香港-2|7.6MB/s
   network: ws
   port: '443'
   server: 8.218.189.27
@@ -771,130 +706,166 @@ proxies:
         AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Mobile Safari/537.36
     path: /proxyip=tw.sni2025.netlib.re
   xudp: true
-- name: 🇭🇰香港-8
-  server: v10.hdacd.com
-  port: 30807
+- name: 🇺🇸美国-17
+  server: 116.49.237.130
+  port: 1112
+  type: trojan
+  password: BxceQaOe
+  sni: t.me%2Fripaojiedian
+  skip-cert-verify: true
+- client-fingerprint: random
+  name: 🇸🇬新加坡-5|3.0MB/s
+  network: ws
+  port: 26666
+  server: 43.154.124.136
+  servername: 0857fd70.ba73fe85.netlib.re
+  skip-cert-verify: true
+  tfo: false
+  tls: true
+  type: vless
+  uuid: d342d11e-d424-4583-b36e-524ab1f0afa4
+  ws-opts:
+    headers:
+      Host: 0857fd70.ba73fe85.netlib.re
+    path: /
+- name: 🇭🇰香港-3
+  server: 58.152.30.175
+  port: 443
+  type: trojan
+  password: BxceQaOe
+  sni: t.me%2Fripaojiedian
+  skip-cert-verify: true
+- name: 🇭🇰香港-4
+  server: 47.243.69.126
+  port: 31904
   type: vmess
-  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
-  alterId: 2
+  uuid: 22550b74-3ebf-49b5-ea36-3078b5d47ed9
+  alterId: 0
   cipher: auto
   tls: false
   skip-cert-verify: false
-- name: 🇭🇰香港-9|6.1MB/s
+- alpn:
+  - h3
+  client-fingerprint: chrome
+  encryption: none
+  name: 🇺🇸美国-18|4.4MB/s
+  network: ws
+  port: '33143'
+  server: 222.104.213.148
+  servername: s3.sni565.netlib.re
+  tls: true
+  type: vless
+  udp: true
+  uuid: 69228a95-e9cb-b1ff-40d2-7315d9d4b9b7
+  ws-opts:
+    headers:
+      Host: s3.sni565.netlib.re
+      User-Agent: Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like
+        Gecko) Chrome/51.0.2704.106 Safari/537.36
+    path: /proxyip=tw.sni2025.netlib.re
+  xudp: true
+- name: 🇭🇰香港-5
+  server: 58.152.25.20
+  port: 443
+  type: trojan
+  password: BxceQaOe
+  sni: t.me%2Fripaojiedian
+  skip-cert-verify: true
+- name: 🇭🇰香港-6
+  server: 58.152.18.192
+  port: 443
+  type: trojan
+  password: 79314e99f0a473fe86efc7827942ad00
+  sni: www.nintendogames.net
+  skip-cert-verify: false
+- cipher: aes-256-cfb
+  name: 🇻🇳VN_1|1.3MB/s
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  port: 38388
+  server: 103.186.154.38
+  type: ss
+- cipher: aes-256-cfb
+  name: 🇻🇳VN_5|2.1MB/s
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  port: 38388
+  server: 103.186.154.40
+  type: ss
+- cipher: aes-256-cfb
+  name: 🇻🇳VN_3|2.0MB/s|GPT
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  port: 38388
+  server: 103.186.154.66
+  type: ss
+- cipher: aes-256-cfb
+  country: 🇨🇳 CN
+  name: 🇻🇳VN_12|1.3MB/s|GPT
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  port: 38388
+  server: 103.186.155.110
+  type: ss
+- cipher: aes-256-cfb
+  name: 🇻🇳VN_13|1.2MB/s|GPT
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  port: 38388
+  server: 103.186.155.218
+  type: ss
+- name: 🇭🇰香港-7|6.1MB/s
   password: ''
   port: '1145'
   server: 183.232.157.102
   skip-cert-verify: true
   type: socks5
   username: ''
-- cipher: chacha20-ietf-poly1305
-  name: 🇩🇪德国-3|5.2MB/s
-  password: '907560230'
-  port: '17844'
-  server: clr.ducks.tel
-  type: ss
-  udp: true
-- cipher: chacha20-ietf-poly1305
-  name: ❓未知-24|3.6MB/s
-  password: '907560230'
-  port: '17847'
-  server: clr.ducks.tel
-  type: ss
-  udp: true
-- cipher: aes-256-cfb
-  name: ❓未知-25|2.1MB/s
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.40
-  type: ss
-- cipher: aes-256-cfb
-  name: ❓未知-26|817KB/s
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.46
-  type: ss
-- cipher: aes-256-cfb
-  name: ❓未知-27|2.2MB/s
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.215
-  type: ss
-- cipher: aes-256-cfb
-  name: ❓未知-28|1.9MB/s
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.49
-  type: ss
-- cipher: aes-256-cfb
-  name: ❓未知-29|950KB/s
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.131
-  type: ss
-- cipher: aes-256-cfb
-  name: ❓未知-30|890KB/s
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.41
-  type: ss
-- cipher: aes-256-cfb
-  name: ❓未知-31|1.3MB/s
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.253
-  type: ss
-- cipher: aes-256-cfb
-  name: ❓未知-32|1.2MB/s
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.218
-  type: ss
 - cipher: aes-256-cfb
   country: 🏁 ZZ
-  name: ❓未知-33|1.4MB/s
+  name: 🇻🇳VN_11|1.4MB/s
   password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
   port: 38388
   server: 103.186.154.190
   type: ss
 - cipher: aes-256-cfb
-  name: ❓未知-34|2.0MB/s
+  name: 🇻🇳VN_7|2.2MB/s
   password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
   port: 38388
-  server: 103.186.154.66
+  server: 103.186.155.215
   type: ss
 - cipher: aes-256-cfb
-  name: ❓未知-35|1.3MB/s
+  name: 🇻🇳VN_9|950KB/s|GPT
   password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
   port: 38388
-  server: 103.186.154.38
+  server: 103.186.155.131
   type: ss
 - cipher: aes-256-cfb
-  country: 🇨🇳 CN
-  name: ❓未知-36|1.3MB/s
+  name: 🇻🇳VN_6|890KB/s
   password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
   port: 38388
-  server: 103.186.155.110
+  server: 103.186.154.41
   type: ss
 - cipher: aes-256-cfb
-  name: ❓未知-37|1.3MB/s
+  name: 🇻🇳VN_10|1.3MB/s|GPT
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  port: 38388
+  server: 103.186.154.253
+  type: ss
+- cipher: aes-256-cfb
+  name: 🇻🇳VN_8|817KB/s
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  port: 38388
+  server: 103.186.155.46
+  type: ss
+- cipher: aes-256-cfb
+  name: 🇻🇳VN_2|1.3MB/s|GPT
   password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
   port: 38388
   server: 103.186.155.111
   type: ss
-- encryption: none
-  name: 🇺🇸美国-18|2.3MB/s
-  network: ws
-  port: 443
-  server: 8.217.180.234
-  servername: kuangbao.xiejiang.dpdns.org
-  tls: true
-  type: vless
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
-  ws-opts:
-    headers:
-      Host: kuangbao.xiejiang.dpdns.org
-    path: /?ed=2560
-- name: 🇭🇰香港-10
+- cipher: aes-256-cfb
+  name: 🇻🇳VN_4|1.9MB/s|GPT
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  port: 38388
+  server: 103.186.154.49
+  type: ss
+- name: 🇭🇰香港-8
   server: a48b0e7b-t6ngg0-t8tsp0-1szmi.hk3.p5pv.com
   port: 80
   type: vmess
@@ -908,7 +879,30 @@ proxies:
     path: /
     headers:
       Host: broadcastlv.chat.bilibili.com
-- name: ❓未知-38|1.8MB/s
+- name: 🇭🇰香港-9
+  server: v10.hdacd.com
+  port: 30807
+  type: vmess
+  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
+  alterId: 2
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+- cipher: chacha20-ietf-poly1305
+  name: 🇩🇪德国-3|5.2MB/s
+  password: '907560230'
+  port: '17844'
+  server: clr.ducks.tel
+  type: ss
+  udp: true
+- cipher: chacha20-ietf-poly1305
+  name: ❓Other_8|3.6MB/s
+  password: '907560230'
+  port: '17847'
+  server: clr.ducks.tel
+  type: ss
+  udp: true
+- name: ❓Other_19|1.8MB/s
   network: ws
   password: f583143c-2cbe-47f5-804d-27efa55442a1
   port: 443
@@ -928,175 +922,173 @@ proxy-groups:
   - ♻️ 自动选择
   - 🔯 故障转移
   - DIRECT
-  - 🇺🇸美国-1|1.0MB/s
-  - 🇺🇸美国-2|4.6MB/s
+  - 🇺🇸美国-1|671KB/s
+  - 🇺🇸美国-2|4.8MB/s
+  - 🇺🇸美国-3|1.0MB/s
+  - 🇺🇸美国-4|4.6MB/s
   - 🇬🇧英国-1|7.5MB/s
-  - 🇺🇸美国-3|4.1MB/s
-  - 🇺🇸美国-4|671KB/s
-  - 🇺🇸美国-5|4.8MB/s
-  - ❓未知-1|4.2MB/s
+  - 🇺🇸美国-5|4.1MB/s
+  - ❓Other_22|4.2MB/s
+  - ❓Other_13|3.1MB/s
   - 🇺🇸美国-6|6.7MB/s
-  - ❓未知-2|3.8MB/s
-  - ❓未知-3|3.2MB/s
-  - ❓未知-4|3.1MB/s
-  - ❓未知-5|3.9MB/s
-  - ❓未知-6|2.3MB/s
-  - ❓未知-7|2.2MB/s
+  - ❓Other_12|3.2MB/s
+  - ❓Other_14|3.9MB/s|GPT
+  - ❓Other_16|3.8MB/s
+  - 🇳🇱NL_4|2.2MB/s
+  - 🇳🇱NL_5|2.3MB/s|GPT
+  - 🇳🇱NL_1|5.4MB/s|GPT
   - 🇺🇸美国-7|3.8MB/s
-  - ❓未知-8|5.4MB/s
-  - 🇺🇸美国-8|2.9MB/s
   - 🇩🇪德国-1|6.8MB/s
-  - 🇺🇸美国-9|5.0MB/s
+  - 🇳🇱NL_3|3.7MB/s
   - 🇩🇪德国-2|6.3MB/s
-  - ❓未知-9|3.7MB/s
-  - ❓未知-10|3.9MB/s
-  - ❓未知-11|1.7MB/s
-  - ❓未知-12|2.3MB/s
-  - ❓未知-13|563KB/s
-  - ❓未知-14|2.9MB/s
-  - ❓未知-15|4.1MB/s
-  - ❓未知-16|512KB/s
-  - ❓未知-17|3.3MB/s
-  - ❓未知-18|5.7MB/s
-  - 🇺🇸美国-10|5.0MB/s
+  - 🇺🇸美国-8|2.9MB/s
+  - 🇺🇸美国-9|5.0MB/s
+  - ❓Other_21|2.3MB/s
+  - ❓Other_7|3.9MB/s
+  - ❓Other_15|563KB/s
+  - 🇪🇸ES_1|512KB/s|GPT
+  - ❓Other_2|4.1MB/s
+  - ❓Other_10|3.3MB/s
+  - 🇫🇮FI_1|3.0MB/s|GPT
+  - 🇸🇪SE_1|1.7MB/s
+  - 🇷🇺RU_1|5.7MB/s
+  - 🇯🇵日本-1|5.0MB/s
   - 🇸🇬新加坡-1
-  - 🇯🇵日本-1
-  - 🇯🇵日本-2
-  - 🇺🇸美国-11
-  - 🇺🇸美国-12|7.4MB/s
-  - 🇺🇸美国-13
+  - 🇺🇸美国-10|5.0MB/s
   - 🇸🇬新加坡-2
-  - 🇸🇬新加坡-3
+  - 🇯🇵日本-2|2.9MB/s
   - 🇯🇵日本-3
-  - 🇸🇬新加坡-4|3.0MB/s
-  - 🇯🇵日本-4|5.0MB/s
-  - ❓未知-19|3.5MB/s
-  - 🇯🇵日本-5|2.9MB/s
+  - 🇯🇵日本-4
+  - 🇯🇵日本-5
+  - 🇸🇬新加坡-3|3.0MB/s
+  - 🇸🇬新加坡-4
+  - ❓Other_11|3.5MB/s
   - 🇯🇵日本-6
-  - ❓未知-20|4.6MB/s
+  - 🇺🇸美国-11
   - 🇯🇵日本-7|2.6MB/s
-  - ❓未知-21|4.2MB/s
-  - ❓未知-22|3.7MB/s
+  - 🇺🇸美国-12
+  - 🇺🇸美国-13|7.4MB/s
+  - ❓Other_1|4.6MB/s
+  - ❓Other_20|3.7MB/s
   - 🇺🇸美国-14|4.7MB/s
+  - ❓Other_4|2.9MB/s
   - 🇹🇼台湾-1|941KB/s
   - 🇭🇰香港-1|4.7MB/s
-  - ❓未知-23|3.0MB/s
-  - 🇺🇸美国-15|4.4MB/s
-  - 🇭🇰香港-2
+  - ❓Other_18|4.2MB/s
+  - 🇺🇸美国-15|4.2MB/s
+  - 🇺🇸美国-16|2.3MB/s
+  - 🇭🇰香港-2|7.6MB/s
+  - 🇺🇸美国-17
   - 🇸🇬新加坡-5|3.0MB/s
-  - 🇺🇸美国-16
-  - 🇭🇰香港-3|739KB/s
+  - 🇭🇰香港-3
   - 🇭🇰香港-4
+  - 🇺🇸美国-18|4.4MB/s
   - 🇭🇰香港-5
-  - 🇺🇸美国-17|4.2MB/s
   - 🇭🇰香港-6
-  - 🇭🇰香港-7|7.6MB/s
+  - 🇻🇳VN_1|1.3MB/s
+  - 🇻🇳VN_5|2.1MB/s
+  - 🇻🇳VN_3|2.0MB/s|GPT
+  - 🇻🇳VN_12|1.3MB/s|GPT
+  - 🇻🇳VN_13|1.2MB/s|GPT
+  - 🇭🇰香港-7|6.1MB/s
+  - 🇻🇳VN_11|1.4MB/s
+  - 🇻🇳VN_7|2.2MB/s
+  - 🇻🇳VN_9|950KB/s|GPT
+  - 🇻🇳VN_6|890KB/s
+  - 🇻🇳VN_10|1.3MB/s|GPT
+  - 🇻🇳VN_8|817KB/s
+  - 🇻🇳VN_2|1.3MB/s|GPT
+  - 🇻🇳VN_4|1.9MB/s|GPT
   - 🇭🇰香港-8
-  - 🇭🇰香港-9|6.1MB/s
+  - 🇭🇰香港-9
   - 🇩🇪德国-3|5.2MB/s
-  - ❓未知-24|3.6MB/s
-  - ❓未知-25|2.1MB/s
-  - ❓未知-26|817KB/s
-  - ❓未知-27|2.2MB/s
-  - ❓未知-28|1.9MB/s
-  - ❓未知-29|950KB/s
-  - ❓未知-30|890KB/s
-  - ❓未知-31|1.3MB/s
-  - ❓未知-32|1.2MB/s
-  - ❓未知-33|1.4MB/s
-  - ❓未知-34|2.0MB/s
-  - ❓未知-35|1.3MB/s
-  - ❓未知-36|1.3MB/s
-  - ❓未知-37|1.3MB/s
-  - 🇺🇸美国-18|2.3MB/s
-  - 🇭🇰香港-10
-  - ❓未知-38|1.8MB/s
+  - ❓Other_8|3.6MB/s
+  - ❓Other_19|1.8MB/s
 - name: ♻️ 自动选择
   type: url-test
   proxies: &id001
-  - 🇺🇸美国-1|1.0MB/s
-  - 🇺🇸美国-2|4.6MB/s
+  - 🇺🇸美国-1|671KB/s
+  - 🇺🇸美国-2|4.8MB/s
+  - 🇺🇸美国-3|1.0MB/s
+  - 🇺🇸美国-4|4.6MB/s
   - 🇬🇧英国-1|7.5MB/s
-  - 🇺🇸美国-3|4.1MB/s
-  - 🇺🇸美国-4|671KB/s
-  - 🇺🇸美国-5|4.8MB/s
-  - ❓未知-1|4.2MB/s
+  - 🇺🇸美国-5|4.1MB/s
+  - ❓Other_22|4.2MB/s
+  - ❓Other_13|3.1MB/s
   - 🇺🇸美国-6|6.7MB/s
-  - ❓未知-2|3.8MB/s
-  - ❓未知-3|3.2MB/s
-  - ❓未知-4|3.1MB/s
-  - ❓未知-5|3.9MB/s
-  - ❓未知-6|2.3MB/s
-  - ❓未知-7|2.2MB/s
+  - ❓Other_12|3.2MB/s
+  - ❓Other_14|3.9MB/s|GPT
+  - ❓Other_16|3.8MB/s
+  - 🇳🇱NL_4|2.2MB/s
+  - 🇳🇱NL_5|2.3MB/s|GPT
+  - 🇳🇱NL_1|5.4MB/s|GPT
   - 🇺🇸美国-7|3.8MB/s
-  - ❓未知-8|5.4MB/s
-  - 🇺🇸美国-8|2.9MB/s
   - 🇩🇪德国-1|6.8MB/s
-  - 🇺🇸美国-9|5.0MB/s
+  - 🇳🇱NL_3|3.7MB/s
   - 🇩🇪德国-2|6.3MB/s
-  - ❓未知-9|3.7MB/s
-  - ❓未知-10|3.9MB/s
-  - ❓未知-11|1.7MB/s
-  - ❓未知-12|2.3MB/s
-  - ❓未知-13|563KB/s
-  - ❓未知-14|2.9MB/s
-  - ❓未知-15|4.1MB/s
-  - ❓未知-16|512KB/s
-  - ❓未知-17|3.3MB/s
-  - ❓未知-18|5.7MB/s
-  - 🇺🇸美国-10|5.0MB/s
+  - 🇺🇸美国-8|2.9MB/s
+  - 🇺🇸美国-9|5.0MB/s
+  - ❓Other_21|2.3MB/s
+  - ❓Other_7|3.9MB/s
+  - ❓Other_15|563KB/s
+  - 🇪🇸ES_1|512KB/s|GPT
+  - ❓Other_2|4.1MB/s
+  - ❓Other_10|3.3MB/s
+  - 🇫🇮FI_1|3.0MB/s|GPT
+  - 🇸🇪SE_1|1.7MB/s
+  - 🇷🇺RU_1|5.7MB/s
+  - 🇯🇵日本-1|5.0MB/s
   - 🇸🇬新加坡-1
-  - 🇯🇵日本-1
-  - 🇯🇵日本-2
-  - 🇺🇸美国-11
-  - 🇺🇸美国-12|7.4MB/s
-  - 🇺🇸美国-13
+  - 🇺🇸美国-10|5.0MB/s
   - 🇸🇬新加坡-2
-  - 🇸🇬新加坡-3
+  - 🇯🇵日本-2|2.9MB/s
   - 🇯🇵日本-3
-  - 🇸🇬新加坡-4|3.0MB/s
-  - 🇯🇵日本-4|5.0MB/s
-  - ❓未知-19|3.5MB/s
-  - 🇯🇵日本-5|2.9MB/s
+  - 🇯🇵日本-4
+  - 🇯🇵日本-5
+  - 🇸🇬新加坡-3|3.0MB/s
+  - 🇸🇬新加坡-4
+  - ❓Other_11|3.5MB/s
   - 🇯🇵日本-6
-  - ❓未知-20|4.6MB/s
+  - 🇺🇸美国-11
   - 🇯🇵日本-7|2.6MB/s
-  - ❓未知-21|4.2MB/s
-  - ❓未知-22|3.7MB/s
+  - 🇺🇸美国-12
+  - 🇺🇸美国-13|7.4MB/s
+  - ❓Other_1|4.6MB/s
+  - ❓Other_20|3.7MB/s
   - 🇺🇸美国-14|4.7MB/s
+  - ❓Other_4|2.9MB/s
   - 🇹🇼台湾-1|941KB/s
   - 🇭🇰香港-1|4.7MB/s
-  - ❓未知-23|3.0MB/s
-  - 🇺🇸美国-15|4.4MB/s
-  - 🇭🇰香港-2
+  - ❓Other_18|4.2MB/s
+  - 🇺🇸美国-15|4.2MB/s
+  - 🇺🇸美国-16|2.3MB/s
+  - 🇭🇰香港-2|7.6MB/s
+  - 🇺🇸美国-17
   - 🇸🇬新加坡-5|3.0MB/s
-  - 🇺🇸美国-16
-  - 🇭🇰香港-3|739KB/s
+  - 🇭🇰香港-3
   - 🇭🇰香港-4
+  - 🇺🇸美国-18|4.4MB/s
   - 🇭🇰香港-5
-  - 🇺🇸美国-17|4.2MB/s
   - 🇭🇰香港-6
-  - 🇭🇰香港-7|7.6MB/s
+  - 🇻🇳VN_1|1.3MB/s
+  - 🇻🇳VN_5|2.1MB/s
+  - 🇻🇳VN_3|2.0MB/s|GPT
+  - 🇻🇳VN_12|1.3MB/s|GPT
+  - 🇻🇳VN_13|1.2MB/s|GPT
+  - 🇭🇰香港-7|6.1MB/s
+  - 🇻🇳VN_11|1.4MB/s
+  - 🇻🇳VN_7|2.2MB/s
+  - 🇻🇳VN_9|950KB/s|GPT
+  - 🇻🇳VN_6|890KB/s
+  - 🇻🇳VN_10|1.3MB/s|GPT
+  - 🇻🇳VN_8|817KB/s
+  - 🇻🇳VN_2|1.3MB/s|GPT
+  - 🇻🇳VN_4|1.9MB/s|GPT
   - 🇭🇰香港-8
-  - 🇭🇰香港-9|6.1MB/s
+  - 🇭🇰香港-9
   - 🇩🇪德国-3|5.2MB/s
-  - ❓未知-24|3.6MB/s
-  - ❓未知-25|2.1MB/s
-  - ❓未知-26|817KB/s
-  - ❓未知-27|2.2MB/s
-  - ❓未知-28|1.9MB/s
-  - ❓未知-29|950KB/s
-  - ❓未知-30|890KB/s
-  - ❓未知-31|1.3MB/s
-  - ❓未知-32|1.2MB/s
-  - ❓未知-33|1.4MB/s
-  - ❓未知-34|2.0MB/s
-  - ❓未知-35|1.3MB/s
-  - ❓未知-36|1.3MB/s
-  - ❓未知-37|1.3MB/s
-  - 🇺🇸美国-18|2.3MB/s
-  - 🇭🇰香港-10
-  - ❓未知-38|1.8MB/s
+  - ❓Other_8|3.6MB/s
+  - ❓Other_19|1.8MB/s
   url: http://www.gstatic.com/generate_204
   interval: 300
 - name: 🔯 故障转移
