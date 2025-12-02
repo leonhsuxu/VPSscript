@@ -17,19 +17,6 @@ dns:
   - https://1.1.1.1/dns-query
 proxies:
 - name: 🇯🇵日本-1
-  server: cmcc.090227.xyz
-  port: 443
-  client-fingerprint: ios
-  type: vless
-  uuid: 5af3e0ba-d1fe-4503-b279-02da286ba779
-  tls: true
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /pq/jp1
-    headers:
-      Host: jpa1.xn--ghqu5fm27b67w.com
-- name: 🇯🇵日本-2
   server: ct.090227.xyz
   port: 443
   client-fingerprint: ios
@@ -42,18 +29,31 @@ proxies:
     path: /pq/jp1
     headers:
       Host: jpa1.xn--ghqu5fm27b67w.com
+- name: 🇯🇵日本-2
+  server: cmcc.090227.xyz
+  port: 443
+  client-fingerprint: ios
+  type: vless
+  uuid: 5af3e0ba-d1fe-4503-b279-02da286ba779
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /pq/jp1
+    headers:
+      Host: jpa1.xn--ghqu5fm27b67w.com
 - name: 🇭🇰香港-1
-  server: 35016.fishnodebgp.com
-  port: 52616
-  type: ss
-  cipher: aes-128-gcm
-  password: da83b407-e4eb-4fc0-932d-2203e781ec5b
-  tfo: false
-- name: 🇭🇰香港-2
   server: 35011.fishnodebgp.com
   port: 52611
   type: ss
   cipher: chacha20-ietf-poly1305
+  password: da83b407-e4eb-4fc0-932d-2203e781ec5b
+  tfo: false
+- name: 🇭🇰香港-2
+  server: 35016.fishnodebgp.com
+  port: 52616
+  type: ss
+  cipher: aes-128-gcm
   password: da83b407-e4eb-4fc0-932d-2203e781ec5b
   tfo: false
 proxy-groups:
