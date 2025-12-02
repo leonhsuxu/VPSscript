@@ -42,7 +42,7 @@ OUTPUT_DIR = os.path.join(SCRIPT_DIR, "output_yaml")  # 定义输出 YAML 配置
 os.makedirs(OUTPUT_DIR, exist_ok=True)  # 创建输出目录，如果目录已存在则不执行任何操作
 
 # ========== 测速配置 ==========
-ENABLE_SPEED_TEST = True  # 是否启用节点测速功能 (True为启用, False为禁用)
+ENABLE_SPEED_TEST = False  # 是否启用节点测速功能 (True为启用, False为禁用)
 SOCKET_TIMEOUT = 10  # 测速时网络连接的超时时间（单位：秒）
 MAX_TEST_WORKERS = 256  # 执行测速时的最大并发工作线程数
 
