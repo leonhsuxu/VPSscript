@@ -33,31 +33,55 @@ from collections import defaultdict
 from urllib.parse import urlparse, parse_qs, unquote
 
 # ========== 基础配置 ==========
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-URL_FILE = os.path.join(SCRIPT_DIR, "URL.TXT")
-OUTPUT_DIR = os.path.join(SCRIPT_DIR, "output_yaml")
-os.makedirs(OUTPUT_DIR, exist_ok=True)
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__)) # 获取当前脚本文件所在的目录的绝对路径
+URL_FILE = os.path.join(SCRIPT_DIR, "URL.TXT") # 构建URL文件的完整路径，该文件应位于脚本同目录下
+OUTPUT_DIR = os.path.join(SCRIPT_DIR, "output_yaml") # 构建输出目录的完整路径，用于存放生成的YAML文件
+os.makedirs(OUTPUT_DIR, exist_ok=True) # 创建输出目录，如果目录已存在则不报错
 
-# ========== 测速配置 ==========
-ENABLE_SPEED_TEST = True
-SOCKET_TIMEOUT = 10
-MAX_TEST_WORKERS = 256
+# ========== 测速配置 ========== # 以下是关于速度测试的配置项
+ENABLE_SPEED_TEST = True # 是否启用速度测试，设置为True表示启用
+SOCKET_TIMEOUT = 10 # 超时时间（秒）
+MAX_TEST_WORKERS = 256 # 最大测试工作线程数，表示同时进行速度测试的最大并发连接数
 
-# ========== 区域映射与规则 ==========
+# ========== 区域映射与规则（合并版） ==========
 REGION_PRIORITY = ['香港', '日本', '新加坡', '美国', '台湾', '韩国', '德国', '英国', '加拿大', '澳大利亚']
 
 CHINESE_COUNTRY_MAP = {
-    'US': '美国', 'United States': '美国', 'USA': '美国',
-    'JP': '日本', 'Japan': '日本',
-    'HK': '香港', 'Hong Kong': '香港',
-    'SG': '新加坡', 'Singapore': '新加坡',
-    'TW': '台湾', 'Taiwan': '台湾',
-    'KR': '韩国', 'Korea': '韩国', 'KOR': '韩国',
-    'DE': '德国', 'Germany': '德国',
+    'US': '美国', 'United States': '美国', 'USA': '美国', 'America': '美国',
+    'New York': '美国', 'Los Angeles': '美国', 'Washington': '美国', 'Chicago': '美国',
+    'San Francisco': '美国', 'Las Vegas': '美国', 'Miami': '美国', 'Seattle': '美国',
+    'Houston': '美国', 'Boston': '美国', 'Atlanta': '美国', 'Dallas': '美国',
+
+    'JP': '日本', 'Japan': '日本', 'Tokyo': '日本', 'Osaka': '日本', 'Nagoya': '日本',
+    'Sapporo': '日本', 'Fukuoka': '日本', 'NTT': '日本', 'IIJ': '日本', 'GMO': '日本', 'Linode': '日本',
+
+    'HK': '香港', 'Hong Kong': '香港', 'HongKong': '香港', 'HKT': '香港',
+    '九龙': '香港', '沙田': '香港', '屯门': '香港', '荃湾': '香港', '深水埗': '香港', '油尖旺': '香港',
+
+    'SG': '新加坡', 'Singapore': '新加坡', 'SGP': '新加坡', 'SG': '新加坡',
+    '星': '新加坡', '狮城': '新加坡', '坡': '新加坡',
+
+    'TW': '台湾', 'Taiwan': '台湾', 'TWN': '台湾',
+    'Taipei': '台湾', 'Taichung': '台湾', 'Kaohsiung': '台湾',
+    '新北': '台湾', '彰化': '台湾', 'Hinet': '台湾', '中华电信': '台湾',
+
+    'KR': '韩国', 'Korea': '韩国', 'KOR': '韩国', 'Seoul': '韩国',
+    'Busan': '韩国', 'KT': '韩国', 'SK': '韩国', 'LG': '韩国',
+    '南朝鲜': '韩国', '韩': '韩国', '韓': '韩国',
+
+    'DE': '德国', 'Germany': '德国', 'Frankfurt': '德国',
+    'Munich': '德国', 'Berlin': '德国', 'Hetzner': '德国',
+
     'GB': '英国', 'United Kingdom': '英国', 'UK': '英国',
-    'CA': '加拿大', 'Canada': '加拿大',
+    'England': '英国', 'London': '英国', 'Manchester': '英国',
+
+    'CA': '加拿大', 'Canada': '加拿大', 'Toronto': '加拿大',
+    'Vancouver': '加拿大', 'Montreal': '加拿大',
+
     'AU': '澳大利亚', 'Australia': '澳大利亚',
+    'Sydney': '澳大利亚', 'Melbourne': '澳大利亚', 'Brisbane': '澳大利亚',
 }
+
 COUNTRY_NAME_TO_CODE_MAP = {
     "阿根廷": "AR", "澳大利亚": "AU", "奥地利": "AT", "孟加拉国": "BD", "比利时": "BE",
     "巴西": "BR", "保加利亚": "BG", "加拿大": "CA", "智利": "CL", "哥伦比亚": "CO",
@@ -78,23 +102,51 @@ COUNTRY_NAME_TO_CODE_MAP = {
     "缅甸": "MM", "老挝": "LA", "斯里兰卡": "LK", "肯尼亚": "KE", "摩洛哥": "MA",
     "突尼斯": "TN", "厄瓜多尔": "EC", "乌拉圭": "UY", "哥斯达黎加": "CR", "巴拿马": "PA",
 }
+
 JUNK_PATTERNS = re.compile(
     r"(?:专线|IPLC|IEPL|BGP|体验|丑团|官网|倍率|x\d[\.\d]*|Rate|[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*|Relay|流量)"
     r"|(?:(?:[\u2460-\u2473\u2776-\u277F\u2780-\u2789]|免費|回家).*?(?=,|$))",
     re.IGNORECASE
 )
+
 CUSTOM_REGEX_RULES = {
-    '香港': {'code': 'HK', 'pattern': r'香港|港|HK|Hong Kong|HKBN|HGC|PCCW|WTT'},
-    '日本': {'code': 'JP', 'pattern': r'日本|川日|东京|大阪|泉日|沪日|深日|JP|Japan'},
-    '新加坡': {'code': 'SG', 'pattern': r'新加坡|坡|新加坡|SG|Singapore'},
-    '美国': {'code': 'US', 'pattern': r'美国|美|波特兰|达拉斯|Oregon|凤凰城|硅谷|拉斯维加斯|洛杉矶|圣何塞|西雅图|芝加哥'},
-    '台湾': {'code': 'TW', 'pattern': r'台湾|台湾|台|新北|彰化|TW|Taiwan'},
-    '韩国': {'code': 'KR', 'pattern': r'韩国|韩|首尔|KR|Korea|KOR|韓'},
-    '德国': {'code': 'DE', 'pattern': r'德国|DE|Germany'},
-    '英国': {'code': 'GB', 'pattern': r'英国|英|UK|GB|United Kingdom|England'},
+    '香港': {
+        'code': 'HK',
+        'pattern': r'香港|港|HK|Hong\s*Kong|HongKong|HKBN|HGC|PCCW|WTT|HKT|九龙|沙田|屯门|荃湾|深水埗|油尖旺'
+    },
+    '日本': {
+        'code': 'JP',
+        'pattern': r'日本|日|川日|东京|大阪|泉日|沪日|深日|京日|广日|JP|Japan|Tokyo|Osaka|Saitama|埼玉|名古屋|Nagoya|福冈|Fukuoka|横滨|Yokohama|NTT|IIJ|GMO|Linode'
+    },
+    '新加坡': {
+        'code': 'SG',
+        'pattern': r'新加坡|坡|狮城|狮|新|SG|Singapore|SG\d+|SGP|星|狮子城'
+    },
+    '美国': {
+        'code': 'US',
+        'pattern': r'美国|美|波特兰|达拉斯|Oregon|俄勒冈|凤凰城|硅谷|拉斯维加斯|洛杉矶|圣何塞|西雅图|芝加哥|纽约|迈阿密|亚特兰大|US|USA|United\s*States|America|LA|NYC|SF|San\s*Francisco|Washington|华盛顿|Kansas|堪萨斯|Denver|丹佛|Phoenix|Seattle|Chicago|Boston|波士顿|Atlanta|Miami|Las\s*Vegas'
+    },
+    '台湾': {
+        'code': 'TW',
+        'pattern': r'台湾|湾省|台|TW|Taiwan|TWN|台北|Taipei|台中|Taichung|高雄|Kaohsiung|新北|彰化|Hinet|中华电信'
+    },
+    '韩国': {
+        'code': 'KR',
+        'pattern': r'韩国|韩|南朝鲜|首尔|釜山|仁川|KR|Korea|KOR|韓|Seoul|Busan|KT|SK|LG'
+    },
+    '德国': {
+        'code': 'DE',
+        'pattern': r'德国|德|法兰克福|慕尼黑|柏林|DE|Germany|Frankfurt|Munich|Berlin|Hetzner'
+    },
+    '英国': {
+        'code': 'GB',
+        'pattern': r'英国|英|伦敦|曼彻斯特|UK|GB|United\s*Kingdom|Britain|England|London|Manchester'
+    },
     '加拿大': {'code': 'CA', 'pattern': r'加拿大|枫叶|多伦多|温哥华|蒙特利尔|CA|Canada'},
     '澳大利亚': {'code': 'AU', 'pattern': r'澳大利亚|澳洲|悉尼|AU|Australia'},
 }
+
+
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
 
 def preprocess_regex_rules():
