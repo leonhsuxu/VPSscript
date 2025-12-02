@@ -1,5 +1,5 @@
 """
-FlClash节点获取脚本 V1.r4 b1 多区块批处理
+固定链接获取节点脚本 V1
 -----------------------------------------
 功能说明：
 本脚本用于从 URL.TXT 文件中读取多个以“#”开头划分的订阅区块，每个区块包含若干订阅链接。
@@ -28,7 +28,7 @@ import subprocess
 import requests
 import concurrent.futures
 import time
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
 from collections import defaultdict
 from urllib.parse import urlparse, parse_qs, unquote
 
@@ -44,13 +44,14 @@ SOCKET_TIMEOUT = 10
 MAX_TEST_WORKERS = 256
 
 # ========== 区域映射与规则 ==========
-REGION_PRIORITY = ['香港', '日本', '狮城', '美国', '湾省', '韩国', '德国', '英国', '加拿大', '澳大利亚']
+REGION_PRIORITY = ['香港', '日本', '新加坡', '美国', '台湾', '韩国', '德国', '英国', '加拿大', '澳大利亚']
+
 CHINESE_COUNTRY_MAP = {
     'US': '美国', 'United States': '美国', 'USA': '美国',
     'JP': '日本', 'Japan': '日本',
     'HK': '香港', 'Hong Kong': '香港',
-    'SG': '狮城', 'Singapore': '狮城',
-    'TW': '湾省', 'Taiwan': '湾省',
+    'SG': '新加坡', 'Singapore': '新加坡',
+    'TW': '台湾', 'Taiwan': '台湾',
     'KR': '韩国', 'Korea': '韩国', 'KOR': '韩国',
     'DE': '德国', 'Germany': '德国',
     'GB': '英国', 'United Kingdom': '英国', 'UK': '英国',
@@ -85,9 +86,9 @@ JUNK_PATTERNS = re.compile(
 CUSTOM_REGEX_RULES = {
     '香港': {'code': 'HK', 'pattern': r'香港|港|HK|Hong Kong|HKBN|HGC|PCCW|WTT'},
     '日本': {'code': 'JP', 'pattern': r'日本|川日|东京|大阪|泉日|沪日|深日|JP|Japan'},
-    '狮城': {'code': 'SG', 'pattern': r'新加坡|坡|狮城|SG|Singapore'},
+    '新加坡': {'code': 'SG', 'pattern': r'新加坡|坡|新加坡|SG|Singapore'},
     '美国': {'code': 'US', 'pattern': r'美国|美|波特兰|达拉斯|Oregon|凤凰城|硅谷|拉斯维加斯|洛杉矶|圣何塞|西雅图|芝加哥'},
-    '湾省': {'code': 'TW', 'pattern': r'台湾|湾省|台|新北|彰化|TW|Taiwan'},
+    '台湾': {'code': 'TW', 'pattern': r'台湾|台湾|台|新北|彰化|TW|Taiwan'},
     '韩国': {'code': 'KR', 'pattern': r'韩国|韩|首尔|KR|Korea|KOR|韓'},
     '德国': {'code': 'DE', 'pattern': r'德国|DE|Germany'},
     '英国': {'code': 'GB', 'pattern': r'英国|英|UK|GB|United Kingdom|England'},
@@ -487,36 +488,27 @@ def process_and_rename_proxies(proxies):
     all_region_names_for_stripping.update(COUNTRY_NAME_TO_CODE_MAP.keys())
     sorted_region_names = sorted(list(all_region_names_for_stripping), key=len, reverse=True)
     master_region_pattern = re.compile('|'.join(map(re.escape, sorted_region_names)), re.IGNORECASE)
-
-    # 用于替换节点名中非国旗的国家英文简称为中文（单词边界）
     country_code_pattern = re.compile(r'\b(' + '|'.join(re.escape(k) for k in CHINESE_COUNTRY_MAP.keys()) + r')\b', re.IGNORECASE)
 
     def replace_country_code(m):
         code = m.group(0)
         return CHINESE_COUNTRY_MAP.get(code.upper(), code)
 
-    # 下载速度匹配正则，例如匹配“3.9MB/s”等数字+单位
     speed_pattern = re.compile(r'(\d+(?:\.\d+)?)\s*(M|K)?B/s', re.IGNORECASE)
+
+    # 新增：删除所有国旗 Emoji 的函数
+    def remove_all_flag_emojis(text):
+        return FLAG_EMOJI_PATTERN.sub('', text).strip()
 
     # 第一步，识别 region
     for p in proxies:
         original_name = p.get('name', '').strip()
-        # 提取并剔除国旗 emoji
-        match_flag = FLAG_EMOJI_PATTERN.search(original_name)
-        if match_flag:
-            # 保留国旗，剔除国旗字符得到处理名
-            name_wo_flag = FLAG_EMOJI_PATTERN.sub('', original_name, count=1).strip()
-        else:
-            name_wo_flag = original_name
-
-        # 替换国家简称为中文，用于后续地区识别
+        name_wo_flag = remove_all_flag_emojis(original_name)  # 删除所有国旗
         name_with_chinese = country_code_pattern.sub(replace_country_code, name_wo_flag)
-        # 去除垃圾字符串后区域识别用名
         name_for_region_detect = JUNK_PATTERNS.sub('', name_with_chinese).strip()
         for eng, chn in CHINESE_COUNTRY_MAP.items():
             pattern = re.compile(r'\b' + re.escape(eng) + r'\b', re.IGNORECASE)
             name_for_region_detect = pattern.sub(chn, name_for_region_detect)
-
         p['region'] = None
         for region_name, rules in CUSTOM_REGEX_RULES.items():
             if re.search(rules['pattern'], name_for_region_detect, re.IGNORECASE):
@@ -534,35 +526,29 @@ def process_and_rename_proxies(proxies):
     # 第二步，重命名，格式：国旗+地区-序号|下载速度
     for proxy in proxies:
         original_name = proxy.get('name', '').strip()
+        # 删除所有国旗 emoji
+        name_wo_flag = remove_all_flag_emojis(original_name)
+
         region_name = proxy.get('region', '未知')
+        region_code = COUNTRY_NAME_TO_CODE_MAP.get(region_name) or CUSTOM_REGEX_RULES.get(region_name, {}).get('code', '')
+        flag_emoji = get_country_flag_emoji(region_code)
 
-        match_flag = FLAG_EMOJI_PATTERN.search(original_name)
-        if match_flag:
-            flag_emoji = match_flag.group(0)
-            name_wo_flag = FLAG_EMOJI_PATTERN.sub('', original_name, count=1).strip()
-        else:
-            # 不存在国旗则根据地区代码自动生成国旗
-            region_code = COUNTRY_NAME_TO_CODE_MAP.get(region_name) or CUSTOM_REGEX_RULES.get(region_name, {}).get('code', '')
-            flag_emoji = get_country_flag_emoji(region_code)
-            name_wo_flag = original_name
-
-        # 替换国家简称为中文（不去掉国旗）
         name_with_chinese = country_code_pattern.sub(replace_country_code, name_wo_flag)
 
-        # 找下载速度文本
+        # 查找所有测速文本，只保留第一个
         speed_text = ''
-        m_speed = speed_pattern.search(name_with_chinese)
-        if m_speed:
-            speed_text = m_speed.group(0).strip()
-            name_without_speed = speed_pattern.sub('', name_with_chinese).strip()
-        else:
-            name_without_speed = name_with_chinese
+        speed_matches = speed_pattern.findall(name_with_chinese)
+        if speed_matches:
+            number, unit = speed_matches[0]
+            unit = unit.upper() if unit else ''
+            speed_text = f"{number}{unit}B/s"
 
-        # 序号累加
+        # 删除所有测速文本
+        name_without_speed = speed_pattern.sub('', name_with_chinese).strip()
+
         country_counters[region_name] += 1
         seq_num = country_counters[region_name]
 
-        # 新节点名：国旗 + 地区-序号，后接 |下载速度（无空格）
         new_name = f"{flag_emoji}{region_name}-{seq_num}"
         if speed_text:
             new_name += f"|{speed_text}"
@@ -706,8 +692,8 @@ def process_block_to_yaml(block):
 
 def main():
     print("=" * 60)
-    print("FlClash节点获取脚本 V1.r4 b1 多区块批处理")
-    print(f"时间: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    print("固定链接获取节点脚本 V1")
+    print(f"时间: {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
     blocks = parse_url_txt_to_blocks()
     if not blocks:
