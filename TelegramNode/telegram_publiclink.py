@@ -617,8 +617,8 @@ async def main():
     preprocess_regex_rules()
     
     # 周一删除旧文件
-    delete_old_yaml()
-
+    # delete_old_yaml()  # 取消定期删除，保留历史文件
+    
     # --- 步骤 1: 从 Telegram 抓取新节点 ---
     print("\n[1/5] 从 Telegram 抓取新节点...")
     urls = await scrape_telegram_links()
@@ -640,16 +640,23 @@ async def main():
             with open(OUTPUT_FILE, 'r', encoding='utf-8') as f:
                 loaded_yaml = yaml.safe_load(f)
                 if isinstance(loaded_yaml, dict) and 'proxies' in loaded_yaml:
-                    # 确保读取的是一个列表
                     if isinstance(loaded_yaml['proxies'], list):
                         existing_proxies = [p for p in loaded_yaml['proxies'] if isinstance(p, dict)]
                         print(f"  - 成功读取 {len(existing_proxies)} 个现有节点。")
-                elif isinstance(loaded_yaml, list): # 兼容旧的纯列表格式
+                elif isinstance(loaded_yaml, list):
                     existing_proxies = [p for p in loaded_yaml if isinstance(p, dict)]
                     print(f"  - 成功读取 {len(existing_proxies)} 个现有节点 (来自旧的列表格式)。")
         except Exception as e:
             print(f"  - 警告: 读取或解析 {OUTPUT_FILE} 失败: {e}。")
 
+    # 新增：先对现有节点测速，获取最新延迟信息
+    if ENABLE_SPEED_TEST and existing_proxies:
+        print(f"  - 对现有节点进行 TCP 连接测速，数量: {len(existing_proxies)}")
+        with concurrent.futures.ThreadPoolExecutor(MAX_TEST_WORKERS) as executor:
+            tested_existing = list(executor.map(test_single_proxy_tcp, existing_proxies))
+        existing_proxies = [p for p in tested_existing if p]
+        print(f"  - 现有节点测速完成，可用节点数: {len(existing_proxies)}")
+    
     # --- 步骤 3: 合并并去重所有节点 ---
     print("\n[3/5] 合并并去重节点...")
     all_proxies_map = {get_proxy_key(p): p for p in existing_proxies}
@@ -670,7 +677,6 @@ async def main():
     processed = process_proxies(all_proxies_list)
     if not processed:
         sys.exit("\n❌ 过滤和重命名后无任何可用节点，脚本终止。")
-
     final = processed
     if ENABLE_SPEED_TEST:
         print(f"  - 开始 TCP 连接测速（超时: {SOCKET_TIMEOUT}秒, 并发: {MAX_TEST_WORKERS}）...")
@@ -693,7 +699,6 @@ async def main():
     config = generate_config(final)
     if not config:
         sys.exit("\n❌ 无法生成配置文件。")
-
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     try:
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
