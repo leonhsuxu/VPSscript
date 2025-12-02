@@ -16,7 +16,7 @@ dns:
   - https://dns.google/dns-query
   - https://1.1.1.1/dns-query
 proxies:
-- name: 🇯🇵 日本orc❷ˣ³𝕋𝔾myFreeNodeChat
+- name: 🇯🇵日本-1
   server: cmcc.090227.xyz
   port: 443
   client-fingerprint: ios
@@ -29,7 +29,21 @@ proxies:
     path: /pq/jp1
     headers:
       Host: jpa1.xn--ghqu5fm27b67w.com
-- name: 🇯🇵 日本orc❶ˣ³𝕋𝔾myFreeNodeChat
+- name: 🇭🇰香港-1
+  server: 35016.fishnodebgp.com
+  port: 52616
+  type: ss
+  cipher: aes-128-gcm
+  password: da83b407-e4eb-4fc0-932d-2203e781ec5b
+  tfo: false
+- name: 🇭🇰香港-2
+  server: 35011.fishnodebgp.com
+  port: 52611
+  type: ss
+  cipher: chacha20-ietf-poly1305
+  password: da83b407-e4eb-4fc0-932d-2203e781ec5b
+  tfo: false
+- name: 🇯🇵日本-2
   server: ct.090227.xyz
   port: 443
   client-fingerprint: ios
@@ -42,20 +56,6 @@ proxies:
     path: /pq/jp1
     headers:
       Host: jpa1.xn--ghqu5fm27b67w.com
-- name: 🇭🇰 HK三網❶ˣ³⁰𝕋𝔾myFreeNodeChat
-  server: 35016.fishnodebgp.com
-  port: 52616
-  type: ss
-  cipher: aes-128-gcm
-  password: da83b407-e4eb-4fc0-932d-2203e781ec5b
-  tfo: false
-- name: 🇭🇰 HK三網❷ˣ³⁰𝕋𝔾myFreeNodeChat
-  server: 35011.fishnodebgp.com
-  port: 52611
-  type: ss
-  cipher: chacha20-ietf-poly1305
-  password: da83b407-e4eb-4fc0-932d-2203e781ec5b
-  tfo: false
 proxy-groups:
 - name: 🚀 节点选择
   type: select
@@ -63,17 +63,17 @@ proxy-groups:
   - ♻️ 自动选择
   - 🔯 故障转移
   - DIRECT
-  - 🇯🇵 日本orc❷ˣ³𝕋𝔾myFreeNodeChat
-  - 🇯🇵 日本orc❶ˣ³𝕋𝔾myFreeNodeChat
-  - 🇭🇰 HK三網❶ˣ³⁰𝕋𝔾myFreeNodeChat
-  - 🇭🇰 HK三網❷ˣ³⁰𝕋𝔾myFreeNodeChat
+  - 🇯🇵日本-1
+  - 🇭🇰香港-1
+  - 🇭🇰香港-2
+  - 🇯🇵日本-2
 - name: ♻️ 自动选择
   type: url-test
   proxies: &id001
-  - 🇯🇵 日本orc❷ˣ³𝕋𝔾myFreeNodeChat
-  - 🇯🇵 日本orc❶ˣ³𝕋𝔾myFreeNodeChat
-  - 🇭🇰 HK三網❶ˣ³⁰𝕋𝔾myFreeNodeChat
-  - 🇭🇰 HK三網❷ˣ³⁰𝕋𝔾myFreeNodeChat
+  - 🇯🇵日本-1
+  - 🇭🇰香港-1
+  - 🇭🇰香港-2
+  - 🇯🇵日本-2
   url: http://www.gstatic.com/generate_204
   interval: 300
 - name: 🔯 故障转移
