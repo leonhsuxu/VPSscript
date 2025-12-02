@@ -56,20 +56,60 @@ MAX_TEST_WORKERS = 256       # 并发测速时的最大线程数，用于控制�
 # ========== 区域映射与规则 ==========
 REGION_PRIORITY = ['香港', '日本', '狮城', '美国', '湾省', '韩国', '德国', '英国', '加拿大', '澳大利亚']
 CHINESE_COUNTRY_MAP = {
-    'US': '美国', 'United States': '美国', 'USA': '美国',
-    'JP': '日本', 'Japan': '日本',
-    'HK': '香港', 'Hong Kong': '香港',
-    'SG': '狮城', 'Singapore': '狮城',
-    'TW': '湾省', 'Taiwan': '湾省',
-    'KR': '韩国', 'Korea': '韩国', 'KOR': '韩国',
-    'DE': '德国', 'Germany': '德国',
+    'US': '美国', 'United States': '美国', 'USA': '美国', 'America': '美国',
+    'New York': '美国', 'Los Angeles': '美国', 'Washington': '美国', 'Chicago': '美国',
+    'San Francisco': '美国', 'Las Vegas': '美国', 'Miami': '美国', 'Seattle': '美国',
+    'Houston': '美国', 'Boston': '美国', 'Atlanta': '美国', 'Dallas': '美国',
+
+    'JP': '日本', 'Japan': '日本', 'Tokyo': '日本', 'Osaka': '日本', 'Nagoya': '日本',
+    'Sapporo': '日本', 'Fukuoka': '日本', 'NTT': '日本', 'IIJ': '日本', 'GMO': '日本', 'Linode': '日本',
+
+    'HK': '香港', 'Hong Kong': '香港', 'HongKong': '香港', 'HKT': '香港',
+    '九龙': '香港', '沙田': '香港', '屯门': '香港', '荃湾': '香港', '深水埗': '香港', '油尖旺': '香港',
+
+    'SG': '新加坡', 'Singapore': '新加坡', 'SGP': '新加坡', 'SG': '新加坡',
+    '星': '新加坡', '狮城': '新加坡', '坡': '新加坡',
+
+    'TW': '台湾', 'Taiwan': '台湾', 'TWN': '台湾',
+    'Taipei': '台湾', 'Taichung': '台湾', 'Kaohsiung': '台湾',
+    '新北': '台湾', '彰化': '台湾', 'Hinet': '台湾', '中华电信': '台湾',
+
+    'KR': '韩国', 'Korea': '韩国', 'KOR': '韩国', 'Seoul': '韩国',
+    'Busan': '韩国', 'KT': '韩国', 'SK': '韩国', 'LG': '韩国',
+    '南朝鲜': '韩国', '韩': '韩国', '韓': '韩国',
+
+    'DE': '德国', 'Germany': '德国', 'Frankfurt': '德国',
+    'Munich': '德国', 'Berlin': '德国', 'Hetzner': '德国',
+
     'GB': '英国', 'United Kingdom': '英国', 'UK': '英国',
-    'CA': '加拿大', 'Canada': '加拿大',
+    'England': '英国', 'London': '英国', 'Manchester': '英国',
+
+    'CA': '加拿大', 'Canada': '加拿大', 'Toronto': '加拿大',
+    'Vancouver': '加拿大', 'Montreal': '加拿大',
+
     'AU': '澳大利亚', 'Australia': '澳大利亚',
+    'Sydney': '澳大利亚', 'Melbourne': '澳大利亚', 'Brisbane': '澳大利亚',
 }
 
 COUNTRY_NAME_TO_CODE_MAP = {
-    "阿根廷": "AR", "澳大利亚": "AU", "奥地利": "AT", "孟加拉国": "BD", "比利时": "BE", "巴西": "BR", "保加利亚": "BG", "加拿大": "CA", "智利": "CL", "哥伦比亚": "CO", "克罗地亚": "HR", "捷克": "CZ", "丹麦": "DK", "埃及": "EG", "爱沙尼亚": "EE", "芬兰": "FI", "法国": "FR", "德国": "DE", "希腊": "GR", "香港": "HK", "匈牙利": "HU", "冰岛": "IS", "印度": "IN", "印度尼西亚": "ID", "爱尔兰": "IE", "以色列": "IL", "意大利": "IT", "日本": "JP", "哈萨克斯坦": "KZ", "韩国": "KR", "拉脱维亚": "LV", "立陶宛": "LT", "卢森堡": "LU", "澳门": "MO", "马来西亚": "MY", "墨西哥": "MX", "摩尔多瓦": "MD", "荷兰": "NL", "新西兰": "NZ", "尼日利亚": "NG", "挪威": "NO", "巴基斯坦": "PK", "菲律宾": "PH", "波兰": "PL", "葡萄牙": "PT", "罗马尼亚": "RO", "俄罗斯": "RU", "沙特阿拉伯": "SA", "塞尔维亚": "RS", "新加坡": "SG", "斯洛伐克": "SK", "斯洛文尼亚": "SI", "南非": "ZA", "西班牙": "ES", "瑞典": "SE", "瑞士": "CH", "台湾": "TW", "泰国": "TH", "土耳其": "TR", "乌克兰": "UA", "阿联酋": "AE", "英国": "GB", "美国": "US", "越南": "VN"
+    "阿根廷": "AR", "澳大利亚": "AU", "奥地利": "AT", "孟加拉国": "BD", "比利时": "BE",
+    "巴西": "BR", "保加利亚": "BG", "加拿大": "CA", "智利": "CL", "哥伦比亚": "CO",
+    "克罗地亚": "HR", "捷克": "CZ", "丹麦": "DK", "埃及": "EG", "爱沙尼亚": "EE",
+    "芬兰": "FI", "法国": "FR", "德国": "DE", "希腊": "GR", "香港": "HK", "匈牙利": "HU",
+    "冰岛": "IS", "印度": "IN", "印度尼西亚": "ID", "爱尔兰": "IE", "以色列": "IL",
+    "意大利": "IT", "日本": "JP", "哈萨克斯坦": "KZ", "韩国": "KR", "拉脱维亚": "LV",
+    "立陶宛": "LT", "卢森堡": "LU", "澳门": "MO", "马来西亚": "MY", "墨西哥": "MX",
+    "摩尔多瓦": "MD", "荷兰": "NL", "新西兰": "NZ", "尼日利亚": "NG", "挪威": "NO",
+    "巴基斯坦": "PK", "菲律宾": "PH", "波兰": "PL", "葡萄牙": "PT", "罗马尼亚": "RO",
+    "俄罗斯": "RU", "沙特阿拉伯": "SA", "塞尔维亚": "RS", "新加坡": "SG", "斯洛伐克": "SK",
+    "斯洛文尼亚": "SI", "南非": "ZA", "西班牙": "ES", "瑞典": "SE", "瑞士": "CH",
+    "台湾": "TW", "泰国": "TH", "土耳其": "TR", "乌克兰": "UA", "阿联酋": "AE",
+    "英国": "GB", "美国": "US", "越南": "VN", "阿曼": "OM", "柬埔寨": "KH",
+    "秘鲁": "PE", "阿塞拜疆": "AZ", "巴林": "BH","伊拉克": "IQ", "尼泊尔": "NP",
+    "卡塔尔": "QA", "科威特": "KW", "马耳他": "MT", "塞浦路斯": "CY", "格鲁吉亚": "GE",
+    "阿尔巴尼亚": "AL", "波黑": "BA", "北马其顿": "MK", "黎巴嫩": "LB", "约旦": "JO",
+    "缅甸": "MM", "老挝": "LA", "斯里兰卡": "LK", "肯尼亚": "KE", "摩洛哥": "MA",
+    "突尼斯": "TN", "厄瓜多尔": "EC", "乌拉圭": "UY", "哥斯达黎加": "CR", "巴拿马": "PA",
 }
 
 JUNK_PATTERNS = re.compile(
@@ -78,14 +118,38 @@ JUNK_PATTERNS = re.compile(
     re.IGNORECASE)
     
 CUSTOM_REGEX_RULES = {
-    '香港': {'code': 'HK', 'pattern': r'香港|港|HK|Hong Kong|HKBN|HGC|PCCW|WTT'},
-    '日本': {'code': 'JP', 'pattern': r'日本|川日|东京|大阪|泉日|沪日|深日|JP|Japan'},
-    '狮城': {'code': 'SG', 'pattern': r'新加坡|坡|狮城|SG|Singapore'},
-    '美国': {'code': 'US', 'pattern': r'美国|美|波特兰|达拉斯|Oregon|凤凰城|硅谷|拉斯维加斯|洛杉矶|圣何塞|西雅图|芝加哥'},
-    '湾省': {'code': 'TW', 'pattern': r'台湾|湾省|台|新北|彰化|TW|Taiwan'},
-    '韩国': {'code': 'KR', 'pattern': r'韩国|韩|首尔|KR|Korea|KOR|韓'},
-    '德国': {'code': 'DE', 'pattern': r'德国|DE|Germany'},
-    '英国': {'code': 'GB', 'pattern': r'英国|英|UK|GB|United Kingdom|England'},
+    '香港': {
+        'code': 'HK',
+        'pattern': r'香港|港|HK|Hong\s*Kong|HongKong|HKBN|HGC|PCCW|WTT|HKT|九龙|沙田|屯门|荃湾|深水埗|油尖旺'
+    },
+    '日本': {
+        'code': 'JP',
+        'pattern': r'日本|日|川日|东京|大阪|泉日|沪日|深日|京日|广日|JP|Japan|Tokyo|Osaka|Saitama|埼玉|名古屋|Nagoya|福冈|Fukuoka|横滨|Yokohama|NTT|IIJ|GMO|Linode'
+    },
+    '新加坡': {
+        'code': 'SG',
+        'pattern': r'新加坡|坡|狮城|狮|新|SG|Singapore|SG\d+|SGP|星|狮子城'
+    },
+    '美国': {
+        'code': 'US',
+        'pattern': r'美国|美|波特兰|达拉斯|Oregon|俄勒冈|凤凰城|硅谷|拉斯维加斯|洛杉矶|圣何塞|西雅图|芝加哥|纽约|迈阿密|亚特兰大|US|USA|United\s*States|America|LA|NYC|SF|San\s*Francisco|Washington|华盛顿|Kansas|堪萨斯|Denver|丹佛|Phoenix|Seattle|Chicago|Boston|波士顿|Atlanta|Miami|Las\s*Vegas'
+    },
+    '台湾': {
+        'code': 'TW',
+        'pattern': r'台湾|湾省|台|TW|Taiwan|TWN|台北|Taipei|台中|Taichung|高雄|Kaohsiung|新北|彰化|Hinet|中华电信'
+    },
+    '韩国': {
+        'code': 'KR',
+        'pattern': r'韩国|韩|南朝鲜|首尔|釜山|仁川|KR|Korea|KOR|韓|Seoul|Busan|KT|SK|LG'
+    },
+    '德国': {
+        'code': 'DE',
+        'pattern': r'德国|德|法兰克福|慕尼黑|柏林|DE|Germany|Frankfurt|Munich|Berlin|Hetzner'
+    },
+    '英国': {
+        'code': 'GB',
+        'pattern': r'英国|英|伦敦|曼彻斯特|UK|GB|United\s*Kingdom|Britain|England|London|Manchester'
+    },
     '加拿大': {'code': 'CA', 'pattern': r'加拿大|枫叶|多伦多|温哥华|蒙特利尔|CA|Canada'},
     '澳大利亚': {'code': 'AU', 'pattern': r'澳大利亚|澳洲|悉尼|AU|Australia'},
 }
