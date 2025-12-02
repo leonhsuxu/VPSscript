@@ -93,14 +93,23 @@ def preprocess_regex_rules():
 preprocess_regex_rules()
 
 def sanitize_filename(name: str) -> str:
-    """提取文件名，只取#和冒号间文字，去除空格和非法字符"""
-    match = re.match(r"#\s*(.*?)\s*:", name, re.IGNORECASE)
+    """
+    严格清理文件名，去除中英文冒号、空格和所有非法字符，
+    用下划线替代空格和冒号，避免文件名不合法。
+    """
+    import re
+
+    # 尝试匹配 # 和第一个中英文冒号之间的内容作为标题
+    match = re.match(r"#\s*(.*?)\s*[:：]", name, re.IGNORECASE)
     if match:
         title = match.group(1)
     else:
+        # 如果找不到冒号，去除开头#，并去除尾部中英文冒号和空格
         title = name.lstrip('#').strip()
-    title = re.sub(r'\s+', '', title)
-    title = re.sub(r'[\\/:"*?<>|]+', '_', title)
+        title = re.sub(r'[:：]+$', '', title).strip()
+
+    title = re.sub(r'[\\/:*?"<>|\s：]+', '_', title)
+    title = title.strip('_')
     return title or 'default'
 
 def get_country_flag_emoji(country_code):
