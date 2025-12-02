@@ -31,3 +31,4 @@ TG-SSRProxy[TG-G]@myFreeNodeChat：https://pastecode.dev/raw/s4tmrvfd/token=myFr
 TG-SSRProxy[TG-G]@dingyue_center：https://proxypool.dmit.dpdns.org/clash/proxies?c=CN,HK,TW,SG,JP,KR,VN,US&type=vmess
 TG-SSRProxy[TG-G]@txwl666：https://sub.zyfx6.xyz/share/file/永久订阅@txwl666?token=clash
 TG-SSRProxy[TG-G]@MxlShare：https://mxlsub.qzz.io/new
+TG-SSRProxy[TG-G]天诚订阅器：https://stallorg.soso.edu.kg/SSS565
