@@ -13,24 +13,13 @@ FlClash节点获取脚本 V1.r2
 7. 根据测速结果及预设地区优先级进行排序，并生成可直接用于 Clash 软件的完整配置文件 YAML。
 8. 输出配置文件至当前目录下 TG-SSRProxy.yaml。
 9. 设计支持灵活的订阅地址管理及自动化批量同步更新。
-10. 兼容性强，依赖少，适合 Windows/Linux 环境。
 
 版本说明：
 V1.r2（2024-06-23）
 - 修正了 Base64 填充字符串补全的错误用法（确保 padding 正确拼接 '='）
 - 优化了正则表达式预处理，增加 `re.escape` 保护特殊字符，防止异常。
 - 统一导入 urllib.parse 函数，避免重复导入。
-- 精细化异常捕获，避免误捕所有异常。
-- 测速进度输出改用 `print(..., end='', flush=True)` 方便阅读。
-- 代码结构微调，代码层次更清晰，辅助函数拆分。
-- 增加重要函数详细注释，提升可维护性。
 
-作者：
-[你的名字或昵称]
-
-运行环境：
-Python 3.7 以上环境
-需安装模块：requests, pyyaml
 
 """
 
@@ -66,7 +55,6 @@ MAX_TEST_WORKERS = 256       # 并发测速时的最大线程数，用于控制�
 
 # ========== 区域映射与规则 ==========
 REGION_PRIORITY = ['香港', '日本', '狮城', '美国', '湾省', '韩国', '德国', '英国', '加拿大', '澳大利亚']
-
 CHINESE_COUNTRY_MAP = {
     'US': '美国', 'United States': '美国', 'USA': '美国',
     'JP': '日本', 'Japan': '日本',
@@ -81,8 +69,7 @@ CHINESE_COUNTRY_MAP = {
 }
 
 COUNTRY_NAME_TO_CODE_MAP = {
-    'US': '美国', 'United States': '美国', 'USA': '美国', 'JP': '日本', 'Japan': '日本', 'HK': '香港', 'Hong Kong': '香港', 'SG': '狮城', 'Singapore': '狮城', 'TW': '湾省', 'Taiwan': '湾省', 'KR': '韩国', 'Korea': '韩国', 'KOR': '韩国', 'DE': '德国', 'Germany': '德国', 'GB': '英国', 'United Kingdom': '英国', 'UK': '英国', 'CA': '加拿大', 'Canada': '加拿大', 'AU': '澳大利亚', 'Australia': '澳大利亚', }
-
+'US': '美国', 'United States': '美国', 'USA': '美国', 'JP': '日本', 'Japan': '日本', 'HK': '香港', 'Hong Kong': '香港', 'SG': '狮城', 'Singapore': '狮城', 'TW': '湾省', 'Taiwan': '湾省', 'KR': '韩国', 'Korea': '韩国', 'KOR': '韩国', 'DE': '德国', 'Germany': '德国', 'GB': '英国', 'United Kingdom': '英国', 'UK': '英国', 'CA': '加拿大', 'Canada': '加拿大', 'AU': '澳大利亚', 'Australia': '澳大利亚', }
 COUNTRY_NAME_TO_CODE_MAP = {"阿富汗": "AF", "阿尔巴尼亚": "AL", "阿尔及利亚": "DZ", "安道尔": "AD", "安哥拉": "AO", "安圭拉": "AI", "安提瓜和巴布达": "AG", "阿根廷": "AR", "亚美尼亚": "AM", "阿鲁巴": "AW", "澳大利亚": "AU", "奥地利": "AT", "阿塞拜疆": "AZ", "巴哈马": "BS", "巴林": "BH", "孟加拉国": "BD", "巴巴多斯": "BB", "白俄罗斯": "BY", "比利时": "BE", "伯利兹": "BZ", "贝宁": "BJ", "百慕大": "BM", "不丹": "BT", "玻利维亚": "BO", "波黑": "BA", "博茨瓦纳": "BW", "巴西": "BR", "文莱": "BN", "保加利亚": "BG", "布基纳法索": "BF", "布隆迪": "BI", "柬埔寨": "KH", "喀麦隆": "CM", "加拿大": "CA", "佛得角": "CV", "开曼群岛": "KY", "中非": "CF", "乍得": "TD", "智利": "CL", "中国": "CN", "哥伦比亚": "CO", "科摩罗": "KM", "刚果（金）": "CD", "刚果（布）": "CG", "哥斯达黎加": "CR", "科特迪瓦": "CI", "克罗地亚": "HR", "古巴": "CU", "塞浦路斯": "CY", "捷克": "CZ", "丹麦": "DK", "吉布提": "DJ", "多米尼克": "DM", "多米尼加": "DO", "厄瓜多尔": "EC", "埃及": "EG", "萨尔瓦多": "SV", "赤道几内亚": "GQ", "厄立特里亚": "ER", "爱沙尼亚": "EE", "埃塞俄比亚": "ET", "斐济": "FJ", "芬兰": "FI", "法国": "FR", "加蓬": "GA", "冈比亚": "GM", "格鲁吉亚": "GE", "加纳": "GH", "希腊": "GR", "格林纳达": "GD", "危地马拉": "GT", "几内亚": "GN", "几内亚比绍": "GW", "圭亚那": "GY", "海地": "HT", "洪都拉斯": "HN", "匈牙利": "HU", "冰岛": "IS", "印度": "IN", "印尼": "ID", "印度尼西亚": "ID", "伊朗": "IR", "伊拉克": "IQ", "爱尔兰": "IE", "以色列": "IL", "意大利": "IT", "牙买加": "JM", "日本": "JP", "约旦": "JO", "哈萨克斯坦": "KZ", "肯尼亚": "KE", "基里巴斯": "KI", "科威特": "KW", "吉尔吉斯斯坦": "KG", "老挝": "LA", "拉脱维亚": "LV", "黎巴嫩": "LB", "莱索托": "LS", "利比里亚": "LR", "利比亚": "LY", "列支敦士登": "LI", "立陶宛": "LT", "卢森堡": "LU", "澳门": "MO", "北马其顿": "MK", "马达加斯加": "MG", "马拉维": "MW", "马来西亚": "MY", "马尔代夫": "MV", "马里": "ML", "马耳他": "MT", "马绍尔群岛": "MH", "毛里塔尼亚": "MR", "毛里求斯": "MU", "墨西哥": "MX", "密克罗尼西亚": "FM", "摩尔多瓦": "MD", "摩纳哥": "MC", "蒙古": "MN", "黑山": "ME", "摩洛哥": "MA", "莫桑比克": "MZ", "缅甸": "MM", "纳米比亚": "NA", "瑙鲁": "NR", "尼泊尔": "NP", "荷兰": "NL", "新西兰": "NZ", "尼加拉瓜": "NI", "尼日尔": "NE", "尼日利亚": "NG", "挪威": "NO", "阿曼": "OM", "巴基斯坦": "PK", "帕劳": "PW", "巴勒斯坦": "PS", "巴拿马": "PA", "巴布亚新几内亚": "PG", "巴拉圭": "PY", "秘鲁": "PE", "菲律宾": "PH", "波兰": "PL", "葡萄牙": "PT", "卡塔尔": "QA", "罗马尼亚": "RO", "俄罗斯": "RU", "卢旺达": "RW", "圣马力诺": "SM", "沙特阿拉伯": "SA", "塞内加尔": "SN", "塞尔维亚": "RS", "塞舌尔": "SC", "塞拉利昂": "SL", "新加坡": "SG", "斯洛伐克": "SK", "斯洛文尼亚": "SI", "所罗门群岛": "SB", "索马里": "SO", "南非": "ZA", "西班牙": "ES", "斯里兰卡": "LK", "苏丹": "SD", "苏里南": "SR", "瑞典": "SE", "瑞士": "CH", "叙利亚": "SY", "塔吉克斯坦": "TJ", "坦桑尼亚": "TZ", "泰国": "TH", "东帝汶": "TL", "多哥": "TG", "汤加": "TO", "特立尼达和多巴哥": "TT", "突尼斯": "TN", "土耳其": "TR", "土库曼斯坦": "TM", "图瓦卢": "TV", "乌干达": "UG", "乌克兰": "UA", "阿联酋": "AE", "乌拉圭": "UY", "乌兹别克斯坦": "UZ", "瓦努阿图": "VU", "委内瑞拉": "VE", "越南": "VN", "也门": "YE", "赞比亚": "ZM", "津巴布韦": "ZW"
 }
 
@@ -90,7 +77,7 @@ JUNK_PATTERNS = re.compile(
     r"(?:专线|IPLC|IEPL|BGP|体验|官网|倍率|x\d[\.\d]*|Rate|[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*|Relay|流量)|"
     r"(?:(?:[\u2460-\u2473\u2776-\u277F\u2780-\u2789]|免費|回家).*?(?=,|$))",
     re.IGNORECASE)
-
+    
 CUSTOM_REGEX_RULES = {
     '香港': {'code': 'HK', 'pattern': r'香港|港|HK|Hong Kong|HKBN|HGC|PCCW|WTT'},
     '日本': {'code': 'JP', 'pattern': r'日本|川日|东京|大阪|泉日|沪日|深日|JP|Japan'},
@@ -530,11 +517,13 @@ def test_single_proxy_socket(proxy):
 def speed_test_proxies(proxies):
     print(f"开始使用纯 Python socket 进行并发测速 (共 {len(proxies)} 个节点)")
     fast_proxies = []
+    total = len(proxies)
     with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_TEST_WORKERS) as executor:
         futures = {executor.submit(test_single_proxy_socket, p): p for p in proxies}
         for i, future in enumerate(concurrent.futures.as_completed(futures), 1):
             result = future.result()
-            print(f"\r  测试进度: {i}/{len(proxies)}", end='', flush=True)
+            if i % 100 == 0 or i == total:
+                print(f"\r  测试进度: {i}/{total}", flush=True)
             if result:
                 fast_proxies.append(result)
     print(f"\n测速完成，剩余可用节点: {len(fast_proxies)}")
