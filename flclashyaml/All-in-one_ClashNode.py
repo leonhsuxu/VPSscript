@@ -1,5 +1,5 @@
 """
-固定链接获取节点脚本 V1
+固定链接获取节点脚本 V1 r1
 -----------------------------------------
 功能说明：
 本脚本用于从 URL.TXT 文件中读取多个以“#”开头划分的订阅区块，每个区块包含若干订阅链接。
@@ -84,27 +84,28 @@ CHINESE_COUNTRY_MAP = {
 
 
 COUNTRY_NAME_TO_CODE_MAP = {
-    "阿根廷": "AR", "澳大利亚": "AU", "奥地利": "AT", "孟加拉国": "BD", "比利时": "BE",
-    "巴西": "BR", "保加利亚": "BG", "加拿大": "CA", "智利": "CL", "哥伦比亚": "CO",
-    "克罗地亚": "HR", "捷克": "CZ", "丹麦": "DK", "埃及": "EG", "爱沙尼亚": "EE",
-    "芬兰": "FI", "法国": "FR", "德国": "DE", "希腊": "GR", "香港": "HK", "匈牙利": "HU",
-    "冰岛": "IS", "印度": "IN", "印度尼西亚": "ID", "爱尔兰": "IE", "以色列": "IL",
-    "意大利": "IT", "日本": "JP", "哈萨克斯坦": "KZ", "韩国": "KR", "拉脱维亚": "LV",
-    "立陶宛": "LT", "卢森堡": "LU", "澳门": "MO", "马来西亚": "MY", "墨西哥": "MX",
-    "摩尔多瓦": "MD", "荷兰": "NL", "新西兰": "NZ", "尼日利亚": "NG", "挪威": "NO",
-    "巴基斯坦": "PK", "菲律宾": "PH", "波兰": "PL", "葡萄牙": "PT", "罗马尼亚": "RO",
-    "俄罗斯": "RU", "沙特阿拉伯": "SA", "塞尔维亚": "RS", "新加坡": "SG", "斯洛伐克": "SK",
-    "斯洛文尼亚": "SI", "南非": "ZA", "西班牙": "ES", "瑞典": "SE", "瑞士": "CH",
-    "台湾": "TW", "泰国": "TH", "土耳其": "TR", "乌克兰": "UA", "阿联酋": "AE",
-    "英国": "GB", "美国": "US", "越南": "VN", "阿曼": "OM", "柬埔寨": "KH",
-    "秘鲁": "PE", "阿塞拜疆": "AZ", "巴林": "BH","伊拉克": "IQ", "尼泊尔": "NP",
-    "卡塔尔": "QA", "科威特": "KW", "马耳他": "MT", "塞浦路斯": "CY", "格鲁吉亚": "GE",
-    "阿尔巴尼亚": "AL", "波黑": "BA", "北马其顿": "MK", "黎巴嫩": "LB", "约旦": "JO",
-    "缅甸": "MM", "老挝": "LA", "斯里兰卡": "LK", "肯尼亚": "KE", "摩洛哥": "MA",
-    "突尼斯": "TN", "厄瓜多尔": "EC", "乌拉圭": "UY", "哥斯达黎加": "CR", "巴拿马": "PA",
-        
+"阿富汗":"AF", "阿尔巴尼亚":"AL", "阿尔及利亚":"DZ", "安道尔":"AD", "安哥拉":"AO", "安圭拉":"AI", 
+"安提瓜和巴布达":"AG", "阿根廷":"AR", "亚美尼亚":"AM", "阿鲁巴":"AW", "澳大利亚":"AU", "奥地利":"AT", "阿塞拜疆":"AZ", "巴哈马":"BS", 
+"巴林":"BH", "孟加拉国":"BD", "巴巴多斯":"BB", "白俄罗斯":"BY", "比利时":"BE", "伯利兹":"BZ", "贝宁":"BJ", "百慕大":"BM", "不丹":"BT", 
+"玻利维亚":"BO", "波黑":"BA", "博茨瓦纳":"BW", "巴西":"BR", "文莱":"BN", "保加利亚":"BG", "布基纳法索":"BF", "布隆迪":"BI", "柬埔寨":"KH", 
+"喀麦隆":"CM", "加拿大":"CA", "佛得角":"CV", "开曼群岛":"KY", "中非":"CF", "乍得":"TD", "智利":"CL", "中国":"CN", "哥伦比亚":"CO", 
+"科摩罗":"KM", "刚果（金）":"CD", "刚果（布）":"CG", "哥斯达黎加":"CR", "科特迪瓦":"CI", "克罗地亚":"HR", "古巴":"CU", "塞浦路斯":"CY", 
+"捷克":"CZ", "丹麦":"DK", "吉布提":"DJ", "多米尼克":"DM", "多米尼加":"DO", "厄瓜多尔":"EC", "埃及":"EG", "萨尔瓦多":"SV", "赤道几内亚":"GQ", 
+"厄立特里亚":"ER", "爱沙尼亚":"EE", "埃塞俄比亚":"ET", "斐济":"FJ", "芬兰":"FI", "法国":"FR", "加蓬":"GA", "冈比亚":"GM", "格鲁吉亚":"GE", 
+"加纳":"GH", "希腊":"GR", "格林纳达":"GD", "危地马拉":"GT", "几内亚":"GN", "几内亚比绍":"GW", "圭亚那":"GY", "海地":"HT", "洪都拉斯":"HN", 
+"匈牙利":"HU", "冰岛":"IS", "印度":"IN", "印尼":"ID", "印度尼西亚":"ID", "伊朗":"IR", "伊拉克":"IQ", "爱尔兰":"IE", "以色列":"IL", 
+"意大利":"IT", "牙买加":"JM", "日本":"JP", "约旦":"JO", "哈萨克斯坦":"KZ", "肯尼亚":"KE", "基里巴斯":"KI", "科威特":"KW", 
+"吉尔吉斯斯坦":"KG", "老挝":"LA", "拉脱维亚":"LV", "黎巴嫩":"LB", "莱索托":"LS", "利比里亚":"LR", "利比亚":"LY", "列支敦士登":"LI", 
+"立陶宛":"LT", "卢森堡":"LU", "澳门":"MO", "北马其顿":"MK", "马达加斯加":"MG", "马拉维":"MW", "马来西亚":"MY", "马尔代夫":"MV", "马里":"ML", 
+"马耳他":"MT", "马绍尔群岛":"MH", "毛里塔尼亚":"MR", "毛里求斯":"MU", "墨西哥":"MX", "密克罗尼西亚":"FM", "摩尔多瓦":"MD", "摩纳哥":"MC", 
+"蒙古":"MN", "黑山":"ME", "摩洛哥":"MA", "莫桑比克":"MZ", "缅甸":"MM", "纳米比亚":"NA", "瑙鲁":"NR", "尼泊尔":"NP", "荷兰":"NL", "新西兰":"NZ", 
+"尼加拉瓜":"NI", "尼日尔":"NE", "尼日利亚":"NG", "挪威":"NO", "阿曼":"OM", "巴基斯坦":"PK", "帕劳":"PW", "巴勒斯坦":"PS", "巴拿马":"PA", 
+"巴布亚新几内亚":"PG", "巴拉圭":"PY", "秘鲁":"PE", "菲律宾":"PH", "波兰":"PL", "葡萄牙":"PT", "卡塔尔":"QA", "罗马尼亚":"RO", "俄罗斯":"RU", 
+"卢旺达":"RW", "圣马力诺":"SM", "沙特阿拉伯":"SA", "塞内加尔":"SN", "塞尔维亚":"RS", "塞舌尔":"SC", "塞拉利昂":"SL", "新加坡":"SG", "斯洛伐克":"SK", "斯洛文尼亚":"SI", "所罗门群岛":"SB", "索马里":"SO", "南非":"ZA", "西班牙":"ES", "斯里兰卡":"LK", "苏丹":"SD", "苏里南":"SR", "瑞典":"SE", 
+"瑞士":"CH", "叙利亚":"SY", "塔吉克斯坦":"TJ", "坦桑尼亚":"TZ", "泰国":"TH", "东帝汶":"TL", "多哥":"TG", "汤加":"TO", "特立尼达和多巴哥":"TT", 
+"突尼斯":"TN", "土耳其":"TR", "土库曼斯坦":"TM", "图瓦卢":"TV", "乌干达":"UG", "乌克兰":"UA", "阿联酋":"AE", "乌拉圭":"UY", "乌兹别克斯坦":"UZ", 
+"瓦努阿图":"VU", "委内瑞拉":"VE", "越南":"VN", "也门":"YE", "赞比亚":"ZM", "津巴布韦":"ZW"
 }
-
 
 
 JUNK_PATTERNS = re.compile(
@@ -534,70 +535,91 @@ def merge_and_deduplicate_proxies(proxies):
 # ----- 重点函数：重命名排序 -----
 def process_and_rename_proxies(proxies):
     country_counters = defaultdict(int)
+    name_repeat_counters = defaultdict(lambda: defaultdict(int))  # {region: {name: count}}
     final_proxies = []
 
+    # 汇总所有地区关键词，用于清理和匹配
     all_country_names = set()
     for rules in CUSTOM_REGEX_RULES.values():
         all_country_names.update(rules['pattern'].split('|'))
     all_country_names.update(CHINESE_COUNTRY_MAP.keys())
     all_country_names.update(CHINESE_COUNTRY_MAP.values())
     all_country_names.update(COUNTRY_NAME_TO_CODE_MAP.keys())
-
     sorted_country_names = sorted(all_country_names, key=len, reverse=True)
-    country_pattern = re.compile('|'.join(map(re.escape, sorted_country_names)), re.IGNORECASE)
+    master_pattern = re.compile('|'.join(map(re.escape, sorted_country_names)), re.IGNORECASE)
+
+    # 国旗emoji正则
+    flag_pattern = FLAG_EMOJI_PATTERN
+
+    # 速度匹配正则
     speed_pattern = re.compile(r'(\d+(?:\.\d+)?)\s*(M|K)?B/s', re.IGNORECASE)
 
     def remove_all_flag_emojis(text):
-        return FLAG_EMOJI_PATTERN.sub('', text).strip()
+        return flag_pattern.sub('', text).strip()
 
     def replace_country_code(m):
         code = m.group(0)
         return CHINESE_COUNTRY_MAP.get(code.upper(), code)
 
+    # 定义无效地区集合，统一过滤
+    INVALID_REGIONS = {"unknown", "other", "未知", "其他"}
+
     for proxy in proxies:
-        original_name = proxy.get('name', '').strip()
+        orig_name = proxy.get('name', '').strip()
+        region = proxy.get('region', None)
 
-        # 先清理节点名中的所有国旗和垃圾信息，减少干扰
-        clean_name = remove_all_flag_emojis(original_name)
-        clean_name = JUNK_PATTERNS.sub('', clean_name)
+        # 过滤无效地区，不重命名，保持原名
+        if not region or region.lower() in INVALID_REGIONS:
+            final_proxies.append(proxy)
+            continue
 
-        # 提取速度文本（第一个），并去除
+        region_code = COUNTRY_NAME_TO_CODE_MAP.get(region) or CUSTOM_REGEX_RULES.get(region, {}).get('code', '')
+
+        # 保留首个国旗，或自动生成
+        match_flag = flag_pattern.search(orig_name)
+        if match_flag:
+            flag = match_flag.group(0)
+            # 去除第一个国旗后的名称主体
+            feature_name = flag_pattern.sub('', orig_name, 1).strip()
+        else:
+            flag = get_country_flag_emoji(region_code)
+            feature_name = orig_name
+
+        # 移除所有地区关键词及垃圾信息，提纯名字主体
+        clean_feature = master_pattern.sub(' ', feature_name)
+        clean_feature = JUNK_PATTERNS.sub(' ', clean_feature)
+        clean_feature = clean_feature.replace('-', ' ').strip()
+        clean_feature = re.sub(r'\s+', ' ', clean_feature)
+
+        # 提取第一个测速标签
         speed_text = ''
-        speed_match = speed_pattern.search(clean_name)
+        speed_match = speed_pattern.search(clean_feature)
         if speed_match:
             number, unit = speed_match.groups()
             unit = unit.upper() if unit else ''
             speed_text = f"{number}{unit}B/s"
-            clean_name = speed_pattern.sub('', clean_name, count=1).strip()
+            clean_feature = speed_pattern.sub('', clean_feature, count=1).strip()
 
-        # 匹配地区
-        country_match = country_pattern.search(clean_name)
-        if country_match:
-            region_name_raw = country_match.group(0)
-
-            # 将英文缩写替换成中文名称
-            region_name = replace_country_code(re.match(r'.*', region_name_raw) or country_match)
-            for eng, chn in CHINESE_COUNTRY_MAP.items():
-                if re.fullmatch(re.escape(region_name), eng, re.IGNORECASE):
-                    region_name = chn
-                    break
-
-            country_counters[region_name] += 1
-            seq_num = country_counters[region_name]
-
-            region_code = COUNTRY_NAME_TO_CODE_MAP.get(region_name) or CUSTOM_REGEX_RULES.get(region_name, {}).get('code', '')
-            flag_emoji = get_country_flag_emoji(region_code)
-
-            # 生成新名称
-            new_name = f"{flag_emoji}{region_name}-{seq_num}"
-            if speed_text:
-                new_name += f"|{speed_text}"
-
-            proxy['name'] = new_name
+        # 如果提纯后名字空，自动用数字编号，否则保留提纯名字作为辨识部分
+        if not clean_feature:
+            country_counters[region] += 1
+            base_name = f"{flag}{region}-{country_counters[region]}"
         else:
-            # 未匹配到地区，保持原名不做重命名
-            proxy['name'] = original_name
+            # 带有地区和名称主体的格式
+            base_name = f"{flag} {region} {clean_feature}"
 
+        # 检测重复名字，自动加数字后缀
+        name_repeat_counters[region][base_name] += 1
+        count = name_repeat_counters[region][base_name]
+        if count > 1:
+            base_name = f"{base_name} {count}"
+
+        # 最后拼接测速文本（用 | 分隔）
+        if speed_text:
+            base_name = f"{base_name}|{speed_text}"
+
+        # 赋值新名称
+        proxy['name'] = base_name
         final_proxies.append(proxy)
 
     return final_proxies
