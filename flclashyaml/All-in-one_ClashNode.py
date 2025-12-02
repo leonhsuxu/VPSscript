@@ -63,9 +63,6 @@ CHINESE_COUNTRY_MAP = {
 }
 
 COUNTRY_NAME_TO_CODE_MAP = {
-'US': '美国', 'United States': '美国', 'USA': '美国', 'JP': '日本', 'Japan': '日本', 'HK': '香港', 'Hong Kong': '香港', 'SG': '狮城', 'Singapore': '狮城', 'TW': '湾省', 'Taiwan': '湾省', 'KR': '韩国', 'Korea': '韩国', 'KOR': '韩国', 'DE': '德国', 'Germany': '德国', 'GB': '英国', 'United Kingdom': '英国', 'UK': '英国', 'CA': '加拿大', 'Canada': '加拿大', 'AU': '澳大利亚', 'Australia': '澳大利亚', }
-
-COUNTRY_NAME_TO_CODE_MAP = {
     "阿根廷": "AR", "澳大利亚": "AU", "奥地利": "AT", "孟加拉国": "BD", "比利时": "BE",
     "巴西": "BR", "保加利亚": "BG", "加拿大": "CA", "智利": "CL", "哥伦比亚": "CO",
     "克罗地亚": "HR", "捷克": "CZ", "丹麦": "DK", "埃及": "EG", "爱沙尼亚": "EE",
