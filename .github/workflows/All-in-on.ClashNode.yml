@@ -46,7 +46,8 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git add flclashyaml/output_yaml
         if ! git diff --staged --quiet; then
-          git commit -m "${{ env.COMMIT_MESSAGE_PREFIX }} $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+          # 使用 TZ='Asia/Shanghai' 设置时区为北京时间，并调整输出格式
+          git commit -m "${{ env.COMMIT_MESSAGE_PREFIX }} $(TZ='Asia/Shanghai' date +'%Y-%m-%d %H:%M:%S') 北京时间"
           git push
         else
           echo "文件无变化，无需提交。"
