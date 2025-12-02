@@ -10,7 +10,7 @@ on:
       - main
     # 注意：[1]这里的路径无法使用变量，如果修改了脚本路径，需要手动同步修改此处
     paths:
-      - 'flclashyaml/All-in-one_ClashNode.py'
+      - 'TelegramNode/All-in-one_ClashNode.py'
 
 permissions:
   contents: write
@@ -20,7 +20,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       # --- 您可以在这里集中修改所有变量 ---
-      PYTHON_SCRIPT_PATH: flclashyaml/All-in-one_ClashNode.py  # <-- 要执行的 Python 脚本路径
+      PYTHON_SCRIPT_PATH: TelegramNode/All-in-one_ClashNode.py  # <-- 要执行的 Python 脚本路径
       COMMIT_MESSAGE_PREFIX: "✈️ 固定订阅链接.节点更新"           # <-- Git 提交信息的前缀
     steps:
     - name: 检出代码
