@@ -53,5 +53,5 @@ jobs:
     - name: 提交并推送更改
       uses: stefanzweifel/git-auto-commit-action@v5
       with:
-        commit_message: "自动更新：合并 Telegram 节点"
+        commit_message: "♻️ 自动更新：合并 Telegram 节点"
         file_pattern: "flclashyaml/telegram_scraper.yaml"
