@@ -30,3 +30,4 @@ TG-SSRProxy[TG-C]@mm8686_bot：https://pastecode.dev/raw/070syyrm/token=007
 TG-SSRProxy[TG-G]@myFreeNodeChat：https://pastecode.dev/raw/s4tmrvfd/token=myFreeNodeChat
 TG-SSRProxy[TG-G]@dingyue_center：https://proxypool.dmit.dpdns.org/clash/proxies?c=CN,HK,TW,SG,JP,KR,VN,US&type=vmess
 TG-SSRProxy[TG-G]@txwl666：https://sub.zyfx6.xyz/share/file/永久订阅@txwl666?token=clash
+TG-SSRProxy[TG-G]@MxlShare：https://mxlsub.qzz.io/new
