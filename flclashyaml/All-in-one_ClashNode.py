@@ -44,13 +44,13 @@ SOCKET_TIMEOUT = 10
 MAX_TEST_WORKERS = 256
 
 # ========== 区域映射与规则 ==========
-REGION_PRIORITY = ['香港', '日本', '新加坡', '美国', '台湾', '韩国', '德国', '英国', '加拿大', '澳大利亚']
+REGION_PRIORITY = ['香港', '日本', '狮城', '美国', '湾省', '韩国', '德国', '英国', '加拿大', '澳大利亚']
 CHINESE_COUNTRY_MAP = {
     'US': '美国', 'United States': '美国', 'USA': '美国',
     'JP': '日本', 'Japan': '日本',
     'HK': '香港', 'Hong Kong': '香港',
-    'SG': '新加坡', 'Singapore': '新加坡',
-    'TW': '台湾', 'Taiwan': '台湾',
+    'SG': '狮城', 'Singapore': '狮城',
+    'TW': '湾省', 'Taiwan': '湾省',
     'KR': '韩国', 'Korea': '韩国', 'KOR': '韩国',
     'DE': '德国', 'Germany': '德国',
     'GB': '英国', 'United Kingdom': '英国', 'UK': '英国',
@@ -85,9 +85,9 @@ JUNK_PATTERNS = re.compile(
 CUSTOM_REGEX_RULES = {
     '香港': {'code': 'HK', 'pattern': r'香港|港|HK|Hong Kong|HKBN|HGC|PCCW|WTT'},
     '日本': {'code': 'JP', 'pattern': r'日本|川日|东京|大阪|泉日|沪日|深日|JP|Japan'},
-    '新加坡': {'code': 'SG', 'pattern': r'新加坡|坡|新加坡|SG|Singapore'},
+    '狮城': {'code': 'SG', 'pattern': r'新加坡|坡|狮城|SG|Singapore'},
     '美国': {'code': 'US', 'pattern': r'美国|美|波特兰|达拉斯|Oregon|凤凰城|硅谷|拉斯维加斯|洛杉矶|圣何塞|西雅图|芝加哥'},
-    '台湾': {'code': 'TW', 'pattern': r'台湾|台湾|台|新北|彰化|TW|Taiwan'},
+    '湾省': {'code': 'TW', 'pattern': r'台湾|湾省|台|新北|彰化|TW|Taiwan'},
     '韩国': {'code': 'KR', 'pattern': r'韩国|韩|首尔|KR|Korea|KOR|韓'},
     '德国': {'code': 'DE', 'pattern': r'德国|DE|Germany'},
     '英国': {'code': 'GB', 'pattern': r'英国|英|UK|GB|United Kingdom|England'},
@@ -203,9 +203,15 @@ def is_base64(text):
 def decode_base64_and_parse(content):
     try:
         decoded = base64.b64decode(''.join(content.split())).decode('utf-8', errors='ignore')
+        # 可选：在这里打印解码内容预览（注释掉避免太长）
+        # print(f"  - Base64 解码内容预览（前500字符）：\n{decoded[:500]}{'...' if len(decoded) > 500 else ''}")
         proxies = []
+        success_count = 0
+        failure_count = 0
         for line in decoded.splitlines():
             line = line.strip()
+            if not line:
+                continue
             proxy = None
             if line.startswith('vmess://'):
                 proxy = parse_vmess_node(line)
@@ -223,6 +229,10 @@ def decode_base64_and_parse(content):
                 proxy = parse_hysteria2_node(line)
             if proxy:
                 proxies.append(proxy)
+                success_count += 1
+            else:
+                failure_count += 1
+        print(f"  - Base64 解码解析完成，成功解析节点数：{success_count}，失败数：{failure_count}")
         return proxies
     except Exception as e:
         print(f"  - Base64 解码解析异常: {e}")
