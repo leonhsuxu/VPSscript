@@ -1,5 +1,5 @@
 """
-固定链接获取节点脚本 V1 r1
+固定链接获取节点脚本 V1
 -----------------------------------------
 功能说明：
 本脚本用于从 URL.TXT 文件中读取多个以“#”开头划分的订阅区块，每个区块包含若干订阅链接。
@@ -101,7 +101,8 @@ COUNTRY_NAME_TO_CODE_MAP = {
 "蒙古":"MN", "黑山":"ME", "摩洛哥":"MA", "莫桑比克":"MZ", "缅甸":"MM", "纳米比亚":"NA", "瑙鲁":"NR", "尼泊尔":"NP", "荷兰":"NL", "新西兰":"NZ", 
 "尼加拉瓜":"NI", "尼日尔":"NE", "尼日利亚":"NG", "挪威":"NO", "阿曼":"OM", "巴基斯坦":"PK", "帕劳":"PW", "巴勒斯坦":"PS", "巴拿马":"PA", 
 "巴布亚新几内亚":"PG", "巴拉圭":"PY", "秘鲁":"PE", "菲律宾":"PH", "波兰":"PL", "葡萄牙":"PT", "卡塔尔":"QA", "罗马尼亚":"RO", "俄罗斯":"RU", 
-"卢旺达":"RW", "圣马力诺":"SM", "沙特阿拉伯":"SA", "塞内加尔":"SN", "塞尔维亚":"RS", "塞舌尔":"SC", "塞拉利昂":"SL", "新加坡":"SG", "斯洛伐克":"SK", "斯洛文尼亚":"SI", "所罗门群岛":"SB", "索马里":"SO", "南非":"ZA", "西班牙":"ES", "斯里兰卡":"LK", "苏丹":"SD", "苏里南":"SR", "瑞典":"SE", 
+"卢旺达":"RW", "圣马力诺":"SM", "沙特阿拉伯":"SA", "塞内加尔":"SN", "塞尔维亚":"RS", "塞舌尔":"SC", "塞拉利昂":"SL", "新加坡":"SG", "斯洛伐克":"SK", 
+"斯洛文尼亚":"SI", "所罗门群岛":"SB", "索马里":"SO", "南非":"ZA", "西班牙":"ES", "斯里兰卡":"LK", "苏丹":"SD", "苏里南":"SR", "瑞典":"SE", 
 "瑞士":"CH", "叙利亚":"SY", "塔吉克斯坦":"TJ", "坦桑尼亚":"TZ", "泰国":"TH", "东帝汶":"TL", "多哥":"TG", "汤加":"TO", "特立尼达和多巴哥":"TT", 
 "突尼斯":"TN", "土耳其":"TR", "土库曼斯坦":"TM", "图瓦卢":"TV", "乌干达":"UG", "乌克兰":"UA", "阿联酋":"AE", "乌拉圭":"UY", "乌兹别克斯坦":"UZ", 
 "瓦努阿图":"VU", "委内瑞拉":"VE", "越南":"VN", "也门":"YE", "赞比亚":"ZM", "津巴布韦":"ZW"
@@ -535,93 +536,64 @@ def merge_and_deduplicate_proxies(proxies):
 # ----- 重点函数：重命名排序 -----
 def process_and_rename_proxies(proxies):
     country_counters = defaultdict(int)
-    name_repeat_counters = defaultdict(lambda: defaultdict(int))  # {region: {name: count}}
     final_proxies = []
-
-    # 汇总所有地区关键词，用于清理和匹配
     all_country_names = set()
+    # 构造所有可能国家名称集合
+    
     for rules in CUSTOM_REGEX_RULES.values():
+        # 建议 here 应该用更合适的方式获取国家名
         all_country_names.update(rules['pattern'].split('|'))
+
     all_country_names.update(CHINESE_COUNTRY_MAP.keys())
     all_country_names.update(CHINESE_COUNTRY_MAP.values())
     all_country_names.update(COUNTRY_NAME_TO_CODE_MAP.keys())
+
     sorted_country_names = sorted(all_country_names, key=len, reverse=True)
-    master_pattern = re.compile('|'.join(map(re.escape, sorted_country_names)), re.IGNORECASE)
-
-    # 国旗emoji正则
-    flag_pattern = FLAG_EMOJI_PATTERN
-
-    # 速度匹配正则
+    country_pattern = re.compile('|'.join(map(re.escape, sorted_country_names)), re.IGNORECASE)
     speed_pattern = re.compile(r'(\d+(?:\.\d+)?)\s*(M|K)?B/s', re.IGNORECASE)
 
     def remove_all_flag_emojis(text):
-        return flag_pattern.sub('', text).strip()
+        return FLAG_EMOJI_PATTERN.sub('', text).strip()
 
-    def replace_country_code(m):
-        code = m.group(0)
-        return CHINESE_COUNTRY_MAP.get(code.upper(), code)
-
-    # 定义无效地区集合，统一过滤
-    INVALID_REGIONS = {"unknown", "other", "未知", "其他"}
+    def replace_country_code(text):
+        return CHINESE_COUNTRY_MAP.get(text.upper(), text)
 
     for proxy in proxies:
-        orig_name = proxy.get('name', '').strip()
-        region = proxy.get('region', None)
-
-        # 过滤无效地区，不重命名，保持原名
-        if not region or region.lower() in INVALID_REGIONS:
-            final_proxies.append(proxy)
-            continue
-
-        region_code = COUNTRY_NAME_TO_CODE_MAP.get(region) or CUSTOM_REGEX_RULES.get(region, {}).get('code', '')
-
-        # 保留首个国旗，或自动生成
-        match_flag = flag_pattern.search(orig_name)
-        if match_flag:
-            flag = match_flag.group(0)
-            # 去除第一个国旗后的名称主体
-            feature_name = flag_pattern.sub('', orig_name, 1).strip()
-        else:
-            flag = get_country_flag_emoji(region_code)
-            feature_name = orig_name
-
-        # 移除所有地区关键词及垃圾信息，提纯名字主体
-        clean_feature = master_pattern.sub(' ', feature_name)
-        clean_feature = JUNK_PATTERNS.sub(' ', clean_feature)
-        clean_feature = clean_feature.replace('-', ' ').strip()
-        clean_feature = re.sub(r'\s+', ' ', clean_feature)
-
-        # 提取第一个测速标签
+        original_name = proxy.get('name', '').strip()
+        clean_name = remove_all_flag_emojis(original_name)
+        clean_name = JUNK_PATTERNS.sub('', clean_name)
+        
         speed_text = ''
-        speed_match = speed_pattern.search(clean_feature)
+        speed_match = speed_pattern.search(clean_name)
         if speed_match:
             number, unit = speed_match.groups()
             unit = unit.upper() if unit else ''
             speed_text = f"{number}{unit}B/s"
-            clean_feature = speed_pattern.sub('', clean_feature, count=1).strip()
+            clean_name = speed_pattern.sub('', clean_name, count=1).strip()
 
-        # 如果提纯后名字空，自动用数字编号，否则保留提纯名字作为辨识部分
-        if not clean_feature:
-            country_counters[region] += 1
-            base_name = f"{flag}{region}-{country_counters[region]}"
+        country_match = country_pattern.search(clean_name)
+        if country_match:
+            region_name_raw = country_match.group(0)
+            region_name = replace_country_code(region_name_raw)
+
+            # 再次尝试替换英文简写为中文名
+            for eng, chn in CHINESE_COUNTRY_MAP.items():
+                if re.fullmatch(re.escape(region_name), eng, re.IGNORECASE):
+                    region_name = chn
+                    break
+
+            country_counters[region_name] += 1
+            seq_num = country_counters[region_name]
+            region_code = COUNTRY_NAME_TO_CODE_MAP.get(region_name) or CUSTOM_REGEX_RULES.get(region_name, {}).get('code', '')
+
+            flag_emoji = get_country_flag_emoji(region_code)
+            new_name = f"{flag_emoji}{region_name}-{seq_num}"
+            if speed_text:
+                new_name += f"|{speed_text}"
+            proxy['name'] = new_name
         else:
-            # 带有地区和名称主体的格式
-            base_name = f"{flag} {region} {clean_feature}"
-
-        # 检测重复名字，自动加数字后缀
-        name_repeat_counters[region][base_name] += 1
-        count = name_repeat_counters[region][base_name]
-        if count > 1:
-            base_name = f"{base_name} {count}"
-
-        # 最后拼接测速文本（用 | 分隔）
-        if speed_text:
-            base_name = f"{base_name}|{speed_text}"
-
-        # 赋值新名称
-        proxy['name'] = base_name
+            proxy['name'] = original_name
         final_proxies.append(proxy)
-
     return final_proxies
 
 # ----- 测速 -----
