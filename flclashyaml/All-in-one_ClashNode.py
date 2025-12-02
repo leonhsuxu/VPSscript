@@ -479,76 +479,71 @@ def merge_and_deduplicate_proxies(proxies):
 def process_and_rename_proxies(proxies):
     country_counters = defaultdict(int)
     final_proxies = []
-    all_region_names_for_stripping = set()
+
+    # 提取所有可能的国家地区词，用于正则匹配
+    all_country_names = set()
     for rules in CUSTOM_REGEX_RULES.values():
-        all_region_names_for_stripping.update(rules['pattern'].split('|'))
-    for k, v in CHINESE_COUNTRY_MAP.items():
-        all_region_names_for_stripping.add(k)
-        all_region_names_for_stripping.add(v)
-    all_region_names_for_stripping.update(COUNTRY_NAME_TO_CODE_MAP.keys())
-    sorted_region_names = sorted(list(all_region_names_for_stripping), key=len, reverse=True)
-    master_region_pattern = re.compile('|'.join(map(re.escape, sorted_region_names)), re.IGNORECASE)
-    country_code_pattern = re.compile(r'\b(' + '|'.join(re.escape(k) for k in CHINESE_COUNTRY_MAP.keys()) + r')\b', re.IGNORECASE)
+        all_country_names.update(rules['pattern'].split('|'))
+    all_country_names.update(CHINESE_COUNTRY_MAP.keys())
+    all_country_names.update(CHINESE_COUNTRY_MAP.values())
+    all_country_names.update(COUNTRY_NAME_TO_CODE_MAP.keys())
+
+    # 按长度倒序排列，避免子串冲突
+    sorted_country_names = sorted(all_country_names, key=len, reverse=True)
+    country_pattern = re.compile('|'.join(map(re.escape, sorted_country_names)), re.IGNORECASE)
+
+    # 匹配速度的正则，兼容 M/K 单位
+    speed_pattern = re.compile(r'(\d+(?:\.\d+)?)\s*(M|K)?B/s', re.IGNORECASE)
+
+    # 删除所有国旗 Emoji
+    def remove_all_flag_emojis(text):
+        return FLAG_EMOJI_PATTERN.sub('', text).strip()
 
     def replace_country_code(m):
         code = m.group(0)
         return CHINESE_COUNTRY_MAP.get(code.upper(), code)
 
-    speed_pattern = re.compile(r'(\d+(?:\.\d+)?)\s*(M|K)?B/s', re.IGNORECASE)
-
-    # 新增：删除所有国旗 Emoji 的函数
-    def remove_all_flag_emojis(text):
-        return FLAG_EMOJI_PATTERN.sub('', text).strip()
-
-    # 第一步，识别 region
-    for p in proxies:
-        original_name = p.get('name', '').strip()
-        name_wo_flag = remove_all_flag_emojis(original_name)  # 删除所有国旗
-        name_with_chinese = country_code_pattern.sub(replace_country_code, name_wo_flag)
-        name_for_region_detect = JUNK_PATTERNS.sub('', name_with_chinese).strip()
-        for eng, chn in CHINESE_COUNTRY_MAP.items():
-            pattern = re.compile(r'\b' + re.escape(eng) + r'\b', re.IGNORECASE)
-            name_for_region_detect = pattern.sub(chn, name_for_region_detect)
-        p['region'] = None
-        for region_name, rules in CUSTOM_REGEX_RULES.items():
-            if re.search(rules['pattern'], name_for_region_detect, re.IGNORECASE):
-                p['region'] = region_name
-                break
-        if p['region'] is None:
-            matched_region = None
-            for country_chn_name in COUNTRY_NAME_TO_CODE_MAP.keys():
-                pattern = re.compile(r'\b' + re.escape(country_chn_name) + r'\b', re.IGNORECASE)
-                if pattern.search(name_for_region_detect):
-                    matched_region = country_chn_name
-                    break
-            p['region'] = matched_region if matched_region else (original_name if original_name else '未知')
-
-    # 第二步，重命名，格式：国旗+地区-序号|下载速度
     for proxy in proxies:
         original_name = proxy.get('name', '').strip()
-        # 删除所有国旗 emoji
-        name_wo_flag = remove_all_flag_emojis(original_name)
 
-        region_name = proxy.get('region', '未知')
-        region_code = COUNTRY_NAME_TO_CODE_MAP.get(region_name) or CUSTOM_REGEX_RULES.get(region_name, {}).get('code', '')
-        flag_emoji = get_country_flag_emoji(region_code)
+        # 1. 删除所有国旗和垃圾字段，减小干扰
+        clean_name = remove_all_flag_emojis(original_name)
+        clean_name = JUNK_PATTERNS.sub('', clean_name)
 
-        name_with_chinese = country_code_pattern.sub(replace_country_code, name_wo_flag)
-
-        # 查找所有测速文本，只保留第一个
+        # 2. 正则提取速度，保留第一个匹配
         speed_text = ''
-        speed_matches = speed_pattern.findall(name_with_chinese)
-        if speed_matches:
-            number, unit = speed_matches[0]
+        speed_match = speed_pattern.search(clean_name)
+        if speed_match:
+            number, unit = speed_match.groups()
             unit = unit.upper() if unit else ''
             speed_text = f"{number}{unit}B/s"
+            # 从名字里去掉速度文本
+            clean_name = speed_pattern.sub('', clean_name, count=1).strip()
 
-        # 删除所有测速文本
-        name_without_speed = speed_pattern.sub('', name_with_chinese).strip()
+        # 3. 正则匹配地区/国家，优先取第一个匹配
+        country_match = country_pattern.search(clean_name)
+        if country_match:
+            region_name = country_match.group(0)
+            # 替换简写英文为中文名（如果在CHINESE_COUNTRY_MAP里）
+            region_name = replace_country_code(re.match(r'.*', region_name) or country_match)
+            # 因可能还是英文缩写，用映射先转换英文->中文
+            # 这里手动再映射一次，确保是中文显示
+            for eng, chn in CHINESE_COUNTRY_MAP.items():
+                if re.fullmatch(re.escape(region_name), eng, re.IGNORECASE):
+                    region_name = chn
+                    break
+        else:
+            region_name = '未知'
 
+        # 4. 序号计数
         country_counters[region_name] += 1
         seq_num = country_counters[region_name]
 
+        # 5. 获取国旗 emoji
+        region_code = COUNTRY_NAME_TO_CODE_MAP.get(region_name) or CUSTOM_REGEX_RULES.get(region_name, {}).get('code', '')
+        flag_emoji = get_country_flag_emoji(region_code)
+
+        # 6. 生成新节点名：国旗emoji+地区名-序号|速度（速度可选）
         new_name = f"{flag_emoji}{region_name}-{seq_num}"
         if speed_text:
             new_name += f"|{speed_text}"
