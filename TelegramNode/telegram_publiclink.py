@@ -237,56 +237,71 @@ def extract_valid_subscribe_links(text):
 
     return valid_links
     
-async def scrape_telegram_links(last_message_ids):
+async def scrape_telegram_links(last_message_ids=None):
+    if last_message_ids is None:
+        last_message_ids = {}
+
     if not all([API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS_STR]):
-        print("❌ 缺少 Telegram 配置信息，终止抓取。")
-        return [], last_message_ids
-    
-    TARGET_CHANNELS = [line.strip() for line in TELEGRAM_CHANNEL_IDS_STR.strip().split('\n') if line.strip() and not line.startswith('#')]
-    if not TARGET_CHANNELS:
-        print("❌ TELEGRAM_CHANNEL_IDS 配置无有效频道ID。")
+        print("❌ 错误: 缺少必要的环境变量 (API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS)。")
         return [], last_message_ids
 
-    client = TelegramClient(StringSession(STRING_SESSION), int(API_ID), API_HASH)
-    await client.start()
-    print("✅ Telegram 登录成功")
-    
+    TARGET_CHANNELS = [line.strip() for line in TELEGRAM_CHANNEL_IDS_STR.split('\n') 
+                       if line.strip() and not line.strip().startswith('#')]
+    if not TARGET_CHANNELS:
+        print("❌ 错误: TELEGRAM_CHANNEL_IDS 中未找到有效频道 ID。")
+        return [], last_message_ids
+
+    print(f"▶️ 配置抓取 {len(TARGET_CHANNELS)} 个频道: {TARGET_CHANNELS}")
+
+    try:
+        client = TelegramClient(StringSession(STRING_SESSION), API_ID, API_HASH)
+        await client.connect()
+        me = await client.get_me()
+        print(f"✅ 以 {me.first_name} (@{me.username}) 的身份成功连接")
+    except Exception as e:
+        print(f"❌ 错误: 连接 Telegram 时出错: {e}")
+        return [], last_message_ids
+
+    from datetime import timezone, timedelta
+    BJ_TZ = timezone(timedelta(hours=8))
     bj_now = datetime.now(BJ_TZ)
-    cutoff_time = bj_now - timedelta(hours=TIME_WINDOW_HOURS)
-    cutoff_utc = cutoff_time.astimezone(timezone.utc)
+    bj_prior_time = bj_now - timedelta(hours=TIME_WINDOW_HOURS)
+    target_time = bj_prior_time.astimezone(timezone.utc)
 
     all_links = set()
 
     for channel_id in TARGET_CHANNELS:
-        print(f"📢 抓取频道 {channel_id} 中...")
+        print(f"\n📢  正在处理频道: {channel_id} ...")
         try:
             entity = await client.get_entity(channel_id)
         except Exception as e:
-            print(f"❌ 获取频道实体失败: {e}")
+            print(f"❌ 错误: 无法获取频道实体 {channel_id}: {e}")
             continue
-        
+
         last_id = last_message_ids.get(channel_id, 0)
         max_id_found = last_id
-        
+
         try:
-            async for message in client.iter_messages(entity, min_id=last_id+1, reverse=False):
-                if message.date < cutoff_utc:
+            async for message in client.iter_messages(entity, min_id=last_id + 1, reverse=False):
+                if message.date < target_time:
                     break
                 if message.text:
                     links = extract_valid_subscribe_links(message.text)
                     for link in links:
                         all_links.add(link)
-                        print(f"  找到链接: {link[:70]}...")
+                        print(f"  ✅ 找到链接: {link[:70]}...")
                 if message.id > max_id_found:
                     max_id_found = message.id
+
             last_message_ids[channel_id] = max_id_found
         except Exception as e:
-            print(f"❌ 频道消息遍历失败: {e}")
+            print(f"❌ 错误: 从频道 '{channel_id}' 获取消息时出错: {e}")
 
     await client.disconnect()
-    print(f"✅ 抓取完成，找到 {len(all_links)} 个不重复链接。")
+
+    print(f"\n✅ 抓取完成, 共找到 {len(all_links)} 个不重复的有效链接。")
     return list(all_links), last_message_ids
-    
+   
     
     
 def get_country_flag_emoji(code):
