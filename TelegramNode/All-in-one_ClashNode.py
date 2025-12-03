@@ -1,5 +1,5 @@
 """
-固定链接获取节点脚本 V1
+固定链接获取节点脚本 V2
 -----------------------------------------
 功能说明：
 本脚本用于从 URL.TXT 文件中读取多个以“#”开头划分的订阅区块，每个区块包含若干订阅链接。
@@ -7,7 +7,7 @@
 1. 自动识别并拆分多个订阅区块；
 2. 针对每个区块，提取所有 HTTP/HTTPS 订阅链接；
 3. 依次下载订阅内容（优先使用 wget，失败后使用 requests）；
-4. 自动识别 YAML 直接解析，或 Base64 解码并支持多协议节点解析（vmess、vless、ssr、ss、trojan、hysteria等）；
+4. V2.自动识别 YAML 直接解析、再明文判定解析、后 Base64 解码节点解析（vmess、vless、ssr、ss、trojan、hysteria等）；
 5. 合并去重所有节点，同时支持节点测速（通过纯 Python socket）筛选可用节点；
 6. 智能为所有节点添加符合规则的区域标识和国旗 Emoji，并重命名；
 7. 按地区优先级及测速结果排序节点；
@@ -215,22 +215,59 @@ def attempt_download_using_requests(url):
         print(f"  ✗ requests 失败: {e}")
         return None
 
+# ----- 新增函数：解析明文协议节点 -----
+def parse_plain_nodes_from_text(text):
+    proxies = []
+    for line in text.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        proxy = None
+        if line.startswith('vmess://'):
+            proxy = parse_vmess_node(line)
+        elif line.startswith('vless://'):
+            proxy = parse_vless_node(line)
+        elif line.startswith('ssr://'):
+            proxy = parse_ssr_node(line)
+        elif line.startswith('ss://'):
+            proxy = parse_ss_node(line)
+        elif line.startswith('trojan://'):
+            proxy = parse_trojan_node(line)
+        elif line.startswith('hysteria://'):
+            proxy = parse_hysteria_node(line)
+        elif line.startswith('hysteria2://'):
+            proxy = parse_hysteria2_node(line)
+        if proxy:
+            proxies.append(proxy)
+    return proxies
+
+# ----- 修改 download_subscription 函数 -----
 def download_subscription(url):
     content = attempt_download_using_wget(url)
     if content is None:
         content = attempt_download_using_requests(url)
     if content is None:
         return []
+
+    # 先尝试yaml格式直接解析
     proxies = parse_proxies_from_content(content)
     if proxies:
         return proxies
+
+    # 尝试从明文协议链接中提取节点
+    proxies = parse_plain_nodes_from_text(content)
+    if proxies:
+        return proxies
+
+    # 再尝试base64编码解码并解析
     if is_base64(content):
         proxies = decode_base64_and_parse(content)
         if proxies:
             return proxies
         print("  - Base64 解码无效节点")
     else:
-        print("  - 内容非 Base64")
+        print("  - 内容非 Base64，且未匹配到明文协议节点")
+
     return []
 
 # ----- 解析相关 -----
@@ -730,7 +767,7 @@ def process_block_to_yaml(block):
 
 def main():
     print("=" * 60)
-    print("固定链接获取节点脚本 V1")
+    print("固定链接获取节点脚本 V2")
     print(f"时间: {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
     blocks = parse_url_txt_to_blocks()
