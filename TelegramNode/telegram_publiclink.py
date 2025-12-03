@@ -119,7 +119,7 @@ def extract_valid_subscribe_links(text):
 
     # 1. 找所有订阅链接（只匹配带订阅关键字的链接，不匹配机场链接）
     link_pattern = re.compile(
-        r'(?:订阅链接|订阅地址|订阅)[\s:：]*\*{0,2}(https?://[^\s<>"*`]+)\*{0,2}'
+        r'(?:订阅链接|订阅地址|订阅)[\s:：]*?[^hH]*?(https?://[^\s<>"*`]+)'
     )
     links = link_pattern.findall(text)
 
