@@ -49,8 +49,10 @@ OUTPUT_FILE = 'flclashyaml/telegram_scraper.yaml'  # 输出YAML路径
 ENABLE_SPEED_TEST = True  # 是否启用测速  True开启，False关闭
 SOCKET_TIMEOUT = 3  # TCP测速超时时间(秒)
 MAX_TEST_WORKERS = 256  # 并发测速线程数
-TEST_URL = 'http://www.gstatic.com/generate_204'  # 测速的 URL
-TEST_INTERVAL = 300  # 测速间隔，单位为秒
+
+SOCKET_TIMEOUT = 3  # TCP连接超时时间，单位秒
+HTTP_TEST_URL = 'http://www.gstatic.com/generate_204'  # 用于HTTP测速的目标URL，该URL返回204无内容响应，轻量快速
+HTTP_TIMEOUT = 5  # HTTP请求超时时间，单位秒
 
 
 # ========== 地区过滤配置 ==========
@@ -702,15 +704,47 @@ def download_subscription(url):
 
 
 def test_single_proxy_tcp(proxy):
-    """使用 TCP 连接测速（兼容所有协议）"""
+    """TCP连接测试，测量连接延迟"""
     try:
-        start = time.time()
+        start = time.time()  # 记录开始时间
+        # 试着以超时 SOCKET_TIMEOUT 秒连接 proxy 的服务器地址和端口
         with socket.create_connection((proxy['server'], proxy['port']), timeout=SOCKET_TIMEOUT) as sock:
-            end = time.time()
-            proxy['delay'] = int((end - start) * 1000)
-            return proxy
+            end = time.time()  # 连接成功，记录结束时间
+            proxy['tcp_delay'] = int((end - start) * 1000) # 计算TCP连接耗时，单位毫秒，存入proxy字典
+            return proxy  # 返回带延迟信息的节点字典
     except Exception:
+        # 连接异常（超时、拒绝、网络错误等）返回 None，表示测速失败
         return None
+
+def test_single_proxy_http(proxy):
+    """HTTP请求测速，测量请求响应时间"""
+    try:
+        start = time.time()  # 记录开始时间
+        # 直接用requests库访问HTTP_TEST_URL，不走代理（如果需要代理需设置proxies参数）
+        # 请求超时为HTTP_TIMEOUT秒
+        response = requests.get(HTTP_TEST_URL, timeout=HTTP_TIMEOUT)
+        response.raise_for_status()  # 如果响应状态码非200抛出异常
+        end = time.time()  # 请求成功返回时记录结束时间
+        proxy['http_delay'] = int((end - start) * 1000) # 计算HTTP请求耗时，单位毫秒，存入proxy字典
+        return proxy  # 返回带HTTP延迟信息的节点字典
+    except Exception:
+        # 请求异常（超时、网络错误、非200状态码等），返回 None 表示测速失败
+        return None
+
+def combined_speed_test(proxy):
+    """先做TCP测速，如果成功，则继续做HTTP请求测速"""
+    p = test_single_proxy_tcp(proxy)  # TCP测速
+    if not p:
+        # TCP测速失败，直接返回None，跳过HTTP测速，节点视为不可用
+        return None
+    p = test_single_proxy_http(p)  # HTTP测速
+    if not p:
+        # HTTP测速失败，但TCP测试成功
+        # 此处设置节点仍保留，但HTTP延迟置为 None，表明HTTP测速失败
+        p['http_delay'] = None
+        return p
+    # TCP和HTTP测速均成功，返回包含两个延迟信息的节点
+    return p
 
 def get_proxy_key(p):
     """生成代理节点的唯一标识"""
