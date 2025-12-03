@@ -158,48 +158,52 @@ def is_expire_time_valid(expire_time):
     return True
 
 async def scrape_telegram_links():
-    """从 Telegram 频道抓取订阅链接"""
     if not all([API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS_STR]):
-        print("❌ 错误: 缺少必要的环境变量 (API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS)。")
+        print("❌ 缺少必要环境变量")
         return []
-
-    # 处理频道 ID 列表
-    TARGET_CHANNELS = [line.strip() for line in TELEGRAM_CHANNEL_IDS_STR.split('\n') if line.strip() and not line.strip().startswith('#')]
+    TARGET_CHANNELS = [line.strip() for line in TELEGRAM_CHANNEL_IDS_STR.split('\n') if line.strip() and not line.startswith('#')]
     if not TARGET_CHANNELS:
-        print("❌ 错误: TELEGRAM_CHANNEL_IDS 中未找到有效频道 ID。")
+        print("❌ 未配置有效频道ID")
         return []
-
-    print(f"▶️ 配置抓取 {len(TARGET_CHANNELS)} 个频道: {TARGET_CHANNELS}")
+    print(f"要抓取的频道: {TARGET_CHANNELS}")
 
     try:
         client = TelegramClient(StringSession(STRING_SESSION), API_ID, API_HASH)
         await client.connect()
         me = await client.get_me()
-        print(f"✅ 以 {me.first_name} (@{me.username}) 的身份成功连接")
+        print(f"✅ Telegram 连接成功，以账号：{me.first_name} (@{me.username})")
     except Exception as e:
-        print(f"❌ 错误: 连接 Telegram 时出错: {e}")
+        print(f"❌ 连接失败: {e}")
         return []
 
     target_time = datetime.now(timezone.utc) - timedelta(hours=TIME_WINDOW_HOURS)
     all_links = set()
 
     for channel_id in TARGET_CHANNELS:
-        print(f"\n--- 正在处理频道: {channel_id} ---")
+        print(f"\n--- 处理频道: {channel_id} ---")
         try:
-            async for message in client.iter_messages(await client.get_entity(channel_id), limit=500):
+            entity = await client.get_entity(channel_id)
+            async for message in client.iter_messages(entity, limit=500):
+                # 打印消息时间和内容调试
+                print(f"消息时间: {message.date}, 内容预览: {message.text[:100] if message.text else '无文本'}")
                 if message.date < target_time:
                     break
-                if message.text and is_expire_time_valid(parse_expire_time(message.text)):
-                    for url in re.findall(r'(?:订阅链接|订阅地址|订阅|链接)[\s:：]*\s*(https?://[^\s<>"*`]+)', message.text):
-                        cleaned_url = url.strip().strip('.,*`')
-                        if cleaned_url:
-                            all_links.add(cleaned_url)
-                            print(f"  ✅ 找到链接: {cleaned_url[:70]}...")
+                # 查看解析的 expire time
+                expire = parse_expire_time(message.text or '')
+                print(f"  到期时间: {expire}")
+                # 临时关闭时间过滤：
+                # if message.text and is_expire_time_valid(expire):
+                if message.text:
+                    urls = re.findall(r'https?://[^\s<>"*`]+', message.text)
+                    for url in urls:
+                        url = url.strip().strip('.,*`')
+                        if url:
+                            all_links.add(url)
+                            print(f"  找到链接: {url}")
         except Exception as e:
-            print(f"❌ 错误: 从频道 '{channel_id}' 获取消息时出错: {e}")
-
+            print(f"❌ 读取频道消息异常: {e}")
     await client.disconnect()
-    print(f"\n✅ 抓取完成, 共找到 {len(all_links)} 个不重复的有效链接。")
+    print(f"\n抓取完成，共找到 {len(all_links)} 个订阅链接。")
     return list(all_links)
 
 def preprocess_regex_rules():
