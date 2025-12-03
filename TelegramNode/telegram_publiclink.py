@@ -656,6 +656,95 @@ def decode_base64_and_parse(content):
         print(f"  - Base64 解码解析异常: {e}")
         return []
 
+def download_subscription(url):
+    content = attempt_download_using_wget(url)
+    if content is None:
+        content = attempt_download_using_requests(url)
+    if content is None:
+        print(f"  ❌ 下载失败: {url}")
+        return []
+
+    proxies = parse_proxies_from_content(content)
+    if proxies:
+        print(f"  - 直接 YAML 解析获取 {len(proxies)} 个节点")
+        return proxies
+
+    proxies = parse_plain_nodes_from_text(content)
+    if proxies:
+        print(f"  - 明文内容解析获取 {len(proxies)} 个节点")
+        return proxies
+
+    if is_base64(content):
+        print(f"  - 内容为 Base64 编码，正在解码解析...")
+        proxies = decode_base64_and_parse(content)
+        if proxies:
+            return proxies
+        else:
+            print(f"  - Base64 解码无有效节点")
+            return []
+    print(f"  - 内容不符合已知格式，未找到有效节点")
+    return []
+
+
+def test_single_proxy_tcp(proxy):
+    """使用 TCP 连接测速（兼容所有协议）"""
+    try:
+        start = time.time()
+        with socket.create_connection((proxy['server'], proxy['port']), timeout=SOCKET_TIMEOUT) as sock:
+            end = time.time()
+            proxy['delay'] = int((end - start) * 1000)
+            return proxy
+    except Exception:
+        return None
+
+def get_proxy_key(p):
+    """生成代理节点的唯一标识"""
+    # 优先使用 uuid/password，然后是 server/port 组合
+    unique_part = p.get('uuid') or p.get('password') or ''
+    return hashlib.md5(
+        f"{p.get('server','')}:{p.get('port',0)}|{unique_part}".encode()
+    ).hexdigest()
+
+def is_valid_proxy(proxy):
+    """验证代理节点的协议格式和有效性"""
+    if not isinstance(proxy, dict):
+        return False
+    required_keys = ['name', 'server', 'port', 'type']
+    if not all(key in proxy for key in required_keys):
+        return False
+    # 进一步检查协议类型
+    allowed_types = {'http', 'socks5', 'trojan', 'vless', 'ss', 'vmess', 'ssr', 'hysteria', 'hysteria2'}
+    if 'type' in proxy and proxy['type'] not in allowed_types:
+        return False
+    # 确保端口范围在有效范围内
+    if not isinstance(proxy['port'], int) or not (1 <= proxy['port'] <= 65535):
+        return False
+    return True
+
+
+
+def delete_old_yaml():
+    """每周一晚上23:00删除旧的 YAML 文件"""
+    now = datetime.now(timezone(timedelta(hours=8)))  # 北京时间
+    # 周一(weekday()==0), 23:00-23:59
+    if now.weekday() == 0 and now.hour == 23:
+        if os.path.exists(OUTPUT_FILE):
+            try:
+                os.remove(OUTPUT_FILE)
+                print(f"✅ 已根据计划删除旧的配置文件: {OUTPUT_FILE}")
+            except OSError as e:
+                print(f"❌ 删除旧配置文件时出错: {e}")
+
+def generate_config(proxies):
+    """根据代理节点列表生成完整的 Clash 配置字典"""
+    if not proxies:
+        return None
+    # 仅包含proxies键，使其成为一个有效的Clash代理提供者文件
+    config = {
+        'proxies': proxies,
+    }
+    return config
+
 
 async def main():
     print("[1/5] 读取已有节点及抓取状态文件")
