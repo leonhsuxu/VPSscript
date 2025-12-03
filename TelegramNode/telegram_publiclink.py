@@ -303,7 +303,13 @@ async def scrape_telegram_links(last_message_ids=None):
 
     print(f"\n✅ 抓取完成, 共找到 {len(all_links)} 个不重复的有效链接。")
     return list(all_links), last_message_ids
-   
+
+def preprocess_regex_rules():
+    """预处理正则规则：按长度排序以优化匹配效率"""
+    for region in CUSTOM_REGEX_RULES:
+        CUSTOM_REGEX_RULES[region]['pattern'] = '|'.join(
+            sorted(CUSTOM_REGEX_RULES[region]['pattern'].split('|'), key=len, reverse=True)
+        )
     
     
 def get_country_flag_emoji(code):
