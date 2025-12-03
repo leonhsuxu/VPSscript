@@ -218,27 +218,49 @@ def attempt_download_using_requests(url):
 # ----- 新增函数：解析明文协议节点 -----
 def parse_plain_nodes_from_text(text):
     proxies = []
+    success_count = defaultdict(int)
+    failure_count = defaultdict(int)
     for line in text.splitlines():
         line = line.strip()
         if not line:
             continue
         proxy = None
+        proto = None
         if line.startswith('vmess://'):
+            proto = 'vmess'
             proxy = parse_vmess_node(line)
         elif line.startswith('vless://'):
+            proto = 'vless'
             proxy = parse_vless_node(line)
         elif line.startswith('ssr://'):
+            proto = 'ssr'
             proxy = parse_ssr_node(line)
         elif line.startswith('ss://'):
+            proto = 'ss'
             proxy = parse_ss_node(line)
         elif line.startswith('trojan://'):
+            proto = 'trojan'
             proxy = parse_trojan_node(line)
         elif line.startswith('hysteria://'):
+            proto = 'hysteria'
             proxy = parse_hysteria_node(line)
         elif line.startswith('hysteria2://'):
+            proto = 'hysteria2'
             proxy = parse_hysteria2_node(line)
+        else:
+            continue
+
         if proxy:
             proxies.append(proxy)
+            success_count[proto] += 1
+        else:
+            failure_count[proto] += 1
+
+    for proto, count in success_count.items():
+        print(f"  - 明文协议解析完成，{proto} 节点成功数：{count}")
+    for proto, count in failure_count.items():
+        print(f"  - 明文协议解析失败，{proto} 节点失败数：{count}")
+
     return proxies
 
 # ----- 修改 download_subscription 函数 -----
@@ -299,184 +321,58 @@ def is_base64(text):
 def decode_base64_and_parse(content):
     try:
         decoded = base64.b64decode(''.join(content.split())).decode('utf-8', errors='ignore')
-        # 可选：在这里打印解码内容预览（注释掉避免太长）
-        # print(f"  - Base64 解码内容预览（前500字符）：\n{decoded[:500]}{'...' if len(decoded) > 500 else ''}")
         proxies = []
-        success_count = 0
-        failure_count = 0
+        success_count = defaultdict(int)
+        failure_count = defaultdict(int)
         for line in decoded.splitlines():
             line = line.strip()
             if not line:
                 continue
             proxy = None
+            proto = None
             if line.startswith('vmess://'):
+                proto = 'vmess'
                 proxy = parse_vmess_node(line)
             elif line.startswith('vless://'):
+                proto = 'vless'
                 proxy = parse_vless_node(line)
             elif line.startswith('ssr://'):
+                proto = 'ssr'
                 proxy = parse_ssr_node(line)
             elif line.startswith('ss://'):
+                proto = 'ss'
                 proxy = parse_ss_node(line)
             elif line.startswith('trojan://'):
+                proto = 'trojan'
                 proxy = parse_trojan_node(line)
             elif line.startswith('hysteria://'):
+                proto = 'hysteria'
                 proxy = parse_hysteria_node(line)
             elif line.startswith('hysteria2://'):
+                proto = 'hysteria2'
                 proxy = parse_hysteria2_node(line)
+            else:
+                continue
+
             if proxy:
                 proxies.append(proxy)
-                success_count += 1
+                success_count[proto] += 1
             else:
-                failure_count += 1
-        print(f"  - Base64 解码解析完成，成功解析节点数：{success_count}，失败数：{failure_count}")
+                failure_count[proto] += 1
+
+        for proto, count in success_count.items():
+            print(f"  - Base64 解码解析完成，{proto} 节点成功数：{count}")
+        for proto, count in failure_count.items():
+            print(f"  - Base64 解码解析失败，{proto} 节点失败数：{count}")
+
         return proxies
     except Exception as e:
         print(f"  - Base64 解码解析异常: {e}")
         return []
 
+
 # ----- 协议解析实现 -----
 def parse_vmess_node(line):
-    try:
-        content_b64 = line[8:]
-        decoded = base64.b64decode(content_b64 + '=' * (-len(content_b64) % 4)).decode('utf-8', errors='ignore')
-        info = json.loads(decoded)
-        node = {
-            'name': info.get('ps', 'vmess_node'),
-            'type': 'vmess',
-            'server': info.get('add') or info.get('host'),
-            'port': int(info.get('port', 0)),
-            'uuid': info.get('id') or info.get('uuid'),
-            'alterId': int(info.get('aid', info.get('alterId', 0))) if str(info.get('aid', '')).isdigit() else 0,
-            'cipher': info.get('scy', 'auto'),
-            'network': info.get('net', 'tcp'),
-            'tls': True if info.get('tls', '').lower() == 'tls' else False,
-            'skip-cert-verify': info.get('allowInsecure', False),
-            'ws-opts': {},
-        }
-        if node['network'] == 'ws':
-            ws_opts = {
-                'path': info.get('path', ''),
-                'headers': {'Host': info.get('host', '')} if info.get('host') else {},
-            }
-            node['ws-opts'] = ws_opts
-        return node
-    except Exception as e:
-        print(f"  - vmess 节点解析失败: {e}")
-        return None
-
-def parse_vless_node(line):
-    try:
-        line = line.strip()
-        parsed = urlparse(line)
-        if parsed.scheme != 'vless':
-            return None
-        params = parse_qs(parsed.query)
-        node = {
-            'name': unquote(parsed.fragment) if parsed.fragment else f"vless_{parsed.hostname}",
-            'type': 'vless',
-            'server': parsed.hostname,
-            'port': int(parsed.port or 0),
-            'uuid': parsed.username,
-            'encryption': 'none',
-            'flow': params.get('flow', [''])[0],
-            'tls': (parsed.query.lower().find('tls') != -1) or ('tls' in params),
-            'skip-cert-verify': params.get('allowInsecure', ['false'])[0].lower() == 'true',
-            'network': params.get('type', ['tcp'])[0],
-            'host': params.get('host', [''])[0],
-            'path': params.get('path', [''])[0],
-            'sni': params.get('sni', [''])[0],
-        }
-        if node['network'] == 'ws':
-            node['ws-opts'] = {
-                'path': node['path'],
-                'headers': {'Host': node['host']} if node['host'] else {}
-            }
-        return node
-    except Exception as e:
-        print(f"  - vless 节点解析失败: {e}")
-        return None
-
-def parse_ssr_node(line):
-    try:
-        ssr_b64 = line[6:]
-        ssr_decoded = base64.urlsafe_b64decode(ssr_b64 + '=' * (-len(ssr_b64) % 4)).decode('utf-8', errors='ignore')
-        parts = ssr_decoded.split('/?')
-        main = parts[0]
-        params_str = parts[1] if len(parts) > 1 else ''
-        
-        server, port, protocol, method, obfs, password_b64 = main.split(':', 5)
-        password = base64.urlsafe_b64decode(password_b64 + '=' * (-len(password_b64) % 4)).decode('utf-8', errors='ignore')
-        
-        params = {}
-        for param in params_str.split('&'):
-            if '=' in param:
-                k, v = param.split('=', 1)
-                params[k] = v
-
-        remark = unquote(params.get('remarks', ''))
-        node = {
-            'name': remark or f"ssr_{server}",
-            'type': 'ssr',
-            'server': server,
-            'port': int(port),
-            'cipher': method,
-            'protocol': protocol,
-            'obfs': obfs,
-            'password': password,
-            'udp': params.get('udp', 'false').lower() == 'true'
-        }
-        return node
-    except Exception as e:
-        print(f"  - ssr 节点解析失败: {e}")
-        return None
-
-def parse_ss_node(line):
-    try:
-        line = line.strip()
-        if not line.startswith('ss://'):
-            return None
-        content = line[5:]
-        if '@' in content:
-            parsed = urlparse('ss://' + content)
-            user_pass = parsed.netloc.split('@')[0]
-            method, password = user_pass.split(':', 1)
-            server = parsed.hostname
-            port = parsed.port
-            name = unquote(parsed.fragment) if parsed.fragment else f"ss_{server}"
-            node = {
-                'name': name,
-                'type': 'ss',
-                'server': server,
-                'port': port,
-                'cipher': method,
-                'password': password,
-                'udp': True,
-            }
-            return node
-        else:
-            ss_b64 = content.split('#')[0]
-            remark = ''
-            if '#' in content:
-                remark = unquote(content.split('#')[1])
-            decoded = base64.urlsafe_b64decode(ss_b64 + '=' * (-len(ss_b64) % 4)).decode('utf-8', errors='ignore')
-            method_password, server_port = decoded.split('@')
-            method, password = method_password.split(':')
-            server, port = server_port.split(':')
-            node = {
-                'name': remark or f"ss_{server}",
-                'type': 'ss',
-                'server': server,
-                'port': int(port),
-                'cipher': method,
-                'password': password,
-                'udp': True,
-            }
-            return node
-    except Exception as e:
-        print(f"  - ss 节点解析失败: {e}")
-        return None
-
-def parse_trojan_node(line):
     try:
         parsed = urlparse(line)
         if parsed.scheme != 'trojan':
@@ -498,8 +394,7 @@ def parse_trojan_node(line):
             'tls': True,
         }
         return node
-    except Exception as e:
-        print(f"  - trojan 节点解析失败: {e}")
+    except Exception:
         return None
 
 def parse_hysteria_node(line):
@@ -520,8 +415,7 @@ def parse_hysteria_node(line):
             'udp': True,
         }
         return node
-    except Exception as e:
-        print(f"  - hysteria 节点解析失败: {e}")
+    except Exception:
         return None
 
 def parse_hysteria2_node(line):
@@ -542,10 +436,8 @@ def parse_hysteria2_node(line):
             'udp': True,
         }
         return node
-    except Exception as e:
-        print(f"  - hysteria2 节点解析失败: {e}")
+    except Exception:
         return None
-
 # ----- 合并去重 -----
 def get_proxy_key(proxy):
     try:
