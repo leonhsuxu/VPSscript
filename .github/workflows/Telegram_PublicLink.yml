@@ -22,7 +22,7 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install telethon pyyaml requests  # 添加 requests 的安装步骤
-    - name: 运行 Python 脚本
+    - name: 脚本运行记录
       env:
         TELEGRAM_CHANNEL_IDS: |
          # 订阅转发-频道
