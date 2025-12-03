@@ -372,7 +372,146 @@ def decode_base64_and_parse(content):
 
 
 # ----- 协议解析实现 -----
+
+
 def parse_vmess_node(line):
+    try:
+        content_b64 = line[8:]
+        decoded = base64.b64decode(content_b64 + '=' * (-len(content_b64) % 4)).decode('utf-8', errors='ignore')
+        info = json.loads(decoded)
+        node = {
+            'name': info.get('ps', 'vmess_node'),
+            'type': 'vmess',
+            'server': info.get('add') or info.get('host'),
+            'port': int(info.get('port', 0)),
+            'uuid': info.get('id') or info.get('uuid'),
+            'alterId': int(info.get('aid', info.get('alterId', 0))) if str(info.get('aid', '')).isdigit() else 0,
+            'cipher': info.get('scy', 'auto'),
+            'network': info.get('net', 'tcp'),
+            'tls': True if info.get('tls', '').lower() == 'tls' else False,
+            'skip-cert-verify': info.get('allowInsecure', False),
+            'ws-opts': {},
+        }
+        if node['network'] == 'ws':
+            ws_opts = {
+                'path': info.get('path', ''),
+                'headers': {'Host': info.get('host', '')} if info.get('host') else {},
+            }
+            node['ws-opts'] = ws_opts
+        return node
+    except Exception:
+        return None
+
+def parse_vless_node(line):
+    try:
+        line = line.strip()
+        parsed = urlparse(line)
+        if parsed.scheme != 'vless':
+            return None
+        params = parse_qs(parsed.query)
+        node = {
+            'name': unquote(parsed.fragment) if parsed.fragment else f"vless_{parsed.hostname}",
+            'type': 'vless',
+            'server': parsed.hostname,
+            'port': int(parsed.port or 0),
+            'uuid': parsed.username,
+            'encryption': 'none',
+            'flow': params.get('flow', [''])[0],
+            'tls': (parsed.query.lower().find('tls') != -1) or ('tls' in params),
+            'skip-cert-verify': params.get('allowInsecure', ['false'])[0].lower() == 'true',
+            'network': params.get('type', ['tcp'])[0],
+            'host': params.get('host', [''])[0],
+            'path': params.get('path', [''])[0],
+            'sni': params.get('sni', [''])[0],
+        }
+        if node['network'] == 'ws':
+            node['ws-opts'] = {
+                'path': node['path'],
+                'headers': {'Host': node['host']} if node['host'] else {}
+            }
+        return node
+    except Exception:
+        return None
+
+def parse_ssr_node(line):
+    try:
+        ssr_b64 = line[6:]
+        ssr_decoded = base64.urlsafe_b64decode(ssr_b64 + '=' * (-len(ssr_b64) % 4)).decode('utf-8', errors='ignore')
+        parts = ssr_decoded.split('/?')
+        main = parts[0]
+        params_str = parts[1] if len(parts) > 1 else ''
+        
+        server, port, protocol, method, obfs, password_b64 = main.split(':', 5)
+        password = base64.urlsafe_b64decode(password_b64 + '=' * (-len(password_b64) % 4)).decode('utf-8', errors='ignore')
+        
+        params = {}
+        for param in params_str.split('&'):
+            if '=' in param:
+                k, v = param.split('=', 1)
+                params[k] = v
+
+        remark = unquote(params.get('remarks', ''))
+        node = {
+            'name': remark or f"ssr_{server}",
+            'type': 'ssr',
+            'server': server,
+            'port': int(port),
+            'cipher': method,
+            'protocol': protocol,
+            'obfs': obfs,
+            'password': password,
+            'udp': params.get('udp', 'false').lower() == 'true'
+        }
+        return node
+    except Exception:
+        return None
+
+def parse_ss_node(line):
+    try:
+        line = line.strip()
+        if not line.startswith('ss://'):
+            return None
+        content = line[5:]
+        if '@' in content:
+            parsed = urlparse('ss://' + content)
+            user_pass = parsed.netloc.split('@')[0]
+            method, password = user_pass.split(':', 1)
+            server = parsed.hostname
+            port = parsed.port
+            name = unquote(parsed.fragment) if parsed.fragment else f"ss_{server}"
+            node = {
+                'name': name,
+                'type': 'ss',
+                'server': server,
+                'port': port,
+                'cipher': method,
+                'password': password,
+                'udp': True,
+            }
+            return node
+        else:
+            ss_b64 = content.split('#')[0]
+            remark = ''
+            if '#' in content:
+                remark = unquote(content.split('#')[1])
+            decoded = base64.urlsafe_b64decode(ss_b64 + '=' * (-len(ss_b64) % 4)).decode('utf-8', errors='ignore')
+            method_password, server_port = decoded.split('@')
+            method, password = method_password.split(':')
+            server, port = server_port.split(':')
+            node = {
+                'name': remark or f"ss_{server}",
+                'type': 'ss',
+                'server': server,
+                'port': int(port),
+                'cipher': method,
+                'password': password,
+                'udp': True,
+            }
+            return node
+    except Exception:
+        return None
+
+def parse_trojan_node(line):
     try:
         parsed = urlparse(line)
         if parsed.scheme != 'trojan':
@@ -438,6 +577,8 @@ def parse_hysteria2_node(line):
         return node
     except Exception:
         return None
+        
+        
 # ----- 合并去重 -----
 def get_proxy_key(proxy):
     try:
