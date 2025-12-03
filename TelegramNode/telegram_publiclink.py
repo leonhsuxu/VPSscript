@@ -46,13 +46,14 @@ TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS')  # Telegram频
 TIME_WINDOW_HOURS = 8  # 抓取时间窗口，单位小时
 MIN_EXPIRE_HOURS = 2  # 订阅链接最低剩余有效期，单位小时
 OUTPUT_FILE = 'flclashyaml/telegram_scraper.yaml'  # 输出YAML路径
+
+# ========================== 测速参数 =========================================
 ENABLE_SPEED_TEST = True  # 是否启用测速  True开启，False关闭
 SOCKET_TIMEOUT = 3  # TCP测速超时时间(秒)
 MAX_TEST_WORKERS = 256  # 并发测速线程数
 
-SOCKET_TIMEOUT = 3  # TCP连接超时时间，单位秒
-HTTP_TEST_URL = 'http://www.gstatic.com/generate_204'  # 用于HTTP测速的目标URL，该URL返回204无内容响应，轻量快速
-HTTP_TIMEOUT = 5  # HTTP请求超时时间，单位秒
+HTTP_TIMEOUT = 5          # HTTP 请求超时时间（秒）
+HTTP_TEST_URL = 'http://www.gstatic.com/generate_204'  # 轻量无内容响应URL，用于HTTP测速
 
 
 # ========== 地区过滤配置 ==========
@@ -710,47 +711,64 @@ def download_subscription(url):
 
 
 def test_single_proxy_tcp(proxy):
-    """TCP连接测试，测量连接延迟"""
-    try:
-        start = time.time()  # 记录开始时间
-        # 试着以超时 SOCKET_TIMEOUT 秒连接 proxy 的服务器地址和端口
-        with socket.create_connection((proxy['server'], proxy['port']), timeout=SOCKET_TIMEOUT) as sock:
-            end = time.time()  # 连接成功，记录结束时间
-            proxy['tcp_delay'] = int((end - start) * 1000) # 计算TCP连接耗时，单位毫秒，存入proxy字典
-            return proxy  # 返回带延迟信息的节点字典
-    except Exception:
-        # 连接异常（超时、拒绝、网络错误等）返回 None，表示测速失败
-        return None
-
-def test_single_proxy_http(proxy):
-    """HTTP请求测速，测量请求响应时间"""
-    try:
-        start = time.time()  # 记录开始时间
-        # 直接用requests库访问HTTP_TEST_URL，不走代理（如果需要代理需设置proxies参数）
-        # 请求超时为HTTP_TIMEOUT秒
-        response = requests.get(HTTP_TEST_URL, timeout=HTTP_TIMEOUT)
-        response.raise_for_status()  # 如果响应状态码非200抛出异常
-        end = time.time()  # 请求成功返回时记录结束时间
-        proxy['http_delay'] = int((end - start) * 1000) # 计算HTTP请求耗时，单位毫秒，存入proxy字典
-        return proxy  # 返回带HTTP延迟信息的节点字典
-    except Exception:
-        # 请求异常（超时、网络错误、非200状态码等），返回 None 表示测速失败
+        # 请求失败返回None
         return None
 
 def combined_speed_test(proxy):
-    """先做TCP测速，如果成功，则继续做HTTP请求测速"""
-    p = test_single_proxy_tcp(proxy)  # TCP测速
+    """
+    组合测速流程：
+    1. 先做TCP连接测试
+    2. TCP成功后做HTTP请求测试（直连，不走代理）
+    3. 返回包含 tcp_delay 和 http_delay 信息的proxy字典
+    4. 失败时返回None，或者http_delay设为None表示HTTP测试失败但TCP成功
+    """
+    p = test_single_proxy_tcp(proxy)    # TCP测试
     if not p:
-        # TCP测速失败，直接返回None，跳过HTTP测速，节点视为不可用
-        return None
-    p = test_single_proxy_http(p)  # HTTP测速
+        return None  # TCP失败，跳过HTTP测试
+    
+    p = test_single_proxy_http(p)       # HTTP测试(直连)
     if not p:
-        # HTTP测速失败，但TCP测试成功
-        # 此处设置节点仍保留，但HTTP延迟置为 None，表明HTTP测速失败
-        p['http_delay'] = None
-        return p
-    # TCP和HTTP测速均成功，返回包含两个延迟信息的节点
-    return p
+        # HTTP测试失败但TCP成功，保留TCP延迟，HTTP延迟设为None
+        proxy['http_delay'] = None
+        return proxy
+
+    return p  # 两项测速都成功，返回包含两个延迟信息的节点
+
+# ------------------ 主控流程 ------------------
+
+# 代理节点示例列表，格式必须包含 'server' 和 'port'
+all_nodes = [
+    {"server": "1.1.1.1", "port": 8080},
+    {"server": "2.2.2.2", "port": 3128},
+    # 你自己的代理列表...
+]
+
+if ENABLE_SPEED_TEST:
+    print(f"[3/5] 开始 TCP 和 HTTP 连接综合测速（超时 TCP:{SOCKET_TIMEOUT}s，HTTP:{HTTP_TIMEOUT}s，最大线程 {MAX_TEST_WORKERS}）...")
+
+    # 使用线程池并发测速，提升测速效率
+    with concurrent.futures.ThreadPoolExecutor(MAX_TEST_WORKERS) as pool:
+        # 并发执行组合测速函数（TCP+HTTP）
+        tested_results = list(pool.map(combined_speed_test, all_nodes))
+    
+    # 筛选测速成功的代理节点（非 None）
+    tested_proxies = [p for p in tested_results if p]
+
+    print(f"测速成功节点数: {len(tested_proxies)} / {len(all_nodes)}")
+
+else:
+    # 测速关闭，直接使用全部节点
+    tested_proxies = all_nodes
+    print("测速关闭，使用全部节点继续处理")
+
+# 如果没有任何测速成功的节点，退回使用全部节点，保证程序后续可执行
+if not tested_proxies:
+    print("⚠️ 无测速成功节点，使用所有节点继续处理")
+    tested_proxies = all_nodes
+
+# 打印最终结果，方便确认
+for proxy in tested_proxies:
+    print(f"代理 {proxy['server']}:{proxy['port']}, TCP延迟={proxy.get('tcp_delay')}ms, HTTP延迟={proxy.get('http_delay')}")
 
 def get_proxy_key(p):
     """生成代理节点的唯一标识"""
