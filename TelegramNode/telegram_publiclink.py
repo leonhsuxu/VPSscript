@@ -476,20 +476,35 @@ def parse_hysteria2_node(line):
         parsed = urlparse(line)
         if parsed.scheme != 'hysteria2':
             return None
+
         params = parse_qs(parsed.query)
+
+        # 用户ID在 netloc 的用户名部分
+        auth = parsed.username or ''
+
+        # 混淆密码
+        obfs_password = params.get('obfs-password', [''])[0]
+
+        # insecure判断，兼容 '0', 'false', '1', 'true'
+        insecure_val = params.get('insecure', ['false'])[0].lower()
+        insecure = insecure_val in ('1', 'true', 'yes')
+
         node = {
-            'name': unquote(parsed.fragment) or f"hysteria2_{parsed.hostname}",
+            'name': unquote(parsed.fragment) if parsed.fragment else f"hysteria2_{parsed.hostname}",
             'type': 'hysteria2',
             'server': parsed.hostname,
             'port': int(parsed.port or 0),
-            'auth': params.get('auth', [''])[0],
+            'auth': auth,
             'protocol': params.get('protocol', ['udp'])[0],
-            'insecure': params.get('insecure', ['false'])[0].lower() == 'true',
+            'insecure': insecure,
             'obfs': params.get('obfs', [''])[0],
-            'udp': True,
+            'obfs-password': obfs_password,
+            'udp': params.get('udp', ['true'])[0].lower() == 'true',
         }
         return node
-    except Exception:
+    except Exception as e:
+        # 通常建议打印或记录异常以方便调试
+        # print(f"Error parsing node: {e}")
         return None
 
 
