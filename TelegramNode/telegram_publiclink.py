@@ -829,7 +829,7 @@ async def main():
             if not http_passed_nodes and http_failed_nodes:
                 print("⚠️ 所有 HTTP 测速均失败。执行回退策略：从 TCP 成功但 HTTP 失败/不支持的节点中选择指定地区节点。")
                 fallback_regions = ['香港', '日本', '美国', '新加坡', '德国']
-                fallback_count_per_region = 20
+                fallback_count_per_region = 30
                 
                 # 首先，识别这些回退候选节点的地区 (不进行重命名)
                 fallback_candidates_with_regions = identify_regions_only(http_failed_nodes)
