@@ -1,5 +1,5 @@
 """
-固定链接获取节点脚本 V1
+固定链接获取节点脚本 V2
 -----------------------------------------
 功能说明：
 本脚本用于从 URL.TXT 文件中读取多个以“#”开头划分的订阅区块，每个区块包含若干订阅链接。
@@ -7,7 +7,7 @@
 1. 自动识别并拆分多个订阅区块；
 2. 针对每个区块，提取所有 HTTP/HTTPS 订阅链接；
 3. 依次下载订阅内容（优先使用 wget，失败后使用 requests）；
-4. 自动识别 YAML 直接解析，或 Base64 解码并支持多协议节点解析（vmess、vless、ssr、ss、trojan、hysteria等）；
+4. V2.自动识别 YAML 直接解析、再明文判定解析、后 Base64 解码节点解析（vmess、vless、ssr、ss、trojan、hysteria等）；
 5. 合并去重所有节点，同时支持节点测速（通过纯 Python socket）筛选可用节点；
 6. 智能为所有节点添加符合规则的区域标识和国旗 Emoji，并重命名；
 7. 按地区优先级及测速结果排序节点；
@@ -215,22 +215,81 @@ def attempt_download_using_requests(url):
         print(f"  ✗ requests 失败: {e}")
         return None
 
+# ----- 新增函数：解析明文协议节点 -----
+def parse_plain_nodes_from_text(text):
+    proxies = []
+    success_count = defaultdict(int)
+    failure_count = defaultdict(int)
+    for line in text.splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        proxy = None
+        proto = None
+        if line.startswith('vmess://'):
+            proto = 'vmess'
+            proxy = parse_vmess_node(line)
+        elif line.startswith('vless://'):
+            proto = 'vless'
+            proxy = parse_vless_node(line)
+        elif line.startswith('ssr://'):
+            proto = 'ssr'
+            proxy = parse_ssr_node(line)
+        elif line.startswith('ss://'):
+            proto = 'ss'
+            proxy = parse_ss_node(line)
+        elif line.startswith('trojan://'):
+            proto = 'trojan'
+            proxy = parse_trojan_node(line)
+        elif line.startswith('hysteria://'):
+            proto = 'hysteria'
+            proxy = parse_hysteria_node(line)
+        elif line.startswith('hysteria2://'):
+            proto = 'hysteria2'
+            proxy = parse_hysteria2_node(line)
+        else:
+            continue
+
+        if proxy:
+            proxies.append(proxy)
+            success_count[proto] += 1
+        else:
+            failure_count[proto] += 1
+
+    for proto, count in success_count.items():
+        print(f"  - 明文协议解析完成，{proto} 节点成功数：{count}")
+    for proto, count in failure_count.items():
+        print(f"  - 明文协议解析失败，{proto} 节点失败数：{count}")
+
+    return proxies
+
+# ----- 修改 download_subscription 函数 -----
 def download_subscription(url):
     content = attempt_download_using_wget(url)
     if content is None:
         content = attempt_download_using_requests(url)
     if content is None:
         return []
+
+    # 先尝试yaml格式直接解析
     proxies = parse_proxies_from_content(content)
     if proxies:
         return proxies
+
+    # 尝试从明文协议链接中提取节点
+    proxies = parse_plain_nodes_from_text(content)
+    if proxies:
+        return proxies
+
+    # 再尝试base64编码解码并解析
     if is_base64(content):
         proxies = decode_base64_and_parse(content)
         if proxies:
             return proxies
         print("  - Base64 解码无效节点")
     else:
-        print("  - 内容非 Base64")
+        print("  - 内容非 Base64，且未匹配到明文协议节点")
+
     return []
 
 # ----- 解析相关 -----
@@ -262,42 +321,59 @@ def is_base64(text):
 def decode_base64_and_parse(content):
     try:
         decoded = base64.b64decode(''.join(content.split())).decode('utf-8', errors='ignore')
-        # 可选：在这里打印解码内容预览（注释掉避免太长）
-        # print(f"  - Base64 解码内容预览（前500字符）：\n{decoded[:500]}{'...' if len(decoded) > 500 else ''}")
         proxies = []
-        success_count = 0
-        failure_count = 0
+        success_count = defaultdict(int)
+        failure_count = defaultdict(int)
         for line in decoded.splitlines():
             line = line.strip()
             if not line:
                 continue
             proxy = None
+            proto = None
             if line.startswith('vmess://'):
+                proto = 'vmess'
                 proxy = parse_vmess_node(line)
             elif line.startswith('vless://'):
+                proto = 'vless'
                 proxy = parse_vless_node(line)
             elif line.startswith('ssr://'):
+                proto = 'ssr'
                 proxy = parse_ssr_node(line)
             elif line.startswith('ss://'):
+                proto = 'ss'
                 proxy = parse_ss_node(line)
             elif line.startswith('trojan://'):
+                proto = 'trojan'
                 proxy = parse_trojan_node(line)
             elif line.startswith('hysteria://'):
+                proto = 'hysteria'
                 proxy = parse_hysteria_node(line)
             elif line.startswith('hysteria2://'):
+                proto = 'hysteria2'
                 proxy = parse_hysteria2_node(line)
+            else:
+                continue
+
             if proxy:
                 proxies.append(proxy)
-                success_count += 1
+                success_count[proto] += 1
             else:
-                failure_count += 1
-        print(f"  - Base64 解码解析完成，成功解析节点数：{success_count}，失败数：{failure_count}")
+                failure_count[proto] += 1
+
+        for proto, count in success_count.items():
+            print(f"  - Base64 解码解析完成，{proto} 节点成功数：{count}")
+        for proto, count in failure_count.items():
+            print(f"  - Base64 解码解析失败，{proto} 节点失败数：{count}")
+
         return proxies
     except Exception as e:
         print(f"  - Base64 解码解析异常: {e}")
         return []
 
+
 # ----- 协议解析实现 -----
+
+
 def parse_vmess_node(line):
     try:
         content_b64 = line[8:]
@@ -323,8 +399,7 @@ def parse_vmess_node(line):
             }
             node['ws-opts'] = ws_opts
         return node
-    except Exception as e:
-        print(f"  - vmess 节点解析失败: {e}")
+    except Exception:
         return None
 
 def parse_vless_node(line):
@@ -355,8 +430,7 @@ def parse_vless_node(line):
                 'headers': {'Host': node['host']} if node['host'] else {}
             }
         return node
-    except Exception as e:
-        print(f"  - vless 节点解析失败: {e}")
+    except Exception:
         return None
 
 def parse_ssr_node(line):
@@ -389,8 +463,7 @@ def parse_ssr_node(line):
             'udp': params.get('udp', 'false').lower() == 'true'
         }
         return node
-    except Exception as e:
-        print(f"  - ssr 节点解析失败: {e}")
+    except Exception:
         return None
 
 def parse_ss_node(line):
@@ -435,8 +508,7 @@ def parse_ss_node(line):
                 'udp': True,
             }
             return node
-    except Exception as e:
-        print(f"  - ss 节点解析失败: {e}")
+    except Exception:
         return None
 
 def parse_trojan_node(line):
@@ -461,8 +533,7 @@ def parse_trojan_node(line):
             'tls': True,
         }
         return node
-    except Exception as e:
-        print(f"  - trojan 节点解析失败: {e}")
+    except Exception:
         return None
 
 def parse_hysteria_node(line):
@@ -483,8 +554,7 @@ def parse_hysteria_node(line):
             'udp': True,
         }
         return node
-    except Exception as e:
-        print(f"  - hysteria 节点解析失败: {e}")
+    except Exception:
         return None
 
 def parse_hysteria2_node(line):
@@ -505,10 +575,10 @@ def parse_hysteria2_node(line):
             'udp': True,
         }
         return node
-    except Exception as e:
-        print(f"  - hysteria2 节点解析失败: {e}")
+    except Exception:
         return None
-
+        
+        
 # ----- 合并去重 -----
 def get_proxy_key(proxy):
     try:
@@ -730,7 +800,7 @@ def process_block_to_yaml(block):
 
 def main():
     print("=" * 60)
-    print("固定链接获取节点脚本 V1")
+    print("固定链接获取节点脚本 V2")
     print(f"时间: {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
     blocks = parse_url_txt_to_blocks()
