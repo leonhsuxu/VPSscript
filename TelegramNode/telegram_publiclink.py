@@ -92,9 +92,16 @@ CUSTOM_REGEX_RULES = {
 JUNK_PATTERNS = re.compile(r"(?:专线|IPLC|体验|官网|倍率|x\d[\.\d]*|[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*|Relay|流量)", re.IGNORECASE)
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
 BJ_TZ = timezone(timedelta(hours=8))
-# =========================    
-
-for p in proxies:
+# =================================================================================
+# Part 2: 函数定义
+# =================================================================================
+def process_proxies(proxies):
+    """
+    过滤节点，仅保留地区在 ALLOWED_REGIONS 的节点，
+    并添加 region_info，最后重命名节点。
+    """
+    identified = []
+    for p in proxies:
         matched_region = None
         for region_name, info in CUSTOM_REGEX_RULES.items():
             pattern = info['pattern']
@@ -135,6 +142,26 @@ for p in proxies:
         final.append(p)
     return final
 
+# 新增辅助函数：仅识别地区，不进行重命名
+def identify_regions_only(proxies):
+    """
+    仅识别代理节点的地区信息并添加到 'region_info' 字段，不进行节点重命名。
+    用于回退策略中筛选地区。
+    """
+    identified = []
+    for p in proxies:
+        matched_region = None
+        for region_name, info in CUSTOM_REGEX_RULES.items():
+            pattern = info['pattern']
+            if re.search(pattern, p.get('name', ''), re.IGNORECASE):
+                matched_region = {'name': region_name, 'code': info['code']}
+                break
+        if matched_region: # Even if not in ALLOWED_REGIONS, we want to know the region for fallback selection
+            p['region_info'] = matched_region
+            identified.append(p)
+        # Nodes without identifiable region are simply skipped.
+    return identified
+
 # --- 读取本地已有节点及抓取状态 ---
 def load_existing_proxies_and_state():
     existing_proxies = []
@@ -155,22 +182,18 @@ def load_existing_proxies_and_state():
         except Exception as e:
             print(f"  - 读取或解析 {OUTPUT_FILE} 失败: {e}")
     return existing_proxies, last_message_ids
-    
-    
 def extract_valid_subscribe_links(text):
     """
     从单条消息文本中提取有效订阅链接，
     忽略机场名链接，根据到期时间过滤剩余时间<2小时的链接。
     """
-    MIN_HOURS_LEFT = 2
+    MIN_HOURS_LEFT = MIN_EXPIRE_HOURS
     BJ_TZ = timezone(timedelta(hours=8))
-
     # 1. 找所有订阅链接（只匹配带订阅关键字的链接，不匹配机场链接）
     link_pattern = re.compile(
         r'(?:订阅链接|订阅地址|订阅)[\s:：]*?[^hH]*?(https?://[^\s<>"*`]+)'
     )
     links = link_pattern.findall(text)
-
     expire_time = None
     expire_patterns = [
         r'到期时间[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2}\s+\d{2}:\d{2}:\d{2})',
@@ -182,10 +205,8 @@ def extract_valid_subscribe_links(text):
         r'过期时间[:：]\s*长期有效',
         r'过期[:：]\s*未知/无限',
     ]
-
     # 把文本统一换成空格替换换行，防止分行影响正则捕获
     text_single_line = text.replace('\n', ' ')
-
     for patt in expire_patterns:
         match = re.search(patt, text_single_line)
         if match:
@@ -205,7 +226,6 @@ def extract_valid_subscribe_links(text):
                     except:
                         continue
             break
-
     now = datetime.now(BJ_TZ)
     valid_links = []
     for url in links:
@@ -214,25 +234,19 @@ def extract_valid_subscribe_links(text):
             if hours_left < MIN_HOURS_LEFT:
                 continue
         valid_links.append(url)
-
     return valid_links
-    
 async def scrape_telegram_links(last_message_ids=None):
     if last_message_ids is None:
         last_message_ids = {}
-
     if not all([API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS_STR]):
         print("❌ 错误: 缺少必要的环境变量 (API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS)。")
         return [], last_message_ids
-
-    TARGET_CHANNELS = [line.strip() for line in TELEGRAM_CHANNEL_IDS_STR.split('\n') 
+    TARGET_CHANNELS = [line.strip() for line in TELEGRAM_CHANNEL_IDS_STR.split('\n')
                        if line.strip() and not line.strip().startswith('#')]
     if not TARGET_CHANNELS:
         print("❌ 错误: TELEGRAM_CHANNEL_IDS 中未找到有效频道 ID。")
         return [], last_message_ids
-
     print(f"▶️ 配置抓取 {len(TARGET_CHANNELS)} 个频道: {TARGET_CHANNELS}")
-
     try:
         client = TelegramClient(StringSession(STRING_SESSION), API_ID, API_HASH)
         await client.connect()
@@ -241,15 +255,12 @@ async def scrape_telegram_links(last_message_ids=None):
     except Exception as e:
         print(f"❌ 错误: 连接 Telegram 时出错: {e}")
         return [], last_message_ids
-
     from datetime import timezone, timedelta
     BJ_TZ = timezone(timedelta(hours=8))
     bj_now = datetime.now(BJ_TZ)
     bj_prior_time = bj_now - timedelta(hours=TIME_WINDOW_HOURS)
     target_time = bj_prior_time.astimezone(timezone.utc)
-
     all_links = set()
-
     for channel_id in TARGET_CHANNELS:
         print(f"\n📢  正在处理频道: {channel_id} ...")
         try:
@@ -257,10 +268,8 @@ async def scrape_telegram_links(last_message_ids=None):
         except Exception as e:
             print(f"❌ 错误: 无法获取频道实体 {channel_id}: {e}")
             continue
-
         last_id = last_message_ids.get(channel_id, 0)
         max_id_found = last_id
-
         try:
             async for message in client.iter_messages(entity, min_id=last_id + 1, reverse=False):
                 if message.date < target_time:
@@ -272,31 +281,23 @@ async def scrape_telegram_links(last_message_ids=None):
                         print(f"  ✅ 找到链接: {link[:70]}...")
                 if message.id > max_id_found:
                     max_id_found = message.id
-
             last_message_ids[channel_id] = max_id_found
         except Exception as e:
             print(f"❌ 错误: 从频道 '{channel_id}' 获取消息时出错: {e}")
-
     await client.disconnect()
-
     print(f"\n✅ 抓取完成, 共找到 {len(all_links)} 个不重复的有效链接。")
     return list(all_links), last_message_ids
-
 def preprocess_regex_rules():
     """预处理正则规则：按长度排序以优化匹配效率"""
     for region in CUSTOM_REGEX_RULES:
         CUSTOM_REGEX_RULES[region]['pattern'] = '|'.join(
             sorted(CUSTOM_REGEX_RULES[region]['pattern'].split('|'), key=len, reverse=True)
         )
-    
-    
 def get_country_flag_emoji(code):
     """根据国家代码生成旗帜 Emoji"""
     if not code or len(code) != 2:
         return "❓"
     return "".join(chr(0x1F1E6 + ord(c.upper()) - ord('A')) for c in code)
-
-
 def attempt_download_using_wget(url):
     """使用 wget 下载订阅链接"""
     print(f"  ⬇️ 正在使用 wget 下载: {url[:80]}...")
@@ -312,8 +313,6 @@ def attempt_download_using_wget(url):
     except subprocess.CalledProcessError as e:
         print(f"  ✗ wget 下载失败: {e.stderr}")
         return None
-
-
 def attempt_download_using_requests(url):
     """使用 requests 下载订阅链接"""
     print(f"  ⬇️ 正在使用 requests 下载: {url[:80]}...")
@@ -326,8 +325,6 @@ def attempt_download_using_requests(url):
     except requests.RequestException as e:
         print(f"  ✗ requests 下载失败: {e}")
         return None
-
-
 def parse_proxies_from_content(content):
     """从下载的内容中解析代理节点"""
     try:
@@ -342,8 +339,6 @@ def parse_proxies_from_content(content):
     except Exception:
         pass
     return []
-
-
 def is_base64(text):
     """检查字符串是否是有效的 Base64 编码"""
     try:
@@ -356,10 +351,7 @@ def is_base64(text):
         return True
     except Exception:
         return False
-
-
 # ---------------- 协议节点解析 ----------------
-
 def parse_vmess_node(line):
     try:
         content_b64 = line[8:]
@@ -387,8 +379,6 @@ def parse_vmess_node(line):
         return node
     except Exception:
         return None
-
-
 def parse_vless_node(line):
     try:
         parsed = urlparse(line.strip())
@@ -415,8 +405,6 @@ def parse_vless_node(line):
         return node
     except Exception:
         return None
-
-
 def parse_ssr_node(line):
     try:
         ssr_b64 = line[6:]
@@ -446,8 +434,6 @@ def parse_ssr_node(line):
         return node
     except Exception:
         return None
-
-
 def parse_ss_node(line):
     try:
         line = line.strip()
@@ -478,8 +464,6 @@ def parse_ss_node(line):
             return node
     except Exception:
         return None
-
-
 def parse_trojan_node(line):
     try:
         parsed = urlparse(line)
@@ -504,8 +488,6 @@ def parse_trojan_node(line):
         return node
     except Exception:
         return None
-
-
 def parse_hysteria_node(line):
     try:
         parsed = urlparse(line)
@@ -526,26 +508,19 @@ def parse_hysteria_node(line):
         return node
     except Exception:
         return None
-
-
 def parse_hysteria2_node(line):
     try:
         parsed = urlparse(line)
         if parsed.scheme != 'hysteria2':
             return None
-
         params = parse_qs(parsed.query)
-
         # 用户ID在 netloc 的用户名部分
         auth = parsed.username or ''
-
         # 混淆密码
         obfs_password = params.get('obfs-password', [''])[0]
-
         # insecure判断，兼容 '0', 'false', '1', 'true'
         insecure_val = params.get('insecure', ['false'])[0].lower()
         insecure = insecure_val in ('1', 'true', 'yes')
-
         node = {
             'name': unquote(parsed.fragment) if parsed.fragment else f"hysteria2_{parsed.hostname}",
             'type': 'hysteria2',
@@ -560,13 +535,9 @@ def parse_hysteria2_node(line):
         }
         return node
     except Exception as e:
-        # 通常建议打印或记录异常以方便调试
-        # print(f"Error parsing node: {e}")
+        # print(f"Error parsing node: {e}") # Debugging
         return None
-        
-
 # ---------------- 订阅解析主逻辑 ----------------
-
 def parse_plain_nodes_from_text(text):
     proxies = []
     success_count = defaultdict(int)
@@ -608,8 +579,6 @@ def parse_plain_nodes_from_text(text):
     for proto, count in failure_count.items():
         print(f"  - 明文协议解析失败，{proto} 节点失败数：{count}")
     return proxies
-
-
 def decode_base64_and_parse(content):
     try:
         decoded = base64.b64decode(''.join(content.split())).decode('utf-8', errors='ignore')
@@ -656,7 +625,6 @@ def decode_base64_and_parse(content):
     except Exception as e:
         print(f"  - Base64 解码解析异常: {e}")
         return []
-
 def download_subscription(url):
     content = attempt_download_using_wget(url)
     if content is None:
@@ -664,17 +632,14 @@ def download_subscription(url):
     if content is None:
         print(f"  ❌ 下载失败: {url}")
         return []
-
     proxies = parse_proxies_from_content(content)
     if proxies:
         print(f"  - 直接 YAML 解析获取 {len(proxies)} 个节点")
         return proxies
-
     proxies = parse_plain_nodes_from_text(content)
     if proxies:
         print(f"  - 明文内容解析获取 {len(proxies)} 个节点")
         return proxies
-
     if is_base64(content):
         print(f"  - 内容为 Base64 编码，正在解码解析...")
         proxies = decode_base64_and_parse(content)
@@ -686,66 +651,75 @@ def download_subscription(url):
     print(f"  - 内容不符合已知格式，未找到有效节点")
     return []
 
-
 def test_single_proxy_tcp(proxy):
-        # 请求失败返回None
+    """
+    对单个代理节点进行 TCP 连接测试。
+    返回包含 'tcp_delay' 字段的代理字典，如果失败则返回 None。
+    """
+    server = proxy.get('server')
+    port = proxy.get('port')
+    if not server or not port:
+        return None
+    try:
+        start_time = time.time()
+        # 创建一个 socket 并连接
+        with socket.create_connection((server, port), timeout=SOCKET_TIMEOUT) as sock:
+            end_time = time.time()
+            delay_ms = round((end_time - start_time) * 1000)
+            proxy['tcp_delay'] = delay_ms
+            return proxy
+    except (socket.timeout, ConnectionRefusedError, OSError):
+        # print(f"  ✗ TCP connection failed for {server}:{port}: {e}") # Too verbose
         return None
 
-def combined_speed_test(proxy):
+def test_single_proxy_http(proxy):
     """
-    组合测速流程：
-    1. 先做TCP连接测试
-    2. TCP成功后做HTTP请求测试（直连，不走代理）
-    3. 返回包含 tcp_delay 和 http_delay 信息的proxy字典
-    4. 失败时返回None，或者http_delay设为None表示HTTP测试失败但TCP成功
+    尝试通过代理进行 HTTP 请求测试。
+    目前仅支持 HTTP 和 SOCKS5 代理。
+    对于其他类型的代理 (vmess, vless, trojan, ss, ssr, hysteria, hysteria2)，
+    此函数将无法通过代理进行实际的 HTTP 请求测试，http_delay 将保持 None。
+    这是一种妥协，因为 requests 库不直接支持所有 Clash 协议。
+    返回包含 'http_delay' (可能为 None) 的代理字典。
     """
-    p = test_single_proxy_tcp(proxy)    # TCP测试
-    if not p:
-        return None  # TCP失败，跳过HTTP测试
+    server = proxy.get('server')
+    port = proxy.get('port')
+    proxy_type = proxy.get('type', '').lower()
     
-    p = test_single_proxy_http(p)       # HTTP测试(直连)
-    if not p:
-        # HTTP测试失败但TCP成功，保留TCP延迟，HTTP延迟设为None
+    if not server or not port:
+        # 如果 server 或 port 信息不完整，无法进行测试
+        proxy['http_delay'] = None # 显式设置为 None
+        return proxy
+
+    # 为 requests 库构造代理 URL
+    proxy_url = None
+    if proxy_type == 'http':
+        proxy_url = f"http://{server}:{port}"
+    elif proxy_type == 'socks5':
+        proxy_url = f"socks5://{server}:{port}"
+    # 对于其他类型，requests 无法直接通过代理进行请求，http_delay 将设为 None
+    
+    proxies_dict = {"http": proxy_url, "https": proxy_url} if proxy_url else None
+
+    try:
+        start_time = time.time()
+        if proxies_dict:
+            response = requests.get(HTTP_TEST_URL, proxies=proxies_dict, timeout=HTTP_TIMEOUT)
+            response.raise_for_status() # 对非 2xx 状态码抛出异常
+            end_time = time.time()
+            delay_ms = round((end_time - start_time) * 1000)
+            proxy['http_delay'] = delay_ms
+        else:
+            # 对于不支持的代理类型，HTTP 测速无法通过代理执行
+            proxy['http_delay'] = None 
+        return proxy
+    except requests.exceptions.RequestException:
+        # HTTP 请求失败 (超时、连接错误、非 2xx 状态码等)
+        proxy['http_delay'] = None # 显式设置为 None
+        return proxy
+    except Exception: # 捕获其他任何意外错误
         proxy['http_delay'] = None
         return proxy
 
-    return p  # 两项测速都成功，返回包含两个延迟信息的节点
-
-# ------------------ 主控流程 ------------------
-
-# 代理节点示例列表，格式必须包含 'server' 和 'port'
-all_nodes = [
-    {"server": "1.1.1.1", "port": 8080},
-    {"server": "2.2.2.2", "port": 3128},
-    # 你自己的代理列表...
-]
-
-if ENABLE_SPEED_TEST:
-    print(f"[3/5] 开始 TCP 和 HTTP 连接综合测速（超时 TCP:{SOCKET_TIMEOUT}s，HTTP:{HTTP_TIMEOUT}s，最大线程 {MAX_TEST_WORKERS}）...")
-
-    # 使用线程池并发测速，提升测速效率
-    with concurrent.futures.ThreadPoolExecutor(MAX_TEST_WORKERS) as pool:
-        # 并发执行组合测速函数（TCP+HTTP）
-        tested_results = list(pool.map(combined_speed_test, all_nodes))
-    
-    # 筛选测速成功的代理节点（非 None）
-    tested_proxies = [p for p in tested_results if p]
-
-    print(f"测速成功节点数: {len(tested_proxies)} / {len(all_nodes)}")
-
-else:
-    # 测速关闭，直接使用全部节点
-    tested_proxies = all_nodes
-    print("测速关闭，使用全部节点继续处理")
-
-# 如果没有任何测速成功的节点，退回使用全部节点，保证程序后续可执行
-if not tested_proxies:
-    print("⚠️ 无测速成功节点，使用所有节点继续处理")
-    tested_proxies = all_nodes
-
-# 打印最终结果，方便确认
-for proxy in tested_proxies:
-    print(f"代理 {proxy['server']}:{proxy['port']}, TCP延迟={proxy.get('tcp_delay')}ms, HTTP延迟={proxy.get('http_delay')}")
 
 def get_proxy_key(p):
     """生成代理节点的唯一标识"""
@@ -753,8 +727,7 @@ def get_proxy_key(p):
     unique_part = p.get('uuid') or p.get('password') or ''
     return hashlib.md5(
         f"{p.get('server','')}:{p.get('port',0)}|{unique_part}".encode()
-    ).hexdigest()
-
+    ).heigest()
 def is_valid_proxy(proxy):
     """验证代理节点的协议格式和有效性"""
     if not isinstance(proxy, dict):
@@ -770,9 +743,6 @@ def is_valid_proxy(proxy):
     if not isinstance(proxy['port'], int) or not (1 <= proxy['port'] <= 65535):
         return False
     return True
-
-
-
 def delete_old_yaml():
     """每周一晚上23:00删除旧的 YAML 文件"""
     now = datetime.now(timezone(timedelta(hours=8)))  # 北京时间
@@ -784,7 +754,6 @@ def delete_old_yaml():
                 print(f"✅ 已根据计划删除旧的配置文件: {OUTPUT_FILE}")
             except OSError as e:
                 print(f"❌ 删除旧配置文件时出错: {e}")
-
 def generate_config(proxies):
     """根据代理节点列表生成完整的 Clash 配置字典"""
     if not proxies:
@@ -794,28 +763,19 @@ def generate_config(proxies):
         'proxies': proxies,
     }
     return config
-
-
 async def main():
-    
     print("=" * 60)
     print("Clash 订阅自动生成脚本 V3 ")
     print(f"时间: {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
-
     preprocess_regex_rules()
-    
     # delete_old_yaml()  # 取消定期删除，保留历史文件
-    
-
     print("[1/5] 读取已有节点及抓取状态文件")
     existing_proxies, last_message_ids = load_existing_proxies_and_state()
     print(f"已有节点数量: {len(existing_proxies)}")
-
     # 2. 抓取 Telegram 获取新订阅链接和新节点
     print("[2/5] 抓取 Telegram 订阅链接")
     urls, last_message_ids = await scrape_telegram_links(last_message_ids)
-
     new_proxies_list = []
     if urls:
         print(f"共抓取 {len(urls)} 个订阅链接，开始下载解析节点...")
@@ -823,9 +783,7 @@ async def main():
             proxies = download_subscription(url)
             if proxies:
                 new_proxies_list.extend(proxies)
-
     print(f"抓取新增节点数: {len(new_proxies_list)}")
-
     # 3. 合并原有和新增节点，去重
     all_proxies_map = {get_proxy_key(p): p for p in existing_proxies if is_valid_proxy(p)}
     added_new = 0
@@ -835,41 +793,86 @@ async def main():
             all_proxies_map[key] = p
             added_new += 1
     print(f"合并去重后总节点数: {len(all_proxies_map)}, 新增节点: {added_new}")
-
     all_nodes = list(all_proxies_map.values())
     if not all_nodes:
         sys.exit("❌ 无任何可用节点, 程序终止")
 
-    # 4. TCP 测速所有节点，保留测速成功的
+    # 4. 综合测速所有节点 (TCP + HTTP)
     if ENABLE_SPEED_TEST:
-        print(f"[3/5] 开始 TCP 连接测速（超时 {SOCKET_TIMEOUT}s，最大线程 {MAX_TEST_WORKERS}）...")
+        print(f"[3/5] 开始 TCP 和 HTTP 连接综合测速（超时 TCP:{SOCKET_TIMEOUT}s，HTTP:{HTTP_TIMEOUT}s，最大线程 {MAX_TEST_WORKERS}）...")
+        
+        # Step 1: TCP Test on all nodes
+        print("  - 执行 TCP 连接测试...")
         with concurrent.futures.ThreadPoolExecutor(MAX_TEST_WORKERS) as pool:
-            tested_results = list(pool.map(test_single_proxy_tcp, all_nodes))
-        tested_proxies = [p for p in tested_results if p]
-        print(f"测速成功节点数: {len(tested_proxies)} / {len(all_nodes)}")
-    else:
-        tested_proxies = all_nodes
+            tcp_tested_results = list(pool.map(test_single_proxy_tcp, all_nodes))
+        tcp_successful_proxies_raw = [p for p in tcp_tested_results if p] # These have 'tcp_delay'
+        print(f"  - TCP 测速成功节点数: {len(tcp_successful_proxies_raw)} / {len(all_nodes)}")
+
+        if not tcp_successful_proxies_raw:
+            print("⚠️ 所有节点 TCP 测速失败，无法进行后续处理。")
+            nodes_to_process_after_speed_test = []
+        else:
+            # Step 2: HTTP Test on TCP successful nodes
+            print("  - 对 TCP 成功的节点执行 HTTP 请求测试...")
+            with concurrent.futures.ThreadPoolExecutor(MAX_TEST_WORKERS) as pool:
+                http_tested_results = list(pool.map(test_single_proxy_http, tcp_successful_proxies_raw))
+            
+            http_passed_nodes = [p for p in http_tested_results if p and p.get('http_delay') is not None]
+            # http_failed_nodes 是那些通过 TCP 测速但 HTTP 测速失败或类型不支持的节点
+            http_failed_nodes = [p for p in http_tested_results if p and p.get('http_delay') is None]
+
+            print(f"  - HTTP 测速成功节点数: {len(http_passed_nodes)} / {len(tcp_successful_proxies_raw)}")
+            
+            nodes_to_process_after_speed_test = http_passed_nodes
+            
+            # Step 3: Fallback if all HTTP tests failed, but some TCP tests passed
+            if not http_passed_nodes and http_failed_nodes:
+                print("⚠️ 所有 HTTP 测速均失败。执行回退策略：从 TCP 成功但 HTTP 失败/不支持的节点中选择指定地区节点。")
+                fallback_regions = ['香港', '日本', '美国', '新加坡', '德国']
+                fallback_count_per_region = 20
+                
+                # 首先，识别这些回退候选节点的地区 (不进行重命名)
+                fallback_candidates_with_regions = identify_regions_only(http_failed_nodes)
+                
+                selected_fallback_nodes = []
+                region_grouped_fallback_nodes = defaultdict(list)
+                for p in fallback_candidates_with_regions:
+                    if p.get('region_info') and p['region_info']['name'] in fallback_regions:
+                        region_grouped_fallback_nodes[p['region_info']['name']].append(p)
+                
+                for region in fallback_regions:
+                    # 如果有 TCP 延迟，则按 TCP 延迟排序，否则顺序取
+                    sorted_region_nodes = sorted(region_grouped_fallback_nodes[region], key=lambda x: x.get('tcp_delay', 9999))
+                    selected_fallback_nodes.extend(sorted_region_nodes[:fallback_count_per_region])
+                
+                print(f"  - 回退策略已选择 {len(selected_fallback_nodes)} 个节点。")
+                nodes_to_process_after_speed_test = selected_fallback_nodes
+            elif not http_passed_nodes and not http_failed_nodes: # 这意味着 tcp_successful_proxies_raw 已经是空的了
+                print("⚠️ 无任何节点通过 TCP 测速或 HTTP 测速。")
+                nodes_to_process_after_speed_test = []
+            
+    else: # ENABLE_SPEED_TEST is False
+        nodes_to_process_after_speed_test = all_nodes
         print("测速关闭，使用全部节点继续处理")
 
-    if not tested_proxies:
-        print("⚠️ 无测速成功节点，使用所有节点继续处理")
-        tested_proxies = all_nodes
+    if not nodes_to_process_after_speed_test:
+        sys.exit("❌ 无任何可用节点通过测速或回退选择，程序终止。")
 
-    # 5. 仅针对测速通过节点做地区识别和重命名
+    # 5. 节点地区识别及重命名 (对最终选定的节点集进行处理)
     print("[4/5] 节点地区识别及重命名")
-    processed_proxies = process_proxies(tested_proxies)
+    processed_proxies = process_proxies(nodes_to_process_after_speed_test) # 这会添加 region_info 并重命名
+    
     if not processed_proxies:
         sys.exit("❌ 识别有效节点失败，程序退出")
-
+    
     # 6. 排序
     processed_proxies.sort(
         key=lambda p: (
             REGION_PRIORITY.index(p['region_info']['name']) if p['region_info']['name'] in REGION_PRIORITY else 99,
-            p.get('delay', 9999)
+            p.get('delay', 9999) # Fallback to a high value if delay is not present (e.g., from fallback nodes that only had TCP delay)
         )
     )
     print(f"[5/5] 排序完成，节点数量: {len(processed_proxies)}")
-
     # 7. 输出最终配置
     final_config = {
         'proxies': processed_proxies,
