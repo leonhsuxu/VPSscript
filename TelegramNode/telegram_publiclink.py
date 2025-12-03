@@ -103,12 +103,71 @@ CUSTOM_REGEX_RULES = {
 JUNK_PATTERNS = re.compile(r"(?:专线|IPLC|体验|官网|倍率|x\d[\.\d]*|[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*|Relay|流量)", re.IGNORECASE)
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
 
-
+BJ_TZ = timezone(timedelta(hours=8))
 
 # =================================================================================
 # Part 2: 函数定义
 # =================================================================================
+def get_country_flag_emoji(code):
+        if matched_region is None:
+            continue
+        p['region_info'] = matched_region
+        identified.append(p)
+    print(f"  - 节点过滤: 总数 {len(proxies)} -> 有效地区识别后 {len(identified)}")
 
+    counters = defaultdict(lambda: defaultdict(int))
+    master_pattern = re.compile(
+        '|'.join(sorted([p for r in CUSTOM_REGEX_RULES.values() for p in r['pattern'].split('|')], key=len, reverse=True)),
+        re.IGNORECASE
+    )
+    final = []
+    for p in identified:
+        info = p['region_info']
+        match = FLAG_EMOJI_PATTERN.search(p['name'])
+        flag = match.group(0) if match else get_country_flag_emoji(info['code'])
+
+        clean_name = master_pattern.sub('', FLAG_EMOJI_PATTERN.sub('', p['name'], 1)).strip()
+        clean_name = re.sub(r'^\W+|\W+$', '', clean_name)
+        feature = re.sub(r'\s+', ' ', clean_name).strip()
+        if not feature:
+            count = sum(1 for fp in final if fp['region_info']['name'] == info['name']) + 1
+            feature = f"{info['code']}{count:02d}"
+        base_name = f"{flag} {info['name']} {feature}".strip()
+
+        counters[info['name']][base_name] += 1
+        count_ = counters[info['name']][base_name]
+        if count_ > 1:
+            new_name = f"{base_name} {count_}"
+        else:
+            new_name = base_name
+
+        p['name'] = new_name
+        final.append(p)
+
+    return final
+
+# --- 读取本地已有节点及抓取状态 ---
+def load_existing_proxies_and_state():
+    existing_proxies = []
+    last_message_ids = {}
+    if os.path.exists(OUTPUT_FILE):
+        try:
+            with open(OUTPUT_FILE, 'r', encoding='utf-8') as f:
+                loaded_yaml = yaml.safe_load(f)
+                if isinstance(loaded_yaml, dict):
+                    existing_proxies = loaded_yaml.get('proxies', [])
+                    if not isinstance(existing_proxies, list):
+                        existing_proxies = []
+                    last_message_ids = loaded_yaml.get('last_message_ids', {})
+                    if not isinstance(last_message_ids, dict):
+                        last_message_ids = {}
+                elif isinstance(loaded_yaml, list):
+                    existing_proxies = [p for p in loaded_yaml if isinstance(p, dict)]
+        except Exception as e:
+            print(f"  - 读取或解析 {OUTPUT_FILE} 失败: {e}")
+    return existing_proxies, last_message_ids
+    
+    
 def extract_valid_subscribe_links(text):
     """
     从单条消息文本中提取有效订阅链接，
@@ -168,106 +227,59 @@ def extract_valid_subscribe_links(text):
         valid_links.append(url)
 
     return valid_links
-
-
-async def scrape_telegram_links(last_message_ids=None):
-    if last_message_ids is None:
-        last_message_ids = {}
-
+    
+async def scrape_telegram_links(last_message_ids):
     if not all([API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS_STR]):
-        print("❌ 错误: 缺少必要的环境变量 (API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS)。")
+        print("❌ 缺少 Telegram 配置信息，终止抓取。")
         return [], last_message_ids
-
-    TARGET_CHANNELS = [line.strip() for line in TELEGRAM_CHANNEL_IDS_STR.split('\n') 
-                       if line.strip() and not line.strip().startswith('#')]
+    
+    TARGET_CHANNELS = [line.strip() for line in TELEGRAM_CHANNEL_IDS_STR.strip().split('\n') if line.strip() and not line.startswith('#')]
     if not TARGET_CHANNELS:
-        print("❌ 错误: TELEGRAM_CHANNEL_IDS 中未找到有效频道 ID。")
+        print("❌ TELEGRAM_CHANNEL_IDS 配置无有效频道ID。")
         return [], last_message_ids
 
-    print(f"▶️ 配置抓取 {len(TARGET_CHANNELS)} 个频道: {TARGET_CHANNELS}")
-
-    try:
-        client = TelegramClient(StringSession(STRING_SESSION), API_ID, API_HASH)
-        await client.connect()
-        me = await client.get_me()
-        print(f"✅ 以 {me.first_name} (@{me.username}) 的身份成功连接")
-    except Exception as e:
-        print(f"❌ 错误: 连接 Telegram 时出错: {e}")
-        return [], last_message_ids
-
-    from datetime import timezone, timedelta
-    BJ_TZ = timezone(timedelta(hours=8))
+    client = TelegramClient(StringSession(STRING_SESSION), int(API_ID), API_HASH)
+    await client.start()
+    print("✅ Telegram 登录成功")
+    
     bj_now = datetime.now(BJ_TZ)
-    bj_prior_time = bj_now - timedelta(hours=TIME_WINDOW_HOURS)
-    target_time = bj_prior_time.astimezone(timezone.utc)
+    cutoff_time = bj_now - timedelta(hours=TIME_WINDOW_HOURS)
+    cutoff_utc = cutoff_time.astimezone(timezone.utc)
 
     all_links = set()
 
     for channel_id in TARGET_CHANNELS:
-        print(f"\n--- 正在处理频道: {channel_id} ---")
+        print(f"📢 抓取频道 {channel_id} 中...")
         try:
             entity = await client.get_entity(channel_id)
         except Exception as e:
-            print(f"❌ 错误: 无法获取频道实体 {channel_id}: {e}")
+            print(f"❌ 获取频道实体失败: {e}")
             continue
-
+        
         last_id = last_message_ids.get(channel_id, 0)
         max_id_found = last_id
-
+        
         try:
-            async for message in client.iter_messages(entity, min_id=last_id + 1, reverse=False):
-                if message.date < target_time:
+            async for message in client.iter_messages(entity, min_id=last_id+1, reverse=False):
+                if message.date < cutoff_utc:
                     break
                 if message.text:
                     links = extract_valid_subscribe_links(message.text)
                     for link in links:
                         all_links.add(link)
-                        print(f"  ✅ 找到链接: {link[:70]}...")
+                        print(f"  找到链接: {link[:70]}...")
                 if message.id > max_id_found:
                     max_id_found = message.id
-
             last_message_ids[channel_id] = max_id_found
         except Exception as e:
-            print(f"❌ 错误: 从频道 '{channel_id}' 获取消息时出错: {e}")
+            print(f"❌ 频道消息遍历失败: {e}")
 
     await client.disconnect()
-
-    print(f"\n✅ 抓取完成, 共找到 {len(all_links)} 个不重复的有效链接。")
+    print(f"✅ 抓取完成，找到 {len(all_links)} 个不重复链接。")
     return list(all_links), last_message_ids
-
-def preprocess_regex_rules():
-    """预处理正则规则：按长度排序以优化匹配效率"""
-    for region in CUSTOM_REGEX_RULES:
-        CUSTOM_REGEX_RULES[region]['pattern'] = '|'.join(
-            sorted(CUSTOM_REGEX_RULES[region]['pattern'].split('|'), key=len, reverse=True)
-        )
-
-
-def load_existing_proxies_and_state():
-    existing_proxies = []
-    last_message_ids = {}
-    if os.path.exists(OUTPUT_FILE):
-        try:
-            with open(OUTPUT_FILE, 'r', encoding='utf-8') as f:
-                loaded_yaml = yaml.safe_load(f)
-                if isinstance(loaded_yaml, dict):
-                    existing_proxies = loaded_yaml.get('proxies', [])
-                    if not isinstance(existing_proxies, list):
-                        existing_proxies = []
-                    last_message_ids = loaded_yaml.get('last_message_ids', {})
-                    if not isinstance(last_message_ids, dict):
-                        last_message_ids = {}
-                elif isinstance(loaded_yaml, list):
-                    existing_proxies = [p for p in loaded_yaml if isinstance(p, dict)]
-        except Exception as e:
-            print(f"  - 警告: 读取或解析 {OUTPUT_FILE} 失败: {e}。")
-    return existing_proxies, last_message_ids
-
-
-
-
-# -------------------- 工具函数 --------------------
-
+    
+    
+    
 def get_country_flag_emoji(code):
     """根据国家代码生成旗帜 Emoji"""
     if not code or len(code) != 2:
@@ -541,7 +553,7 @@ def parse_hysteria2_node(line):
         # 通常建议打印或记录异常以方便调试
         # print(f"Error parsing node: {e}")
         return None
-
+        
 
 # ---------------- 订阅解析主逻辑 ----------------
 
@@ -636,215 +648,81 @@ def decode_base64_and_parse(content):
         return []
 
 
-def download_subscription(url):
-    content = attempt_download_using_wget(url)
-    if content is None:
-        content = attempt_download_using_requests(url)
-    if content is None:
-        print(f"  ❌ 下载失败: {url}")
-        return []
-
-    proxies = parse_proxies_from_content(content)
-    if proxies:
-        print(f"  - 直接 YAML 解析获取 {len(proxies)} 个节点")
-        return proxies
-
-    proxies = parse_plain_nodes_from_text(content)
-    if proxies:
-        print(f"  - 明文内容解析获取 {len(proxies)} 个节点")
-        return proxies
-
-    if is_base64(content):
-        print(f"  - 内容为 Base64 编码，正在解码解析...")
-        proxies = decode_base64_and_parse(content)
-        if proxies:
-            return proxies
-        else:
-            print(f"  - Base64 解码无有效节点")
-            return []
-    print(f"  - 内容不符合已知格式，未找到有效节点")
-    return []
-
-
-def test_single_proxy_tcp(proxy):
-    """使用 TCP 连接测速（兼容所有协议）"""
-    try:
-        start = time.time()
-        with socket.create_connection((proxy['server'], proxy['port']), timeout=SOCKET_TIMEOUT) as sock:
-            end = time.time()
-            proxy['delay'] = int((end - start) * 1000)
-            return proxy
-    except Exception:
-        return None
-
-def get_proxy_key(p):
-    """生成代理节点的唯一标识"""
-    # 优先使用 uuid/password，然后是 server/port 组合
-    unique_part = p.get('uuid') or p.get('password') or ''
-    return hashlib.md5(
-        f"{p.get('server','')}:{p.get('port',0)}|{unique_part}".encode()
-    ).hexdigest()
-
-def is_valid_proxy(proxy):
-    """验证代理节点的协议格式和有效性"""
-    if not isinstance(proxy, dict):
-        return False
-    required_keys = ['name', 'server', 'port', 'type']
-    if not all(key in proxy for key in required_keys):
-        return False
-    # 进一步检查协议类型
-    allowed_types = {'http', 'socks5', 'trojan', 'vless', 'ss', 'vmess', 'ssr', 'hysteria', 'hysteria2'}
-    if 'type' in proxy and proxy['type'] not in allowed_types:
-        return False
-    # 确保端口范围在有效范围内
-    if not isinstance(proxy['port'], int) or not (1 <= proxy['port'] <= 65535):
-        return False
-    return True
-
-def process_proxies(proxies):
-    """过滤、验证、识别地区并重命名节点"""
-    identified = []
-    for p in proxies:
-        if not is_valid_proxy(p):
-            # print(f"  - 过滤无效节点: {p.get('name', '未知')}")
-            continue
-        name = JUNK_PATTERNS.sub('', FLAG_EMOJI_PATTERN.sub('', p.get('name', ''))).strip()
-        for eng, chn in CHINESE_COUNTRY_MAP.items():
-            name = re.sub(r'\b' + re.escape(eng) + r'\b', chn, name, flags=re.IGNORECASE)
-        for r_name, rules in CUSTOM_REGEX_RULES.items():
-            if re.search(rules['pattern'], name, re.IGNORECASE) and r_name in ALLOWED_REGIONS:
-                p['region_info'] = {'name': r_name, 'code': rules['code']}
-                identified.append(p)
-                break
-
-    print(f"  - 节点过滤: 原始 {len(proxies)} -> 识别并保留 {len(identified)}")
-    
-    final, counters = [], defaultdict(lambda: defaultdict(int))
-    master_pattern = re.compile(
-        '|'.join(sorted([p for r in CUSTOM_REGEX_RULES.values() for p in r['pattern'].split('|')], key=len, reverse=True)),
-        re.IGNORECASE
-    )
-    
-    for p in identified:
-        info = p['region_info']
-        match = FLAG_EMOJI_PATTERN.search(p['name'])
-        flag = match.group(0) if match else get_country_flag_emoji(info['code'])
-        
-        # 清理名称以提取特征
-        clean_name = master_pattern.sub('', FLAG_EMOJI_PATTERN.sub('', p['name'], 1)).strip()
-        clean_name = re.sub(r'^\W+|\W+$', '', clean_name) # 移除开头和结尾的非字母数字字符
-        feature = re.sub(r'\s+', ' ', clean_name).strip() or f"{info['code']}{sum(1 for fp in final if fp['region_info']['name'] == info['name']) + 1:02d}"
-        
-        new_name = f"{flag} {info['name']} {feature}".strip()
-        counters[info['name']][new_name] += 1
-        if counters[info['name']][new_name] > 1:
-            new_name += f" {counters[info['name']][new_name]}"
-        
-        p['name'] = new_name
-        final.append(p)
-    return final
-
-def delete_old_yaml():
-    """每周一晚上23:00删除旧的 YAML 文件"""
-    now = datetime.now(timezone(timedelta(hours=8)))  # 北京时间
-    # 周一(weekday()==0), 23:00-23:59
-    if now.weekday() == 0 and now.hour == 23:
-        if os.path.exists(OUTPUT_FILE):
-            try:
-                os.remove(OUTPUT_FILE)
-                print(f"✅ 已根据计划删除旧的配置文件: {OUTPUT_FILE}")
-            except OSError as e:
-                print(f"❌ 删除旧配置文件时出错: {e}")
-
-def generate_config(proxies):
-    """根据代理节点列表生成完整的 Clash 配置字典"""
-    if not proxies:
-        return None
-    # 仅包含proxies键，使其成为一个有效的Clash代理提供者文件
-    config = {
-        'proxies': proxies,
-    }
-    return config
-
 async def main():
-    print("=" * 60)
-    print("Clash 订阅自动生成脚本 V2.r1")
-    print(f"时间: {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S')}")
-    print("=" * 60)
-    preprocess_regex_rules()
-
-    print("\n[2/5] 读取现有节点及抓取状态...")
+    print("[1/5] 读取已有节点及抓取状态文件")
     existing_proxies, last_message_ids = load_existing_proxies_and_state()
-    print(f"  - 读取到 {len(existing_proxies)} 个现有节点，和 {len(last_message_ids)} 条频道抓取状态")
+    print(f"已有节点数量: {len(existing_proxies)}")
 
-    print("\n[1/5] 从 Telegram 抓取新节点...")
+    # 2. 抓取 Telegram 获取新订阅链接和新节点
+    print("[2/5] 抓取 Telegram 订阅链接")
     urls, last_message_ids = await scrape_telegram_links(last_message_ids)
+
     new_proxies_list = []
     if urls:
+        print(f"共抓取 {len(urls)} 个订阅链接，开始下载解析节点...")
         for url in urls:
             proxies = download_subscription(url)
             if proxies:
                 new_proxies_list.extend(proxies)
 
-    # 去重新节点
-    new_proxies_map = {}
+    print(f"抓取新增节点数: {len(new_proxies_list)}")
+
+    # 3. 合并原有和新增节点，去重
+    all_proxies_map = {get_proxy_key(p): p for p in existing_proxies if is_valid_proxy(p)}
+    added_new = 0
     for p in new_proxies_list:
         key = get_proxy_key(p)
-        if key not in new_proxies_map:
-            new_proxies_map[key] = p
-    print(f"✅ 从 Telegram 抓取并去重后，获得 {len(new_proxies_map)} 个新节点。")
-
-    print("\n[2/5] 处理、过滤、识别、重命名现有节点...")
-    existing_proxies = process_proxies(existing_proxies)
-    print(f"  - 现有节点过滤后数量: {len(existing_proxies)}")
-
-    print("\n[3/5] 合并并去重节点...")
-    all_proxies_map = {get_proxy_key(p): p for p in existing_proxies}
-    added_count = 0
-    for key, p in new_proxies_map.items():
         if key not in all_proxies_map:
             all_proxies_map[key] = p
-            added_count += 1
-    print(f"✅ 合并完成: 新增 {added_count} 个节点，总计 {len(all_proxies_map)} 个不重复节点。")
-    all_proxies_list = list(all_proxies_map.values())
-    if not all_proxies_list:
-        sys.exit("\n❌ 无任何可用节点，脚本终止。")
+            added_new += 1
+    print(f"合并去重后总节点数: {len(all_proxies_map)}, 新增节点: {added_new}")
 
-    print("\n[4/5] 处理、测速与排序节点...")
-    processed = process_proxies(all_proxies_list)
-    if not processed:
-        sys.exit("\n❌ 过滤和重命名后无任何可用节点，脚本终止。")
-    final = processed
-    if ENABLE_SPEED_TEST and final:
-        print(f"  - 开始 TCP 连接测速（超时: {SOCKET_TIMEOUT}秒, 并发: {MAX_TEST_WORKERS}）...")
-        with concurrent.futures.ThreadPoolExecutor(MAX_TEST_WORKERS) as executor:
-            tested = list(executor.map(test_single_proxy_tcp, final))
-        final = [p for p in tested if p]
-        print(f"  - 测速完成, {len(final)} / {len(processed)} 个节点可用。")
-        if not final:
-            print("\n  ⚠️ 测速后无可用节点，将使用所有过滤后的节点。")
-            final = processed
+    all_nodes = list(all_proxies_map.values())
+    if not all_nodes:
+        sys.exit("❌ 无任何可用节点, 程序终止")
 
-    final.sort(
+    # 4. TCP 测速所有节点，保留测速成功的
+    if ENABLE_SPEED_TEST:
+        print(f"[3/5] 开始 TCP 连接测速（超时 {SOCKET_TIMEOUT}s，最大线程 {MAX_TEST_WORKERS}）...")
+        with concurrent.futures.ThreadPoolExecutor(MAX_TEST_WORKERS) as pool:
+            tested_results = list(pool.map(test_single_proxy_tcp, all_nodes))
+        tested_proxies = [p for p in tested_results if p]
+        print(f"测速成功节点数: {len(tested_proxies)} / {len(all_nodes)}")
+    else:
+        tested_proxies = all_nodes
+        print("测速关闭，使用全部节点继续处理")
+
+    if not tested_proxies:
+        print("⚠️ 无测速成功节点，使用所有节点继续处理")
+        tested_proxies = all_nodes
+
+    # 5. 仅针对测速通过节点做地区识别和重命名
+    print("[4/5] 节点地区识别及重命名")
+    processed_proxies = process_proxies(tested_proxies)
+    if not processed_proxies:
+        sys.exit("❌ 识别有效节点失败，程序退出")
+
+    # 6. 排序
+    processed_proxies.sort(
         key=lambda p: (
             REGION_PRIORITY.index(p['region_info']['name']) if p['region_info']['name'] in REGION_PRIORITY else 99,
             p.get('delay', 9999)
         )
     )
-    print(f"✅ 最终处理完成 {len(final)} 个节点。")
+    print(f"[5/5] 排序完成，节点数量: {len(processed_proxies)}")
 
-    print("\n[5/5] 生成最终配置文件...")
-    config = {
-        'proxies': final,
+    # 7. 输出最终配置
+    final_config = {
+        'proxies': processed_proxies,
         'last_message_ids': last_message_ids,
     }
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     try:
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-            yaml.dump(config, f, allow_unicode=True, sort_keys=False, indent=2)
-        print(f"✅ 配置文件及状态已成功保存至: {OUTPUT_FILE}\n\n🎉 任务全部完成！")
+            yaml.dump(final_config, f, allow_unicode=True, sort_keys=False, indent=2)
+        print(f"✅ 配置文件写入成功: {OUTPUT_FILE}")
     except Exception as e:
-        print(f"❌ 写入最终配置文件时出错: {e}")
+        print(f"❌ 写入配置文件失败: {e}")
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     asyncio.run(main())
