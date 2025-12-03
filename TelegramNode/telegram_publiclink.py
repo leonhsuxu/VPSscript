@@ -43,7 +43,7 @@ STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')  # 获取 Telegram �
 
 # ========================== 配置区 =========================================
 TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS')  # Telegram频道ID，多行字符串，从yml引入
-TIME_WINDOW_HOURS = 3  # 抓取时间窗口，单位小时
+TIME_WINDOW_HOURS = 360  # 抓取时间窗口，单位小时
 MIN_EXPIRE_HOURS = 3  # 订阅链接最低剩余有效期，单位小时
 OUTPUT_FILE = 'flclashyaml/telegram_scraper.yaml'  # 输出YAML路径
 ENABLE_SPEED_TEST = True  # 是否启用测速  True开启，False关闭
