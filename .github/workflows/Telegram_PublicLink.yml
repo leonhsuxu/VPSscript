@@ -44,6 +44,8 @@ jobs:
          # -1002400305087
          # 订阅分享中心
          @dingyue_Center
+         # ※个人的订阅收集 leon
+         @tempssrlink
          
         TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
         TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
