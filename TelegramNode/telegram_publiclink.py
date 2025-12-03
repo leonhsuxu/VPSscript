@@ -92,7 +92,9 @@ CUSTOM_REGEX_RULES = {
 JUNK_PATTERNS = re.compile(r"(?:专线|IPLC|体验|官网|倍率|x\d[\.\d]*|[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*|Relay|流量)", re.IGNORECASE)
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
 BJ_TZ = timezone(timedelta(hours=8))
-# =========================    for p in proxies:
+# =========================    
+
+for p in proxies:
         matched_region = None
         for region_name, info in CUSTOM_REGEX_RULES.items():
             pattern = info['pattern']
