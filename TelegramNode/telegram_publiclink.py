@@ -727,7 +727,7 @@ def get_proxy_key(p):
     unique_part = p.get('uuid') or p.get('password') or ''
     return hashlib.md5(
         f"{p.get('server','')}:{p.get('port',0)}|{unique_part}".encode()
-    ).heigest()
+    ).hexdigest() 
 def is_valid_proxy(proxy):
     """验证代理节点的协议格式和有效性"""
     if not isinstance(proxy, dict):
