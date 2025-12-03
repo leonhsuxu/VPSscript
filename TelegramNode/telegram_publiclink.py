@@ -110,19 +110,47 @@ FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
 # =================================================================================
 
 def parse_expire_time(text):
-    """解析消息中的到期时间"""
-    match = re.search(r'到期时间[:：]\s*(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})', text)
+    """
+    解析消息中的到期时间：
+    - 如果包含 '+0000 UTC' 标记，解析UTC时间并转换成北京时间
+    - 否则默认解析为北京时间
+    - 支持格式：
+      - 2025-12-04
+      - 2025-12-04 19:33:46
+      - 2026-01-01 06:52:13 +0000 UTC
+    """
+    # 先匹配带 +0000 UTC 的UTC时间（日期或日期时间）
+    utc_pattern = r'(\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2}:\d{2})?) \+0000 UTC'
+    match = re.search(utc_pattern, text)
     if match:
+        dt_str = match.group(1)
         try:
-            return datetime.strptime(match.group(1), '%Y-%m-%d %H:%M:%S').replace(tzinfo=timezone(timedelta(hours=8)))
-        except ValueError:
+            fmt = '%Y-%m-%d %H:%M:%S' if ' ' in dt_str else '%Y-%m-%d'
+            dt_utc = datetime.strptime(dt_str, fmt).replace(tzinfo=timezone.utc)
+            dt_bjt = dt_utc.astimezone(timezone(timedelta(hours=8)))
+            return dt_bjt
+        except Exception:
             return None
+
+    # 不带时区的时间，形如 到期时间: 2025-12-04 或 到期: 2025-12-04 19:33:46
+    bjt_pattern = r'(?:到期时间|到期|过期时间|过期|剩余时间)[:：]\s*(\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2}:\d{2})?)'
+    match = re.search(bjt_pattern, text)
+    if match:
+        dt_str = match.group(1)
+        try:
+            fmt = '%Y-%m-%d %H:%M:%S' if ' ' in dt_str else '%Y-%m-%d'
+            dt_bjt = datetime.strptime(dt_str, fmt).replace(tzinfo=timezone(timedelta(hours=8)))
+            return dt_bjt
+        except Exception:
+            return None
+
     return None
+
 
 def is_expire_time_valid(expire_time):
     """检查订阅链接是否在有效期内"""
     if expire_time is None:
-        return True
+        return True # 没有时间信息默认不过期
     hours_remaining = (expire_time - datetime.now(timezone(timedelta(hours=8)))).total_seconds() / 3600
     if hours_remaining < MIN_EXPIRE_HOURS:
         print(f"  ❌ 已跳过: 链接剩余时间 ({hours_remaining:.1f} 小时) 少于最低要求 ({MIN_EXPIRE_HOURS} 小时)")
