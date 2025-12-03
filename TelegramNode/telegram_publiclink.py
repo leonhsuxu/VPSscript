@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # =====================================================================
-# Clash 订阅自动生成脚本 V2.r1 - 20251203
+# Clash 订阅自动生成脚本 V3 - 20251203
 #
 # 功能：
 # 1. 从 Telegram 频道动态抓取订阅链接
@@ -47,7 +47,7 @@ TIME_WINDOW_HOURS = 8  # 抓取时间窗口，单位小时
 MIN_EXPIRE_HOURS = 2  # 订阅链接最低剩余有效期，单位小时
 OUTPUT_FILE = 'flclashyaml/telegram_scraper.yaml'  # 输出YAML路径
 ENABLE_SPEED_TEST = True  # 是否启用测速  True开启，False关闭
-SOCKET_TIMEOUT = 8  # TCP测速超时时间(秒)
+SOCKET_TIMEOUT = 3  # TCP测速超时时间(秒)
 MAX_TEST_WORKERS = 256  # 并发测速线程数
 TEST_URL = 'http://www.gstatic.com/generate_204'  # 测速的 URL
 TEST_INTERVAL = 300  # 测速间隔，单位为秒
@@ -762,6 +762,17 @@ def generate_config(proxies):
 
 
 async def main():
+    
+    print("=" * 60)
+    print("Clash 订阅自动生成脚本 V3 ")
+    print(f"时间: {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S')}")
+    print("=" * 60)
+
+    preprocess_regex_rules()
+    
+    # delete_old_yaml()  # 取消定期删除，保留历史文件
+    
+
     print("[1/5] 读取已有节点及抓取状态文件")
     existing_proxies, last_message_ids = load_existing_proxies_and_state()
     print(f"已有节点数量: {len(existing_proxies)}")
