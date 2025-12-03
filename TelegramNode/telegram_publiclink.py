@@ -741,21 +741,51 @@ async def main():
     print(f"✅ 从 Telegram 抓取并去重后，获得 {len(new_proxies_map)} 个新节点。")
     
     # --- 步骤 2: 读取现有节点 ---
-    print("\n[2/5] 读取现有节点...")
-    existing_proxies = []
-    if os.path.exists(OUTPUT_FILE):
-        try:
-            with open(OUTPUT_FILE, 'r', encoding='utf-8') as f:
-                loaded_yaml = yaml.safe_load(f)
-                if isinstance(loaded_yaml, dict) and 'proxies' in loaded_yaml:
-                    if isinstance(loaded_yaml['proxies'], list):
-                        existing_proxies = [p for p in loaded_yaml['proxies'] if isinstance(p, dict)]
-                        print(f"  - 成功读取 {len(existing_proxies)} 个现有节点。")
-                elif isinstance(loaded_yaml, list):
-                    existing_proxies = [p for p in loaded_yaml if isinstance(p, dict)]
-                    print(f"  - 成功读取 {len(existing_proxies)} 个现有节点 (来自旧的列表格式)。")
-        except Exception as e:
-            print(f"  - 警告: 读取或解析 {OUTPUT_FILE} 失败: {e}。")
+print("\n[2/5] 读取现有节点...")
+
+existing_proxies = []
+if os.path.exists(OUTPUT_FILE):
+    try:
+        # 读取已有配置文件
+        with open(OUTPUT_FILE, 'r', encoding='utf-8') as f:
+            loaded_yaml = yaml.safe_load(f)
+            if isinstance(loaded_yaml, dict) and 'proxies' in loaded_yaml:
+                if isinstance(loaded_yaml['proxies'], list):
+                    existing_proxies = [p for p in loaded_yaml['proxies'] if isinstance(p, dict)]
+                    print(f"  - 成功读取 {len(existing_proxies)} 个现有节点。")
+            elif isinstance(loaded_yaml, list):
+                # 兼容旧格式：整个列表即是节点列表
+                existing_proxies = [p for p in loaded_yaml if isinstance(p, dict)]
+                print(f"  - 成功读取 {len(existing_proxies)} 个现有节点 (来自旧的列表格式)。")
+    except Exception as e:
+        print(f"  - 警告: 读取或解析 {OUTPUT_FILE} 失败: {e}。")
+
+# -----------------------------------------
+# 统一处理旧节点：
+# - 过滤无效节点
+# - 识别地区
+# - 重命名为规范格式，避免命名重复与新节点冲突
+# -----------------------------------------
+print(f"  - 对现有节点进行统一过滤、地区识别和重命名...")
+
+existing_proxies = process_proxies(existing_proxies)
+
+print(f"  - 统一处理后现有节点数量: {len(existing_proxies)}")
+
+# -----------------------------------------
+# 如果启用测速，对现有节点做 TCP 连接测速
+# 以获取延迟信息，辅助后续排序和过滤
+# -----------------------------------------
+if ENABLE_SPEED_TEST and existing_proxies:
+    print(f"  - 对现有节点进行 TCP 连接测速，节点数量: {len(existing_proxies)}")
+
+    with concurrent.futures.ThreadPoolExecutor(MAX_TEST_WORKERS) as executor:
+        tested_existing = list(executor.map(test_single_proxy_tcp, existing_proxies))
+
+    # 过滤测速失败的节点
+    existing_proxies = [p for p in tested_existing if p]
+
+    print(f"  - 现有节点测速完成，可用节点数量: {len(existing_proxies)}")
 
     # 新增：先对现有(旧)节点测速，获取最新延迟信息
     if ENABLE_SPEED_TEST and existing_proxies:
