@@ -11,7 +11,7 @@
 #    - Base64 编码的混合协议节点解析
 # 4. 解析过程中统计各协议成功和失败节点数量，统一打印
 # 5. 支持节点去重、地区识别（含emoji国旗）、TCP测速与排序、旧节点测速去重
-# 6. 生成Clash兼容配置文件
+# 6. 生成Clash兼容配置文件，里边包含爬取消息截止id
 # =====================================================================
 
 import os
@@ -43,7 +43,7 @@ STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')  # 获取 Telegram �
 
 # ========================== 配置区 =========================================
 TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS')  # Telegram频道ID，多行字符串，从yml引入
-TIME_WINDOW_HOURS = 3  # 抓取时间窗口，单位小时
+TIME_WINDOW_HOURS = 6  # 抓取时间窗口，单位小时
 MIN_EXPIRE_HOURS = 2  # 订阅链接最低剩余有效期，单位小时
 OUTPUT_FILE = 'flclashyaml/telegram_scraper.yaml'  # 输出YAML路径
 ENABLE_SPEED_TEST = True  # 是否启用测速  True开启，False关闭
