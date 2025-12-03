@@ -172,16 +172,19 @@ def extract_valid_subscribe_links(text):
 
 
 async def scrape_telegram_links():
-    """从 Telegram 频道抓取订阅链接"""
+    """从 Telegram 频道抓取订阅链接，时间窗口基于北京时间当前时间减 TIME_WINDOW_HOURS 小时"""
     if not all([API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS_STR]):
         print("❌ 错误: 缺少必要的环境变量 (API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS)。")
         return []
-    # 处理频道 ID 列表
-    TARGET_CHANNELS = [line.strip() for line in TELEGRAM_CHANNEL_IDS_STR.split('\n') if line.strip() and not line.strip().startswith('#')]
+
+    TARGET_CHANNELS = [line.strip() for line in TELEGRAM_CHANNEL_IDS_STR.split('\n') 
+                       if line.strip() and not line.strip().startswith('#')]
     if not TARGET_CHANNELS:
         print("❌ 错误: TELEGRAM_CHANNEL_IDS 中未找到有效频道 ID。")
         return []
+
     print(f"▶️ 配置抓取 {len(TARGET_CHANNELS)} 个频道: {TARGET_CHANNELS}")
+
     try:
         client = TelegramClient(StringSession(STRING_SESSION), API_ID, API_HASH)
         await client.connect()
@@ -190,12 +193,21 @@ async def scrape_telegram_links():
     except Exception as e:
         print(f"❌ 错误: 连接 Telegram 时出错: {e}")
         return []
-    target_time = datetime.now(timezone.utc) - timedelta(hours=TIME_WINDOW_HOURS)
+
+    from datetime import timezone, timedelta
+
+    BJ_TZ = timezone(timedelta(hours=8))
+    bj_now = datetime.now(BJ_TZ)
+    bj_prior_time = bj_now - timedelta(hours=TIME_WINDOW_HOURS)
+    target_time = bj_prior_time.astimezone(timezone.utc)
+
     all_links = set()
+
     for channel_id in TARGET_CHANNELS:
         print(f"\n--- 正在处理频道: {channel_id} ---")
         try:
-            async for message in client.iter_messages(await client.get_entity(channel_id), limit=500):
+            entity = await client.get_entity(channel_id)
+            async for message in client.iter_messages(entity, limit=500):
                 if message.date < target_time:
                     break
                 if message.text:
@@ -205,7 +217,9 @@ async def scrape_telegram_links():
                         print(f"  ✅ 找到链接: {link[:70]}...")
         except Exception as e:
             print(f"❌ 错误: 从频道 '{channel_id}' 获取消息时出错: {e}")
+
     await client.disconnect()
+
     print(f"\n✅ 抓取完成, 共找到 {len(all_links)} 个不重复的有效链接。")
     return list(all_links)
 
