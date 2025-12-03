@@ -36,25 +36,37 @@ from urllib.parse import urlparse, parse_qs, unquote
 from telethon.sync import TelegramClient
 from telethon.sessions import StringSession
 
-# ========================== 配置区 ==========================
-API_ID = os.environ.get('TELEGRAM_API_ID')  # Telegram API ID
-API_HASH = os.environ.get('TELEGRAM_API_HASH')  # Telegram API HASH
-STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')  # Telegram 会话字符串
-TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS')  # Telegram频道ID，多行字符串
+# ========================== Telegram 个人资料配置 ==========================
+API_ID = os.environ.get('TELEGRAM_API_ID')  # 获取 Telegram API ID
+API_HASH = os.environ.get('TELEGRAM_API_HASH')  # 获取 Telegram API HASH
+STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')  # 获取 Telegram 会话字符串
 
+# ========================== 配置区 =========================================
+TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS')  # Telegram频道ID，多行字符串，从yml引入
 TIME_WINDOW_HOURS = 3  # 抓取时间窗口，单位小时
 MIN_EXPIRE_HOURS = 3  # 订阅链接最低剩余有效期，单位小时
-
 OUTPUT_FILE = 'flclashyaml/telegram_scraper.yaml'  # 输出YAML路径
-
-ENABLE_SPEED_TEST = True  # 是否启用测速
+ENABLE_SPEED_TEST = True  # 是否启用测速  True开启，False关闭
 SOCKET_TIMEOUT = 8  # TCP测速超时时间(秒)
-MAX_TEST_WORKERS = 128  # 并发测速线程数
+MAX_TEST_WORKERS = 256  # 并发测速线程数
+TEST_URL = 'http://www.gstatic.com/generate_204'  # 测速的 URL
+TEST_INTERVAL = 300  # 测速间隔，单位为秒
 
+
+# ========== 地区过滤配置 ==========
+ALLOWED_REGIONS = {'香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国',
+                   '印度', '菲律宾', '印度尼西亚', '越南', '美国', '加拿大', '法国',
+                   '英国', '德国', '俄罗斯', '意大利', '巴西', '阿根廷', '土耳其', '澳大利亚'}
+                   
+# ALLOWED_REGIONS = set(CUSTOM_REGEX_RULES.keys()) # 或可使用已有的 CUSTOM_REGEX_RULES 键集合
+
+
+# ========== 排序优先级配置 ==========
 REGION_PRIORITY = ['香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国', '印度', '菲律宾',
                    '印度尼西亚', '越南', '美国', '加拿大', '法国', '英国', '德国', '俄罗斯', '意大利',
                    '巴西', '阿根廷', '土耳其', '澳大利亚']
 
+# ========== 国家/地区映射表 ==========
 CHINESE_COUNTRY_MAP = {
     'HK': '香港', 'TW': '台湾', 'JP': '日本', 'SG': '新加坡', 'KR': '韩国', 'MY': '马来西亚',
     'TH': '泰国', 'IN': '印度', 'PH': '菲律宾', 'ID': '印度尼西亚', 'VN': '越南', 'US': '美国',
@@ -62,6 +74,7 @@ CHINESE_COUNTRY_MAP = {
     'BR': '巴西', 'AR': '阿根廷', 'TR': '土耳其', 'AU': '澳大利亚'
 }
 
+# ========== 地区识别正则规则 ==========
 CUSTOM_REGEX_RULES = {
     '香港': {'code': 'HK', 'pattern': r'香港|港|HK|Hong\s*Kong'},
     '台湾': {'code': 'TW', 'pattern': r'台湾|台|TW|Taiwan'},
@@ -90,15 +103,96 @@ CUSTOM_REGEX_RULES = {
 JUNK_PATTERNS = re.compile(r"(?:专线|IPLC|体验|官网|倍率|x\d[\.\d]*|[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*|Relay|流量)", re.IGNORECASE)
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
 
+
+
+# =================================================================================
+# Part 2: 函数定义
+# =================================================================================
+
+def parse_expire_time(text):
+    """解析消息中的到期时间"""
+    match = re.search(r'到期时间[:：]\s*(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})', text)
+    if match:
+        try:
+            return datetime.strptime(match.group(1), '%Y-%m-%d %H:%M:%S').replace(tzinfo=timezone(timedelta(hours=8)))
+        except ValueError:
+            return None
+    return None
+
+def is_expire_time_valid(expire_time):
+    """检查订阅链接是否在有效期内"""
+    if expire_time is None:
+        return True
+    hours_remaining = (expire_time - datetime.now(timezone(timedelta(hours=8)))).total_seconds() / 3600
+    if hours_remaining < MIN_EXPIRE_HOURS:
+        print(f"  ❌ 已跳过: 链接剩余时间 ({hours_remaining:.1f} 小时) 少于最低要求 ({MIN_EXPIRE_HOURS} 小时)")
+        return False
+    return True
+
+async def scrape_telegram_links():
+    """从 Telegram 频道抓取订阅链接"""
+    if not all([API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS_STR]):
+        print("❌ 错误: 缺少必要的环境变量 (API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS)。")
+        return []
+
+    # 处理频道 ID 列表
+    TARGET_CHANNELS = [line.strip() for line in TELEGRAM_CHANNEL_IDS_STR.split('\n') if line.strip() and not line.strip().startswith('#')]
+    if not TARGET_CHANNELS:
+        print("❌ 错误: TELEGRAM_CHANNEL_IDS 中未找到有效频道 ID。")
+        return []
+
+    print(f"▶️ 配置抓取 {len(TARGET_CHANNELS)} 个频道: {TARGET_CHANNELS}")
+
+    try:
+        client = TelegramClient(StringSession(STRING_SESSION), API_ID, API_HASH)
+        await client.connect()
+        me = await client.get_me()
+        print(f"✅ 以 {me.first_name} (@{me.username}) 的身份成功连接")
+    except Exception as e:
+        print(f"❌ 错误: 连接 Telegram 时出错: {e}")
+        return []
+
+    target_time = datetime.now(timezone.utc) - timedelta(hours=TIME_WINDOW_HOURS)
+    all_links = set()
+
+    for channel_id in TARGET_CHANNELS:
+        print(f"\n--- 正在处理频道: {channel_id} ---")
+        try:
+            async for message in client.iter_messages(await client.get_entity(channel_id), limit=500):
+                if message.date < target_time:
+                    break
+                if message.text and is_expire_time_valid(parse_expire_time(message.text)):
+                    for url in re.findall(r'(?:订阅链接|订阅地址|订阅|链接)[\s:：]*\s*(https?://[^\s<>"*`]+)', message.text):
+                        cleaned_url = url.strip().strip('.,*`')
+                        if cleaned_url:
+                            all_links.add(cleaned_url)
+                            print(f"  ✅ 找到链接: {cleaned_url[:70]}...")
+        except Exception as e:
+            print(f"❌ 错误: 从频道 '{channel_id}' 获取消息时出错: {e}")
+
+    await client.disconnect()
+    print(f"\n✅ 抓取完成, 共找到 {len(all_links)} 个不重复的有效链接。")
+    return list(all_links)
+
+def preprocess_regex_rules():
+    """预处理正则规则：按长度排序以优化匹配效率"""
+    for region in CUSTOM_REGEX_RULES:
+        CUSTOM_REGEX_RULES[region]['pattern'] = '|'.join(
+            sorted(CUSTOM_REGEX_RULES[region]['pattern'].split('|'), key=len, reverse=True)
+        )
+
+
 # -------------------- 工具函数 --------------------
 
 def get_country_flag_emoji(code):
+    """根据国家代码生成旗帜 Emoji"""
     if not code or len(code) != 2:
         return "❓"
     return "".join(chr(0x1F1E6 + ord(c.upper()) - ord('A')) for c in code)
 
 
 def attempt_download_using_wget(url):
+    """使用 wget 下载订阅链接"""
     print(f"  ⬇️ 正在使用 wget 下载: {url[:80]}...")
     if not shutil.which("wget"):
         print("  ✗ 错误: wget 未安装，无法执行下载。")
@@ -115,6 +209,7 @@ def attempt_download_using_wget(url):
 
 
 def attempt_download_using_requests(url):
+    """使用 requests 下载订阅链接"""
     print(f"  ⬇️ 正在使用 requests 下载: {url[:80]}...")
     try:
         headers = {'User-Agent': 'Clash'}
@@ -128,7 +223,9 @@ def attempt_download_using_requests(url):
 
 
 def parse_proxies_from_content(content):
+    """从下载的内容中解析代理节点"""
     try:
+        # 尝试解析 YAML 内容
         data = yaml.safe_load(content)
         if isinstance(data, dict):
             proxies = data.get('proxies', [])
@@ -142,6 +239,7 @@ def parse_proxies_from_content(content):
 
 
 def is_base64(text):
+    """检查字符串是否是有效的 Base64 编码"""
     try:
         s = ''.join(text.split())
         if not s or len(s) % 4 != 0:
