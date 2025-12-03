@@ -1,24 +1,4 @@
 proxies:
-- name: 🇭🇰 香港 WAP-优化2-Gemi
-  type: vmess
-  server: m.cnmjin.net
-  port: 16622
-  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  ws-path: /
-  ws-headers:
-    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  region_info:
-    name: 香港
-    code: HK
-  delay: 89
 - name: 🇭🇰 香港 优化2-Gemi
   type: vmess
   server: m.cnmjin.net
@@ -38,7 +18,7 @@ proxies:
   region_info:
     name: 香港
     code: HK
-  delay: 91
+  delay: 107
 - name: 🇭🇰 香港 优化-Gemi
   type: vmess
   server: planb.mojcn.com
@@ -58,7 +38,27 @@ proxies:
   region_info:
     name: 香港
     code: HK
-  delay: 91
+  delay: 108
+- name: 🇭🇰 香港 WAP-优化2-Gemi
+  type: vmess
+  server: m.cnmjin.net
+  port: 16622
+  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  ws-path: /
+  ws-headers:
+    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  region_info:
+    name: 香港
+    code: HK
+  delay: 109
 - name: 🇭🇰 香港 WAP-优化-Gemi
   type: vmess
   server: planb.mojcn.com
@@ -78,7 +78,7 @@ proxies:
   region_info:
     name: 香港
     code: HK
-  delay: 91
+  delay: 111
 - name: 🇭🇰 香港 IEPL
   type: ss
   server: gd.bjnet2.com
@@ -93,83 +93,51 @@ proxies:
   region_info:
     name: 香港
     code: HK
-  delay: 208
-- alterId: 2
-  cipher: auto
-  name: 🇭🇰 香港 宿舍_2|3.1MB/s
-  network: ws
-  port: 80
-  server: hkt.gotochinatown.net
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: e534d120-d32f-11ef-bdb9-f23c91cfbbc9
-  ws-opts:
-    headers:
-      Host: hkt.gotochinatown.net
-    path: /
+  delay: 198
+- name: 🇭🇰 香港 精品4
+  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  port: 443
+  server: 6d337dba-t6t0g0-t917sa-12ach.hkt2.cdnhuawei.com
+  tls: true
+  type: http
+  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
   region_info:
     name: 香港
     code: HK
-  delay: 224
-- alterId: 2
-  cipher: auto
-  country: 🇭🇰HK
-  h2-opts: {}
-  http-opts: {}
-  name: 🇭🇰 香港 宿舍_9|1.6MB/s
-  network: ws
-  port: 80
-  server: 03199e4c-t6r5s0-tbnucr-1thfv.hkt.gotochinatown.net
-  skip-cert-verify: true
-  type: vmess
-  uuid: 0a4d1c88-fb3a-11ef-8c3f-f23c913c8d2b
-  ws-opts:
-    headers:
-      HOST: broadcastlv.chat.bilibili.com
-      Host: 03199e4c-t6r5s0-tbnucr-1thfv.hkt.gotochinatown.net
-    path: /
-  servername: broadcastlv.chat.bilibili.com
+  delay: 199
+- name: 🇭🇰 香港 精品2 2
+  password: <password>
+  port: 443
+  server: 17f71170-t6t0g0-tiuylw-46gc.hkt2.cdnhuawei.com
+  tls: true
+  type: socks5
+  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
   region_info:
     name: 香港
     code: HK
-  delay: 227
-- alterId: 2
-  cipher: auto
-  name: 🇭🇰 香港 精品 2
-  network: ws
-  port: 80
-  server: 1bded891-t6t0g0-tiuylw-46gc.hkt.gotochinatown.net
-  tls: false
-  type: vmess
-  uuid: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  ws-headers:
-    Host: broadcastlv.chat.bilibili.com
-    User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36
-      (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36
-  ws-path: /
+  delay: 202
+- name: 🇭🇰 香港 精品2
+  password: <password>
+  port: 443
+  server: 6d337dba-t6t0g0-t917sa-12ach.hkt2.cdnhuawei.com
+  tls: true
+  type: socks5
+  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
   region_info:
     name: 香港
     code: HK
-  delay: 227
-- alterId: 2
-  cipher: auto
-  name: 🇭🇰 香港 精品
-  network: ws
-  port: 80
-  server: 29d398ca-t6t0g0-t917sa-12ach.hkt.gotochinatown.net
-  tls: false
-  type: vmess
-  uuid: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  ws-headers:
-    Host: broadcastlv.chat.bilibili.com
-    User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36
-      (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36
-  ws-path: /
+  delay: 203
+- name: 🇭🇰 香港 精品4 2
+  password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
+  port: 443
+  server: 17f71170-t6t0g0-tiuylw-46gc.hkt2.cdnhuawei.com
+  tls: true
+  type: http
+  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
   region_info:
     name: 香港
     code: HK
-  delay: 228
+  delay: 204
 - name: 🇭🇰 香港 优化3-Gemi
   type: vmess
   server: t.cnmjcn.cyou
@@ -189,29 +157,108 @@ proxies:
   region_info:
     name: 香港
     code: HK
-  delay: 229
+  delay: 208
 - alterId: 2
   cipher: auto
-  country: 🇭🇰 HK
-  h2-opts: {}
-  http-opts: {}
-  name: 🇭🇰 香港 宿舍_7|2.0MB/s
+  name: 🇭🇰 香港 宿舍_3|1.1MB/s
   network: ws
   port: 80
-  server: hkt.gotochinatown.net
-  skip-cert-verify: true
+  server: 418446e2-sv2sg0-t2nkut-jx5r.hk3.p5pv.com
+  skip-cert-verify: false
+  tls: false
   type: vmess
-  uuid: 9cccea7a-b6ab-11eb-a0fc-f23c913c8d2b
+  uuid: 73bfcc1c-5814-5f2a-b43a-3ef6af011db8
   ws-opts:
     headers:
-      HOST: broadcastlv.chat.bilibili.com
-      Host: hkt.gotochinatown.net
+      Host: 418446e2-sv2sg0-t2nkut-jx5r.hk3.p5pv.com
     path: /
   servername: broadcastlv.chat.bilibili.com
   region_info:
     name: 香港
     code: HK
-  delay: 229
+  delay: 210
+- name: 🇭🇰 香港 精品3 2
+  password: <password>
+  port: 8443
+  server: 97a437f3-t6t0g0-tiuylw-46gc.hkt.cdnhuawei.com
+  tls: true
+  type: http
+  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
+  region_info:
+    name: 香港
+    code: HK
+  delay: 210
+- name: 🇭🇰 香港 WAP-优化3-Gemi
+  type: vmess
+  server: t.cnmjcn.cyou
+  port: 16622
+  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  ws-path: /
+  ws-headers:
+    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  region_info:
+    name: 香港
+    code: HK
+  delay: 215
+- name: 🇭🇰 香港 中转[CM 2
+  password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
+  port: 5228
+  server: 69c5d135-t6t0g0-tiuylw-46gc.cm4.oshuawei.com
+  tls: true
+  type: http
+  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
+  region_info:
+    name: 香港
+    code: HK
+  delay: 230
+- name: 🇭🇰 香港 精品3
+  password: <password>
+  port: 8443
+  server: 47a7b17e-t6t0g0-t917sa-12ach.hkt.cdnhuawei.com
+  tls: true
+  type: http
+  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  region_info:
+    name: 香港
+    code: HK
+  delay: 231
+- name: 🇭🇰 香港 中转[CM
+  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  port: 5228
+  server: 170d584d-t6t0g0-t917sa-12ach.cm4.oshuawei.com
+  tls: true
+  type: http
+  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  region_info:
+    name: 香港
+    code: HK
+  delay: 237
+- alterId: 2
+  cipher: auto
+  name: 🇭🇰 香港 03
+  network: ws
+  port: 80
+  server: 186e6a73-t6t0g0-tiuylw-46gc.hk3.p5pv.com
+  tls: false
+  type: vmess
+  uuid: 225d1cca-d744-11ef-b790-f23c91cfbbc9
+  ws-headers:
+    Host: broadcastlv.chat.bilibili.com
+    User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36
+      (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36
+  ws-path: /
+  region_info:
+    name: 香港
+    code: HK
+  delay: 243
 - alterId: 2
   cipher: auto
   country: 🇭🇰 HK
@@ -233,26 +280,87 @@ proxies:
   region_info:
     name: 香港
     code: HK
-  delay: 229
+  delay: 268
 - alterId: 2
   cipher: auto
-  name: 🇭🇰 香港 宿舍_3|1.1MB/s
+  country: 🇭🇰HK
+  h2-opts: {}
+  http-opts: {}
+  name: 🇭🇰 香港 宿舍_9|1.6MB/s
   network: ws
   port: 80
-  server: 418446e2-sv2sg0-t2nkut-jx5r.hk3.p5pv.com
-  skip-cert-verify: false
-  tls: false
+  server: 03199e4c-t6r5s0-tbnucr-1thfv.hkt.gotochinatown.net
+  skip-cert-verify: true
   type: vmess
-  uuid: 73bfcc1c-5814-5f2a-b43a-3ef6af011db8
+  uuid: 0a4d1c88-fb3a-11ef-8c3f-f23c913c8d2b
   ws-opts:
     headers:
-      Host: 418446e2-sv2sg0-t2nkut-jx5r.hk3.p5pv.com
+      HOST: broadcastlv.chat.bilibili.com
+      Host: 03199e4c-t6r5s0-tbnucr-1thfv.hkt.gotochinatown.net
     path: /
   servername: broadcastlv.chat.bilibili.com
   region_info:
     name: 香港
     code: HK
-  delay: 231
+  delay: 269
+- alterId: 2
+  cipher: auto
+  country: 🇭🇰 HK
+  h2-opts: {}
+  http-opts: {}
+  name: 🇭🇰 香港 宿舍_7|2.0MB/s
+  network: ws
+  port: 80
+  server: hkt.gotochinatown.net
+  skip-cert-verify: true
+  type: vmess
+  uuid: 9cccea7a-b6ab-11eb-a0fc-f23c913c8d2b
+  ws-opts:
+    headers:
+      HOST: broadcastlv.chat.bilibili.com
+      Host: hkt.gotochinatown.net
+    path: /
+  servername: broadcastlv.chat.bilibili.com
+  region_info:
+    name: 香港
+    code: HK
+  delay: 269
+- alterId: 2
+  cipher: auto
+  name: 🇭🇰 香港 精品
+  network: ws
+  port: 80
+  server: 29d398ca-t6t0g0-t917sa-12ach.hkt.gotochinatown.net
+  tls: false
+  type: vmess
+  uuid: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  ws-headers:
+    Host: broadcastlv.chat.bilibili.com
+    User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36
+      (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36
+  ws-path: /
+  region_info:
+    name: 香港
+    code: HK
+  delay: 271
+- alterId: 2
+  cipher: auto
+  name: 🇭🇰 香港 精品 2
+  network: ws
+  port: 80
+  server: 1bded891-t6t0g0-tiuylw-46gc.hkt.gotochinatown.net
+  tls: false
+  type: vmess
+  uuid: 225d1cca-d744-11ef-b790-f23c91cfbbc9
+  ws-headers:
+    Host: broadcastlv.chat.bilibili.com
+    User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36
+      (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36
+  ws-path: /
+  region_info:
+    name: 香港
+    code: HK
+  delay: 272
 - alterId: 2
   cipher: auto
   country: 🇭🇰HK
@@ -274,133 +382,25 @@ proxies:
   region_info:
     name: 香港
     code: HK
-  delay: 235
-- name: 🇭🇰 香港 WAP-优化3-Gemi
-  type: vmess
-  server: t.cnmjcn.cyou
-  port: 16622
-  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  ws-path: /
-  ws-headers:
-    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  region_info:
-    name: 香港
-    code: HK
-  delay: 236
-- name: 🇭🇰 香港 精品3
-  password: <password>
-  port: 8443
-  server: 47a7b17e-t6t0g0-t917sa-12ach.hkt.cdnhuawei.com
-  tls: true
-  type: http
-  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  region_info:
-    name: 香港
-    code: HK
-  delay: 241
-- name: 🇭🇰 香港 精品3 2
-  password: <password>
-  port: 8443
-  server: 97a437f3-t6t0g0-tiuylw-46gc.hkt.cdnhuawei.com
-  tls: true
-  type: http
-  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  region_info:
-    name: 香港
-    code: HK
-  delay: 244
-- name: 🇭🇰 香港 中转[CM
-  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  port: 5228
-  server: 170d584d-t6t0g0-t917sa-12ach.cm4.oshuawei.com
-  tls: true
-  type: http
-  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  region_info:
-    name: 香港
-    code: HK
-  delay: 261
-- name: 🇭🇰 香港 中转[CM 2
-  password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  port: 5228
-  server: 69c5d135-t6t0g0-tiuylw-46gc.cm4.oshuawei.com
-  tls: true
-  type: http
-  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  region_info:
-    name: 香港
-    code: HK
-  delay: 266
-- name: 🇭🇰 香港 精品4 2
-  password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  port: 443
-  server: 17f71170-t6t0g0-tiuylw-46gc.hkt2.cdnhuawei.com
-  tls: true
-  type: http
-  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  region_info:
-    name: 香港
-    code: HK
-  delay: 293
-- name: 🇭🇰 香港 精品2 2
-  password: <password>
-  port: 443
-  server: 17f71170-t6t0g0-tiuylw-46gc.hkt2.cdnhuawei.com
-  tls: true
-  type: socks5
-  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  region_info:
-    name: 香港
-    code: HK
-  delay: 293
-- name: 🇭🇰 香港 精品4
-  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  port: 443
-  server: 6d337dba-t6t0g0-t917sa-12ach.hkt2.cdnhuawei.com
-  tls: true
-  type: http
-  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  region_info:
-    name: 香港
-    code: HK
-  delay: 299
-- name: 🇭🇰 香港 精品2
-  password: <password>
-  port: 443
-  server: 6d337dba-t6t0g0-t917sa-12ach.hkt2.cdnhuawei.com
-  tls: true
-  type: socks5
-  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  region_info:
-    name: 香港
-    code: HK
-  delay: 303
+  delay: 1222
 - alterId: 2
   cipher: auto
-  name: 🇭🇰 香港 03
+  name: 🇭🇰 香港 宿舍_2|3.1MB/s
   network: ws
   port: 80
-  server: 186e6a73-t6t0g0-tiuylw-46gc.hk3.p5pv.com
+  server: hkt.gotochinatown.net
+  skip-cert-verify: false
   tls: false
   type: vmess
-  uuid: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  ws-headers:
-    Host: broadcastlv.chat.bilibili.com
-    User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36
-      (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36
-  ws-path: /
+  uuid: e534d120-d32f-11ef-bdb9-f23c91cfbbc9
+  ws-opts:
+    headers:
+      Host: hkt.gotochinatown.net
+    path: /
   region_info:
     name: 香港
     code: HK
-  delay: 305
+  delay: 1225
 - alterId: 2
   cipher: auto
   name: 🇭🇰 香港 03 2
@@ -418,7 +418,7 @@ proxies:
   region_info:
     name: 香港
     code: HK
-  delay: 1254
+  delay: 1281
 - name: 🇹🇼 台湾 优化
   type: vmess
   server: planb.mojcn.com
@@ -438,7 +438,7 @@ proxies:
   region_info:
     name: 台湾
     code: TW
-  delay: 91
+  delay: 108
 - name: 🇹🇼 台湾 优化2-GPT
   type: vmess
   server: m.cnmjin.net
@@ -458,7 +458,7 @@ proxies:
   region_info:
     name: 台湾
     code: TW
-  delay: 92
+  delay: 109
 - name: 🇹🇼 台湾 IEPL
   type: ss
   server: gd.bjnet2.com
@@ -473,7 +473,31 @@ proxies:
   region_info:
     name: 台湾
     code: TW
-  delay: 219
+  delay: 109
+- name: 🇨🇳 台湾 05
+  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  port: 443
+  server: f14f6d9a-t6t0g0-t917sa-12ach.tw3.p5pv.com
+  tls: true
+  type: http
+  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  region_info:
+    name: 台湾
+    code: TW
+  delay: 184
+- name: 🇹🇼 台湾 宿舍_1|3.2MB/s
+  password: exaxgqkKkd0TAMrCxeonWg==
+  port: 1443
+  server: twmoon1-cdn-route.couldflare-cdn.com
+  skip-cert-verify: false
+  sni: twmoon1-cdn-route.couldflare-cdn.com
+  tls: true
+  type: http
+  username: mrwdfNTD8M79LCukCieldrqZWqs=
+  region_info:
+    name: 台湾
+    code: TW
+  delay: 190
 - name: 🇹🇼 台湾 优化3
   type: vmess
   server: t.cnmjcn.cyou
@@ -493,31 +517,7 @@ proxies:
   region_info:
     name: 台湾
     code: TW
-  delay: 228
-- name: 🇹🇼 台湾 宿舍_1|3.2MB/s
-  password: exaxgqkKkd0TAMrCxeonWg==
-  port: 1443
-  server: twmoon1-cdn-route.couldflare-cdn.com
-  skip-cert-verify: false
-  sni: twmoon1-cdn-route.couldflare-cdn.com
-  tls: true
-  type: http
-  username: mrwdfNTD8M79LCukCieldrqZWqs=
-  region_info:
-    name: 台湾
-    code: TW
-  delay: 258
-- name: 🇨🇳 台湾 05
-  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  port: 443
-  server: f14f6d9a-t6t0g0-t917sa-12ach.tw3.p5pv.com
-  tls: true
-  type: http
-  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  region_info:
-    name: 台湾
-    code: TW
-  delay: 263
+  delay: 214
 - name: 🇨🇳 台湾 06
   password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
   port: 443
@@ -528,7 +528,41 @@ proxies:
   region_info:
     name: 台湾
     code: TW
-  delay: 263
+  delay: 216
+- name: 🇯🇵 日本 01|白嫖机场.k 2
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 8080
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+  region_info:
+    name: 日本
+    code: JP
+  delay: 8
+- name: 🇯🇵 日本 01|白嫖机场.k
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 8080
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+  region_info:
+    name: 日本
+    code: JP
+  delay: 9
 - name: 🇯🇵 日本 优化2
   type: vmess
   server: m.cnmjin.net
@@ -548,7 +582,51 @@ proxies:
   region_info:
     name: 日本
     code: JP
-  delay: 92
+  delay: 109
+- name: 🇯🇵 日本 4 2
+  password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
+  port: 443
+  server: 20deec2d-t6t0g0-tiuylw-46gc.jp4.oshuawei.com
+  tls: true
+  type: http
+  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
+  region_info:
+    name: 日本
+    code: JP
+  delay: 150
+- name: 🇯🇵 日本 4
+  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  port: 443
+  server: 72f6d369-t6t0g0-t917sa-12ach.jp4.oshuawei.com
+  tls: true
+  type: http
+  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  region_info:
+    name: 日本
+    code: JP
+  delay: 150
+- name: 🇯🇵 日本 08
+  password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
+  port: 443
+  server: 26f36862-t6t0g0-tiuylw-46gc.jp.oshuawei.com
+  tls: true
+  type: http
+  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
+  region_info:
+    name: 日本
+    code: JP
+  delay: 152
+- name: 🇯🇵 日本 05
+  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  port: 443
+  server: ae45d8d5-t6t0g0-t917sa-12ach.jp.oshuawei.com
+  tls: true
+  type: http
+  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  region_info:
+    name: 日本
+    code: JP
+  delay: 155
 - name: 🇯🇵 日本 IEPL-GPT
   type: ss
   server: gd.bjnet2.com
@@ -563,51 +641,7 @@ proxies:
   region_info:
     name: 日本
     code: JP
-  delay: 92
-- name: 🇯🇵 日本 08
-  password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  port: 443
-  server: 26f36862-t6t0g0-tiuylw-46gc.jp.oshuawei.com
-  tls: true
-  type: http
-  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  region_info:
-    name: 日本
-    code: JP
-  delay: 171
-- name: 🇯🇵 日本 05
-  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  port: 443
-  server: ae45d8d5-t6t0g0-t917sa-12ach.jp.oshuawei.com
-  tls: true
-  type: http
-  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  region_info:
-    name: 日本
-    code: JP
-  delay: 173
-- name: 🇯🇵 日本 4 2
-  password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  port: 443
-  server: 20deec2d-t6t0g0-tiuylw-46gc.jp4.oshuawei.com
-  tls: true
-  type: http
-  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  region_info:
-    name: 日本
-    code: JP
-  delay: 175
-- name: 🇯🇵 日本 4
-  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  port: 443
-  server: 72f6d369-t6t0g0-t917sa-12ach.jp4.oshuawei.com
-  tls: true
-  type: http
-  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  region_info:
-    name: 日本
-    code: JP
-  delay: 180
+  delay: 201
 - name: 🇯🇵 日本 优化3
   type: vmess
   server: t.cnmjcn.cyou
@@ -627,61 +661,7 @@ proxies:
   region_info:
     name: 日本
     code: JP
-  delay: 240
-- name: 🇯🇵 日本 01|白嫖机场.k 2
-  type: vmess
-  server: baipiaojichangink.huahuasuansuan.cfd
-  port: 8080
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: baipiaoyyds.huahuasuansuan.cfd
-  region_info:
-    name: 日本
-    code: JP
-  delay: 314
-- name: 🇯🇵 日本 01|白嫖机场.k
-  type: vmess
-  server: baipiaojichangink.huahuasuansuan.cfd
-  port: 8080
-  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: baipiaoyyds.huahuasuansuan.cfd
-  region_info:
-    name: 日本
-    code: JP
-  delay: 314
-- name: 🇸🇬 新加坡 优化-Gemi-GPT
-  type: vmess
-  server: planb.mojcn.com
-  port: 16618
-  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  ws-path: /
-  ws-headers:
-    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  region_info:
-    name: 新加坡
-    code: SG
-  delay: 90
+  delay: 213
 - name: 🇸🇬 新加坡 优化2-Gemi-GPT
   type: vmess
   server: m.cnmjin.net
@@ -701,7 +681,27 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
-  delay: 92
+  delay: 112
+- name: 🇸🇬 新加坡 优化-Gemi-GPT
+  type: vmess
+  server: planb.mojcn.com
+  port: 16618
+  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  ws-path: /
+  ws-headers:
+    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  region_info:
+    name: 新加坡
+    code: SG
+  delay: 114
 - name: 🇸🇬 新加坡 IEPL
   type: ss
   server: gd.bjnet2.com
@@ -716,7 +716,18 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
-  delay: 205
+  delay: 209
+- name: 🇸🇬 新加坡 10
+  password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
+  port: 443
+  server: 9939dd3e-t6t0g0-tiuylw-46gc.sg.oshuawei.com
+  tls: true
+  type: http
+  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
+  region_info:
+    name: 新加坡
+    code: SG
+  delay: 212
 - name: 🇸🇬 新加坡 优化3-Gemi
   type: vmess
   server: t.cnmjcn.cyou
@@ -736,7 +747,7 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
-  delay: 233
+  delay: 213
 - name: 🇸🇬 新加坡 3 2
   password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
   port: 443
@@ -747,29 +758,7 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
-  delay: 233
-- name: 🇸🇬 新加坡 10
-  password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  port: 443
-  server: 9939dd3e-t6t0g0-tiuylw-46gc.sg.oshuawei.com
-  tls: true
-  type: http
-  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  region_info:
-    name: 新加坡
-    code: SG
-  delay: 239
-- name: 🇸🇬 新加坡 07
-  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  port: 443
-  server: 58aa598f-t6t0g0-t917sa-12ach.sg.oshuawei.com
-  tls: true
-  type: http
-  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  region_info:
-    name: 新加坡
-    code: SG
-  delay: 240
+  delay: 213
 - name: 🇸🇬 新加坡 3
   password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
   port: 443
@@ -780,24 +769,18 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
-  delay: 241
-- name: 🇸🇬 新加坡 01|白嫖机场.k 2
-  type: vmess
-  server: baipiaojichangink.huahuasuansuan.cfd
-  port: 8880
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: baipiaoyyds.huahuasuansuan.cfd
+  delay: 214
+- name: 🇸🇬 新加坡 07
+  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  port: 443
+  server: 58aa598f-t6t0g0-t917sa-12ach.sg.oshuawei.com
+  tls: true
+  type: http
+  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
   region_info:
     name: 新加坡
     code: SG
-  delay: 313
+  delay: 219
 - name: 🇸🇬 新加坡 01|白嫖机场.k
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
@@ -814,7 +797,24 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
-  delay: 313
+  delay: 380
+- name: 🇸🇬 新加坡 01|白嫖机场.k 2
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 8880
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+  region_info:
+    name: 新加坡
+    code: SG
+  delay: 382
 - name: 🇰🇷 韩国 01|白嫖机场.k 2
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
@@ -831,7 +831,7 @@ proxies:
   region_info:
     name: 韩国
     code: KR
-  delay: 312
+  delay: 381
 - name: 🇰🇷 韩国 01|白嫖机场.k
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
@@ -848,7 +848,7 @@ proxies:
   region_info:
     name: 韩国
     code: KR
-  delay: 312
+  delay: 381
 - name: 🇮🇳 印度 优化
   type: vmess
   server: planb.mojcn.com
@@ -868,7 +868,7 @@ proxies:
   region_info:
     name: 印度
     code: IN
-  delay: 92
+  delay: 110
 - name: 🇮🇩 印度 IEPL
   type: ss
   server: gd.bjnet2.com
@@ -883,41 +883,7 @@ proxies:
   region_info:
     name: 印度
     code: IN
-  delay: 96
-- name: 🇩🇪 印度 01|白嫖机场.k 2
-  type: vmess
-  server: baipiaojichangink.huahuasuansuan.cfd
-  port: 2086
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: baipiaoyyds.huahuasuansuan.cfd
-  region_info:
-    name: 印度
-    code: IN
-  delay: 311
-- name: 🇺🇸 印度 01|白嫖机场.k 2
-  type: vmess
-  server: baipiaojichangink.huahuasuansuan.cfd
-  port: 2052
-  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: baipiaoyyds.huahuasuansuan.cfd
-  region_info:
-    name: 印度
-    code: IN
-  delay: 311
+  delay: 112
 - name: 🇺🇸 印度 01|白嫖机场.k
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
@@ -934,7 +900,41 @@ proxies:
   region_info:
     name: 印度
     code: IN
-  delay: 311
+  delay: 379
+- name: 🇩🇪 印度 01|白嫖机场.k 2
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 2086
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+  region_info:
+    name: 印度
+    code: IN
+  delay: 380
+- name: 🇺🇸 印度 01|白嫖机场.k 2
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 2052
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+  region_info:
+    name: 印度
+    code: IN
+  delay: 380
 - name: 🇩🇪 印度 01|白嫖机场.k
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
@@ -951,7 +951,7 @@ proxies:
   region_info:
     name: 印度
     code: IN
-  delay: 311
+  delay: 380
 - name: 🇻🇳 越南 IEPL
   type: ss
   server: gd.bjnet2.com
@@ -966,45 +966,7 @@ proxies:
   region_info:
     name: 越南
     code: VN
-  delay: 214
-- name: 🇺🇸 美国 宿舍_9|2.1MB/s
-  network: ws
-  port: 2096
-  server: 94.140.0.39
-  skip-cert-verify: false
-  tfo: false
-  tls: true
-  type: vless
-  udp: true
-  uuid: d342d11e-d424-4583-b36e-524ab1f0afa4
-  ws-opts:
-    headers:
-      Host: sni.001316.xyz
-    path: /Telegram🇨🇳
-  servername: sni.001316.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 5
-- encryption: none
-  name: 🇺🇸 美国 宿舍_3|2.4MB/s
-  network: ws
-  port: 80
-  server: 172.66.156.81
-  type: vless
-  udp: true
-  uuid: 5f9917b6-cdba-4f17-8c90-a2a66d15668f
-  ws-opts:
-    headers:
-      Host: websocket.network.www.speedtest.net.flutter.dev.russia.pyt.digitalcity5.xyz.
-      User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML,
-        like Gecko) Chrome/54.0.2840.71 Safari/537.36
-    path: /@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy
-  xudp: true
-  region_info:
-    name: 美国
-    code: US
-  delay: 6
+  delay: 112
 - client-fingerprint: chrome
   encryption: none
   name: 🇺🇸 美国 宿舍_4|3.2MB/s
@@ -1028,7 +990,45 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 6
+  delay: 1
+- name: 🇺🇸 美国 宿舍_9|2.1MB/s
+  network: ws
+  port: 2096
+  server: 94.140.0.39
+  skip-cert-verify: false
+  tfo: false
+  tls: true
+  type: vless
+  udp: true
+  uuid: d342d11e-d424-4583-b36e-524ab1f0afa4
+  ws-opts:
+    headers:
+      Host: sni.001316.xyz
+    path: /Telegram🇨🇳
+  servername: sni.001316.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 2
+- encryption: none
+  name: 🇺🇸 美国 宿舍_3|2.4MB/s
+  network: ws
+  port: 80
+  server: 172.66.156.81
+  type: vless
+  udp: true
+  uuid: 5f9917b6-cdba-4f17-8c90-a2a66d15668f
+  ws-opts:
+    headers:
+      Host: websocket.network.www.speedtest.net.flutter.dev.russia.pyt.digitalcity5.xyz.
+      User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML,
+        like Gecko) Chrome/54.0.2840.71 Safari/537.36
+    path: /@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy
+  xudp: true
+  region_info:
+    name: 美国
+    code: US
+  delay: 2
 - name: 🇺🇸 美国 宿舍_8|2.4MB/s
   network: ws
   port: 2096
@@ -1047,7 +1047,7 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 6
+  delay: 2
 - client-fingerprint: chrome
   encryption: none
   name: 🇺🇸 美国 宿舍_10|2.2MB/s
@@ -1071,7 +1071,7 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 6
+  delay: 3
 - name: 🇺🇸 美国 62
   server: www.zhoubowen.vip
   port: 443
@@ -1089,433 +1089,7 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 7
-- name: 🇺🇸 美国 疯高速87 (0.02x
-  type: vmess
-  server: us5.998998.best
-  port: 443
-  uuid: 24254866-770c-41b4-9404-3f50524f425b
-  alterId: 0
-  cipher: auto
-  udp: true
-  tls: true
-  skip-cert-verify: true
-  servername: 24254866-770c-41b4-9404-3f50524f425b.fasleangles.fun
-  network: ws
-  ws-opts:
-    path: /androirfdsreoightrjh
-    headers:
-      Host: 24254866-770c-41b4-9404-3f50524f425b.fasleangles.fun
-  region_info:
-    name: 美国
-    code: US
-  delay: 26
-- name: 🇺🇸 美国 宿舍_2|1.0MB/s
-  password: http
-  port: 8080
-  server: 107.173.31.37
-  type: http
-  username: http
-  region_info:
-    name: 美国
-    code: US
-  delay: 27
-- name: 🇺🇸 美国 40
-  server: 82.198.246.97
-  port: 180
-  type: vmess
-  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
-  alterId: 0
-  cipher: auto
-  tls: false
-  skip-cert-verify: false
-  region_info:
-    name: 美国
-    code: US
-  delay: 62
-- name: 🇺🇸 美国 48
-  server: 38.14.99.163
-  port: 59807
-  type: vmess
-  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
-  alterId: 0
-  cipher: auto
-  tls: false
-  skip-cert-verify: false
-  region_info:
-    name: 美国
-    code: US
-  delay: 70
-- name: 🇺🇸 美国 46
-  server: 38.14.99.179
-  port: 59807
-  type: vmess
-  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
-  alterId: 0
-  cipher: auto
-  tls: false
-  skip-cert-verify: false
-  region_info:
-    name: 美国
-    code: US
-  delay: 71
-- name: 🇺🇸 美国 圣何塞
-  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  port: 443
-  server: 6c327648-t6t0g0-t917sa-12ach.sjc.oshuawei.com
-  tls: true
-  type: http
-  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  region_info:
-    name: 美国
-    code: US
-  delay: 80
-- name: 🇺🇸 美国 硅谷 2
-  password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  port: 443
-  server: 5a2d39f1-t6t0g0-tiuylw-46gc.sj.gotochinatown.net
-  tls: true
-  type: socks5
-  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  region_info:
-    name: 美国
-    code: US
-  delay: 81
-- name: 🇺🇸 美国 硅谷
-  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  port: 443
-  server: 68c7b5ac-t6t0g0-t917sa-12ach.sj.gotochinatown.net
-  tls: true
-  type: socks5
-  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  region_info:
-    name: 美国
-    code: US
-  delay: 81
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 宿舍_5|1.0MB/s
-  network: ws
-  port: 37934
-  server: 74.117.196.232
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  udp: true
-  uuid: 3786e67a-41eb-4b92-b31e-417e89493b93
-  ws-opts:
-    headers:
-      Host: imafake.locker
-    path: /speedtest
-  xudp: true
-  servername: imafake.locker
-  region_info:
-    name: 美国
-    code: US
-  delay: 89
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 宿舍_7|1.4MB/s
-  network: ws
-  port: 37934
-  server: 74.117.196.232
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  udp: true
-  uuid: f1a513d2-c32a-49dc-8e64-d4f8a2f1e001
-  ws-opts:
-    headers:
-      Host: imafake.locker
-    path: /speedtest
-  xudp: true
-  servername: imafake.locker
-  region_info:
-    name: 美国
-    code: US
-  delay: 89
-- alterId: 0
-  cipher: auto
-  country: 🇺🇸US
-  delay: 89
-  h2-opts: {}
-  http-opts: {}
-  name: 🇺🇸 美国 宿舍_1|1.0MB/s
-  network: ws
-  port: 37934
-  server: 74.117.196.232
-  skip-cert-verify: true
-  tls: true
-  type: vmess
-  uuid: 35f332d0-0b05-4cc6-91cb-ec0d4465055f
-  ws-opts:
-    headers:
-      HOST: imafake.locker
-    path: /speedtest
-  servername: imafake.locker
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 硅谷2 2
-  password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  port: 443
-  server: 27a03f41-t6t0g0-tiuylw-46gc.sj.oshuawei.com
-  tls: true
-  type: http
-  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  region_info:
-    name: 美国
-    code: US
-  delay: 91
-- name: 🇺🇸 美国 西雅图
-  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  port: 443
-  server: 571786cf-t6t0g0-t917sa-12ach.se.oshuawei.com
-  tls: true
-  type: http
-  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  region_info:
-    name: 美国
-    code: US
-  delay: 93
-- name: 🇺🇸 美国 IEPL-GPT
-  type: ss
-  server: gd.bjnet2.com
-  port: 36608
-  cipher: aes-128-gcm
-  password: 84d85af8-2807-4306-a701-f784676b77c3
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-  region_info:
-    name: 美国
-    code: US
-  delay: 94
-- name: 🇺🇸 美国 LA-优化2-GPT
-  type: vmess
-  server: m.cnmjin.net
-  port: 16648
-  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  ws-path: /
-  ws-headers:
-    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  region_info:
-    name: 美国
-    code: US
-  delay: 94
-- name: 🇺🇸 美国 LA-优化-GPT
-  type: vmess
-  server: planb.mojcn.com
-  port: 16648
-  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  ws-path: /
-  ws-headers:
-    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  region_info:
-    name: 美国
-    code: US
-  delay: 94
-- name: 🇺🇸 美国 西雅图 2
-  password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  port: 443
-  server: b0f2df31-t6t0g0-tiuylw-46gc.se.oshuawei.com
-  tls: true
-  type: http
-  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  region_info:
-    name: 美国
-    code: US
-  delay: 94
-- name: 🇺🇸 美国 洛杉矶 2
-  password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  port: 443
-  server: 67b463a6-t6t0g0-tiuylw-46gc.los.gotochinatown.net
-  tls: true
-  type: socks5
-  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  region_info:
-    name: 美国
-    code: US
-  delay: 100
-- name: 🇺🇸 美国 西雅图2
-  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  port: 443
-  server: e6306bb0-t6t0g0-t917sa-12ach.sv.plebai.net
-  tls: true
-  type: socks5
-  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  region_info:
-    name: 美国
-    code: US
-  delay: 101
-- name: 🇺🇸 美国 硅谷2
-  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  port: 443
-  server: 3b306628-t6t0g0-t917sa-12ach.sj.oshuawei.com
-  tls: true
-  type: http
-  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  region_info:
-    name: 美国
-    code: US
-  delay: 104
-- name: 🇺🇸 美国 西雅图2 2
-  password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  port: 443
-  server: df7bade1-t6t0g0-tiuylw-46gc.sv.plebai.net
-  tls: true
-  type: socks5
-  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
-  region_info:
-    name: 美国
-    code: US
-  delay: 104
-- name: 🇺🇸 美国 9
-  server: bestcdn1.868863.xyz
-  port: 2053
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248831496.796812.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      Host: 17642248831496.796812.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 121
-- name: 🇺🇸 美国 4
-  server: bestcdn4.868863.xyz
-  port: 2087
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248839754.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248839754.796813.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 121
-- name: 🇺🇸 美国 11
-  server: bestcdn1.868863.xyz
-  port: 2087
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248838532.206355.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248838532.206355.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 121
-- name: 🇺🇸 美国 20
-  server: bestcdn4.868863.xyz
-  port: 2083
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248834335.206355.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248834335.206355.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 121
-- name: 🇺🇸 美国 10
-  server: bestcdn1.868863.xyz
-  port: 2096
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832011.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248832011.796813.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 121
-- name: 🇺🇸 美国 8
-  server: bestcdn4.868863.xyz
-  port: 2053
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832420.796812.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      Host: 17642248832420.796812.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 122
-- name: 🇺🇸 美国 18
-  server: bestcdn4.868863.xyz
-  port: 2096
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248833097.796812.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      Host: 17642248833097.796812.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 122
-- name: 🇺🇸 美国 19
-  server: bestcdn4.868863.xyz
-  port: 8443
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248839907.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248839907.796813.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 122
+  delay: 5
 - client-fingerprint: chrome
   encryption: none
   name: 🇺🇸 美国 宿舍_6|3.1MB/s
@@ -1539,55 +1113,123 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 126
-- name: 🇺🇸 美国 41
-  server: 107.174.82.102.sslip.io
+  delay: 12
+- name: 🇺🇸 美国 宿舍_2|1.0MB/s
+  password: http
+  port: 8080
+  server: 107.173.31.37
+  type: http
+  username: http
+  region_info:
+    name: 美国
+    code: US
+  delay: 14
+- name: 🇺🇸 美国 疯高速87 (0.02x
+  type: vmess
+  server: us5.998998.best
   port: 443
-  type: vmess
-  uuid: bb824a22-b7ce-427b-9ed6-1adf0751da02
+  uuid: 24254866-770c-41b4-9404-3f50524f425b
   alterId: 0
   cipher: auto
+  udp: true
   tls: true
-  skip-cert-verify: false
+  skip-cert-verify: true
+  servername: 24254866-770c-41b4-9404-3f50524f425b.fasleangles.fun
   network: ws
   ws-opts:
-    path: /Ov7HrgwlEcRugowKV
+    path: /androirfdsreoightrjh
     headers:
-      Host: 107.174.82.102.sslip.io
+      Host: 24254866-770c-41b4-9404-3f50524f425b.fasleangles.fun
   region_info:
     name: 美国
     code: US
-  delay: 141
-- name: 🇺🇸 美国 56
-  server: fn.130519.xyz
-  port: 8443
-  type: vmess
-  uuid: 19aebb35-b458-4d0c-b767-2adb39e6bb02
-  alterId: 0
+  delay: 40
+- alterId: 0
   cipher: auto
-  tls: true
-  skip-cert-verify: false
-  servername: deji.186507.xyz
+  name: 🇺🇸 美国 宿舍_5|1.0MB/s
   network: ws
+  port: 37934
+  server: 74.117.196.232
+  skip-cert-verify: false
+  tls: true
+  type: vmess
+  udp: true
+  uuid: 3786e67a-41eb-4b92-b31e-417e89493b93
   ws-opts:
-    path: /19aebb35-b458-4d0c-b767-2adb39e6bb02-vm
     headers:
-      Host: deji.186507.xyz
+      Host: imafake.locker
+    path: /speedtest
+  xudp: true
+  servername: imafake.locker
   region_info:
     name: 美国
     code: US
-  delay: 143
-- name: 🇺🇸 美国 洛杉矶
+  delay: 48
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 宿舍_7|1.4MB/s
+  network: ws
+  port: 37934
+  server: 74.117.196.232
+  skip-cert-verify: false
+  tls: true
+  type: vmess
+  udp: true
+  uuid: f1a513d2-c32a-49dc-8e64-d4f8a2f1e001
+  ws-opts:
+    headers:
+      Host: imafake.locker
+    path: /speedtest
+  xudp: true
+  servername: imafake.locker
+  region_info:
+    name: 美国
+    code: US
+  delay: 48
+- alterId: 0
+  cipher: auto
+  country: 🇺🇸US
+  delay: 48
+  h2-opts: {}
+  http-opts: {}
+  name: 🇺🇸 美国 宿舍_1|1.0MB/s
+  network: ws
+  port: 37934
+  server: 74.117.196.232
+  skip-cert-verify: true
+  tls: true
+  type: vmess
+  uuid: 35f332d0-0b05-4cc6-91cb-ec0d4465055f
+  ws-opts:
+    headers:
+      HOST: imafake.locker
+    path: /speedtest
+  servername: imafake.locker
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 圣何塞
   password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
   port: 443
-  server: 55818105-t6t0g0-t917sa-12ach.los.gotochinatown.net
+  server: 6c327648-t6t0g0-t917sa-12ach.sjc.oshuawei.com
   tls: true
-  type: socks5
+  type: http
   username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
   region_info:
     name: 美国
     code: US
-  delay: 157
+  delay: 53
+- name: 🇺🇸 美国 洛杉矶 2
+  password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
+  port: 443
+  server: 67b463a6-t6t0g0-tiuylw-46gc.los.gotochinatown.net
+  tls: true
+  type: socks5
+  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
+  region_info:
+    name: 美国
+    code: US
+  delay: 57
 - name: 🇺🇸 美国 圣何塞 2
   password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
   port: 443
@@ -1598,7 +1240,313 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 161
+  delay: 57
+- name: 🇺🇸 美国 46
+  server: 38.14.99.179
+  port: 59807
+  type: vmess
+  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  region_info:
+    name: 美国
+    code: US
+  delay: 65
+- name: 🇺🇸 美国 40
+  server: 82.198.246.97
+  port: 180
+  type: vmess
+  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  region_info:
+    name: 美国
+    code: US
+  delay: 67
+- name: 🇺🇸 美国 48
+  server: 38.14.99.163
+  port: 59807
+  type: vmess
+  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  region_info:
+    name: 美国
+    code: US
+  delay: 68
+- name: 🇺🇸 美国 硅谷 2
+  password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
+  port: 443
+  server: 5a2d39f1-t6t0g0-tiuylw-46gc.sj.gotochinatown.net
+  tls: true
+  type: socks5
+  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
+  region_info:
+    name: 美国
+    code: US
+  delay: 72
+- name: 🇺🇸 美国 硅谷2
+  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  port: 443
+  server: 3b306628-t6t0g0-t917sa-12ach.sj.oshuawei.com
+  tls: true
+  type: http
+  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  region_info:
+    name: 美国
+    code: US
+  delay: 73
+- name: 🇺🇸 美国 硅谷2 2
+  password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
+  port: 443
+  server: 27a03f41-t6t0g0-tiuylw-46gc.sj.oshuawei.com
+  tls: true
+  type: http
+  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
+  region_info:
+    name: 美国
+    code: US
+  delay: 79
+- name: 🇺🇸 美国 西雅图
+  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  port: 443
+  server: 571786cf-t6t0g0-t917sa-12ach.se.oshuawei.com
+  tls: true
+  type: http
+  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  region_info:
+    name: 美国
+    code: US
+  delay: 87
+- name: 🇺🇸 美国 西雅图2 2
+  password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
+  port: 443
+  server: df7bade1-t6t0g0-tiuylw-46gc.sv.plebai.net
+  tls: true
+  type: socks5
+  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
+  region_info:
+    name: 美国
+    code: US
+  delay: 88
+- name: 🇺🇸 美国 西雅图2
+  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  port: 443
+  server: e6306bb0-t6t0g0-t917sa-12ach.sv.plebai.net
+  tls: true
+  type: socks5
+  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  region_info:
+    name: 美国
+    code: US
+  delay: 90
+- name: 🇺🇸 美国 西雅图 2
+  password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
+  port: 443
+  server: b0f2df31-t6t0g0-tiuylw-46gc.se.oshuawei.com
+  tls: true
+  type: http
+  username: 225d1cca-d744-11ef-b790-f23c91cfbbc9
+  region_info:
+    name: 美国
+    code: US
+  delay: 91
+- name: 🇺🇸 美国 洛杉矶
+  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  port: 443
+  server: 55818105-t6t0g0-t917sa-12ach.los.gotochinatown.net
+  tls: true
+  type: socks5
+  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  region_info:
+    name: 美国
+    code: US
+  delay: 91
+- name: 🇺🇸 美国 LA-优化2-GPT
+  type: vmess
+  server: m.cnmjin.net
+  port: 16648
+  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  ws-path: /
+  ws-headers:
+    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  region_info:
+    name: 美国
+    code: US
+  delay: 107
+- name: 🇺🇸 美国 硅谷
+  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  port: 443
+  server: 68c7b5ac-t6t0g0-t917sa-12ach.sj.gotochinatown.net
+  tls: true
+  type: socks5
+  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  region_info:
+    name: 美国
+    code: US
+  delay: 109
+- name: 🇺🇸 美国 LA-优化-GPT
+  type: vmess
+  server: planb.mojcn.com
+  port: 16648
+  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  ws-path: /
+  ws-headers:
+    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  region_info:
+    name: 美国
+    code: US
+  delay: 112
+- name: 🇺🇸 美国 18
+  server: bestcdn4.868863.xyz
+  port: 2096
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248833097.796812.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agraeabtegrrh
+    headers:
+      Host: 17642248833097.796812.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 143
+- name: 🇺🇸 美国 11
+  server: bestcdn1.868863.xyz
+  port: 2087
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248838532.206355.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /videomuaawe
+    headers:
+      Host: 17642248838532.206355.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 144
+- name: 🇺🇸 美国 20
+  server: bestcdn4.868863.xyz
+  port: 2083
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248834335.206355.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /videomuaawe
+    headers:
+      Host: 17642248834335.206355.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 144
+- name: 🇺🇸 美国 10
+  server: bestcdn1.868863.xyz
+  port: 2096
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248832011.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248832011.796813.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 144
+- name: 🇺🇸 美国 8
+  server: bestcdn4.868863.xyz
+  port: 2053
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248832420.796812.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agraeabtegrrh
+    headers:
+      Host: 17642248832420.796812.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 144
+- name: 🇺🇸 美国 19
+  server: bestcdn4.868863.xyz
+  port: 8443
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248839907.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248839907.796813.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 144
+- name: 🇺🇸 美国 9
+  server: bestcdn1.868863.xyz
+  port: 2053
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248831496.796812.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agraeabtegrrh
+    headers:
+      Host: 17642248831496.796812.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 145
+- name: 🇺🇸 美国 4
+  server: bestcdn4.868863.xyz
+  port: 2087
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248839754.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248839754.796813.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 145
 - name: 🇺🇸 美国 58
   server: 152.70.92.69
   port: 80
@@ -1611,7 +1559,22 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 194
+  delay: 190
+- name: 🇺🇸 美国 IEPL-GPT
+  type: ss
+  server: gd.bjnet2.com
+  port: 36608
+  cipher: aes-128-gcm
+  password: 84d85af8-2807-4306-a701-f784676b77c3
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+  region_info:
+    name: 美国
+    code: US
+  delay: 200
 - name: 🇺🇸 美国 LA-优化3-GPT
   type: vmess
   server: t.cnmjcn.cyou
@@ -1631,18 +1594,7 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 235
-- name: 🇺🇸 美国 洛杉矶[CU
-  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  port: 15229
-  server: b3abe0b7-t6t0g0-t917sa-12ach.cu.oshuawei.com
-  tls: true
-  type: http
-  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  region_info:
-    name: 美国
-    code: US
-  delay: 258
+  delay: 214
 - name: 🇺🇸 美国 洛杉矶[CU 2
   password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
   port: 15229
@@ -1653,7 +1605,37 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 269
+  delay: 228
+- name: 🇺🇸 美国 洛杉矶[CU
+  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  port: 15229
+  server: b3abe0b7-t6t0g0-t917sa-12ach.cu.oshuawei.com
+  tls: true
+  type: http
+  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  region_info:
+    name: 美国
+    code: US
+  delay: 246
+- name: 🇺🇸 美国 56
+  server: fn.130519.xyz
+  port: 8443
+  type: vmess
+  uuid: 19aebb35-b458-4d0c-b767-2adb39e6bb02
+  alterId: 0
+  cipher: auto
+  tls: true
+  skip-cert-verify: false
+  servername: deji.186507.xyz
+  network: ws
+  ws-opts:
+    path: /19aebb35-b458-4d0c-b767-2adb39e6bb02-vm
+    headers:
+      Host: deji.186507.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 259
 - name: 🇺🇸 美国 14
   server: bestcdn2.868863.xyz
   port: 2096
@@ -1669,7 +1651,7 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 297
+  delay: 272
 - name: 🇺🇸 美国 12
   server: bestcdn2.868863.xyz
   port: 2083
@@ -1685,7 +1667,7 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 308
+  delay: 272
 - name: 🇺🇸 美国 13
   server: bestcdn2.868863.xyz
   port: 2087
@@ -1701,23 +1683,7 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 314
-- name: 🇺🇸 美国 15
-  server: bestcdn3.868863.xyz
-  port: 2087
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248835602.796812.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      Host: 17642248835602.796812.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 321
+  delay: 272
 - name: 🇺🇸 美国 16
   server: bestcdn3.868863.xyz
   port: 2083
@@ -1733,7 +1699,7 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 321
+  delay: 303
 - name: 🇺🇸 美国 17
   server: bestcdn3.868863.xyz
   port: 2053
@@ -1749,7 +1715,41 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 322
+  delay: 303
+- name: 🇺🇸 美国 15
+  server: bestcdn3.868863.xyz
+  port: 2087
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248835602.796812.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agraeabtegrrh
+    headers:
+      Host: 17642248835602.796812.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 304
+- name: 🇺🇸 美国 41
+  server: 107.174.82.102.sslip.io
+  port: 443
+  type: vmess
+  uuid: bb824a22-b7ce-427b-9ed6-1adf0751da02
+  alterId: 0
+  cipher: auto
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /Ov7HrgwlEcRugowKV
+    headers:
+      Host: 107.174.82.102.sslip.io
+  region_info:
+    name: 美国
+    code: US
+  delay: 324
 - name: 🇺🇸 美国 23
   server: bestcdn5.868863.xyz
   port: 8443
@@ -1765,7 +1765,7 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 531
+  delay: 596
 - name: 🇺🇸 美国 22
   server: bestcdn5.868863.xyz
   port: 2053
@@ -1781,27 +1781,7 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 532
-- name: 🇨🇦 加拿大 优化2
-  type: vmess
-  server: m.cnmjcn.com
-  port: 16641
-  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  ws-path: /
-  ws-headers:
-    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  region_info:
-    name: 加拿大
-    code: CA
-  delay: 95
+  delay: 596
 - name: 🇨🇦 加拿大 优化
   type: vmess
   server: planb.mojcn.com
@@ -1821,7 +1801,27 @@ proxies:
   region_info:
     name: 加拿大
     code: CA
-  delay: 95
+  delay: 107
+- name: 🇨🇦 加拿大 优化2
+  type: vmess
+  server: m.cnmjcn.com
+  port: 16641
+  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  ws-path: /
+  ws-headers:
+    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  region_info:
+    name: 加拿大
+    code: CA
+  delay: 116
 - name: 🇨🇦 加拿大 优化3
   type: vmess
   server: t.cnmjcn.cyou
@@ -1841,22 +1841,7 @@ proxies:
   region_info:
     name: 加拿大
     code: CA
-  delay: 236
-- encryption: none
-  grpc-opts:
-    grpc-service-name: ZEDMODEON-ZEDMODEON-bia-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON
-  name: 🇫🇷 法国 宿舍_1|2.4MB/s
-  network: grpc
-  port: 56089
-  server: 141.227.172.96
-  type: vless
-  udp: true
-  uuid: 2d535288-d08e-4de4-b674-fd8cb3c6e4d3
-  xudp: true
-  region_info:
-    name: 法国
-    code: FR
-  delay: 87
+  delay: 211
 - encryption: none
   grpc-opts:
     grpc-service-name: ZEDMODEON-ZEDMODEON-bia-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON
@@ -1871,7 +1856,7 @@ proxies:
   region_info:
     name: 法国
     code: FR
-  delay: 88
+  delay: 99
 - client-fingerprint: chrome
   encryption: none
   flow: xtls-rprx-vision
@@ -1889,7 +1874,7 @@ proxies:
   region_info:
     name: 法国
     code: FR
-  delay: 94
+  delay: 112
 - name: 🇫🇷 法国 01
   password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
   port: 8443
@@ -1900,7 +1885,22 @@ proxies:
   region_info:
     name: 法国
     code: FR
-  delay: 100
+  delay: 112
+- encryption: none
+  grpc-opts:
+    grpc-service-name: ZEDMODEON-ZEDMODEON-bia-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON
+  name: 🇫🇷 法国 宿舍_1|2.4MB/s
+  network: grpc
+  port: 56089
+  server: 141.227.172.96
+  type: vless
+  udp: true
+  uuid: 2d535288-d08e-4de4-b674-fd8cb3c6e4d3
+  xudp: true
+  region_info:
+    name: 法国
+    code: FR
+  delay: 115
 - name: 🇫🇷 法国 02
   password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
   port: 8443
@@ -1911,7 +1911,7 @@ proxies:
   region_info:
     name: 法国
     code: FR
-  delay: 185
+  delay: 141
 - name: 🇬🇧 英国 剩余流量：996.56
   type: vmess
   server: us19-25.998998.best
@@ -1931,7 +1931,7 @@ proxies:
   region_info:
     name: 英国
     code: GB
-  delay: 10
+  delay: 4
 - name: 🇬🇧 英国 07
   password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
   port: 443
@@ -1942,7 +1942,18 @@ proxies:
   region_info:
     name: 英国
     code: GB
-  delay: 93
+  delay: 100
+- name: 🇬🇧 英国 06
+  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  port: 443
+  server: 342bdf39-t6t0g0-t917sa-12ach.uk.oshuawei.com
+  tls: true
+  type: http
+  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
+  region_info:
+    name: 英国
+    code: GB
+  delay: 103
 - name: 🇬🇧 英国 优化-GPT
   type: vmess
   server: planb.mojcn.com
@@ -1962,7 +1973,7 @@ proxies:
   region_info:
     name: 英国
     code: GB
-  delay: 94
+  delay: 107
 - name: 🇬🇧 英国 剩余流量：8346.51
   type: vmess
   server: planb.mojcn.com
@@ -1982,7 +1993,7 @@ proxies:
   region_info:
     name: 英国
     code: GB
-  delay: 95
+  delay: 107
 - name: 🇬🇧 英国 优化2
   type: vmess
   server: m.cnmjin.net
@@ -2002,18 +2013,7 @@ proxies:
   region_info:
     name: 英国
     code: GB
-  delay: 95
-- name: 🇬🇧 英国 06
-  password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  port: 443
-  server: 342bdf39-t6t0g0-t917sa-12ach.uk.oshuawei.com
-  tls: true
-  type: http
-  username: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
-  region_info:
-    name: 英国
-    code: GB
-  delay: 106
+  delay: 110
 - name: 🇬🇧 英国 优化3
   type: vmess
   server: t.cnmjcn.cyou
@@ -2033,27 +2033,7 @@ proxies:
   region_info:
     name: 英国
     code: GB
-  delay: 237
-- name: 🇩🇪 德国 疯高速73 (0.02x
-  type: vmess
-  server: uk2-2.998998.best
-  port: 443
-  uuid: 24254866-770c-41b4-9404-3f50524f425b
-  alterId: 0
-  cipher: auto
-  udp: true
-  tls: true
-  skip-cert-verify: true
-  servername: 24254866-770c-41b4-9404-3f50524f425b.placeunaorder.fun
-  network: ws
-  ws-opts:
-    path: /logcatxiouerd34try9
-    headers:
-      Host: 24254866-770c-41b4-9404-3f50524f425b.placeunaorder.fun
-  region_info:
-    name: 德国
-    code: DE
-  delay: 10
+  delay: 211
 - encryption: none
   name: 🇩🇪 德国 宿舍_4|2.9MB/s
   network: ws
@@ -2074,7 +2054,27 @@ proxies:
   region_info:
     name: 德国
     code: DE
-  delay: 10
+  delay: 3
+- name: 🇩🇪 德国 疯高速73 (0.02x
+  type: vmess
+  server: uk2-2.998998.best
+  port: 443
+  uuid: 24254866-770c-41b4-9404-3f50524f425b
+  alterId: 0
+  cipher: auto
+  udp: true
+  tls: true
+  skip-cert-verify: true
+  servername: 24254866-770c-41b4-9404-3f50524f425b.placeunaorder.fun
+  network: ws
+  ws-opts:
+    path: /logcatxiouerd34try9
+    headers:
+      Host: 24254866-770c-41b4-9404-3f50524f425b.placeunaorder.fun
+  region_info:
+    name: 德国
+    code: DE
+  delay: 4
 - client-fingerprint: chrome
   encryption: none
   name: 🇩🇪 德国 宿舍_1|2.4MB/s
@@ -2093,18 +2093,7 @@ proxies:
   region_info:
     name: 德国
     code: DE
-  delay: 88
-- cipher: chacha20-ietf-poly1305
-  name: 🇩🇪 德国 宿舍_5|1.0MB/s
-  password: de7UgY8RRME1beqctFaILQ
-  port: 7048
-  server: 62.133.60.60
-  type: ss
-  udp: true
-  region_info:
-    name: 德国
-    code: DE
-  delay: 88
+  delay: 105
 - client-fingerprint: chrome
   encryption: none
   flow: xtls-rprx-vision
@@ -2128,7 +2117,18 @@ proxies:
   region_info:
     name: 德国
     code: DE
-  delay: 90
+  delay: 107
+- cipher: chacha20-ietf-poly1305
+  name: 🇩🇪 德国 宿舍_5|1.0MB/s
+  password: de7UgY8RRME1beqctFaILQ
+  port: 7048
+  server: 62.133.60.60
+  type: ss
+  udp: true
+  region_info:
+    name: 德国
+    code: DE
+  delay: 108
 - name: 🇩🇪 德国 优化
   type: vmess
   server: planb.mojcn.com
@@ -2148,7 +2148,22 @@ proxies:
   region_info:
     name: 德国
     code: DE
-  delay: 94
+  delay: 108
+- name: 🇩🇪 德国 IEPL
+  type: ss
+  server: gd.bjnet2.com
+  port: 36611
+  cipher: aes-128-gcm
+  password: 84d85af8-2807-4306-a701-f784676b77c3
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+  region_info:
+    name: 德国
+    code: DE
+  delay: 110
 - name: 🇩🇪 德国 优化2
   type: vmess
   server: m.cnmjcn.com
@@ -2168,7 +2183,7 @@ proxies:
   region_info:
     name: 德国
     code: DE
-  delay: 94
+  delay: 111
 - name: 🇩🇪 德国 06
   password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
   port: 443
@@ -2179,7 +2194,7 @@ proxies:
   region_info:
     name: 德国
     code: DE
-  delay: 102
+  delay: 119
 - name: 🇩🇪 德国 05
   password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
   port: 443
@@ -2190,22 +2205,7 @@ proxies:
   region_info:
     name: 德国
     code: DE
-  delay: 104
-- name: 🇩🇪 德国 IEPL
-  type: ss
-  server: gd.bjnet2.com
-  port: 36611
-  cipher: aes-128-gcm
-  password: 84d85af8-2807-4306-a701-f784676b77c3
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-  region_info:
-    name: 德国
-    code: DE
-  delay: 212
+  delay: 124
 - client-fingerprint: chrome
   encryption: none
   name: 🇩🇪 德国 宿舍_2|2.7MB/s
@@ -2224,7 +2224,7 @@ proxies:
   region_info:
     name: 德国
     code: DE
-  delay: 276
+  delay: 400
 - client-fingerprint: chrome
   encryption: none
   flow: xtls-rprx-vision
@@ -2248,4 +2248,4 @@ proxies:
   region_info:
     name: 俄罗斯
     code: RU
-  delay: 391
+  delay: 298
