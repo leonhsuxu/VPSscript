@@ -109,94 +109,110 @@ FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
 # Part 2: 函数定义
 # =================================================================================
 
-def parse_expire_time(text):
+def extract_valid_subscribe_links(text):
     """
-    解析消息中的到期时间：
-    - 如果包含 '+0000 UTC' 标记，解析UTC时间并转换成北京时间
-    - 否则默认解析为北京时间
-    - 支持格式：
-      - 2025-12-04
-      - 2025-12-04 19:33:46
-      - 2026-01-01 06:52:13 +0000 UTC
+    从单条消息文本中提取有效订阅链接，
+    忽略机场名链接，根据到期时间过滤剩余时间<2小时的链接。
     """
-    # 先匹配带 +0000 UTC 的UTC时间（日期或日期时间）
-    utc_pattern = r'(\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2}:\d{2})?) \+0000 UTC'
-    match = re.search(utc_pattern, text)
-    if match:
-        dt_str = match.group(1)
-        try:
-            fmt = '%Y-%m-%d %H:%M:%S' if ' ' in dt_str else '%Y-%m-%d'
-            dt_utc = datetime.strptime(dt_str, fmt).replace(tzinfo=timezone.utc)
-            dt_bjt = dt_utc.astimezone(timezone(timedelta(hours=8)))
-            return dt_bjt
-        except Exception:
-            return None
+    MIN_HOURS_LEFT = 2
+    BJ_TZ = timezone(timedelta(hours=8))
 
-    # 不带时区的时间，形如 到期时间: 2025-12-04 或 到期: 2025-12-04 19:33:46
-    bjt_pattern = r'(?:到期时间|到期|过期时间|过期|剩余时间)[:：]\s*(\d{4}-\d{2}-\d{2}(?: \d{2}:\d{2}:\d{2})?)'
-    match = re.search(bjt_pattern, text)
-    if match:
-        dt_str = match.group(1)
-        try:
-            fmt = '%Y-%m-%d %H:%M:%S' if ' ' in dt_str else '%Y-%m-%d'
-            dt_bjt = datetime.strptime(dt_str, fmt).replace(tzinfo=timezone(timedelta(hours=8)))
-            return dt_bjt
-        except Exception:
-            return None
+    # 1. 找所有订阅链接（只匹配带订阅关键字的链接，不匹配机场链接）
+    link_pattern = re.compile(
+        r'(?:订阅链接|订阅地址|订阅)[\s:：]*\*{0,2}(https?://[^\s<>"*`]+)\*{0,2}'
+    )
+    links = link_pattern.findall(text)
 
-    return None
+    expire_time = None
+    expire_patterns = [
+        r'到期时间[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2}\s+\d{2}:\d{2}:\d{2})',
+        r'过期时间[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2}\s+\d{2}:\d{2}:\d{2})',
+        r'该订阅将于(\d{4}[-/]\d{1,2}[-/]\d{1,2}\s+\d{2}:\d{2}:\d{2})(?:\s*\+\d{4}\s*[A-Za-z]{3})?过期',
+        r'过期[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2})',
+        r'到期[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2})',
+        r'该订阅将于未知过期',
+        r'过期时间[:：]\s*长期有效',
+        r'过期[:：]\s*未知/无限',
+    ]
+
+    # 把文本统一换成空格替换换行，防止分行影响正则捕获
+    text_single_line = text.replace('\n', ' ')
+
+    for patt in expire_patterns:
+        match = re.search(patt, text_single_line)
+        if match:
+            if '未知' in match.group(0) or '长期有效' in match.group(0) or '无限' in match.group(0):
+                expire_time = None  # 无限期
+                break
+            if match.lastindex:
+                dt_str = match.group(1)
+                fmt_candidates = ['%Y-%m-%d %H:%M:%S', '%Y/%m/%d %H:%M:%S', '%Y-%m-%d', '%Y/%m/%d']
+                for fmt in fmt_candidates:
+                    try:
+                        dt = datetime.strptime(dt_str, fmt)
+                        if fmt in ('%Y-%m-%d', '%Y/%m/%d'):
+                            dt = dt.replace(hour=23, minute=59, second=59)
+                        expire_time = dt.replace(tzinfo=BJ_TZ)
+                        break
+                    except:
+                        continue
+            break
+
+    now = datetime.now(BJ_TZ)
+    valid_links = []
+    for url in links:
+        if expire_time is not None:
+            hours_left = (expire_time - now).total_seconds() / 3600
+            if hours_left < MIN_HOURS_LEFT:
+                continue
+        valid_links.append(url)
+
+    return valid_links
 
 
-def is_expire_time_valid(expire_time):
-    """检查订阅链接是否在有效期内"""
-    if expire_time is None:
-        return True # 没有时间信息默认不过期
-    hours_remaining = (expire_time - datetime.now(timezone(timedelta(hours=8)))).total_seconds() / 3600
-    if hours_remaining < MIN_EXPIRE_HOURS:
-        print(f"  ❌ 已跳过: 链接剩余时间 ({hours_remaining:.1f} 小时) 少于最低要求 ({MIN_EXPIRE_HOURS} 小时)")
-        return False
-    return True
-
+# 修改 scrape_telegram_links 中相关代码段：
 async def scrape_telegram_links():
+     """从 Telegram 频道抓取订阅链接"""
     if not all([API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS_STR]):
-        print("❌ 缺少必要环境变量")
+        print("❌ 错误: 缺少必要的环境变量 (API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS)。")
         return []
-    TARGET_CHANNELS = [line.strip() for line in TELEGRAM_CHANNEL_IDS_STR.split('\n') if line.strip() and not line.startswith('#')]
+
+    # 处理频道 ID 列表
+    TARGET_CHANNELS = [line.strip() for line in TELEGRAM_CHANNEL_IDS_STR.split('\n') if line.strip() and not line.strip().startswith('#')]
     if not TARGET_CHANNELS:
-        print("❌ 未配置有效频道ID")
+        print("❌ 错误: TELEGRAM_CHANNEL_IDS 中未找到有效频道 ID。")
         return []
-    print(f"要抓取的频道: {TARGET_CHANNELS}")
+
+    print(f"▶️ 配置抓取 {len(TARGET_CHANNELS)} 个频道: {TARGET_CHANNELS}")
 
     try:
         client = TelegramClient(StringSession(STRING_SESSION), API_ID, API_HASH)
         await client.connect()
         me = await client.get_me()
-        print(f"✅ Telegram 连接成功，以账号：{me.first_name} (@{me.username})")
+        print(f"✅ 以 {me.first_name} (@{me.username}) 的身份成功连接")
     except Exception as e:
-        print(f"❌ 连接失败: {e}")
+        print(f"❌ 错误: 连接 Telegram 时出错: {e}")
         return []
 
     target_time = datetime.now(timezone.utc) - timedelta(hours=TIME_WINDOW_HOURS)
     all_links = set()
 
     for channel_id in TARGET_CHANNELS:
-        # print(f"\n--- 处理频道: {channel_id} ---")  # 可根据需求保留或注释
+        print(f"\n--- 正在处理频道: {channel_id} ---")
         try:
-            entity = await client.get_entity(channel_id)
-            async for message in client.iter_messages(entity, limit=500):
+            async for message in client.iter_messages(await client.get_entity(channel_id), limit=500):
                 if message.date < target_time:
                     break
                 if message.text:
-                    urls = re.findall(r'https?://[^\s<>"*`]+', message.text)
-                    for url in urls:
-                        cleaned_url = url.strip().strip('.,*`')
-                        if cleaned_url:
-                            all_links.add(cleaned_url)
-                            print(cleaned_url)  # 仅打印链接
+                    links = extract_valid_subscribe_links(message.text)
+                    for link in links:
+                        all_links.add(link)
+                        print(f"  ✅ 找到链接: {link[:70]}...")
         except Exception as e:
-            print(f"❌ 读取频道消息异常: {e}")
+            print(f"❌ 错误: 从频道 '{channel_id}' 获取消息时出错: {e}")
+
     await client.disconnect()
-    # 不再重复打印数量，只返回链接列表即可
+    print(f"\n✅ 抓取完成, 共找到 {len(all_links)} 个不重复的有效链接。")
     return list(all_links)
 
 def preprocess_regex_rules():
