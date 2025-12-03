@@ -262,7 +262,7 @@ async def scrape_telegram_links(last_message_ids=None):
     target_time = bj_prior_time.astimezone(timezone.utc)
     all_links = set()
     for channel_id in TARGET_CHANNELS:
-        print(f"\n📢  正在处理频道: {channel_id} ...")
+        print(f"\n 🎯正在处理频道: {channel_id} ...")
         try:
             entity = await client.get_entity(channel_id)
         except Exception as e:
