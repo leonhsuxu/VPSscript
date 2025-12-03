@@ -18,47 +18,7 @@ proxies:
   region_info:
     name: 香港
     code: HK
-  delay: 154
-- name: 🇭🇰 香港 优化-Gemi
-  type: vmess
-  server: planb.mojcn.com
-  port: 16632
-  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  ws-path: /
-  ws-headers:
-    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  region_info:
-    name: 香港
-    code: HK
-  delay: 155
-- name: 🇭🇰 香港 WAP-优化-Gemi
-  type: vmess
-  server: planb.mojcn.com
-  port: 16622
-  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  ws-path: /
-  ws-headers:
-    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  region_info:
-    name: 香港
-    code: HK
-  delay: 159
+  delay: 89
 - name: 🇭🇰 香港 WAP-优化2-Gemi
   type: vmess
   server: m.cnmjin.net
@@ -78,10 +38,45 @@ proxies:
   region_info:
     name: 香港
     code: HK
-  delay: 160
-- name: 🇭🇰 香港 WAP-优化3-Gemi
+  delay: 90
+- name: 🇭🇰 香港 IEPL
+  type: ss
+  server: gd.bjnet2.com
+  port: 36602
+  cipher: aes-128-gcm
+  password: 84d85af8-2807-4306-a701-f784676b77c3
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+  region_info:
+    name: 香港
+    code: HK
+  delay: 90
+- name: 🇭🇰 香港 优化-Gemi
   type: vmess
-  server: t.cnmjcn.cyou
+  server: planb.mojcn.com
+  port: 16632
+  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  ws-path: /
+  ws-headers:
+    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  region_info:
+    name: 香港
+    code: HK
+  delay: 91
+- name: 🇭🇰 香港 WAP-优化-Gemi
+  type: vmess
+  server: planb.mojcn.com
   port: 16622
   uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
   alterId: 0
@@ -98,7 +93,7 @@ proxies:
   region_info:
     name: 香港
     code: HK
-  delay: 173
+  delay: 91
 - name: 🇭🇰 香港 优化3-Gemi
   type: vmess
   server: t.cnmjcn.cyou
@@ -118,26 +113,11 @@ proxies:
   region_info:
     name: 香港
     code: HK
-  delay: 187
-- name: 🇭🇰 香港 IEPL
-  type: ss
-  server: gd.bjnet2.com
-  port: 36602
-  cipher: aes-128-gcm
-  password: 84d85af8-2807-4306-a701-f784676b77c3
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-  region_info:
-    name: 香港
-    code: HK
-  delay: 467
-- name: 🇹🇼 台湾 优化2-GPT
+  delay: 223
+- name: 🇭🇰 香港 WAP-优化3-Gemi
   type: vmess
-  server: m.cnmjin.net
-  port: 16616
+  server: t.cnmjcn.cyou
+  port: 16622
   uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
   alterId: 0
   cipher: auto
@@ -151,9 +131,9 @@ proxies:
   ws-headers:
     Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
   region_info:
-    name: 台湾
-    code: TW
-  delay: 154
+    name: 香港
+    code: HK
+  delay: 224
 - name: 🇹🇼 台湾 优化
   type: vmess
   server: planb.mojcn.com
@@ -173,7 +153,42 @@ proxies:
   region_info:
     name: 台湾
     code: TW
-  delay: 161
+  delay: 90
+- name: 🇹🇼 台湾 优化2-GPT
+  type: vmess
+  server: m.cnmjin.net
+  port: 16616
+  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  ws-path: /
+  ws-headers:
+    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  region_info:
+    name: 台湾
+    code: TW
+  delay: 91
+- name: 🇹🇼 台湾 IEPL
+  type: ss
+  server: gd.bjnet2.com
+  port: 36603
+  cipher: aes-128-gcm
+  password: 84d85af8-2807-4306-a701-f784676b77c3
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+  region_info:
+    name: 台湾
+    code: TW
+  delay: 209
 - name: 🇹🇼 台湾 优化3
   type: vmess
   server: t.cnmjcn.cyou
@@ -193,22 +208,7 @@ proxies:
   region_info:
     name: 台湾
     code: TW
-  delay: 185
-- name: 🇹🇼 台湾 IEPL
-  type: ss
-  server: gd.bjnet2.com
-  port: 36603
-  cipher: aes-128-gcm
-  password: 84d85af8-2807-4306-a701-f784676b77c3
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-  region_info:
-    name: 台湾
-    code: TW
-  delay: 467
+  delay: 225
 - name: 🇯🇵 日本 优化2
   type: vmess
   server: m.cnmjin.net
@@ -228,7 +228,22 @@ proxies:
   region_info:
     name: 日本
     code: JP
-  delay: 155
+  delay: 91
+- name: 🇯🇵 日本 IEPL-GPT
+  type: ss
+  server: gd.bjnet2.com
+  port: 36609
+  cipher: aes-128-gcm
+  password: 84d85af8-2807-4306-a701-f784676b77c3
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+  region_info:
+    name: 日本
+    code: JP
+  delay: 209
 - name: 🇯🇵 日本 优化3
   type: vmess
   server: t.cnmjcn.cyou
@@ -248,7 +263,7 @@ proxies:
   region_info:
     name: 日本
     code: JP
-  delay: 173
+  delay: 225
 - name: 🇯🇵 日本 01|白嫖机场.k
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
@@ -265,22 +280,7 @@ proxies:
   region_info:
     name: 日本
     code: JP
-  delay: 461
-- name: 🇯🇵 日本 IEPL-GPT
-  type: ss
-  server: gd.bjnet2.com
-  port: 36609
-  cipher: aes-128-gcm
-  password: 84d85af8-2807-4306-a701-f784676b77c3
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-  region_info:
-    name: 日本
-    code: JP
-  delay: 466
+  delay: 309
 - name: 🇸🇬 新加坡 优化-Gemi-GPT
   type: vmess
   server: planb.mojcn.com
@@ -300,7 +300,7 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
-  delay: 155
+  delay: 91
 - name: 🇸🇬 新加坡 优化2-Gemi-GPT
   type: vmess
   server: m.cnmjin.net
@@ -320,7 +320,22 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
-  delay: 160
+  delay: 92
+- name: 🇸🇬 新加坡 IEPL
+  type: ss
+  server: gd.bjnet2.com
+  port: 36604
+  cipher: aes-128-gcm
+  password: 84d85af8-2807-4306-a701-f784676b77c3
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+  region_info:
+    name: 新加坡
+    code: SG
+  delay: 210
 - name: 🇸🇬 新加坡 优化3-Gemi
   type: vmess
   server: t.cnmjcn.cyou
@@ -340,7 +355,7 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
-  delay: 184
+  delay: 225
 - name: 🇸🇬 新加坡 01|白嫖机场.k
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
@@ -357,22 +372,7 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
-  delay: 461
-- name: 🇸🇬 新加坡 IEPL
-  type: ss
-  server: gd.bjnet2.com
-  port: 36604
-  cipher: aes-128-gcm
-  password: 84d85af8-2807-4306-a701-f784676b77c3
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-  region_info:
-    name: 新加坡
-    code: SG
-  delay: 467
+  delay: 307
 - name: 🇰🇷 韩国 01|白嫖机场.k
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
@@ -389,7 +389,7 @@ proxies:
   region_info:
     name: 韩国
     code: KR
-  delay: 460
+  delay: 307
 - name: 🇮🇳 印度 优化
   type: vmess
   server: planb.mojcn.com
@@ -409,7 +409,22 @@ proxies:
   region_info:
     name: 印度
     code: IN
-  delay: 164
+  delay: 90
+- name: 🇮🇩 印度 IEPL
+  type: ss
+  server: gd.bjnet2.com
+  port: 36607
+  cipher: aes-128-gcm
+  password: 84d85af8-2807-4306-a701-f784676b77c3
+  udp: true
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+  region_info:
+    name: 印度
+    code: IN
+  delay: 92
 - name: 🇺🇸 印度 01|白嫖机场.k
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
@@ -426,7 +441,7 @@ proxies:
   region_info:
     name: 印度
     code: IN
-  delay: 460
+  delay: 306
 - name: 🇩🇪 印度 01|白嫖机场.k
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
@@ -443,22 +458,7 @@ proxies:
   region_info:
     name: 印度
     code: IN
-  delay: 460
-- name: 🇮🇩 印度尼西亚 IEPL
-  type: ss
-  server: gd.bjnet2.com
-  port: 36607
-  cipher: aes-128-gcm
-  password: 84d85af8-2807-4306-a701-f784676b77c3
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
-  region_info:
-    name: 印度尼西亚
-    code: ID
-  delay: 466
+  delay: 306
 - name: 🇻🇳 越南 IEPL
   type: ss
   server: gd.bjnet2.com
@@ -473,33 +473,7 @@ proxies:
   region_info:
     name: 越南
     code: VN
-  delay: 466
-- name: 🇺🇸 美国 46
-  server: 38.14.99.179
-  port: 59807
-  type: vmess
-  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
-  alterId: 0
-  cipher: auto
-  tls: false
-  skip-cert-verify: false
-  region_info:
-    name: 美国
-    code: US
-  delay: 2
-- name: 🇺🇸 美国 48
-  server: 38.14.99.163
-  port: 59807
-  type: vmess
-  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
-  alterId: 0
-  cipher: auto
-  tls: false
-  skip-cert-verify: false
-  region_info:
-    name: 美国
-    code: US
-  delay: 2
+  delay: 92
 - name: 🇺🇸 美国 62
   server: www.zhoubowen.vip
   port: 443
@@ -518,166 +492,6 @@ proxies:
     name: 美国
     code: US
   delay: 3
-- name: 🇺🇸 美国 11
-  server: bestcdn1.868863.xyz
-  port: 2087
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248838532.206355.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248838532.206355.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 3
-- name: 🇺🇸 美国 10
-  server: bestcdn1.868863.xyz
-  port: 2096
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832011.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248832011.796813.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 3
-- name: 🇺🇸 美国 19
-  server: bestcdn4.868863.xyz
-  port: 8443
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248839907.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248839907.796813.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 3
-- name: 🇺🇸 美国 8
-  server: bestcdn4.868863.xyz
-  port: 2053
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832420.796812.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      Host: 17642248832420.796812.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 3
-- name: 🇺🇸 美国 9
-  server: bestcdn1.868863.xyz
-  port: 2053
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248831496.796812.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      Host: 17642248831496.796812.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 4
-- name: 🇺🇸 美国 20
-  server: bestcdn4.868863.xyz
-  port: 2083
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248834335.206355.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248834335.206355.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 4
-- name: 🇺🇸 美国 18
-  server: bestcdn4.868863.xyz
-  port: 2096
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248833097.796812.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      Host: 17642248833097.796812.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 4
-- name: 🇺🇸 美国 4
-  server: bestcdn4.868863.xyz
-  port: 2087
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248839754.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248839754.796813.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 4
-- name: 🇺🇸 美国 23
-  server: bestcdn5.868863.xyz
-  port: 8443
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248833040.206355.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248833040.206355.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 5
-- name: 🇺🇸 美国 13
-  server: bestcdn2.868863.xyz
-  port: 2087
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832844.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248832844.796813.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 7
 - name: 🇺🇸 美国 40
   server: 82.198.246.97
   port: 180
@@ -690,78 +504,12 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 8
-- name: 🇺🇸 美国 14
-  server: bestcdn2.868863.xyz
-  port: 2096
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248837494.206355.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      Host: 17642248837494.206355.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 8
-- name: 🇺🇸 美国 22
-  server: bestcdn5.868863.xyz
-  port: 2053
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248832331.796813.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      Host: 17642248832331.796813.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 23
-- name: 🇺🇸 美国 12
-  server: bestcdn2.868863.xyz
-  port: 2083
-  type: trojan
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642248838279.796812.xyz
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      Host: 17642248838279.796812.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 26
-- name: 🇺🇸 美国 41
-  server: 107.174.82.102.sslip.io
-  port: 443
+  delay: 66
+- name: 🇺🇸 美国 46
+  server: 38.14.99.179
+  port: 59807
   type: vmess
-  uuid: bb824a22-b7ce-427b-9ed6-1adf0751da02
-  alterId: 0
-  cipher: auto
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  ws-opts:
-    path: /Ov7HrgwlEcRugowKV
-    headers:
-      Host: 107.174.82.102.sslip.io
-  region_info:
-    name: 美国
-    code: US
-  delay: 44
-- name: 🇺🇸 美国 58
-  server: 152.70.92.69
-  port: 80
-  type: vmess
-  uuid: bb9c3993-a4b9-4dad-aeb9-ac86371ae68b
+  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
   alterId: 0
   cipher: auto
   tls: false
@@ -769,7 +517,20 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 134
+  delay: 70
+- name: 🇺🇸 美国 48
+  server: 38.14.99.163
+  port: 59807
+  type: vmess
+  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  region_info:
+    name: 美国
+    code: US
+  delay: 72
 - name: 🇺🇸 美国 LA-优化-GPT
   type: vmess
   server: planb.mojcn.com
@@ -789,7 +550,7 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 154
+  delay: 92
 - name: 🇺🇸 美国 LA-优化2-GPT
   type: vmess
   server: m.cnmjin.net
@@ -809,46 +570,22 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 157
-- name: 🇺🇸 美国 LA-优化3-GPT
-  type: vmess
-  server: t.cnmjcn.cyou
-  port: 16648
-  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
-  alterId: 0
-  cipher: auto
+  delay: 92
+- name: 🇺🇸 美国 IEPL-GPT
+  type: ss
+  server: gd.bjnet2.com
+  port: 36608
+  cipher: aes-128-gcm
+  password: 84d85af8-2807-4306-a701-f784676b77c3
   udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  ws-path: /
-  ws-headers:
-    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
   region_info:
     name: 美国
     code: US
-  delay: 180
-- name: 🇺🇸 美国 56
-  server: fn.130519.xyz
-  port: 8443
-  type: vmess
-  uuid: 19aebb35-b458-4d0c-b767-2adb39e6bb02
-  alterId: 0
-  cipher: auto
-  tls: true
-  skip-cert-verify: false
-  servername: deji.186507.xyz
-  network: ws
-  ws-opts:
-    path: /19aebb35-b458-4d0c-b767-2adb39e6bb02-vm
-    headers:
-      Host: deji.186507.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 208
+  delay: 93
 - name: 🇺🇸 美国 疯高速87 (0.02x
   type: vmess
   server: us5.998998.best
@@ -868,7 +605,153 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 299
+  delay: 113
+- name: 🇺🇸 美国 41
+  server: 107.174.82.102.sslip.io
+  port: 443
+  type: vmess
+  uuid: bb824a22-b7ce-427b-9ed6-1adf0751da02
+  alterId: 0
+  cipher: auto
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /Ov7HrgwlEcRugowKV
+    headers:
+      Host: 107.174.82.102.sslip.io
+  region_info:
+    name: 美国
+    code: US
+  delay: 143
+- name: 🇺🇸 美国 20
+  server: bestcdn4.868863.xyz
+  port: 2083
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248834335.206355.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /videomuaawe
+    headers:
+      Host: 17642248834335.206355.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 170
+- name: 🇺🇸 美国 18
+  server: bestcdn4.868863.xyz
+  port: 2096
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248833097.796812.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agraeabtegrrh
+    headers:
+      Host: 17642248833097.796812.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 170
+- name: 🇺🇸 美国 4
+  server: bestcdn4.868863.xyz
+  port: 2087
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248839754.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248839754.796813.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 170
+- name: 🇺🇸 美国 11
+  server: bestcdn1.868863.xyz
+  port: 2087
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248838532.206355.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /videomuaawe
+    headers:
+      Host: 17642248838532.206355.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 171
+- name: 🇺🇸 美国 10
+  server: bestcdn1.868863.xyz
+  port: 2096
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248832011.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248832011.796813.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 171
+- name: 🇺🇸 美国 19
+  server: bestcdn4.868863.xyz
+  port: 8443
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248839907.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248839907.796813.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 171
+- name: 🇺🇸 美国 8
+  server: bestcdn4.868863.xyz
+  port: 2053
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248832420.796812.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agraeabtegrrh
+    headers:
+      Host: 17642248832420.796812.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 171
+- name: 🇺🇸 美国 9
+  server: bestcdn1.868863.xyz
+  port: 2053
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248831496.796812.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agraeabtegrrh
+    headers:
+      Host: 17642248831496.796812.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 171
 - name: 🇺🇸 美国 15
   server: bestcdn3.868863.xyz
   port: 2087
@@ -884,7 +767,7 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 356
+  delay: 216
 - name: 🇺🇸 美国 17
   server: bestcdn3.868863.xyz
   port: 2053
@@ -900,7 +783,7 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 357
+  delay: 216
 - name: 🇺🇸 美国 16
   server: bestcdn3.868863.xyz
   port: 2083
@@ -916,22 +799,139 @@ proxies:
   region_info:
     name: 美国
     code: US
-  delay: 358
-- name: 🇺🇸 美国 IEPL-GPT
-  type: ss
-  server: gd.bjnet2.com
-  port: 36608
-  cipher: aes-128-gcm
-  password: 84d85af8-2807-4306-a701-f784676b77c3
+  delay: 216
+- name: 🇺🇸 美国 LA-优化3-GPT
+  type: vmess
+  server: t.cnmjcn.cyou
+  port: 16648
+  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
+  alterId: 0
+  cipher: auto
   udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: de5bdbffa87896a4b126f8b62150bb4e.baidu.com
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  ws-path: /
+  ws-headers:
+    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
   region_info:
     name: 美国
     code: US
-  delay: 466
+  delay: 224
+- name: 🇺🇸 美国 58
+  server: 152.70.92.69
+  port: 80
+  type: vmess
+  uuid: bb9c3993-a4b9-4dad-aeb9-ac86371ae68b
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: false
+  region_info:
+    name: 美国
+    code: US
+  delay: 252
+- name: 🇺🇸 美国 56
+  server: fn.130519.xyz
+  port: 8443
+  type: vmess
+  uuid: 19aebb35-b458-4d0c-b767-2adb39e6bb02
+  alterId: 0
+  cipher: auto
+  tls: true
+  skip-cert-verify: false
+  servername: deji.186507.xyz
+  network: ws
+  ws-opts:
+    path: /19aebb35-b458-4d0c-b767-2adb39e6bb02-vm
+    headers:
+      Host: deji.186507.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 255
+- name: 🇺🇸 美国 12
+  server: bestcdn2.868863.xyz
+  port: 2083
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248838279.796812.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agraeabtegrrh
+    headers:
+      Host: 17642248838279.796812.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 473
+- name: 🇺🇸 美国 13
+  server: bestcdn2.868863.xyz
+  port: 2087
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248832844.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248832844.796813.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 474
+- name: 🇺🇸 美国 14
+  server: bestcdn2.868863.xyz
+  port: 2096
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248837494.206355.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /videomuaawe
+    headers:
+      Host: 17642248837494.206355.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 474
+- name: 🇺🇸 美国 22
+  server: bestcdn5.868863.xyz
+  port: 2053
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248832331.796813.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /agrbniuh
+    headers:
+      Host: 17642248832331.796813.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 532
+- name: 🇺🇸 美国 23
+  server: bestcdn5.868863.xyz
+  port: 8443
+  type: trojan
+  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
+  sni: 17642248833040.206355.xyz
+  skip-cert-verify: false
+  network: ws
+  ws-opts:
+    path: /videomuaawe
+    headers:
+      Host: 17642248833040.206355.xyz
+  region_info:
+    name: 美国
+    code: US
+  delay: 533
 - name: 🇨🇦 加拿大 优化2
   type: vmess
   server: m.cnmjcn.com
@@ -951,7 +951,7 @@ proxies:
   region_info:
     name: 加拿大
     code: CA
-  delay: 158
+  delay: 93
 - name: 🇨🇦 加拿大 优化
   type: vmess
   server: planb.mojcn.com
@@ -971,7 +971,7 @@ proxies:
   region_info:
     name: 加拿大
     code: CA
-  delay: 164
+  delay: 93
 - name: 🇨🇦 加拿大 优化3
   type: vmess
   server: t.cnmjcn.cyou
@@ -991,87 +991,7 @@ proxies:
   region_info:
     name: 加拿大
     code: CA
-  delay: 180
-- name: 🇬🇧 英国 优化2
-  type: vmess
-  server: m.cnmjin.net
-  port: 16645
-  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  ws-path: /
-  ws-headers:
-    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  region_info:
-    name: 英国
-    code: GB
-  delay: 159
-- name: 🇬🇧 英国 剩余流量：8346.51
-  type: vmess
-  server: planb.mojcn.com
-  port: 16617
-  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  ws-path: /
-  ws-headers:
-    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  region_info:
-    name: 英国
-    code: GB
-  delay: 168
-- name: 🇬🇧 英国 优化-GPT
-  type: vmess
-  server: planb.mojcn.com
-  port: 16645
-  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  ws-path: /
-  ws-headers:
-    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  region_info:
-    name: 英国
-    code: GB
-  delay: 170
-- name: 🇬🇧 英国 优化3
-  type: vmess
-  server: t.cnmjcn.cyou
-  port: 16645
-  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  ws-path: /
-  ws-headers:
-    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
-  region_info:
-    name: 英国
-    code: GB
-  delay: 180
+  delay: 226
 - name: 🇬🇧 英国 剩余流量：996.56
   type: vmess
   server: us19-25.998998.best
@@ -1091,11 +1011,31 @@ proxies:
   region_info:
     name: 英国
     code: GB
-  delay: 197
-- name: 🇩🇪 德国 优化
+  delay: 3
+- name: 🇬🇧 英国 优化2
+  type: vmess
+  server: m.cnmjin.net
+  port: 16645
+  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  ws-path: /
+  ws-headers:
+    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  region_info:
+    name: 英国
+    code: GB
+  delay: 92
+- name: 🇬🇧 英国 剩余流量：8346.51
   type: vmess
   server: planb.mojcn.com
-  port: 16644
+  port: 16617
   uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
   alterId: 0
   cipher: auto
@@ -1109,13 +1049,13 @@ proxies:
   ws-headers:
     Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
   region_info:
-    name: 德国
-    code: DE
-  delay: 162
-- name: 🇩🇪 德国 优化2
+    name: 英国
+    code: GB
+  delay: 92
+- name: 🇬🇧 英国 优化-GPT
   type: vmess
-  server: m.cnmjcn.com
-  port: 16644
+  server: planb.mojcn.com
+  port: 16645
   uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
   alterId: 0
   cipher: auto
@@ -1129,9 +1069,29 @@ proxies:
   ws-headers:
     Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
   region_info:
-    name: 德国
-    code: DE
-  delay: 163
+    name: 英国
+    code: GB
+  delay: 92
+- name: 🇬🇧 英国 优化3
+  type: vmess
+  server: t.cnmjcn.cyou
+  port: 16645
+  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  ws-path: /
+  ws-headers:
+    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  region_info:
+    name: 英国
+    code: GB
+  delay: 225
 - name: 🇩🇪 德国 疯高速73 (0.02x
   type: vmess
   server: uk2-2.998998.best
@@ -1151,7 +1111,27 @@ proxies:
   region_info:
     name: 德国
     code: DE
-  delay: 341
+  delay: 3
+- name: 🇩🇪 德国 优化2
+  type: vmess
+  server: m.cnmjcn.com
+  port: 16644
+  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  ws-path: /
+  ws-headers:
+    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  region_info:
+    name: 德国
+    code: DE
+  delay: 90
 - name: 🇩🇪 德国 IEPL
   type: ss
   server: gd.bjnet2.com
@@ -1166,4 +1146,24 @@ proxies:
   region_info:
     name: 德国
     code: DE
-  delay: 466
+  delay: 91
+- name: 🇩🇪 德国 优化
+  type: vmess
+  server: planb.mojcn.com
+  port: 16644
+  uuid: 77439561-dcef-4e45-803a-743cfa7d20c2
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  ws-path: /
+  ws-headers:
+    Host: 9e97d6c9e2e0ad3444cbf96d3709366d.mobgslb.tbcache.com
+  region_info:
+    name: 德国
+    code: DE
+  delay: 92
