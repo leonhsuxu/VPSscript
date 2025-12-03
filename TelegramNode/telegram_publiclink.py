@@ -108,13 +108,26 @@ BJ_TZ = timezone(timedelta(hours=8))
 # =================================================================================
 # Part 2: 函数定义
 # =================================================================================
-def get_country_flag_emoji(code):
+def process_proxies(proxies):
+    """
+    过滤节点，仅保留地区在 ALLOWED_REGIONS 的节点，
+    并添加 region_info，最后重命名节点。
+    """
+    identified = []
+    for p in proxies:
+        matched_region = None
+        for region_name, info in CUSTOM_REGEX_RULES.items():
+            pattern = info['pattern']
+            if re.search(pattern, p.get('name', ''), re.IGNORECASE):
+                matched_region = {'name': region_name, 'code': info['code']}
+                break
         if matched_region is None:
+            continue
+        if matched_region['name'] not in ALLOWED_REGIONS:
             continue
         p['region_info'] = matched_region
         identified.append(p)
     print(f"  - 节点过滤: 总数 {len(proxies)} -> 有效地区识别后 {len(identified)}")
-
     counters = defaultdict(lambda: defaultdict(int))
     master_pattern = re.compile(
         '|'.join(sorted([p for r in CUSTOM_REGEX_RULES.values() for p in r['pattern'].split('|')], key=len, reverse=True)),
@@ -125,7 +138,6 @@ def get_country_flag_emoji(code):
         info = p['region_info']
         match = FLAG_EMOJI_PATTERN.search(p['name'])
         flag = match.group(0) if match else get_country_flag_emoji(info['code'])
-
         clean_name = master_pattern.sub('', FLAG_EMOJI_PATTERN.sub('', p['name'], 1)).strip()
         clean_name = re.sub(r'^\W+|\W+$', '', clean_name)
         feature = re.sub(r'\s+', ' ', clean_name).strip()
@@ -133,17 +145,14 @@ def get_country_flag_emoji(code):
             count = sum(1 for fp in final if fp['region_info']['name'] == info['name']) + 1
             feature = f"{info['code']}{count:02d}"
         base_name = f"{flag} {info['name']} {feature}".strip()
-
         counters[info['name']][base_name] += 1
         count_ = counters[info['name']][base_name]
         if count_ > 1:
             new_name = f"{base_name} {count_}"
         else:
             new_name = base_name
-
         p['name'] = new_name
         final.append(p)
-
     return final
 
 # --- 读取本地已有节点及抓取状态 ---
