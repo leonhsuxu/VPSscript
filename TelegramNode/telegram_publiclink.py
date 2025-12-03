@@ -722,16 +722,20 @@ async def main():
     print(f"时间: {datetime.now(timezone(timedelta(hours=8))).strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
 
-   
     preprocess_regex_rules()
-    # 周一删除旧文件
+    # 周一删除旧文件（如果需要开启）
     # delete_old_yaml()  # 取消定期删除，保留历史文件
-    
+
     # --- 步骤 1: 从 Telegram 抓取新节点 ---
     print("\n[1/5] 从 Telegram 抓取新节点...")
     urls = await scrape_telegram_links()
-    new_proxies_list = [p for url in urls for p in download_subscription(url) if p] if urls else []
-    
+    new_proxies_list = []
+    if urls:
+        for url in urls:
+            proxies = download_subscription(url)
+            if proxies:
+                new_proxies_list.extend(proxies)
+
     # 去重抓取到的新节点
     new_proxies_map = {}
     for p in new_proxies_list:
@@ -739,62 +743,29 @@ async def main():
         if key not in new_proxies_map:
             new_proxies_map[key] = p
     print(f"✅ 从 Telegram 抓取并去重后，获得 {len(new_proxies_map)} 个新节点。")
-    
+
     # --- 步骤 2: 读取现有节点 ---
-print("\n[2/5] 读取现有节点...")
+    print("\n[2/5] 读取现有节点...")
+    existing_proxies = []
+    if os.path.exists(OUTPUT_FILE):
+        try:
+            with open(OUTPUT_FILE, 'r', encoding='utf-8') as f:
+                loaded_yaml = yaml.safe_load(f)
+                if isinstance(loaded_yaml, dict) and 'proxies' in loaded_yaml:
+                    if isinstance(loaded_yaml['proxies'], list):
+                        existing_proxies = [p for p in loaded_yaml['proxies'] if isinstance(p, dict)]
+                        print(f"  - 成功读取 {len(existing_proxies)} 个现有节点。")
+                elif isinstance(loaded_yaml, list):
+                    # 兼容旧格式：整个列表即是节点列表
+                    existing_proxies = [p for p in loaded_yaml if isinstance(p, dict)]
+                    print(f"  - 成功读取 {len(existing_proxies)} 个现有节点 (来自旧的列表格式)。")
+        except Exception as e:
+            print(f"  - 警告: 读取或解析 {OUTPUT_FILE} 失败: {e}。")
 
-existing_proxies = []
-if os.path.exists(OUTPUT_FILE):
-    try:
-        # 读取已有配置文件
-        with open(OUTPUT_FILE, 'r', encoding='utf-8') as f:
-            loaded_yaml = yaml.safe_load(f)
-            if isinstance(loaded_yaml, dict) and 'proxies' in loaded_yaml:
-                if isinstance(loaded_yaml['proxies'], list):
-                    existing_proxies = [p for p in loaded_yaml['proxies'] if isinstance(p, dict)]
-                    print(f"  - 成功读取 {len(existing_proxies)} 个现有节点。")
-            elif isinstance(loaded_yaml, list):
-                # 兼容旧格式：整个列表即是节点列表
-                existing_proxies = [p for p in loaded_yaml if isinstance(p, dict)]
-                print(f"  - 成功读取 {len(existing_proxies)} 个现有节点 (来自旧的列表格式)。")
-    except Exception as e:
-        print(f"  - 警告: 读取或解析 {OUTPUT_FILE} 失败: {e}。")
+    print(f"  - 对现有节点进行统一过滤、地区识别和重命名...")
+    existing_proxies = process_proxies(existing_proxies)
+    print(f"  - 统一处理后现有节点数量: {len(existing_proxies)}")
 
-# -----------------------------------------
-# 统一处理旧节点：
-# - 过滤无效节点
-# - 识别地区
-# - 重命名为规范格式，避免命名重复与新节点冲突
-# -----------------------------------------
-print(f"  - 对现有节点进行统一过滤、地区识别和重命名...")
-
-existing_proxies = process_proxies(existing_proxies)
-
-print(f"  - 统一处理后现有节点数量: {len(existing_proxies)}")
-
-# -----------------------------------------
-# 如果启用测速，对现有节点做 TCP 连接测速
-# 以获取延迟信息，辅助后续排序和过滤
-# -----------------------------------------
-if ENABLE_SPEED_TEST and existing_proxies:
-    print(f"  - 对现有节点进行 TCP 连接测速，节点数量: {len(existing_proxies)}")
-
-    with concurrent.futures.ThreadPoolExecutor(MAX_TEST_WORKERS) as executor:
-        tested_existing = list(executor.map(test_single_proxy_tcp, existing_proxies))
-
-    # 过滤测速失败的节点
-    existing_proxies = [p for p in tested_existing if p]
-
-    print(f"  - 现有节点测速完成，可用节点数量: {len(existing_proxies)}")
-
-    # 新增：先对现有(旧)节点测速，获取最新延迟信息
-    if ENABLE_SPEED_TEST and existing_proxies:
-        print(f"  - 对现有节点进行 TCP 连接测速，数量: {len(existing_proxies)}")
-        with concurrent.futures.ThreadPoolExecutor(MAX_TEST_WORKERS) as executor:
-            tested_existing = list(executor.map(test_single_proxy_tcp, existing_proxies))
-        existing_proxies = [p for p in tested_existing if p]
-        print(f"  - 现有节点测速完成，可用节点数: {len(existing_proxies)}")
-    
     # --- 步骤 3: 合并并去重所有节点 ---
     print("\n[3/5] 合并并去重节点...")
     all_proxies_map = {get_proxy_key(p): p for p in existing_proxies}
@@ -803,40 +774,48 @@ if ENABLE_SPEED_TEST and existing_proxies:
         if key not in all_proxies_map:
             all_proxies_map[key] = p
             added_count += 1
-    
+    print(f"✅ 合并完成: 新增 {added_count} 个节点，总计 {len(all_proxies_map)} 个不重复节点。")
+
     all_proxies_list = list(all_proxies_map.values())
-    print(f"✅ 合并完成: 新增 {added_count} 个节点，总计 {len(all_proxies_list)} 个不重复节点。")
-    
     if not all_proxies_list:
         sys.exit("\n❌ 无任何可用节点，脚本终止。")
-    
+
     # --- 步骤 4: 过滤、重命名、测速与排序 ---
     print("\n[4/5] 处理、测速与排序节点...")
     processed = process_proxies(all_proxies_list)
     if not processed:
         sys.exit("\n❌ 过滤和重命名后无任何可用节点，脚本终止。")
+
     final = processed
-    if ENABLE_SPEED_TEST:
+
+    if ENABLE_SPEED_TEST and final:
         print(f"  - 开始 TCP 连接测速（超时: {SOCKET_TIMEOUT}秒, 并发: {MAX_TEST_WORKERS}）...")
         with concurrent.futures.ThreadPoolExecutor(MAX_TEST_WORKERS) as executor:
-            tested = list(executor.map(test_single_proxy_tcp, processed))
-        
+            tested = list(executor.map(test_single_proxy_tcp, final))
+
+        # 过滤测速失败的节点
         final = [p for p in tested if p]
         print(f"  - 测速完成, {len(final)} / {len(processed)} 个节点可用。")
-        
+
         if not final:
             print("\n  ⚠️ 警告: 测速后无可用节点，将使用所有过滤后的节点。")
             final = processed
-    
-    # 排序
-    final.sort(key=lambda p: (REGION_PRIORITY.index(p['region_info']['name']) if p['region_info']['name'] in REGION_PRIORITY else 99, p.get('delay', 9999)))
+
+    # 排序：先按地区优先级，再按延迟升序
+    final.sort(
+        key=lambda p: (
+            REGION_PRIORITY.index(p['region_info']['name']) if p['region_info']['name'] in REGION_PRIORITY else 99,
+            p.get('delay', 9999)
+        )
+    )
     print(f"✅ 最终处理完成 {len(final)} 个节点。")
-    
+
     # --- 步骤 5: 生成并写入最终配置文件 ---
     print("\n[5/5] 生成最终配置文件...")
     config = generate_config(final)
     if not config:
         sys.exit("\n❌ 无法生成配置文件。")
+
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     try:
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
