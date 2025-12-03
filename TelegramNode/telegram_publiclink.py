@@ -833,9 +833,9 @@ async def main():
     try:
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
             yaml.dump(final_config, f, allow_unicode=True, sort_keys=False, indent=2)
-        print(f"✅ 配置文件写入成功: {OUTPUT_FILE}")
+        print(f"✅ 配置文件及状态已成功保存至: {OUTPUT_FILE}\n\n🎉 任务全部完成！")
     except Exception as e:
-        print(f"❌ 写入配置文件失败: {e}")
+        print(f"❌ 写入最终配置文件时出错: {e}")
 
 if __name__ == "__main__":
     asyncio.run(main())
