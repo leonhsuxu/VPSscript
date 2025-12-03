@@ -43,7 +43,7 @@ STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')  # 获取 Telegram �
 
 # ========================== 配置区 =========================================
 TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS')  # Telegram频道ID，多行字符串，从yml引入
-TIME_WINDOW_HOURS = 5  # 抓取时间窗口，单位小时
+TIME_WINDOW_HOURS = 3  # 抓取时间窗口，单位小时
 MIN_EXPIRE_HOURS = 2  # 订阅链接最低剩余有效期，单位小时
 OUTPUT_FILE = 'flclashyaml/telegram_scraper.yaml'  # 输出YAML路径
 ENABLE_SPEED_TEST = True  # 是否启用测速  True开启，False关闭
@@ -180,30 +180,23 @@ async def scrape_telegram_links():
     all_links = set()
 
     for channel_id in TARGET_CHANNELS:
-        print(f"\n--- 处理频道: {channel_id} ---")
+        # print(f"\n--- 处理频道: {channel_id} ---")  # 可根据需求保留或注释
         try:
             entity = await client.get_entity(channel_id)
             async for message in client.iter_messages(entity, limit=500):
-                # 打印消息时间和内容调试
-                print(f"消息时间: {message.date}, 内容预览: {message.text[:100] if message.text else '无文本'}")
                 if message.date < target_time:
                     break
-                # 查看解析的 expire time
-                expire = parse_expire_time(message.text or '')
-                print(f"  到期时间: {expire}")
-                # 临时关闭时间过滤：
-                # if message.text and is_expire_time_valid(expire):
                 if message.text:
                     urls = re.findall(r'https?://[^\s<>"*`]+', message.text)
                     for url in urls:
-                        url = url.strip().strip('.,*`')
-                        if url:
-                            all_links.add(url)
-                            print(f"  找到链接: {url}")
+                        cleaned_url = url.strip().strip('.,*`')
+                        if cleaned_url:
+                            all_links.add(cleaned_url)
+                            print(cleaned_url)  # 仅打印链接
         except Exception as e:
             print(f"❌ 读取频道消息异常: {e}")
     await client.disconnect()
-    print(f"\n抓取完成，共找到 {len(all_links)} 个订阅链接。")
+    # 不再重复打印数量，只返回链接列表即可
     return list(all_links)
 
 def preprocess_regex_rules():
