@@ -13,7 +13,6 @@
 # 5. 支持节点去重、地区识别（含emoji国旗）、TCP测速与排序、旧节点测速去重
 # 6. 生成Clash兼容配置文件，里边包含爬取消息截止id
 # =====================================================================
-
 import os
 import re
 import asyncio
@@ -31,44 +30,33 @@ import hashlib
 import subprocess
 import shutil
 from urllib.parse import urlparse, parse_qs, unquote
-
 # --- Telethon ---
 from telethon.sync import TelegramClient
 from telethon.sessions import StringSession
-
 # ========================== Telegram 个人资料配置 ==========================
 API_ID = os.environ.get('TELEGRAM_API_ID')  # 获取 Telegram API ID
 API_HASH = os.environ.get('TELEGRAM_API_HASH')  # 获取 Telegram API HASH
 STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')  # 获取 Telegram 会话字符串
-
 # ========================== 配置区 =========================================
 TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS')  # Telegram频道ID，多行字符串，从yml引入
 TIME_WINDOW_HOURS = 8  # 抓取时间窗口，单位小时
 MIN_EXPIRE_HOURS = 2  # 订阅链接最低剩余有效期，单位小时
 OUTPUT_FILE = 'flclashyaml/telegram_scraper.yaml'  # 输出YAML路径
-
 # ========================== 测速参数 =========================================
 ENABLE_SPEED_TEST = True  # 是否启用测速  True开启，False关闭
 SOCKET_TIMEOUT = 3  # TCP测速超时时间(秒)
 MAX_TEST_WORKERS = 256  # 并发测速线程数
-
 HTTP_TIMEOUT = 5          # HTTP 请求超时时间（秒）
 HTTP_TEST_URL = 'http://www.gstatic.com/generate_204'  # 轻量无内容响应URL，用于HTTP测速
-
-
 # ========== 地区过滤配置 ==========
 ALLOWED_REGIONS = {'香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国',
                    '印度', '菲律宾', '印度尼西亚', '越南', '美国', '加拿大', '法国',
                    '英国', '德国', '俄罗斯', '意大利', '巴西', '阿根廷', '土耳其', '澳大利亚'}
-                   
 # ALLOWED_REGIONS = set(CUSTOM_REGEX_RULES.keys()) # 或可使用已有的 CUSTOM_REGEX_RULES 键集合
-
-
 # ========== 排序优先级配置 ==========
 REGION_PRIORITY = ['香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国', '印度', '菲律宾',
                    '印度尼西亚', '越南', '美国', '加拿大', '法国', '英国', '德国', '俄罗斯', '意大利',
                    '巴西', '阿根廷', '土耳其', '澳大利亚']
-
 # ========== 国家/地区映射表 ==========
 CHINESE_COUNTRY_MAP = {
     'HK': '香港', 'TW': '台湾', 'JP': '日本', 'SG': '新加坡', 'KR': '韩国', 'MY': '马来西亚',
@@ -76,7 +64,6 @@ CHINESE_COUNTRY_MAP = {
     'CA': '加拿大', 'FR': '法国', 'GB': '英国', 'DE': '德国', 'RU': '俄罗斯', 'IT': '意大利',
     'BR': '巴西', 'AR': '阿根廷', 'TR': '土耳其', 'AU': '澳大利亚'
 }
-
 # ========== 地区识别正则规则 ==========
 CUSTOM_REGEX_RULES = {
     '香港': {'code': 'HK', 'pattern': r'香港|港|HK|Hong\s*Kong'},
@@ -102,22 +89,10 @@ CUSTOM_REGEX_RULES = {
     '土耳其': {'code': 'TR', 'pattern': r'土耳其|TR|Turkey'},
     '澳大利亚': {'code': 'AU', 'pattern': r'澳大利亚|AU|Australia'},
 }
-
 JUNK_PATTERNS = re.compile(r"(?:专线|IPLC|体验|官网|倍率|x\d[\.\d]*|[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*|Relay|流量)", re.IGNORECASE)
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
-
 BJ_TZ = timezone(timedelta(hours=8))
-
-# =================================================================================
-# Part 2: 函数定义
-# =================================================================================
-def process_proxies(proxies):
-    """
-    过滤节点，仅保留地区在 ALLOWED_REGIONS 的节点，
-    并添加 region_info，最后重命名节点。
-    """
-    identified = []
-    for p in proxies:
+# =========================    for p in proxies:
         matched_region = None
         for region_name, info in CUSTOM_REGEX_RULES.items():
             pattern = info['pattern']
