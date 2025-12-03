@@ -1,18 +1,4 @@
 proxies:
-- name: 🇭🇰 香港 03 2
-  type: trojan
-  server: 112.118.116.66
-  port: 443
-  udp: true
-  password: BxceQaOe
-  sni: t.me/ripaojiedian
-  skip-cert-verify: true
-  region_info:
-    name: 香港
-    code: HK
-  delay: 185
-  tcp_delay: 158
-  http_delay: null
 - name: 🇭🇰 香港 02
   type: trojan
   server: 58.152.18.95
@@ -25,7 +11,21 @@ proxies:
     name: 香港
     code: HK
   delay: 185
-  tcp_delay: 178
+  tcp_delay: 209
+  http_delay: null
+- name: 🇭🇰 香港 03 2
+  type: trojan
+  server: 112.118.116.66
+  port: 443
+  udp: true
+  password: BxceQaOe
+  sni: t.me/ripaojiedian
+  skip-cert-verify: true
+  region_info:
+    name: 香港
+    code: HK
+  delay: 185
+  tcp_delay: 211
   http_delay: null
 - type: vless
   name: 🇭🇰 香港 07
@@ -49,7 +49,7 @@ proxies:
     name: 香港
     code: HK
   delay: 185
-  tcp_delay: 194
+  tcp_delay: 218
   http_delay: null
 - name: 🇭🇰 香港 05
   type: trojan
@@ -63,7 +63,7 @@ proxies:
     name: 香港
     code: HK
   delay: 190
-  tcp_delay: 170
+  tcp_delay: 209
   http_delay: null
 - name: 🇭🇰 香港 精品3 2 2
   password: <password>
@@ -76,7 +76,7 @@ proxies:
     name: 香港
     code: HK
   delay: 216
-  tcp_delay: 184
+  tcp_delay: 219
   http_delay: null
 - name: 🇭🇰 香港 中国 - - Telecommunions (T) Limed Mass ternet - 3
   server: cba2dad5-t6ngg0-tcdlur-1qwom.hk3.p5pv.com
@@ -99,7 +99,7 @@ proxies:
   region_info:
     name: 香港
     code: HK
-  tcp_delay: 177
+  tcp_delay: 226
   http_delay: null
 - name: 🇭🇰 香港 精品3
   password: <password>
@@ -112,7 +112,7 @@ proxies:
     name: 香港
     code: HK
   delay: 242
-  tcp_delay: 173
+  tcp_delay: 293
   http_delay: null
 - name: 🇭🇰 香港 精品4 2 2
   password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
@@ -125,7 +125,7 @@ proxies:
     name: 香港
     code: HK
   delay: 247
-  tcp_delay: 244
+  tcp_delay: 299
   http_delay: null
 - name: 🇭🇰 香港 精品2 2 2
   password: <password>
@@ -138,7 +138,7 @@ proxies:
     name: 香港
     code: HK
   delay: 250
-  tcp_delay: 245
+  tcp_delay: 298
   http_delay: null
 - name: 🇭🇰 香港 中国--1-:1.0
   type: trojan
@@ -154,7 +154,7 @@ proxies:
     name: 香港
     code: HK
   delay: 303
-  tcp_delay: 185
+  tcp_delay: 292
   http_delay: null
 - name: 🇭🇰 香港 精品3 2
   password: <password>
@@ -167,7 +167,7 @@ proxies:
     name: 香港
     code: HK
   delay: 303
-  tcp_delay: 188
+  tcp_delay: 293
   http_delay: null
 - name: 🇭🇰 香港 精品4
   password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
@@ -180,7 +180,7 @@ proxies:
     name: 香港
     code: HK
   delay: 322
-  tcp_delay: 249
+  tcp_delay: 298
   http_delay: null
 - name: 🇭🇰 香港 精品2
   password: <password>
@@ -193,20 +193,7 @@ proxies:
     name: 香港
     code: HK
   delay: 324
-  tcp_delay: 249
-  http_delay: null
-- name: 🇭🇰 香港 精品4 2
-  password: c5eb2c2c-bc1d-11ed-a8bf-f23c91cfbbc9
-  port: 443
-  server: ac9a38ed-t6t0g0-t6py8y-44k4.hkt2.cdnhuawei.com
-  tls: true
-  type: http
-  username: c5eb2c2c-bc1d-11ed-a8bf-f23c91cfbbc9
-  region_info:
-    name: 香港
-    code: HK
-  delay: 326
-  tcp_delay: 244
+  tcp_delay: 298
   http_delay: null
 - name: 🇭🇰 香港 精品2 2
   password: <password>
@@ -219,7 +206,20 @@ proxies:
     name: 香港
     code: HK
   delay: 326
-  tcp_delay: 244
+  tcp_delay: 229
+  http_delay: null
+- name: 🇭🇰 香港 精品4 2
+  password: c5eb2c2c-bc1d-11ed-a8bf-f23c91cfbbc9
+  port: 443
+  server: ac9a38ed-t6t0g0-t6py8y-44k4.hkt2.cdnhuawei.com
+  tls: true
+  type: http
+  username: c5eb2c2c-bc1d-11ed-a8bf-f23c91cfbbc9
+  region_info:
+    name: 香港
+    code: HK
+  delay: 326
+  tcp_delay: 231
   http_delay: null
 - name: 🇭🇰 香港 中国--2-:1.0
   type: trojan
@@ -235,7 +235,7 @@ proxies:
     name: 香港
     code: HK
   delay: 333
-  tcp_delay: 173
+  tcp_delay: 295
   http_delay: null
 - name: 🇭🇰 香港 中转[CM 2
   password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
@@ -248,7 +248,7 @@ proxies:
     name: 香港
     code: HK
   delay: 340
-  tcp_delay: 215
+  tcp_delay: 328
   http_delay: null
 - name: 🇭🇰 香港 中转[CM 2 2
   password: c5eb2c2c-bc1d-11ed-a8bf-f23c91cfbbc9
@@ -261,7 +261,7 @@ proxies:
     name: 香港
     code: HK
   delay: 343
-  tcp_delay: 222
+  tcp_delay: 263
   http_delay: null
 - name: 🇭🇰 香港 中转[CM
   password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
@@ -274,7 +274,7 @@ proxies:
     name: 香港
     code: HK
   delay: 343
-  tcp_delay: 259
+  tcp_delay: 326
   http_delay: null
 - name: 🇭🇰 香港 IEPL
   type: ss
@@ -291,7 +291,7 @@ proxies:
     name: 香港
     code: HK
   delay: 370
-  tcp_delay: 313
+  tcp_delay: 406
   http_delay: null
 - name: 🇯🇵 日本 01
   type: trojan
@@ -305,7 +305,7 @@ proxies:
     name: 日本
     code: JP
   delay: 133
-  tcp_delay: 106
+  tcp_delay: 161
   http_delay: null
 - name: 🇯🇵 日本 16
   server: 54.95.11.3
@@ -325,7 +325,7 @@ proxies:
     name: 日本
     code: JP
   delay: 133
-  tcp_delay: 107
+  tcp_delay: 161
   http_delay: null
 - name: 🇯🇵 日本 24
   password: c5eb2c2c-bc1d-11ed-a8bf-f23c91cfbbc9
@@ -338,7 +338,7 @@ proxies:
     name: 日本
     code: JP
   delay: 164
-  tcp_delay: 132
+  tcp_delay: 247
   http_delay: null
 - name: 🇯🇵 日本 02
   type: vless
@@ -357,7 +357,7 @@ proxies:
     name: 日本
     code: JP
   delay: 186
-  tcp_delay: 159
+  tcp_delay: 211
   http_delay: null
 - name: 🇯🇵 日本 05
   password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
@@ -370,7 +370,7 @@ proxies:
     name: 日本
     code: JP
   delay: 187
-  tcp_delay: 133
+  tcp_delay: 242
   http_delay: null
 - name: 🇯🇵 日本 4
   password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
@@ -383,7 +383,7 @@ proxies:
     name: 日本
     code: JP
   delay: 189
-  tcp_delay: 130
+  tcp_delay: 249
   http_delay: null
 - name: 🇯🇵 日本 4 2
   password: c5eb2c2c-bc1d-11ed-a8bf-f23c91cfbbc9
@@ -396,7 +396,7 @@ proxies:
     name: 日本
     code: JP
   delay: 190
-  tcp_delay: 132
+  tcp_delay: 242
   http_delay: null
 - name: 🇯🇵 日本 东京-TY-4-:1.0
   type: trojan
@@ -412,7 +412,7 @@ proxies:
     name: 日本
     code: JP
   delay: 193
-  tcp_delay: 174
+  tcp_delay: 264
   http_delay: null
 - name: 🇯🇵 日本 08
   password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
@@ -425,7 +425,7 @@ proxies:
     name: 日本
     code: JP
   delay: 252
-  tcp_delay: 194
+  tcp_delay: 246
   http_delay: null
 - name: 🇯🇵 日本 东京-TY-3-:1.0
   type: trojan
@@ -441,23 +441,7 @@ proxies:
     name: 日本
     code: JP
   delay: 253
-  tcp_delay: 131
-  http_delay: null
-- name: 🇯🇵 日本 大阪-OS-1-:1.0
-  type: trojan
-  server: os-1.tr202501.com
-  port: 443
-  password: 3tKOYNqAiP0Url9JDX
-  sni: ''
-  skip-cert-verify: false
-  udp: true
-  alpn: []
-  tls: true
-  region_info:
-    name: 日本
-    code: JP
-  delay: 261
-  tcp_delay: 136
+  tcp_delay: 162
   http_delay: null
 - name: 🇯🇵 日本 大阪-OS-3-:1.0
   type: trojan
@@ -473,7 +457,23 @@ proxies:
     name: 日本
     code: JP
   delay: 261
-  tcp_delay: 137
+  tcp_delay: 182
+  http_delay: null
+- name: 🇯🇵 日本 大阪-OS-1-:1.0
+  type: trojan
+  server: os-1.tr202501.com
+  port: 443
+  password: 3tKOYNqAiP0Url9JDX
+  sni: ''
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 日本
+    code: JP
+  delay: 261
+  tcp_delay: 245
   http_delay: null
 - name: 🇯🇵 日本 4 2 2
   password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
@@ -486,7 +486,7 @@ proxies:
     name: 日本
     code: JP
   delay: 263
-  tcp_delay: 189
+  tcp_delay: 173
   http_delay: null
 - name: 🇯🇵 日本 大阪-OS-2-:1.0
   type: trojan
@@ -502,7 +502,7 @@ proxies:
     name: 日本
     code: JP
   delay: 274
-  tcp_delay: 128
+  tcp_delay: 270
   http_delay: null
 - name: 🇯🇵 日本 IEPL-GPT
   type: ss
@@ -519,7 +519,7 @@ proxies:
     name: 日本
     code: JP
   delay: 364
-  tcp_delay: 315
+  tcp_delay: 407
   http_delay: null
 - name: 🇯🇵 日本 优化2
   type: vmess
@@ -541,7 +541,7 @@ proxies:
     name: 日本
     code: JP
   delay: 426
-  tcp_delay: 347
+  tcp_delay: 475
   http_delay: null
 - name: 🇯🇵 日本 优化3
   type: vmess
@@ -563,7 +563,7 @@ proxies:
     name: 日本
     code: JP
   delay: 468
-  tcp_delay: 482
+  tcp_delay: 747
   http_delay: null
 - name: 🇯🇵 日本 28
   type: vless
@@ -585,7 +585,7 @@ proxies:
     name: 日本
     code: JP
   delay: 501
-  tcp_delay: 494
+  tcp_delay: 690
   http_delay: null
 - name: 🇯🇵 日本 01|白嫖机场.k
   type: vmess
@@ -604,7 +604,7 @@ proxies:
     name: 日本
     code: JP
   delay: 656
-  tcp_delay: 599
+  tcp_delay: 584
   http_delay: null
 - name: 🇯🇵 日本 01|白嫖机场.k 2
   type: vmess
@@ -623,7 +623,7 @@ proxies:
     name: 日本
     code: JP
   delay: 657
-  tcp_delay: 599
+  tcp_delay: 583
   http_delay: null
 - name: 🇸🇬 新加坡 01
   type: vless
@@ -642,7 +642,7 @@ proxies:
     name: 新加坡
     code: SG
   delay: 178
-  tcp_delay: 137
+  tcp_delay: 181
   http_delay: null
 - name: 🇸🇬 新加坡 ProxyGo免费节点分享 2
   type: vless
@@ -665,7 +665,7 @@ proxies:
     name: 新加坡
     code: SG
   delay: 186
-  tcp_delay: 159
+  tcp_delay: 211
   http_delay: null
 - type: vless
   name: 🇸🇬 新加坡 02
@@ -689,7 +689,7 @@ proxies:
     name: 新加坡
     code: SG
   delay: 187
-  tcp_delay: 161
+  tcp_delay: 217
   http_delay: null
 - name: 🇸🇬 新加坡 3
   password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
@@ -702,7 +702,7 @@ proxies:
     name: 新加坡
     code: SG
   delay: 229
-  tcp_delay: 204
+  tcp_delay: 316
   http_delay: null
 - name: 🇸🇬 新加坡 19
   password: c5eb2c2c-bc1d-11ed-a8bf-f23c91cfbbc9
@@ -715,7 +715,7 @@ proxies:
     name: 新加坡
     code: SG
   delay: 253
-  tcp_delay: 198
+  tcp_delay: 229
   http_delay: null
 - name: 🇸🇬 新加坡 2-:1.0
   type: trojan
@@ -731,7 +731,7 @@ proxies:
     name: 新加坡
     code: SG
   delay: 258
-  tcp_delay: 194
+  tcp_delay: 293
   http_delay: null
 - name: 🇸🇬 新加坡 07
   password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
@@ -744,7 +744,7 @@ proxies:
     name: 新加坡
     code: SG
   delay: 313
-  tcp_delay: 200
+  tcp_delay: 313
   http_delay: null
 - name: 🇸🇬 新加坡 3 2 2
   password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
@@ -757,7 +757,7 @@ proxies:
     name: 新加坡
     code: SG
   delay: 314
-  tcp_delay: 193
+  tcp_delay: 231
   http_delay: null
 - name: 🇸🇬 新加坡 10
   password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
@@ -770,7 +770,7 @@ proxies:
     name: 新加坡
     code: SG
   delay: 318
-  tcp_delay: 201
+  tcp_delay: 236
   http_delay: null
 - name: 🇸🇬 新加坡 3 2
   password: c5eb2c2c-bc1d-11ed-a8bf-f23c91cfbbc9
@@ -783,7 +783,7 @@ proxies:
     name: 新加坡
     code: SG
   delay: 327
-  tcp_delay: 253
+  tcp_delay: 301
   http_delay: null
 - name: 🇸🇬 新加坡 1-:1.0
   type: trojan
@@ -799,7 +799,7 @@ proxies:
     name: 新加坡
     code: SG
   delay: 333
-  tcp_delay: 195
+  tcp_delay: 221
   http_delay: null
 - name: 🇸🇬 新加坡 优化-Gemi-GPT
   type: vmess
@@ -821,7 +821,7 @@ proxies:
     name: 新加坡
     code: SG
   delay: 353
-  tcp_delay: 332
+  tcp_delay: 823
   http_delay: null
 - name: 🇸🇬 新加坡 IEPL
   type: ss
@@ -838,7 +838,7 @@ proxies:
     name: 新加坡
     code: SG
   delay: 362
-  tcp_delay: 309
+  tcp_delay: 398
   http_delay: null
 - name: 🇸🇬 新加坡 优化2-Gemi-GPT
   type: vmess
@@ -860,7 +860,7 @@ proxies:
     name: 新加坡
     code: SG
   delay: 418
-  tcp_delay: 340
+  tcp_delay: 467
   http_delay: null
 - name: 🇸🇬 新加坡 优化3-Gemi
   type: vmess
@@ -882,7 +882,7 @@ proxies:
     name: 新加坡
     code: SG
   delay: 467
-  tcp_delay: 479
+  tcp_delay: 730
   http_delay: null
 - name: 🇸🇬 新加坡 01|白嫖机场.k
   type: vmess
@@ -901,7 +901,7 @@ proxies:
     name: 新加坡
     code: SG
   delay: 651
-  tcp_delay: 596
+  tcp_delay: 580
   http_delay: null
 - name: 🇸🇬 新加坡 01|白嫖机场.k 2
   type: vmess
@@ -920,7 +920,7 @@ proxies:
     name: 新加坡
     code: SG
   delay: 654
-  tcp_delay: 597
+  tcp_delay: 581
   http_delay: null
 - name: 🇸🇬 新加坡 ProxyGo免费节点分享
   type: vless
@@ -943,7 +943,7 @@ proxies:
     name: 新加坡
     code: SG
   delay: 1056
-  tcp_delay: 803
+  tcp_delay: 771
   http_delay: null
 - client-fingerprint: chrome
   encryption: none
@@ -969,7 +969,7 @@ proxies:
     name: 美国
     code: US
   delay: 10
-  tcp_delay: 2
+  tcp_delay: 3
   http_delay: null
 - name: 🇺🇸 美国 ProxyGo免费节点分享
   type: vless
@@ -992,7 +992,7 @@ proxies:
     name: 美国
     code: US
   delay: 11
-  tcp_delay: 4
+  tcp_delay: 3
   http_delay: null
 - name: 🇺🇸 美国 ProxyGo免费节点分享 11
   type: vless
@@ -1015,7 +1015,7 @@ proxies:
     name: 美国
     code: US
   delay: 12
-  tcp_delay: 4
+  tcp_delay: 2
   http_delay: null
 - encryption: none
   name: 🇺🇸 美国 宿舍_3|2.4MB/s
@@ -1082,7 +1082,25 @@ proxies:
     name: 美国
     code: US
   delay: 13
-  tcp_delay: 4
+  tcp_delay: 3
+  http_delay: null
+- name: 🇺🇸 美国 02
+  type: vless
+  server: 108.162.198.11
+  port: 2096
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  tls: true
+  network: ws
+  ws-opts:
+    path: /
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2560
+  servername: kuangbao.xiejiang.dpdns.org
+  region_info:
+    name: 美国
+    code: US
+  delay: 14
+  tcp_delay: 2
   http_delay: null
 - name: 🇺🇸 美国 ProxyGo免费节点分享 2
   type: vless
@@ -1101,24 +1119,6 @@ proxies:
     path: /Telegram🇨🇳@WangCai2/?ed=2560
     headers:
       Host: sni.001316.xyz
-  region_info:
-    name: 美国
-    code: US
-  delay: 14
-  tcp_delay: 3
-  http_delay: null
-- name: 🇺🇸 美国 02
-  type: vless
-  server: 108.162.198.11
-  port: 2096
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
-  tls: true
-  network: ws
-  ws-opts:
-    path: /
-    early-data-header-name: Sec-WebSocket-Protocol
-    max-early-data: 2560
-  servername: kuangbao.xiejiang.dpdns.org
   region_info:
     name: 美国
     code: US
@@ -1169,7 +1169,7 @@ proxies:
     name: 美国
     code: US
   delay: 14
-  tcp_delay: 4
+  tcp_delay: 3
   http_delay: null
 - name: 🇺🇸 美国 ProxyGo免费节点分享 4
   type: vless
@@ -1192,7 +1192,7 @@ proxies:
     name: 美国
     code: US
   delay: 14
-  tcp_delay: 8
+  tcp_delay: 3
   http_delay: null
 - name: 🇺🇸 美国 ProxyGo免费节点分享 15
   type: vless
@@ -1215,7 +1215,7 @@ proxies:
     name: 美国
     code: US
   delay: 14
-  tcp_delay: 9
+  tcp_delay: 3
   http_delay: null
 - name: 🇺🇸 美国 34
   type: vless
@@ -1275,7 +1275,30 @@ proxies:
     name: 美国
     code: US
   delay: 15
-  tcp_delay: 9
+  tcp_delay: 3
+  http_delay: null
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 宿舍_5|1.0MB/s
+  network: ws
+  port: 37934
+  server: 74.117.196.232
+  skip-cert-verify: false
+  tls: true
+  type: vmess
+  udp: true
+  uuid: 3786e67a-41eb-4b92-b31e-417e89493b93
+  ws-opts:
+    headers:
+      Host: imafake.locker
+    path: /speedtest
+  xudp: true
+  servername: imafake.locker
+  region_info:
+    name: 美国
+    code: US
+  delay: 48
+  tcp_delay: 71
   http_delay: null
 - alterId: 0
   cipher: auto
@@ -1299,30 +1322,7 @@ proxies:
   region_info:
     name: 美国
     code: US
-  tcp_delay: 2
-  http_delay: null
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 宿舍_5|1.0MB/s
-  network: ws
-  port: 37934
-  server: 74.117.196.232
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  udp: true
-  uuid: 3786e67a-41eb-4b92-b31e-417e89493b93
-  ws-opts:
-    headers:
-      Host: imafake.locker
-    path: /speedtest
-  xudp: true
-  servername: imafake.locker
-  region_info:
-    name: 美国
-    code: US
-  delay: 48
-  tcp_delay: 8
+  tcp_delay: 73
   http_delay: null
 - name: 🇺🇸 美国 48
   server: 38.14.99.163
@@ -1337,7 +1337,7 @@ proxies:
     name: 美国
     code: US
   delay: 49
-  tcp_delay: 2
+  tcp_delay: 66
   http_delay: null
 - name: 🇺🇸 美国 46
   server: 38.14.99.179
@@ -1352,7 +1352,7 @@ proxies:
     name: 美国
     code: US
   delay: 49
-  tcp_delay: 8
+  tcp_delay: 71
   http_delay: null
 - alterId: 0
   cipher: auto
@@ -1375,7 +1375,7 @@ proxies:
     name: 美国
     code: US
   delay: 50
-  tcp_delay: 7
+  tcp_delay: 66
   http_delay: null
 - cipher: chacha20-ietf-poly1305
   name: 🇩🇪 德国 宿舍_5|1.0MB/s
@@ -1388,7 +1388,7 @@ proxies:
     name: 德国
     code: DE
   delay: 111
-  tcp_delay: 155
+  tcp_delay: 89
   http_delay: null
 - client-fingerprint: chrome
   encryption: none
@@ -1414,7 +1414,7 @@ proxies:
     name: 德国
     code: DE
   delay: 118
-  tcp_delay: 154
+  tcp_delay: 91
   http_delay: null
 - type: vless
   name: 🇩🇪 德国 15
@@ -1438,7 +1438,7 @@ proxies:
     name: 德国
     code: DE
   delay: 119
-  tcp_delay: 156
+  tcp_delay: 93
   http_delay: null
 - client-fingerprint: chrome
   encryption: none
@@ -1459,7 +1459,7 @@ proxies:
     name: 德国
     code: DE
   delay: 119
-  tcp_delay: 158
+  tcp_delay: 97
   http_delay: null
 - name: 🇩🇪 德国 05
   password: fc5ba91a-acd7-11ef-97e0-f23c9164ca5d
@@ -1472,7 +1472,7 @@ proxies:
     name: 德国
     code: DE
   delay: 134
-  tcp_delay: 175
+  tcp_delay: 172
   http_delay: null
 - name: 🇩🇪 德国 06
   password: 225d1cca-d744-11ef-b790-f23c91cfbbc9
@@ -1485,7 +1485,7 @@ proxies:
     name: 德国
     code: DE
   delay: 142
-  tcp_delay: 170
+  tcp_delay: 105
   http_delay: null
 - name: 🇩🇪 德国 15 2
   password: c5eb2c2c-bc1d-11ed-a8bf-f23c91cfbbc9
@@ -1498,7 +1498,7 @@ proxies:
     name: 德国
     code: DE
   delay: 147
-  tcp_delay: 183
+  tcp_delay: 105
   http_delay: null
 - encryption: none
   name: 🇩🇪 德国 宿舍_4|2.9MB/s
@@ -1521,7 +1521,7 @@ proxies:
     name: 德国
     code: DE
   delay: 232
-  tcp_delay: 319
+  tcp_delay: 176
   http_delay: null
 - name: 🇩🇪 德国 优化
   type: vmess
@@ -1543,7 +1543,7 @@ proxies:
     name: 德国
     code: DE
   delay: 269
-  tcp_delay: 256
+  tcp_delay: 815
   http_delay: null
 - name: 🇩🇪 德国 IEPL
   type: ss
@@ -1560,7 +1560,7 @@ proxies:
     name: 德国
     code: DE
   delay: 271
-  tcp_delay: 220
+  tcp_delay: 395
   http_delay: null
 - name: 🇩🇪 德国 疯高速73 (0.02x
   type: vmess
@@ -1582,7 +1582,7 @@ proxies:
     name: 德国
     code: DE
   delay: 316
-  tcp_delay: 173
+  tcp_delay: 289
   http_delay: null
 - name: 🇩🇪 德国 优化2
   type: vmess
@@ -1604,7 +1604,7 @@ proxies:
     name: 德国
     code: DE
   delay: 376
-  tcp_delay: 459
+  tcp_delay: 383
   http_delay: null
 - client-fingerprint: chrome
   encryption: none
@@ -1625,7 +1625,7 @@ proxies:
     name: 德国
     code: DE
   delay: 437
-  tcp_delay: 328
+  tcp_delay: 281
   http_delay: null
 - name: 🇩🇪 德国 3-:1.0
   type: trojan
@@ -1641,16 +1641,16 @@ proxies:
     name: 德国
     code: DE
   delay: 1204
-  tcp_delay: 163
+  tcp_delay: 1144
   http_delay: null
 last_message_ids:
   '@fqDINYUE': 4645
   '@wxdy666': 0
-  '@freeyule': 1925055
+  '@freeyule': 1925061
   '@ccbaohe': 14948
-  '@duangvpsfs': 3670129
-  '@zzzjjjkkkoi': 605575
-  '@xmdexw': 219563
+  '@duangvpsfs': 3670165
+  '@zzzjjjkkkoi': 605588
+  '@xmdexw': 219614
   '@v2v2clash': 0
   '@dingyue_Center': 3891
   '@tempssrlink': 14
