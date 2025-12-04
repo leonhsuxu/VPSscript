@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  CLASH_SPEEDTEST_VERSION: v0.7.1  # 请根据实际版本调整
+  CLASH_SPEEDTEST_VERSION: v1.5.5  # 请根据需要替换为目标版本
   TELEGRAM_CHANNEL_IDS: |
     # 订阅转发-频道
     @fqDINYUE
@@ -54,26 +54,24 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # 缓存 clash-speedtest 核心，放置在 clash_core/ 目录，并命名为 clash
-      - name: 缓存 clash-speedtest 核心（放置在 clash_core/clash）
+      - name: 缓存 clash-speedtest 核心 (clash_core/)
         id: cache-clash-speedtest
         uses: actions/cache@v4
         with:
           path: clash_core/
           key: ${{ runner.os }}-clash-speedtest-${{ env.CLASH_SPEEDTEST_VERSION }}
 
-      - name: 下载 clash-speedtest（缓存未命中时执行）
+      - name: 下载并解压 clash-speedtest 到 clash_core/clash
         if: steps.cache-clash-speedtest.outputs.cache-hit != 'true'
         run: |
           mkdir -p clash_core
-          ARCH=$(uname -m)
-          # 根据架构确认下载文件名，我示例用 amd64
-          FILENAME="clash-speedtest-linux-amd64"
-          URL="https://github.com/doomybot/clash-speedtest/releases/download/${{ env.CLASH_SPEEDTEST_VERSION }}/${FILENAME}"
+          URL="https://github.com/faceair/clash-speedtest/releases/download/${{ env.CLASH_SPEEDTEST_VERSION }}/clash-speedtest_Linux_x86_64.tar.gz"
           echo "正在下载 clash-speedtest 核心..."
-          wget -q -O clash_core/clash "$URL"
+          wget -q -O clash-speedtest.tar.gz "$URL"
+          tar -xzf clash-speedtest.tar.gz -C clash_core --strip-components=1 clash-speedtest
+          rm -f clash-speedtest.tar.gz
           chmod +x clash_core/clash
-          echo "clash-speedtest 下载完成。"
+          echo "clash-speedtest 下载并解压完成。"
 
       - name: 运行 Telegram 抓取及 Clash 测速脚本
         env:
