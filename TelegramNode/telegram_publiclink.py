@@ -702,158 +702,82 @@ def generate_config(proxies, last_message_ids):
         'last_message_ids': last_message_ids,
     }
 
-
-
-def normalize_name(name):
+def clash_speedtest_filter_nodes(
+        clash_speedtest_path,
+        proxies,
+        max_latency_ms=800,
+        min_speed=5,
+        tmp_dir='tmp',
+        debug=False
+    ):
     """
-    节点名称归一化函数：
-    - 去除所有非字母数字字符（包含空格、符号、emoji）
-    - 小写化，方便比较
-    """
-    # \W会匹配非字母数字下划线，另外去掉下划线，保留仅字母数字
-    # 兼容unicode，带flags=re.UNICODE
-    return re.sub(r'[\W_]+', '', name, flags=re.UNICODE).lower()
-
-def merge_speedtest_blocks(log_text):
-    """
-    解析 clash speedtest 输出日志，将节点名对应的日志块提取出来。
-    返回 [(节点名, 合并日志字符串), ...] 列表。
-    """
-    lines = log_text.splitlines()
-    blocks = []
-    current_block_lines = []
-    current_node_name = None
-    header_re = re.compile(r'^Clash Speedtest 输出（(.+?)）:')
-    end_re = re.compile(r'(it/s\)|it/min\))')
-    for line in lines:
-        header_match = header_re.match(line)
-        if header_match:
-            # 保存上一个块
-            if current_block_lines and current_node_name:
-                blocks.append((current_node_name, ' '.join(current_block_lines)))
-            current_node_name = header_match.group(1)
-            current_block_lines = [line.strip()]
-        else:
-            if current_block_lines:
-                current_block_lines.append(line.strip())
-            if end_re.search(line):
-                if current_block_lines and current_node_name:
-                    blocks.append((current_node_name, ' '.join(current_block_lines)))
-                current_block_lines = []
-                current_node_name = None
-            else:
-                pass
-    # 保存末尾块
-    if current_block_lines and current_node_name:
-        blocks.append((current_node_name, ' '.join(current_block_lines)))
-    return blocks
-
-def clash_test_proxy(clash_path, proxy, debug=False):
-    """
-    使用 Clash 核心测速节点延迟，返回延迟值(ms)或 None 表示失败。
-    通过名称归一化方式匹配测速日志块。
+    用clash-speedtest对代理配置文件进行测速过滤，返回筛选后的节点列表。
 
     参数:
-      - clash_path: Clash 可执行文件路径
-      - proxy: 单个代理字典，必含 'name' 字段
-      - debug: 是否打印调试信息
+      clash_speedtest_path(str): clash-speedtest可执行文件路径
+      proxies(list): 代理节点dict列表（Raw Clash YAML proxies格式）
+      max_latency_ms(int): 最大接受延迟，单位ms，默认800
+      min_speed(int): 最小吞吐速度，单位 Mbps，默认5
+      tmp_dir(str): 临时目录用来读写缓存，默认'tmp'
+      debug(bool): 是否打印详细日志
 
     返回:
-      - 延迟毫秒(int) 或 None
+      list: 测速过滤后有效节点列表
     """
-    temp_dir = tempfile.mkdtemp()
-    temp_config_path = os.path.join(temp_dir, 'config.yaml')
-    test_url = globals().get('HTTP_TEST_URL', 'http://www.gstatic.com/generate_204')
-    config = {
-        "port": 7890,
-        "socks-port": 7891,
-        "allow-lan": False,
-        "mode": "Rule",
-        "proxies": [proxy],
-        "proxy-groups": [
-            {
-                "name": "TestGroup",
-                "type": "select",
-                "proxies": [proxy['name']]
-            }
-        ],
-        "rules": [
-            f"DOMAIN,{urlparse(test_url).netloc},TestGroup",
-            "FINAL,DIRECT"
-        ]
+
+    os.makedirs(tmp_dir, exist_ok=True)
+    unfiltered_path = os.path.join(tmp_dir, 'unfiltered.yaml')
+    filtered_path = os.path.join(tmp_dir, 'filtered.yaml')
+
+    data = {
+        'proxies': proxies,
+        'proxy-groups': [{
+            'name': 'AutoTestGroup',
+            'type': 'select',
+            'proxies': [p['name'] for p in proxies],
+        }],
+        'rules': ['FINAL,DIRECT']
     }
+
+    with open(unfiltered_path, 'w', encoding='utf-8') as f:
+        yaml.dump(data, f, allow_unicode=True, sort_keys=False)
+
+    cmd = [
+        clash_speedtest_path,
+        '-c', unfiltered_path,
+        '-output', filtered_path,
+        '-max-latency', f'{max_latency_ms}ms',
+        '-min-speed', str(min_speed),
+    ]
+
+    if debug:
+        print(f'运行命令: {" ".join(cmd)}')
+
+    res = subprocess.run(cmd, capture_output=True, encoding='utf-8')
+
+    if res.returncode != 0:
+        print(f'clash-speedtest 执行失败: {res.stderr}')
+        return []
+
+    if debug:
+        print(f'clash-speedtest 输出:\n{res.stdout}')
+
     try:
-        with open(temp_config_path, 'w', encoding='utf-8') as f:
-            yaml.dump(config, f, allow_unicode=True, sort_keys=False)
-        proc = subprocess.run(
-            [clash_path, '-c', temp_config_path, '-fast'],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            encoding='utf-8',
-            timeout=30,
-            check=False
-        )
-        output = proc.stdout + proc.stderr
-        if debug:
-            print(f"节点 [{proxy['name']}] 测试输出:\n{output}\n{'='*60}")
-
-        blocks = merge_speedtest_blocks(output)
-        proxy_name_norm = normalize_name(proxy['name'])
-        node_block = None
-        for name, block in blocks:
-            if normalize_name(name) == proxy_name_norm:
-                node_block = block
-                break
-        if node_block is None:
-            if debug:
-                print(f"⚠️ 未找到节点 [{proxy['name']}] 对应的测速日志块")
-            return None
-
-        delay_match = re.search(r'(\d+)[^\d]{0,5}ms', node_block, re.IGNORECASE)
-        if delay_match:
-            delay = int(delay_match.group(1))
-            if 1 <= delay < 800:
-                return delay
-            else:
-                if debug:
-                    print(f"⚠️ 节点 [{proxy['name']}] 延迟 {delay}ms 超出有效范围")
-                return None
-        else:
-            if debug:
-                print(f"⚠️ 节点 [{proxy['name']}] 测试日志无有效延迟信息")
-            return None
-
-    except subprocess.TimeoutExpired:
-        if debug:
-            print(f"⚠️ 节点 [{proxy['name']}] 测试超时")
+        with open(filtered_path, 'r', encoding='utf-8') as f:
+            filtered_data = yaml.safe_load(f)
     except Exception as e:
-        if debug:
-            print(f"⚠️ 节点 [{proxy['name']}] 测试异常: {e}")
-    finally:
-        try:
-            shutil.rmtree(temp_dir)
-        except Exception:
-            pass
-    return None
+        print(f"读取过滤文件失败: {e}")
+        return []
 
-def test_proxy_with_clash(clash_path, proxy):
-    # 调试时把 debug=True 打开
-    delay = clash_test_proxy(clash_path, proxy, debug=True)
-    if delay is not None:
-        proxy['clash_delay'] = delay
-        return proxy
-    return None
+    filtered_proxies = filtered_data.get('proxies', [])
+    return filtered_proxies
 
-def batch_test_proxies_clash(clash_path, proxies, max_workers=32):
-    import concurrent.futures
-    results = []
-    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
-        futures = [executor.submit(test_proxy_with_clash, clash_path, p) for p in proxies]
-        for future in futures:
-            res = future.result()
-            if res:
-                results.append(res)
-    return results
+
+
+
+
+
+
 
 
 async def main():
@@ -895,27 +819,22 @@ async def main():
         sys.exit("❌ 无任何节点可用，程序退出")
 
     if ENABLE_SPEED_TEST:
-        print("[3/5] 使用 clash-speedtest 核心测速")
-        clash_path = 'clash_core/clash'
+        print("[3/5] 使用 clash-speedtest 核心测速过滤（批量模式）")
+        clash_path = 'clash_core/clash'  # 替换成你实际执行文件路径
         if not (os.path.isfile(clash_path) and os.access(clash_path, os.X_OK)):
-            sys.exit(f"❌ clash 核心缺失或不可执行: {clash_path}")
-        tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
-        success_count = len(tested_nodes)
-        fail_count = len(all_nodes) - success_count
-        print(f"🌐 测速成功节点数: {success_count}，失败节点数: {fail_count}")        
+            sys.exit(f"❌ clash-speedtest 执行文件缺失或不可执行: {clash_path}")
+        tested_nodes = clash_speedtest_filter_nodes(
+            clash_speedtest_path=clash_path,
+            proxies=all_nodes,
+            max_latency_ms=800,
+            min_speed=5,
+            debug=False
+        )
+        print(f"🌐 经过 clash-speedtest 过滤后的有效节点数: {len(tested_nodes)}")
         if not tested_nodes:
-            print("⚠️ clash测速全部失败，启用回退策略保留指定地区节点")
-            fallback_regions = ['香港', '日本', '美国', '新加坡', '德国']
-            fallback_count = 30
-            fallback_candidates = identify_regions_only(all_nodes)
-            selected = []
-            grouped = defaultdict(list)
-            for p in fallback_candidates:
-                if p.get('region_info') and p['region_info']['name'] in fallback_regions:
-                    grouped[p['region_info']['name']].append(p)
-            for region in fallback_regions:
-                selected.extend(grouped[region][:fallback_count])
-            tested_nodes = selected
+            print("⚠️ clash-speedtest 筛选无有效节点，启用回退策略保留指定地区节点")
+            # ...你的回退逻辑...
+            tested_nodes = fallback_nodes
         nodes_to_process = tested_nodes
     else:
         print("测速关闭，使用所有节点")
@@ -927,27 +846,20 @@ async def main():
     print("[4/5] 节点地区识别和重命名")
     processed_proxies = process_proxies(nodes_to_process)
 
-    if not processed_proxies:
-        sys.exit("❌ 节点地区识别失败，程序退出")
-
     processed_proxies.sort(
         key=lambda p: (
-            REGION_PRIORITY.index(p['region_info']['name']) if p['region_info']['name'] in REGION_PRIORITY else 99,
+            REGION_PRIORITY.index(p['region_info']['name']) if p.get('region_info') and p['region_info']['name'] in REGION_PRIORITY else 99,
             p.get('clash_delay', 9999)
         )
     )
-    print(f"[5/5] 排序完成，节点数: {len(processed_proxies)}")
 
+    # 生成最终配置并保存
     final_config = generate_config(processed_proxies, last_message_ids)
-
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
-    try:
-        with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-            yaml.dump(final_config, f, allow_unicode=True, sort_keys=False, indent=2)
-        print(f"✅ 配置文件已保存至 {OUTPUT_FILE}")
-        print("🎉 任务完成！")
-    except Exception as e:
-        print(f"写出文件时异常: {e}")
+    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
+        yaml.dump(final_config, f, allow_unicode=True, sort_keys=False, indent=2)
+
+    print(f"✅ 配置文件已保存至 {OUTPUT_FILE}")
 
 
 if __name__ == "__main__":
