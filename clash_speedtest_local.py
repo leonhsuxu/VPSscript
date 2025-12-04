@@ -10,9 +10,10 @@ def main():
     output_path = os.getenv("OUTPUT_PATH", "flclashyaml/1.yaml")
     max_latency = os.getenv("MAX_LATENCY", "800ms")
     try:
-        min_speed = int(os.getenv("MIN_SPEED", "5"))
+        min_speed_mbps = float(os.getenv("MIN_SPEED", "5"))
+        min_speed = min_speed_mbps / 8  # 转换成 MB/s
     except Exception:
-        min_speed = 5
+        min_speed = 0.625  # 5 Mbps = 0.625 MB/s
 
     if not os.path.exists(input_path):
         print(f"输入文件不存在：{input_path}")
