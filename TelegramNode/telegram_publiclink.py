@@ -705,48 +705,128 @@ def wait_for_clash_startup(port, timeout=10):
     return False
 
 def test_single_proxy_with_clash_core(proxy):
-        proxy['http_delay'] = None
+    """
+    使用 Clash 内核对单个代理进行 HTTP 代理测速，
+    返回更新了 'http_delay' 字段的代理字典。
+    """
+    import random
+    import subprocess
+    import tempfile
+    import time
+    import requests
+
+    # 先初始化延迟字段为 None — 表示未测速或测速失败
+    proxy['http_delay'] = None
+
+    # 生成唯一id用于临时文件命名等
+    unique_id = hashlib.md5(str(proxy).encode()).hexdigest()[:6]
+    original_proxy_name = proxy.get('name', f"{proxy.get('type', 'unknown')}_{unique_id}")
+
+    temp_dir = None
+    clash_process = None
+    log_file_stdout = None
+    log_file_stderr = None
+
+    # 随机端口，避免端口冲突，范围从30000到40000
+    http_port = random.randint(30000, 40000)
+    socks_port = http_port + 1
+
+    try:
+        # 创建临时目录写入 Clash 配置文件
+        temp_dir = tempfile.mkdtemp(prefix=f"clash_test_{unique_id}_")
+        config_path = os.path.join(temp_dir, "config.yaml")
+
+        # 生成单节点配置
+        # 使用外部全局配置端口，确保 Clash api secret 使用一致
+        generate_clash_config_for_proxy(proxy, config_path, http_port, socks_port)
+
+        # 日志文件路径
+        log_file_stdout = os.path.join(temp_dir, "clash_stdout.log")
+        log_file_stderr = os.path.join(temp_dir, "clash_stderr.log")
+
+        # 启动 clash core 进程
+        process_args = [
+            CLASH_CORE_PATH,
+            '-f', config_path,
+            '--log-level', 'info',  # 方便调试，可改为 'silent' 减少日志
+        ]
+        with open(log_file_stdout, 'w', encoding='utf-8') as fout, open(log_file_stderr, 'w', encoding='utf-8') as ferr:
+            clash_process = subprocess.Popen(
+                process_args,
+                stdout=fout,
+                stderr=ferr,
+                cwd=temp_dir
+            )
+
+        # 等待 Clash 核心监听端口启动，最长10秒
+        if not wait_for_clash_startup(http_port, timeout=10):
+            # 没有启动成功
+            print(f"  ✗ Clash Core 未能在10秒内监听端口 {http_port}")
+            return proxy
+
+        # 配置HTTP代理地址
+        proxies = {
+            'http': f'http://127.0.0.1:{http_port}',
+            'https': f'http://127.0.0.1:{http_port}',
+        }
+
+        # 进行HTTP测速请求
+        start_time = time.time()
+        try:
+            resp = requests.get(
+                HTTP_TEST_URL,
+                proxies=proxies,
+                timeout=HTTP_TIMEOUT,
+                verify=False,
+                headers={'User-Agent': 'Clash Test'}
+            )
+            # 成功请求响应 状态码204
+            if resp.status_code == 204:
+                elapsed = (time.time() - start_time) * 1000  # 延迟ms
+                proxy['http_delay'] = round(elapsed, 2)
+            else:
+                # 状态码非预期，测速失败
+                proxy['http_delay'] = None
+        except requests.RequestException as e:
+            # 请求异常视为测速失败
+            proxy['http_delay'] = None
+
         return proxy
     except Exception as e:
-        # 捕获其他任何意外错误
-        print(f"  ✗ An unexpected error occurred during Clash core testing for {original_proxy_name}: {e}")
+        print(f"  ✗ Clash core测速异常: {e}")
         proxy['http_delay'] = None
         return proxy
     finally:
-        # 恢复代理的原始名称，因为我们在函数开始时修改了它
+        # 恢复原始名称
         if 'name' in proxy and proxy['name'].endswith(f"_{unique_id}"):
             proxy['name'] = original_proxy_name
-
-        # 终止 Clash 核心进程
-        if clash_process and clash_process.poll() is None: # 检查进程是否仍在运行
-            clash_process.terminate() # 尝试正常终止
+        # 关闭clash进程
+        if clash_process and clash_process.poll() is None:
+            clash_process.terminate()
             try:
-                clash_process.wait(timeout=5) # 等待几秒钟让进程关闭
+                clash_process.wait(timeout=5)
             except subprocess.TimeoutExpired:
-                clash_process.kill() # 如果超时未关闭，则强制杀死进程
-        
-        # ****** 仅在 http_delay 为 None 时（即测速失败）打印 Clash 核心的日志 ******
+                clash_process.kill()
+        # 打印日志（仅在测速失败时）
         if proxy.get('http_delay') is None:
             print(f"  --- Clash Core Logs for {original_proxy_name} ---")
-            if os.path.exists(log_file_stdout):
+            if log_file_stdout and os.path.exists(log_file_stdout):
                 with open(log_file_stdout, 'r', encoding='utf-8') as f:
-                    stdout_content = f.read()
-                    if stdout_content:
-                        print(f"  Clash STDOUT:\n{stdout_content}")
-            if os.path.exists(log_file_stderr):
+                    content = f.read()
+                    if content.strip():
+                        print(f"  Clash STDOUT:\n{content}")
+            if log_file_stderr and os.path.exists(log_file_stderr):
                 with open(log_file_stderr, 'r', encoding='utf-8') as f:
-                    stderr_content = f.read()
-                    if stderr_content:
-                        print(f"  Clash STDERR:\n{stderr_content}")
+                    content = f.read()
+                    if content.strip():
+                        print(f"  Clash STDERR:\n{content}")
             print(f"  --- End Clash Core Logs ---")
-        # ****** 调试日志输出结束 ******
-
-        # 清理临时目录
+        # 清理临时文件夹
         if temp_dir and os.path.exists(temp_dir):
             try:
                 shutil.rmtree(temp_dir)
             except Exception as e:
-                print(f"  ✗ Failed to clean up temp directory {temp_dir}: {e}")
+                print(f"  ✗ 清理临时目录失败 {temp_dir}: {e}")
 
 # --- 主控流程 ---
 def get_proxy_key(p):
