@@ -665,10 +665,25 @@ def generate_config(proxies, last_message_ids):
 
 
 def clash_test_proxy(clash_path, proxy, debug=False):
+    """
+    使用 Clash 进行代理节点延迟测速，返回有效延迟（1ms至799ms），过滤掉0ms及>=800ms的异常值。
+    
+    参数:
+        clash_path (str): Clash 可执行文件路径
+        proxy (dict): 代理节点信息，必须包含 'name' 字段
+        debug (bool): 是否输出调试信息，默认False
+    
+    返回:
+        int | None: 延迟值（毫秒）或测速失败返回 None
+    """
+    # 创建临时目录存放配置文件
     temp_dir = tempfile.mkdtemp()
     temp_config_path = os.path.join(temp_dir, 'config.yaml')
-    test_url = HTTP_TEST_URL if 'HTTP_TEST_URL' in globals() else 'http://www.gstatic.com/generate_204'
 
+    # 测试 URL，尝试从全局变量读取，缺省使用 Google 的无内容响应地址
+    test_url = globals().get('HTTP_TEST_URL', 'http://www.gstatic.com/generate_204')
+
+    # 生成 Clash 配置，仅包含一个测试代理及对应代理组和规则
     config = {
         "port": 7890,
         "socks-port": 7891,
@@ -683,54 +698,72 @@ def clash_test_proxy(clash_path, proxy, debug=False):
             }
         ],
         "rules": [
+            # 针对测试 URL 的域名，走 TestGroup 组测试
             f"DOMAIN,{urlparse(test_url).netloc},TestGroup",
+            # 其余流量直连
             "FINAL,DIRECT"
         ]
     }
 
     try:
+        # 写入 YAML 配置文件
         with open(temp_config_path, 'w', encoding='utf-8') as f:
             yaml.dump(config, f, allow_unicode=True, sort_keys=False)
 
+        # 运行 Clash 命令，使用临时配置启动测速，设置超时30秒
         proc = subprocess.run(
             [clash_path, '-c', temp_config_path, '-fast'],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             encoding='utf-8',
-            timeout=30
+            timeout=30,
+            check=False  # 不强制抛异常，方便输出调试
         )
 
+        # 合并标准输出和标准错误以便匹配
         output = proc.stdout + proc.stderr
 
         if debug:
             print(f"Clash Speedtest 输出（节点 {proxy['name']}）:\n{output}")
 
+        # 匹配输出中所有形如 "123ms" 的延迟数字
         delays = re.findall(r'\b(\d+)ms\b', output, re.IGNORECASE)
-        if delays:
-            delay = int(delays[0])
-            return delay
 
+        # 过滤只保留 1 <= delay < 800 的有效值
+        valid_delays = [int(d) for d in delays if 1 <= int(d) < 800]
+
+        # 如果有有效延迟，返回其中最小值作为最终延迟
+        if valid_delays:
+            return min(valid_delays)
+
+        # 如果没找到带 ms 的数字，再匹配所有1至4位的纯数字（可能存在其他数字信息）
         delays_num = re.findall(r'\b(\d{1,4})\b', output)
+
+        # 依次过滤数字，返回第一个符合有效区间的延迟
         for val in delays_num:
             iv = int(val)
-            if 1 <= iv < 10000:
+            if 1 <= iv < 800:
                 return iv
 
         if debug:
-            print(f"⚠️ 未找到延迟匹配信息，节点名: {proxy['name']}")
+            print(f"⚠️ 未找到有效延迟信息，节点名: {proxy['name']}")
+
     except subprocess.TimeoutExpired:
         if debug:
             print(f"⚠️ 节点测速超时，节点名: {proxy['name']}")
+
     except Exception as e:
         if debug:
             print(f"⚠️ 节点测速异常 {proxy['name']}: {e}")
+
     finally:
+        # 清理临时目录及文件，避免垃圾文件残留
         try:
-            os.remove(temp_config_path)
-            os.rmdir(temp_dir)
+            shutil.rmtree(temp_dir)
         except Exception:
             pass
 
+    # 若无有效延迟，返回 None 表示测速失败
     return None
 
 
