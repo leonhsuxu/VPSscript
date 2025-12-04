@@ -698,6 +698,7 @@ def clash_test_proxy(clash_path, proxy):
             timeout=15
         )
         output = proc.stdout + proc.stderr  # 合并查看
+        print(f"Clash 测试输出（节点 {proxy['name']}）:\n{output}")
         # 简单提取延迟：只匹配数字（不带节点名也可以捕获，针对核心无节点名输出）
         delays = re.findall(r'(\d+) ms', output)
         if delays:
