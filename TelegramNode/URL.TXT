@@ -11,9 +11,9 @@ https://substore.panell.top/share/file/%E4%B8%91%E5%9B%A25?token=OP5
 
 
 # Github公益托管：
-Github-SSRProxy & dingyue center：https://alipay.vavv.cn/r6pif1rkclkvtvf1
+Github-SSRProxy & dingyue center：
 Github-SSRProxy 未知：https://gist.github.com/Tdison/6b745663fd038e3c63e0880ecc652bcf/raw/f38390d826cf4aceb61d684561b539df6db96d37/all.yaml
-Github-SSRProxy CF：https://alipay.vavv.cn/9p6iavwf1lor69yi
+Github-SSRProxy CF：
 Github-SSRProxy 抓取：https://raw.githubusercontent.com/ripaojiedian/freenode/main/clash
 Github-SSRProxy 公益：https://api.dler.io/sub?target=clash&url=https%3A%2F%2Fraw.githubusercontent.com%2Fgo4sharing%2Fsub%2Fmain%2Fsub.yaml&insert=false&config=https%3A%2F%2Fraw.githubusercontent.com%2FACL4SSR%2FACL4SSR%2Fmaster%2FClash%2Fconfig%2FACL4SSR_Online.ini&emoji=true&list=false&tfo=false&scv=true&fdn=true&expand=true&sort=false&new_name=true
 
@@ -23,7 +23,7 @@ TG-SSRProxy[TG-G]@zzzjjjkkkoi 白嫖机场交流群：https://sub.irys.dpdns.org
 TG-SSRProxy[TG-C]@wxgqlfx 翻墙世界的梯子：https://tg.wxgqlfx.fun/wxzl
 TG-SSRProxy[TG-C]@wxgqlfx 翻墙世界的梯子：https://tg.wxgqlfx.fun/wxsx
 TG-SSRProxy[TG-C]@wxgqlfx 翻墙世界的梯子：https://tg.wxgqlfx.fun/wxfl
-TG-SSRProxy[TG-C]@wxgqlfx 翻墙世界的梯子：https://trnc.wxgqlfx.cn/wxgqlfx
+TG-SSRProxy[TG-C]@wxgqlfx 翻墙世界的梯子：
 TG-SSRProxy[TG-C]@wxgqlfx 翻墙世界的梯子：https://zjzl.wxgqlfx.fun/wxgqlfx
 TG-SSRProxy[TG-C]@go4sharing 公益机场节点：https://raw.githubusercontent.com/go4sharing/sub/main/sub.yaml
 TG-SSRProxy[TG-C]@mm8686_bot：https://pastecode.dev/raw/070syyrm/token=007
