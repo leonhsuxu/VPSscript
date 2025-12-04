@@ -230,7 +230,7 @@ async def scrape_telegram_links(last_message_ids=None):
             print(f"获取频道 {channel_id} 消息出错: {e}")
 
     await client.disconnect()
-    print(f"共抓取到 {len(all_links)} 个有效不重复链接。")
+    print(f"共抓取到 {len(all_links)} 个有效不重复链接。 ")
     return list(all_links), last_message_ids
 
 def is_base64(text):
