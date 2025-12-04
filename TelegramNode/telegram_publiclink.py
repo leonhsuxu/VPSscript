@@ -664,17 +664,6 @@ def generate_config(proxies, last_message_ids):
 
 
 def clash_test_proxy(clash_path, proxy, debug=False):
-    """
-    使用 clash-speedtest 核心测试单个代理节点的延迟。
-
-    参数:
-        clash_path: clash-speedtest 可执行文件路径，如 'clash_core/clash'
-        proxy: 代理节点字典（需包含 name 字段）
-        debug: 是否打印调试信息，默认 False
-
-    返回:
-        延迟（毫秒）整数，测试失败返回 None
-    """
     temp_dir = tempfile.mkdtemp()
     temp_config_path = os.path.join(temp_dir, 'config.yaml')
     test_url = HTTP_TEST_URL if 'HTTP_TEST_URL' in globals() else 'http://www.gstatic.com/generate_204'
@@ -715,13 +704,11 @@ def clash_test_proxy(clash_path, proxy, debug=False):
         if debug:
             print(f"Clash Speedtest 输出（节点 {proxy['name']}）:\n{output}")
 
-        # 匹配格式如 231ms，数字紧邻单位
         delays = re.findall(r'\b(\d+)ms\b', output, re.IGNORECASE)
         if delays:
             delay = int(delays[0])
             return delay
 
-        # 兜底匹配纯数字，过滤合理延迟范围
         delays_num = re.findall(r'\b(\d{1,4})\b', output)
         for val in delays_num:
             iv = int(val)
@@ -742,7 +729,6 @@ def clash_test_proxy(clash_path, proxy, debug=False):
             os.rmdir(temp_dir)
         except Exception:
             pass
-
     return None
 
 
