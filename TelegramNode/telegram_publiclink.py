@@ -664,6 +664,8 @@ def generate_config(proxies, last_message_ids):
 def clash_test_proxy(clash_path, proxy):
     import tempfile
     import yaml
+    import os
+
     temp_dir = tempfile.mkdtemp()
     temp_config_path = os.path.join(temp_dir, 'config.yaml')
     test_url = "http://www.gstatic.com/generate_204"
@@ -703,17 +705,15 @@ def clash_test_proxy(clash_path, proxy):
             return delay
 
         # 兼容去掉emoji节点名的匹配尝试
-        import re
         safe_name = re.sub(r'[^\w\s-]', '', proxy['name'])
         pattern = re.compile(rf"{re.escape(safe_name)}.*?: (\d+) ms", re.IGNORECASE)
         match = pattern.search(output)
         if match:
             delay = int(match.group(1))
             return delay
-        
-        # 打印未匹配内容，供调试
+
         print(f"⚠️ 未找到延迟匹配信息，节点名: {proxy['name']}")
-        #print(f"Clash输出:\n{output}")
+        # print(f"Clash输出:\n{output}")
     except Exception as e:
         print(f"Clash 测试异常: {e}")
         return None
