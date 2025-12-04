@@ -43,7 +43,7 @@ jobs:
       - name: 安装 PyYAML
         run: |
           python3 -m pip install --upgrade pip
-          pip3 install pyyam
+          pip3 install pyyaml
 
       - name: 缓存 clash-speedtest 核心 (clash_core/)
         id: cache-clash-speedtest
