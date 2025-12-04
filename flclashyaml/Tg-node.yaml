@@ -543,6 +543,343 @@ proxies:
   region_info:
     name: 香港
     code: HK
+- name: 🇭🇰 香港 1|v6
+  type: vmess
+  server: 2602:fa67:102:13::a
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 2|v6
+  type: vmess
+  server: 2401:b60:5:9c::a
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 3|v6
+  type: vmess
+  server: 2a0f:7803:fb31:a4::a
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 6|v6
+  type: vmess
+  server: 2602:fa4f:200:40aa:133b:47a2:a3ce:7fe4
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 7|v6
+  type: vmess
+  server: 2400:e3e0:f5a9:8e0f:109b:83c8:c9e1:deda
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 8|v6
+  type: vmess
+  server: 2400:e3e0:f5a9:177e:d9f4:2288:e161:5b42
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 9|v6
+  type: vmess
+  server: 2602:fa4f:202:5cf7:f37b:4ab4:59b2:d997
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 11|v6
+  type: vmess
+  server: 2400:8a20:112:1::687
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 12|v6
+  type: vmess
+  server: 2400:8a20:112:1::688
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 13|v6
+  type: vmess
+  server: 2400:8a20:112:1::68e
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /7e60be4f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 14|v6
+  type: vmess
+  server: 2400:e3e0:f5a9:8a43:265:a68a:3cec:108b
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 15|v6
+  type: vmess
+  server: 2a0c:9a40:9201:43d3::1
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 16|v6
+  type: vmess
+  server: 2a12:3fc2:ab41:69ff:c43a:1345:0:1
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 17|v6
+  type: vmess
+  server: 2400:e3e0:f5a9:656:be38:23be:bc61:6c3f
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 18|v6
+  type: vmess
+  server: 2400:e3e0:f5a9:6045:1249:ebc6:219d:61fe
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 精品 2
+  type: vmess
+  server: 07d60f67-t729s0-tg8syu-1nyy5.hkt.gotochinatown.net
+  port: 80
+  uuid: 8f7cb770-1305-11ee-b107-f23c91cfbbc9
+  alterId: 2
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /
+    headers:
+      Host: broadcastlv.chat.bilibili.com
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 01 2
+  type: vmess
+  server: 5d4847e2-t729s0-tg8syu-1nyy5.hk.p5pv.com
+  port: 80
+  uuid: 8f7cb770-1305-11ee-b107-f23c91cfbbc9
+  alterId: 2
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /
+    headers:
+      Host: broadcastlv.chat.bilibili.com
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 HY02 2
+  type: hysteria2
+  server: 6b741fb6-t729s0-tg8syu-1nyy5.hk2.hyhuawei.com
+  port: 443
+  auth: 8f7cb770-1305-11ee-b107-f23c91cfbbc9
+  protocol: udp
+  insecure: true
+  obfs: ''
+  obfs-password: ''
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 HY01 2
+  type: hysteria2
+  server: 04eb8a32-t729s0-tg8syu-1nyy5.hk1.hyhuawei.com
+  port: 443
+  auth: 8f7cb770-1305-11ee-b107-f23c91cfbbc9
+  protocol: udp
+  insecure: true
+  obfs: ''
+  obfs-password: ''
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 03 2
+  type: vmess
+  server: 7687e9dc-t729s0-tg8syu-1nyy5.hk3.p5pv.com
+  port: 80
+  uuid: 8f7cb770-1305-11ee-b107-f23c91cfbbc9
+  alterId: 2
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /
+    headers:
+      Host: broadcastlv.chat.bilibili.com
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
 - name: 🇭🇰 香港 04
   type: ss
   server: 8tv68qhq.slashdevslashnetslashtun.net
@@ -709,13 +1046,98 @@ proxies:
   region_info:
     name: 台湾
     code: TW
-- name: 🇨🇳 台湾 TW16
+- name: 🇨🇳 台湾 16
   password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
   port: 443
   server: 33fdd83a-t6uv40-t83bw1-1f596.tw3.p5pv.com
   tls: true
   type: http
   username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇹🇼 台湾 1|v6
+  type: vmess
+  server: 2001:b030:a42d:5d01::1043
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇹🇼 台湾 2|v6
+  type: vmess
+  server: 2400:70e0:b000:0:8ac:4fff:fe14:7e0
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇹🇼 台湾 3|v6
+  type: vmess
+  server: 2406:8dc0:6001::12c5
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇹🇼 台湾 4|v6
+  type: vmess
+  server: 2406:8dc0:600a::13
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇹🇼 台湾 5|v6n
+  type: vmess
+  server: 2406:8dc0:6004:8bbb:5c76:6773:58d8:6205
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
   clash_delay: 1
   region_info:
     name: 台湾
@@ -868,7 +1290,7 @@ proxies:
   region_info:
     name: 日本
     code: JP
-- name: 🇯🇵 日本 JP22
+- name: 🇯🇵 日本 22
   password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
   port: 443
   server: 73012ec5-t6uv40-t83bw1-1f596.jp.oshuawei.com
@@ -897,6 +1319,91 @@ proxies:
   tls: true
   type: http
   username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 1|v6
+  type: vmess
+  server: 2a12:f8c1:50:8::513
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 3|v6
+  type: vmess
+  server: '2a12:bec0:167:1178::'
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 6|v6
+  type: vmess
+  server: 2a12:a300:3400::8f6a:163
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 7|v6
+  type: vmess
+  server: 2a12:a300:500::2925:1fc2
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 尼利亚1|v6
+  type: vmess
+  server: '2a01:4f8:162:54d9:16a::'
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
   clash_delay: 1
   region_info:
     name: 日本
@@ -1182,7 +1689,7 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
-- name: 🇸🇬 新加坡 SG27
+- name: 🇸🇬 新加坡 27
   password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
   port: 443
   server: 24886d45-t6uv40-t83bw1-1f596.sg.oshuawei.com
@@ -1200,6 +1707,106 @@ proxies:
   tls: true
   type: http
   username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 rq
+  type: vmess
+  server: 210.61.97.241
+  port: 81
+  uuid: 2f38f848-a899-4c87-9807-207a41615e3c
+  alterId: 0
+  cipher: auto
+  network: grpc
+  tls: true
+  skip-cert-verify: false
+  ws-opts: {}
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 1|v6
+  type: vmess
+  server: 2a0e:97c0:7d4:ff05::a
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 2|v6
+  type: vmess
+  server: 2a0e:97c0:7d4:ff3c::a
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 3|v6
+  type: vmess
+  server: 2a02:6ea0:d14a::cdf0:54bf
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 8|v6
+  type: vmess
+  server: 2605:e440:16::281
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 9|v6
+  type: vmess
+  server: 2605:e440:16::346
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
   clash_delay: 1
   region_info:
     name: 新加坡
@@ -1402,6 +2009,74 @@ proxies:
   region_info:
     name: 韩国
     code: KR
+- name: 🇰🇷 韩国 1|v6
+  type: vmess
+  server: 2603:c024:b:ed11:ca30:a4cf:af3a:d423
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 韩国
+    code: KR
+- name: 🇰🇷 韩国 2|v6
+  type: vmess
+  server: 2603:c024:b:ed11:1a52:82c9:e0fb:ee1d
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 韩国
+    code: KR
+- name: 🇰🇷 韩国 3|v6
+  type: vmess
+  server: 2603:c024:b:ed11:aaa9:2a92:768c:55a2
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 韩国
+    code: KR
+- name: 🇰🇷 韩国 4|v6
+  type: vmess
+  server: 2603:c024:b:ed11:bbba:dec7:f562:3ead
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 韩国
+    code: KR
 - name: 🇲🇾 马来西亚 1BGP|0.4X
   type: vmess
   server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
@@ -1426,7 +2101,7 @@ proxies:
   region_info:
     name: 马来西亚
     code: MY
-- name: 🇲🇾 马来西亚 MY03
+- name: 🇲🇾 马来西亚 03
   password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
   port: 31233
   server: 197d65ee-t6uv40-t83bw1-1f596.my.oshuawei.com
@@ -1437,7 +2112,7 @@ proxies:
   region_info:
     name: 马来西亚
     code: MY
-- name: 🇹🇭 泰国 TH02
+- name: 🇹🇭 泰国 02
   password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
   port: 27235
   server: 4d26dbe5-t6uv40-t83bw1-1f596.cm5.oshuawei.com
@@ -1458,7 +2133,7 @@ proxies:
   region_info:
     name: 泰国
     code: TH
-- name: 🇮🇩 印度尼西亚 CT
+- name: 🇮🇩 印度 CT
   password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
   port: 32233
   server: 05b2bc2e-t6uv40-t83bw1-1f596.id.oshuawei.com
@@ -1467,8 +2142,8 @@ proxies:
   username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
   clash_delay: 1
   region_info:
-    name: 印度尼西亚
-    code: ID
+    name: 印度
+    code: IN
 - name: 🇻🇳 越南 1|BGP|0.4X
   type: vmess
   server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
@@ -1489,6 +2164,23 @@ proxies:
   alterId: 0
   cipher: auto
   udp: true
+  clash_delay: 1
+  region_info:
+    name: 越南
+    code: VN
+- name: 🇻🇳 越南 1|v6
+  type: vmess
+  server: 2400:6ea0:0:1351::4c89
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
   clash_delay: 1
   region_info:
     name: 越南
@@ -1670,6 +2362,41 @@ proxies:
   tls: true
   type: socks5
   username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 01 | 合适下载使用-pq
+  type: vless
+  server: 104.18.20.69
+  port: 443
+  uuid: 6bff6f9b-f402-48f9-8a69-142d30d7c41e
+  encryption: none
+  flow: ''
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  host: us1p.pqvip.top
+  path: /pq/us1
+  sni: us1p.pqvip.top
+  ws-opts:
+    path: /pq/us1
+    headers:
+      Host: us1p.pqvip.top
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 洛杉磯HY 2
+  type: hysteria2
+  server: 44b38e95-t729s0-tg8syu-1nyy5.us.hyhuawei.com
+  port: 443
+  auth: 8f7cb770-1305-11ee-b107-f23c91cfbbc9
+  protocol: udp
+  insecure: true
+  obfs: ''
+  obfs-password: ''
+  udp: true
   clash_delay: 1
   region_info:
     name: 美国
@@ -1866,13 +2593,30 @@ proxies:
   region_info:
     name: 法国
     code: FR
-- name: 🇫🇷 法国 FR04
+- name: 🇫🇷 法国 04
   password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
   port: 8443
   server: c64f72c0-t6uv40-t83bw1-1f596.fr.cdnkuaishou.com
   tls: true
   type: http
   username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 法国
+    code: FR
+- name: 🇫🇷 法国 1|v6
+  type: vmess
+  server: 2a01:7a7:2:3343::2b93:6841
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
   clash_delay: 1
   region_info:
     name: 法国
@@ -1911,13 +2655,64 @@ proxies:
   region_info:
     name: 英国
     code: GB
-- name: 🇬🇧 英国 GB04
+- name: 🇬🇧 英国 04
   password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
   port: 443
   server: 514cf8d4-t6uv40-t83bw1-1f596.uk.oshuawei.com
   tls: true
   type: http
   username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 英国
+    code: GB
+- name: 🇬🇧 英国 2|v6
+  type: vmess
+  server: 2a01:a500:1087:1:31::1
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 英国
+    code: GB
+- name: 🇬🇧 英国 3|v6
+  type: vmess
+  server: 2a0c:9a40:9211:1:ec07:6ff:fe0f:27b9
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 英国
+    code: GB
+- name: 🇬🇧 英国 X01
+  type: vless
+  server: uk-001.xiaoxiaobujidao.xyz
+  port: 443
+  uuid: 1f05a69e-1dfb-340a-8a6b-117a59ed7e7f
+  encryption: none
+  flow: xtls-rprx-vision
+  tls: true
+  skip-cert-verify: false
+  network: tcp
+  host: ''
+  path: ''
+  sni: dash.cloudflare.com
   clash_delay: 1
   region_info:
     name: 英国
@@ -1946,13 +2741,30 @@ proxies:
   region_info:
     name: 德国
     code: DE
-- name: 🇩🇪 德国 DE04
+- name: 🇩🇪 德国 04
   password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
   port: 443
   server: ff8cb15f-t6uv40-t83bw1-1f596.de.oshuawei.com
   tls: true
   type: http
   username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 德国
+    code: DE
+- name: 🇩🇪 德国 3|v6
+  type: vmess
+  server: 2a01:4f8:242:1d0e::1461:40
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
   clash_delay: 1
   region_info:
     name: 德国
@@ -1991,6 +2803,23 @@ proxies:
   region_info:
     name: 俄罗斯
     code: RU
+- name: 🇷🇺 俄罗斯 1|v6
+  type: vmess
+  server: 2a00:b700::6:288
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 俄罗斯
+    code: RU
 - name: 🇷🇺 俄罗斯 01
   type: ss
   server: 185.126.239.231
@@ -2021,6 +2850,23 @@ proxies:
   alterId: 0
   cipher: auto
   udp: true
+  clash_delay: 1
+  region_info:
+    name: 意大利
+    code: IT
+- name: 🇮🇹 意大利 1|v6
+  type: vmess
+  server: 2a05:4140:3::389f
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
   clash_delay: 1
   region_info:
     name: 意大利
@@ -2065,6 +2911,23 @@ proxies:
   alterId: 0
   cipher: auto
   udp: true
+  clash_delay: 1
+  region_info:
+    name: 阿根廷
+    code: AR
+- name: 🇦🇷 阿根廷 1|v6
+  type: vmess
+  server: '2a01:4f8:162:54d9:16f::'
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
   clash_delay: 1
   region_info:
     name: 阿根廷
@@ -2126,11 +2989,11 @@ proxies:
 last_message_ids:
   '@fqDINYUE': 4650
   '@wxdy666': 6205
-  '@freeyule': 1926197
+  '@freeyule': 1926226
   '@ccbaohe': 14958
-  '@duangvpsfs': 3671961
-  '@zzzjjjkkkoi': 606613
-  '@xmdexw': 219871
+  '@duangvpsfs': 3671967
+  '@zzzjjjkkkoi': 606630
+  '@xmdexw': 219878
   '@v2v2clash': 0
   '@dingyue_Center': 3893
   '@tempssrlink': 0
