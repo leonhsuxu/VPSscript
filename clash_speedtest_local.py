@@ -11,34 +11,40 @@ def main():
     max_latency = os.getenv("MAX_LATENCY", "800ms")
     try:
         min_speed_mbps = float(os.getenv("MIN_SPEED", "5"))
-        min_speed = min_speed_mbps / 8  # 转换成 MB/s
+        min_speed = min_speed_mbps / 8  # Mbps 转 MB/s
     except Exception:
-        min_speed = 0.625  # 5 Mbps = 0.625 MB/s
+        min_speed = 0.625
 
     if not os.path.exists(input_path):
         print(f"输入文件不存在：{input_path}")
         sys.exit(1)
 
+    clash_exe = "./clash_core/clash"  # 这里缺少引号，改为clash
+    if not os.path.isfile(clash_exe) or not os.access(clash_exe, os.X_OK):
+        print(f"找不到或无权限执行clash-speedtest: {clash_exe}")
+        sys.exit(1)
+
     cmd = [
-    "./clash_core/clash",
-    "-c", input_path,
-    "-output", output_path,
-    "-max-latency", max_latency,
-    "-min-speed", str(min_speed),
-   ]
-    print(f"开始测速，参数：\n 输入路径: {input_path}\n 输出路径: {output_path}\n 最大延迟: {max_latency}\n 最小速度: {min_speed}")
+        clash_exe,
+        "-c", input_path,
+        "-output", output_path,
+        "-max-latency", max_latency,
+        "-min-download-speed", str(min_speed),
+    ]
+
+    print(f"执行命令: {' '.join(cmd)}")
 
     try:
-        result = subprocess.run(cmd, text=True, capture_output=True, timeout=300)
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
         print(result.stdout)
         if result.returncode != 0:
-            print(f"测速失败，错误信息：\n{result.stderr}")
+            print(f"错误: {result.stderr}")
             sys.exit(1)
-        else:
-            print(f"测速成功，结果已保存至：{output_path}")
+        print(f"测速成功，结果保存到: {output_path}")
     except Exception as e:
-        print(f"测速异常：{e}")
+        print(f"异常: {e}")
         sys.exit(1)
+
 
 if __name__ == "__main__":
     main()
