@@ -12,6 +12,7 @@ import asyncio
 import shutil
 import subprocess
 import concurrent.futures
+import tempfile  
 from urllib.parse import urlparse, parse_qs, unquote
 from datetime import datetime, timedelta, timezone
 from collections import defaultdict
@@ -729,6 +730,7 @@ def clash_test_proxy(clash_path, proxy, debug=False):
             os.rmdir(temp_dir)
         except Exception:
             pass
+
     return None
 
 
