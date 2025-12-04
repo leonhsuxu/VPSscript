@@ -1,10 +1,8 @@
 name: ⏳ Tg频道群抓取节点测速 (clash-speedtest缓存版)
-
 on:
   schedule:
     - cron: '0 0,12 * * *' # 每天 UTC 时间的 0 点和 12 点运行
   workflow_dispatch:
-
 env:
   CLASH_SPEEDTEST_VERSION: v1.7.0  # 请根据需要替换为目标版本
   TELEGRAM_CHANNEL_IDS: |
@@ -28,19 +26,18 @@ env:
     @dingyue_Center
     # ※个人的订阅收集 leon
     @tempssrlink
-
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: 检出代码仓库
         uses: actions/checkout@v4
-
+        with:
+          fetch-depth: 0      # 确保完整历史，方便推送改动
       - name: 设置 Python 环境
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-
       - name: 缓存 Python 依赖
         uses: actions/cache@v4
         with:
@@ -48,19 +45,16 @@ jobs:
           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
-
       - name: 安装 Python 依赖
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-
       - name: 缓存 clash-speedtest 核心 (clash_core/)
         id: cache-clash-speedtest
         uses: actions/cache@v4
         with:
           path: clash_core/
           key: ${{ runner.os }}-clash-speedtest-${{ env.CLASH_SPEEDTEST_VERSION }}
-
       - name: 下载并解压 clash-speedtest 到 clash_core/clash
         if: steps.cache-clash-speedtest.outputs.cache-hit != 'true'
         run: |
@@ -73,7 +67,6 @@ jobs:
           mv clash_core/clash-speedtest clash_core/clash
           chmod +x clash_core/clash
           echo "clash-speedtest 下载并解压完成。"
-
       - name: 运行 Telegram 抓取及 Clash 测速脚本
         env:
           TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
@@ -83,10 +76,14 @@ jobs:
         run: |
           mkdir -p flclashyaml
           python TelegramNode/telegram_publiclink.py
-
-      - name: 上传生成的 Clash 配置
-        uses: actions/upload-artifact@v4
-        with:
-          name: clash-config-output
-          path: flclashyaml/Tg-node.yaml
-          retention-days: 7
+      - name: 提交生成的 Clash 配置到仓库
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add flclashyaml/Tg-node.yaml
+          if ! git diff --staged --quiet; then
+            git commit -m "🛠 更新 Tg-node.yaml 配置 $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+            git push
+          else
+            echo "文件无变化，无需提交。"
+          fi
