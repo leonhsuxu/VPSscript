@@ -26,7 +26,7 @@ API_HASH = os.environ.get('TELEGRAM_API_HASH')
 STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')
 TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS', '')
 
-TIME_WINDOW_HOURS = 8
+TIME_WINDOW_HOURS = 3
 MIN_EXPIRE_HOURS = 2
 OUTPUT_FILE = 'flclashyaml/telegram_scraper.yaml'
 
@@ -735,7 +735,7 @@ def clash_test_proxy(clash_path, proxy, debug=False):
 
 
 def test_proxy_with_clash(clash_path, proxy):
-    delay = clash_test_proxy(clash_path, proxy)
+    delay = clash_test_proxy(clash_path, proxy, debug=True)
     # delay = clash_test_proxy('clash_core/clash', proxy, debug=True)  加入debug=True是打印调试日志
     if delay is not None:
         proxy['clash_delay'] = delay
