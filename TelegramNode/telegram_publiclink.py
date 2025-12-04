@@ -190,12 +190,12 @@ async def scrape_telegram_links(last_message_ids=None):
     if not TARGET_CHANNELS:
         print("❌ TELEGRAM_CHANNEL_IDS 未找到有效频道")
         return [], last_message_ids
-    print(f"准备从 {len(TARGET_CHANNELS)} 频道抓取订阅链接")
+    print(f"▶️ 配置抓取 {len(TARGET_CHANNELS)} 个频道: {TARGET_CHANNELS}")
     try:
         client = TelegramClient(StringSession(STRING_SESSION), API_ID, API_HASH)
         await client.connect()
         me = await client.get_me()
-        print(f"已连接 Telegram: {me.first_name} (@{me.username})")
+        print(f"✅ 以 {me.first_name} (@{me.username}) 的身份成功连接")
     except Exception as e:
         print(f"连接 Telegram 出错: {e}")
         return [], last_message_ids
@@ -206,7 +206,7 @@ async def scrape_telegram_links(last_message_ids=None):
 
     all_links = set()
     for channel_id in TARGET_CHANNELS:
-        print(f"处理频道 {channel_id}")
+        print(f"🎯正在处理频道：{channel_id}")
         try:
             entity = await client.get_entity(channel_id)
         except Exception as e:
@@ -222,7 +222,7 @@ async def scrape_telegram_links(last_message_ids=None):
                     links = extract_valid_subscribe_links(msg.text)
                     for link in links:
                         all_links.add(link)
-                        print(f"  获得链接: {link[:70]}")
+                        print(f"  ✅ 找到链接: {link[:70]}")
                 if msg.id > max_id_found:
                     max_id_found = msg.id
             last_message_ids[channel_id] = max_id_found
@@ -230,7 +230,7 @@ async def scrape_telegram_links(last_message_ids=None):
             print(f"获取频道 {channel_id} 消息出错: {e}")
 
     await client.disconnect()
-    print(f"共抓取到 {len(all_links)} 个有效不重复链接。 ")
+    print(f"✅ 获取完成, 共找到 {len(all_links)} 个不重复的有效链接。")
     return list(all_links), last_message_ids
 
 def is_base64(text):
@@ -524,8 +524,8 @@ def decode_base64_and_parse(content):
 def attempt_download(url):
     import shutil
 
-    def try_wget():
-        if shutil.which("wget"):
+    def try_wget():        
+        if shutil.which("wget"):            
             try:
                 result = subprocess.run(
                     ["wget", "-O", "-", "--timeout=30", "--header=User-Agent: Clash", url],
@@ -538,7 +538,7 @@ def attempt_download(url):
                 pass
         return None
 
-    def try_requests():
+    def try_requests():        
         import requests
         try:
             r = requests.get(url, headers={'User-Agent': 'Clash'}, timeout=30)
