@@ -705,6 +705,9 @@ def clash_test_proxy(clash_path, proxy):
             encoding='utf-8',
             timeout=15
         )
+        print(f"Clash 测试节点: {proxy['name']}")
+        print(f"Clash stdout:\n{proc.stdout}")
+        print(f"Clash stderr:\n{proc.stderr}")
         output = proc.stdout
         # 找出“节点名: 123 ms”形式的延迟
         match = re.search(rf"{re.escape(proxy['name'])}: (\d+) ms", output)
