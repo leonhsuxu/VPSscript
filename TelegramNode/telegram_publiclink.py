@@ -357,80 +357,35 @@ def parse_ssr_node(line):
         return None
 
 def parse_ss_node(line):
-    """
-    解析 Shadowsocks ss:// 节点链接，支持 base64 或明文格式。
-    返回字典，失败返回 None。
-    """
     try:
         line = line.strip()
         if not line.startswith('ss://'):
             return None
         content = line[5:]
-
-        # 情况1：明文格式，包含 '@'，例如:
-        # ss://aes-256-gcm:password@hostname:port#备注
         if '@' in content:
-            # 先尝试整体用 urlparse 处理
-            parsed = urlparse('ss://' + content)  # 加上 scheme,urlparse才正常解析
-
-            if not parsed.hostname or not parsed.port or not parsed.username:
-                return None
-
-            # parsed.username 部分是 method:password 的形式
-            if ':' not in parsed.username:
-                return None
-            method, password = parsed.username.split(':', 1)
-
-            name = unquote(parsed.fragment) if parsed.fragment else f"ss_{parsed.hostname}"
-
-            node = {
-                'name': name,
-                'type': 'ss',
-                'server': parsed.hostname,
-                'port': parsed.port,
-                'cipher': method,
-                'password': password,
-                'udp': True
-            }
+            # 标准格式: ss://method:password@server:port#remarks
+            parsed = urlparse('ss://' + content)
+            user_pass = parsed.netloc.split('@')[0]
+            method, password = user_pass.split(':', 1)
+            server = parsed.hostname
+            port = parsed.port
+            name = unquote(parsed.fragment) if parsed.fragment else f"ss_{server}"
+            node = {'name': name, 'type': 'ss', 'server': server, 'port': port,
+                    'cipher': method, 'password': password, 'udp': True}
             return node
-
         else:
-            # 情况2：base64编码格式，内容形如 base64(method:password@host:port)
-            # 有时链接后面带备注，用#分割
+            # base64格式 ss://base64(method:password@server:port) 或带备注
+            ss_b64 = content.split('#')[0]
+            remark = ''
             if '#' in content:
-                main_b64, remark = content.split('#', 1)
-                remark = unquote(remark)
-            else:
-                main_b64 = content
-                remark = ''
-
-            # base64 解码，注意补齐 '='
-            padding = '=' * (-len(main_b64) % 4)
-            decoded = base64.urlsafe_b64decode(main_b64 + padding).decode('utf-8', errors='ignore')
-
-            if '@' not in decoded:
-                return None
-
-            method_password, server_port = decoded.split('@', 1)
-            if ':' not in method_password or ':' not in server_port:
-                return None
-
-            method, password = method_password.split(':', 1)
-            server, port_str = server_port.rsplit(':', 1)
-
-            port = int(port_str)
-
-            node = {
-                'name': remark if remark else f"ss_{server}",
-                'type': 'ss',
-                'server': server,
-                'port': port,
-                'cipher': method,
-                'password': password,
-                'udp': True
-            }
+                remark = unquote(content.split('#')[1])
+            decoded = base64.urlsafe_b64decode(ss_b64 + '=' * (-len(ss_b64) % 4)).decode('utf-8', errors='ignore')
+            method_password, server_port = decoded.split('@')
+            method, password = method_password.split(':')
+            server, port = server_port.split(':')
+            node = {'name': remark or f"ss_{server}", 'type': 'ss', 'server': server,
+                    'port': int(port), 'cipher': method, 'password': password, 'udp': True}
             return node
-
     except Exception:
         return None
 
@@ -631,17 +586,59 @@ def get_proxy_key(proxy):
         f"{proxy.get('server','')}:{proxy.get('port',0)}|{unique_part}".encode()
     ).hexdigest()
 
+def is_valid_ss_cipher(cipher):
+    """
+    判断ss节点cipher字段是否合法，避免被错误的Base64或其它字符串污染。
+    这里列举了Clash常见支持的ss加密方法，必要时你可根据实际增加或修改。
+
+    参数:
+        cipher (str): ss节点中cipher字段
+
+    返回:
+        bool: 是否有效
+    """
+    if not cipher:
+        return False
+    valid_ciphers = {
+        'aes-256-gcm', 'aes-128-gcm', 'chacha20-ietf-poly1305',
+        'aes-256-cfb', 'aes-128-cfb', 'chacha20-ietf', 'xchacha20',
+        'aes-128-ctr', 'aes-256-ctr', 'rc4-md5'
+    }
+    return cipher.lower() in valid_ciphers
+
+
 def is_valid_proxy(proxy):
+    """
+    验证代理节点基本完整性和字段有效性，增加对ss加密方法的单独验证。
+
+    参数:
+        proxy (dict): 代理节点字典
+
+    返回:
+        bool: 合法为True，否则False
+    """
     if not isinstance(proxy, dict):
         return False
     required_keys = ['name', 'server', 'port', 'type']
     if not all(key in proxy for key in required_keys):
         return False
+
     allowed_types = {'http', 'socks5', 'trojan', 'vless', 'ss', 'vmess', 'ssr', 'hysteria', 'hysteria2'}
     if proxy['type'] not in allowed_types:
         return False
-    if not isinstance(proxy['port'], int) or not (1 <= proxy['port'] <= 65535):
+
+    port = proxy.get('port')
+    if not isinstance(port, int) or not (1 <= port <= 65535):
         return False
+
+    # SS协议特有的加密方法字段检查，确保为有效cipher
+    if proxy['type'] == 'ss':
+        cipher = proxy.get('cipher', '')
+        if not is_valid_ss_cipher(cipher):
+            if cipher:
+                print(f"⚠️ 无效的 ss cipher: {cipher}，节点名: {proxy.get('name')}")
+            return False
+
     return True
 
 def identify_regions_only(proxies):
