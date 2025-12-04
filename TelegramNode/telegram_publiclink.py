@@ -703,17 +703,21 @@ def generate_config(proxies, last_message_ids):
     }
 
 
-import re
-import tempfile
-import shutil
-import subprocess
-import yaml
-from urllib.parse import urlparse
+
+def normalize_name(name):
+    """
+    节点名称归一化函数：
+    - 去除所有非字母数字字符（包含空格、符号、emoji）
+    - 小写化，方便比较
+    """
+    # \W会匹配非字母数字下划线，另外去掉下划线，保留仅字母数字
+    # 兼容unicode，带flags=re.UNICODE
+    return re.sub(r'[\W_]+', '', name, flags=re.UNICODE).lower()
 
 def merge_speedtest_blocks(log_text):
     """
-    解析日志文本，提取每个节点对应的测速块（以特定开头和结尾匹配）。
-    返回列表：(节点名, 合并后的日志字符串)
+    解析 clash speedtest 输出日志，将节点名对应的日志块提取出来。
+    返回 [(节点名, 合并日志字符串), ...] 列表。
     """
     lines = log_text.splitlines()
     blocks = []
@@ -724,7 +728,7 @@ def merge_speedtest_blocks(log_text):
     for line in lines:
         header_match = header_re.match(line)
         if header_match:
-            # 发现新块，先保存前一块
+            # 保存上一个块
             if current_block_lines and current_node_name:
                 blocks.append((current_node_name, ' '.join(current_block_lines)))
             current_node_name = header_match.group(1)
@@ -738,24 +742,24 @@ def merge_speedtest_blocks(log_text):
                 current_block_lines = []
                 current_node_name = None
             else:
-                pass # 忽略非块内行
-    # 保存残余块
+                pass
+    # 保存末尾块
     if current_block_lines and current_node_name:
         blocks.append((current_node_name, ' '.join(current_block_lines)))
     return blocks
 
 def clash_test_proxy(clash_path, proxy, debug=False):
     """
-    使用 Clash 进行代理节点延迟测速，返回有效延迟（1ms至799ms），过滤掉0ms及>=800ms的异常值。
-    若未找到有效延迟返回 None。
+    使用 Clash 核心测速节点延迟，返回延迟值(ms)或 None 表示失败。
+    通过名称归一化方式匹配测速日志块。
 
     参数:
-        clash_path (str): Clash 可执行文件路径
-        proxy (dict): 代理节点信息，必须包含 'name' 字段
-        debug (bool): 是否输出调试信息，默认False
+      - clash_path: Clash 可执行文件路径
+      - proxy: 单个代理字典，必含 'name' 字段
+      - debug: 是否打印调试信息
 
     返回:
-        int | None: 延迟值（毫秒）或测速失败返回 None
+      - 延迟毫秒(int) 或 None
     """
     temp_dir = tempfile.mkdtemp()
     temp_config_path = os.path.join(temp_dir, 'config.yaml')
@@ -791,19 +795,20 @@ def clash_test_proxy(clash_path, proxy, debug=False):
         )
         output = proc.stdout + proc.stderr
         if debug:
-            print(f"Clash Speedtest 输出（节点 {proxy['name']}）:\n{output}")
-        # 利用日志块解析函数提取当前节点对应日志块
+            print(f"节点 [{proxy['name']}] 测试输出:\n{output}\n{'='*60}")
+
         blocks = merge_speedtest_blocks(output)
+        proxy_name_norm = normalize_name(proxy['name'])
         node_block = None
         for name, block in blocks:
-            if name == proxy['name']:
+            if normalize_name(name) == proxy_name_norm:
                 node_block = block
                 break
         if node_block is None:
             if debug:
-                print(f"⚠️ 未找到节点 {proxy['name']} 的测速块日志")
+                print(f"⚠️ 未找到节点 [{proxy['name']}] 对应的测速日志块")
             return None
-        # 正则查找延迟, 例如'time: 123ms' 格式
+
         delay_match = re.search(r'(\d+)ms', node_block)
         if delay_match:
             delay = int(delay_match.group(1))
@@ -811,19 +816,19 @@ def clash_test_proxy(clash_path, proxy, debug=False):
                 return delay
             else:
                 if debug:
-                    print(f"⚠️ 节点 {proxy['name']} 延迟 {delay}ms 不在有效范围")
+                    print(f"⚠️ 节点 [{proxy['name']}] 延迟 {delay}ms 超出有效范围")
                 return None
         else:
-            # 找不到有效延迟，认为测速失败或NA
             if debug:
-                print(f"⚠️ 节点 {proxy['name']} 测试结果无有效延迟信息")
+                print(f"⚠️ 节点 [{proxy['name']}] 测试日志无有效延迟信息")
             return None
+
     except subprocess.TimeoutExpired:
         if debug:
-            print(f"⚠️ 节点测速超时，节点名: {proxy['name']}")
+            print(f"⚠️ 节点 [{proxy['name']}] 测试超时")
     except Exception as e:
         if debug:
-            print(f"⚠️ 节点测速异常 {proxy['name']}: {e}")
+            print(f"⚠️ 节点 [{proxy['name']}] 测试异常: {e}")
     finally:
         try:
             shutil.rmtree(temp_dir)
@@ -832,8 +837,8 @@ def clash_test_proxy(clash_path, proxy, debug=False):
     return None
 
 def test_proxy_with_clash(clash_path, proxy):
-    delay = clash_test_proxy(clash_path, proxy,debug=True)  # 默认不打印
-    # 若需要打印调试日志，可调用： delay = clash_test_proxy(clash_path, proxy, debug=True)
+    # 调试时把 debug=True 打开
+    delay = clash_test_proxy(clash_path, proxy, debug=True)
     if delay is not None:
         proxy['clash_delay'] = delay
         return proxy
