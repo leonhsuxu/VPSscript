@@ -82,7 +82,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add flclashyaml/Tg-node.yaml
           if ! git diff --staged --quiet; then
-            git commit -m "🛠 更新 Tg-node.yaml 配置 $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+            git commit -m "🕒 更新Tg-node.yaml 配置 $(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M:%S CST')"
             git push
           else
             echo "文件无变化，无需提交。"
