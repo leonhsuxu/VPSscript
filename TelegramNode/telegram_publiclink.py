@@ -662,19 +662,11 @@ def generate_config(proxies, last_message_ids):
 
 
 def clash_test_proxy(clash_path, proxy):
-    """调用 clash 执行文件测速接口，返回延迟或 None。"""
-    tested_types = {'vmess', 'vless', 'trojan', 'ss', 'ssr', 'hysteria', 'hysteria2', 'http', 'socks5'}
-    if proxy.get('type', '').lower() not in tested_types:
-        return None
-
     import tempfile
     import yaml
-
     temp_dir = tempfile.mkdtemp()
     temp_config_path = os.path.join(temp_dir, 'config.yaml')
-
     test_url = "http://www.gstatic.com/generate_204"
-
     config = {
         "port": 7890,
         "socks-port": 7891,
@@ -693,10 +685,8 @@ def clash_test_proxy(clash_path, proxy):
             "FINAL,DIRECT"
         ]
     }
-
     with open(temp_config_path, 'w', encoding='utf-8') as f:
         yaml.dump(config, f, allow_unicode=True, sort_keys=False)
-
     try:
         proc = subprocess.run(
             [clash_path, '-t', temp_config_path],
@@ -705,22 +695,35 @@ def clash_test_proxy(clash_path, proxy):
             encoding='utf-8',
             timeout=15
         )
-        output = proc.stdout
-        # 调试打印全部输出，确认内容
-        # print(f"Clash 输出:\n{output}")
-        
-        # 找出“节点名: 123 ms”形式的延迟
-        match = re.search(rf"{re.escape(proxy['name'])}: (\d+) ms", output)
+        output = proc.stdout + proc.stderr  # 合并查看
+        # 简单提取延迟：只匹配数字（不带节点名也可以捕获，针对核心无节点名输出）
+        delays = re.findall(r'(\d+) ms', output)
+        if delays:
+            delay = int(delays[0])
+            return delay
+
+        # 兼容去掉emoji节点名的匹配尝试
+        import re
+        safe_name = re.sub(r'[^\w\s-]', '', proxy['name'])
+        pattern = re.compile(rf"{re.escape(safe_name)}.*?: (\d+) ms", re.IGNORECASE)
+        match = pattern.search(output)
         if match:
             delay = int(match.group(1))
             return delay
-        else:
-            # 若未匹配成功，打印警告及输出方便分析
-            print(f"⚠️ 未找到延迟匹配信息，节点名: {proxy['name']}")
-            # print(f"Clash输出:\n{output}")
+        
+        # 打印未匹配内容，供调试
+        print(f"⚠️ 未找到延迟匹配信息，节点名: {proxy['name']}")
+        #print(f"Clash输出:\n{output}")
     except Exception as e:
         print(f"Clash 测试异常: {e}")
         return None
+    finally:
+        try:
+            os.remove(temp_config_path)
+            os.rmdir(temp_dir)
+        except Exception:
+            pass
+    return None
 
 def test_proxy_with_clash(clash_path, proxy):
     delay = clash_test_proxy(clash_path, proxy)
