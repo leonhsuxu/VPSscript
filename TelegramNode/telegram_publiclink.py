@@ -875,46 +875,106 @@ def generate_config(proxies):
     return config
 
 async def main():
-                    if p.get('region_info') and p['region_info']['name'] in fallback_regions:
-                        # For fallback, if http_delay is None, use tcp_delay for sorting
-                        p['http_delay'] = p.get('tcp_delay', 9999) # Assign tcp_delay if http_delay is None
-                        region_grouped_fallback_nodes[p['region_info']['name']].append(p)
-                
-                for region in fallback_regions:
-                    # Sort by http_delay (which is tcp_delay for fallback nodes)
-                    sorted_region_nodes = sorted(region_grouped_fallback_nodes[region], key=lambda x: x.get('http_delay', 9999))
-                    selected_fallback_nodes.extend(sorted_region_nodes[:fallback_count_per_region])
-                
-                print(f"  - 回退策略已选择 {len(selected_fallback_nodes)} 个节点。")
-                nodes_to_process_after_speed_test = selected_fallback_nodes
-            elif not http_passed_nodes and not http_failed_nodes: # This means tcp_successful_proxies_raw was empty
-                print("⚠️ 无任何节点通过 TCP 测速或 HTTP 测速。")
-                nodes_to_process_after_speed_test = []
-            
-    else: # ENABLE_SPEED_TEST is False
+    print("正在运行 Clash 测速脚本...")
+
+    # 1. 定时删除旧yaml文件，保留配置文件清洁
+    #delete_old_yaml()
+
+    # 2. 读取本地已有节点和抓取状态
+    existing_proxies, last_message_ids = load_existing_proxies_and_state()
+
+    # 3. 抓取最新订阅链接
+    new_links, last_message_ids = await scrape_telegram_links(last_message_ids=last_message_ids)
+    print(f"🔗 新获取 {len(new_links)} 个订阅链接")
+
+    # 4. 下载并解析所有订阅链接节点
+    new_proxies = []
+    for link in new_links:
+        print(f"▶️ 处理链接: {link}")
+        proxies = download_subscription(link)
+        if proxies:
+            new_proxies.extend(proxies)
+            print(f"  - 解析到 {len(proxies)} 个节点")
+        else:
+            print("  - 无有效节点")
+
+    # 5. 合并旧节点与新节点，并去重
+    all_proxies_raw = existing_proxies + new_proxies
+    unique_map = {}
+    for p in all_proxies_raw:
+        if not is_valid_proxy(p):
+            continue
+        key = get_proxy_key(p)
+        # 保留第一个出现的节点
+        if key not in unique_map:
+            unique_map[key] = p
+    all_nodes = list(unique_map.values())
+    print(f"🔧 节点总计（去重后）: {len(all_nodes)} 个")
+
+    # 6. 测速部分：使用 Clash 核心进行 HTTP 测速
+    if ENABLE_SPEED_TEST:
+        print("[2/5] 启动节点测速（Clash HTTP测速）")
+        with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_TEST_WORKERS) as executor:
+            futures = [executor.submit(test_single_proxy_with_clash_core, proxy) for proxy in all_nodes]
+            results = []
+            for future in concurrent.futures.as_completed(futures):
+                res = future.result()
+                results.append(res)
+        print("[3/5] 测速完成")
+        all_nodes = results
+        # 根据测速结果分组
+        http_passed_nodes = [p for p in all_nodes if p.get('http_delay') is not None]
+        http_failed_nodes = [p for p in all_nodes if p.get('http_delay') is None]
+
+        # 回退策略：选取每个区域表现最好的几个节点
+        fallback_regions = [r for r in REGION_PRIORITY if r in ALLOWED_REGIONS]
+        fallback_count_per_region = 3
+
+        region_grouped_fallback_nodes = defaultdict(list)
+        selected_fallback_nodes = []
+
+        # 给 http_delay 为 None 的节点，赋予 tcp_delay 或极大延迟，用于fallback排序
+        for p in http_failed_nodes:
+            if p.get('region_info') and p['region_info']['name'] in fallback_regions:
+                # 如果 http_delay 为空，则用 tcp_delay（若存在）或默认9999赋值
+                p['http_delay'] = p.get('tcp_delay', 9999)
+                region_grouped_fallback_nodes[p['region_info']['name']].append(p)
+
+        # 从每个区域选出 fallback_count_per_region 个节点
+        for region in fallback_regions:
+            sorted_nodes = sorted(region_grouped_fallback_nodes[region], key=lambda x: x.get('http_delay', 9999))
+            selected_fallback_nodes.extend(sorted_nodes[:fallback_count_per_region])
+
+        print(f"  - 回退策略已选择 {len(selected_fallback_nodes)} 个节点")
+
+        # 整合通过测速和 fallback 节点
+        nodes_to_process_after_speed_test = http_passed_nodes + selected_fallback_nodes
+
+        if not nodes_to_process_after_speed_test:
+            print("⚠️ 无任何节点通过 HTTP 测速或回退节点为空")
+            sys.exit("❌ 无有效节点，程序终止")
+
+    else:
+        # 未开启测速，全部节点进入后续处理
         nodes_to_process_after_speed_test = all_nodes
         print("测速关闭，使用全部节点继续处理")
 
-    if not nodes_to_process_after_speed_test:
-        sys.exit("❌ 无任何可用节点通过测速或回退选择，程序终止。")
-
-    # 5. 节点地区识别及重命名 (对最终选定的节点集进行处理)
+    # 7. 区域识别与节点重命名
     print("[4/5] 节点地区识别及重命名")
     processed_proxies = process_proxies(nodes_to_process_after_speed_test)
-    
     if not processed_proxies:
         sys.exit("❌ 识别有效节点失败，程序退出")
-    
-    # 6. 排序 (优先使用 http_delay 进行排序)
+
+    # 8. 排序：优先按区域优先级 + http延迟排序
     processed_proxies.sort(
         key=lambda p: (
             REGION_PRIORITY.index(p['region_info']['name']) if p['region_info']['name'] in REGION_PRIORITY else 99,
-            p.get('http_delay', p.get('tcp_delay', 9999)) # Use http_delay first, then tcp_delay if http_delay is missing
+            p.get('http_delay', 9999)
         )
     )
-    print(f"[5/5] 排序完成，节点数量: {len(processed_proxies)}")
+    print(f"[5/5] 排序完成，剩余节点数: {len(processed_proxies)}")
 
-    # 7. 输出最终配置
+    # 9. 写入最终 YAML 配置文件，包含新的 last_message_ids
     final_config = {
         'proxies': processed_proxies,
         'last_message_ids': last_message_ids,
@@ -923,9 +983,10 @@ async def main():
     try:
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
             yaml.dump(final_config, f, allow_unicode=True, sort_keys=False, indent=2)
-        print(f"✅ 配置文件及状态已成功保存至: {OUTPUT_FILE}\n\n🎉 任务全部完成！")
+        print(f"✅ 配置及状态已保存至: {OUTPUT_FILE}")
+        print("\n🎉 任务全部完成！")
     except Exception as e:
-        print(f"❌ 写入最终配置文件时出错: {e}")
+        print(f"❌ 写入配置文件失败: {e}")
 
 if __name__ == "__main__":
     asyncio.run(main())
