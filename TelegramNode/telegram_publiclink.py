@@ -697,24 +697,24 @@ def clash_test_proxy(clash_path, proxy):
             encoding='utf-8',
             timeout=15
         )
-        output = proc.stdout + proc.stderr  # 合并查看
-        print(f"Clash 测试输出（节点 {proxy['name']}）:\n{output}")
-        # 简单提取延迟：只匹配数字（不带节点名也可以捕获，针对核心无节点名输出）
-        delays = re.findall(r'(\d+) ms', output)
-        if delays:
-            delay = int(delays[0])
-            return delay
+        output = proc.stdout + proc.stderr  # 合并输出
+        print(f"Clash 测试输出（节点 {proxy['name']}）:\n{output}")  # 调试用，确认输出内容
 
-        # 兼容去掉emoji节点名的匹配尝试
-        safe_name = re.sub(r'[^\w\s-]', '', proxy['name'])
-        pattern = re.compile(rf"{re.escape(safe_name)}.*?: (\d+) ms", re.IGNORECASE)
-        match = pattern.search(output)
-        if match:
-            delay = int(match.group(1))
-            return delay
+        lines = output.splitlines()
+        safe_name = re.sub(r'[^\w\s-]', '', proxy['name']).lower()
+
+        for line in lines:
+            if ' ms' in line.lower():
+                m = re.match(r'^(.*?):\s*(\d+)\s*ms$', line.strip(), re.IGNORECASE)
+                if m:
+                    name_part = m.group(1)
+                    delay = int(m.group(2))
+                    cmp_name = re.sub(r'\s+', '', safe_name)
+                    cmp_part = re.sub(r'\s+', '', name_part.lower())
+                    if cmp_name in cmp_part or cmp_part in cmp_name:
+                        return delay
 
         print(f"⚠️ 未找到延迟匹配信息，节点名: {proxy['name']}")
-        # print(f"Clash输出:\n{output}")
     except Exception as e:
         print(f"Clash 测试异常: {e}")
         return None
