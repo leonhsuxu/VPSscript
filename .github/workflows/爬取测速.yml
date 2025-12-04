@@ -1,4 +1,4 @@
-name: ⏳ Tg频道群抓取节点测速 (mihomo核心缓存版)
+name: ⏳ Tg频道群抓取节点测速 (clash-speedtest缓存版)
 
 on:
   schedule:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  MIHOMO_VERSION: v1.19.17
+  CLASH_SPEEDTEST_VERSION: v0.7.1  # 请根据实际版本调整
   TELEGRAM_CHANNEL_IDS: |
     # 订阅转发-频道
     @fqDINYUE
@@ -41,7 +41,6 @@ jobs:
         with:
           python-version: '3.11'
 
-      # 缓存 Python 依赖
       - name: 缓存 Python 依赖
         uses: actions/cache@v4
         with:
@@ -55,27 +54,26 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # 缓存 mihomo clash 核心
-      - name: 缓存 mihomo 核心
-        id: cache-mihomo-core
+      # 缓存 clash-speedtest 核心，放置在 clash_core/ 目录，并命名为 clash
+      - name: 缓存 clash-speedtest 核心（放置在 clash_core/clash）
+        id: cache-clash-speedtest
         uses: actions/cache@v4
         with:
           path: clash_core/
-          key: ${{ runner.os }}-mihomo-core-${{ env.MIHOMO_VERSION }}
+          key: ${{ runner.os }}-clash-speedtest-${{ env.CLASH_SPEEDTEST_VERSION }}
 
-      - name: 下载 mihomo clash 核心（缓存未命中时执行）
-        if: steps.cache-mihomo-core.outputs.cache-hit != 'true'
+      - name: 下载 clash-speedtest（缓存未命中时执行）
+        if: steps.cache-clash-speedtest.outputs.cache-hit != 'true'
         run: |
           mkdir -p clash_core
-          MIHOMO_FILENAME="mihomo-linux-amd64-${{ env.MIHOMO_VERSION }}.gz"
-          MIHOMO_URL="https://github.com/MetaCubeX/mihomo/releases/download/${{ env.MIHOMO_VERSION }}/${MIHOMO_FILENAME}"
-
-          echo "正在下载 mihomo 核心..."
-          wget -q -O mihomo.gz "$MIHOMO_URL"
-          gunzip mihomo.gz
-          mv mihomo clash_core/clash
+          ARCH=$(uname -m)
+          # 根据架构确认下载文件名，我示例用 amd64
+          FILENAME="clash-speedtest-linux-amd64"
+          URL="https://github.com/doomybot/clash-speedtest/releases/download/${{ env.CLASH_SPEEDTEST_VERSION }}/${FILENAME}"
+          echo "正在下载 clash-speedtest 核心..."
+          wget -q -O clash_core/clash "$URL"
           chmod +x clash_core/clash
-          echo "mihomo clash 核心下载完成。"
+          echo "clash-speedtest 下载完成。"
 
       - name: 运行 Telegram 抓取及 Clash 测速脚本
         env:
