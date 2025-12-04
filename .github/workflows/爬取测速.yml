@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  CLASH_SPEEDTEST_VERSION: v1.7.0  # 请根据需要替换为目标版本
+  CLASH_SPEEDTEST_VERSION: v1.5.5  # 请根据需要替换为目标版本
   TELEGRAM_CHANNEL_IDS: |
     # 订阅转发-频道
     @fqDINYUE
@@ -68,8 +68,9 @@ jobs:
           URL="https://github.com/faceair/clash-speedtest/releases/download/${{ env.CLASH_SPEEDTEST_VERSION }}/clash-speedtest_Linux_x86_64.tar.gz"
           echo "正在下载 clash-speedtest 核心..."
           wget -q -O clash-speedtest.tar.gz "$URL"
-          tar -xzf clash-speedtest.tar.gz -C clash_core --strip-components=1 clash-speedtest
+          tar -xzf clash-speedtest.tar.gz -C clash_core
           rm -f clash-speedtest.tar.gz
+          mv clash_core/clash-speedtest clash_core/clash
           chmod +x clash_core/clash
           echo "clash-speedtest 下载并解压完成。"
 
