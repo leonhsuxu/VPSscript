@@ -4,11 +4,32 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:  # 支持手动触发，并传入自定义参数
+  workflow_dispatch:
+    inputs:
+      input_path:
+        description: '输入配置文件路径'
+        required: false
+        default: 'flclashyaml/Tg-node.yaml'
+      output_path:
+        description: '输出配置文件路径'
+        required: false
+        default: 'flclashyaml/1.yaml'
+      max_latency:
+        description: '最大允许延迟(ms)'
+        required: false
+        default: '800ms'
+      min_speed:
+        description: '最小速度(Mbps)'
+        required: false
+        default: '5'
 
 jobs:
   speedtest:
     runs-on: ubuntu-latest
+
+    env:
+      # 这里放缓存版本号，方便以后更新
+      CLASH_SPEEDTEST_VERSION: v1.7.0
 
     steps:
       - name: Checkout 代码
@@ -19,18 +40,33 @@ jobs:
         with:
           python-version: 3.8
 
-      - name: 下载 clash-speedtest 可执行文件并授权
+      - name: 缓存 clash-speedtest 核心 (clash_core/)
+        id: cache-clash-speedtest
+        uses: actions/cache@v4
+        with:
+          path: clash_core/
+          key: ${{ runner.os }}-clash-speedtest-${{ env.CLASH_SPEEDTEST_VERSION }}
+
+      - name: 下载并解压 clash-speedtest 到 clash_core/clash
+        if: steps.cache-clash-speedtest.outputs.cache-hit != 'true'
         run: |
-          wget -qO clash-speedtest https://github.com/Dreamacro/clash/releases/latest/download/clash-speedtest-linux-amd64
-          chmod +x clash-speedtest
-          ./clash-speedtest -h
+          mkdir -p clash_core
+          URL="https://github.com/faceair/clash-speedtest/releases/download/${{ env.CLASH_SPEEDTEST_VERSION }}/clash-speedtest_Linux_x86_64.tar.gz"
+          echo "正在下载 clash-speedtest 核心..."
+          wget --tries=3 -q -O clash-speedtest.tar.gz "$URL"
+          tar -xzf clash-speedtest.tar.gz -C clash_core
+          rm -f clash-speedtest.tar.gz
+          mv clash_core/clash-speedtest clash_core/clash
+          chmod +x clash_core/clash
+          echo "clash-speedtest 下载并解压完成。"
 
       - name: 运行 Clash Speedtest 脚本
         env:
-          INPUT_PATH: ${{ github.event.inputs.input_path || 'flclashyaml/Tg-node.yaml' }}
-          OUTPUT_PATH: ${{ github.event.inputs.output_path || 'flclashyaml/1.yaml' }}
-          MAX_LATENCY: ${{ github.event.inputs.max_latency || '800ms' }}
-          MIN_SPEED: ${{ github.event.inputs.min_speed || '5' }}
+          INPUT_PATH: ${{ github.event.inputs.input_path }}
+          OUTPUT_PATH: ${{ github.event.inputs.output_path }}
+          MAX_LATENCY: ${{ github.event.inputs.max_latency }}
+          MIN_SPEED: ${{ github.event.inputs.min_speed }}
+          PATH: ${{ github.workflow }}:$PATH
         run: |
           python3 clash_speedtest_local.py
 
@@ -38,4 +74,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: clash-speedtest-result
-          path: ${{ github.event.inputs.output_path || 'flclashyaml/1.yaml' }}
+          path: ${{ github.event.inputs.output_path }}
