@@ -864,7 +864,9 @@ async def main():
         if not (os.path.isfile(clash_path) and os.access(clash_path, os.X_OK)):
             sys.exit(f"❌ clash 核心缺失或不可执行: {clash_path}")
         tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
-        print(f"🌐 测速成功节点数: {len(tested_nodes)}")
+        success_count = len(tested_nodes)
+        fail_count = len(all_nodes) - success_count
+        print(f"🌐 测速成功节点数: {success_count}，失败节点数: {fail_count}")        
         if not tested_nodes:
             print("⚠️ clash测速全部失败，启用回退策略保留指定地区节点")
             fallback_regions = ['香港', '日本', '美国', '新加坡', '德国']
