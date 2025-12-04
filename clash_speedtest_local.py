@@ -19,13 +19,12 @@ def main():
         sys.exit(1)
 
     cmd = [
-        "./clash_core/clash-speedtest",
-        "-c", input_path,
-        "-output", output_path,
-        "-max-latency", max_latency,
-        "-min-speed", str(min_speed),
-    ]
-
+    "./clash_core/clash",
+    "-c", input_path,
+    "-output", output_path,
+    "-max-latency", max_latency,
+    "-min-speed", str(min_speed),
+   ]
     print(f"开始测速，参数：\n 输入路径: {input_path}\n 输出路径: {output_path}\n 最大延迟: {max_latency}\n 最小速度: {min_speed}")
 
     try:
