@@ -44,12 +44,12 @@ API_HASH = os.environ.get('TELEGRAM_API_HASH')
 STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')
 TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS', '')
 
-TIME_WINDOW_HOURS = 3  # 抓取多长时间的消息，单位为小时。
+TIME_WINDOW_HOURS = 4  # 抓取多长时间的消息，单位为小时。
 MIN_EXPIRE_HOURS = 2   # 订阅地址剩余时间最小过期，单位为小时。
 OUTPUT_FILE = 'flclashyaml/Tg-node.yaml'  # 输出文件路径，用于保存生成的配置或结果。
 
 ENABLE_SPEED_TEST = True  # 是否启用速度测试功能，True表示启用。
-MAX_TEST_WORKERS = 64    # 速度测试时最大并发工作线程数，控制测试的并行度。
+MAX_TEST_WORKERS = 128    # 速度测试时最大并发工作线程数，控制测试的并行度。
 SOCKET_TIMEOUT = 3       # 套接字连接超时时间，单位为秒
 HTTP_TIMEOUT = 5         # HTTP请求超时时间，单位为秒
 
