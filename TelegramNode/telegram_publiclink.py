@@ -653,36 +653,44 @@ def download_subscription(url):
 
 # 移除了 test_single_proxy_tcp 函数，因为不再进行直接 TCP 测速
 
-def generate_clash_config_for_proxy(proxy, config_path):
-    """Generates a minimal Clash config file for a single proxy."""
+def generate_clash_config_for_proxy(proxy, config_path, http_port, socks_port):
+    """
+    Generates a minimal Clash config file for a single proxy.
+    Accepts http_port and socks_port to configure Clash listener ports.
+    """
     # Ensure proxy has a name for the Clash config
     if 'name' not in proxy:
         proxy['name'] = f"{proxy.get('type', 'unknown')}_{proxy.get('server', 'unknown')}_{proxy.get('port', 'unknown')}_{hashlib.md5(str(proxy).encode()).hexdigest()[:6]}"
+
     config_data = {
-        'port': CLASH_CONFIG_PORT_HTTP,
-        'socks-port': CLASH_CONFIG_PORT_SOCKS,
-        'allow-lan': False,
+        'port': http_port, # <--- 使用动态分配的 HTTP 端口
+        'socks-port': socks_port, # <--- 使用动态分配的 SOCKS 端口
+        'allow-lan': False, # 通常在测速时设置为 False
         'mode': 'rule', # or 'direct'
-        'log-level': 'silent',
-        'secret': CLASH_SECRET,
-        'proxies': [proxy], # Add the single proxy to the proxies list
+        'log-level': 'silent', # 设置为 silent 减少日志输出，如果需要详细日志可以改为 info 或 debug
+        'secret': CLASH_SECRET, # Clash API 的可选密码
+        'proxies': [proxy], # 将单个代理添加到 proxies 列表中
         'proxy-groups': [
             {
                 'name': 'Proxy',
                 'type': 'select',
-                'proxies': [proxy['name']] # Reference the proxy by its name
+                'proxies': [proxy['name']] # 代理组引用该代理
             },
             {
-                'name': 'DIRECT',
+                'name': 'DIRECT', # 直连策略组，虽然此处未使用，但Clash配置通常包含
                 'type': 'direct'
             }
         ],
         'rules': [
-            'MATCH,Proxy' # All traffic goes through 'Proxy' group
+            'MATCH,Proxy' # 所有流量都通过 'Proxy' 组，确保测速流量走代理
         ]
     }
-    with open(config_path, 'w', encoding='utf-8') as f:
-        yaml.dump(config_data, f, allow_unicode=True, sort_keys=False, indent=2)
+    try:
+        with open(config_path, 'w', encoding='utf-8') as f:
+            yaml.dump(config_data, f, allow_unicode=True, sort_keys=False, indent=2)
+    except Exception as e:
+        print(f"  ✗ Failed to write Clash config to {config_path}: {e}")
+        raise # 重新抛出异常，让调用者知道配置生成失败
 
 def wait_for_clash_startup(port, timeout=10):
     """Waits for Clash to start listening on the given port."""
@@ -697,81 +705,43 @@ def wait_for_clash_startup(port, timeout=10):
     return False
 
 def test_single_proxy_with_clash_core(proxy):
-    """
-    Tests a single proxy's HTTP connectivity using a Clash core instance.
-    Returns the proxy dict with 'http_delay' or None if Clash failed to start/test.
-    """
-    temp_dir = None
-    clash_process = None
-    original_proxy_name = proxy.get('name', 'unknown') # Store original name for logging
-    # Add a temporary unique ID to the proxy name to avoid conflicts in Clash config for multiple instances
-    # This is important if proxy names are not unique already
-    unique_id = hashlib.md5(str(proxy).encode()).hexdigest()[:8]
-    if 'name' in proxy:
-        proxy['name'] = f"{original_proxy_name}_{unique_id}"
-    else:
-        proxy['name'] = f"node_{unique_id}"
-    try:
-        temp_dir = tempfile.mkdtemp(prefix="clash_test_")
-        config_file = os.path.join(temp_dir, 'config.yaml')
-        generate_clash_config_for_proxy(proxy, config_file)
-        # Determine Clash executable name based on OS
-        clash_exec_name = 'clash'
-        if platform.system() == 'Windows':
-            clash_exec_name = 'clash.exe'
-        # Check if CLASH_CORE_PATH exists, otherwise try to locate 'clash' in PATH
-        clash_cmd = None
-        if os.path.exists(CLASH_CORE_PATH):
-            clash_cmd = CLASH_CORE_PATH
-        else:
-            clash_cmd = shutil.which(clash_exec_name) # Search in PATH
-        if not clash_cmd:
-            print(f"  ✗ Clash core executable not found. Please ensure it's in PATH or at {CLASH_CORE_PATH}.")
-            proxy['http_delay'] = None
-            return proxy
-        # Start Clash core process
-        # Using subprocess.DEVNULL for stdout/stderr to keep the console clean
-        clash_process = subprocess.Popen(
-            [clash_cmd, '-f', config_file, '-d', temp_dir],
-            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
-        )
-        # Wait for Clash to start listening
-        if not wait_for_clash_startup(CLASH_CONFIG_PORT_HTTP):
-            # print(f"  ✗ Clash core failed to start or listen on port {CLASH_CONFIG_PORT_HTTP} for {original_proxy_name}.") # Too verbose
-            proxy['http_delay'] = None
-            return proxy
-        # Perform HTTP test through local Clash HTTP proxy
-        proxies_dict = {
-            "http": f"http://127.0.0.1:{CLASH_CONFIG_PORT_HTTP}",
-            "https": f"http://127.0.0.1:{CLASH_CONFIG_PORT_HTTP}"
-        }
-        start_time = time.time()
-        # verify=False is used here for requests through Clash as the Clash core itself handles SSL verification
-        # or may present its own cert, preventing a direct failure from requests if proxy server cert is self-signed/invalid.
-        response = requests.get(HTTP_TEST_URL, proxies=proxies_dict, timeout=HTTP_TIMEOUT, verify=False)
-        response.raise_for_status() # Raise an exception for HTTP errors (4xx or 5xx)
-        end_time = time.time()
-        delay_ms = round((end_time - start_time) * 1000)
-        proxy['http_delay'] = delay_ms
-        return proxy
-    except requests.exceptions.RequestException as e:
-        # HTTP request failed through Clash proxy
-        # print(f"  ✗ HTTP test failed via Clash for {original_proxy_name}: {e}") # Enable for verbose debugging
         proxy['http_delay'] = None
         return proxy
     except Exception as e:
+        # 捕获其他任何意外错误
         print(f"  ✗ An unexpected error occurred during Clash core testing for {original_proxy_name}: {e}")
         proxy['http_delay'] = None
         return proxy
     finally:
-        # Terminate Clash process if it's running
-        if clash_process and clash_process.poll() is None: # Check if process is still running
-            clash_process.terminate()
+        # 恢复代理的原始名称，因为我们在函数开始时修改了它
+        if 'name' in proxy and proxy['name'].endswith(f"_{unique_id}"):
+            proxy['name'] = original_proxy_name
+
+        # 终止 Clash 核心进程
+        if clash_process and clash_process.poll() is None: # 检查进程是否仍在运行
+            clash_process.terminate() # 尝试正常终止
             try:
-                clash_process.wait(timeout=5) # Give Clash some time to shut down
+                clash_process.wait(timeout=5) # 等待几秒钟让进程关闭
             except subprocess.TimeoutExpired:
-                clash_process.kill() # Force kill if it doesn't terminate gracefully
-        # Clean up temporary directory
+                clash_process.kill() # 如果超时未关闭，则强制杀死进程
+        
+        # ****** 仅在 http_delay 为 None 时（即测速失败）打印 Clash 核心的日志 ******
+        if proxy.get('http_delay') is None:
+            print(f"  --- Clash Core Logs for {original_proxy_name} ---")
+            if os.path.exists(log_file_stdout):
+                with open(log_file_stdout, 'r', encoding='utf-8') as f:
+                    stdout_content = f.read()
+                    if stdout_content:
+                        print(f"  Clash STDOUT:\n{stdout_content}")
+            if os.path.exists(log_file_stderr):
+                with open(log_file_stderr, 'r', encoding='utf-8') as f:
+                    stderr_content = f.read()
+                    if stderr_content:
+                        print(f"  Clash STDERR:\n{stderr_content}")
+            print(f"  --- End Clash Core Logs ---")
+        # ****** 调试日志输出结束 ******
+
+        # 清理临时目录
         if temp_dir and os.path.exists(temp_dir):
             try:
                 shutil.rmtree(temp_dir)
@@ -825,77 +795,41 @@ def generate_config(proxies):
     return config
 
 async def main():
-    print("=" * 60)
-    print("Clash 订阅自动生成脚本 V4 Clash测速版 ")
-    print(f"时间: {datetime.now(BJ_TZ).strftime('%Y-%m-%d %H:%M:%S')}") # 使用 BJ_TZ
-    print("=" * 60)
-    preprocess_regex_rules()
-
-    print("[1/5] 读取已有节点及抓取状态文件")
-    existing_proxies, last_message_ids = load_existing_proxies_and_state()
-    print(f"已有节点数量: {len(existing_proxies)}")
-
-    print("[2/5] 抓取 Telegram 订阅链接")
-    urls, last_message_ids = await scrape_telegram_links(last_message_ids)
-
-    new_proxies_list = []
-    if urls:
-        print(f"共抓取 {len(urls)} 个订阅链接，开始下载解析节点...")
-        for url in urls:
-            proxies = download_subscription(url)
-            if proxies:
-                new_proxies_list.extend(proxies)
-
-    print(f"抓取新增节点数: {len(new_proxies_list)}")
-    print("----------------------------------------------------------------")
-    print("重要提示：Clash 核心测速会创建临时文件和启动进程，资源消耗较大。")
-    print(f"当前 MAX_TEST_WORKERS = {MAX_TEST_WORKERS}。如果遇到性能问题，请适当调低。")
-    print("----------------------------------------------------------------")
-
-    all_proxies_map = {get_proxy_key(p): p for p in existing_proxies if is_valid_proxy(p)}
-    added_new = 0
-    for p in new_proxies_list:
-        key = get_proxy_key(p)
-        if key not in all_proxies_map:
-            all_proxies_map[key] = p
-            added_new += 1
-    print(f"合并去重后总节点数: {len(all_proxies_map)}, 新增节点: {added_new}")
-    all_nodes = list(all_proxies_map.values())
-
-    if not all_nodes:
-        sys.exit("❌ 无任何可用节点, 程序终止")
-
-    # 4. Clash 核心 HTTP 连接测速
-    if ENABLE_SPEED_TEST:
-        print(f"[3/5] 开始 Clash 核心 HTTP 连接测速（超时 {HTTP_TIMEOUT}s，最大线程 {MAX_TEST_WORKERS}）...")
-
-        with concurrent.futures.ThreadPoolExecutor(MAX_TEST_WORKERS) as pool:
-            # 直接对所有节点进行 Clash 核心测速
-            clash_tested_results = list(pool.map(test_single_proxy_with_clash_core, all_nodes))
-
-        # 过滤出通过 Clash 核心 HTTP 测速的节点 (http_delay 不为 None)
-        nodes_to_process_after_speed_test = [p for p in clash_tested_results if p and p.get('http_delay') is not None]
-
-        print(f"  - Clash 核心 HTTP 测速成功节点数: {len(nodes_to_process_after_speed_test)} / {len(all_nodes)}")
-
-        if not nodes_to_process_after_speed_test:
-            sys.exit("❌ 所有节点 Clash 核心 HTTP 测速均失败，无可用节点，程序终止。")
-
+                    if p.get('region_info') and p['region_info']['name'] in fallback_regions:
+                        # For fallback, if http_delay is None, use tcp_delay for sorting
+                        p['http_delay'] = p.get('tcp_delay', 9999) # Assign tcp_delay if http_delay is None
+                        region_grouped_fallback_nodes[p['region_info']['name']].append(p)
+                
+                for region in fallback_regions:
+                    # Sort by http_delay (which is tcp_delay for fallback nodes)
+                    sorted_region_nodes = sorted(region_grouped_fallback_nodes[region], key=lambda x: x.get('http_delay', 9999))
+                    selected_fallback_nodes.extend(sorted_region_nodes[:fallback_count_per_region])
+                
+                print(f"  - 回退策略已选择 {len(selected_fallback_nodes)} 个节点。")
+                nodes_to_process_after_speed_test = selected_fallback_nodes
+            elif not http_passed_nodes and not http_failed_nodes: # This means tcp_successful_proxies_raw was empty
+                print("⚠️ 无任何节点通过 TCP 测速或 HTTP 测速。")
+                nodes_to_process_after_speed_test = []
+            
     else: # ENABLE_SPEED_TEST is False
         nodes_to_process_after_speed_test = all_nodes
         print("测速关闭，使用全部节点继续处理")
 
+    if not nodes_to_process_after_speed_test:
+        sys.exit("❌ 无任何可用节点通过测速或回退选择，程序终止。")
+
     # 5. 节点地区识别及重命名 (对最终选定的节点集进行处理)
     print("[4/5] 节点地区识别及重命名")
     processed_proxies = process_proxies(nodes_to_process_after_speed_test)
+    
     if not processed_proxies:
         sys.exit("❌ 识别有效节点失败，程序退出")
-
-    # 6. 排序 (仅使用 http_delay 进行排序)
+    
+    # 6. 排序 (优先使用 http_delay 进行排序)
     processed_proxies.sort(
         key=lambda p: (
             REGION_PRIORITY.index(p['region_info']['name']) if p['region_info']['name'] in REGION_PRIORITY else 99,
-            p.get('http_delay', 9999) # 仅使用 http_delay 进行排序，如果 http_delay 缺失则置为高值
+            p.get('http_delay', p.get('tcp_delay', 9999)) # Use http_delay first, then tcp_delay if http_delay is missing
         )
     )
     print(f"[5/5] 排序完成，节点数量: {len(processed_proxies)}")
