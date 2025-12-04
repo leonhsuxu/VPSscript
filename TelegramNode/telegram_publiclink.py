@@ -809,7 +809,7 @@ def clash_test_proxy(clash_path, proxy, debug=False):
                 print(f"⚠️ 未找到节点 [{proxy['name']}] 对应的测速日志块")
             return None
 
-        delay_match = re.search(r'(\d+)ms', node_block)
+        delay_match = re.search(r'(\d+)[^\d]{0,5}ms', node_block, re.IGNORECASE)
         if delay_match:
             delay = int(delay_match.group(1))
             if 1 <= delay < 800:
