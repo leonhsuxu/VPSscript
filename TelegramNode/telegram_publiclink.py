@@ -28,7 +28,7 @@ TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS', '')
 
 TIME_WINDOW_HOURS = 3
 MIN_EXPIRE_HOURS = 2
-OUTPUT_FILE = 'flclashyaml/telegram_scraper.yaml'
+OUTPUT_FILE = 'flclashyaml/Tg-node.ymal'
 
 ENABLE_SPEED_TEST = True
 MAX_TEST_WORKERS = 64
