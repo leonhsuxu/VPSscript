@@ -662,63 +662,38 @@ def generate_config(proxies, last_message_ids):
 
 
 def clash_test_proxy(clash_path, proxy):
-    import tempfile
-    import yaml
-    import os
-
-    temp_dir = tempfile.mkdtemp()
-    temp_config_path = os.path.join(temp_dir, 'config.yaml')
-    test_url = "http://www.gstatic.com/generate_204"
-    config = {
-        "port": 7890,
-        "socks-port": 7891,
-        "allow-lan": False,
-        "mode": "Rule",
-        "proxies": [proxy],
-        "proxy-groups": [
-            {
-                "name": "TestGroup",
-                "type": "select",
-                "proxies": [proxy['name']]
-            }
-        ],
-        "rules": [
-            f"DOMAIN,{urlparse(test_url).netloc},TestGroup",
-            "FINAL,DIRECT"
-        ]
-    }
-    with open(temp_config_path, 'w', encoding='utf-8') as f:
-        yaml.dump(config, f, allow_unicode=True, sort_keys=False)
-    try:
-        proc = subprocess.run(
-            [clash_path, '-t', temp_config_path],
-            stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             encoding='utf-8',
-            timeout=15
+            timeout=30  # 按需适当延长超时
         )
-        output = proc.stdout + proc.stderr  # 合并输出
-        print(f"Clash 测试输出（节点 {proxy['name']}）:\n{output}")  # 调试用，确认输出内容
+        output = proc.stdout + proc.stderr
 
-        lines = output.splitlines()
-        safe_name = re.sub(r'[^\w\s-]', '', proxy['name']).lower()
+        # 调试输出，方便排查
+        print(f"Clash Speedtest 输出（节点 {proxy['name']}）:\n{output}")
 
-        for line in lines:
-            if ' ms' in line.lower():
-                m = re.match(r'^(.*?):\s*(\d+)\s*ms$', line.strip(), re.IGNORECASE)
-                if m:
-                    name_part = m.group(1)
-                    delay = int(m.group(2))
-                    cmp_name = re.sub(r'\s+', '', safe_name)
-                    cmp_part = re.sub(r'\s+', '', name_part.lower())
-                    if cmp_name in cmp_part or cmp_part in cmp_name:
-                        return delay
+        # clash-speedtest 输出的延迟格式通常是类似： "延迟: XXX ms"
+        # 示例匹配所有包含 ms 的数值（需根据实际格式调整）
+        delays = re.findall(r'(\d+)\s*ms', output)
+        if delays:
+            delay = int(delays[0])
+            return delay
+
+        # 如果找不到带“ms”的延迟，尝试匹配仅数字（视需求）
+        delays_num = re.findall(r'\b(\d{1,4})\b', output)
+        if delays_num:
+            # 简单过滤可能的延迟，选第一个合理值
+            for val in delays_num:
+                iv = int(val)
+                if 1 <= iv < 10000:
+                    return iv
 
         print(f"⚠️ 未找到延迟匹配信息，节点名: {proxy['name']}")
+    except subprocess.TimeoutExpired:
+        print(f"⚠️ 节点测速超时，节点名: {proxy['name']}")
     except Exception as e:
-        print(f"Clash 测试异常: {e}")
-        return None
+        print(f"⚠️ 节点测速异常 {proxy['name']}: {e}")
     finally:
+        # 清理临时目录
         try:
             os.remove(temp_config_path)
             os.rmdir(temp_dir)
@@ -731,9 +706,9 @@ def test_proxy_with_clash(clash_path, proxy):
     if delay is not None:
         proxy['clash_delay'] = delay
         return proxy
-    else:
-        return None
+    return None
 
+import concurrent.futures
 
 def batch_test_proxies_clash(clash_path, proxies, max_workers=32):
     results = []
