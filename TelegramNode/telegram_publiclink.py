@@ -663,20 +663,21 @@ def generate_config(proxies, last_message_ids):
 
 
 
-def clash_test_proxy(clash_path, proxy):
+def clash_test_proxy(clash_path, proxy, debug=False):
     """
     使用 clash-speedtest 核心测试单个代理节点的延迟。
+
     参数:
         clash_path: clash-speedtest 可执行文件路径，如 'clash_core/clash'
         proxy: 代理节点字典（需包含 name 字段）
+        debug: 是否打印调试信息，默认 False
+
     返回:
         延迟（毫秒）整数，测试失败返回 None
     """
-    import tempfile
     temp_dir = tempfile.mkdtemp()
     temp_config_path = os.path.join(temp_dir, 'config.yaml')
-
-    test_url = HTTP_TEST_URL
+    test_url = HTTP_TEST_URL if 'HTTP_TEST_URL' in globals() else 'http://www.gstatic.com/generate_204'
 
     config = {
         "port": 7890,
@@ -711,24 +712,30 @@ def clash_test_proxy(clash_path, proxy):
 
         output = proc.stdout + proc.stderr
 
-        print(f"Clash Speedtest 输出（节点 {proxy['name']}）:\n{output}")
+        if debug:
+            print(f"Clash Speedtest 输出（节点 {proxy['name']}）:\n{output}")
 
-        delays = re.findall(r'(\d+)\s*ms', output)
+        # 匹配格式如 231ms，数字紧邻单位
+        delays = re.findall(r'\b(\d+)ms\b', output, re.IGNORECASE)
         if delays:
             delay = int(delays[0])
             return delay
 
+        # 兜底匹配纯数字，过滤合理延迟范围
         delays_num = re.findall(r'\b(\d{1,4})\b', output)
         for val in delays_num:
             iv = int(val)
             if 1 <= iv < 10000:
                 return iv
 
-        print(f"⚠️ 未找到延迟匹配信息，节点名: {proxy['name']}")
+        if debug:
+            print(f"⚠️ 未找到延迟匹配信息，节点名: {proxy['name']}")
     except subprocess.TimeoutExpired:
-        print(f"⚠️ 节点测速超时，节点名: {proxy['name']}")
+        if debug:
+            print(f"⚠️ 节点测速超时，节点名: {proxy['name']}")
     except Exception as e:
-        print(f"⚠️ 节点测速异常 {proxy['name']}: {e}")
+        if debug:
+            print(f"⚠️ 节点测速异常 {proxy['name']}: {e}")
     finally:
         try:
             os.remove(temp_config_path)
@@ -741,6 +748,7 @@ def clash_test_proxy(clash_path, proxy):
 
 def test_proxy_with_clash(clash_path, proxy):
     delay = clash_test_proxy(clash_path, proxy)
+    # delay = clash_test_proxy('clash_core/clash', proxy, debug=True)  加入debug=True是打印调试日志
     if delay is not None:
         proxy['clash_delay'] = delay
         return proxy
