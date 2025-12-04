@@ -1,79 +1,55 @@
 # -*- coding: utf-8 -*-
-# =====================================================================
-# Clash 订阅自动生成脚本 V4 - 20251204 Clash测速版
-#
-# 功能：
-# 1. 从 Telegram 频道动态抓取订阅链接
-# 2. 支持两种下载方式（wget优先，requests备用）
-# 3. 订阅内容自动判断并解析：
-#    - YAML 格式直接提取 proxies 字段
-#    - 明文协议链接（vmess、vless、ssr、ss、trojan、hysteria等）逐行解析
-#    - Base64 编码的混合协议节点解析
-# 4. 解析过程中统计各协议成功和失败节点数量，统一打印
-# 5. 支持节点去重、地区识别（含emoji国旗）、Clash核心测速与排序、旧节点测速去重
-# 6. 生成Clash兼容配置文件，里边包含爬取消息截止id
-# =====================================================================
 import os
 import re
-import asyncio
-import yaml
+import sys
 import base64
 import json
+import yaml
 import time
-import requests
-from datetime import datetime, timedelta, timezone
-import sys
-from collections import defaultdict
 import socket
-import concurrent.futures
 import hashlib
-import subprocess
+import asyncio
 import shutil
+import subprocess
+import concurrent.futures
 from urllib.parse import urlparse, parse_qs, unquote
-import tempfile # For creating temporary directories
-import platform # To detect OS for Clash core executable name
-# --- Telethon ---
+from datetime import datetime, timedelta, timezone
+from collections import defaultdict
+
 from telethon.sync import TelegramClient
 from telethon.sessions import StringSession
-# ========================== Telegram 个人资料配置 ==========================
-API_ID = os.environ.get('TELEGRAM_API_ID')  # 获取 Telegram API ID
-API_HASH = os.environ.get('TELEGRAM_API_HASH')  # 获取 Telegram API HASH
-STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')  # 获取 Telegram 会话字符串
-# ========================== 配置区 =========================================
-TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS')  # Telegram频道ID，多行字符串，从yml引入
-TIME_WINDOW_HOURS = 8  # 抓取时间窗口，单位小时
-MIN_EXPIRE_HOURS = 2  # 订阅链接最低剩余有效期，单位小时
-OUTPUT_FILE = 'flclashyaml/telegram_scraper.yaml'  # 输出YAML路径
-# ========================== 测速参数 =========================================
-ENABLE_SPEED_TEST = True  # 是否启用测速  True开启，False关闭
-# SOCKET_TIMEOUT = 3  # TCP测速超时时间(秒) - 已移除，因为不再进行 TCP 直接测速
-MAX_TEST_WORKERS = 5  # 并发测速线程数 (注意: 使用Clash核心测速时，过高的并发数会显著增加资源消耗)
-HTTP_TIMEOUT = 5          # HTTP 请求超时时间（秒），用于Clash核心测速时的请求
-HTTP_TEST_URL = 'http://www.gstatic.com/generate_204'  # 轻量无内容响应URL，用于HTTP测速
-# Clash 核心测速相关配置
-# 请根据您的操作系统和Clash核心的实际位置进行修改
-# 示例: Linux 为 './clash_core/clash', Windows 为 'C:\\clash_core\\clash.exe'
-# 或者如果您已将Clash核心添加到系统PATH中，可以直接写 'clash'
-CLASH_CORE_PATH = './clash_core/clash'
-CLASH_CONFIG_PORT_HTTP = 7890  # Clash 核心监听的 HTTP 代理端口
-CLASH_CONFIG_PORT_SOCKS = 7891 # Clash 核心监听的 SOCKS5 代理端口
-CLASH_SECRET = "your_clash_secret" # Clash API 的可选密码，如果不需要可以留空或删除
-# ========== 地区过滤配置 ==========
-ALLOWED_REGIONS = {'香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国',
-                   '印度', '菲律宾', '印度尼西亚', '越南', '美国', '加拿大', '法国',
-                   '英国', '德国', '俄罗斯', '意大利', '巴西', '阿根廷', '土耳其', '澳大利亚'}
-# ========== 排序优先级配置 ==========
-REGION_PRIORITY = ['香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国', '印度', '菲律宾',
-                   '印度尼西亚', '越南', '美国', '加拿大', '法国', '英国', '德国', '俄罗斯', '意大利',
-                   '巴西', '阿根廷', '土耳其', '澳大利亚']
-# ========== 国家/地区映射表 ==========
-CHINESE_COUNTRY_MAP = {
-    'HK': '香港', 'TW': '台湾', 'JP': '日本', 'SG': '新加坡', 'KR': '韩国', 'MY': '马来西亚',
-    'TH': '泰国', 'IN': '印度', 'PH': '菲律宾', 'ID': '印度尼西亚', 'VN': '越南', 'US': '美国',
-    'CA': '加拿大', 'FR': '法国', 'GB': '英国', 'DE': '德国', 'RU': '俄罗斯', 'IT': '意大利',
-    'BR': '巴西', 'AR': '阿根廷', 'TR': '土耳其', 'AU': '澳大利亚'
+
+# === 环境变量读取 ===
+API_ID = int(os.environ.get('TELEGRAM_API_ID') or 0)
+API_HASH = os.environ.get('TELEGRAM_API_HASH')
+STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')
+TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS', '')
+
+TIME_WINDOW_HOURS = 8
+MIN_EXPIRE_HOURS = 2
+OUTPUT_FILE = 'flclashyaml/telegram_scraper.yaml'
+
+ENABLE_SPEED_TEST = True
+MAX_TEST_WORKERS = 64
+SOCKET_TIMEOUT = 3
+HTTP_TIMEOUT = 5
+
+HTTP_TEST_URL = 'http://www.gstatic.com/generate_204'
+
+ALLOWED_REGIONS = {
+    '香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国',
+    '印度', '菲律宾', '印度尼西亚', '越南', '美国', '加拿大',
+    '法国', '英国', '德国', '俄罗斯', '意大利', '巴西',
+    '阿根廷', '土耳其', '澳大利亚'
 }
-# ========== 地区识别正则规则 ==========
+
+REGION_PRIORITY = [
+    '香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国',
+    '印度', '菲律宾', '印度尼西亚', '越南', '美国', '加拿大',
+    '法国', '英国', '德国', '俄罗斯', '意大利', '巴西',
+    '阿根廷', '土耳其', '澳大利亚'
+]
+
 CUSTOM_REGEX_RULES = {
     '香港': {'code': 'HK', 'pattern': r'香港|港|HK|Hong\s*Kong'},
     '台湾': {'code': 'TW', 'pattern': r'台湾|台|TW|Taiwan'},
@@ -98,60 +74,24 @@ CUSTOM_REGEX_RULES = {
     '土耳其': {'code': 'TR', 'pattern': r'土耳其|TR|Turkey'},
     '澳大利亚': {'code': 'AU', 'pattern': r'澳大利亚|AU|Australia'},
 }
-JUNK_PATTERNS = re.compile(r"(?:专线|IPLC|体验|官网|倍率|x\d[\.\d]*|[\[\(【「].*?[\]\)】」]|^\s*@\w+\s*|Relay|流量)", re.IGNORECASE)
+
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
 BJ_TZ = timezone(timedelta(hours=8))
-# =================================================================================
-# Part 2: 函数定义
-# =================================================================================
-def process_proxies(proxies):
-    """
-    过滤节点，仅保留地区在 ALLOWED_REGIONS 的节点，
-    并添加 region_info，最后重命名节点。
-    """
-    identified = []
-    for p in proxies:
-        matched_region = None
-        for region_name, info in CUSTOM_REGEX_RULES.items():
-            pattern = info['pattern']
-            if re.search(pattern, p.get('name', ''), re.IGNORECASE):
-                matched_region = {'name': region_name, 'code': info['code']}
-                break
-        if matched_region is None:
-            continue
-        if matched_region['name'] not in ALLOWED_REGIONS:
-            continue
-        p['region_info'] = matched_region
-        identified.append(p)
-    print(f"  - 节点过滤: 总数 {len(proxies)} -> 有效地区识别后 {len(identified)}")
-    counters = defaultdict(lambda: defaultdict(int))
-    master_pattern = re.compile(
-        '|'.join(sorted([p for r in CUSTOM_REGEX_RULES.values() for p in r['pattern'].split('|')], key=len, reverse=True)),
-        re.IGNORECASE
-    )
-    final = []
-    for p in identified:
-        info = p['region_info']
-        match = FLAG_EMOJI_PATTERN.search(p['name'])
-        flag = match.group(0) if match else get_country_flag_emoji(info['code'])
-        clean_name = master_pattern.sub('', FLAG_EMOJI_PATTERN.sub('', p['name'], 1)).strip()
-        clean_name = re.sub(r'^\W+|\W+$', '', clean_name)
-        feature = re.sub(r'\s+', ' ', clean_name).strip()
-        if not feature:
-            count = sum(1 for fp in final if fp['region_info']['name'] == info['name']) + 1
-            feature = f"{info['code']}{count:02d}"
-        base_name = f"{flag} {info['name']} {feature}".strip()
-        counters[info['name']][base_name] += 1
-        count_ = counters[info['name']][base_name]
-        if count_ > 1:
-            new_name = f"{base_name} {count_}"
-        else:
-            new_name = base_name
-        p['name'] = new_name
-        final.append(p)
-    return final
 
-# --- 读取本地已有节点及抓取状态 ---
+
+def get_country_flag_emoji(code):
+    if not code or len(code) != 2:
+        return "❓"
+    return "".join(chr(0x1F1E6 + ord(c.upper()) - ord('A')) for c in code)
+
+
+def preprocess_regex_rules():
+    for region in CUSTOM_REGEX_RULES:
+        CUSTOM_REGEX_RULES[region]['pattern'] = '|'.join(
+            sorted(CUSTOM_REGEX_RULES[region]['pattern'].split('|'), key=len, reverse=True)
+        )
+
+
 def load_existing_proxies_and_state():
     existing_proxies = []
     last_message_ids = {}
@@ -161,28 +101,22 @@ def load_existing_proxies_and_state():
                 loaded_yaml = yaml.safe_load(f)
                 if isinstance(loaded_yaml, dict):
                     existing_proxies = loaded_yaml.get('proxies', [])
-                    if not isinstance(existing_proxies, list):
-                        existing_proxies = []
                     last_message_ids = loaded_yaml.get('last_message_ids', {})
-                    if not isinstance(last_message_ids, dict):
-                        last_message_ids = {}
                 elif isinstance(loaded_yaml, list):
                     existing_proxies = [p for p in loaded_yaml if isinstance(p, dict)]
         except Exception as e:
-            print(f"  - 读取或解析 {OUTPUT_FILE} 失败: {e}")
+            print(f"读取 {OUTPUT_FILE} 失败: {e}")
     return existing_proxies, last_message_ids
 
+
 def extract_valid_subscribe_links(text):
-    """
-    从单条消息文本中提取有效订阅链接，
-    忽略机场名链接，根据到期时间过滤剩余时间<2小时的链接。
-    """
     MIN_HOURS_LEFT = MIN_EXPIRE_HOURS
-    BJ_TZ = timezone(timedelta(hours=8))
+
     link_pattern = re.compile(
         r'(?:订阅链接|订阅地址|订阅)[\s:：]*?[^hH]*?(https?://[^\s<>"*`]+)'
     )
     links = link_pattern.findall(text)
+
     expire_time = None
     expire_patterns = [
         r'到期时间[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2}\s+\d{2}:\d{2}:\d{2})',
@@ -194,6 +128,7 @@ def extract_valid_subscribe_links(text):
         r'过期时间[:：]\s*长期有效',
         r'过期[:：]\s*未知/无限',
     ]
+
     text_single_line = text.replace('\n', ' ')
     for patt in expire_patterns:
         match = re.search(patt, text_single_line)
@@ -224,113 +159,60 @@ def extract_valid_subscribe_links(text):
         valid_links.append(url)
     return valid_links
 
+
 async def scrape_telegram_links(last_message_ids=None):
     if last_message_ids is None:
         last_message_ids = {}
     if not all([API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS_STR]):
-        print("❌ 错误: 缺少必要的环境变量 (API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS)。")
+        print("❌ 缺少环境变量(API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS)")
         return [], last_message_ids
     TARGET_CHANNELS = [line.strip() for line in TELEGRAM_CHANNEL_IDS_STR.split('\n')
                        if line.strip() and not line.strip().startswith('#')]
     if not TARGET_CHANNELS:
-        print("❌ 错误: TELEGRAM_CHANNEL_IDS 中未找到有效频道 ID。")
+        print("❌ TELEGRAM_CHANNEL_IDS 未找到有效频道")
         return [], last_message_ids
-    print(f"▶️ 配置抓取 {len(TARGET_CHANNELS)} 个频道: {TARGET_CHANNELS}")
+    print(f"准备从 {len(TARGET_CHANNELS)} 频道抓取订阅链接")
     try:
         client = TelegramClient(StringSession(STRING_SESSION), API_ID, API_HASH)
         await client.connect()
         me = await client.get_me()
-        print(f"✅ 以 {me.first_name} (@{me.username}) 的身份成功连接")
+        print(f"已连接 Telegram: {me.first_name} (@{me.username})")
     except Exception as e:
-        print(f"❌ 错误: 连接 Telegram 时出错: {e}")
+        print(f"连接 Telegram 出错: {e}")
         return [], last_message_ids
+
     bj_now = datetime.now(BJ_TZ)
-    bj_prior_time = bj_now - timedelta(hours=TIME_WINDOW_HOURS)
-    target_time = bj_prior_time.astimezone(timezone.utc)
+    target_time = bj_now - timedelta(hours=TIME_WINDOW_HOURS)
+    target_time = target_time.astimezone(timezone.utc)
+
     all_links = set()
     for channel_id in TARGET_CHANNELS:
-        print(f"\n📢  正在处理频道: {channel_id} ...")
+        print(f"处理频道 {channel_id}")
         try:
             entity = await client.get_entity(channel_id)
         except Exception as e:
-            print(f"❌ 错误: 无法获取频道实体 {channel_id}: {e}")
+            print(f"无法获取频道 {channel_id} 实体: {e}")
             continue
         last_id = last_message_ids.get(channel_id, 0)
         max_id_found = last_id
         try:
-            async for message in client.iter_messages(entity, min_id=last_id + 1, reverse=False):
-                if message.date < target_time:
+            async for msg in client.iter_messages(entity, min_id=last_id + 1, reverse=False):
+                if msg.date < target_time:
                     break
-                if message.text:
-                    links = extract_valid_subscribe_links(message.text)
+                if msg.text:
+                    links = extract_valid_subscribe_links(msg.text)
                     for link in links:
                         all_links.add(link)
-                        print(f"  ✅ 找到链接: {link[:70]}...")
-                if message.id > max_id_found:
-                    max_id_found = message.id
+                        print(f"  获得链接: {link[:70]}")
+                if msg.id > max_id_found:
+                    max_id_found = msg.id
             last_message_ids[channel_id] = max_id_found
         except Exception as e:
-            print(f"❌ 错误: 从频道 '{channel_id}' 获取消息时出错: {e}")
+            print(f"获取频道 {channel_id} 消息出错: {e}")
+
     await client.disconnect()
-    print(f"\n✅ 抓取完成, 共找到 {len(all_links)} 个不重复的有效链接。")
+    print(f"共抓取到 {len(all_links)} 个有效不重复链接。")
     return list(all_links), last_message_ids
-
-def preprocess_regex_rules():
-    """预处理正则规则：按长度排序以优化匹配效率"""
-    for region in CUSTOM_REGEX_RULES:
-        CUSTOM_REGEX_RULES[region]['pattern'] = '|'.join(
-            sorted(CUSTOM_REGEX_RULES[region]['pattern'].split('|'), key=len, reverse=True)
-        )
-
-def get_country_flag_emoji(code):
-    """根据国家代码生成旗帜 Emoji"""
-    if not code or len(code) != 2:
-        return "❓"
-    return "".join(chr(0x1F1E6 + ord(c.upper()) - ord('A')) for c in code)
-
-def attempt_download_using_wget(url):
-    """使用 wget 下载订阅链接"""
-    print(f"  ⬇️ 正在使用 wget 下载: {url[:80]}...")
-    if not shutil.which("wget"):
-        print("  ✗ 错误: wget 未安装，无法执行下载。")
-        return None
-    try:
-        # 使用 --no-check-certificate 避免证书问题
-        content = subprocess.run(
-            ["wget", "-O", "-", "--timeout=30", "--header=User-Agent: Clash", "--no-check-certificate", url],
-            capture_output=True, text=True, check=True, encoding='utf-8', errors='ignore'
-        ).stdout
-        return content if content else None
-    except subprocess.CalledProcessError as e:
-        print(f"  ✗ wget 下载失败: {e.stderr}")
-        return None
-
-def attempt_download_using_requests(url):
-    """使用 requests 下载订阅链接"""
-    print(f"  ⬇️ 正在使用 requests 下载: {url[:80]}...")
-    try:
-        headers = {'User-Agent': 'Clash'}
-        response = requests.get(url, headers=headers, timeout=30, verify=False) # verify=False 忽略SSL证书错误
-        response.raise_for_status()
-        response.encoding = response.apparent_encoding or 'utf-8'
-        return response.text
-    except requests.RequestException as e:
-        print(f"  ✗ requests 下载失败: {e}")
-        return None
-
-def parse_proxies_from_content(content):
-    """从下载的内容中解析代理节点"""
-    try:
-        data = yaml.safe_load(content)
-        if isinstance(data, dict):
-            proxies = data.get('proxies', [])
-            if isinstance(proxies, list):
-                return proxies
-        elif isinstance(data, list):
-            return data
-    except Exception:
-        pass
-    return []
 
 def is_base64(text):
     """检查字符串是否是有效的 Base64 编码"""
@@ -338,14 +220,12 @@ def is_base64(text):
         s = ''.join(text.split())
         if not s or len(s) % 4 != 0:
             return False
-        # Relaxed check for URL-safe base64, common in some subs
-        if not re.match(r'^[A-Za-z0-9+/=\-_]+$', s): # Added - and _
+        if not re.match(r'^[A-Za-z0-9+/=]+$', s):
             return False
         base64.b64decode(s, validate=True)
         return True
     except Exception:
         return False
-
 # ---------------- 协议节点解析 ----------------
 def parse_vmess_node(line):
     try:
@@ -374,7 +254,6 @@ def parse_vmess_node(line):
         return node
     except Exception:
         return None
-
 def parse_vless_node(line):
     try:
         parsed = urlparse(line.strip())
@@ -401,7 +280,6 @@ def parse_vless_node(line):
         return node
     except Exception:
         return None
-
 def parse_ssr_node(line):
     try:
         ssr_b64 = line[6:]
@@ -431,7 +309,6 @@ def parse_ssr_node(line):
         return node
     except Exception:
         return None
-
 def parse_ss_node(line):
     try:
         line = line.strip()
@@ -462,7 +339,6 @@ def parse_ss_node(line):
             return node
     except Exception:
         return None
-
 def parse_trojan_node(line):
     try:
         parsed = urlparse(line)
@@ -487,7 +363,6 @@ def parse_trojan_node(line):
         return node
     except Exception:
         return None
-
 def parse_hysteria_node(line):
     try:
         parsed = urlparse(line)
@@ -508,15 +383,17 @@ def parse_hysteria_node(line):
         return node
     except Exception:
         return None
-
 def parse_hysteria2_node(line):
     try:
         parsed = urlparse(line)
         if parsed.scheme != 'hysteria2':
             return None
         params = parse_qs(parsed.query)
+        # 用户ID在 netloc 的用户名部分
         auth = parsed.username or ''
+        # 混淆密码
         obfs_password = params.get('obfs-password', [''])[0]
+        # insecure判断，兼容 '0', 'false', '1', 'true'
         insecure_val = params.get('insecure', ['false'])[0].lower()
         insecure = insecure_val in ('1', 'true', 'yes')
         node = {
@@ -533,8 +410,8 @@ def parse_hysteria2_node(line):
         }
         return node
     except Exception as e:
+        # print(f"Error parsing node: {e}") # Debugging
         return None
-
 # ---------------- 订阅解析主逻辑 ----------------
 def parse_plain_nodes_from_text(text):
     proxies = []
@@ -577,7 +454,6 @@ def parse_plain_nodes_from_text(text):
     for proto, count in failure_count.items():
         print(f"  - 明文协议解析失败，{proto} 节点失败数：{count}")
     return proxies
-
 def decode_base64_and_parse(content):
     try:
         decoded = base64.b64decode(''.join(content.split())).decode('utf-8', errors='ignore')
@@ -625,368 +501,346 @@ def decode_base64_and_parse(content):
         print(f"  - Base64 解码解析异常: {e}")
         return []
 
-def download_subscription(url):
-    content = attempt_download_using_wget(url)
+# --------- 下载并解析订阅内容 ---------
+def attempt_download(url):
+    import shutil
+
+    def try_wget():
+        if shutil.which("wget"):
+            try:
+                result = subprocess.run(
+                    ["wget", "-O", "-", "--timeout=30", "--header=User-Agent: Clash", url],
+                    stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                    encoding='utf-8', timeout=30
+                )
+                if result.returncode == 0:
+                    return result.stdout
+            except Exception:
+                pass
+        return None
+
+    def try_requests():
+        import requests
+        try:
+            r = requests.get(url, headers={'User-Agent': 'Clash'}, timeout=30)
+            r.raise_for_status()
+            r.encoding = r.apparent_encoding or 'utf-8'
+            return r.text
+        except Exception:
+            return None
+
+    content = try_wget()
     if content is None:
-        content = attempt_download_using_requests(url)
-    if content is None:
-        print(f"  ❌ 下载失败: {url}")
-        return []
-    proxies = parse_proxies_from_content(content)
-    if proxies:
-        print(f"  - 直接 YAML 解析获取 {len(proxies)} 个节点")
-        return proxies
+        content = try_requests()
+
+    return content
+
+
+def parse_proxies_subscribe(content):
+    # 先试yaml解析
+    try:
+        data = yaml.safe_load(content)
+        if isinstance(data, dict):
+            proxies = data.get('proxies', [])
+            if isinstance(proxies, list):
+                return proxies
+        elif isinstance(data, list):
+            return data
+    except Exception:
+        pass
+
+    # 解析明文订阅，组合用例（需要加入你的节点解析函数，parse_vmess_node等）
+    # 这里只示意
     proxies = parse_plain_nodes_from_text(content)
     if proxies:
-        print(f"  - 明文内容解析获取 {len(proxies)} 个节点")
         return proxies
+
+    # Base64解码后尝试
     if is_base64(content):
-        print(f"  - 内容为 Base64 编码，正在解码解析...")
-        proxies = decode_base64_and_parse(content)
-        if proxies:
-            return proxies
-        else:
-            print(f"  - Base64 解码无有效节点")
-            return []
-    print(f"  - 内容不符合已知格式，未找到有效节点")
+        return decode_base64_and_parse(content)
+
     return []
 
-# 移除了 test_single_proxy_tcp 函数，因为不再进行直接 TCP 测速
 
-def generate_clash_config_for_proxy(proxy, config_path, http_port, socks_port):
-    """
-    Generates a minimal Clash config file for a single proxy.
-    Accepts http_port and socks_port to configure Clash listener ports.
-    """
-    # Ensure proxy has a name for the Clash config
-    if 'name' not in proxy:
-        proxy['name'] = f"{proxy.get('type', 'unknown')}_{proxy.get('server', 'unknown')}_{proxy.get('port', 'unknown')}_{hashlib.md5(str(proxy).encode()).hexdigest()[:6]}"
+def download_and_parse(url):
+    content = attempt_download(url)
+    if not content:
+        print(f"下载失败: {url}")
+        return []
 
-    config_data = {
-        'port': http_port, # <--- 使用动态分配的 HTTP 端口
-        'socks-port': socks_port, # <--- 使用动态分配的 SOCKS 端口
-        'allow-lan': False, # 通常在测速时设置为 False
-        'mode': 'rule', # or 'direct'
-        'log-level': 'silent', # 设置为 silent 减少日志输出，如果需要详细日志可以改为 info 或 debug
-        'secret': CLASH_SECRET, # Clash API 的可选密码
-        'proxies': [proxy], # 将单个代理添加到 proxies 列表中
-        'proxy-groups': [
-            {
-                'name': 'Proxy',
-                'type': 'select',
-                'proxies': [proxy['name']] # 代理组引用该代理
-            },
-            {
-                'name': 'DIRECT', # 直连策略组，虽然此处未使用，但Clash配置通常包含
-                'type': 'direct'
-            }
-        ],
-        'rules': [
-            'MATCH,Proxy' # 所有流量都通过 'Proxy' 组，确保测速流量走代理
-        ]
-    }
-    try:
-        with open(config_path, 'w', encoding='utf-8') as f:
-            yaml.dump(config_data, f, allow_unicode=True, sort_keys=False, indent=2)
-    except Exception as e:
-        print(f"  ✗ Failed to write Clash config to {config_path}: {e}")
-        raise # 重新抛出异常，让调用者知道配置生成失败
+    proxies = parse_proxies_subscribe(content)
+    if proxies:
+        print(f"解析出节点数: {len(proxies)}")
+    else:
+        print(f"未找到有效节点: {url}")
+    return proxies
 
-def wait_for_clash_startup(port, timeout=10):
-    """Waits for Clash to start listening on the given port."""
-    start_time = time.time()
-    while time.time() - start_time < timeout:
-        try:
-            # Try to establish a connection to the Clash HTTP proxy port
-            with socket.create_connection(('127.0.0.1', port), timeout=1):
-                return True
-        except (socket.timeout, ConnectionRefusedError, OSError):
-            time.sleep(0.5)
-    return False
 
-def test_single_proxy_with_clash_core(proxy):
-    """
-    使用 Clash 内核对单个代理进行 HTTP 代理测速，
-    返回更新了 'http_delay' 字段的代理字典。
-    """
-    import random
-    import subprocess
-    import tempfile
-    import time
-    import requests
-
-    # 先初始化延迟字段为 None — 表示未测速或测速失败
-    proxy['http_delay'] = None
-
-    # 生成唯一id用于临时文件命名等
-    unique_id = hashlib.md5(str(proxy).encode()).hexdigest()[:6]
-    original_proxy_name = proxy.get('name', f"{proxy.get('type', 'unknown')}_{unique_id}")
-
-    temp_dir = None
-    clash_process = None
-    log_file_stdout = None
-    log_file_stderr = None
-
-    # 随机端口，避免端口冲突，范围从30000到40000
-    http_port = random.randint(30000, 40000)
-    socks_port = http_port + 1
-
-    try:
-        # 创建临时目录写入 Clash 配置文件
-        temp_dir = tempfile.mkdtemp(prefix=f"clash_test_{unique_id}_")
-        config_path = os.path.join(temp_dir, "config.yaml")
-
-        # 生成单节点配置
-        # 使用外部全局配置端口，确保 Clash api secret 使用一致
-        generate_clash_config_for_proxy(proxy, config_path, http_port, socks_port)
-
-        # 日志文件路径
-        log_file_stdout = os.path.join(temp_dir, "clash_stdout.log")
-        log_file_stderr = os.path.join(temp_dir, "clash_stderr.log")
-
-        # 启动 clash core 进程
-        process_args = [
-            CLASH_CORE_PATH,
-            '-f', config_path,
-            '--log-level', 'info',  # 方便调试，可改为 'silent' 减少日志
-        ]
-        with open(log_file_stdout, 'w', encoding='utf-8') as fout, open(log_file_stderr, 'w', encoding='utf-8') as ferr:
-            clash_process = subprocess.Popen(
-                process_args,
-                stdout=fout,
-                stderr=ferr,
-                cwd=temp_dir
-            )
-
-        # 等待 Clash 核心监听端口启动，最长10秒
-        if not wait_for_clash_startup(http_port, timeout=10):
-            # 没有启动成功
-            print(f"  ✗ Clash Core 未能在10秒内监听端口 {http_port}")
-            return proxy
-
-        # 配置HTTP代理地址
-        proxies = {
-            'http': f'http://127.0.0.1:{http_port}',
-            'https': f'http://127.0.0.1:{http_port}',
-        }
-
-        # 进行HTTP测速请求
-        start_time = time.time()
-        try:
-            resp = requests.get(
-                HTTP_TEST_URL,
-                proxies=proxies,
-                timeout=HTTP_TIMEOUT,
-                verify=False,
-                headers={'User-Agent': 'Clash Test'}
-            )
-            # 成功请求响应 状态码204
-            if resp.status_code == 204:
-                elapsed = (time.time() - start_time) * 1000  # 延迟ms
-                proxy['http_delay'] = round(elapsed, 2)
-            else:
-                # 状态码非预期，测速失败
-                proxy['http_delay'] = None
-        except requests.RequestException as e:
-            # 请求异常视为测速失败
-            proxy['http_delay'] = None
-
-        return proxy
-    except Exception as e:
-        print(f"  ✗ Clash core测速异常: {e}")
-        proxy['http_delay'] = None
-        return proxy
-    finally:
-        # 恢复原始名称
-        if 'name' in proxy and proxy['name'].endswith(f"_{unique_id}"):
-            proxy['name'] = original_proxy_name
-        # 关闭clash进程
-        if clash_process and clash_process.poll() is None:
-            clash_process.terminate()
-            try:
-                clash_process.wait(timeout=5)
-            except subprocess.TimeoutExpired:
-                clash_process.kill()
-        # 打印日志（仅在测速失败时）
-        if proxy.get('http_delay') is None:
-            print(f"  --- Clash Core Logs for {original_proxy_name} ---")
-            if log_file_stdout and os.path.exists(log_file_stdout):
-                with open(log_file_stdout, 'r', encoding='utf-8') as f:
-                    content = f.read()
-                    if content.strip():
-                        print(f"  Clash STDOUT:\n{content}")
-            if log_file_stderr and os.path.exists(log_file_stderr):
-                with open(log_file_stderr, 'r', encoding='utf-8') as f:
-                    content = f.read()
-                    if content.strip():
-                        print(f"  Clash STDERR:\n{content}")
-            print(f"  --- End Clash Core Logs ---")
-        # 清理临时文件夹
-        if temp_dir and os.path.exists(temp_dir):
-            try:
-                shutil.rmtree(temp_dir)
-            except Exception as e:
-                print(f"  ✗ 清理临时目录失败 {temp_dir}: {e}")
-
-# --- 主控流程 ---
-def get_proxy_key(p):
-    """生成代理节点的唯一标识"""
-    # 优先使用 uuid/password，然后是 server/port 组合
-    unique_part = p.get('uuid') or p.get('password') or ''
+def get_proxy_key(proxy):
+    unique_part = proxy.get('uuid') or proxy.get('password') or ''
     return hashlib.md5(
-        f"{p.get('server','')}:{p.get('port',0)}|{unique_part}".encode()
+        f"{proxy.get('server','')}:{proxy.get('port',0)}|{unique_part}".encode()
     ).hexdigest()
 
+
 def is_valid_proxy(proxy):
-    """验证代理节点的协议格式和有效性"""
     if not isinstance(proxy, dict):
         return False
     required_keys = ['name', 'server', 'port', 'type']
     if not all(key in proxy for key in required_keys):
         return False
-    # 进一步检查协议类型
     allowed_types = {'http', 'socks5', 'trojan', 'vless', 'ss', 'vmess', 'ssr', 'hysteria', 'hysteria2'}
-    if 'type' in proxy and proxy['type'] not in allowed_types:
+    if proxy['type'] not in allowed_types:
         return False
-    # 确保端口范围在有效范围内
     if not isinstance(proxy['port'], int) or not (1 <= proxy['port'] <= 65535):
         return False
     return True
 
-def delete_old_yaml():
-    """每周一晚上23:00删除旧的 YAML 文件"""
-    now = datetime.now(timezone(timedelta(hours=8)))  # 北京时间
-    # 周一(weekday()==0), 23:00-23:59
-    if now.weekday() == 0 and now.hour == 23:
-        if os.path.exists(OUTPUT_FILE):
-            try:
-                os.remove(OUTPUT_FILE)
-                print(f"✅ 已根据计划删除旧的配置文件: {OUTPUT_FILE}")
-            except OSError as e:
-                print(f"❌ 删除旧配置文件时出错: {e}")
 
-def generate_config(proxies):
-    """根据代理节点列表生成完整的 Clash 配置字典"""
-    if not proxies:
-        return None
-    config = {
+def identify_regions_only(proxies):
+    identified = []
+    for p in proxies:
+        matched_region = None
+        for region_name, info in CUSTOM_REGEX_RULES.items():
+            if re.search(info['pattern'], p.get('name', ''), re.IGNORECASE):
+                matched_region = {'name': region_name, 'code': info['code']}
+                break
+        if matched_region:
+            p['region_info'] = matched_region
+            identified.append(p)
+    return identified
+
+
+def process_proxies(proxies):
+    identified = []
+    for p in proxies:
+        matched_region = None
+        for region_name, info in CUSTOM_REGEX_RULES.items():
+            if re.search(info['pattern'], p.get('name', ''), re.IGNORECASE):
+                matched_region = {'name': region_name, 'code': info['code']}
+                break
+        if matched_region is None:
+            continue
+        if matched_region['name'] not in ALLOWED_REGIONS:
+            continue
+        p['region_info'] = matched_region
+        identified.append(p)
+
+    counters = defaultdict(lambda: defaultdict(int))
+    master_pattern = re.compile(
+        '|'.join(sorted([p for r in CUSTOM_REGEX_RULES.values() for p in r['pattern'].split('|')], key=len, reverse=True)),
+        re.IGNORECASE
+    )
+    final = []
+    for p in identified:
+        info = p['region_info']
+        match = FLAG_EMOJI_PATTERN.search(p['name'])
+        flag = match.group(0) if match else get_country_flag_emoji(info['code'])
+        clean_name = master_pattern.sub('', FLAG_EMOJI_PATTERN.sub('', p['name'], 1)).strip()
+        clean_name = re.sub(r'^\W+|\W+$', '', clean_name)
+        feature = re.sub(r'\s+', ' ', clean_name).strip()
+        if not feature:
+            count = sum(1 for fp in final if fp['region_info']['name'] == info['name']) + 1
+            feature = f"{info['code']}{count:02d}"
+        base_name = f"{flag} {info['name']} {feature}".strip()
+        counters[info['name']][base_name] += 1
+        count_ = counters[info['name']][base_name]
+        if count_ > 1:
+            new_name = f"{base_name} {count_}"
+        else:
+            new_name = base_name
+        p['name'] = new_name
+        final.append(p)
+    return final
+
+
+def generate_config(proxies, last_message_ids):
+    return {
         'proxies': proxies,
+        'last_message_ids': last_message_ids,
     }
-    return config
+
+
+def clash_test_proxy(clash_path, proxy):
+    """调用 clash 执行文件测速接口，返回延迟或 None。"""
+    tested_types = {'vmess', 'vless', 'trojan', 'ss', 'ssr', 'hysteria', 'hysteria2', 'http', 'socks5'}
+    if proxy.get('type', '').lower() not in tested_types:
+        return None
+
+    import tempfile
+    import yaml
+
+    temp_dir = tempfile.mkdtemp()
+    temp_config_path = os.path.join(temp_dir, 'config.yaml')
+
+    test_url = "http://www.gstatic.com/generate_204"
+
+    config = {
+        "port": 7890,
+        "socks-port": 7891,
+        "allow-lan": False,
+        "mode": "Rule",
+        "proxies": [proxy],
+        "proxy-groups": [
+            {
+                "name": "TestGroup",
+                "type": "select",
+                "proxies": [proxy['name']]
+            }
+        ],
+        "rules": [
+            f"DOMAIN,{urlparse(test_url).netloc},TestGroup",
+            "FINAL,DIRECT"
+        ]
+    }
+
+    with open(temp_config_path, 'w', encoding='utf-8') as f:
+        yaml.dump(config, f, allow_unicode=True, sort_keys=False)
+
+    try:
+        proc = subprocess.run(
+            [clash_path, '-t', temp_config_path],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            encoding='utf-8',
+            timeout=15
+        )
+        output = proc.stdout
+        # 找出“节点名: 123 ms”形式的延迟
+        match = re.search(rf"{re.escape(proxy['name'])}: (\d+) ms", output)
+        if match:
+            delay = int(match.group(1))
+            return delay
+    except Exception as e:
+        print(f"Clash 测试异常: {e}")
+        return None
+    finally:
+        try:
+            os.remove(temp_config_path)
+            os.rmdir(temp_dir)
+        except Exception:
+            pass
+
+    return None
+
+
+def test_proxy_with_clash(clash_path, proxy):
+    delay = clash_test_proxy(clash_path, proxy)
+    if delay is not None:
+        proxy['clash_delay'] = delay
+        return proxy
+    else:
+        return None
+
+
+def batch_test_proxies_clash(clash_path, proxies, max_workers=32):
+    results = []
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = [executor.submit(test_proxy_with_clash, clash_path, p) for p in proxies]
+        for future in futures:
+            res = future.result()
+            if res:
+                results.append(res)
+    return results
+
 
 async def main():
-    print("正在运行 Clash 测速脚本...")
+    print("=" * 60)
+    print("Clash 订阅自动生成脚本 - Clash 核心测速版本")
+    print(datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S"))
+    print("=" * 60)
 
-    # 1. 定时删除旧yaml文件，保留配置文件清洁
-    #delete_old_yaml()
+    preprocess_regex_rules()
 
-    # 2. 读取本地已有节点和抓取状态
+    print("[1/5] 加载原有节点和抓取状态")
     existing_proxies, last_message_ids = load_existing_proxies_and_state()
+    print(f"已有节点数: {len(existing_proxies)}")
 
-    # 3. 抓取最新订阅链接
-    new_links, last_message_ids = await scrape_telegram_links(last_message_ids=last_message_ids)
-    print(f"🔗 新获取 {len(new_links)} 个订阅链接")
+    print("[2/5] 抓取 Telegram 新订阅链接")
+    urls, last_message_ids = await scrape_telegram_links(last_message_ids)
 
-    # 4. 下载并解析所有订阅链接节点
     new_proxies = []
-    for link in new_links:
-        print(f"▶️ 处理链接: {link}")
-        proxies = download_subscription(link)
-        if proxies:
-            new_proxies.extend(proxies)
-            print(f"  - 解析到 {len(proxies)} 个节点")
-        else:
-            print("  - 无有效节点")
+    if urls:
+        print(f"抓取到 {len(urls)} 个订阅链接，开始下载解析...")
+        for url in urls:
+            proxies = download_and_parse(url)
+            if proxies:
+                new_proxies.extend(proxies)
+    print(f"新增节点数: {len(new_proxies)}")
 
-    # 5. 合并旧节点与新节点，并去重
-    all_proxies_raw = existing_proxies + new_proxies
-    unique_map = {}
-    for p in all_proxies_raw:
-        if not is_valid_proxy(p):
-            continue
+    all_proxies_map = {get_proxy_key(p): p for p in existing_proxies if is_valid_proxy(p)}
+    added_count = 0
+    for p in new_proxies:
         key = get_proxy_key(p)
-        # 保留第一个出现的节点
-        if key not in unique_map:
-            unique_map[key] = p
-    all_nodes = list(unique_map.values())
-    print(f"🔧 节点总计（去重后）: {len(all_nodes)} 个")
+        if key not in all_proxies_map:
+            all_proxies_map[key] = p
+            added_count += 1
+    print(f"合并去重后总节点数: {len(all_proxies_map)}，新增有效节点: {added_count}")
 
-    # 6. 测速部分：使用 Clash 核心进行 HTTP 测速
+    all_nodes = list(all_proxies_map.values())
+
+    if not all_nodes:
+        sys.exit("❌ 无任何节点可用，程序退出")
+
     if ENABLE_SPEED_TEST:
-        print("[2/5] 启动节点测速（Clash HTTP测速）")
-        with concurrent.futures.ThreadPoolExecutor(max_workers=MAX_TEST_WORKERS) as executor:
-            futures = [executor.submit(test_single_proxy_with_clash_core, proxy) for proxy in all_nodes]
-            results = []
-            for future in concurrent.futures.as_completed(futures):
-                res = future.result()
-                results.append(res)
-        print("[3/5] 测速完成")
-        all_nodes = results
-        # 根据测速结果分组
-        http_passed_nodes = [p for p in all_nodes if p.get('http_delay') is not None]
-        http_failed_nodes = [p for p in all_nodes if p.get('http_delay') is None]
+        print("[3/5] 使用 clash 核心测速")
+        clash_path = 'clash_core/clash'
+        if not (os.path.isfile(clash_path) and os.access(clash_path, os.X_OK)):
+            sys.exit(f"❌ clash 核心缺失或不可执行: {clash_path}")
 
-        # 回退策略：选取每个区域表现最好的几个节点
-        fallback_regions = [r for r in REGION_PRIORITY if r in ALLOWED_REGIONS]
-        fallback_count_per_region = 3
+        tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
+        print(f"测速成功节点数: {len(tested_nodes)}")
 
-        region_grouped_fallback_nodes = defaultdict(list)
-        selected_fallback_nodes = []
+        if not tested_nodes:
+            print("⚠️ clash测速全部失败，启用回退策略保留指定地区节点")
+            fallback_regions = ['香港', '日本', '美国', '新加坡', '德国']
+            fallback_count = 30
+            fallback_candidates = identify_regions_only(all_nodes)
 
-        # 给 http_delay 为 None 的节点，赋予 tcp_delay 或极大延迟，用于fallback排序
-        for p in http_failed_nodes:
-            if p.get('region_info') and p['region_info']['name'] in fallback_regions:
-                # 如果 http_delay 为空，则用 tcp_delay（若存在）或默认9999赋值
-                p['http_delay'] = p.get('tcp_delay', 9999)
-                region_grouped_fallback_nodes[p['region_info']['name']].append(p)
+            selected = []
+            grouped = defaultdict(list)
+            for p in fallback_candidates:
+                if p.get('region_info') and p['region_info']['name'] in fallback_regions:
+                    grouped[p['region_info']['name']].append(p)
 
-        # 从每个区域选出 fallback_count_per_region 个节点
-        for region in fallback_regions:
-            sorted_nodes = sorted(region_grouped_fallback_nodes[region], key=lambda x: x.get('http_delay', 9999))
-            selected_fallback_nodes.extend(sorted_nodes[:fallback_count_per_region])
+            for region in fallback_regions:
+                selected.extend(grouped[region][:fallback_count])
 
-        print(f"  - 回退策略已选择 {len(selected_fallback_nodes)} 个节点")
+            tested_nodes = selected
 
-        # 整合通过测速和 fallback 节点
-        nodes_to_process_after_speed_test = http_passed_nodes + selected_fallback_nodes
-
-        if not nodes_to_process_after_speed_test:
-            print("⚠️ 无任何节点通过 HTTP 测速或回退节点为空")
-            sys.exit("❌ 无有效节点，程序终止")
+        nodes_to_process = tested_nodes
 
     else:
-        # 未开启测速，全部节点进入后续处理
-        nodes_to_process_after_speed_test = all_nodes
-        print("测速关闭，使用全部节点继续处理")
+        print("测速关闭，使用所有节点")
+        nodes_to_process = all_nodes
 
-    # 7. 区域识别与节点重命名
-    print("[4/5] 节点地区识别及重命名")
-    processed_proxies = process_proxies(nodes_to_process_after_speed_test)
+    if not nodes_to_process:
+        sys.exit("❌ 找不到符合条件的节点，程序退出")
+
+    print("[4/5] 节点地区识别和重命名")
+    processed_proxies = process_proxies(nodes_to_process)
     if not processed_proxies:
-        sys.exit("❌ 识别有效节点失败，程序退出")
+        sys.exit("❌ 节点地区识别失败，程序退出")
 
-    # 8. 排序：优先按区域优先级 + http延迟排序
     processed_proxies.sort(
         key=lambda p: (
             REGION_PRIORITY.index(p['region_info']['name']) if p['region_info']['name'] in REGION_PRIORITY else 99,
-            p.get('http_delay', 9999)
+            p.get('clash_delay', 9999)
         )
     )
-    print(f"[5/5] 排序完成，剩余节点数: {len(processed_proxies)}")
 
-    # 9. 写入最终 YAML 配置文件，包含新的 last_message_ids
-    final_config = {
-        'proxies': processed_proxies,
-        'last_message_ids': last_message_ids,
-    }
+    print(f"[5/5] 排序完成，节点数: {len(processed_proxies)}")
+
+    final_config = generate_config(processed_proxies, last_message_ids)
+
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     try:
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
             yaml.dump(final_config, f, allow_unicode=True, sort_keys=False, indent=2)
-        print(f"✅ 配置及状态已保存至: {OUTPUT_FILE}")
-        print("\n🎉 任务全部完成！")
+        print(f"✅ 配置文件已保存至 {OUTPUT_FILE}")
+        print("🎉 任务完成！")
     except Exception as e:
-        print(f"❌ 写入配置文件失败: {e}")
+        print(f"写出文件时异常: {e}")
 
 if __name__ == "__main__":
     asyncio.run(main())
