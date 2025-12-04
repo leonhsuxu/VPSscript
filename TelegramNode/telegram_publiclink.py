@@ -357,33 +357,80 @@ def parse_ssr_node(line):
         return None
 
 def parse_ss_node(line):
+    """
+    解析 Shadowsocks ss:// 节点链接，支持 base64 或明文格式。
+    返回字典，失败返回 None。
+    """
     try:
         line = line.strip()
         if not line.startswith('ss://'):
             return None
         content = line[5:]
+
+        # 情况1：明文格式，包含 '@'，例如:
+        # ss://aes-256-gcm:password@hostname:port#备注
         if '@' in content:
-            parsed = urlparse('ss://' + content)
-            user_pass = parsed.netloc.split('@')[0]
-            method, password = user_pass.split(':', 1)
-            server = parsed.hostname
-            port = parsed.port
-            name = unquote(parsed.fragment) if parsed.fragment else f"ss_{server}"
-            node = {'name': name, 'type': 'ss', 'server': server, 'port': port,
-                    'cipher': method, 'password': password, 'udp': True}
+            # 先尝试整体用 urlparse 处理
+            parsed = urlparse('ss://' + content)  # 加上 scheme,urlparse才正常解析
+
+            if not parsed.hostname or not parsed.port or not parsed.username:
+                return None
+
+            # parsed.username 部分是 method:password 的形式
+            if ':' not in parsed.username:
+                return None
+            method, password = parsed.username.split(':', 1)
+
+            name = unquote(parsed.fragment) if parsed.fragment else f"ss_{parsed.hostname}"
+
+            node = {
+                'name': name,
+                'type': 'ss',
+                'server': parsed.hostname,
+                'port': parsed.port,
+                'cipher': method,
+                'password': password,
+                'udp': True
+            }
             return node
+
         else:
-            ss_b64 = content.split('#')[0]
-            remark = ''
+            # 情况2：base64编码格式，内容形如 base64(method:password@host:port)
+            # 有时链接后面带备注，用#分割
             if '#' in content:
-                remark = unquote(content.split('#')[1])
-            decoded = base64.urlsafe_b64decode(ss_b64 + '=' * (-len(ss_b64) % 4)).decode('utf-8', errors='ignore')
-            method_password, server_port = decoded.split('@')
-            method, password = method_password.split(':')
-            server, port = server_port.split(':')
-            node = {'name': remark or f"ss_{server}", 'type': 'ss', 'server': server,
-                    'port': int(port), 'cipher': method, 'password': password, 'udp': True}
+                main_b64, remark = content.split('#', 1)
+                remark = unquote(remark)
+            else:
+                main_b64 = content
+                remark = ''
+
+            # base64 解码，注意补齐 '='
+            padding = '=' * (-len(main_b64) % 4)
+            decoded = base64.urlsafe_b64decode(main_b64 + padding).decode('utf-8', errors='ignore')
+
+            if '@' not in decoded:
+                return None
+
+            method_password, server_port = decoded.split('@', 1)
+            if ':' not in method_password or ':' not in server_port:
+                return None
+
+            method, password = method_password.split(':', 1)
+            server, port_str = server_port.rsplit(':', 1)
+
+            port = int(port_str)
+
+            node = {
+                'name': remark if remark else f"ss_{server}",
+                'type': 'ss',
+                'server': server,
+                'port': port,
+                'cipher': method,
+                'password': password,
+                'udp': True
+            }
             return node
+
     except Exception:
         return None
 
