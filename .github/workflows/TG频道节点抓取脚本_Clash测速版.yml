@@ -26,6 +26,10 @@ env:
     @dingyue_Center
     # ※个人的订阅收集 leon
     @tempssrlink
+    # 虚空新手村
+    -1003250922598
+    
+    
 jobs:
   build:
     runs-on: ubuntu-latest
