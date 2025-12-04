@@ -425,6 +425,124 @@ proxies:
   region_info:
     name: 香港
     code: HK
+- name: 🇭🇰 香港 中转[CM
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 5228
+  server: 33beb8a7-t6uv40-t83bw1-1f596.cm4.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 精品4
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: a316d09b-t6uv40-t83bw1-1f596.hkt2.cdnhuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 精品3
+  password: <password>
+  port: 8443
+  server: 5cc2d430-t6uv40-t83bw1-1f596.hkt.cdnhuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- alterId: 2
+  cipher: auto
+  name: 🇭🇰 香港 精品
+  network: ws
+  port: 80
+  server: 99413a31-t6uv40-t83bw1-1f596.hkt.gotochinatown.net
+  tls: false
+  type: vmess
+  uuid: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  ws-headers:
+    Host: broadcastlv.chat.bilibili.com
+    User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36
+      (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36
+  ws-path: /
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 精品2
+  password: <password>
+  port: 443
+  server: a316d09b-t6uv40-t83bw1-1f596.hkt2.cdnhuawei.com
+  tls: true
+  type: socks5
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- alterId: 2
+  cipher: auto
+  name: 🇭🇰 香港 01
+  network: ws
+  port: 80
+  server: e3434571-t6uv40-t83bw1-1f596.hk.p5pv.com
+  tls: false
+  type: vmess
+  uuid: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  ws-headers:
+    Host: broadcastlv.chat.bilibili.com
+    User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36
+      (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36
+  ws-path: /
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 HY02
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  ports: 30000-60000
+  server: a9c237f5-t6uv40-t83bw1-1f596.hk2.hyhuawei.com
+  type: hysteria2
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 HY01
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  ports: 30000-60000
+  server: b4c36c3a-t6uv40-t83bw1-1f596.hk1.hyhuawei.com
+  type: hysteria2
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- alterId: 2
+  cipher: auto
+  name: 🇭🇰 香港 03
+  network: ws
+  port: 80
+  server: 74f80fae-t6uv40-t83bw1-1f596.hk3.p5pv.com
+  tls: false
+  type: vmess
+  uuid: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  ws-headers:
+    Host: broadcastlv.chat.bilibili.com
+    User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36
+      (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36
+  ws-path: /
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
 - name: 🇭🇰 香港 04
   type: ss
   server: 8tv68qhq.slashdevslashnetslashtun.net
@@ -591,6 +709,17 @@ proxies:
   region_info:
     name: 台湾
     code: TW
+- name: 🇨🇳 台湾 TW16
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: 33fdd83a-t6uv40-t83bw1-1f596.tw3.p5pv.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 台湾
+    code: TW
 - name: 🇨🇳 台湾 01
   type: ss
   server: ti3hyra4.slashdevslashnetslashtun.net
@@ -735,6 +864,39 @@ proxies:
   alterId: 0
   cipher: auto
   udp: true
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 JP22
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: 73012ec5-t6uv40-t83bw1-1f596.jp.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 CT
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 27233
+  server: 4d26dbe5-t6uv40-t83bw1-1f596.cm5.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 4
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: 45049a88-t6uv40-t83bw1-1f596.jp4.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
   clash_delay: 1
   region_info:
     name: 日本
@@ -1009,6 +1171,39 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
+- name: 🇸🇬 新加坡 CT
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 17235
+  server: 4d26dbe5-t6uv40-t83bw1-1f596.cm5.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 SG27
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: 24886d45-t6uv40-t83bw1-1f596.sg.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 3
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: 612572f2-t6uv40-t83bw1-1f596.sg3.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
 - name: 🇸🇬 新加坡 01
   type: ss
   server: ti3hyra4.slashdevslashnetslashtun.net
@@ -1231,6 +1426,28 @@ proxies:
   region_info:
     name: 马来西亚
     code: MY
+- name: 🇲🇾 马来西亚 MY03
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 31233
+  server: 197d65ee-t6uv40-t83bw1-1f596.my.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 马来西亚
+    code: MY
+- name: 🇹🇭 泰国 TH02
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 27235
+  server: 4d26dbe5-t6uv40-t83bw1-1f596.cm5.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 泰国
+    code: TH
 - name: 🇹🇭 泰国 01
   type: ss
   server: 46.16.129.217
@@ -1241,6 +1458,17 @@ proxies:
   region_info:
     name: 泰国
     code: TH
+- name: 🇮🇩 印度尼西亚 CT
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 32233
+  server: 05b2bc2e-t6uv40-t83bw1-1f596.id.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 印度尼西亚
+    code: ID
 - name: 🇻🇳 越南 1|BGP|0.4X
   type: vmess
   server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
@@ -1355,6 +1583,93 @@ proxies:
   alterId: 0
   cipher: auto
   udp: true
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 西雅图
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: d34843ad-t6uv40-t83bw1-1f596.se.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 西雅图2
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: ec313335-t6uv40-t83bw1-1f596.sv.plebai.net
+  tls: true
+  type: socks5
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 洛杉矶[CU
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 15229
+  server: 8e110e6f-t6uv40-t83bw1-1f596.cu.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 洛杉磯HY
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  ports: 30000-60000
+  server: 0dd02a06-t6uv40-t83bw1-1f596.us.hyhuawei.com
+  type: hysteria2
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 硅谷
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: c3d204f5-t6uv40-t83bw1-1f596.sj.gotochinatown.net
+  tls: true
+  type: socks5
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 硅谷2
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: 492d4823-t6uv40-t83bw1-1f596.sj.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 圣何塞
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: 201c74bf-t6uv40-t83bw1-1f596.sjc.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 洛杉矶
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: 852bab19-t6uv40-t83bw1-1f596.los.gotochinatown.net
+  tls: true
+  type: socks5
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
   clash_delay: 1
   region_info:
     name: 美国
@@ -1551,6 +1866,17 @@ proxies:
   region_info:
     name: 法国
     code: FR
+- name: 🇫🇷 法国 FR04
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 8443
+  server: c64f72c0-t6uv40-t83bw1-1f596.fr.cdnkuaishou.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 法国
+    code: FR
 - name: 🇬🇧 英国 剩余流量：999.54
   type: ss
   server: car.com
@@ -1585,6 +1911,17 @@ proxies:
   region_info:
     name: 英国
     code: GB
+- name: 🇬🇧 英国 GB04
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: 514cf8d4-t6uv40-t83bw1-1f596.uk.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 英国
+    code: GB
 - name: 🇩🇪 德国 1|BGP|0.4X
   type: vmess
   server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
@@ -1605,6 +1942,17 @@ proxies:
   alterId: 0
   cipher: auto
   udp: true
+  clash_delay: 1
+  region_info:
+    name: 德国
+    code: DE
+- name: 🇩🇪 德国 DE04
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: ff8cb15f-t6uv40-t83bw1-1f596.de.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
   clash_delay: 1
   region_info:
     name: 德国
@@ -1778,10 +2126,10 @@ proxies:
 last_message_ids:
   '@fqDINYUE': 4650
   '@wxdy666': 6205
-  '@freeyule': 1926187
+  '@freeyule': 1926197
   '@ccbaohe': 14958
-  '@duangvpsfs': 3671955
-  '@zzzjjjkkkoi': 606592
+  '@duangvpsfs': 3671961
+  '@zzzjjjkkkoi': 606613
   '@xmdexw': 219871
   '@v2v2clash': 0
   '@dingyue_Center': 3893
