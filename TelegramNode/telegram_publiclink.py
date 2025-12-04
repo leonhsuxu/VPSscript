@@ -661,31 +661,67 @@ def generate_config(proxies, last_message_ids):
     }
 
 
+
 def clash_test_proxy(clash_path, proxy):
+    """
+    使用 clash-speedtest 核心测试单个代理节点的延迟。
+    参数:
+        clash_path: clash-speedtest 可执行文件路径，如 'clash_core/clash'
+        proxy: 代理节点字典（需包含 name 字段）
+    返回:
+        延迟（毫秒）整数，测试失败返回 None
+    """
+    import tempfile
+    temp_dir = tempfile.mkdtemp()
+    temp_config_path = os.path.join(temp_dir, 'config.yaml')
+
+    test_url = HTTP_TEST_URL
+
+    config = {
+        "port": 7890,
+        "socks-port": 7891,
+        "allow-lan": False,
+        "mode": "Rule",
+        "proxies": [proxy],
+        "proxy-groups": [
+            {
+                "name": "TestGroup",
+                "type": "select",
+                "proxies": [proxy['name']]
+            }
+        ],
+        "rules": [
+            f"DOMAIN,{urlparse(test_url).netloc},TestGroup",
+            "FINAL,DIRECT"
+        ]
+    }
+
+    try:
+        with open(temp_config_path, 'w', encoding='utf-8') as f:
+            yaml.dump(config, f, allow_unicode=True, sort_keys=False)
+
+        proc = subprocess.run(
+            [clash_path, '-c', temp_config_path, '-fast'],
+            stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             encoding='utf-8',
-            timeout=30  # 按需适当延长超时
+            timeout=30
         )
+
         output = proc.stdout + proc.stderr
 
-        # 调试输出，方便排查
         print(f"Clash Speedtest 输出（节点 {proxy['name']}）:\n{output}")
 
-        # clash-speedtest 输出的延迟格式通常是类似： "延迟: XXX ms"
-        # 示例匹配所有包含 ms 的数值（需根据实际格式调整）
         delays = re.findall(r'(\d+)\s*ms', output)
         if delays:
             delay = int(delays[0])
             return delay
 
-        # 如果找不到带“ms”的延迟，尝试匹配仅数字（视需求）
         delays_num = re.findall(r'\b(\d{1,4})\b', output)
-        if delays_num:
-            # 简单过滤可能的延迟，选第一个合理值
-            for val in delays_num:
-                iv = int(val)
-                if 1 <= iv < 10000:
-                    return iv
+        for val in delays_num:
+            iv = int(val)
+            if 1 <= iv < 10000:
+                return iv
 
         print(f"⚠️ 未找到延迟匹配信息，节点名: {proxy['name']}")
     except subprocess.TimeoutExpired:
@@ -693,13 +729,14 @@ def clash_test_proxy(clash_path, proxy):
     except Exception as e:
         print(f"⚠️ 节点测速异常 {proxy['name']}: {e}")
     finally:
-        # 清理临时目录
         try:
             os.remove(temp_config_path)
             os.rmdir(temp_dir)
         except Exception:
             pass
+
     return None
+
 
 def test_proxy_with_clash(clash_path, proxy):
     delay = clash_test_proxy(clash_path, proxy)
@@ -708,7 +745,6 @@ def test_proxy_with_clash(clash_path, proxy):
         return proxy
     return None
 
-import concurrent.futures
 
 def batch_test_proxies_clash(clash_path, proxies, max_workers=32):
     results = []
@@ -719,6 +755,13 @@ def batch_test_proxies_clash(clash_path, proxies, max_workers=32):
             if res:
                 results.append(res)
     return results
+
+
+# 下面是调用示例:
+# 如果你要使用，确保 clash_path 路径正确且可执行
+# proxies = [...]  # 你的代理节点列表
+# tested = batch_test_proxies_clash('clash_core/clash', proxies, max_workers=MAX_TEST_WORKERS)
+# print("测速完成，成功节点数:", len(tested))
 
 
 async def main():
