@@ -1493,7 +1493,7 @@ proxies:
   region_info:
     name: 香港
     code: HK
-- name: 🇨🇳 台湾 TW01
+- name: 🇨🇳 台湾 01
   password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
   port: 443
   server: 02acaa6c-t6uv40-t8em25-1o8ak.tw3.p5pv.com
@@ -1752,7 +1752,7 @@ proxies:
   region_info:
     name: 日本
     code: JP
-- name: 🇯🇵 日本 JP19
+- name: 🇯🇵 日本 19
   password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
   port: 443
   server: c9cb6059-t6uv40-t8em25-1o8ak.jp.oshuawei.com
@@ -2119,7 +2119,7 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
-- name: 🇸🇬 新加坡 SG26
+- name: 🇸🇬 新加坡 26
   password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
   port: 443
   server: d9de68b8-t6uv40-t8em25-1o8ak.sg.oshuawei.com
@@ -2174,7 +2174,7 @@ proxies:
   region_info:
     name: 韩国
     code: KR
-- name: 🇲🇾 马来西亚 MY01
+- name: 🇲🇾 马来西亚 01
   password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
   port: 31233
   server: 5fb22b84-t6uv40-t8em25-1o8ak.my.oshuawei.com
@@ -2185,7 +2185,7 @@ proxies:
   region_info:
     name: 马来西亚
     code: MY
-- name: 🇹🇭 泰国 TH01
+- name: 🇹🇭 泰国 01
   password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
   port: 27235
   server: 5324a4e2-t6uv40-t8em25-1o8ak.cm5.oshuawei.com
@@ -2256,7 +2256,7 @@ proxies:
   region_info:
     name: 印度
     code: IN
-- name: 🇮🇩 印度尼西亚 CT
+- name: 🇮🇩 印度 CT
   password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
   port: 32233
   server: 929cff44-t6uv40-t8em25-1o8ak.id.oshuawei.com
@@ -2265,8 +2265,8 @@ proxies:
   username: 8bb68d04-6973-11ee-b518-f23c9164ca5d
   clash_delay: 1
   region_info:
-    name: 印度尼西亚
-    code: ID
+    name: 印度
+    code: IN
 - name: 🇺🇸 美国 疯高速100 (免费
   type: vmess
   server: us24-3.998998.best
@@ -2572,7 +2572,7 @@ proxies:
   region_info:
     name: 美国
     code: US
-- name: 🇺🇸 美国 洛杉磯HY 2
+- name: 🇺🇸 美国 洛杉磯HY 2 2
   password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
   port: 443
   ports: 30000-60000
@@ -2673,7 +2673,7 @@ proxies:
   region_info:
     name: 法国
     code: FR
-- name: 🇫🇷 法国 FR04
+- name: 🇫🇷 法国 04
   password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
   port: 8443
   server: b045e103-t6uv40-t8em25-1o8ak.fr.cdnkuaishou.com
@@ -2684,7 +2684,7 @@ proxies:
   region_info:
     name: 法国
     code: FR
-- name: 🇬🇧 英国 GB01
+- name: 🇬🇧 英国 01
   password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
   port: 443
   server: 14d0b48d-t6uv40-t8em25-1o8ak.uk.oshuawei.com
@@ -2747,7 +2747,7 @@ proxies:
   region_info:
     name: 德国
     code: DE
-- name: 🇩🇪 德国 DE05
+- name: 🇩🇪 德国 05
   password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
   port: 443
   server: bc1bf232-t6uv40-t8em25-1o8ak.de.oshuawei.com
@@ -2776,9 +2776,9 @@ proxies:
 last_message_ids:
   '@fqDINYUE': 4654
   '@wxdy666': 6210
-  '@freeyule': 1926757
+  '@freeyule': 1926764
   '@ccbaohe': 14963
-  '@duangvpsfs': 3672544
+  '@duangvpsfs': 3672552
   '@zzzjjjkkkoi': 606994
   '@xmdexw': 219878
   '@v2v2clash': 0
