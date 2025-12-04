@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 env:
-  CLASH_SPEEDTEST_VERSION: v1.5.5  # 请根据需要替换为目标版本
+  CLASH_SPEEDTEST_VERSION: v1.7.0  # 请根据需要替换为目标版本
   TELEGRAM_CHANNEL_IDS: |
     # 订阅转发-频道
     @fqDINYUE
