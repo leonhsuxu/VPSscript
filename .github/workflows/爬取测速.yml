@@ -2,16 +2,15 @@ name: ⏳ Tg频道群抓取节点测速 (mihomo核心缓存版)
 
 on:
   schedule:
-    # 每天 UTC 时间的 0 点和 12 点运行（例如北京时间早上 8 点和晚上 8 点）
-    - cron: '0 0,12 * * *'
+    - cron: '0 0,12 * * *' # 每天 UTC 时间的 0 点和 12 点运行
   workflow_dispatch: # 允许在 GitHub 界面手动触发工作流
 
 env:
-  # 设置 mihomo (原 Clash Meta) 核心的版本号。
+  # 设置 mihomo 核心的版本号。
   # 每次你需要更新核心时，只需修改这个变量的值，缓存就会自动失效。
-  MIHOMO_VERSION: v1.19.17 # <--- 请务必确认此版本号在 mihomo Release 页面存在且是你想要的版本
+  MIHOMO_VERSION: v1.19.17 # <--- 根据你的选择更新为 v1.19.17
 
-  # TELEGRAM_CHANNEL_IDS 频道列表，直接写入 YAML (请注意隐私风险，公开仓库谨慎使用)
+  # TELEGRAM_CHANNEL_IDS 频道列表，直接写入 YAML (请注意隐私风险)
   TELEGRAM_CHANNEL_IDS: |
          # 订阅转发-频道
          @fqDINYUE
@@ -41,63 +40,57 @@ jobs:
 
     steps:
       - name: 检出代码仓库
-        uses: actions/checkout@v4 # 检出你的代码库
+        uses: actions/checkout@v4 
 
       - name: 设置 Python 环境
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11' # 指定 Python 版本，请根据你的脚本需求选择
+          python-version: '3.11' 
 
       # === 缓存 Python 依赖 ===
       - name: 缓存 Python 依赖
-        id: cache-pip-dependencies # 给这个缓存步骤一个ID
+        id: cache-pip-dependencies 
         uses: actions/cache@v4
         with:
-          path: ~/.cache/pip # Python pip 的缓存目录
-          # 缓存键包含操作系统和 requirements.txt 文件的哈希值。
-          # 只要 requirements.txt 内容不变，缓存就会命中。
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          path: ~/.cache/pip 
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }} 
           restore-keys: |
-            ${{ runner.os }}-pip- # 当主键未命中时，尝试匹配更通用的键
+            ${{ runner.os }}-pip- 
 
       - name: 安装 Python 依赖
         run: |
           python -m pip install --upgrade pip
-          # 如果缓存命中，pip 会从本地缓存安装，速度非常快。
-          # 请确保你的项目根目录有 `requirements.txt` 文件，内容为 PyYAML, requests, Telethon。
-          pip install -r requirements.txt
+          pip install -r requirements.txt 
           echo "Python 依赖安装完成。"
 
-      # === 缓存 mihomo 核心 (原 Clash Meta) ===
+      # === 缓存 mihomo 核心 ===
       - name: 缓存 mihomo 核心
-        id: cache-mihomo-core # <--- 缓存步骤的 ID，修改以反映 mihomo
+        id: cache-mihomo-core 
         uses: actions/cache@v4
         with:
-          path: clash_core/ # 存放 mihomo 核心的目录
-          # 缓存键包含操作系统和 MIHOMO_VERSION。
-          # 只要 MIHOMO_VERSION 不变，缓存就会命中。
-          key: ${{ runner.os }}-mihomo-core-${{ env.MIHOMO_VERSION }} # <--- 缓存键，修改以反映 mihomo 版本
+          path: clash_core/ 
+          key: ${{ runner.os }}-mihomo-core-${{ env.MIHOMO_VERSION }} 
 
       - name: 如果 mihomo 核心缓存未命中，则下载并解压
-        if: steps.cache-mihomo-core.outputs.cache-hit != 'true' # <--- 根据 mihomo 缓存步骤的 ID 判断
+        if: steps.cache-mihomo-core.outputs.cache-hit != 'true'
         run: |
           echo "mihomo 核心缓存未命中，正在下载..."
           mkdir -p clash_core
           
-          # ****** 关键下载链接和文件名调整 ******
-          # 请务必访问 https://github.com/MetaCubeX/mihomo/releases 页面，
-          # 核实 ${{ env.MIHOMO_VERSION }} 对应的 Linux AMD64 压缩包的准确文件名。
-          # 以下链接假定文件名为 mihomo-linux-amd64-${{ env.MIHOMO_VERSION }}.tar.gz
-          MIHOMO_URL="https://github.com/MetaCubeX/mihomo/releases/download/${{ env.MIHOMO_VERSION }}/mihomo-linux-amd64-${{ env.MIHOMO_VERSION }}.tar.gz"
+          # ****** 关键修改点：更新下载链接和处理方式 ******
+          # 使用推荐的文件名: mihomo-linux-amd64-v1.19.17.gz
+          # 注意这是一个 .gz 文件，需要用 gunzip 解压，然后 mv
+          MIHOMO_FILENAME="mihomo-linux-amd64-${{ env.MIHOMO_VERSION }}.gz" # <--- 使用推荐的文件名
+          MIHOMO_URL="https://github.com/MetaCubeX/mihomo/releases/download/${{ env.MIHOMO_VERSION }}/${MIHOMO_FILENAME}"
           
           echo "正在从 ${MIHOMO_URL} 下载 mihomo 核心..."
-          wget -O mihomo.tar.gz "${MIHOMO_URL}" # <--- 下载的文件名
+          wget -O mihomo.gz "${MIHOMO_URL}" # 下载到 mihomo.gz
           
-          tar -xzf mihomo.tar.gz -C clash_core # <--- 解压此文件
+          gunzip mihomo.gz # <--- 使用 gunzip 解压 .gz 文件，会得到一个没有扩展名的可执行文件 'mihomo'
           
-          # 解压后通常会得到一个名为 'mihomo' 的可执行文件。
-          # 我们将其重命名为 'clash'，以保持与 Python 脚本中 CLASH_CORE_PATH 的一致性。
-          mv clash_core/mihomo clash_core/clash # <--- 重命名为 'clash'
+          # 解压后得到的可执行文件名为 'mihomo'
+          mv mihomo clash_core/clash # <--- 将解压出的 'mihomo' 移动并重命名为 'clash_core/clash'
+          
           echo "mihomo 核心下载完成。"
       
       - name: 确保 mihomo 核心可执行
@@ -105,23 +98,30 @@ jobs:
           chmod +x clash_core/clash
           echo "mihomo 核心已设置为可执行状态。"
 
+      # === 缓存 flclashyaml 目录，用于持久化状态 ===
+      - name: 缓存 flclashyaml 状态文件
+        id: cache-flclashyaml
+        uses: actions/cache@v4
+        with:
+          path: flclashyaml/ 
+          key: ${{ runner.os }}-flclashyaml-state-${{ github.ref }} 
+          restore-keys: |
+            ${{ runner.os }}-flclashyaml-state- 
+
       - name: 配置 Telegram (从 Secrets 读取敏感信息) 并运行脚本
         env:
-          # 这些是你的 Telegram API 凭据和会话字符串。
-          # 它们是敏感信息，请务必在 GitHub 仓库的 Secrets 中配置。
           TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
           TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
           TELEGRAM_STRING_SESSION: ${{ secrets.TELEGRAM_STRING_SESSION }}
-          # TELEGRAM_CHANNEL_IDS 环境变量会自动从上方 env: 块中获取。
         run: |
           echo "正在运行 Clash 测速脚本..."
-          # 请确保你的 Python 脚本位于 TelegramNode/telegram_publiclink.py
+          mkdir -p flclashyaml 
           python TelegramNode/telegram_publiclink.py
           echo "脚本执行完成。"
 
       - name: 上传生成的 Clash 配置
-        uses: actions/upload-artifact@v4 # 将脚本生成的 YAML 文件作为工作流的产物上传
+        uses: actions/upload-artifact@v4
         with:
-          name: clash-config-output # 产物的名称
-          path: flclashyaml/telegram_scraper.yaml # 脚本输出的 YAML 文件路径
-          retention-days: 7 # 产物在 GitHub 上保留 7 天
+          name: clash-config-output
+          path: flclashyaml/telegram_scraper.yaml
+          retention-days: 7
