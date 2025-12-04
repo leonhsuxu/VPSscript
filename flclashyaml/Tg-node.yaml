@@ -880,76 +880,6 @@ proxies:
   region_info:
     name: 香港
     code: HK
-- name: 🇭🇰 香港 04
-  type: ss
-  server: 8tv68qhq.slashdevslashnetslashtun.net
-  port: 15005
-  cipher: YWVzLTI1Ni1nY206RUhGV1UxUFo0TU9EUlhRSw==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 香港
-    code: HK
-- name: 🇭🇰 香港 06
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 15007
-  cipher: YWVzLTI1Ni1nY206QUxQV0pPVEVXMkZVUEJQQQ==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 香港
-    code: HK
-- name: 🇭🇰 香港 08
-  type: ss
-  server: 8tv68qhq.slashdevslashnetslashtun.net
-  port: 15009
-  cipher: YWVzLTI1Ni1nY206Rk5JMjZVOEpPSTY4TDZaOA==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 香港
-    code: HK
-- name: 🇭🇰 香港 11
-  type: ss
-  server: 8tv68qhq.slashdevslashnetslashtun.net
-  port: 15012
-  cipher: YWVzLTI1Ni1nY206MU5JOUE5UElEMVBIRURCVA==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 香港
-    code: HK
-- name: 🇭🇰 香港 13
-  type: ss
-  server: 8tv68qhq.slashdevslashnetslashtun.net
-  port: 15014
-  cipher: YWVzLTI1Ni1nY206UDVGTUVHRFBHWUNYSklLQw==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 香港
-    code: HK
-- name: 🇭🇰 香港 14
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 15015
-  cipher: YWVzLTI1Ni1nY206T1I2RUxYTlpMN1NJSTZMTA==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 香港
-    code: HK
-- name: 🇭🇰 香港 15
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 15016
-  cipher: YWVzLTI1Ni1nY206VzdGV1BSN1BUR1VYSlBSNg==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 香港
-    code: HK
 - name: 🇹🇼 台湾 1|BGP|0.4X
   type: vmess
   server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
@@ -1139,76 +1069,6 @@ proxies:
     path: /5e60be5f/
     headers: {}
   clash_delay: 1
-  region_info:
-    name: 台湾
-    code: TW
-- name: 🇨🇳 台湾 01
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 21001
-  cipher: YWVzLTI1Ni1nY206MldLNTBRVkI4VUxTMkJENg==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 台湾
-    code: TW
-- name: 🇨🇳 台湾 02
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 21002
-  cipher: YWVzLTI1Ni1nY206MTFETDg2RVc2RzdaMURCWA==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 台湾
-    code: TW
-- name: 🇨🇳 台湾 03
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 21003
-  cipher: YWVzLTI1Ni1nY206M1g2N1dKNVhCUjlCSkdOSA==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 台湾
-    code: TW
-- name: 🇨🇳 台湾 04
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 21004
-  cipher: YWVzLTI1Ni1nY206OFIyNTlNMU9LUUpGMjI0Vg==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 台湾
-    code: TW
-- name: 🇨🇳 台湾 05
-  type: ss
-  server: 8tv68qhq.slashdevslashnetslashtun.net
-  port: 21005
-  cipher: YWVzLTI1Ni1nY206UlpZSVQ4RldWRVJHUTNKMQ==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 台湾
-    code: TW
-- name: 🇨🇳 台湾 06
-  type: ss
-  server: 8tv68qhq.slashdevslashnetslashtun.net
-  port: 21006
-  cipher: YWVzLTI1Ni1nY206SDdaV0FWTzBVOTZONTROSw==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 台湾
-    code: TW
-- name: 🇨🇳 台湾 07
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 21007
-  cipher: YWVzLTI1Ni1nY206SFc1M1kxMkZUWkU2VlZEVA==
-  password: undefined
-  clash_delay: 12
   region_info:
     name: 台湾
     code: TW
@@ -1408,153 +1268,55 @@ proxies:
   region_info:
     name: 日本
     code: JP
-- name: 🇯🇵 日本 01
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 18001
-  cipher: YWVzLTI1Ni1nY206STY4QjhMWloyOTdDMEIyQw==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 日本
-    code: JP
-- name: 🇯🇵 日本 02
-  type: ss
-  server: 8tv68qhq.slashdevslashnetslashtun.net
-  port: 18002
-  cipher: YWVzLTI1Ni1nY206TjNWOVEzWlVXSlRNM0hWTg==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 日本
-    code: JP
-- name: 🇯🇵 日本 03
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 18003
-  cipher: YWVzLTI1Ni1nY206VUJYRTUxQzVJQUQ5MTBaTQ==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 日本
-    code: JP
-- name: 🇯🇵 日本 04
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 18004
-  cipher: YWVzLTI1Ni1nY206ODhHMEY4NEE4VTdZUFZZTA==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 日本
-    code: JP
 - name: 🇯🇵 日本 05
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 18005
-  cipher: YWVzLTI1Ni1nY206TEsySFBJWDFZOTlHM1dGUA==
-  password: undefined
-  clash_delay: 12
+  type: trojan
+  server: jp005.421421.xyz
+  port: 20230
+  password: 0bfa2050-b165-4156-859c-70f36d300dce
+  udp: true
+  network: ws
+  sni: www.alibaba.com
+  skip-cert-verify: true
+  clash_delay: 1
   region_info:
     name: 日本
     code: JP
 - name: 🇯🇵 日本 06
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 18006
-  cipher: YWVzLTI1Ni1nY206SlVYQjNaTlBXUEE4QVY0Vg==
-  password: undefined
-  clash_delay: 12
+  type: trojan
+  server: jp006.421421.xyz
+  port: 20230
+  password: 0bfa2050-b165-4156-859c-70f36d300dce
+  udp: true
+  network: ws
+  sni: www.alibaba.com
+  skip-cert-verify: true
+  clash_delay: 1
   region_info:
     name: 日本
     code: JP
 - name: 🇯🇵 日本 07
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 18007
-  cipher: YWVzLTI1Ni1nY206M0tVRjJZQVlPSUhXUlZXRQ==
-  password: undefined
-  clash_delay: 12
+  type: trojan
+  server: jp007.421421.xyz
+  port: 20230
+  password: 0bfa2050-b165-4156-859c-70f36d300dce
+  udp: true
+  network: ws
+  sni: www.alibaba.com
+  skip-cert-verify: true
+  clash_delay: 1
   region_info:
     name: 日本
     code: JP
 - name: 🇯🇵 日本 08
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 18008
-  cipher: YWVzLTI1Ni1nY206M1BSSTg3MFRCRUlRSERUTQ==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 日本
-    code: JP
-- name: 🇯🇵 日本 09
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 18009
-  cipher: YWVzLTI1Ni1nY206UFE2Qk5DRjM0RklVMFlFUw==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 日本
-    code: JP
-- name: 🇯🇵 日本 11
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 18011
-  cipher: YWVzLTI1Ni1nY206NDdCVDI5UUY4OERJS0FCVA==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 日本
-    code: JP
-- name: 🇯🇵 日本 12
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 18012
-  cipher: YWVzLTI1Ni1nY206RE5DMkowOEEyWDcySUhFMA==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 日本
-    code: JP
-- name: 🇯🇵 日本 13
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 18013
-  cipher: YWVzLTI1Ni1nY206TU9GQkxJTERIWTBYUUJOSg==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 日本
-    code: JP
-- name: 🇯🇵 日本 14
-  type: ss
-  server: 8tv68qhq.slashdevslashnetslashtun.net
-  port: 18014
-  cipher: YWVzLTI1Ni1nY206MTBUTVo2Wk41UzZSUDVBRg==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 日本
-    code: JP
-- name: 🇯🇵 日本 15
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 18015
-  cipher: YWVzLTI1Ni1nY206TTVVUEpDWlJUNzNUTVc5Mw==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 日本
-    code: JP
-- name: 🇯🇵 日本 16
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 18016
-  cipher: YWVzLTI1Ni1nY206R0ZBS1pGODdHRFZWS0JYOQ==
-  password: undefined
-  clash_delay: 12
+  type: trojan
+  server: jp008.421421.xyz
+  port: 20230
+  password: 0bfa2050-b165-4156-859c-70f36d300dce
+  udp: true
+  network: ws
+  sni: www.alibaba.com
+  skip-cert-verify: true
+  clash_delay: 1
   region_info:
     name: 日本
     code: JP
@@ -1811,153 +1573,55 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
-- name: 🇸🇬 新加坡 01
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 16001
-  cipher: YWVzLTI1Ni1nY206QkMxTUhPNUk1UTdFRjlQWg==
-  password: undefined
-  clash_delay: 12
+- name: 🇸🇬 新加坡 05|流媒体
+  type: trojan
+  server: sg005.421421.xyz
+  port: 20230
+  password: 0bfa2050-b165-4156-859c-70f36d300dce
+  udp: true
+  network: ws
+  sni: www.alibaba.com
+  skip-cert-verify: true
+  clash_delay: 1
   region_info:
     name: 新加坡
     code: SG
-- name: 🇸🇬 新加坡 02
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 16002
-  cipher: YWVzLTI1Ni1nY206VEkyUENKWk1ETlNXMTg0VQ==
-  password: undefined
-  clash_delay: 12
+- name: 🇸🇬 新加坡 06|流媒体
+  type: trojan
+  server: sg006.421421.xyz
+  port: 20230
+  password: 0bfa2050-b165-4156-859c-70f36d300dce
+  udp: true
+  network: ws
+  sni: www.alibaba.com
+  skip-cert-verify: true
+  clash_delay: 1
   region_info:
     name: 新加坡
     code: SG
-- name: 🇸🇬 新加坡 03
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 16003
-  cipher: YWVzLTI1Ni1nY206WlVaT05PQjBMRDc1SkNSUQ==
-  password: undefined
-  clash_delay: 12
+- name: 🇸🇬 新加坡 07|流媒体
+  type: trojan
+  server: sg007.421421.xyz
+  port: 20230
+  password: 0bfa2050-b165-4156-859c-70f36d300dce
+  udp: true
+  network: ws
+  sni: www.alibaba.com
+  skip-cert-verify: true
+  clash_delay: 1
   region_info:
     name: 新加坡
     code: SG
-- name: 🇸🇬 新加坡 04
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 16004
-  cipher: YWVzLTI1Ni1nY206OUlaOUhVS1hWMFE3MEFXNQ==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 05
-  type: ss
-  server: 8tv68qhq.slashdevslashnetslashtun.net
-  port: 16005
-  cipher: YWVzLTI1Ni1nY206QTBTT0FPWUxPQkU4TTFHSg==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 06
-  type: ss
-  server: 8tv68qhq.slashdevslashnetslashtun.net
-  port: 16006
-  cipher: YWVzLTI1Ni1nY206Vk4zUEZUOEsyRU1ZTUFZSw==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 07
-  type: ss
-  server: w72tapyb.slashdevslashnetslashtun.net
-  port: 16007
-  cipher: YWVzLTI1Ni1nY206R1g5V0FQRlVHTU4xNE5IMg==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 08
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 16008
-  cipher: YWVzLTI1Ni1nY206WlpJNU5BTEJGNlgyQlU5Sw==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 09
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 16009
-  cipher: YWVzLTI1Ni1nY206T1hJSVFCN0YyN0ZLQjRBUw==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 10
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 16010
-  cipher: YWVzLTI1Ni1nY206WVRWREE4SThWSVlSMkxMOQ==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 11
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 16011
-  cipher: YWVzLTI1Ni1nY206TUg3WU9NVUJGRjQ4RlZIMg==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 12
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 16012
-  cipher: YWVzLTI1Ni1nY206V0VNUjg2UEdQRTlPMkw5Rw==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 13
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 16013
-  cipher: YWVzLTI1Ni1nY206MVpMOTE3OVFTODcxR0VDQQ==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 14
-  type: ss
-  server: 8tv68qhq.slashdevslashnetslashtun.net
-  port: 16014
-  cipher: YWVzLTI1Ni1nY206NzZLQ005NlhUOVdGMElaVw==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 16
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 16016
-  cipher: YWVzLTI1Ni1nY206VFBGQlY3Qk1MNzU4QUpZNQ==
-  password: undefined
-  clash_delay: 12
+- name: 🇸🇬 新加坡 08|流媒体
+  type: trojan
+  server: sg008.421421.xyz
+  port: 20230
+  password: 0bfa2050-b165-4156-859c-70f36d300dce
+  udp: true
+  network: ws
+  sni: www.alibaba.com
+  skip-cert-verify: true
+  clash_delay: 1
   region_info:
     name: 新加坡
     code: SG
@@ -2120,16 +1784,6 @@ proxies:
   type: http
   username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
   clash_delay: 1
-  region_info:
-    name: 泰国
-    code: TH
-- name: 🇹🇭 泰国 01
-  type: ss
-  server: 46.16.129.217
-  port: 20022
-  cipher: YWVzLTI1Ni1nY206WDRXSTU3V01GNlU0V1VKUg==
-  password: undefined
-  clash_delay: 12
   region_info:
     name: 泰国
     code: TH
@@ -2401,143 +2055,29 @@ proxies:
   region_info:
     name: 美国
     code: US
-- name: 🇺🇸 美国 01
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 17001
-  cipher: YWVzLTI1Ni1nY206NFhTQ0QwNVBaRllFQUpRQw==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 02
-  type: ss
-  server: 23.185.248.12
-  port: 17002
-  cipher: YWVzLTI1Ni1nY206TEhDUFNUVTVWMzFFWDRNMg==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 美国
-    code: US
 - name: 🇺🇸 美国 03
-  type: ss
-  server: 23.185.248.13
-  port: 17003
-  cipher: YWVzLTI1Ni1nY206QjY1VEkwT0RETDJPRVo0UQ==
-  password: undefined
-  clash_delay: 12
+  type: trojan
+  server: us003.421421.xyz
+  port: 20230
+  password: 0bfa2050-b165-4156-859c-70f36d300dce
+  udp: true
+  network: ws
+  sni: www.alibaba.com
+  skip-cert-verify: true
+  clash_delay: 1
   region_info:
     name: 美国
     code: US
 - name: 🇺🇸 美国 04
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 17004
-  cipher: YWVzLTI1Ni1nY206RUxGM0ZIQzNGNFAwQklZSw==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 05
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 17005
-  cipher: YWVzLTI1Ni1nY206QTRBQkxKT1MxVDlQNUVYQQ==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 07
-  type: ss
-  server: ti3hyra4.slashdevslashnetslashtun.net
-  port: 17007
-  cipher: YWVzLTI1Ni1nY206NEFIWjdOWFZSMElOTlBYQg==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 09
-  type: ss
-  server: 23.185.248.19
-  port: 17009
-  cipher: YWVzLTI1Ni1nY206SVkwSUpGMDNZRzRRT0dCQQ==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 10
-  type: ss
-  server: 23.185.248.20
-  port: 17010
-  cipher: YWVzLTI1Ni1nY206UUUyQkJEUkVIQUlVUkFCVA==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 11
-  type: ss
-  server: 23.185.248.21
-  port: 17011
-  cipher: YWVzLTI1Ni1nY206ME8xNFFVQldIMklQUjdUNg==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 12
-  type: ss
-  server: 23.185.248.22
-  port: 17012
-  cipher: YWVzLTI1Ni1nY206NTdSOElUSzMxQThWRFJBMQ==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 13
-  type: ss
-  server: 23.185.248.23
-  port: 17013
-  cipher: YWVzLTI1Ni1nY206N1JCSVNZTFJHRERBVFlWRg==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 14
-  type: ss
-  server: 23.185.248.24
-  port: 17014
-  cipher: YWVzLTI1Ni1nY206NDFONkNNVlE0TklYSFpDRA==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 15
-  type: ss
-  server: 23.185.248.25
-  port: 17015
-  cipher: YWVzLTI1Ni1nY206RUNVSDFKTk5URlpXODNDWg==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 16
-  type: ss
-  server: 23.185.248.26
-  port: 17016
-  cipher: YWVzLTI1Ni1nY206SDZRVTRMSjkxWlE2NkJUTQ==
-  password: undefined
-  clash_delay: 12
+  type: trojan
+  server: us004.421421.xyz
+  port: 20230
+  password: 0bfa2050-b165-4156-859c-70f36d300dce
+  udp: true
+  network: ws
+  sni: www.alibaba.com
+  skip-cert-verify: true
+  clash_delay: 1
   region_info:
     name: 美国
     code: US
@@ -2769,16 +2309,6 @@ proxies:
   region_info:
     name: 德国
     code: DE
-- name: 🇩🇪 德国 01
-  type: ss
-  server: 45.154.207.246
-  port: 20030
-  cipher: YWVzLTI1Ni1nY206MVFHSFZGRU4zVURRRU42Sw==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 德国
-    code: DE
 - name: 🇷🇺 俄罗斯 1|BGP|0.4X
   type: vmess
   server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
@@ -2817,16 +2347,6 @@ proxies:
     path: /5e60be5f/
     headers: {}
   clash_delay: 1
-  region_info:
-    name: 俄罗斯
-    code: RU
-- name: 🇷🇺 俄罗斯 01
-  type: ss
-  server: 185.126.239.231
-  port: 20002
-  cipher: YWVzLTI1Ni1nY206VTZBUkI5VFVIRVNWNkxHSQ==
-  password: undefined
-  clash_delay: 12
   region_info:
     name: 俄罗斯
     code: RU
@@ -2871,26 +2391,6 @@ proxies:
   region_info:
     name: 意大利
     code: IT
-- name: 🇮🇹 意大利 01
-  type: ss
-  server: 185.213.20.36
-  port: 20029
-  cipher: YWVzLTI1Ni1nY206WDFRUzBHUENLNE45M1lVTA==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 意大利
-    code: IT
-- name: 🇧🇷 巴西 01
-  type: ss
-  server: 185.192.124.41
-  port: 20013
-  cipher: YWVzLTI1Ni1nY206SE5IOFFVWlU1OE8xMENDRw==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 巴西
-    code: BR
 - name: 🇦🇷 阿根廷 1|BGP|0.4X
   type: vmess
   server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
@@ -2932,26 +2432,6 @@ proxies:
   region_info:
     name: 阿根廷
     code: AR
-- name: 🇦🇷 阿根廷 01
-  type: ss
-  server: 31.40.212.221
-  port: 20006
-  cipher: YWVzLTI1Ni1nY206SUwxNVhPV0E0MFpJR003Rg==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 阿根廷
-    code: AR
-- name: 🇹🇷 土耳其 01
-  type: ss
-  server: 185.123.100.140
-  port: 20024
-  cipher: YWVzLTI1Ni1nY206MkZKTjJCUjVVRFVDOFpROA==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 土耳其
-    code: TR
 - name: 🇦🇺 澳大利亚 1|BGP|0.4X
   type: vmess
   server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
@@ -2976,23 +2456,13 @@ proxies:
   region_info:
     name: 澳大利亚
     code: AU
-- name: 🇦🇺 澳大利亚 01
-  type: ss
-  server: 103.75.119.144
-  port: 20021
-  cipher: YWVzLTI1Ni1nY206STJSTzRZRFRaU1QxWk9aTQ==
-  password: undefined
-  clash_delay: 12
-  region_info:
-    name: 澳大利亚
-    code: AU
 last_message_ids:
   '@fqDINYUE': 4650
   '@wxdy666': 6205
-  '@freeyule': 1926226
+  '@freeyule': 1926262
   '@ccbaohe': 14958
-  '@duangvpsfs': 3671967
-  '@zzzjjjkkkoi': 606630
+  '@duangvpsfs': 3671976
+  '@zzzjjjkkkoi': 606648
   '@xmdexw': 219878
   '@v2v2clash': 0
   '@dingyue_Center': 3893
