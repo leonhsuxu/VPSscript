@@ -65,7 +65,7 @@ def main():
         print(f"输入文件不存在：{input_path}")
         sys.exit(1)
 
-    clash_exe = "./clash_core/clash-speedtest"
+    clash_exe = "./clash_core/clash"
     if not os.path.isfile(clash_exe) or not os.access(clash_exe, os.X_OK):
         print(f"找不到或无权限执行 clash-speedtest: {clash_exe}")
         sys.exit(1)
