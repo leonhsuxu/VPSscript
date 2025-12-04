@@ -709,6 +709,15 @@ def generate_config(proxies, last_message_ids):
 def clash_test_proxy(clash_path, proxy, debug=False):
     """
     使用 Clash 进行代理节点延迟测速，返回有效延迟（1ms至799ms），过滤掉0ms及>=800ms的异常值。
+    通过更严格的正则匹配测速输出中延迟数字，避免被行号等干扰。
+    
+    参数:
+        clash_path (str): Clash 可执行文件路径
+        proxy (dict): 代理节点信息，必须包含 'name' 字段
+        debug (bool): 是否输出调试信息，默认False
+    
+    返回:
+        int | None: 延迟值（毫秒）或测速失败返回 None
     """
     temp_dir = tempfile.mkdtemp()
     temp_config_path = os.path.join(temp_dir, 'config.yaml')
@@ -733,6 +742,7 @@ def clash_test_proxy(clash_path, proxy, debug=False):
     }
     try:
         with open(temp_config_path, 'w', encoding='utf-8') as f:
+            import yaml
             yaml.dump(config, f, allow_unicode=True, sort_keys=False)
         proc = subprocess.run(
             [clash_path, '-c', temp_config_path, '-fast'],
@@ -745,28 +755,48 @@ def clash_test_proxy(clash_path, proxy, debug=False):
         output = proc.stdout + proc.stderr
         if debug:
             print(f"Clash Speedtest 输出（节点 {proxy['name']}）:\n{output}")
-        delays = re.findall(r'\b(\d+)ms\b', output, re.IGNORECASE)
-        valid_delays = [int(d) for d in delays if 1 <= int(d) < 800]
+
+        # 精准匹配含有效延迟的行，过滤掉携带N/A和无关数字
+        pattern = re.compile(
+            r'^\s*\d+\.\s+.+?\s+(?:Http|Vmess|Trojan|Ss|Ssr|Vless|Hysteria|Hysteria2)\s+(\d+)ms\s*$', 
+            re.MULTILINE | re.IGNORECASE
+        )
+        matches = pattern.findall(output)
+        valid_delays = []
+        for delay_str in matches:
+            try:
+                delay = int(delay_str)
+                if 1 <= delay < 800:
+                    valid_delays.append(delay)
+            except:
+                continue
         if valid_delays:
             return min(valid_delays)
+
+        # 如果以上未找到，尝试匹配所有数字，安全过滤
         delays_num = re.findall(r'\b(\d{1,4})\b', output)
         for val in delays_num:
             iv = int(val)
             if 1 <= iv < 800:
                 return iv
+
         if debug:
             print(f"⚠️ 未找到有效延迟信息，节点名: {proxy['name']}")
+
     except subprocess.TimeoutExpired:
         if debug:
             print(f"⚠️ 节点测速超时，节点名: {proxy['name']}")
+
     except Exception as e:
         if debug:
             print(f"⚠️ 节点测速异常 {proxy['name']}: {e}")
+
     finally:
         try:
             shutil.rmtree(temp_dir)
         except Exception:
             pass
+
     return None
 
 
