@@ -789,7 +789,7 @@ async def main():
             sys.exit(f"❌ clash 核心缺失或不可执行: {clash_path}")
 
         tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
-        print(f"测速成功节点数: {len(tested_nodes)}")
+        print(f" ✅测速成功节点数: {len(tested_nodes)}")
 
         if not tested_nodes:
             print("⚠️ clash测速全部失败，启用回退策略保留指定地区节点")
