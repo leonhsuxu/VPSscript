@@ -341,6 +341,326 @@ proxies:
   region_info:
     name: 香港
     code: HK
+- name: 🇭🇰 香港 1|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51011
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 2|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51012
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 2|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51012
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 3|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51013
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 3|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51013
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 4|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51014
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 4|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51014
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 04
+  type: ss
+  server: 8tv68qhq.slashdevslashnetslashtun.net
+  port: 15005
+  cipher: YWVzLTI1Ni1nY206RUhGV1UxUFo0TU9EUlhRSw==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 06
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 15007
+  cipher: YWVzLTI1Ni1nY206QUxQV0pPVEVXMkZVUEJQQQ==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 08
+  type: ss
+  server: 8tv68qhq.slashdevslashnetslashtun.net
+  port: 15009
+  cipher: YWVzLTI1Ni1nY206Rk5JMjZVOEpPSTY4TDZaOA==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 11
+  type: ss
+  server: 8tv68qhq.slashdevslashnetslashtun.net
+  port: 15012
+  cipher: YWVzLTI1Ni1nY206MU5JOUE5UElEMVBIRURCVA==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 13
+  type: ss
+  server: 8tv68qhq.slashdevslashnetslashtun.net
+  port: 15014
+  cipher: YWVzLTI1Ni1nY206UDVGTUVHRFBHWUNYSklLQw==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 14
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 15015
+  cipher: YWVzLTI1Ni1nY206T1I2RUxYTlpMN1NJSTZMTA==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 15
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 15016
+  cipher: YWVzLTI1Ni1nY206VzdGV1BSN1BUR1VYSlBSNg==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇹🇼 台湾 1|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51021
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇹🇼 台湾 1|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51021
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇹🇼 台湾 2|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51022
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇹🇼 台湾 2|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51022
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇹🇼 台湾 3|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51023
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇹🇼 台湾 3|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51023
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇹🇼 台湾 4|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51024
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇹🇼 台湾 4|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51024
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇨🇳 台湾 01
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 21001
+  cipher: YWVzLTI1Ni1nY206MldLNTBRVkI4VUxTMkJENg==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇨🇳 台湾 02
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 21002
+  cipher: YWVzLTI1Ni1nY206MTFETDg2RVc2RzdaMURCWA==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇨🇳 台湾 03
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 21003
+  cipher: YWVzLTI1Ni1nY206M1g2N1dKNVhCUjlCSkdOSA==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇨🇳 台湾 04
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 21004
+  cipher: YWVzLTI1Ni1nY206OFIyNTlNMU9LUUpGMjI0Vg==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇨🇳 台湾 05
+  type: ss
+  server: 8tv68qhq.slashdevslashnetslashtun.net
+  port: 21005
+  cipher: YWVzLTI1Ni1nY206UlpZSVQ4RldWRVJHUTNKMQ==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇨🇳 台湾 06
+  type: ss
+  server: 8tv68qhq.slashdevslashnetslashtun.net
+  port: 21006
+  cipher: YWVzLTI1Ni1nY206SDdaV0FWTzBVOTZONTROSw==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇨🇳 台湾 07
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 21007
+  cipher: YWVzLTI1Ni1nY206SFc1M1kxMkZUWkU2VlZEVA==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 台湾
+    code: TW
 - name: 🇯🇵 日本 _n1751468092.lie5d.cyou
   type: vmess
   server: n1751468092.lie5d.cyou
@@ -359,6 +679,592 @@ proxies:
   region_info:
     name: 日本
     code: JP
+- name: 🇯🇵 日本 亚洲】01丨专线【3x
+  type: trojan
+  server: ssjp01.go52pokemon.com
+  port: 54225
+  password: a26d9eef-4a6c-4881-921d-6ef2b57cc508
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 亚洲】03丨专线【3x
+  type: trojan
+  server: ssjp02.go52pokemon.com
+  port: 54032
+  password: a26d9eef-4a6c-4881-921d-6ef2b57cc508
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 亚洲】09丨IPLC游戏专线【10x
+  type: trojan
+  server: ssjp03.go52pokemon.com
+  port: 54029
+  password: a26d9eef-4a6c-4881-921d-6ef2b57cc508
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 1|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51041
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 1|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51041
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 01
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 18001
+  cipher: YWVzLTI1Ni1nY206STY4QjhMWloyOTdDMEIyQw==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 02
+  type: ss
+  server: 8tv68qhq.slashdevslashnetslashtun.net
+  port: 18002
+  cipher: YWVzLTI1Ni1nY206TjNWOVEzWlVXSlRNM0hWTg==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 03
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 18003
+  cipher: YWVzLTI1Ni1nY206VUJYRTUxQzVJQUQ5MTBaTQ==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 04
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 18004
+  cipher: YWVzLTI1Ni1nY206ODhHMEY4NEE4VTdZUFZZTA==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 05
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 18005
+  cipher: YWVzLTI1Ni1nY206TEsySFBJWDFZOTlHM1dGUA==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 06
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 18006
+  cipher: YWVzLTI1Ni1nY206SlVYQjNaTlBXUEE4QVY0Vg==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 07
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 18007
+  cipher: YWVzLTI1Ni1nY206M0tVRjJZQVlPSUhXUlZXRQ==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 08
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 18008
+  cipher: YWVzLTI1Ni1nY206M1BSSTg3MFRCRUlRSERUTQ==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 09
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 18009
+  cipher: YWVzLTI1Ni1nY206UFE2Qk5DRjM0RklVMFlFUw==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 11
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 18011
+  cipher: YWVzLTI1Ni1nY206NDdCVDI5UUY4OERJS0FCVA==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 12
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 18012
+  cipher: YWVzLTI1Ni1nY206RE5DMkowOEEyWDcySUhFMA==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 13
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 18013
+  cipher: YWVzLTI1Ni1nY206TU9GQkxJTERIWTBYUUJOSg==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 14
+  type: ss
+  server: 8tv68qhq.slashdevslashnetslashtun.net
+  port: 18014
+  cipher: YWVzLTI1Ni1nY206MTBUTVo2Wk41UzZSUDVBRg==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 15
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 18015
+  cipher: YWVzLTI1Ni1nY206TTVVUEpDWlJUNzNUTVc5Mw==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 16
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 18016
+  cipher: YWVzLTI1Ni1nY206R0ZBS1pGODdHRFZWS0JYOQ==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇸🇬 新加坡 亚洲】04丨专线【3x
+  type: trojan
+  server: sssg02.go52pokemon.com
+  port: 55015
+  password: a26d9eef-4a6c-4881-921d-6ef2b57cc508
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 亚洲】09丨IPLC【10x
+  type: trojan
+  server: sshk03.go52pokemon.com
+  port: 55017
+  password: a26d9eef-4a6c-4881-921d-6ef2b57cc508
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 1|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51031
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 1|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51031
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 2|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51032
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 2|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51032
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 3|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51033
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 3|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51033
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 4|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51034
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 4|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51034
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 01
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 16001
+  cipher: YWVzLTI1Ni1nY206QkMxTUhPNUk1UTdFRjlQWg==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 02
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 16002
+  cipher: YWVzLTI1Ni1nY206VEkyUENKWk1ETlNXMTg0VQ==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 03
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 16003
+  cipher: YWVzLTI1Ni1nY206WlVaT05PQjBMRDc1SkNSUQ==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 04
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 16004
+  cipher: YWVzLTI1Ni1nY206OUlaOUhVS1hWMFE3MEFXNQ==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 05
+  type: ss
+  server: 8tv68qhq.slashdevslashnetslashtun.net
+  port: 16005
+  cipher: YWVzLTI1Ni1nY206QTBTT0FPWUxPQkU4TTFHSg==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 06
+  type: ss
+  server: 8tv68qhq.slashdevslashnetslashtun.net
+  port: 16006
+  cipher: YWVzLTI1Ni1nY206Vk4zUEZUOEsyRU1ZTUFZSw==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 07
+  type: ss
+  server: w72tapyb.slashdevslashnetslashtun.net
+  port: 16007
+  cipher: YWVzLTI1Ni1nY206R1g5V0FQRlVHTU4xNE5IMg==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 08
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 16008
+  cipher: YWVzLTI1Ni1nY206WlpJNU5BTEJGNlgyQlU5Sw==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 09
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 16009
+  cipher: YWVzLTI1Ni1nY206T1hJSVFCN0YyN0ZLQjRBUw==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 10
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 16010
+  cipher: YWVzLTI1Ni1nY206WVRWREE4SThWSVlSMkxMOQ==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 11
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 16011
+  cipher: YWVzLTI1Ni1nY206TUg3WU9NVUJGRjQ4RlZIMg==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 12
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 16012
+  cipher: YWVzLTI1Ni1nY206V0VNUjg2UEdQRTlPMkw5Rw==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 13
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 16013
+  cipher: YWVzLTI1Ni1nY206MVpMOTE3OVFTODcxR0VDQQ==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 14
+  type: ss
+  server: 8tv68qhq.slashdevslashnetslashtun.net
+  port: 16014
+  cipher: YWVzLTI1Ni1nY206NzZLQ005NlhUOVdGMElaVw==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 16
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 16016
+  cipher: YWVzLTI1Ni1nY206VFBGQlY3Qk1MNzU4QUpZNQ==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇰🇷 韩国 亚洲】家宽01丨专线【6x
+  type: trojan
+  server: sskr01.go52pokemon.com
+  port: 59110
+  password: a26d9eef-4a6c-4881-921d-6ef2b57cc508
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
+  clash_delay: 1
+  region_info:
+    name: 韩国
+    code: KR
+- name: 🇰🇷 韩国 亚洲】家宽02丨专线【6x
+  type: trojan
+  server: sskr02.go52pokemon.com
+  port: 59099
+  password: a26d9eef-4a6c-4881-921d-6ef2b57cc508
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
+  clash_delay: 1
+  region_info:
+    name: 韩国
+    code: KR
+- name: 🇰🇷 韩国 1BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51061
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 韩国
+    code: KR
+- name: 🇰🇷 韩国 1IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51061
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 韩国
+    code: KR
+- name: 🇲🇾 马来西亚 1BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51081
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 马来西亚
+    code: MY
+- name: 🇲🇾 马来西亚 1IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51081
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 马来西亚
+    code: MY
+- name: 🇹🇭 泰国 01
+  type: ss
+  server: 46.16.129.217
+  port: 20022
+  cipher: YWVzLTI1Ni1nY206WDRXSTU3V01GNlU0V1VKUg==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 泰国
+    code: TH
+- name: 🇻🇳 越南 1|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51071
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 越南
+    code: VN
+- name: 🇻🇳 越南 1|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51071
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 越南
+    code: VN
 - name: 🇺🇸 美国 疯高速100 (免费
   type: vmess
   server: us24-3.998998.best
@@ -379,6 +1285,272 @@ proxies:
   region_info:
     name: 美国
     code: US
+- name: 🇺🇸 美国 北美洲】01丨专线【3x
+  type: trojan
+  server: ssus01.go52pokemon.com
+  port: 56115
+  password: a26d9eef-4a6c-4881-921d-6ef2b57cc508
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 北美洲】03丨专线【3x
+  type: trojan
+  server: ssus02.go52pokemon.com
+  port: 56017
+  password: a26d9eef-4a6c-4881-921d-6ef2b57cc508
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 北美洲】05丨IPLC【10x
+  type: trojan
+  server: ssus03.go52pokemon.com
+  port: 56019
+  password: a26d9eef-4a6c-4881-921d-6ef2b57cc508
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 SCP
+  type: trojan
+  server: 180.131.145.161
+  port: 23274
+  password: FodSUXysuS
+  sni: cloudflare.com
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 1|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51051
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 1|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51051
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 01
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 17001
+  cipher: YWVzLTI1Ni1nY206NFhTQ0QwNVBaRllFQUpRQw==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 02
+  type: ss
+  server: 23.185.248.12
+  port: 17002
+  cipher: YWVzLTI1Ni1nY206TEhDUFNUVTVWMzFFWDRNMg==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 03
+  type: ss
+  server: 23.185.248.13
+  port: 17003
+  cipher: YWVzLTI1Ni1nY206QjY1VEkwT0RETDJPRVo0UQ==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 04
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 17004
+  cipher: YWVzLTI1Ni1nY206RUxGM0ZIQzNGNFAwQklZSw==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 05
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 17005
+  cipher: YWVzLTI1Ni1nY206QTRBQkxKT1MxVDlQNUVYQQ==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 07
+  type: ss
+  server: ti3hyra4.slashdevslashnetslashtun.net
+  port: 17007
+  cipher: YWVzLTI1Ni1nY206NEFIWjdOWFZSMElOTlBYQg==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 09
+  type: ss
+  server: 23.185.248.19
+  port: 17009
+  cipher: YWVzLTI1Ni1nY206SVkwSUpGMDNZRzRRT0dCQQ==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 10
+  type: ss
+  server: 23.185.248.20
+  port: 17010
+  cipher: YWVzLTI1Ni1nY206UUUyQkJEUkVIQUlVUkFCVA==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 11
+  type: ss
+  server: 23.185.248.21
+  port: 17011
+  cipher: YWVzLTI1Ni1nY206ME8xNFFVQldIMklQUjdUNg==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 12
+  type: ss
+  server: 23.185.248.22
+  port: 17012
+  cipher: YWVzLTI1Ni1nY206NTdSOElUSzMxQThWRFJBMQ==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 13
+  type: ss
+  server: 23.185.248.23
+  port: 17013
+  cipher: YWVzLTI1Ni1nY206N1JCSVNZTFJHRERBVFlWRg==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 14
+  type: ss
+  server: 23.185.248.24
+  port: 17014
+  cipher: YWVzLTI1Ni1nY206NDFONkNNVlE0TklYSFpDRA==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 15
+  type: ss
+  server: 23.185.248.25
+  port: 17015
+  cipher: YWVzLTI1Ni1nY206RUNVSDFKTk5URlpXODNDWg==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 16
+  type: ss
+  server: 23.185.248.26
+  port: 17016
+  cipher: YWVzLTI1Ni1nY206SDZRVTRMSjkxWlE2NkJUTQ==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 美国
+    code: US
+- name: 🇨🇦 加拿大 SCP
+  type: trojan
+  server: 209.200.246.53
+  port: 36774
+  password: Fv7ogJ6vfz
+  sni: cloudflare.com
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  clash_delay: 1
+  region_info:
+    name: 加拿大
+    code: CA
+- name: 🇫🇷 法国 SCP
+  type: trojan
+  server: 145.223.70.115
+  port: 25365
+  password: eDHWaPzxcl
+  sni: cloudflare.com
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  clash_delay: 1
+  region_info:
+    name: 法国
+    code: FR
+- name: 🇫🇷 法国 1|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51141
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 法国
+    code: FR
+- name: 🇫🇷 法国 1|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51141
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 法国
+    code: FR
 - name: 🇬🇧 英国 剩余流量：999.54
   type: ss
   server: car.com
@@ -401,14 +1573,216 @@ proxies:
   region_info:
     name: 英国
     code: GB
+- name: 🇬🇧 英国 剩余流量：49.43
+  type: trojan
+  server: sssg01.go52pokemon.com
+  port: 55016
+  password: a26d9eef-4a6c-4881-921d-6ef2b57cc508
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
+  clash_delay: 1
+  region_info:
+    name: 英国
+    code: GB
+- name: 🇩🇪 德国 1|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51131
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 德国
+    code: DE
+- name: 🇩🇪 德国 1|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51131
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 德国
+    code: DE
+- name: 🇩🇪 德国 01
+  type: ss
+  server: 45.154.207.246
+  port: 20030
+  cipher: YWVzLTI1Ni1nY206MVFHSFZGRU4zVURRRU42Sw==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 德国
+    code: DE
+- name: 🇷🇺 俄罗斯 1|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51091
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 俄罗斯
+    code: RU
+- name: 🇷🇺 俄罗斯 1|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51091
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 俄罗斯
+    code: RU
+- name: 🇷🇺 俄罗斯 01
+  type: ss
+  server: 185.126.239.231
+  port: 20002
+  cipher: YWVzLTI1Ni1nY206VTZBUkI5VFVIRVNWNkxHSQ==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 俄罗斯
+    code: RU
+- name: 🇮🇹 意大利 1|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51161
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 意大利
+    code: IT
+- name: 🇮🇹 意大利 1|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51161
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 意大利
+    code: IT
+- name: 🇮🇹 意大利 01
+  type: ss
+  server: 185.213.20.36
+  port: 20029
+  cipher: YWVzLTI1Ni1nY206WDFRUzBHUENLNE45M1lVTA==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 意大利
+    code: IT
+- name: 🇧🇷 巴西 01
+  type: ss
+  server: 185.192.124.41
+  port: 20013
+  cipher: YWVzLTI1Ni1nY206SE5IOFFVWlU1OE8xMENDRw==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 巴西
+    code: BR
+- name: 🇦🇷 阿根廷 1|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51151
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 阿根廷
+    code: AR
+- name: 🇦🇷 阿根廷 1|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51151
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 阿根廷
+    code: AR
+- name: 🇦🇷 阿根廷 01
+  type: ss
+  server: 31.40.212.221
+  port: 20006
+  cipher: YWVzLTI1Ni1nY206SUwxNVhPV0E0MFpJR003Rg==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 阿根廷
+    code: AR
+- name: 🇹🇷 土耳其 01
+  type: ss
+  server: 185.123.100.140
+  port: 20024
+  cipher: YWVzLTI1Ni1nY206MkZKTjJCUjVVRFVDOFpROA==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 土耳其
+    code: TR
+- name: 🇦🇺 澳大利亚 1|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51111
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 澳大利亚
+    code: AU
+- name: 🇦🇺 澳大利亚 1|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51111
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 澳大利亚
+    code: AU
+- name: 🇦🇺 澳大利亚 01
+  type: ss
+  server: 103.75.119.144
+  port: 20021
+  cipher: YWVzLTI1Ni1nY206STJSTzRZRFRaU1QxWk9aTQ==
+  password: undefined
+  clash_delay: 12
+  region_info:
+    name: 澳大利亚
+    code: AU
 last_message_ids:
-  '@fqDINYUE': 4648
-  '@wxdy666': 0
-  '@freeyule': 1925984
-  '@ccbaohe': 14956
-  '@duangvpsfs': 3671717
-  '@zzzjjjkkkoi': 606516
-  '@xmdexw': 0
+  '@fqDINYUE': 4650
+  '@wxdy666': 6205
+  '@freeyule': 1926187
+  '@ccbaohe': 14958
+  '@duangvpsfs': 3671955
+  '@zzzjjjkkkoi': 606592
+  '@xmdexw': 219871
   '@v2v2clash': 0
   '@dingyue_Center': 3893
   '@tempssrlink': 0
