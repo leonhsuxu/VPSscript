@@ -1,7 +1,7 @@
-name: ⏳ Tg频道群抓取节点测速 (clash-speedtest缓存版)
+name: ⏳ TG频道&群抓取节点测速 (clash-speedtest测速版)
 on:
   schedule:
-    - cron: '0 0,12 * * *' # 每天 UTC 时间的 0 点和 12 点运行
+    - cron: '10 */4 * * *'  # 每6小时执行
   workflow_dispatch:
 env:
   CLASH_SPEEDTEST_VERSION: v1.7.0  # 请根据需要替换为目标版本
