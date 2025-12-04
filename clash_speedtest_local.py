@@ -71,6 +71,8 @@ def main():
         "-output", output_path,
         "-max-latency", max_latency,
         "-fast"
+        "-concurrent", "8",
+
     ]
 
     print(f"执行命令: {' '.join(cmd)}")
