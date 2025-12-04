@@ -800,7 +800,7 @@ async def main():
         sys.exit("❌ 无任何节点可用，程序退出")
 
     if ENABLE_SPEED_TEST:
-        print("[3/5] 使用 clash 核心测速")
+        print("[3/5] 使用 clash-speedtest 核心测速")
         clash_path = 'clash_core/clash'
         if not (os.path.isfile(clash_path) and os.access(clash_path, os.X_OK)):
             sys.exit(f"❌ clash 核心缺失或不可执行: {clash_path}")
