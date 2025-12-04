@@ -705,27 +705,22 @@ def clash_test_proxy(clash_path, proxy):
             encoding='utf-8',
             timeout=15
         )
-        print(f"Clash 测试节点: {proxy['name']}")
-        print(f"Clash stdout:\n{proc.stdout}")
-        print(f"Clash stderr:\n{proc.stderr}")
         output = proc.stdout
+        # 调试打印全部输出，确认内容
+        # print(f"Clash 输出:\n{output}")
+        
         # 找出“节点名: 123 ms”形式的延迟
         match = re.search(rf"{re.escape(proxy['name'])}: (\d+) ms", output)
         if match:
             delay = int(match.group(1))
             return delay
+        else:
+            # 若未匹配成功，打印警告及输出方便分析
+            print(f"⚠️ 未找到延迟匹配信息，节点名: {proxy['name']}")
+            # print(f"Clash输出:\n{output}")
     except Exception as e:
         print(f"Clash 测试异常: {e}")
         return None
-    finally:
-        try:
-            os.remove(temp_config_path)
-            os.rmdir(temp_dir)
-        except Exception:
-            pass
-
-    return None
-
 
 def test_proxy_with_clash(clash_path, proxy):
     delay = clash_test_proxy(clash_path, proxy)
