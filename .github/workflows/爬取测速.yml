@@ -3,121 +3,89 @@ name: ⏳ Tg频道群抓取节点测速 (mihomo核心缓存版)
 on:
   schedule:
     - cron: '0 0,12 * * *' # 每天 UTC 时间的 0 点和 12 点运行
-  workflow_dispatch: # 允许在 GitHub 界面手动触发工作流
+  workflow_dispatch:
 
 env:
-  # 设置 mihomo 核心的版本号。
-  # 每次你需要更新核心时，只需修改这个变量的值，缓存就会自动失效。
-  MIHOMO_VERSION: v1.19.17 # <--- 根据你的选择更新为 v1.19.17
-
-  # TELEGRAM_CHANNEL_IDS 频道列表，直接写入 YAML (请注意隐私风险)
+  MIHOMO_VERSION: v1.19.17
   TELEGRAM_CHANNEL_IDS: |
-         # 订阅转发-频道
-         @fqDINYUE
-         # 机场订阅节点VPN分享社
-         @wxdy666
-         # 白嫖订阅&节点分享群
-         @freeyule
-         # CC宝盒
-         @ccbaohe
-         # Duang VPS交流群
-         @duangvpsfs         
-         # 白嫖机场交流群   
-         @zzzjjjkkkoi
-         # M麦当劳 全家桶
-         @xmdexw
-         # v2clash 免费分享中心
-         @v2v2clash
-         # -1002400305087
-         # 订阅分享中心
-         @dingyue_Center
-         # ※个人的订阅收集 leon
-         @tempssrlink
+    # 订阅转发-频道
+    @fqDINYUE
+    # 机场订阅节点VPN分享社
+    @wxdy666
+    # 白嫖订阅&节点分享群
+    @freeyule
+    # CC宝盒
+    @ccbaohe
+    # Duang VPS交流群
+    @duangvpsfs         
+    # 白嫖机场交流群   
+    @zzzjjjkkkoi
+    # M麦当劳 全家桶
+    @xmdexw
+    # v2clash 免费分享中心
+    @v2v2clash
+    # 订阅分享中心
+    @dingyue_Center
+    # ※个人的订阅收集 leon
+    @tempssrlink
 
 jobs:
   build:
-    runs-on: ubuntu-latest # 使用最新的 Ubuntu 运行器
-
+    runs-on: ubuntu-latest
     steps:
       - name: 检出代码仓库
-        uses: actions/checkout@v4 
+        uses: actions/checkout@v4
 
       - name: 设置 Python 环境
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11' 
+          python-version: '3.11'
 
-      # === 缓存 Python 依赖 ===
+      # 缓存 Python 依赖
       - name: 缓存 Python 依赖
-        id: cache-pip-dependencies 
         uses: actions/cache@v4
         with:
-          path: ~/.cache/pip 
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }} 
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
           restore-keys: |
-            ${{ runner.os }}-pip- 
+            ${{ runner.os }}-pip-
 
       - name: 安装 Python 依赖
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt 
-          echo "Python 依赖安装完成。"
+          pip install -r requirements.txt
 
-      # === 缓存 mihomo 核心 ===
+      # 缓存 mihomo clash 核心
       - name: 缓存 mihomo 核心
-        id: cache-mihomo-core 
+        id: cache-mihomo-core
         uses: actions/cache@v4
         with:
-          path: clash_core/ 
-          key: ${{ runner.os }}-mihomo-core-${{ env.MIHOMO_VERSION }} 
+          path: clash_core/
+          key: ${{ runner.os }}-mihomo-core-${{ env.MIHOMO_VERSION }}
 
-      - name: 如果 mihomo 核心缓存未命中，则下载并解压
+      - name: 下载 mihomo clash 核心（缓存未命中时执行）
         if: steps.cache-mihomo-core.outputs.cache-hit != 'true'
         run: |
-          echo "mihomo 核心缓存未命中，正在下载..."
           mkdir -p clash_core
-          
-          # ****** 关键修改点：更新下载链接和处理方式 ******
-          # 使用推荐的文件名: mihomo-linux-amd64-v1.19.17.gz
-          # 注意这是一个 .gz 文件，需要用 gunzip 解压，然后 mv
-          MIHOMO_FILENAME="mihomo-linux-amd64-${{ env.MIHOMO_VERSION }}.gz" # <--- 使用推荐的文件名
+          MIHOMO_FILENAME="mihomo-linux-amd64-${{ env.MIHOMO_VERSION }}.gz"
           MIHOMO_URL="https://github.com/MetaCubeX/mihomo/releases/download/${{ env.MIHOMO_VERSION }}/${MIHOMO_FILENAME}"
-          
-          echo "正在从 ${MIHOMO_URL} 下载 mihomo 核心..."
-          wget -O mihomo.gz "${MIHOMO_URL}" # 下载到 mihomo.gz
-          
-          gunzip mihomo.gz # <--- 使用 gunzip 解压 .gz 文件，会得到一个没有扩展名的可执行文件 'mihomo'
-          
-          # 解压后得到的可执行文件名为 'mihomo'
-          mv mihomo clash_core/clash # <--- 将解压出的 'mihomo' 移动并重命名为 'clash_core/clash'
-          
-          echo "mihomo 核心下载完成。"
-      
-      - name: 确保 mihomo 核心可执行
-        run: |
+
+          echo "正在下载 mihomo 核心..."
+          wget -q -O mihomo.gz "$MIHOMO_URL"
+          gunzip mihomo.gz
+          mv mihomo clash_core/clash
           chmod +x clash_core/clash
-          echo "mihomo 核心已设置为可执行状态。"
+          echo "mihomo clash 核心下载完成。"
 
-      # === 缓存 flclashyaml 目录，用于持久化状态 ===
-      - name: 缓存 flclashyaml 状态文件
-        id: cache-flclashyaml
-        uses: actions/cache@v4
-        with:
-          path: flclashyaml/ 
-          key: ${{ runner.os }}-flclashyaml-state-${{ github.ref }} 
-          restore-keys: |
-            ${{ runner.os }}-flclashyaml-state- 
-
-      - name: 配置 Telegram (从 Secrets 读取敏感信息) 并运行脚本
+      - name: 运行 Telegram 抓取及 Clash 测速脚本
         env:
           TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
           TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
           TELEGRAM_STRING_SESSION: ${{ secrets.TELEGRAM_STRING_SESSION }}
+          TELEGRAM_CHANNEL_IDS: ${{ env.TELEGRAM_CHANNEL_IDS }}
         run: |
-          echo "正在运行 Clash 测速脚本..."
-          mkdir -p flclashyaml 
+          mkdir -p flclashyaml
           python TelegramNode/telegram_publiclink.py
-          echo "脚本执行完成。"
 
       - name: 上传生成的 Clash 配置
         uses: actions/upload-artifact@v4
