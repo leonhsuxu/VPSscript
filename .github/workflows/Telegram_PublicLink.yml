@@ -46,6 +46,8 @@ jobs:
          @dingyue_Center
          # ※个人的订阅收集 leon
          @tempssrlink
+         # 虚空新手村交流群
+         -1003250922598
          
         TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
         TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
