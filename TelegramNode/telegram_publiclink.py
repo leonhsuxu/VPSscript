@@ -1,4 +1,22 @@
 # -*- coding: utf-8 -*-
+"""
+文件名: Telegram.Node_Clash-Speedtest测试版 V1
+
+脚本说明:
+本脚本实现从指定 Telegram 频道自动爬取订阅链接；
+下载并解析各种代理订阅节点（包括 vmess, vless, ssr, ss, trojan, hysteria及hysteria2等协议），
+支持节点去重、地区识别与重命名，并使用 Clash 核心程序进行节点测速（延迟测试）；
+最终生成可用于 Clash 使用的 YAML 配置文件。
+
+主要功能:
+1. 从 Telegram 指定频道抓取带有订阅链接的消息，支持时间窗口过滤新消息。
+2. 支持多种常见代理协议的节点解析，以及识别节点所在区域。
+3. 采用命令行模式调用 clash 核心程序进行节点延迟测试，筛选有效节点。
+4. 根据节点地区与延迟自动排序和归类，生成最终配置文件。
+5. 环境变量配置灵活，方便集成自动化流程。
+
+"""
+
 import os
 import re
 import sys
@@ -796,7 +814,7 @@ def batch_test_proxies_clash(clash_path, proxies, max_workers=32):
 
 async def main():
     print("=" * 60)
-    print("Clash 订阅自动生成脚本 - Clash 核心测速版本")
+    print("Telegram.Node_Clash-Speedtest测试版 V1")
     print(datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S"))
     print("=" * 60)
 
