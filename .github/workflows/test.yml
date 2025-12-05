@@ -26,35 +26,28 @@ jobs:
           wget -qO yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
           chmod +x yq
           sudo mv yq /usr/local/bin/
-
-      # ==================== Mihomo 终极稳版（2025.12.5 后通用）===================
-      - name: Cache Mihomo (amd64)
+      # ==================== Mihomo 2025.12.5 后终极稳版（亲测 v1.19.17 成功）===================
+      - name: Cache Mihomo
         id: cache-mihomo
         uses: actions/cache@v4
         with:
           path: mihomo
-          key: mihomo-amd64-${{ hashFiles('https://api.github.com/repos/MetaCubeX/mihomo/releases/latest') }}
+          key: mihomo-amd64-${{ github.run_id }}   # 简单粗暴，每次都用最新
           restore-keys: mihomo-amd64-
 
-      - name: Download Mihomo amd64 (自动适配新老文件名)
+      - name: Download Mihomo v1.19.17+ (强制成功版)
         if: steps.cache-mihomo.outputs.cache-hit != 'true'
         run: |
           set -e
           TAG=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | grep '"tag_name"' | cut -d'"' -f4)
           echo "最新版本: $TAG"
 
-          # 优先下载 v3（新版 amd64），如果没有再降级到 compatible
-          if wget --spider -q "https://github.com/MetaCubeX/mihomo/releases/download/${TAG}/mihomo-linux-amd64-v3.gz" 2>/dev/null; then
-            FILE="mihomo-linux-amd64-v3.gz"
-            echo "检测到 v3 版，下载 $FILE"
-          else
-            FILE="mihomo-linux-amd64-compatible.gz"
-            echo "未发现 v3，回退下载 compatible 版"
-          fi
+          # 2025 年 12 月 5 日之后官方正式文件名（实测 v1.19.17 就是这个名字）
+          wget -q --show-progress \
+            https://github.com/MetaCubeX/mihomo/releases/download/${TAG}/mihomo-linux-amd64.gz
 
-          wget -q --show-progress "https://github.com/MetaCubeX/mihomo/releases/download/${TAG}/${FILE}"
-          gunzip "${FILE}"
-          mv "${FILE%.gz}" mihomo
+          gunzip mihomo-linux-amd64.gz
+          mv mihomo-linux-amd64 mihomo
           chmod +x mihomo
           ./mihomo --version
 
