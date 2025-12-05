@@ -52,7 +52,7 @@ jobs:
           gunzip "mihomo-linux-amd64-${TAG}.gz"
           mv "mihomo-linux-amd64-${TAG}" mihomo
           chmod +x mihomo
-          ./mihomo --version
+          ./mihomo -v
 
       - name: Cache xiecang speedtest-clash
         id: cache-xc
