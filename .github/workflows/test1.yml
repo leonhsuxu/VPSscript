@@ -22,9 +22,7 @@ jobs:
       - name: Install Python dependencies # 核心修复：安装 PyYAML 库
         run: |
           pip install PyYAML
-          pip install -r requirements.txt
-
-
+          pip install -r requirements.txt # 如果您的TelegramNode脚本有requirements.txt文件，这会安装其依赖
       - name: Install yq
         run: |
           wget -qO yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64
@@ -62,38 +60,30 @@ jobs:
         if: steps.cache-xc.outputs.cache-hit != 'true'
         run: |
           set -e # 确保任何命令失败都会导致脚本退出
-
           RELEASE_TAG=${{ env.SPEEDTEST_VERSION }}
           echo "尝试下载 speedtest-clash 版本: $RELEASE_TAG"
-
           # 尝试从指定版本获取下载链接
           # 查找包含 "browser_download_url" 且资产名称中包含 "speedtest-clash_Linux_x86_64" 的链接
           URL=$(curl -s "https://api.github.com/repos/xiecang/speedtest-clash/releases/tags/${RELEASE_TAG}" \
                 | grep "browser_download_url.*speedtest-clash_Linux_x86_64" | cut -d '"' -f4)
-
           # 如果在指定版本中未能找到，则尝试从最新版本获取（保留原脚本的健壮性）
           if [ -z "$URL" ]; then
             echo "警告: 未在指定版本 ${RELEASE_TAG} 找到 speedtest-clash_Linux_x86_64 资产，尝试从最新版本获取。"
             URL=$(curl -s https://api.github.com/repos/xiecang/speedtest-clash/releases/latest \
                 | grep "browser_download_url.*speedtest-clash_Linux_x86_64" | cut -d '"' -f4)
           fi
-
           if [ -z "$URL" ]; then
             echo "错误: 未找到 speedtest-clash 的下载链接 (需要包含 speedtest-clash_Linux_x86_64)。请检查版本号或仓库。退出。"
             exit 1
           fi
-
           FILENAME=$(basename "$URL") # 获取下载文件名，例如 speedtest-clash_Linux_x86_64.tar.gz 或 speedtest-clash_Linux_x86_64
           echo "xiecang speedtest-clash 下载地址: $URL"
           echo "下载到文件: $FILENAME"
-
           wget --tries=5 --timeout=60 --progress=bar:force -O "${FILENAME}" "$URL"
-
           # 检查是否为 tar.gz 压缩包
           if [[ "$FILENAME" == *.tar.gz ]]; then
             echo "检测到 .tar.gz 压缩包，进行解压..."
             tar -xzf "${FILENAME}"
-
             # 假设解压后的二进制文件名为 'speedtest-clash'
             if [ -f "speedtest-clash" ]; then
               echo "找到解压后的二进制文件 'speedtest-clash'。"
@@ -116,7 +106,6 @@ jobs:
             echo "下载的是直接的二进制文件。"
             mv "${FILENAME}" xcspeedtest
           fi
-
           chmod +x xcspeedtest
           echo "xcspeedtest 下载并准备完成。"
           ./xcspeedtest --help | head -3
@@ -155,16 +144,42 @@ jobs:
           EOF
           yq e '.proxies = load("flclashyaml/Tg-node.yaml")' -i config.yaml
           NAMES=$(yq e '.proxies[].name' config.yaml | sed 's/^/  - /')
-          yq e ".proxy-groups[] |= .proxies += \"$NAMES\"" -i config.yaml
+          # 检查 NAMES 是否为空，如果为空则不添加到 proxy-groups，防止 yq 报错或生成无效配置
+          if [ -z "$NAMES" ]; then
+            echo "警告: Tg-node.yaml 中没有提取到代理名称，proxy-groups 将只包含 DIRECT。"
+          else
+            yq e ".proxy-groups[] |= .proxies += \"$NAMES\"" -i config.yaml
+          fi
+      - name: Debug - Show generated configs # 新增调试步骤
+        run: |
+          echo "--- Content of flclashyaml/Tg-node.yaml ---"
+          cat flclashyaml/Tg-node.yaml || echo "flclashyaml/Tg-node.yaml not found or empty."
+          echo "--- End of flclashyaml/Tg-node.yaml ---"
+          echo "--- Content of config.yaml ---"
+          cat config.yaml || echo "config.yaml not found or empty."
+          echo "--- End of config.yaml ---"
       - name: Start Mihomo
         run: |
-          ./mihomo -f config.yaml -d . &
+          # 启动 Mihomo，并将所有输出重定向到 mihomo.log
+          nohup ./mihomo -f config.yaml -d . > mihomo.log 2>&1 &
+          
+          # 等待 Mihomo 启动
           for i in {1..20}; do
             curl -s http://127.0.0.1:9090/proxies >/dev/null && break
             echo "等待 Mihomo 启动... ($i/20)"
             sleep 2
           done
-          curl -s http://127.0.0.1:9090/proxies >/dev/null || (echo "Mihomo 启动失败" && exit 1)
+          
+          # 检查 Mihomo 是否成功启动，如果失败则打印日志并退出
+          if ! curl -s http://127.0.0.1:9090/proxies >/dev/null; then
+            echo "Mihomo 启动失败"
+            echo "--- Mihomo Log ---"
+            cat mihomo.log # 打印 Mihomo 的日志内容
+            echo "--- End Mihomo Log ---"
+            exit 1
+          else
+            echo "Mihomo 成功启动。"
+          fi
       - name: Run xiecang speedtest-clash 测速
         run: |
           ./xcspeedtest --clash-api http://127.0.0.1:9090 --test-target google --timeout 12s --threads 10 --output results.txt
