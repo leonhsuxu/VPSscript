@@ -260,13 +260,22 @@ def parse_proxies_from_content(content):
     return []
 
 def is_base64(text):
+    """
+    判断字符串是否是Base64格式（支持urlsafe base64）
+    - 允许无padding
+    - 允许urlsafe字符集（- 和 _）
+    """
     try:
-        s = ''.join(text.split())
-        if not s or len(s) % 4 != 0:
+        s = ''.join(text.strip().split())
+        if not s:
             return False
-        if not re.match(r'^[A-Za-z0-9+/=]+$', s):
+        # base64字符集，包括urlsafe的 '-' 和 '_'
+        if not re.match(r'^[A-Za-z0-9\-_+=]+$', s):
             return False
-        base64.b64decode(s, validate=True)
+        # 尝试解码，补足padding
+        padding_len = (4 - len(s) % 4) % 4
+        s_padded = s + ('=' * padding_len)
+        base64.urlsafe_b64decode(s_padded)
         return True
     except Exception:
         return False
@@ -357,36 +366,64 @@ def parse_ssr_node(line):
         return None
 
 def parse_ss_node(line):
-    try:
-        line = line.strip()
-        if not line.startswith('ss://'):
-            return None
-        content = line[5:]
-        if '@' in content:
-            # 标准格式: ss://method:password@server:port#remarks
-            parsed = urlparse('ss://' + content)
+            # 明文格式直接用urlparse解析
+            parsed = urlparse('ss://' + main_part)
             user_pass = parsed.netloc.split('@')[0]
+            if ':' not in user_pass:
+                logger.debug(f"解析失败，user_pass格式错误: {user_pass}")
+                return None
             method, password = user_pass.split(':', 1)
             server = parsed.hostname
             port = parsed.port
-            name = unquote(parsed.fragment) if parsed.fragment else f"ss_{server}"
-            node = {'name': name, 'type': 'ss', 'server': server, 'port': port,
-                    'cipher': method, 'password': password, 'udp': True}
-            return node
+            if not (server and port):
+                logger.debug(f"解析失败，server或port缺失: server={server}, port={port}")
+                return None
+
+            return {
+                'name': remark or f"ss_{server}:{port}",
+                'type': 'ss',
+                'server': server,
+                'port': port,
+                'cipher': method,
+                'password': password,
+                'udp': True
+            }
         else:
-            # base64格式 ss://base64(method:password@server:port) 或带备注
-            ss_b64 = content.split('#')[0]
-            remark = ''
-            if '#' in content:
-                remark = unquote(content.split('#')[1])
-            decoded = base64.urlsafe_b64decode(ss_b64 + '=' * (-len(ss_b64) % 4)).decode('utf-8', errors='ignore')
-            method_password, server_port = decoded.split('@')
-            method, password = method_password.split(':')
-            server, port = server_port.split(':')
-            node = {'name': remark or f"ss_{server}", 'type': 'ss', 'server': server,
-                    'port': int(port), 'cipher': method, 'password': password, 'udp': True}
-            return node
-    except Exception:
+            # base64格式
+            ss_b64 = main_part
+            if not is_base64(ss_b64):
+                logger.debug(f"不是合法的base64编码字符串: {ss_b64}")
+                return None
+
+            padding_len = (4 - len(ss_b64) % 4) % 4
+            ss_b64_padded = ss_b64 + ('=' * padding_len)
+            decoded = base64.urlsafe_b64decode(ss_b64_padded).decode('utf-8', errors='ignore')
+
+            if '@' not in decoded:
+                logger.debug(f"base64解码后缺少@符号: {decoded}")
+                return None
+
+            method_password, server_port = decoded.split('@', 1)
+            if ':' not in method_password or ':' not in server_port:
+                logger.debug(f"格式错误，method_password或server_port无冒号: {method_password}, {server_port}")
+                return None
+
+            method, password = method_password.split(':', 1)
+            server, port_str = server_port.rsplit(':', 1)
+            port = int(port_str)
+
+            return {
+                'name': remark or f"ss_{server}:{port}",
+                'type': 'ss',
+                'server': server,
+                'port': port,
+                'cipher': method,
+                'password': password,
+                'udp': True
+            }
+
+    except Exception as e:
+        logger.error(f"解析ss节点异常: {line}, 错误: {e}", exc_info=True)
         return None
 
 def parse_trojan_node(line):
