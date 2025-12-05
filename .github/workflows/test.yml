@@ -1,4 +1,4 @@
-name: TG频道抓取 → xiecang/speedtest-clash 测速（2025.12 终极版）
+name: TG频道抓取 → xiecang/speedtest-clash 测速（带版本变量）
 
 on:
   schedule:
@@ -36,8 +36,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: mihomo
-          key: mihomo-amd64-${{ env.MIHOMO_VERSION }}
-          restore-keys: mihomo-amd64-
+          key: mihomo-amd64-${{ env.MIHOMO_VERSION }}-${{ github.run_id }}
+          restore-keys: mihomo-amd64-${{ env.MIHOMO_VERSION }}-
 
       - name: Download Mihomo
         if: steps.cache-mihomo.outputs.cache-hit != 'true'
@@ -54,19 +54,23 @@ jobs:
         uses: actions/cache@v4
         with:
           path: xcspeedtest
-          key: xiecang-v-${{ env.SPEEDTEST_VERSION }}
-          restore-keys: xiecang-v-
+          key: xiecang-${{ env.SPEEDTEST_VERSION }}-${{ github.run_id }}
+          restore-keys: xiecang-${{ env.SPEEDTEST_VERSION }}-
 
       - name: Download xiecang speedtest-clash
         if: steps.cache-xc.outputs.cache-hit != 'true'
         run: |
-          URL=$(curl -s https://api.github.com/repos/xiecang/speedtest-clash/releases/latest \
-               | grep "browser_download_url.*speedtest_linux_amd64" | grep "${SPEEDTEST_VERSION}" | cut -d '"' -f4)
+          URL=$(curl -s https://api.github.com/repos/xiecang/speedtest-clash/releases/tag/${SPEEDTEST_VERSION} \
+                | grep "browser_download_url.*speedtest_linux_amd64" | cut -d '"' -f4)
+          if [ -z "$URL" ]; then
+            URL=$(curl -s https://api.github.com/repos/xiecang/speedtest-clash/releases/latest \
+                | grep "browser_download_url.*speedtest_linux_amd64" | cut -d '"' -f4)
+          fi
+          echo "xiecang 下载地址: $URL"
           wget -q --show-progress -O xcspeedtest "$URL"
           chmod +x xcspeedtest
           ./xcspeedtest --help | head -3
 
-      # Telegram 抓取，测速及优化逻辑同你之前配置
       - name: Run Telegram scraper
         env:
           TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
@@ -126,19 +130,23 @@ jobs:
           python <<'PY'
           import yaml, re
           results = []
-          with open('results.txt') as f:
+          with open('results.txt', encoding='utf-8') as f:
               for line in f:
                   m = re.search(r'\[(.*?)\]\s+\((.*?)\):\s+(\d+)ms\s+(Success|Timeout|Error)', line)
                   if m:
                       results.append({'name': m.group(1), 'latency': int(m.group(3)), 'status': m.group(4)})
           good = sorted([r for r in results if r['status']=='Success' and r['latency']<800], key=lambda x: x['latency'])
           good_names = [x['name'] for x in good]
-          with open('config.yaml') as f:
+          with open('config.yaml', encoding='utf-8') as f:
               cfg = yaml.safe_load(f)
           cfg['proxies'] = [p for p in cfg['proxies'] if p['name'] in good_names]
           for g in cfg.get('proxy-groups', []):
               if g['type'] in ('select', 'url-test'):
                   g['proxies'] = ['DIRECT'] + good_names
+          if not good_names:
+              for g in cfg.get('proxy-groups', []):
+                  if g['type'] in ('select', 'url-test'):
+                      g['proxies'] = ['DIRECT']
           with open('flclashyaml/Tg-node-optimized.yaml', 'w', encoding='utf-8') as f:
               yaml.dump(cfg, f, allow_unicode=True, sort_keys=False)
           print(f"生成优质节点 {len(good_names)} 个")
@@ -151,3 +159,10 @@ jobs:
           git add flclashyaml/Tg-node-optimized.yaml
           git diff --quiet --staged || git commit -m "Auto: 更新优化节点 $(date -u +%F_%H-%M)"
           git push || echo "无变化"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: TG优化节点
+          path: flclashyaml/Tg-node-optimized.yaml
+          retention-days: 7
