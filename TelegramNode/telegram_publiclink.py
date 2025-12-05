@@ -793,85 +793,79 @@ def generate_config(proxies, last_message_ids):
     }
 
 def clash_test_proxy(clash_path, proxy, debug=False):
-    """
-    使用 Clash 进行代理节点延迟测速，返回有效延迟（1ms至799ms），过滤掉0ms及>=800ms的异常值。
-    通过正则匹配测速输出中的延迟数字，避免被其他数字干扰。
-
-    返回:
-        int|None: 延迟毫秒或 None 表示测速失败
-    """
-    import yaml
     temp_dir = tempfile.mkdtemp()
-    temp_config_path = os.path.join(temp_dir, 'config.yaml')
-    test_url = globals().get('HTTP_TEST_URL', 'http://www.gstatic.com/generate_204')
+    config_path = os.path.join(temp_dir, 'config.yaml')
+
+    # 使用 generate_204 最快最准
+    test_url = 'http://www.gstatic.com/generate_204'
+
     config = {
         "port": 7890,
         "socks-port": 7891,
         "allow-lan": False,
         "mode": "Rule",
+        "log-level": "silent",
+        "external-controller": "127.0.0.1:9090",
         "proxies": [proxy],
-        "proxy-groups": [
-            {
-                "name": "TestGroup",
-                "type": "select",
-                "proxies": [proxy['name']]
-            }
-        ],
-        "rules": [
-            f"DOMAIN,{urlparse(test_url).netloc},TestGroup",
-            "FINAL,DIRECT"
-        ]
+        "proxy-groups": [{"name": "TEST", "type": "select", "proxies": [proxy["name"]]}],
+        "rules": [f"DOMAIN,{urlparse(test_url).netloc},TEST", "MATCH,DIRECT"]
     }
+
     try:
-        with open(temp_config_path, 'w', encoding='utf-8') as f:
+        with open(config_path, 'w', encoding='utf-8') as f:
             yaml.dump(config, f, allow_unicode=True, sort_keys=False)
-        proc = subprocess.run(
-            [clash_path, '-c', temp_config_path, '-fast'],
+
+        # 强烈推荐使用 -test 参数，输出最标准
+        cmd = [clash_path, '-c', config_path, '-test', proxy['name']]
+        result = subprocess.run(
+            cmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            encoding='utf-8',
-            timeout=30,
-            check=False
+            timeout=20,          # 20秒超时足够
+            text=True
         )
-        output = proc.stdout + proc.stderr
+        output = (result.stdout + result.stderr).replace('\x00', '')
+
         if debug:
-            print(f"Clash Speedtest 输出（节点 {proxy['name']}）:\n{output}")
-        # 匹配形如“数字ms”且值1~799的结果
-        pattern = re.compile(
-            r'Clash Speedtest 输出.*?(\d+ms|NA).*?测试中\.\.\. 100%',
-            re.MULTILINE | re.IGNORECASE
-        )
-        matches = pattern.findall(output)
-        valid_delays = []
-        for delay_str in matches:
-            try:
-                delay = int(delay_str.replace('ms', ''))
-                if 1 <= delay < 800:
-                    valid_delays.append(delay)
-            except:
-                continue
-        if valid_delays:
-            return min(valid_delays)
-        # 若未找到以上有效结果，尝试抓取所有数字粗筛
-        delays_num = re.findall(r'\b(\d{1,4})\b', output)
-        for val in delays_num:
-            iv = int(val)
-            if 1 <= iv < 800:
-                return iv
-        if debug:
-            print(f"⚠️ 未找到有效延迟信息，节点名: {proxy['name']}")
+            print(f"\n=== 测速原始输出 [{proxy['name']}] ===\n{output}\n{'='*50}")
+
+        # 方法1：匹配表格里最后一列的 xxms（最准）
+        match = re.search(r'\b(\d+)ms\b(?=\s*$)', output, re.MULTILINE)
+        if match:
+            delay = int(match.group(1))
+            if delay > 1:                    # 严格大于1ms才通过
+                return delay
+
+        # 方法2：匹配 Latency = 123ms 这种
+        match = re.search(r'Latency\s*[:=]\s*(\d+)ms', output, re.I)
+        if match:
+            delay = int(match.group(1))
+            if delay > 1:
+                return delay
+
+        # 方法3：匹配任意独立出现的 123ms，但排除 0ms/1ms
+        matches = re.findall(r'\b([2-9]\d{1,3}|1\d{3}|800)ms\b', output)  # 2~800ms
+        if matches:
+            delay = min(int(x) for x in matches)
+            return delay
+
+        # 明确出现 1ms / 0ms / NA 的直接判失败
+        if re.search(r'\b(1ms|0ms|NA)\b', output, re.I):
+            return None
+
     except subprocess.TimeoutExpired:
         if debug:
-            print(f"⚠️ 节点测速超时，节点名: {proxy['name']}")
+            print(f"测速超时 → 丢弃: {proxy['name']}")
     except Exception as e:
         if debug:
-            print(f"⚠️ 节点测速异常 {proxy['name']}: {e}")
+            print(f"测速异常: {proxy['name']} → {e}")
     finally:
         try:
             shutil.rmtree(temp_dir)
-        except Exception:
+        except:
             pass
-    return None
+
+    return None  # 任何没抓到有效延迟的情况都返回 None
 
 def test_proxy_with_clash(clash_path, proxy):
     delay = clash_test_proxy(clash_path, proxy, debug=True)
