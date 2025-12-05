@@ -1016,7 +1016,34 @@ async def main():
 
     print(f"[5/5] 重命名和限制完成，保留节点数: {len(final_proxies)}")
 
-    final_config = generate_config(final_proxies, last_message_ids)
+    # 生成最终配置并加上时间戳（确保每次内容都不一样，Git 必定提交）
+    update_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
+    total_count = len(processed_proxies)
+
+    final_config = {
+        'proxies': processed_proxies,
+        'last_message_ids': last_message_ids,
+        'update_time': update_time,                    # ← 新增：更新时间
+        'total_nodes': total_count,                    # ← 新增：节点数量
+        'note': '由 GitHub Actions 自动生成，每4小时更新一次，已按延迟排序并智能限量'
+    }
+
+    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
+    try:
+        with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
+            # 加上醒目的头部注释，用户打开文件就能看到更新时间
+            f.write(f"# TG频道节点自动抓取+测延迟精选订阅\n")
+            f.write(f"# 最后更新时间：{update_time} (北京时间)\n")
+            f.write(f"# 本次保留节点数：{total_count} 个（延迟最优 + 失联专用）\n")           
+            f.write(f"# 由 GitHub Actions 自动构建！\n\n")
+            yaml.dump(final_config, f, allow_unicode=True, sort_keys=False, indent=2, width=4096)
+
+        print(f"配置文件已保存至 {OUTPUT_FILE}")
+        print(f"   本次共保留 {total_count} 个优质节点")
+        print(f"   更新时间：{update_time}")
+        print("任务完成！")
+    except Exception as e:
+        print(f"写出文件时异常: {e}")
 
 
 if __name__ == "__main__":
