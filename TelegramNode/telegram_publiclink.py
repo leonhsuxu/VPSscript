@@ -16,34 +16,23 @@
 import os
 import re
 import sys
-import json
-import time
-import yaml
 import base64
+import json
+import yaml
+import time
+import socket
 import hashlib
-import shutil
 import asyncio
-import logging
-import tempfile
+import shutil
 import subprocess
-import threading
 import concurrent.futures
+import tempfile
+import requests
+from urllib.parse import urlparse, parse_qs, unquote
 from datetime import datetime, timedelta, timezone
 from collections import defaultdict
-from urllib.parse import urlparse, parse_qs, quote, unquote
-import threading
-import requests
-from zoneinfo import ZoneInfo
-from telethon import TelegramClient
+from telethon.sync import TelegramClient
 from telethon.sessions import StringSession
-from concurrent.futures import ThreadPoolExecutor, as_completed
-from telethon import TelegramClient
-import logging
-from urllib.parse import urlparse, unquote
-
-# 已经在脚本开头配置logger
-logger = logging.getLogger("TelegramNodeClashSpeedtest")
-print_lock = threading.Lock()
 
 # --- 环境变量读取 ---
 API_ID = int(os.environ.get('TELEGRAM_API_ID') or 0)
@@ -54,7 +43,7 @@ TIME_WINDOW_HOURS = 4  # 抓取多长时间的消息，单位为小时。
 MIN_EXPIRE_HOURS = 2   # 订阅地址剩余时间最小过期，单位为小时。
 OUTPUT_FILE = 'flclashyaml/Tg-node.yaml'  # 输出文件路径，用于保存生成的配置或结果。
 ENABLE_SPEED_TEST = True  # 是否启用速度测试功能，True表示启用。
-MAX_TEST_WORKERS = 32    # 速度测试时最大并发工作线程数，控制测试的并行度。
+MAX_TEST_WORKERS = 128    # 速度测试时最大并发工作线程数，控制测试的并行度。
 SOCKET_TIMEOUT = 3       # 套接字连接超时时间，单位为秒
 HTTP_TIMEOUT = 5         # HTTP请求超时时间，单位为秒
 HTTP_TEST_URL = 'http://www.gstatic.com/generate_204'
@@ -95,7 +84,7 @@ CUSTOM_REGEX_RULES = {
     '澳大利亚': {'code': 'AU', 'pattern': r'澳大利亚|AU|Australia'},
 }
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
-BJ_TZ = ZoneInfo("Asia/Shanghai")
+BJ_TZ = timezone(timedelta(hours=8))
 
 def get_country_flag_emoji(code):
     if not code or len(code) != 2:
@@ -271,22 +260,13 @@ def parse_proxies_from_content(content):
     return []
 
 def is_base64(text):
-    """
-    判断字符串是否是Base64格式（支持urlsafe base64）
-    - 允许无padding
-    - 允许urlsafe字符集（- 和 _）
-    """
     try:
-        s = ''.join(text.strip().split())
-        if not s:
+        s = ''.join(text.split())
+        if not s or len(s) % 4 != 0:
             return False
-        # base64字符集，包括urlsafe的 '-' 和 '_'
-        if not re.match(r'^[A-Za-z0-9\-_+=]+$', s):
+        if not re.match(r'^[A-Za-z0-9+/=]+$', s):
             return False
-        # 尝试解码，补足padding
-        padding_len = (4 - len(s) % 4) % 4
-        s_padded = s + ('=' * padding_len)
-        base64.urlsafe_b64decode(s_padded)
+        base64.b64decode(s, validate=True)
         return True
     except Exception:
         return False
@@ -377,106 +357,36 @@ def parse_ssr_node(line):
         return None
 
 def parse_ss_node(line):
-    """
-    解析SS协议节点字符串，支持以下格式：
-    - 明文格式：ss://method:password@server:port#remark
-    - Base64编码格式：ss://base64(method:password@server:port)#remark
-    返回解析字典或None。
-    """
     try:
         line = line.strip()
         if not line.startswith('ss://'):
             return None
         content = line[5:]
-
-        # 拆分备注部分
-        main_part, sep, remark_part = content.partition('#')
-        remark = unquote(remark_part) if sep else ''
-
-        if '@' in main_part:
-            # 明文格式，直接用urlparse解析
-            parsed = urlparse('ss://' + main_part)
+        if '@' in content:
+            # 标准格式: ss://method:password@server:port#remarks
+            parsed = urlparse('ss://' + content)
             user_pass = parsed.netloc.split('@')[0]
-            if ':' not in user_pass:
-                logger.debug(f"解析失败，user_pass格式错误: {user_pass}")
-                return None
             method, password = user_pass.split(':', 1)
-
             server = parsed.hostname
             port = parsed.port
-            if not (server and port):
-                logger.debug(f"解析失败，server或port缺失: server={server}, port={port}")
-                return None
-
-            return {
-                'name': remark or f"ss_{server}:{port}",
-                'type': 'ss',
-                'server': server,
-                'port': port,
-                'cipher': method,
-                'password': password,
-                'udp': True
-            }
+            name = unquote(parsed.fragment) if parsed.fragment else f"ss_{server}"
+            node = {'name': name, 'type': 'ss', 'server': server, 'port': port,
+                    'cipher': method, 'password': password, 'udp': True}
+            return node
         else:
-            # base64编码格式
-            ss_b64 = main_part
-            # 判断是否为合法Base64字符串
-            from base64 import urlsafe_b64decode
-            import re
-
-            def is_base64(s):
-                s = s.strip()
-                # base64字符集，包括urlsafe的 '-' 和 '_'
-                if not re.match(r'^[A-Za-z0-9\-_+=]+$', s):
-                    return False
-                try:
-                    padding_len = (4 - len(s) % 4) % 4
-                    s_padded = s + ('=' * padding_len)
-                    urlsafe_b64decode(s_padded)
-                    return True
-                except Exception:
-                    return False
-
-            if not is_base64(ss_b64):
-                logger.debug(f"不是合法的base64编码字符串: {ss_b64}")
-                return None
-
-            padding_len = (4 - len(ss_b64) % 4) % 4
-            ss_b64_padded = ss_b64 + ('=' * padding_len)
-            decoded = urlsafe_b64decode(ss_b64_padded).decode('utf-8', errors='ignore')
-
-            if '@' not in decoded:
-                logger.debug(f"base64解码后缺少@符号: {decoded}")
-                return None
-
-            method_password, server_port = decoded.split('@', 1)
-            if ':' not in method_password:
-                logger.debug(f"格式错误，method_password无冒号: {method_password}")
-                return None
-            method, password = method_password.split(':', 1)
-
-            if ':' not in server_port:
-                logger.debug(f"格式错误，server_port无冒号: {server_port}")
-                return None
-            # 端口在最后一个冒号之后
-            server, port_str = server_port.rsplit(':', 1)
-            try:
-                port = int(port_str)
-            except ValueError:
-                logger.debug(f"端口转换失败: {port_str}")
-                return None
-
-            return {
-                'name': remark or f"ss_{server}:{port}",
-                'type': 'ss',
-                'server': server,
-                'port': port,
-                'cipher': method,
-                'password': password,
-                'udp': True
-            }
-    except Exception as e:
-        logger.error(f"解析ss节点异常: {line}, 错误: {e}", exc_info=True)
+            # base64格式 ss://base64(method:password@server:port) 或带备注
+            ss_b64 = content.split('#')[0]
+            remark = ''
+            if '#' in content:
+                remark = unquote(content.split('#')[1])
+            decoded = base64.urlsafe_b64decode(ss_b64 + '=' * (-len(ss_b64) % 4)).decode('utf-8', errors='ignore')
+            method_password, server_port = decoded.split('@')
+            method, password = method_password.split(':')
+            server, port = server_port.split(':')
+            node = {'name': remark or f"ss_{server}", 'type': 'ss', 'server': server,
+                    'port': int(port), 'cipher': method, 'password': password, 'udp': True}
+            return node
+    except Exception:
         return None
 
 def parse_trojan_node(line):
@@ -792,150 +702,106 @@ def generate_config(proxies, last_message_ids):
         'last_message_ids': last_message_ids,
     }
 
+
 def clash_test_proxy(clash_path, proxy, debug=False):
     temp_dir = tempfile.mkdtemp()
     config_path = os.path.join(temp_dir, 'config.yaml')
-
-    # 使用 generate_204 最快最准
+    
+    # 最快最准的测速地址
     test_url = 'http://www.gstatic.com/generate_204'
-
+    
     config = {
         "port": 7890,
         "socks-port": 7891,
         "allow-lan": False,
         "mode": "Rule",
         "log-level": "silent",
-        "external-controller": "127.0.0.1:9090",
         "proxies": [proxy],
-        "proxy-groups": [{"name": "TEST", "type": "select", "proxies": [proxy["name"]]}],
-        "rules": [f"DOMAIN,{urlparse(test_url).netloc},TEST", "MATCH,DIRECT"]
+        "proxy-groups": [{"name": "TESTGROUP", "type": "select", "proxies": [proxy["name"]]}],
+        "rules": [f"DOMAIN,{urlparse(test_url).netloc},TESTGROUP", "MATCH,DIRECT"]
     }
 
     try:
         with open(config_path, 'w', encoding='utf-8') as f:
             yaml.dump(config, f, allow_unicode=True, sort_keys=False)
 
-        # 强烈推荐使用 -test 参数，输出最标准
-        cmd = [clash_path, '-c', config_path, '-test', proxy['name']]
+        # 你坚持要用的 -fast 参数
+        cmd = [clash_path, '-c', config_path, '-fast']
+        
         result = subprocess.run(
             cmd,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            timeout=20,          # 20秒超时足够
+            timeout=22,           # 22秒超时足够
             text=True
         )
         output = (result.stdout + result.stderr).replace('\x00', '')
 
         if debug:
-            print(f"\n=== 测速原始输出 [{proxy['name']}] ===\n{output}\n{'='*50}")
+            print(f"\n=== [-fast] 原始输出 [{proxy['name']}] ===\n{output}\n{'='*60}")
 
-        # 方法1：匹配表格里最后一列的 xxms（最准）
+        # ─────────────────────────────
+        # 核心正则：完美匹配 -fast 表格输出的最后一列延迟
+        # 示例行：1.   🇭🇰 香港 xxx    Vmess   	450ms
+        # ─────────────────────────────
         match = re.search(r'\b(\d+)ms\b(?=\s*$)', output, re.MULTILINE)
         if match:
             delay = int(match.group(1))
-            if delay > 1:                    # 严格大于1ms才通过
+            if delay > 1 and delay < 800:          # 严格 >1ms 且 <800ms
+                if debug:
+                    print(f"成功抓到延迟: {delay}ms → 保留")
                 return delay
+            else:
+                if debug:
+                    print(f"延迟 {delay}ms 不符合要求（只保留 2~799ms）→ 丢弃")
+                return None
 
-        # 方法2：匹配 Latency = 123ms 这种
-        match = re.search(r'Latency\s*[:=]\s*(\d+)ms', output, re.I)
-        if match:
-            delay = int(match.group(1))
+        # 兜底：如果上面没抓到，再扫一遍所有数字，排除 0/1ms
+        delays = re.findall(r'\b([2-9]\d{1,3})\b', output)  # 只匹配 2~9999
+        if delays:
+            delay = min(int(x) for x in delays if int(x) < 800)
             if delay > 1:
                 return delay
 
-        # 方法3：匹配任意独立出现的 123ms，但排除 0ms/1ms
-        matches = re.findall(r'\b([2-9]\d{1,3}|1\d{3}|800)ms\b', output)  # 2~800ms
-        if matches:
-            delay = min(int(x) for x in matches)
-            return delay
-
-        # 明确出现 1ms / 0ms / NA 的直接判失败
-        if re.search(r'\b(1ms|0ms|NA)\b', output, re.I):
+        # 明确出现 1ms / 0ms / NA 的直接判死
+        if re.search(r'\b(0\s*ms|1\s*ms|NA)\b', output, re.I):
+            if debug:
+                print("检测到 0ms/1ms/NA → 丢弃")
             return None
 
     except subprocess.TimeoutExpired:
         if debug:
-            print(f"测速超时 → 丢弃: {proxy['name']}")
+            print(f"[-fast] 测速超时 → 丢弃: {proxy['name']}")
     except Exception as e:
         if debug:
-            print(f"测速异常: {proxy['name']} → {e}")
+            print(f"[-fast] 异常: {proxy['name']} → {e}")
     finally:
         try:
             shutil.rmtree(temp_dir)
         except:
             pass
 
-    return None  # 任何没抓到有效延迟的情况都返回 None
+    return None   # 任何没抓到 2~799ms 延迟的都返回 None
+
 
 def test_proxy_with_clash(clash_path, proxy):
-    delay = clash_test_proxy(clash_path, proxy, debug=True)
-    if delay is not None and 1 <= delay < 800:
+    # delay = clash_test_proxy(clash_path, proxy)  # 不打印测试日志
+    delay = clash_test_proxy('clash_core/clash', proxy, debug=True) # 加入debug=True是打印调试日志
+    if delay is not None:
         proxy['clash_delay'] = delay
         return proxy
-    # 未获得有效延迟，返回 None
     return None
 
+
 def batch_test_proxies_clash(clash_path, proxies, max_workers=32):
-    """
-    批量并发测速节点，统计成功、失败、0ms/NA节点数量，打印统计结果，返回成功测速节点列表。
-
-    返回:
-        测试成功（delay=1~799ms）节点组成的列表
-    """
-    import threading
-    success_nodes = []
-    stats = {
-        "total": len(proxies),
-        "success": 0,      # 1~799ms
-        "zero_or_na": 0,   # 延迟0ms或缺失（None 显示为失败，这里规范下）
-        "timeout_fail": 0  # 超时或异常失败
-    }
-    print(f"\n[3/5] 开始 Clash 测速，总节点 {stats['total']} 个，并发 {max_workers}，每节点超时 30秒")
-    print_lock = threading.Lock()
-
+    results = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
-        future_to_proxy = {executor.submit(test_proxy_with_clash, clash_path, p): p for p in proxies}
-        for future in concurrent.futures.as_completed(future_to_proxy):
-            proxy = future_to_proxy[future]
-            delay = None
-            try:
-                result = future.result()
-                if result and 'clash_delay' in result:
-                    delay = result['clash_delay']
-                else:
-                    delay = None
-            except Exception:
-                delay = None
-            name = proxy.get("name", "Unknown")[:40]
-            if delay is not None and 2 <= delay < 800:
-                proxy["clash_delay"] = delay
-                success_nodes.append(proxy)
-                stats["success"] += 1
-                with print_lock:
-                    print(f"成功 {name.ljust(40)} → {delay:3}ms")
-            else:
-                # 0或NA视为zero_or_na组，None（异常超时）视为timeout_fail
-                if delay == 0:
-                    stats["zero_or_na"] += 1
-                    with print_lock:
-                        print(f"失败 {name.ljust(40)} → 0ms/NA")
-                else:
-                    stats["timeout_fail"] += 1
-                    with print_lock:
-                        print(f"失败 {name.ljust(40)} → 超时")
-    # 按延迟升序排序
-    success_nodes.sort(key=lambda x: x.get("clash_delay", 9999))
-
-    print("\n" + "="*70)
-    print("测速统计结果：")
-    print(f"总节点          ：{stats['total']}")
-    print(f"成功 (1-799ms)  ：{stats['success']} 个")
-    print(f"失败 (0ms/NA)   ：{stats['zero_or_na']} 个")
-    print(f"超时/异常       ：{stats['timeout_fail']} 个")
-    print("="*70)
-
-    return success_nodes
-
+        futures = [executor.submit(test_proxy_with_clash, clash_path, p) for p in proxies]
+        for future in futures:
+            res = future.result()
+            if res:
+                results.append(res)
+    return results
 
 
 async def main():
@@ -981,13 +847,8 @@ async def main():
         clash_path = 'clash_core/clash'
         if not (os.path.isfile(clash_path) and os.access(clash_path, os.X_OK)):
             sys.exit(f"❌ clash 核心缺失或不可执行: {clash_path}")
-        # 记录待删tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
-        tested_nodes = batch_test_proxies_clash(
-            clash_path="clash_core/clash",   # 你的 clash 可执行文件路径
-            proxies=all_nodes,
-            max_workers=MAX_TEST_WORKERS
-            )
-        success_count = len(tested_nodes)        
+        tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
+        success_count = len(tested_nodes)
         fail_count = len(all_nodes) - success_count
         print(f"🌐 测速成功节点数: {success_count}，失败节点数: {fail_count}")        
         if not tested_nodes:
