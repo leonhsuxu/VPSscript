@@ -853,7 +853,7 @@ async def main():
         print(f"🌐 测速✅成功节点数: {success_count}，❌失败节点数: {fail_count}")        
         if not tested_nodes:
             print("⚠️ clash测速全部失败，启用回退策略保留指定地区节点")
-            fallback_regions = ['香港', '日本', '美国', '新加坡', '德国']
+            fallback_regions = ['香港', '日本', '美国', '新加坡', '德国','台湾','韩国']
             fallback_count = 30
             fallback_candidates = identify_regions_only(all_nodes)
             selected = []
