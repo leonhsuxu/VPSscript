@@ -366,6 +366,23 @@ def parse_ssr_node(line):
         return None
 
 def parse_ss_node(line):
+    """
+    解析SS协议节点字符串，支持以下格式：
+    - 明文格式：ss://method:password@server:port#remark
+    - Base64编码格式：ss://base64(method:password@server:port)#remark
+    返回解析字典或None。
+    """
+    try:
+        line = line.strip()
+        if not line.startswith('ss://'):
+            return None
+
+        content = line[5:]
+        # 拆分备注
+        main_part, sep, remark_part = content.partition('#')
+        remark = unquote(remark_part) if sep else ''
+
+        if '@' in main_part:
             # 明文格式直接用urlparse解析
             parsed = urlparse('ss://' + main_part)
             user_pass = parsed.netloc.split('@')[0]
