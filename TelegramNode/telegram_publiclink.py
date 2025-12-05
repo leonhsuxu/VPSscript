@@ -53,7 +53,7 @@ OUTPUT_FILE = 'flclashyaml/Tg-node.yaml'  # 输出文件路径，用于保存生
 #   "clash_only"    → 只用 Clash -fast 测速（最准）
 #   "tcp_first"     → 先 TCP 粗筛（<800ms）→ 再 Clash 精测（推荐！平衡速度与质量）
 #   "clash_first"   → 先 Clash → 再 TCP（一般用不上）
-SPEEDTEST_MODE = os.getenv('SPEEDTEST_MODE', 'tcp_first').lower()  # 默认推荐 tcp_first
+SPEEDTEST_MODE = os.getenv('SPEEDTEST_MODE', 'tcp_only').lower()  # 默认推荐 tcp_first,上边的命令
 
 # TCP 测速专属参数
 TCP_TIMEOUT = 4.0          # 单次 TCP 连接超时时间（秒），建议 3~5
