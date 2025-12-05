@@ -1,82 +1,112 @@
-name: Clash Speedtest 测速流程
+name: TG免费节点 → 只测延迟（xiecang/speedtest-clash）
 
 on:
-  push:
-    branches:
-      - main
+  schedule:
+    - cron: '0 */3 * * *'      # 每3小时测一次
   workflow_dispatch:
-    inputs:
-      input_path:
-        description: '输入配置文件路径'
-        required: false
-        default: 'flclashyaml/Tg-node.yaml'
-      output_path:
-        description: '输出配置文件路径'
-        required: false
-        default: 'flclashyaml/1.yaml'
-      max_latency:
-        description: '最大允许延迟(ms)'
-        required: false
-        default: '800ms'
-      min_speed:
-        description: '最小速度(Mbps)'
-        required: false
-        default: '5'
 
 jobs:
-  speedtest:
+  test-latency-only:
     runs-on: ubuntu-latest
-
-    env:
-      # 这里放缓存版本号，方便以后更新
-      CLASH_SPEEDTEST_VERSION: v1.7.0
+    timeout-minutes: 15
 
     steps:
-      - name: Checkout 代码
-        uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Setup Python 3
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.8
-          
-      - name: 安装 PyYAML
-        run: |
-          python3 -m pip install --upgrade pip
-          pip3 install pyyaml
-
-      - name: 缓存 clash-speedtest 核心 (clash_core/)
-        id: cache-clash-speedtest
+      # 1. 缓存 Mihomo（Clash Meta 核心）
+      - name: Cache Mihomo
+        id: cache-mihomo
         uses: actions/cache@v4
         with:
-          path: clash_core/
-          key: ${{ runner.os }}-clash-speedtest-${{ env.CLASH_SPEEDTEST_VERSION }}
+          path: mihomo
+          key: mihomo-${{ hashFiles('https://api.github.com/repos/MetaCubeX/mihomo/releases/latest') }}
+          restore-keys: mihomo-
 
-      - name: 下载并解压 clash-speedtest 到 clash_core/clash
-        if: steps.cache-clash-speedtest.outputs.cache-hit != 'true'
+      - name: Download Mihomo（首次或更新时）
+        if: steps.cache-mihomo.outputs.cache-hit != 'true'
         run: |
-          mkdir -p clash_core
-          URL="https://github.com/faceair/clash-speedtest/releases/download/${{ env.CLASH_SPEEDTEST_VERSION }}/clash-speedtest_Linux_x86_64.tar.gz"
-          echo "正在下载 clash-speedtest 核心..."
-          wget --tries=3 -q -O clash-speedtest.tar.gz "$URL"
-          tar -xzf clash-speedtest.tar.gz -C clash_core
-          rm -f clash-speedtest.tar.gz
-          mv clash_core/clash-speedtest clash_core/clash
-          chmod +x clash_core/clash
-          echo "clash-speedtest 下载并解压完成。"
+          URL=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | grep -o 'https.*clash.meta-linux-amd64[^"]*')
+          wget -qO mihomo "$URL" && chmod +x mihomo
 
-      - name: 运行 Clash Speedtest 脚本
+      # 2. 缓存 xiecang/speedtest-clash
+      - name: Cache xiecang/speedtest-clash
+        id: cache-xc
+        uses: actions/cache@v4
+        with:
+          path: xcspeedtest
+          key: xc-${{ hashFiles('https://api.github.com/repos/xiecang/speedtest-clash/releases/latest') }}
+          restore-keys: xc-
+
+      - name: Download xiecang/speedtest-clash
+        if: steps.cache-xc.outputs.cache-hit != 'true'
+        run: |
+          URL=$(curl -s https://api.github.com/repos/xiecang/speedtest-clash/releases/latest | grep -o 'https.*linux-amd64[^"]*')
+          wget -qO xcspeedtest "$URL" && chmod +x xcspeedtest
+
+      # 3. 运行你的 TG 抓取脚本（生成 flclashyaml/Tg-node.yaml）
+      - name: Run TG scraper
         env:
-          INPUT_PATH: ${{ github.event.inputs.input_path }}
-          OUTPUT_PATH: ${{ github.event.inputs.output_path }}
-          MAX_LATENCY: ${{ github.event.inputs.max_latency }}
-          MIN_SPEED: ${{ github.event.inputs.min_speed }}
-          PATH: ${{ github.workflow }}:$PATH
+          TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
+          TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
+          TELEGRAM_STRING_SESSION: ${{ secrets.TELEGRAM_STRING_SESSION }}
         run: |
-          python3 clash_speedtest_local.py
+          mkdir -p flclashyaml
+          python TelegramNode/telegram_publiclink.py
 
-      - name: 上传测速结果
+      # 4. 生成最小可用 config.yaml（只为了让 mihomo 启动）
+      - name: Create minimal config
+        run: |
+          cat > config.yaml <<EOF
+          external-controller: 127.0.0.1:9090
+          proxies: $(cat flclashyaml/Tg-node.yaml)
+          proxy-groups:
+            - name: auto
+              type: url-test
+              url: http://www.gstatic.com/generate_204
+              interval: 300
+              proxies: $(cat flclashyaml/Tg-node.yaml | grep -o "name: [^,]*" | sed 's/name: //g' | sed 's/^/  - /')
+          EOF
+
+      # 5. 启动 mihomo
+      - name: Start mihomo
+        run: |
+          ./mihomo -f config.yaml -d . &
+          for i in {1..12}; do
+            curl -s http://127.0.0.1:9090/proxies >/dev/null && break
+            sleep 2
+          done
+
+      # 6. 【真正只测延迟】一行命令搞定！
+      - name: 只测延迟（Google）
+        run: |
+          echo "开始测延迟（Google）..."
+          ./xcspeedtest --clash-api http://127.0.0.1:9090 \
+                         --test-target google \
+                         --timeout 10s \
+                         --threads 10
+
+      # 7. （可选）再测一次 ChatGPT、YouTube 等
+      - name: 测延迟（ChatGPT）
+        run: |
+          echo "开始测延迟（ChatGPT）..."
+          ./xcspeedtest --clash-api http://127.0.0.1:9090 \
+                         --test-target chatgpt \
+                         --timeout 10s \
+                         --threads 10
+
+      - name: 测延迟（YouTube）
+        run: |
+          echo "开始测延迟（YouTube）..."
+          ./xcspeedtest --clash-api http://127.0.0.1:9090 \
+                         --test-target youtube \
+                         --timeout 10s \
+                         --threads 10
+
+      # 8. 把完整结果保存为 Artifact，随时下载看
+      - name: Upload latency result
         uses: actions/upload-artifact@v4
         with:
-          name: clash-speedtest-result
-          path: ${{ github.event.inputs.output_path }}
+          name: TG节点延迟测试结果
+          path: speedtest_results.txt
+          retention-days: 5
