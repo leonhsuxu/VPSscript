@@ -27,26 +27,34 @@ jobs:
           chmod +x yq
           sudo mv yq /usr/local/bin/
 
-      # ==================== 1. Mihomo 真实缓存 + 永不翻车下载 ====================
-      - name: Cache Mihomo (amd64-compatible)
+      # ==================== Mihomo 终极稳版（2025.12.5 后通用）===================
+      - name: Cache Mihomo (amd64)
         id: cache-mihomo
         uses: actions/cache@v4
         with:
           path: mihomo
-          # 用最新版本号做 key，这样版本更新时会自动重新下载，旧版继续缓存命中
           key: mihomo-amd64-${{ hashFiles('https://api.github.com/repos/MetaCubeX/mihomo/releases/latest') }}
           restore-keys: mihomo-amd64-
 
-      - name: Download Mihomo amd64-compatible (2025 永不翻车版)
+      - name: Download Mihomo amd64 (自动适配新老文件名)
         if: steps.cache-mihomo.outputs.cache-hit != 'true'
         run: |
           set -e
           TAG=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | grep '"tag_name"' | cut -d'"' -f4)
-          echo "正在下载 Mihomo $TAG (amd64-compatible)"
-          wget -q --show-progress \
-            https://github.com/MetaCubeX/mihomo/releases/download/${TAG}/mihomo-linux-amd64-compatible.gz
-          gunzip mihomo-linux-amd64-compatible.gz
-          mv mihomo-linux-amd64-compatible mihomo
+          echo "最新版本: $TAG"
+
+          # 优先下载 v3（新版 amd64），如果没有再降级到 compatible
+          if wget --spider -q "https://github.com/MetaCubeX/mihomo/releases/download/${TAG}/mihomo-linux-amd64-v3.gz" 2>/dev/null; then
+            FILE="mihomo-linux-amd64-v3.gz"
+            echo "检测到 v3 版，下载 $FILE"
+          else
+            FILE="mihomo-linux-amd64-compatible.gz"
+            echo "未发现 v3，回退下载 compatible 版"
+          fi
+
+          wget -q --show-progress "https://github.com/MetaCubeX/mihomo/releases/download/${TAG}/${FILE}"
+          gunzip "${FILE}"
+          mv "${FILE%.gz}" mihomo
           chmod +x mihomo
           ./mihomo --version
 
