@@ -756,119 +756,66 @@ def generate_config(proxies, last_message_ids):
         'last_message_ids': last_message_ids,
     }
 
-
-def clash_test_proxy(clash_path, proxy, debug=False):
-    """
-    使用 Clash 进行代理节点延迟测速，返回有效延迟（1ms至799ms），过滤掉0ms及>=800ms的异常值。
-    通过更严格的正则匹配测速输出中延迟数字，避免被行号等干扰。
-    
-    参数:
-        clash_path (str): Clash 可执行文件路径
-        proxy (dict): 代理节点信息，必须包含 'name' 字段
-        debug (bool): 是否输出调试信息，默认False
-    
-    返回:
-        int | None: 延迟值（毫秒）或测速失败返回 None
-    """
-    temp_dir = tempfile.mkdtemp()
-    temp_config_path = os.path.join(temp_dir, 'config.yaml')
-    test_url = globals().get('HTTP_TEST_URL', 'http://www.gstatic.com/generate_204')
-    config = {
-        "port": 7890,
-        "socks-port": 7891,
-        "allow-lan": False,
-        "mode": "Rule",
-        "proxies": [proxy],
-        "proxy-groups": [
-            {
-                "name": "TestGroup",
-                "type": "select",
-                "proxies": [proxy['name']]
-            }
-        ],
-        "rules": [
-            f"DOMAIN,{urlparse(test_url).netloc},TestGroup",
-            "FINAL,DIRECT"
-        ]
-    }
-    try:
-        with open(temp_config_path, 'w', encoding='utf-8') as f:
-            import yaml
-            yaml.dump(config, f, allow_unicode=True, sort_keys=False)
-        proc = subprocess.run(
-            [clash_path, '-c', temp_config_path, '-fast'],
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            encoding='utf-8',
-            timeout=30,
-            check=False
-        )
-        output = proc.stdout + proc.stderr
-        if debug:
-            print(f"Clash Speedtest 输出（节点 {proxy['name']}）:\n{output}")
-
-        # 精准匹配含有效延迟的行，过滤掉携带N/A和无关数字
-        pattern = re.compile(
-            r'^\s*\d+\.\s+.*?" + re.escape(proxy["name"]) + r".*?(\d+)ms', 
-            re.MULTILINE | re.IGNORECASE
-        )
-        matches = pattern.findall(output)
-        valid_delays = []
-        for delay_str in matches:
+def clash_test_proxy_single(proxy: dict, clash_path: str = "clash_core/clash", debug: bool = False) -> int | None:
             try:
-                delay = int(delay_str)
-                if 1 <= delay < 800:
-                    valid_delays.append(delay)
+                proc.wait(timeout=3)
             except:
-                continue
-        if valid_delays:
-            return min(valid_delays)
-
-        # 如果以上未找到，尝试匹配所有数字，安全过滤
-        delays_num = re.findall(r'\b(\d{1,4})\b', output)
-        for val in delays_num:
-            iv = int(val)
-            if 1 <= iv < 800:
-                return iv
-
-        if debug:
-            print(f"⚠️ 未找到有效延迟信息，节点名: {proxy['name']}")
-
-    except subprocess.TimeoutExpired:
-        if debug:
-            print(f"⚠️ 节点测速超时，节点名: {proxy['name']}")
-
-    except Exception as e:
-        if debug:
-            print(f"⚠️ 节点测速异常 {proxy['name']}: {e}")
-
-    finally:
-        try:
-            shutil.rmtree(temp_dir)
-        except Exception:
-            pass
+                proc.kill()
+        shutil.rmtree(temp_dir, ignore_errors=True)
 
     return None
 
 
-def test_proxy_with_clash(clash_path, proxy):
-    # delay = clash_test_proxy(clash_path, proxy)  # 不打印测试日志
-    delay = clash_test_proxy('clash_core/clash', proxy, debug=True) # 加入debug=True是打印调试日志
-    if delay is not None:
-        proxy['clash_delay'] = delay
-        return proxy
-    return None
+# ========== 多线程批量测速 + 精确统计（直接替换你原来的 batch_test_proxies_clash）==========
+def batch_test_proxies_clash(clash_path: str, proxies: list, max_workers: int = 128):
+    success_nodes = []
+    stats = {
+        "total": len(proxies),
+        "success": 0,        # 1~799ms
+        "zero_or_na": 0,     # 明确 0ms 或 NA
+        "timeout_fail": 0    # 超时或其他失败
+    }
 
+    print(f"\n[3/5] 开始 Clash 测速，总节点 {stats['total']} 个，并发 {max_workers}，每节点超时 45s")
 
-def batch_test_proxies_clash(clash_path, proxies, max_workers=32):
-    results = []
-    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
-        futures = [executor.submit(test_proxy_with_clash, clash_path, p) for p in proxies]
-        for future in futures:
-            res = future.result()
-            if res:
-                results.append(res)
-    return results
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        future_to_proxy = {executor.submit(clash_test_proxy_single, proxy, clash_path): proxy for proxy in proxies}
+
+        for future in as_completed(future_to_proxy):
+            proxy = future_to_proxy[future]
+            delay = future.result()
+
+            name = proxy.get("name", "Unknown")[:40]
+
+            if delay is not None and 1 <= delay < 800:
+                proxy["clash_delay"] = delay
+                success_nodes.append(proxy)
+                stats["success"] += 1
+                with print_lock:
+                    print(f"成功 {name.ljust(40)} → {delay:3}ms")
+            else:
+                if delay == 0:
+                    stats["zero_or_na"] += 1
+                    with print_lock:
+                        print(f"失败 {name.ljust(40)} → 0ms/NA")
+                else:
+                    stats["timeout_fail"] += 1
+                    with print_lock:
+                        print(f"失败 {name.ljust(40)} → 超时")
+
+    # 按延迟排序
+    success_nodes.sort(key=lambda x: x.get("clash_delay", 9999))
+
+    print("\n" + "="*70)
+    print("测速统计结果：")
+    print(f"总节点          ：{stats['total']}")
+    print(f"成功 (1-799ms)  ：{stats['success']} 个")
+    print(f"失败 (0ms/NA)   ：{stats['zero_or_na']} 个")
+    print(f"超时/异常       ：{stats['timeout_fail']} 个")
+    print("="*70)
+
+    return success_nodes
+
 
 
 async def main():
@@ -914,7 +861,11 @@ async def main():
         clash_path = 'clash_core/clash'
         if not (os.path.isfile(clash_path) and os.access(clash_path, os.X_OK)):
             sys.exit(f"❌ clash 核心缺失或不可执行: {clash_path}")
-        tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
+        # tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
+        tested_nodes = batch_test_proxies_clash(
+            clash_path="clash_core/clash",   # 你的 clash 可执行文件路径
+            proxies=all_nodes,
+            max_workers=MAX_TEST_WORKERS
         success_count = len(tested_nodes)
         fail_count = len(all_nodes) - success_count
         print(f"🌐 测速成功节点数: {success_count}，失败节点数: {fail_count}")        
