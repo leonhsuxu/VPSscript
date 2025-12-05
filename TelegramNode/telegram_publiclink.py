@@ -785,8 +785,8 @@ def clash_test_proxy(clash_path, proxy, debug=False):
 
 
 def test_proxy_with_clash(clash_path, proxy):
-    # delay = clash_test_proxy(clash_path, proxy)  # 不打印测试日志
-    delay = clash_test_proxy('clash_core/clash', proxy, debug=True) # 加入debug=True是打印调试日志
+    delay = clash_test_proxy(clash_path, proxy)  # 不打印测试日志
+    # delay = clash_test_proxy('clash_core/clash', proxy, debug=True) # 加入debug=True是打印调试日志
     if delay is not None:
         proxy['clash_delay'] = delay
         return proxy
@@ -850,7 +850,7 @@ async def main():
         tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
         success_count = len(tested_nodes)
         fail_count = len(all_nodes) - success_count
-        print(f"🌐 测速成功节点数: {success_count}，失败节点数: {fail_count}")        
+        print(f"🌐 测速✅成功节点数: {success_count}，❌失败节点数: {fail_count}")        
         if not tested_nodes:
             print("⚠️ clash测速全部失败，启用回退策略保留指定地区节点")
             fallback_regions = ['香港', '日本', '美国', '新加坡', '德国']
