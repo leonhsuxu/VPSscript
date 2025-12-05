@@ -34,6 +34,7 @@ import threading
 import requests
 from zoneinfo import ZoneInfo
 from concurrent.futures import ThreadPoolExecutor, as_completed
+print_lock = threading.Lock()
 
 # --- 环境变量读取 ---
 API_ID = int(os.environ.get('TELEGRAM_API_ID') or 0)
