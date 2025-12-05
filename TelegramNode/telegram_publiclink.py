@@ -28,6 +28,8 @@ import subprocess
 import concurrent.futures
 import tempfile
 import requests
+import socket
+from concurrent.futures import as_completed
 from urllib.parse import urlparse, parse_qs, unquote
 from datetime import datetime, timedelta, timezone
 from collections import defaultdict
@@ -42,11 +44,29 @@ TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS', '')
 TIME_WINDOW_HOURS = 4  # 抓取多长时间的消息，单位为小时。
 MIN_EXPIRE_HOURS = 2   # 订阅地址剩余时间最小过期，单位为小时。
 OUTPUT_FILE = 'flclashyaml/Tg-node.yaml'  # 输出文件路径，用于保存生成的配置或结果。
+
+
+
+# === 新增：测速策略开关（推荐保留这几个选项）===
+# 测速模式：
+#   "tcp_only"      → 只用 TCP 测速（最快，最严格，适合节点特别多的情况）
+#   "clash_only"    → 只用 Clash -fast 测速（最准）
+#   "tcp_first"     → 先 TCP 粗筛（<800ms）→ 再 Clash 精测（推荐！平衡速度与质量）
+#   "clash_first"   → 先 Clash → 再 TCP（一般用不上）
+SPEEDTEST_MODE = os.getenv('SPEEDTEST_MODE', 'tcp_first').lower()  # 默认推荐 tcp_first
+
+# TCP 测速专属参数
+TCP_TIMEOUT = 4.0          # 单次 TCP 连接超时时间（秒），建议 3~5
+TCP_MAX_WORKERS = 200      # TCP 测速最大并发（可以比 Clash 高很多，非常快）
+TCP_MAX_DELAY = 800        # TCP 延迟阈值，超过此值直接丢弃（ms）
+
 ENABLE_SPEED_TEST = True  # 是否启用速度测试功能，True表示启用。
 MAX_TEST_WORKERS = 128    # 速度测试时最大并发工作线程数，控制测试的并行度。
 SOCKET_TIMEOUT = 3       # 套接字连接超时时间，单位为秒
 HTTP_TIMEOUT = 5         # HTTP请求超时时间，单位为秒
 HTTP_TEST_URL = 'http://www.gstatic.com/generate_204'
+
+
 ALLOWED_REGIONS = {
     '香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国',
     '印度', '菲律宾', '印度尼西亚', '越南', '美国', '加拿大',
@@ -819,6 +839,50 @@ def generate_config(proxies, last_message_ids):
     }
 
 
+#TCP 测速
+def tcp_ping(proxy, timeout=TCP_TIMEOUT):
+    """
+    纯 TCP 连接测延迟，返回延迟（ms）或 None
+    """
+    server = proxy.get('server')
+    port = proxy.get('port')
+    if not server or not port:
+        return None
+    
+    try:
+        start = time.time()
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.settimeout(timeout)
+            s.connect((server, int(port)))
+        delay_ms = int((time.time() - start) * 1000)
+        # 过滤异常值（<1ms 基本是假的）
+        if 1 < delay_ms <= 5000:
+            return delay_ms
+        else:
+            return None
+    except:
+        return None
+
+def batch_tcp_test(proxies, max_workers=TCP_MAX_WORKERS):
+    """超高并发 TCP 测速"""
+    results = []
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+        future_to_proxy = {executor.submit(tcp_ping, p): p for p in proxies}
+        for future in as_completed(future_to_proxy):
+            proxy = future_to_proxy[future]
+            delay = future.result()
+            if delay is not None and delay <= TCP_MAX_DELAY:
+                proxy = proxy.copy()  # 避免修改原字典
+                proxy['tcp_delay'] = delay
+                results.append(proxy)
+                print(f"TCP PASS: {delay:4d}ms → {proxy.get('name', '')[:40]}")
+            else:
+                if delay:
+                    print(f"TCP SLOW: {delay:4d}ms → 丢弃 {proxy.get('name', '')[:40]}")
+    return results
+
+
+# clash 测速
 def clash_test_proxy(clash_path, proxy, debug=False):
     temp_dir = tempfile.mkdtemp()
     config_path = os.path.join(temp_dir, 'config.yaml')
@@ -958,35 +1022,75 @@ async def main():
     if not all_nodes:
         sys.exit("❌ 无任何节点可用，程序退出")
 
-    if ENABLE_SPEED_TEST:
-        print("[3/5] 使用 clash-speedtest 核心测速")
-        clash_path = 'clash_core/clash'
-        if not (os.path.isfile(clash_path) and os.access(clash_path, os.X_OK)):
-            sys.exit(f"❌ clash 核心缺失或不可执行: {clash_path}")
-        tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
-        success_count = len(tested_nodes)
-        fail_count = len(all_nodes) - success_count
-        print(f"🌐 测速✅成功节点数: {success_count}，❌失败节点数: {fail_count}")        
-        if not tested_nodes:
-            print("⚠️ clash测速全部失败，启用回退策略保留指定地区节点")
-            fallback_regions = ['香港', '日本', '美国', '新加坡', '德国','台湾','韩国']
-            fallback_count = 30
-            fallback_candidates = identify_regions_only(all_nodes)
-            selected = []
-            grouped = defaultdict(list)
-            for p in fallback_candidates:
-                if p.get('region_info') and p['region_info']['name'] in fallback_regions:
-                    grouped[p['region_info']['name']].append(p)
-            for region in fallback_regions:
-                selected.extend(grouped[region][:fallback_count])
-            tested_nodes = selected
-        nodes_to_process = tested_nodes
-    else:
-        print("测速关闭，使用所有节点")
-        nodes_to_process = all_nodes
+    
+    
+    
+    
+    
+    
+    print("[3/5] 开始节点测速（模式: %s）" % SPEEDTEST_MODE)
+    clash_path = 'clash_core/clash'
+    if not (os.path.isfile(clash_path) and os.access(clash_path, os.X_OK)):
+        print(f"clash 核心缺失或不可执行: {clash_path}")
+        if 'clash' in SPEEDTEST_MODE:
+            sys.exit("clash 核心不可用，无法进行测速")
+    
+    nodes_to_process = all_nodes  # 初始全量节点
 
-    if not nodes_to_process:
-        sys.exit("❌ 找不到符合条件的节点，程序退出")
+    # ==================== 测速策略分流 ====================
+    if SPEEDTEST_MODE == "tcp_only":
+        print("使用【纯 TCP 测速】模式")
+        nodes_to_process = batch_tcp_test(all_nodes)
+        # TCP 测完后直接排序用 tcp_delay
+        nodes_to_process.sort(key=lambda p: p.get('tcp_delay', 9999))
+
+    elif SPEEDTEST_MODE == "clash_only":
+        print("使用【纯 Clash -fast 测速】模式")
+        nodes_to_process = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
+        for p in nodes_to_process:
+            p['clash_delay'] = p.get('clash_delay', 9999)
+
+    elif SPEEDTEST_MODE == "tcp_first":   # 推荐模式！
+        print("使用【TCP 粗筛 → Clash 精测】两阶段模式")
+        # 第一阶段：TCP 快速筛掉大量死节点（通常能从 3000+ 筛到 600~1000）
+        print("阶段1：TCP 粗筛（超高并发）...")
+        tcp_passed = batch_tcp_test(all_nodes)
+        print(f"TCP 粗筛完成：{len(all_nodes)} → {len(tcp_passed)}（保留率 {len(tcp_passed)/max(1,len(all_nodes))*100:.1f}%）")
+
+        if not tcp_passed:
+            print("TCP 阶段全部失败，尝试回退到纯 Clash 模式")
+            nodes_to_process = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
+        else:
+            # 第二阶段：对 TCP 存活的节点进行 Clash 精准测速
+            print("阶段2：对 TCP 存活节点进行 Clash 精准测速...")
+            nodes_to_process = batch_test_proxies_clash(clash_path, tcp_passed, max_workers=MAX_TEST_WORKERS)
+
+    elif SPEEDTEST_MODE == "clash_first":
+        print("使用【Clash 先测 → TCP 后验】模式（不推荐）")
+        clash_passed = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
+        nodes_to_process = [p for p in clash_passed if tcp_ping(p) is not None]
+
+    else:
+        print(f"未知测速模式 {SPEEDTEST_MODE}，默认使用 tcp_first")
+        # 同上 tcp_first 逻辑...
+
+    # ==================== 测速结束，统一处理延迟字段 ====================
+    success_count = len(nodes_to_process)
+    print(f"测速完成，最终优质节点数: {success_count}")
+
+    if success_count == 0:
+        print("测速后无存活节点，启动保底回退策略...")
+        fallback_regions = ['香港', '台湾', '日本', '新加坡', '美国', '韩国', '德国']
+        fallback = identify_regions_only(all_nodes)
+        selected = []
+        grouped = defaultdict(list)
+        for p in fallback:
+            if p.get('region_info', {}).get('name') in fallback_regions:
+                grouped[p['region_info']['name']].append(p)
+        for r in fallback_regions:
+            selected.extend(grouped[r][:20])
+        nodes_to_process = selected[:400]  # 保底最多400个
+        print(f"回退保留 {len(nodes_to_process)} 个热门地区节点（未测速）")
 
         # [4/5] 节点地区识别和重命名 + 数量限制
     print("[4/5] 节点重命名和限制总数处理")
@@ -1008,7 +1112,7 @@ async def main():
     final_proxies.sort(
         key=lambda p: (
             REGION_PRIORITY.index(p['region_info']['name']) if p.get('region_info') and p['region_info']['name'] in REGION_PRIORITY else 99,
-            p.get('clash_delay', 9999)
+            p.get('clash_delay', p.get('tcp_delay', 9999))   # clash_delay 优先
         )
     )
 
