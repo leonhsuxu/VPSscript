@@ -64,7 +64,10 @@ ENABLE_SPEED_TEST = True  # 是否启用速度测试功能，True表示启用。
 MAX_TEST_WORKERS = 128    # 速度测试时最大并发工作线程数，控制测试的并行度。
 SOCKET_TIMEOUT = 3       # 套接字连接超时时间，单位为秒
 HTTP_TIMEOUT = 5         # HTTP请求超时时间，单位为秒
-HTTP_TEST_URL = 'http://www.gstatic.com/generate_204'
+TEST_URLS = [
+    'http://www.gstatic.com/generate_204',
+    'http://www.youtube.com',
+]
 
 
 ALLOWED_REGIONS = {
@@ -912,72 +915,55 @@ def batch_tcp_test(proxies, max_workers=TCP_MAX_WORKERS):
 
 
 # clash 测速
+
 def clash_test_proxy(clash_path, proxy, debug=False):
     temp_dir = tempfile.mkdtemp()
     config_path = os.path.join(temp_dir, 'config.yaml')
-    
-    # 最快最准的测速地址
-    test_url = 'http://www.gstatic.com/generate_204'
-    
-    config = {
-        "port": 7890,
-        "socks-port": 7891,
-        "allow-lan": False,
-        "mode": "Rule",
-        "log-level": "silent",
-        "proxies": [proxy],
-        "proxy-groups": [{"name": "TESTGROUP", "type": "select", "proxies": [proxy["name"]]}],
-        "rules": [f"DOMAIN,{urlparse(test_url).netloc},TESTGROUP", "MATCH,DIRECT"]
-    }
-
     try:
-        with open(config_path, 'w', encoding='utf-8') as f:
-            yaml.dump(config, f, allow_unicode=True, sort_keys=False)
-
-        # 你坚持要用的 -fast 参数
-        cmd = [clash_path, '-c', config_path, '-fast']
-        
-        result = subprocess.run(
-            cmd,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            timeout=22,           # 22秒超时足够
-            text=True
-        )
-        output = (result.stdout + result.stderr).replace('\x00', '')
-
-        if debug:
-            print(f"\n=== [-fast] 原始输出 [{proxy['name']}] ===\n{output}\n{'='*60}")
-
-        # ─────────────────────────────
-        # 核心正则：完美匹配 -fast 表格输出的最后一列延迟
-        # 示例行：1.   🇭🇰 香港 xxx    Vmess   	450ms
-        # ─────────────────────────────
-        match = re.search(r'\b(\d+)ms\b(?=\s*$)', output, re.MULTILINE)
-        if match:
-            delay = int(match.group(1))
-            if delay > 1 and delay < 800:          # 严格 >1ms 且 <800ms
-                if debug:
-                    print(f"成功抓到延迟: {delay}ms → 保留")
-                return delay
-            else:
-                if debug:
-                    print(f"延迟 {delay}ms 不符合要求（只保留 2~799ms）→ 丢弃")
-                return None
-
-        # 兜底：如果上面没抓到，再扫一遍所有数字，排除 0/1ms
-        delays = re.findall(r'\b([2-9]\d{1,3})\b', output)  # 只匹配 2~9999
-        if delays:
-            delay = min(int(x) for x in delays if int(x) < 800)
-            if delay > 1:
-                return delay
-
-        # 明确出现 1ms / 0ms / NA 的直接判死
-        if re.search(r'\b(0\s*ms|1\s*ms|NA)\b', output, re.I):
+        for test_url in TEST_URLS:
+            config = {
+                "port": 7890,
+                "socks-port": 7891,
+                "allow-lan": False,
+                "mode": "Rule",
+                "log-level": "silent",
+                "proxies": [proxy],
+                "proxy-groups": [{"name": "TESTGROUP", "type": "select", "proxies": [proxy["name"]]}],
+                "rules": [f"DOMAIN,{urlparse(test_url).netloc},TESTGROUP", "MATCH,DIRECT"]
+            }
+            with open(config_path, 'w', encoding='utf-8') as f:
+                yaml.dump(config, f, allow_unicode=True, sort_keys=False)
+            cmd = [clash_path, '-c', config_path, '-fast']
+            result = subprocess.run(
+                cmd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                timeout=22,
+                text=True
+            )
+            output = (result.stdout + result.stderr).replace('\x00', '')
             if debug:
-                print("检测到 0ms/1ms/NA → 丢弃")
-            return None
-
+                print(f"\n=== [-fast] 测试 URL: {test_url} [{proxy['name']}] ===\n{output}\n{'='*60}")
+            # 解析延迟，逻辑同之前
+            match = re.search(r'\b(\d+)ms\b(?=\s*$)', output, re.MULTILINE)
+            if match:
+                delay = int(match.group(1))
+                if 1 < delay < 800:
+                    if debug:
+                        print(f"成功抓到延迟: {delay}ms → 保留")
+                    return delay
+            delays = re.findall(r'\b([2-9]\d{1,3})\b', output)
+            if delays:
+                delay = min(int(x) for x in delays if int(x) < 800)
+                if delay > 1:
+                    return delay
+            if re.search(r'\b(0\s*ms|1\s*ms|NA)\b', output, re.I):
+                if debug:
+                    print("检测到 0ms/1ms/NA → 丢弃")
+                return None
+        # 所有测速地址都无结果时返回 None
+        if debug:
+            print(f"所有测速地址均未通过 → 丢弃: {proxy['name']}")
     except subprocess.TimeoutExpired:
         if debug:
             print(f"[-fast] 测速超时 → 丢弃: {proxy['name']}")
@@ -989,28 +975,10 @@ def clash_test_proxy(clash_path, proxy, debug=False):
             shutil.rmtree(temp_dir)
         except:
             pass
-
-    return None   # 任何没抓到 2~799ms 延迟的都返回 None
-
-
-def test_proxy_with_clash(clash_path, proxy):
-    delay = clash_test_proxy('clash_core/clash', proxy)  # 不打印测试日志
-    # delay = clash_test_proxy('clash_core/clash', proxy, debug=True) # 加入debug=True是打印调试日志
-    if delay is not None:
-        proxy['clash_delay'] = delay
-        return proxy
     return None
 
 
-def batch_test_proxies_clash(clash_path, proxies, max_workers=32):
-    results = []
-    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
-        futures = [executor.submit(test_proxy_with_clash, clash_path, p) for p in proxies]
-        for future in futures:
-            res = future.result()
-            if res:
-                results.append(res)
-    return results
+
 
 # 主函数
 async def main():
