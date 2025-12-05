@@ -736,27 +736,37 @@ def emoji_to_country_code(emoji):
 
 FLAG_EMOJI_UN_FLAG ='🇺🇳'  # 无国家用联合国，按需修改
 
+def strip_starting_flags(s):
+    """
+    反复检测字符串开头是否为2个区域符号组成的国旗emoji，
+    若是，则去除，直到开头无此国旗emoji。
+    """
+    def is_flag_emoji(substr):
+        # 判断 substr 是否两个unicode字符都位于国旗unicode区域
+        if len(substr) != 2:
+            return False
+        return all(0x1F1E6 <= ord(c) <= 0x1F1FF for c in substr)
+    
+    while len(s) >= 2 and is_flag_emoji(s[:2]):
+        s = s[2:]
+    return s.strip()
 
 def normalize_proxy_names(proxies):
-    # 匹配开头所有成对国旗emoji（可连续多个）的正则
-    pattern_flags_at_start = re.compile(r'^(?:[\U0001F1E6-\U0001F1FF]{2})+')
-    # 匹配末尾所有数字序号
     pattern_trailing_number = re.compile(r'\s*\d+\s*$')
     normalized = []
 
     for p in proxies:
         name = p.get('name', '').strip()
 
-        # 一次性清除开头连续的所有国旗emoji（包括多个联合国国旗）
-        name = pattern_flags_at_start.sub('', name).strip()
+        # 用循环检测清理开头所有国旗emoji
+        name = strip_starting_flags(name)
 
-        # 清除末尾所有数字序号
+        # 清理尾部数字序号
         name = pattern_trailing_number.sub('', name).strip()
 
-        # 赋值更新清理名
         p['name'] = name
 
-        # 以下原逻辑保持
+        # 以下保持现有逻辑不变
         region_info = p.get('region_info', None)
         flag_match = re.search(r'[\U0001F1E6-\U0001F1FF]{2}', name)
         flag_emoji = flag_match.group(0) if flag_match else None
@@ -777,7 +787,6 @@ def normalize_proxy_names(proxies):
             short_name = name[:2] if len(name) >= 2 else name
             country_cn = short_name if short_name else "未知"
             flag_emoji = FLAG_EMOJI_UN_FLAG
-
         if not flag_emoji:
             code = None
             for k, v in COUNTRY_CODE_TO_CN.items():
