@@ -143,8 +143,7 @@ def load_existing_proxies_and_state():
 def extract_valid_subscribe_links(text):
     MIN_HOURS_LEFT = MIN_EXPIRE_HOURS
     link_pattern = re.compile(
-        r'(?:订阅链接|订阅地址|订阅)[\s:：`~！!☆★●()\[\]{}【】«»„“”"\'‘’—–\-\n\r,，。！？?!…️]*?`?\(?\[?(`?)(https?://[A-Za-z0-9\-._~:/?#[\]@!$&\'()*+,;=%]+)\1\]?\.?\)?'
-    
+        r'(?:订阅链接|订阅地址|订阅|链接)[\s:：`]*?(https?://[A-Za-z0-9\-._~:/?#[\]@!$&\'()*+,;=%]+)'
     )
     expire_patterns = [
         r'到期时间[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2}\s+\d{2}:\d{2}:\d{2})',
