@@ -1,9 +1,13 @@
-name: TG频道抓取 → xiecang/speedtest-clash 测速（2025.12.6 终极确认版）
+name: TG频道抓取 → xiecang/speedtest-clash 测速（2025.12 终极版）
 
 on:
   schedule:
-    - cron: '10 */4 * * *'      # 每4小时一次
+    - cron: '10 */4 * * *'
   workflow_dispatch:
+
+env:
+  MIHOMO_VERSION: v1.19.17
+  SPEEDTEST_VERSION: v0.3.12
 
 jobs:
   test-and-optimize:
@@ -27,50 +31,42 @@ jobs:
           chmod +x yq
           sudo mv yq /usr/local/bin/
 
-      # ==================== 1. Mihomo（官方最新 v1.19.17 确认可用）====================
       - name: Cache Mihomo
         id: cache-mihomo
         uses: actions/cache@v4
         with:
           path: mihomo
-          key: mihomo-amd64-v1.19.17-${{ github.run_id }}
-          restore-keys: mihomo-amd64-v1.19.17-
+          key: mihomo-amd64-${{ env.MIHOMO_VERSION }}
+          restore-keys: mihomo-amd64-
 
-      - name: Download Mihomo v1.19.17 (2025.12.6 确认可用)
+      - name: Download Mihomo
         if: steps.cache-mihomo.outputs.cache-hit != 'true'
         run: |
-          set -e
-          TAG=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | grep '"tag_name"' | cut -d'"' -f4)
-          echo "Mihomo 最新版本: $TAG"
           wget -q --show-progress \
-            https://github.com/MetaCubeX/mihomo/releases/download/${TAG}/mihomo-linux-amd64.gz
+            https://github.com/MetaCubeX/mihomo/releases/download/${MIHOMO_VERSION}/mihomo-linux-amd64.gz
           gunzip mihomo-linux-amd64.gz
           mv mihomo-linux-amd64 mihomo
           chmod +x mihomo
           ./mihomo --version
 
-      # ==================== 2. xiecang/speedtest-clash（最新 v0.3.12 确认可用）====================
-      - name: Cache xiecang/speedtest-clash
+      - name: Cache xiecang speedtest-clash
         id: cache-xc
         uses: actions/cache@v4
         with:
           path: xcspeedtest
-          key: xiecang-v0.3.12-${{ github.run_id }}
-          restore-keys: xiecang-v0.3.12-
+          key: xiecang-v-${{ env.SPEEDTEST_VERSION }}
+          restore-keys: xiecang-v-
 
-      - name: Download xiecang/speedtest-clash v0.3.12 (2025.12.6 确认可用)
+      - name: Download xiecang speedtest-clash
         if: steps.cache-xc.outputs.cache-hit != 'true'
         run: |
-          set -e
           URL=$(curl -s https://api.github.com/repos/xiecang/speedtest-clash/releases/latest \
-                | grep "browser_download_url.*speedtest_linux_amd64" \
-                | cut -d '"' -f4)
-          echo "xiecang 下载地址: $URL"
+               | grep "browser_download_url.*speedtest_linux_amd64" | grep "${SPEEDTEST_VERSION}" | cut -d '"' -f4)
           wget -q --show-progress -O xcspeedtest "$URL"
           chmod +x xcspeedtest
           ./xcspeedtest --help | head -3
 
-      # ==================== 以下你原来的全部逻辑（完全不动）====================
+      # Telegram 抓取，测速及优化逻辑同你之前配置
       - name: Run Telegram scraper
         env:
           TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
@@ -120,7 +116,7 @@ jobs:
           done
           curl -s http://127.0.0.1:9090/proxies >/dev/null || (echo "Mihomo 启动失败" && exit 1)
 
-      - name: Run xiecang/speedtest-clash 测速
+      - name: Run xiecang speedtest-clash 测速
         run: |
           ./xcspeedtest --clash-api http://127.0.0.1:9090 --test-target google --timeout 12s --threads 10 --output results.txt
           cat results.txt
@@ -155,10 +151,3 @@ jobs:
           git add flclashyaml/Tg-node-optimized.yaml
           git diff --quiet --staged || git commit -m "Auto: 更新优化节点 $(date -u +%F_%H-%M)"
           git push || echo "无变化"
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: TG优化节点
-          path: flclashyaml/Tg-node-optimized.yaml
-          retention-days: 7
