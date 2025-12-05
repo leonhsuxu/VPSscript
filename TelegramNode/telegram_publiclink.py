@@ -809,7 +809,7 @@ def clash_test_proxy(clash_path, proxy, debug=False):
 
         # 精准匹配含有效延迟的行，过滤掉携带N/A和无关数字
         pattern = re.compile(
-            r'Clash Speedtest 输出.*?(\d+ms|NA).*?测试中\.\.\. 100%', 
+            r'^\s*\d+\.\s+.*?" + re.escape(proxy["name"]) + r".*?(\d+)ms', 
             re.MULTILINE | re.IGNORECASE
         )
         matches = pattern.findall(output)
