@@ -894,6 +894,18 @@ def tcp_ping(proxy, timeout=TCP_TIMEOUT):
             return None
     except:
         return None
+        
+
+# 锚点
+
+def test_proxy_with_clash(clash_path, proxy):
+    delay = clash_test_proxy(clash_path, proxy)
+    if delay is not None:
+        proxy['clash_delay'] = delay
+        return proxy
+    return None
+
+
 
 def batch_tcp_test(proxies, max_workers=TCP_MAX_WORKERS):
     """超高并发 TCP 测速"""
