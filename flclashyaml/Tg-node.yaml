@@ -1493,6 +1493,39 @@ proxies:
   region_info:
     name: 香港
     code: HK
+- name: 🇭🇰 香港 高速【广州
+  type: ss
+  server: gz.xn--1lqrb57uoq8a.com
+  port: 42336
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 高速【江苏
+  type: ss
+  server: js.dd33e.com
+  port: 42336
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 江苏
+  type: ss
+  server: js.dd33e.com
+  port: 21642
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
 - name: 🇨🇳 台湾 01
   password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
   port: 443
@@ -1500,6 +1533,52 @@ proxies:
   tls: true
   type: http
   username: 8bb68d04-6973-11ee-b518-f23c9164ca5d
+  clash_delay: 1
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇹🇼 台湾 江苏
+  type: ss
+  server: js.dd33e.com
+  port: 42503
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇹🇼 台湾 广州
+  type: ss
+  server: gz.xn--1lqrb57uoq8a.com
+  port: 32022
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇹🇼 台湾 GTP可以用动态纯净节点【新疆专用1
+  type: vmess
+  server: tongyu.lt1122.com
+  port: 19331
+  uuid: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇹🇼 台湾 新疆专用3
+  type: vmess
+  server: tongyu.lt1122.com
+  port: 19333
+  uuid: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  alterId: 0
+  cipher: auto
+  udp: true
   clash_delay: 1
   region_info:
     name: 台湾
@@ -1781,6 +1860,28 @@ proxies:
   tls: true
   type: http
   username: 8bb68d04-6973-11ee-b518-f23c9164ca5d
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 2【江苏】GPT
+  type: ss
+  server: js.dd33e.com
+  port: 40779
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 2【广州】GPT
+  type: ss
+  server: gz.xn--1lqrb57uoq8a.com
+  port: 24779
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
   clash_delay: 1
   region_info:
     name: 日本
@@ -2141,6 +2242,28 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
+- name: 🇸🇬 新加坡 江苏】gpt
+  type: ss
+  server: js.dd33e.com
+  port: 11999
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 广州】gpt
+  type: ss
+  server: gz.xn--1lqrb57uoq8a.com
+  port: 37038
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
 - name: 🇰🇷 韩国 Relay_-🇰🇷_229 |10.71Mb
   type: vmess
   server: seoul03.zgjok.com
@@ -2170,6 +2293,28 @@ proxies:
   tls: false
   skip-cert-verify: false
   ws-opts: {}
+  clash_delay: 1
+  region_info:
+    name: 韩国
+    code: KR
+- name: 🇰🇷 韩国 广州】gpt
+  type: ss
+  server: gz.xn--1lqrb57uoq8a.com
+  port: 32736
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 韩国
+    code: KR
+- name: 🇰🇷 韩国 江苏】gpt
+  type: ss
+  server: js.dd33e.com
+  port: 42860
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
   clash_delay: 1
   region_info:
     name: 韩国
@@ -2267,6 +2412,61 @@ proxies:
   region_info:
     name: 印度
     code: IN
+- name: 🇮🇳 印度 广州】gpt
+  type: ss
+  server: gz.xn--1lqrb57uoq8a.com
+  port: 34213
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 印度
+    code: IN
+- name: 🇮🇳 印度 江苏】gpt
+  type: ss
+  server: js.dd33e.com
+  port: 36997
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 印度
+    code: IN
+- name: 🇵🇭 菲律宾 GPT
+  type: ss
+  server: gz.xn--1lqrb57uoq8a.com
+  port: 18239
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 菲律宾
+    code: PH
+- name: 🇻🇳 越南 广州】gpt
+  type: ss
+  server: gz.xn--1lqrb57uoq8a.com
+  port: 19770
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 越南
+    code: VN
+- name: 🇻🇳 越南 江苏】gpt
+  type: ss
+  server: js.dd33e.com
+  port: 19770
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 越南
+    code: VN
 - name: 🇺🇸 美国 疯高速100 (免费
   type: vmess
   server: us24-3.998998.best
@@ -2626,6 +2826,61 @@ proxies:
   region_info:
     name: 美国
     code: US
+- name: 🇺🇸 美国 江苏】gpt
+  type: ss
+  server: js.dd33e.com
+  port: 41616
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 3】gpt
+  type: ss
+  server: js.dd33e.com
+  port: 41615
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 广州】gpt
+  type: ss
+  server: gz.xn--1lqrb57uoq8a.com
+  port: 39355
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇨🇦 加拿大 广州
+  type: ss
+  server: gz.xn--1lqrb57uoq8a.com
+  port: 44679
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 加拿大
+    code: CA
+- name: 🇨🇦 加拿大 江苏
+  type: ss
+  server: js.dd33e.com
+  port: 44679
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 加拿大
+    code: CA
 - name: 🇫🇷 法国 disney_netflix_ |13.82Mb
   type: vmess
   server: 208.76.223.218
@@ -2684,6 +2939,28 @@ proxies:
   region_info:
     name: 法国
     code: FR
+- name: 🇫🇷 法国 江苏】gpt
+  type: ss
+  server: js.dd33e.com
+  port: 39378
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 法国
+    code: FR
+- name: 🇫🇷 法国 广州】gpt
+  type: ss
+  server: gz.xn--1lqrb57uoq8a.com
+  port: 39378
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 法国
+    code: FR
 - name: 🇬🇧 英国 01
   password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
   port: 443
@@ -2691,6 +2968,39 @@ proxies:
   tls: true
   type: http
   username: 8bb68d04-6973-11ee-b518-f23c9164ca5d
+  clash_delay: 1
+  region_info:
+    name: 英国
+    code: GB
+- name: 🇬🇧 英国 剩余流量：137.35
+  type: ss
+  server: gz.xn--1lqrb57uoq8a.com
+  port: 21642
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 英国
+    code: GB
+- name: 🇬🇧 英国 广州】GPT
+  type: ss
+  server: gz.xn--1lqrb57uoq8a.com
+  port: 33478
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 英国
+    code: GB
+- name: 🇬🇧 英国 江苏】GPT
+  type: ss
+  server: js.dd33e.com
+  port: 27439
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
   clash_delay: 1
   region_info:
     name: 英国
@@ -2758,6 +3068,28 @@ proxies:
   region_info:
     name: 德国
     code: DE
+- name: 🇩🇪 德国 广州】gpt
+  type: ss
+  server: gz.xn--1lqrb57uoq8a.com
+  port: 41723
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 德国
+    code: DE
+- name: 🇩🇪 德国 江苏】gpt
+  type: ss
+  server: js.dd33e.com
+  port: 41723
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 德国
+    code: DE
 - name: 🇧🇷 巴西 netflix_ |15.30Mb
   type: vmess
   server: 38.180.16.86
@@ -2773,13 +3105,68 @@ proxies:
   region_info:
     name: 巴西
     code: BR
+- name: 🇧🇷 巴西 广州】gpt
+  type: ss
+  server: gz.xn--1lqrb57uoq8a.com
+  port: 37620
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 巴西
+    code: BR
+- name: 🇦🇷 阿根廷 江苏】gpt
+  type: ss
+  server: js.dd33e.com
+  port: 47110
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 阿根廷
+    code: AR
+- name: 🇦🇷 阿根廷 广州】gpt
+  type: ss
+  server: gz.xn--1lqrb57uoq8a.com
+  port: 47110
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 阿根廷
+    code: AR
+- name: 🇦🇺 澳大利亚 广州】GPT
+  type: ss
+  server: gz.xn--1lqrb57uoq8a.com
+  port: 28130
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 澳大利亚
+    code: AU
+- name: 🇦🇺 澳大利亚 江苏】GPT
+  type: ss
+  server: js.dd33e.com
+  port: 27977
+  cipher: aes-128-gcm
+  password: 22750a5a-1cf8-4ecd-b5d8-be35295d0b49
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 澳大利亚
+    code: AU
 last_message_ids:
   '@fqDINYUE': 4658
-  '@wxdy666': 6216
-  '@freeyule': 1926985
+  '@wxdy666': 6218
+  '@freeyule': 1927047
   '@ccbaohe': 14963
-  '@duangvpsfs': 3672836
-  '@zzzjjjkkkoi': 607305
+  '@duangvpsfs': 3672898
+  '@zzzjjjkkkoi': 607362
   '@xmdexw': 219878
   '@v2v2clash': 0
   '@dingyue_Center': 3893
