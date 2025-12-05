@@ -736,20 +736,22 @@ def emoji_to_country_code(emoji):
 
 FLAG_EMOJI_UN_FLAG ='🇺🇳'  # 无国家用联合国，按需修改
 
+
 def normalize_proxy_names(proxies):
-    """
-    统一规范代理节点名称，规则：
-    1. 补齐国旗和国家名（中文）
-    2. 名字只保留国家名字符（删除数字符号等）
-    3. 无国家无国旗用名字前两个字符并补白旗emoji
-    4. 按国家分组加序号编码
-    """
     pattern_flag = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
-    
+    pattern_trailing_number = re.compile(r'\s+\d+$')
     normalized = []
-    
+
     for p in proxies:
         name = p.get('name', '').strip()
+
+        # 先清理旧国旗和数字后缀，避免重复累加
+        name = pattern_trailing_number.sub('', name)
+        name = pattern_flag.sub('', name, count=1).strip()
+
+        p['name'] = name
+
+        # 剩下代码保持不变，用清理过的名字识别或补充国旗和国家名
         region_info = p.get('region_info', None)
         flag_match = pattern_flag.search(name)
         flag_emoji = flag_match.group(0) if flag_match else None
@@ -759,23 +761,23 @@ def normalize_proxy_names(proxies):
             country_cn = region_info['name']
         else:
             country_cn = None
-        
+
         if not country_cn and flag_emoji:
             code = emoji_to_country_code(flag_emoji)
             if code and code in COUNTRY_CODE_TO_CN:
                 country_cn = COUNTRY_CODE_TO_CN[code]
-        
+
         if not country_cn:
             for cname, info in CUSTOM_REGEX_RULES.items():
                 if re.search(info['pattern'], name, re.IGNORECASE):
                     country_cn = cname
                     break
-        
+
         if not country_cn:
             short_name = name[:2] if len(name) >= 2 else name
             country_cn = short_name if short_name else "未知"
             flag_emoji = FLAG_EMOJI_UN_FLAG
-        
+
         if not flag_emoji:
             code = None
             for k, v in COUNTRY_CODE_TO_CN.items():
@@ -783,18 +785,18 @@ def normalize_proxy_names(proxies):
                     code = k
                     break
             flag_emoji = get_country_flag_emoji(code) if code else FLAG_EMOJI_UN_FLAG
-        
+
         clean_name = country_cn
-        
+
         p['_norm_flag'] = flag_emoji
         p['_norm_country'] = clean_name
         normalized.append(p)
-    
+
     grouped = {}
     for p in normalized:
         country = p['_norm_country']
         grouped.setdefault(country, []).append(p)
-    
+
     final_list = []
     for country, plist in grouped.items():
         for idx, p in enumerate(plist, 1):
@@ -804,6 +806,7 @@ def normalize_proxy_names(proxies):
             del p['_norm_country']
             final_list.append(p)
     return final_list
+
 
 # ----
 
