@@ -146,126 +146,18 @@ jobs:
           # --- 核心修复：处理 Tg-node.yaml 的内容，确保其为 YAML 列表 ---
           if [ -s flclashyaml/Tg-node.yaml ]; then
             python <<'EOPY'
-import yaml
-import sys
-try:
-    with open('flclashyaml/Tg-node.yaml', 'r', encoding='utf-8') as f:
-        data = yaml.safe_load(f)
-    if data is None: # 文件内容为空
-        proxies_to_add = []
-    elif isinstance(data, dict): # 如果是单个字典（单个代理），将其包装成列表
-        proxies_to_add = [data]
-    elif isinstance(data, list): # 如果已经是列表，直接使用
-        proxies_to_add = data
-    else: #  unexpected format
-        print('Warning: Tg-node.yaml contained unexpected data type, treating as empty list.', file=sys.stderr)
-        proxies_to_add = []
-    with open('flclashyaml/Tg-node_processed.yaml', 'w', encoding='utf-8') as f_out:
-        yaml.dump(proxies_to_add, f_out, allow_unicode=True, sort_keys=False)
-except Exception as e:
-    print(f'Error processing Tg-node.yaml: {e}', file=sys.stderr)
-    # 出现任何异常时，也确保输出一个空列表
-    with open('flclashyaml/Tg-node_processed.yaml', 'w', encoding='utf-8') as f_out:
-        yaml.dump([], f_out)
-EOPY
-            # 现在，将经过处理（保证是列表）的代理配置加载到 config.yaml 的 proxies 部分
-            yq e '.proxies = load("flclashyaml/Tg-node_processed.yaml")' -i config.yaml
-          else
-            echo "flclashyaml/Tg-node.yaml 是空的或不存在，'proxies' 将保持为空列表。"
-            # 此时 config.yaml 中的 proxies 已经初始化为 []，无需额外操作。
-          fi
-
-          # 现在 config.yaml 中的 'proxies' 保证是合法的 YAML 列表。
-          # 接下来，安全地提取代理名称。
-          # 'select(. != null)' 用于过滤掉任何可能的空名称或无效项。
-          # 注意：yq 提取出的列表项会被 sed 添加缩进，然后用 load 重新解析为列表
-          NAMES_RAW=$(yq e '.proxies[].name | select(. != null)' config.yaml)
-          NAMES_LIST=""
-          # 将每个代理名称格式化为 YAML 列表项，并收集起来
-          if [ -n "$NAMES_RAW" ]; then
-            for name in $NAMES_RAW; do
-              NAMES_LIST="${NAMES_LIST}  - \"$name\""$'\n' # 使用双引号包围名称以处理空格和特殊字符
-            done
-          fi
-
-          if [ -z "$NAMES_LIST" ]; then
-            echo "警告: 没有从代理列表中提取到任何代理名称，proxy-groups 的 'proxies' 键将只包含 [DIRECT]。"
-            # 如果没有提取到任何名称，确保 proxy-groups 的 proxies 列表中只包含 DIRECT。
-            yq e '.proxy-groups[] |= .proxies = ["DIRECT"]' -i config.yaml
-          else
-            # 创建一个临时 YAML 文件，包含提取到的代理名称（已格式化为列表项）。
-            echo -e "$NAMES_LIST" > /tmp/extracted_proxy_names.yaml
-            # 将这些名称追加到每个 proxy-group 的 'proxies' 列表中。
-            yq e '.proxy-groups[] |= .proxies += load("/tmp/extracted_proxy_names.yaml")' -i config.yaml
-            rm /tmp/extracted_proxy_names.yaml # 清理临时文件
-          fi
-      - name: Debug - Show generated configs # 调试步骤，检查最终配置
-        run: |
-          echo "--- Content of flclashyaml/Tg-node.yaml (original) ---"
-          cat flclashyaml/Tg-node.yaml || echo "flclashyaml/Tg-node.yaml not found or empty."
-          echo "--- End of flclashyaml/Tg-node.yaml (original) ---"
-          echo "--- Content of flclashyaml/Tg-node_processed.yaml ---"
-          cat flclashyaml/Tg-node_processed.yaml || echo "flclashyaml/Tg-node_processed.yaml not found or empty."
-          echo "--- End of flclashyaml/Tg-node_processed.yaml ---"
-          echo "--- Content of config.yaml (final) ---"
-          cat config.yaml || echo "config.yaml not found or empty."
-          echo "--- End of config.yaml (final) ---"
-      - name: Start Mihomo
-        run: |
-          # 启动 Mihomo，并将所有输出重定向到 mihomo.log
-          nohup ./mihomo -f config.yaml -d . > mihomo.log 2>&1 &
-          
-          # 等待 Mihomo 启动
-          for i in {1..20}; do
-            curl -s http://127.0.0.1:9090/proxies >/dev/null && break
-            echo "等待 Mihomo 启动... ($i/20)"
-            sleep 2
-          done
-          
-          # 检查 Mihomo 是否成功启动，如果失败则打印日志并退出
-          if ! curl -s http://127.0.0.1:9090/proxies >/dev/null; then
-            echo "Mihomo 启动失败"
-            echo "--- Mihomo Log ---"
-            cat mihomo.log # 打印 Mihomo 的日志内容
-            echo "--- End Mihomo Log ---"
-            exit 1
-          else
-            echo "Mihomo 成功启动。"
-          fi
-      - name: Run xiecang speedtest-clash 测速
-        run: |
-          ./xcspeedtest --clash-api http://127.0.0.1:9090 --test-target google --timeout 12s --threads 10 --output results.txt
-          cat results.txt
-      - name: Generate optimized config
-        run: |
-          python <<'PY'
-          import yaml, re
-          results = []
-          with open('results.txt', encoding='utf-8') as f:
-              for line in f:
-                  m = re.search(r'\[(.*?)\]\s+\((.*?)\):\s+(\d+)ms\s+(Success|Timeout|Error)', line)
-                  if m:
-                      results.append({'name': m.group(1), 'latency': int(m.group(3)), 'status': m.group(4)})
-          good = sorted([r for r in results if r['status']=='Success' and r['latency']<800], key=lambda x: x['latency'])
-          good_names = [x['name'] for x in good]
-          with open('config.yaml', encoding='utf-8') as f:
-              cfg = yaml.safe_load(f)
-          cfg['proxies'] = [p for p in cfg['proxies'] if p['name'] in good_names]
-          for g in cfg.get('proxy-groups', []):
-              if g['type'] in ('select', 'url-test'):
-                  g['proxies'] = ['DIRECT'] + good_names
-          if not good_names:
-              for g in cfg.get('proxy-groups', []):
-                  if g['type'] in ('select', 'url-test'):
-                      g['proxies'] = ['DIRECT']
-          with open('flclashyaml/Tg-node-optimized.yaml', 'w', encoding='utf-8') as f:
-              yaml.dump(cfg, f, allow_unicode=True, sort_keys=False)
-          print(f"生成优质节点 {len(good_names)} 个")
-          PY
-      - name: Commit & Push
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add flclashyaml/Tg-node-optimized.yaml
-          git diff --quiet --staged || git commit -m "Auto: 更新优化节点 $(date -u +%F_%H-%M)"
-          git push || echo "无变化"
+              import yaml
+              import sys
+              try:
+                  with open('flclashyaml/Tg-node.yaml', 'r', encoding='utf-8') as f:
+                      data = yaml.safe_load(f)
+                  if data is None: # 文件内容为空
+                      proxies_to_add = []
+                  elif isinstance(data, dict): # 如果是单个字典（单个代理），将其包装成列表
+                      proxies_to_add = [data]
+                  elif isinstance(data, list): # 如果已经是列表，直接使用
+                      proxies_to_add = data
+                  else: #  unexpected format
+                      print('Warning: Tg-node.yaml contained unexpected data type, treating as empty list.', file=sys.stderr)
+                      proxies_to_add = []
+                  with open('flcl
