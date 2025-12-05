@@ -695,6 +695,122 @@ def process_proxies(proxies):
         final.append(p)
     return final
 
+def rename_proxies(proxies):
+    """
+    根据节点名称提取地区关键词，重命名节点：
+    - 识别/提取国旗emoji，如果已存在则保留；
+    - 否则根据地区代码转换为emoji国旗；
+    - 清理名称，只保留地区关键词，其他删除；
+    - 按地区分组，给每个节点排序编号；
+    返回重命名后的节点列表。
+    """
+    counters = defaultdict(int)
+
+    # 构建正则匹配总pattern，用于清理名字中非地区字符
+    master_pattern = re.compile(
+        '|'.join(sorted([r for r in CUSTOM_REGEX_RULES.values() for r in r['pattern'].split('|')], key=len, reverse=True)),
+        re.IGNORECASE
+    )
+
+    renamed_proxies = []
+    # 先给 每个代理识别地区，赋region_info
+    for p in proxies:
+        matched_region = None
+        for region_name, info in CUSTOM_REGEX_RULES.items():
+            if re.search(info['pattern'], p.get('name', ''), re.IGNORECASE):
+                matched_region = {'name': region_name, 'code': info['code']}
+                break
+        # 没匹配到保留原名，region_info置空
+        p['region_info'] = matched_region
+    # 筛选出有地区的节点用于重命名，无地区的保留原名
+    proxies_with_region = [p for p in proxies if p['region_info']]
+
+    # 根据地区进行分组
+    grouped = defaultdict(list)
+    for p in proxies_with_region:
+        grouped[p['region_info']['name']].append(p)
+
+    for region, plist in grouped.items():
+        for idx, p in enumerate(plist, 1):
+            # 查找国旗emoji
+            match = FLAG_EMOJI_PATTERN.search(p['name'])
+            if match:
+                flag_emoji = match.group(0)
+            else:
+                flag_emoji = get_country_flag_emoji(p['region_info']['code'])
+            # 清理名称，只保留地区关键词
+            name_clean = master_pattern.sub('', FLAG_EMOJI_PATTERN.sub('', p['name'], count=1)).strip()
+            name_clean = re.sub(r'^\W+|\W+$', '', name_clean)  # 去除首尾非字母数字字符
+            name_clean = re.sub(r'\s+', ' ', name_clean)  # 多空格合1个空格
+            if not name_clean:
+                name_clean = f"{p['region_info']['code']}"
+            # 拼接最终名称
+            new_name = f"{flag_emoji} {region} {name_clean} {idx}".strip()
+            p['name'] = new_name
+            counters[region] += 1
+            renamed_proxies.append(p)
+
+    # 处理没有识别地区的节点，保留原名
+    no_region_proxies = [p for p in proxies if not p['region_info']]
+    renamed_proxies.extend(no_region_proxies)
+
+    return renamed_proxies
+
+def limit_proxy_counts(proxies, max_total=600):
+    """
+    根据指定规则限制节点数量：
+    - ['香港', '日本', '美国', '新加坡'] 每区最多60个；
+    - ['德国', '台湾', '韩国'] 每区最多15个；
+    - 其他地区 每区最多10个；
+    其余地区数量不足照常保留。
+    
+    总数 <= max_total时不限制。
+    先按延迟排序，延迟无值排后。
+    返回限制后的节点列表。
+    """
+    
+    if len(proxies) <= max_total:
+        return proxies
+
+    limit_60 = {'香港', '日本', '美国', '新加坡'}
+    limit_15 = {'德国', '台湾', '韩国'}
+
+    # 按延迟排序，延迟缺失按9999处理
+    proxies.sort(key=lambda p: p.get('clash_delay', 9999))
+
+    grouped = defaultdict(list)
+    for p in proxies:
+        rname = p.get('region_info', {}).get('name') if p.get('region_info') else None
+        grouped[rname].append(p)
+
+    selected = []
+
+    # 先选60限制区
+    for region in limit_60:
+        nodes = grouped.get(region, [])
+        selected.extend(nodes[:60])
+
+    # 15限制区
+    for region in limit_15:
+        nodes = grouped.get(region, [])
+        selected.extend(nodes[:15])
+
+    # 其他区域
+    other_regions = set(grouped.keys()) - limit_60 - limit_15 - {None}
+    for region in other_regions:
+        nodes = grouped.get(region, [])
+        selected.extend(nodes[:10])
+
+    # 可能有没有地区信息的节点，全部保留
+    selected.extend(grouped.get(None, []))
+
+    # 如果数量仍超限，则按延迟排序截断
+    if len(selected) > max_total:
+        selected.sort(key=lambda p: p.get('clash_delay', 9999))
+        selected = selected[:max_total]
+
+    return selected
+
 
 def generate_config(proxies, last_message_ids):
     return {
@@ -872,30 +988,35 @@ async def main():
     if not nodes_to_process:
         sys.exit("❌ 找不到符合条件的节点，程序退出")
 
-    print("[4/5] 节点地区识别和重命名")
-    processed_proxies = process_proxies(nodes_to_process)
+    # [4/5] 节点地区识别和重命名（替换process_proxies）
+    print("[4/5] 节点重命名和限制总数处理")
 
-    if not processed_proxies:
-        sys.exit("❌ 节点地区识别失败，程序退出")
+    # 只保留测速成功的节点
+    if ENABLE_SPEED_TEST:
+        nodes_to_rename = tested_nodes
+    else:
+        nodes_to_rename = all_nodes
 
-    processed_proxies.sort(
+    # 重命名所有节点
+    renamed_proxies = rename_proxies(nodes_to_rename)
+
+    # 限制最大节点数量
+    final_proxies = limit_proxy_counts(renamed_proxies, max_total=600)
+
+    if not final_proxies:
+        sys.exit("❌ 节点重命名后无有效节点，程序退出")
+
+    # 重新排序，优先区域列表优先，延迟后置
+    final_proxies.sort(
         key=lambda p: (
-            REGION_PRIORITY.index(p['region_info']['name']) if p['region_info']['name'] in REGION_PRIORITY else 99,
+            REGION_PRIORITY.index(p['region_info']['name']) if p.get('region_info') and p['region_info']['name'] in REGION_PRIORITY else 99,
             p.get('clash_delay', 9999)
         )
     )
-    print(f"[5/5] 排序完成，节点数: {len(processed_proxies)}")
 
-    final_config = generate_config(processed_proxies, last_message_ids)
+    print(f"[5/5] 重命名和限制完成，保留节点数: {len(final_proxies)}")
 
-    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
-    try:
-        with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-            yaml.dump(final_config, f, allow_unicode=True, sort_keys=False, indent=2)
-        print(f"✅ 配置文件已保存至 {OUTPUT_FILE}")
-        print("🎉 任务完成！")
-    except Exception as e:
-        print(f"写出文件时异常: {e}")
+    final_config = generate_config(final_proxies, last_message_ids)
 
 
 if __name__ == "__main__":
