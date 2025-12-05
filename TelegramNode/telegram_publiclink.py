@@ -916,6 +916,18 @@ def batch_tcp_test(proxies, max_workers=TCP_MAX_WORKERS):
 
 # clash 测速
 
+def batch_test_proxies_clash(clash_path, proxies, max_workers=32):
+    results = []
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = [executor.submit(test_proxy_with_clash, clash_path, p) for p in proxies]
+        for future in futures:
+            res = future.result()
+            if res:
+                results.append(res)
+    return results
+
+
+
 def clash_test_proxy(clash_path, proxy, debug=False):
     temp_dir = tempfile.mkdtemp()
     config_path = os.path.join(temp_dir, 'config.yaml')
