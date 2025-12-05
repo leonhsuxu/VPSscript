@@ -874,7 +874,7 @@ def clash_test_proxy(clash_path, proxy, debug=False):
     return None
 
 def test_proxy_with_clash(clash_path, proxy):
-    delay = clash_test_proxy(clash_path, proxy, debug=False)  # 关闭调试打印，可改为 True 排查
+    delay = clash_test_proxy(clash_path, proxy, debug=True)  # 关闭调试打印，可改为 True 排查
     if delay is not None:
         proxy['clash_delay'] = delay
         return proxy
