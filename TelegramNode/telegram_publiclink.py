@@ -37,6 +37,11 @@ from telethon import TelegramClient
 from telethon.sessions import StringSession
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from telethon import TelegramClient
+import logging
+from urllib.parse import urlparse, unquote
+
+# 已经在脚本开头配置logger
+logger = logging.getLogger("TelegramNodeClashSpeedtest")
 print_lock = threading.Lock()
 
 # --- 环境变量读取 ---
@@ -381,20 +386,21 @@ def parse_ss_node(line):
         line = line.strip()
         if not line.startswith('ss://'):
             return None
-
         content = line[5:]
-        # 拆分备注
+
+        # 拆分备注部分
         main_part, sep, remark_part = content.partition('#')
         remark = unquote(remark_part) if sep else ''
 
         if '@' in main_part:
-            # 明文格式直接用urlparse解析
+            # 明文格式，直接用urlparse解析
             parsed = urlparse('ss://' + main_part)
             user_pass = parsed.netloc.split('@')[0]
             if ':' not in user_pass:
                 logger.debug(f"解析失败，user_pass格式错误: {user_pass}")
                 return None
             method, password = user_pass.split(':', 1)
+
             server = parsed.hostname
             port = parsed.port
             if not (server and port):
@@ -411,28 +417,53 @@ def parse_ss_node(line):
                 'udp': True
             }
         else:
-            # base64格式
+            # base64编码格式
             ss_b64 = main_part
+            # 判断是否为合法Base64字符串
+            from base64 import urlsafe_b64decode
+            import re
+
+            def is_base64(s):
+                s = s.strip()
+                # base64字符集，包括urlsafe的 '-' 和 '_'
+                if not re.match(r'^[A-Za-z0-9\-_+=]+$', s):
+                    return False
+                try:
+                    padding_len = (4 - len(s) % 4) % 4
+                    s_padded = s + ('=' * padding_len)
+                    urlsafe_b64decode(s_padded)
+                    return True
+                except Exception:
+                    return False
+
             if not is_base64(ss_b64):
                 logger.debug(f"不是合法的base64编码字符串: {ss_b64}")
                 return None
 
             padding_len = (4 - len(ss_b64) % 4) % 4
             ss_b64_padded = ss_b64 + ('=' * padding_len)
-            decoded = base64.urlsafe_b64decode(ss_b64_padded).decode('utf-8', errors='ignore')
+            decoded = urlsafe_b64decode(ss_b64_padded).decode('utf-8', errors='ignore')
 
             if '@' not in decoded:
                 logger.debug(f"base64解码后缺少@符号: {decoded}")
                 return None
 
             method_password, server_port = decoded.split('@', 1)
-            if ':' not in method_password or ':' not in server_port:
-                logger.debug(f"格式错误，method_password或server_port无冒号: {method_password}, {server_port}")
+            if ':' not in method_password:
+                logger.debug(f"格式错误，method_password无冒号: {method_password}")
                 return None
-
             method, password = method_password.split(':', 1)
+
+            if ':' not in server_port:
+                logger.debug(f"格式错误，server_port无冒号: {server_port}")
+                return None
+            # 端口在最后一个冒号之后
             server, port_str = server_port.rsplit(':', 1)
-            port = int(port_str)
+            try:
+                port = int(port_str)
+            except ValueError:
+                logger.debug(f"端口转换失败: {port_str}")
+                return None
 
             return {
                 'name': remark or f"ss_{server}:{port}",
@@ -443,7 +474,6 @@ def parse_ss_node(line):
                 'password': password,
                 'udp': True
             }
-
     except Exception as e:
         logger.error(f"解析ss节点异常: {line}, 错误: {e}", exc_info=True)
         return None
