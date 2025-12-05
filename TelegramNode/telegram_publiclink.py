@@ -988,25 +988,23 @@ async def main():
     if not nodes_to_process:
         sys.exit("❌ 找不到符合条件的节点，程序退出")
 
-    # [4/5] 节点地区识别和重命名（替换process_proxies）
+        # [4/5] 节点地区识别和重命名 + 数量限制
     print("[4/5] 节点重命名和限制总数处理")
-
-    # 只保留测速成功的节点
-    if ENABLE_SPEED_TEST:
-        nodes_to_rename = tested_nodes
-    else:
-        nodes_to_rename = all_nodes
-
-    # 重命名所有节点
+    
+    # 确定需要重命名的节点列表
+    nodes_to_rename = tested_nodes if ENABLE_SPEED_TEST else all_nodes
+    
+    # 重命名（带国旗 + 地区 + 序号）
     renamed_proxies = rename_proxies(nodes_to_rename)
-
-    # 限制最大节点数量
+    
+    # 按地区+延迟限制最大节点数量（默认不超过600个）
     final_proxies = limit_proxy_counts(renamed_proxies, max_total=600)
-
+    
     if not final_proxies:
-        sys.exit("❌ 节点重命名后无有效节点，程序退出")
+        sys.exit("❌ 节点重命名和限量后无有效节点，程序退出")
 
-    # 重新排序，优先区域列表优先，延迟后置
+    # [5/5] 最终排序：先按 REGION_PRIORITY 地区优先级，再按延迟升序
+    print("[5/5] 最终排序并生成配置文件")
     final_proxies.sort(
         key=lambda p: (
             REGION_PRIORITY.index(p['region_info']['name']) if p.get('region_info') and p['region_info']['name'] in REGION_PRIORITY else 99,
@@ -1014,37 +1012,36 @@ async def main():
         )
     )
 
-    print(f"[5/5] 重命名和限制完成，保留节点数: {len(final_proxies)}")
-
-    # 生成最终配置并加上时间戳（确保每次内容都不一样，Git 必定提交）
+    total_count = len(final_proxies)
     update_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
-    total_count = len(processed_proxies)
 
+    # 最终配置（这里变量名统一为 final_proxies）
     final_config = {
-        'proxies': processed_proxies,
+        'proxies': final_proxies,
         'last_message_ids': last_message_ids,
-        'update_time': update_time,                    # ← 新增：更新时间
-        'total_nodes': total_count,                    # ← 新增：节点数量
+        'update_time': update_time,
+        'total_nodes': total_count,
         'note': '由 GitHub Actions 自动生成，每4小时更新一次，已按延迟排序并智能限量'
     }
 
+    # 确保输出目录存在
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
+
     try:
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-            # 加上醒目的头部注释，用户打开文件就能看到更新时间
             f.write(f"# TG频道节点自动抓取+测延迟精选订阅\n")
             f.write(f"# 最后更新时间：{update_time} (北京时间)\n")
-            f.write(f"# 本次保留节点数：{total_count} 个（延迟最优 + 失联专用）\n")           
+            f.write(f"# 本次保留节点数：{total_count} 个（延迟最优）\n")
             f.write(f"# 由 GitHub Actions 自动构建！\n\n")
             yaml.dump(final_config, f, allow_unicode=True, sort_keys=False, indent=2, width=4096)
-
-        print(f"配置文件已保存至 {OUTPUT_FILE}")
+        
+        print(f"✅ 配置文件已成功保存至 {OUTPUT_FILE}")
         print(f"   本次共保留 {total_count} 个优质节点")
         print(f"   更新时间：{update_time}")
-        print("任务完成！")
+        print("🎉 全部任务完成！")
     except Exception as e:
-        print(f"写出文件时异常: {e}")
-
+        print(f"❌ 写出配置文件失败: {e}")
+        sys.exit(1)
 
 if __name__ == "__main__":
     asyncio.run(main())
