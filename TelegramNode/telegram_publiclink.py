@@ -1076,22 +1076,22 @@ async def main():
 
     # 如果测速后一个节点都没活，启动保底回退
     if success_count == 0:
-    print("测速全死，启动保底回退策略（热门地区未测速保留）")
-    fallback_regions = [
-        '香港', '台湾', '日本', '新加坡', 
-        '美国', '韩国', '德国', '英国', '加拿大'
-    ]
-    candidates = identify_regions_only(all_nodes)
-    selected = []
-    grouped = defaultdict(list)
-    for p in candidates:
-        region = p.get('region_info', {}).get('name')
-        if region in fallback_regions:
-            grouped[region].append(p)
-    for r in fallback_regions:
-        selected.extend(grouped[r][:30])
-    final_tested_nodes = selected[:500]
-    print(f"回退保留 {len(final_tested_nodes)} 个热门地区节点（未测速）")
+        print("测速全死，启动保底回退策略（热门地区未测速保留）")
+        fallback_regions = [
+            '香港', '台湾', '日本', '新加坡', 
+            '美国', '韩国', '德国', '英国', '加拿大'
+        ]
+        candidates = identify_regions_only(all_nodes)
+        selected = []
+        grouped = defaultdict(list)
+        for p in candidates:
+            region = p.get('region_info', {}).get('name')
+            if region in fallback_regions:
+                grouped[region].append(p)
+        for r in fallback_regions:
+            selected.extend(grouped[r][:30])
+        final_tested_nodes = selected[:500]
+        print(f"回退保留 {len(final_tested_nodes)} 个热门地区节点（未测速）")
 
 
     
