@@ -714,67 +714,96 @@ def process_proxies(proxies):
         p['name'] = new_name
         final.append(p)
     return final
+#锚点
 
-def rename_proxies(proxies):
+
+# 新增的国家代码 转 中文名字典，方便快速映射
+COUNTRY_CODE_TO_CN = {
+    v['code']: k for k, v in CUSTOM_REGEX_RULES.items()
+}
+
+def emoji_to_country_code(emoji):
+    if len(emoji) != 2:
+        return None
+    try:
+        # 两个flag emoji的unicode解码成国家代码
+        return ''.join(chr(ord(c) - 0x1F1E6 + ord('A')) for c in emoji)
+    except:
+        return None
+
+FLAG_EMOJI_UN_FLAG ='🇺🇳'  # 无国家用联合国，按需修改
+
+def normalize_proxy_names(proxies):
     """
-    根据节点名称提取地区关键词，重命名节点：
-    - 识别/提取国旗emoji，如果已存在则保留；
-    - 否则根据地区代码转换为emoji国旗；
-    - 清理名称，只保留地区关键词，其他删除；
-    - 按地区分组，给每个节点排序编号；
-    返回重命名后的节点列表。
+    统一规范代理节点名称，规则：
+    1. 补齐国旗和国家名（中文）
+    2. 名字只保留国家名字符（删除数字符号等）
+    3. 无国家无国旗用名字前两个字符并补白旗emoji
+    4. 按国家分组加序号编码
     """
-    counters = defaultdict(int)
-
-    # 构建正则匹配总pattern，用于清理名字中非地区字符
-    master_pattern = re.compile(
-        '|'.join(sorted([r for r in CUSTOM_REGEX_RULES.values() for r in r['pattern'].split('|')], key=len, reverse=True)),
-        re.IGNORECASE
-    )
-
-    renamed_proxies = []
-    # 先给 每个代理识别地区，赋region_info
+    pattern_flag = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
+    
+    normalized = []
+    
     for p in proxies:
-        matched_region = None
-        for region_name, info in CUSTOM_REGEX_RULES.items():
-            if re.search(info['pattern'], p.get('name', ''), re.IGNORECASE):
-                matched_region = {'name': region_name, 'code': info['code']}
-                break
-        # 没匹配到保留原名，region_info置空
-        p['region_info'] = matched_region
-    # 筛选出有地区的节点用于重命名，无地区的保留原名
-    proxies_with_region = [p for p in proxies if p['region_info']]
+        name = p.get('name', '').strip()
+        region_info = p.get('region_info', None)
+        flag_match = pattern_flag.search(name)
+        flag_emoji = flag_match.group(0) if flag_match else None
 
-    # 根据地区进行分组
-    grouped = defaultdict(list)
-    for p in proxies_with_region:
-        grouped[p['region_info']['name']].append(p)
-
-    for region, plist in grouped.items():
+        country_cn = None
+        if region_info and 'name' in region_info and region_info['name'] in CUSTOM_REGEX_RULES:
+            country_cn = region_info['name']
+        else:
+            country_cn = None
+        
+        if not country_cn and flag_emoji:
+            code = emoji_to_country_code(flag_emoji)
+            if code and code in COUNTRY_CODE_TO_CN:
+                country_cn = COUNTRY_CODE_TO_CN[code]
+        
+        if not country_cn:
+            for cname, info in CUSTOM_REGEX_RULES.items():
+                if re.search(info['pattern'], name, re.IGNORECASE):
+                    country_cn = cname
+                    break
+        
+        if not country_cn:
+            short_name = name[:2] if len(name) >= 2 else name
+            country_cn = short_name if short_name else "未知"
+            flag_emoji = FLAG_EMOJI_UN_FLAG
+        
+        if not flag_emoji:
+            code = None
+            for k, v in COUNTRY_CODE_TO_CN.items():
+                if v == country_cn:
+                    code = k
+                    break
+            flag_emoji = get_country_flag_emoji(code) if code else FLAG_EMOJI_UN_FLAG
+        
+        clean_name = country_cn
+        
+        p['_norm_flag'] = flag_emoji
+        p['_norm_country'] = clean_name
+        normalized.append(p)
+    
+    grouped = {}
+    for p in normalized:
+        country = p['_norm_country']
+        grouped.setdefault(country, []).append(p)
+    
+    final_list = []
+    for country, plist in grouped.items():
         for idx, p in enumerate(plist, 1):
-            # 查找国旗emoji
-            match = FLAG_EMOJI_PATTERN.search(p['name'])
-            if match:
-                flag_emoji = match.group(0)
-            else:
-                flag_emoji = get_country_flag_emoji(p['region_info']['code'])
-            # 清理名称，只保留地区关键词
-            name_clean = master_pattern.sub('', FLAG_EMOJI_PATTERN.sub('', p['name'], count=1)).strip()
-            name_clean = re.sub(r'^\W+|\W+$', '', name_clean)  # 去除首尾非字母数字字符
-            name_clean = re.sub(r'\s+', ' ', name_clean)  # 多空格合1个空格
-            if not name_clean:
-                name_clean = f"{p['region_info']['code']}"
-            # 拼接最终名称
-            new_name = f"{flag_emoji} {region} {name_clean} {idx}".strip()
+            new_name = f"{p['_norm_flag']} {country} {idx}"
             p['name'] = new_name
-            counters[region] += 1
-            renamed_proxies.append(p)
+            del p['_norm_flag']
+            del p['_norm_country']
+            final_list.append(p)
+    return final_list
 
-    # 处理没有识别地区的节点，保留原名
-    no_region_proxies = [p for p in proxies if not p['region_info']]
-    renamed_proxies.extend(no_region_proxies)
+# ----
 
-    return renamed_proxies
 
 def limit_proxy_counts(proxies, max_total=600):
     """
@@ -983,18 +1012,16 @@ def batch_test_proxies_clash(clash_path, proxies, max_workers=32):
                 results.append(res)
     return results
 
-
+# 主函数
 async def main():
     print("=" * 60)
     print("Telegram.Node_Clash-Speedtest测试版 V1")
     print(datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S"))
     print("=" * 60)
-
     preprocess_regex_rules()
     print("[1/5] 加载原有节点和抓取状态")
     existing_proxies, last_message_ids = load_existing_proxies_and_state()
     print(f"已有节点数: {len(existing_proxies)}")
-
     print("[2/5] 抓取 Telegram 新订阅链接")
     urls, last_message_ids = await scrape_telegram_links(last_message_ids)
     new_proxies = []
@@ -1004,9 +1031,7 @@ async def main():
             proxies = download_and_parse(url)
             if proxies:
                 new_proxies.extend(proxies)
-
     print(f"新增节点数: {len(new_proxies)}")
-
     all_proxies_map = {
         get_proxy_key(p): p for p in existing_proxies if is_valid_proxy(p)
     }
@@ -1017,51 +1042,36 @@ async def main():
             all_proxies_map[key] = p
             added_count += 1
     print(f"合并去重后总节点数: {len(all_proxies_map)}，新增有效节点: {added_count}")
-
     all_nodes = list(all_proxies_map.values())
     if not all_nodes:
         sys.exit("❌ 无任何节点可用，程序退出")
-
-    
-    
-    
-    
-    
-    
         # =============================================
     # [3/5] 开始节点测速（支持多种模式）
     # =============================================
     print("[3/5] 开始节点测速（模式: %s）" % SPEEDTEST_MODE)
-
     clash_path = 'clash_core/clash'
     need_clash = 'clash' in SPEEDTEST_MODE
     if need_clash and not (os.path.isfile(clash_path) and os.access(clash_path, os.X_OK)):
         sys.exit(f"clash 核心缺失或不可执行: {clash_path}")
-
     # 最终进入后续处理（重命名、限量、排序）的节点列表
     final_tested_nodes = all_nodes.copy()
-
     if SPEEDTEST_MODE == "tcp_only":
         print("使用【纯 TCP 测速】模式")
         final_tested_nodes = batch_tcp_test(all_nodes)
-
     elif SPEEDTEST_MODE == "clash_only":
         print("使用【纯 Clash -fast 测速】模式")
         final_tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
-
     elif SPEEDTEST_MODE == "tcp_first":  # 推荐！
         print("使用【TCP 粗筛 → Clash 精测】两阶段模式")
         print("阶段1：TCP 超高并发粗筛...")
         tcp_passed = batch_tcp_test(all_nodes)
         print(f"TCP 粗筛完成：{len(all_nodes)} → {len(tcp_passed)}")
-
         if not tcp_passed:
             print("TCP 全死，降级使用纯 Clash 模式")
             final_tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
         else:
             print("阶段2：对 TCP 存活节点进行 Clash 精准测速...")
             final_tested_nodes = batch_test_proxies_clash(clash_path, tcp_passed, max_workers=MAX_TEST_WORKERS)
-
     elif SPEEDTEST_MODE == "clash_first":
         print("使用【Clash 先测 → TCP 后验】模式")
         clash_passed = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
@@ -1069,16 +1079,14 @@ async def main():
     else:
         print("未知模式，使用默认 tcp_first")
         # 同 tcp_first 逻辑...
-
     # 测速结果统计
     success_count = len(final_tested_nodes)
     print(f"测速完成，最终存活优质节点：{success_count} 个")
-
     # 如果测速后一个节点都没活，启动保底回退
     if success_count == 0:
         print("测速全死，启动保底回退策略（热门地区未测速保留）")
         fallback_regions = [
-            '香港', '台湾', '日本', '新加坡', 
+            '香港', '台湾', '日本', '新加坡',
             '美国', '韩国', '德国', '英国', '加拿大'
         ]
         candidates = identify_regions_only(all_nodes)
@@ -1092,22 +1100,13 @@ async def main():
             selected.extend(grouped[r][:30])
         final_tested_nodes = selected[:500]
         print(f"回退保留 {len(final_tested_nodes)} 个热门地区节点（未测速）")
-
-
-    
-    # [4/5] 节点地区识别和重命名 + 数量限制
-    print("[4/5] 节点重命名和限制总数处理")   
-   
-    # 重命名（带国旗 + 地区 + 序号）
-    renamed_proxies = rename_proxies(final_tested_nodes)
-    
-    # 按地区+延迟限制最大节点数量（默认不超过600个）
-    final_proxies = limit_proxy_counts(renamed_proxies, max_total=600)
-    
+    # [4/5] 节点名称统一规范化处理
+    print("[4/5] 节点名称统一规范化处理")
+    normalized_proxies = normalize_proxy_names(final_tested_nodes)
+    final_proxies = limit_proxy_counts(normalized_proxies, max_total=600)
     if not final_proxies:
         sys.exit("❌ 节点重命名和限量后无有效节点，程序退出")
-
-    # [5/5] 最终排序
+    # [5/5] 最终排序并生成配置文件
     print("[5/5] 最终排序并生成配置文件")
     final_proxies.sort(
         key=lambda p: (
@@ -1115,11 +1114,8 @@ async def main():
             p.get('clash_delay', p.get('tcp_delay', 9999))
         )
     )
-
     total_count = len(final_proxies)
     update_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
-
-    # 最终配置（这里变量名统一为 final_proxies）
     final_config = {
         'proxies': final_proxies,
         'last_message_ids': last_message_ids,
@@ -1127,10 +1123,7 @@ async def main():
         'total_nodes': total_count,
         'note': '由 GitHub Actions 自动生成，每4小时更新一次，已按延迟排序并智能限量'
     }
-
-    # 确保输出目录存在
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
-
     try:
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
             f.write(f"# TG频道节点自动抓取+测延迟精选订阅\n")
@@ -1138,7 +1131,6 @@ async def main():
             f.write(f"# 本次保留节点数：{total_count} 个（延迟最优）\n")
             f.write(f"# 由 GitHub Actions 自动构建！\n\n")
             yaml.dump(final_config, f, allow_unicode=True, sort_keys=False, indent=2, width=4096)
-        
         print(f"✅ 配置文件已成功保存至 {OUTPUT_FILE}")
         print(f"   本次共保留 {total_count} 个优质节点")
         print(f"   更新时间：{update_time}")
@@ -1146,6 +1138,8 @@ async def main():
     except Exception as e:
         print(f"❌ 写出配置文件失败: {e}")
         sys.exit(1)
+
+   
 
 if __name__ == "__main__":
     asyncio.run(main())
