@@ -736,24 +736,26 @@ def emoji_to_country_code(emoji):
 
 FLAG_EMOJI_UN_FLAG ='🇺🇳'  # 无国家用联合国，按需修改
 
-
 def normalize_proxy_names(proxies):
-    pattern_flag = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
-    pattern_trailing_number = re.compile(r'\s+\d+$')
+    pattern_flags_at_start = re.compile(r'^([\U0001F1E6-\U0001F1FF]{2})+')
+    pattern_trailing_number = re.compile(r'\s*\d+\s*$')
     normalized = []
 
     for p in proxies:
         name = p.get('name', '').strip()
 
-        # 先清理旧国旗和数字后缀，避免重复累加
-        name = pattern_trailing_number.sub('', name)
-        name = pattern_flag.sub('', name, count=1).strip()
+        # 先去除名称开头的全部国旗emoji（含联合国旗、多个国旗）
+        name = pattern_flags_at_start.sub('', name).strip()
 
+        # 再去除末尾的数字序号
+        name = pattern_trailing_number.sub('', name).strip()
+
+        # 更新清理后的名字
         p['name'] = name
 
-        # 剩下代码保持不变，用清理过的名字识别或补充国旗和国家名
+        # 以下识别国旗和国家名逻辑和之前一样
         region_info = p.get('region_info', None)
-        flag_match = pattern_flag.search(name)
+        flag_match = re.search(r'[\U0001F1E6-\U0001F1FF]{2}', name)
         flag_emoji = flag_match.group(0) if flag_match else None
 
         country_cn = None
@@ -792,6 +794,7 @@ def normalize_proxy_names(proxies):
         p['_norm_country'] = clean_name
         normalized.append(p)
 
+    # 按国家分组排序编码
     grouped = {}
     for p in normalized:
         country = p['_norm_country']
@@ -805,6 +808,7 @@ def normalize_proxy_names(proxies):
             del p['_norm_flag']
             del p['_norm_country']
             final_list.append(p)
+
     return final_list
 
 
