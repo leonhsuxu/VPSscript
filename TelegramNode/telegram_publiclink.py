@@ -792,47 +792,29 @@ def generate_config(proxies, last_message_ids):
     }
 
 def clash_test_proxy_single(proxy: dict, clash_path: str = "clash_core/clash", debug: bool = False) -> int | None:
-    """
-    使用 Clash 核心对单个节点进行延迟测试（返回毫秒或 None）
-    """
     temp_dir = None
     try:
-        # 1. 创建临时目录
         temp_dir = tempfile.mkdtemp(prefix="clash_test_")
-
-        # 2. 生成最小化 config.yaml
         config = {
-            "mixed-port": 7890,
-            "mode": "direct",
-            "log-level": "silent",
-            "ipv6": False,
-            "proxies": [proxy],
-            "proxy-groups": [{"name": "auto", "type": "select", "proxies": [proxy["name"]]}],
-            "rules": []
+            ...
         }
         config_path = os.path.join(temp_dir, "config.yaml")
         with open(config_path, "w", encoding="utf-8") as f:
             yaml.dump(config, f, allow_unicode=True)
-
-        # 3. 启动 Clash 并测试延迟
         cmd = [
             clash_path,
             "-d", temp_dir,
-            "-f", config_path
+            "-f", config_path,
+            "-fast",         # 增加 -fast 参数
         ]
         if debug:
             print(f"调试: 启动 Clash 测试节点 → {proxy.get('name', 'Unknown')}")
-
         proc = subprocess.Popen(
             cmd,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL
+            stdout=subprocess.PIPE,    # 改成管道，方便调试
+            stderr=subprocess.PIPE
         )
-
-        # 等待 Clash 启动（最多 5 秒）
-        time.sleep(4)
-
-        # 发起测速请求
+        time.sleep(5)  # 延长启动等待时间
         test_url = f"http://127.0.0.1:7890/proxies/{quote(proxy['name'])}/delay?timeout=5000&url={quote(HTTP_TEST_URL)}"
         start_time = time.time()
         try:
@@ -841,18 +823,19 @@ def clash_test_proxy_single(proxy: dict, clash_path: str = "clash_core/clash", d
                 data = resp.json()
                 delay = data.get("delay")
                 if isinstance(delay, int) and delay > 0:
+                    if debug:
+                        out, err = proc.communicate(timeout=1)
+                        print("Clash stdout:", out.decode(errors='ignore'))
+                        print("Clash stderr:", err.decode(errors='ignore'))
                     return delay
-        except:
-            pass
-
-        # 超时或失败处理
+        except Exception as e:
+            if debug:
+                print(f"请求测速接口异常: {e}")
         try:
             proc.wait(timeout=3)
         except:
             proc.kill()
-
         return None
-
     except Exception as e:
         if debug:
             print(f"测速异常: {proxy.get('name')} → {e}")
@@ -862,9 +845,7 @@ def clash_test_proxy_single(proxy: dict, clash_path: str = "clash_core/clash", d
         except:
             pass
         return None
-
     finally:
-        # 确保清理临时目录
         if temp_dir and os.path.exists(temp_dir):
             try:
                 shutil.rmtree(temp_dir, ignore_errors=True)
