@@ -16,23 +16,24 @@
 import os
 import re
 import sys
-import base64
 import json
-import yaml
 import time
-import socket
+import yaml
+import base64
 import hashlib
-import asyncio
 import shutil
-import subprocess
-import concurrent.futures
+import asyncio
+import logging
 import tempfile
-import requests
-from urllib.parse import urlparse, parse_qs, unquote
-from datetime import datetime, timedelta, timezone
+import subprocess
+import threading
+from datetime import datetime
 from collections import defaultdict
-from telethon.sync import TelegramClient
-from telethon.sessions import StringSession
+from urllib.parse import urlparse, parse_qs, quote, unquote
+
+import requests
+from pytz import timezone
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # --- 环境变量读取 ---
 API_ID = int(os.environ.get('TELEGRAM_API_ID') or 0)
