@@ -145,7 +145,7 @@ jobs:
 
           # --- 核心修复：处理 Tg-node.yaml 的内容，确保其为 YAML 列表 ---
           if [ -s flclashyaml/Tg-node.yaml ]; then
-            python -c "
+            python <<'EOPY'
 import yaml
 import sys
 try:
@@ -167,7 +167,7 @@ except Exception as e:
     # 出现任何异常时，也确保输出一个空列表
     with open('flclashyaml/Tg-node_processed.yaml', 'w', encoding='utf-8') as f_out:
         yaml.dump([], f_out)
-"
+EOPY
             # 现在，将经过处理（保证是列表）的代理配置加载到 config.yaml 的 proxies 部分
             yq e '.proxies = load("flclashyaml/Tg-node_processed.yaml")' -i config.yaml
           else
@@ -178,15 +178,23 @@ except Exception as e:
           # 现在 config.yaml 中的 'proxies' 保证是合法的 YAML 列表。
           # 接下来，安全地提取代理名称。
           # 'select(. != null)' 用于过滤掉任何可能的空名称或无效项。
-          NAMES=$(yq e '.proxies[].name | select(. != null)' config.yaml | sed 's/^/  - /')
-          
-          if [ -z "$NAMES" ]; then
+          # 注意：yq 提取出的列表项会被 sed 添加缩进，然后用 load 重新解析为列表
+          NAMES_RAW=$(yq e '.proxies[].name | select(. != null)' config.yaml)
+          NAMES_LIST=""
+          # 将每个代理名称格式化为 YAML 列表项，并收集起来
+          if [ -n "$NAMES_RAW" ]; then
+            for name in $NAMES_RAW; do
+              NAMES_LIST="${NAMES_LIST}  - \"$name\""$'\n' # 使用双引号包围名称以处理空格和特殊字符
+            done
+          fi
+
+          if [ -z "$NAMES_LIST" ]; then
             echo "警告: 没有从代理列表中提取到任何代理名称，proxy-groups 的 'proxies' 键将只包含 [DIRECT]。"
             # 如果没有提取到任何名称，确保 proxy-groups 的 proxies 列表中只包含 DIRECT。
             yq e '.proxy-groups[] |= .proxies = ["DIRECT"]' -i config.yaml
           else
             # 创建一个临时 YAML 文件，包含提取到的代理名称（已格式化为列表项）。
-            echo "$NAMES" > /tmp/extracted_proxy_names.yaml
+            echo -e "$NAMES_LIST" > /tmp/extracted_proxy_names.yaml
             # 将这些名称追加到每个 proxy-group 的 'proxies' 列表中。
             yq e '.proxy-groups[] |= .proxies += load("/tmp/extracted_proxy_names.yaml")' -i config.yaml
             rm /tmp/extracted_proxy_names.yaml # 清理临时文件
