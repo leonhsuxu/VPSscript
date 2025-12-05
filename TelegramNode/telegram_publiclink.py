@@ -874,10 +874,11 @@ def clash_test_proxy(clash_path, proxy, debug=False):
     return None
 
 def test_proxy_with_clash(clash_path, proxy):
-    delay = clash_test_proxy(clash_path, proxy, debug=True)  # 关闭调试打印，可改为 True 排查
-    if delay is not None:
+    delay = clash_test_proxy(clash_path, proxy, debug=True)
+    if delay is not None and 1 <= delay < 800:
         proxy['clash_delay'] = delay
         return proxy
+    # 未获得有效延迟，返回 None
     return None
 
 def batch_test_proxies_clash(clash_path, proxies, max_workers=32):
@@ -912,7 +913,7 @@ def batch_test_proxies_clash(clash_path, proxies, max_workers=32):
             except Exception:
                 delay = None
             name = proxy.get("name", "Unknown")[:40]
-            if delay is not None and 1 <= delay < 800:
+            if delay is not None and 2 <= delay < 800:
                 proxy["clash_delay"] = delay
                 success_nodes.append(proxy)
                 stats["success"] += 1
