@@ -1080,11 +1080,8 @@ async def main():
         fallback_regions = ['香港', '台湾', '日本', '新加坡', '美国
 
     # [4/5] 节点地区识别和重命名 + 数量限制
-    print("[4/5] 节点重命名和限制总数处理")
-    
-    # 确定需要重命名的节点列表
-    nodes_to_rename = tested_nodes if ENABLE_SPEED_TEST else all_nodes
-    
+    print("[4/5] 节点重命名和限制总数处理")   
+   
     # 重命名（带国旗 + 地区 + 序号）
     renamed_proxies = rename_proxies(nodes_to_rename)
     
@@ -1094,12 +1091,12 @@ async def main():
     if not final_proxies:
         sys.exit("❌ 节点重命名和限量后无有效节点，程序退出")
 
-    # [5/5] 最终排序：先按 REGION_PRIORITY 地区优先级，再按延迟升序
+    # [5/5] 最终排序
     print("[5/5] 最终排序并生成配置文件")
     final_proxies.sort(
         key=lambda p: (
             REGION_PRIORITY.index(p['region_info']['name']) if p.get('region_info') and p['region_info']['name'] in REGION_PRIORITY else 99,
-            p.get('clash_delay', p.get('tcp_delay', 9999))   # clash_delay 优先
+            p.get('clash_delay', p.get('tcp_delay', 9999))
         )
     )
 
