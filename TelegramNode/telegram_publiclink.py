@@ -1028,71 +1028,58 @@ async def main():
     
     
     
+        # =============================================
+    # [3/5] 开始节点测速（支持多种模式）
+    # =============================================
     print("[3/5] 开始节点测速（模式: %s）" % SPEEDTEST_MODE)
-    clash_path = 'clash_core/clash'
-    if not (os.path.isfile(clash_path) and os.access(clash_path, os.X_OK)):
-        print(f"clash 核心缺失或不可执行: {clash_path}")
-        if 'clash' in SPEEDTEST_MODE:
-            sys.exit("clash 核心不可用，无法进行测速")
-    
-    nodes_to_process = all_nodes  # 初始全量节点
 
-    # ==================== 测速策略分流 ====================
+    clash_path = 'clash_core/clash'
+    need_clash = 'clash' in SPEEDTEST_MODE
+    if need_clash and not (os.path.isfile(clash_path) and os.access(clash_path, os.X_OK)):
+        sys.exit(f"clash 核心缺失或不可执行: {clash_path}")
+
+    # 最终进入后续处理（重命名、限量、排序）的节点列表
+    final_tested_nodes = all_nodes.copy()
+
     if SPEEDTEST_MODE == "tcp_only":
         print("使用【纯 TCP 测速】模式")
-        nodes_to_process = batch_tcp_test(all_nodes)
-        # TCP 测完后直接排序用 tcp_delay
-        nodes_to_process.sort(key=lambda p: p.get('tcp_delay', 9999))
+        final_tested_nodes = batch_tcp_test(all_nodes)
 
     elif SPEEDTEST_MODE == "clash_only":
         print("使用【纯 Clash -fast 测速】模式")
-        nodes_to_process = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
-        for p in nodes_to_process:
-            p['clash_delay'] = p.get('clash_delay', 9999)
+        final_tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
 
-    elif SPEEDTEST_MODE == "tcp_first":   # 推荐模式！
+    elif SPEEDTEST_MODE == "tcp_first":  # 推荐！
         print("使用【TCP 粗筛 → Clash 精测】两阶段模式")
-        # 第一阶段：TCP 快速筛掉大量死节点（通常能从 3000+ 筛到 600~1000）
-        print("阶段1：TCP 粗筛（超高并发）...")
+        print("阶段1：TCP 超高并发粗筛...")
         tcp_passed = batch_tcp_test(all_nodes)
-        print(f"TCP 粗筛完成：{len(all_nodes)} → {len(tcp_passed)}（保留率 {len(tcp_passed)/max(1,len(all_nodes))*100:.1f}%）")
+        print(f"TCP 粗筛完成：{len(all_nodes)} → {len(tcp_passed)}")
 
         if not tcp_passed:
-            print("TCP 阶段全部失败，尝试回退到纯 Clash 模式")
-            nodes_to_process = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
+            print("TCP 全死，降级使用纯 Clash 模式")
+            final_tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
         else:
-            # 第二阶段：对 TCP 存活的节点进行 Clash 精准测速
             print("阶段2：对 TCP 存活节点进行 Clash 精准测速...")
-            nodes_to_process = batch_test_proxies_clash(clash_path, tcp_passed, max_workers=MAX_TEST_WORKERS)
+            final_tested_nodes = batch_test_proxies_clash(clash_path, tcp_passed, max_workers=MAX_TEST_WORKERS)
 
     elif SPEEDTEST_MODE == "clash_first":
-        print("使用【Clash 先测 → TCP 后验】模式（不推荐）")
+        print("使用【Clash 先测 → TCP 后验】模式")
         clash_passed = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
-        nodes_to_process = [p for p in clash_passed if tcp_ping(p) is not None]
-
+        final_tested_nodes = [p for p in clash_passed if tcp_ping(p) is not None]
     else:
-        print(f"未知测速模式 {SPEEDTEST_MODE}，默认使用 tcp_first")
-        # 同上 tcp_first 逻辑...
+        print("未知模式，使用默认 tcp_first")
+        # 同 tcp_first 逻辑...
 
-    # ==================== 测速结束，统一处理延迟字段 ====================
-    success_count = len(nodes_to_process)
-    print(f"测速完成，最终优质节点数: {success_count}")
+    # 测速结果统计
+    success_count = len(final_tested_nodes)
+    print(f"测速完成，最终存活优质节点：{success_count} 个")
 
+    # 如果测速后一个节点都没活，启动保底回退
     if success_count == 0:
-        print("测速后无存活节点，启动保底回退策略...")
-        fallback_regions = ['香港', '台湾', '日本', '新加坡', '美国', '韩国', '德国']
-        fallback = identify_regions_only(all_nodes)
-        selected = []
-        grouped = defaultdict(list)
-        for p in fallback:
-            if p.get('region_info', {}).get('name') in fallback_regions:
-                grouped[p['region_info']['name']].append(p)
-        for r in fallback_regions:
-            selected.extend(grouped[r][:20])
-        nodes_to_process = selected[:400]  # 保底最多400个
-        print(f"回退保留 {len(nodes_to_process)} 个热门地区节点（未测速）")
+        print("测速全死，启动保底回退策略（热门地区未测速保留）")
+        fallback_regions = ['香港', '台湾', '日本', '新加坡', '美国
 
-        # [4/5] 节点地区识别和重命名 + 数量限制
+    # [4/5] 节点地区识别和重命名 + 数量限制
     print("[4/5] 节点重命名和限制总数处理")
     
     # 确定需要重命名的节点列表
