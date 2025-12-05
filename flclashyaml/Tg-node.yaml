@@ -1,9 +1,9 @@
 proxies:
-- name: 🇭🇰 香港 _n1752833184.lie5d.cyou
+- name: 🇭🇰 香港 _n1761296874.lie5d.cyou
   type: vmess
-  server: n1752833184.lie5d.cyou
+  server: n1761296874.lie5d.cyou
   port: 443
-  uuid: 6c7d09e3-9cfa-41c8-8194-e81eb21bfb88
+  uuid: a0e70b2b-040c-424f-8619-f267a7d8d2cc
   alterId: 0
   cipher: auto
   network: ws
@@ -12,97 +12,55 @@ proxies:
   ws-opts:
     path: /
     headers:
-      Host: n1752833184.lie5d.cyou
+      Host: n1761296874.lie5d.cyou
   clash_delay: 1
   region_info:
     name: 香港
     code: HK
-- name: 🇭🇰 香港 _n1753101277.4u9ma.icu
+- name: 🇭🇰 香港 1|IEPL|1X
   type: vmess
-  server: n1753101277.4u9ma.icu
-  port: 443
-  uuid: 6ea48dfe-7de2-45dc-9267-d4d9effad9fc
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51011
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
   alterId: 0
   cipher: auto
-  network: ws
-  tls: true
-  skip-cert-verify: false
-  ws-opts:
-    path: /
-    headers:
-      Host: n1753101277.4u9ma.icu
+  udp: true
   clash_delay: 1
   region_info:
     name: 香港
     code: HK
-- name: 🇭🇰 香港 _n1753356361.lie5d.cyou
+- name: 🇭🇰 香港 3|IEPL|1X
   type: vmess
-  server: n1753356361.lie5d.cyou
-  port: 443
-  uuid: cdfd9787-dac8-4c1e-9ae5-104e23a9d994
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51013
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
   alterId: 0
   cipher: auto
-  network: ws
-  tls: true
-  skip-cert-verify: false
-  ws-opts:
-    path: /
-    headers:
-      Host: n1753356361.lie5d.cyou
+  udp: true
   clash_delay: 1
   region_info:
     name: 香港
     code: HK
-- name: 🇭🇰 香港 _n1761296887.lie5d.cyou
+- name: 🇭🇰 香港 2|IEPL|1X
   type: vmess
-  server: n1761296887.lie5d.cyou
-  port: 443
-  uuid: 72be2f46-a08f-4358-ad39-1e9fb7bab945
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51012
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
   alterId: 0
   cipher: auto
-  network: ws
-  tls: true
-  skip-cert-verify: false
-  ws-opts:
-    path: /
-    headers:
-      Host: n1761296887.lie5d.cyou
+  udp: true
   clash_delay: 1
   region_info:
     name: 香港
     code: HK
-- name: 🇭🇰 香港 _n1761296889.4u9ma.icu
+- name: 🇭🇰 香港 4|IEPL|1X
   type: vmess
-  server: n1761296889.4u9ma.icu
-  port: 443
-  uuid: 5fdc6ab1-8347-411c-9bbf-fbc3ea853d2f
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51014
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
   alterId: 0
   cipher: auto
-  network: ws
-  tls: true
-  skip-cert-verify: false
-  ws-opts:
-    path: /
-    headers:
-      Host: n1761296889.4u9ma.icu
-  clash_delay: 1
-  region_info:
-    name: 香港
-    code: HK
-- name: 🇭🇰 香港 _n1761296892.4u9ma.icu
-  type: vmess
-  server: n1761296892.4u9ma.icu
-  port: 443
-  uuid: d6db128f-42b9-40b1-b979-5e0095fa593c
-  alterId: 0
-  cipher: auto
-  network: ws
-  tls: true
-  skip-cert-verify: false
-  ws-opts:
-    path: /
-    headers:
-      Host: n1761296892.4u9ma.icu
+  udp: true
   clash_delay: 1
   region_info:
     name: 香港
@@ -125,20 +83,38 @@ proxies:
   region_info:
     name: 香港
     code: HK
-- name: 🇭🇰 香港 _n1752248951.lie5d.cyou
+- name: 🇭🇰 香港 4|BGP|0.4X
   type: vmess
-  server: n1752248951.lie5d.cyou
-  port: 443
-  uuid: bf2ce3c2-339f-4926-b92d-b7d83af1b3b6
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51014
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
   alterId: 0
   cipher: auto
-  network: ws
-  tls: true
-  skip-cert-verify: false
-  ws-opts:
-    path: /
-    headers:
-      Host: n1752248951.lie5d.cyou
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 3|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51013
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 2|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51012
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
   clash_delay: 1
   region_info:
     name: 香港
@@ -161,11 +137,11 @@ proxies:
   region_info:
     name: 香港
     code: HK
-- name: 🇭🇰 香港 _n1752248946.4u9ma.icu
+- name: 🇭🇰 香港 _n1761296877.lie5d.cyou
   type: vmess
-  server: n1752248946.4u9ma.icu
+  server: n1761296877.lie5d.cyou
   port: 443
-  uuid: ef167986-d154-4409-88b1-757efb6ae823
+  uuid: 1ebfdffa-1a37-4336-8494-f85b36cdf087
   alterId: 0
   cipher: auto
   network: ws
@@ -174,43 +150,7 @@ proxies:
   ws-opts:
     path: /
     headers:
-      Host: n1752248946.4u9ma.icu
-  clash_delay: 1
-  region_info:
-    name: 香港
-    code: HK
-- name: 🇭🇰 香港 _n1761296871.4u9ma.icu
-  type: vmess
-  server: n1761296871.4u9ma.icu
-  port: 443
-  uuid: e1c45e10-1ede-4489-a38b-4993ad857a00
-  alterId: 0
-  cipher: auto
-  network: ws
-  tls: true
-  skip-cert-verify: false
-  ws-opts:
-    path: /
-    headers:
-      Host: n1761296871.4u9ma.icu
-  clash_delay: 1
-  region_info:
-    name: 香港
-    code: HK
-- name: 🇭🇰 香港 _n1761296886.lie5d.cyou
-  type: vmess
-  server: n1761296886.lie5d.cyou
-  port: 443
-  uuid: 697ece59-37c9-4a61-b986-705cad56057b
-  alterId: 0
-  cipher: auto
-  network: ws
-  tls: true
-  skip-cert-verify: false
-  ws-opts:
-    path: /
-    headers:
-      Host: n1761296886.lie5d.cyou
+      Host: n1761296877.lie5d.cyou
   clash_delay: 1
   region_info:
     name: 香港
@@ -251,24 +191,6 @@ proxies:
   region_info:
     name: 香港
     code: HK
-- name: 🇭🇰 香港 _n1761296893.lie5d.cyou
-  type: vmess
-  server: n1761296893.lie5d.cyou
-  port: 443
-  uuid: 40f088bf-ed4b-4630-860f-45ed12c75ff7
-  alterId: 0
-  cipher: auto
-  network: ws
-  tls: true
-  skip-cert-verify: false
-  ws-opts:
-    path: /
-    headers:
-      Host: n1761296893.lie5d.cyou
-  clash_delay: 1
-  region_info:
-    name: 香港
-    code: HK
 - name: 🇭🇰 香港 _n1761296880.lie5d.cyou
   type: vmess
   server: n1761296880.lie5d.cyou
@@ -287,11 +209,11 @@ proxies:
   region_info:
     name: 香港
     code: HK
-- name: 🇭🇰 香港 _n1761296877.lie5d.cyou
+- name: 🇭🇰 香港 _n1753101277.4u9ma.icu
   type: vmess
-  server: n1761296877.lie5d.cyou
+  server: n1753101277.4u9ma.icu
   port: 443
-  uuid: 1ebfdffa-1a37-4336-8494-f85b36cdf087
+  uuid: 6ea48dfe-7de2-45dc-9267-d4d9effad9fc
   alterId: 0
   cipher: auto
   network: ws
@@ -300,7 +222,162 @@ proxies:
   ws-opts:
     path: /
     headers:
-      Host: n1761296877.lie5d.cyou
+      Host: n1753101277.4u9ma.icu
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 _n1752833184.lie5d.cyou
+  type: vmess
+  server: n1752833184.lie5d.cyou
+  port: 443
+  uuid: 6c7d09e3-9cfa-41c8-8194-e81eb21bfb88
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: true
+  skip-cert-verify: false
+  ws-opts:
+    path: /
+    headers:
+      Host: n1752833184.lie5d.cyou
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 _n1753356361.lie5d.cyou
+  type: vmess
+  server: n1753356361.lie5d.cyou
+  port: 443
+  uuid: cdfd9787-dac8-4c1e-9ae5-104e23a9d994
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: true
+  skip-cert-verify: false
+  ws-opts:
+    path: /
+    headers:
+      Host: n1753356361.lie5d.cyou
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 _n1752248946.4u9ma.icu
+  type: vmess
+  server: n1752248946.4u9ma.icu
+  port: 443
+  uuid: ef167986-d154-4409-88b1-757efb6ae823
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: true
+  skip-cert-verify: false
+  ws-opts:
+    path: /
+    headers:
+      Host: n1752248946.4u9ma.icu
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 _n1761296892.4u9ma.icu
+  type: vmess
+  server: n1761296892.4u9ma.icu
+  port: 443
+  uuid: d6db128f-42b9-40b1-b979-5e0095fa593c
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: true
+  skip-cert-verify: false
+  ws-opts:
+    path: /
+    headers:
+      Host: n1761296892.4u9ma.icu
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 _n1761296871.4u9ma.icu
+  type: vmess
+  server: n1761296871.4u9ma.icu
+  port: 443
+  uuid: e1c45e10-1ede-4489-a38b-4993ad857a00
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: true
+  skip-cert-verify: false
+  ws-opts:
+    path: /
+    headers:
+      Host: n1761296871.4u9ma.icu
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 _n1761296887.lie5d.cyou
+  type: vmess
+  server: n1761296887.lie5d.cyou
+  port: 443
+  uuid: 72be2f46-a08f-4358-ad39-1e9fb7bab945
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: true
+  skip-cert-verify: false
+  ws-opts:
+    path: /
+    headers:
+      Host: n1761296887.lie5d.cyou
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 精品3
+  password: <password>
+  port: 8443
+  server: 5cc2d430-t6uv40-t83bw1-1f596.hkt.cdnhuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 _n1761296889.4u9ma.icu
+  type: vmess
+  server: n1761296889.4u9ma.icu
+  port: 443
+  uuid: 5fdc6ab1-8347-411c-9bbf-fbc3ea853d2f
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: true
+  skip-cert-verify: false
+  ws-opts:
+    path: /
+    headers:
+      Host: n1761296889.4u9ma.icu
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 _n1752248951.lie5d.cyou
+  type: vmess
+  server: n1752248951.lie5d.cyou
+  port: 443
+  uuid: bf2ce3c2-339f-4926-b92d-b7d83af1b3b6
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: true
+  skip-cert-verify: false
+  ws-opts:
+    path: /
+    headers:
+      Host: n1752248951.lie5d.cyou
   clash_delay: 1
   region_info:
     name: 香港
@@ -323,119 +400,6 @@ proxies:
   region_info:
     name: 香港
     code: HK
-- name: 🇭🇰 香港 _n1761296874.lie5d.cyou
-  type: vmess
-  server: n1761296874.lie5d.cyou
-  port: 443
-  uuid: a0e70b2b-040c-424f-8619-f267a7d8d2cc
-  alterId: 0
-  cipher: auto
-  network: ws
-  tls: true
-  skip-cert-verify: false
-  ws-opts:
-    path: /
-    headers:
-      Host: n1761296874.lie5d.cyou
-  clash_delay: 1
-  region_info:
-    name: 香港
-    code: HK
-- name: 🇭🇰 香港 1|IEPL|1X
-  type: vmess
-  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
-  port: 51011
-  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
-  alterId: 0
-  cipher: auto
-  udp: true
-  clash_delay: 1
-  region_info:
-    name: 香港
-    code: HK
-- name: 🇭🇰 香港 2|BGP|0.4X
-  type: vmess
-  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
-  port: 51012
-  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
-  alterId: 0
-  cipher: auto
-  udp: true
-  clash_delay: 1
-  region_info:
-    name: 香港
-    code: HK
-- name: 🇭🇰 香港 2|IEPL|1X
-  type: vmess
-  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
-  port: 51012
-  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
-  alterId: 0
-  cipher: auto
-  udp: true
-  clash_delay: 1
-  region_info:
-    name: 香港
-    code: HK
-- name: 🇭🇰 香港 3|BGP|0.4X
-  type: vmess
-  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
-  port: 51013
-  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
-  alterId: 0
-  cipher: auto
-  udp: true
-  clash_delay: 1
-  region_info:
-    name: 香港
-    code: HK
-- name: 🇭🇰 香港 3|IEPL|1X
-  type: vmess
-  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
-  port: 51013
-  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
-  alterId: 0
-  cipher: auto
-  udp: true
-  clash_delay: 1
-  region_info:
-    name: 香港
-    code: HK
-- name: 🇭🇰 香港 4|BGP|0.4X
-  type: vmess
-  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
-  port: 51014
-  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
-  alterId: 0
-  cipher: auto
-  udp: true
-  clash_delay: 1
-  region_info:
-    name: 香港
-    code: HK
-- name: 🇭🇰 香港 4|IEPL|1X
-  type: vmess
-  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
-  port: 51014
-  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
-  alterId: 0
-  cipher: auto
-  udp: true
-  clash_delay: 1
-  region_info:
-    name: 香港
-    code: HK
-- name: 🇭🇰 香港 中转[CM
-  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  port: 5228
-  server: 33beb8a7-t6uv40-t83bw1-1f596.cm4.oshuawei.com
-  tls: true
-  type: http
-  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  clash_delay: 1
-  region_info:
-    name: 香港
-    code: HK
 - name: 🇭🇰 香港 精品4
   password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
   port: 443
@@ -447,10 +411,46 @@ proxies:
   region_info:
     name: 香港
     code: HK
-- name: 🇭🇰 香港 精品3
-  password: <password>
-  port: 8443
-  server: 5cc2d430-t6uv40-t83bw1-1f596.hkt.cdnhuawei.com
+- name: 🇭🇰 香港 _n1761296886.lie5d.cyou
+  type: vmess
+  server: n1761296886.lie5d.cyou
+  port: 443
+  uuid: 697ece59-37c9-4a61-b986-705cad56057b
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: true
+  skip-cert-verify: false
+  ws-opts:
+    path: /
+    headers:
+      Host: n1761296886.lie5d.cyou
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 _n1761296893.lie5d.cyou
+  type: vmess
+  server: n1761296893.lie5d.cyou
+  port: 443
+  uuid: 40f088bf-ed4b-4630-860f-45ed12c75ff7
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: true
+  skip-cert-verify: false
+  ws-opts:
+    path: /
+    headers:
+      Host: n1761296893.lie5d.cyou
+  clash_delay: 1
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 中转[CM
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 5228
+  server: 33beb8a7-t6uv40-t83bw1-1f596.cm4.oshuawei.com
   tls: true
   type: http
   username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
@@ -490,99 +490,6 @@ proxies:
     path: /
     headers:
       Host: n1751468092.lie5d.cyou
-  clash_delay: 1
-  region_info:
-    name: 日本
-    code: JP
-- name: 🇯🇵 日本 亚洲】01丨专线【3x
-  type: trojan
-  server: ssjp01.go52pokemon.com
-  port: 54225
-  password: a26d9eef-4a6c-4881-921d-6ef2b57cc508
-  udp: true
-  sni: www.volcengine.com
-  skip-cert-verify: true
-  clash_delay: 1
-  region_info:
-    name: 日本
-    code: JP
-- name: 🇯🇵 日本 亚洲】03丨专线【3x
-  type: trojan
-  server: ssjp02.go52pokemon.com
-  port: 54032
-  password: a26d9eef-4a6c-4881-921d-6ef2b57cc508
-  udp: true
-  sni: www.volcengine.com
-  skip-cert-verify: true
-  clash_delay: 1
-  region_info:
-    name: 日本
-    code: JP
-- name: 🇯🇵 日本 亚洲】09丨IPLC游戏专线【10x
-  type: trojan
-  server: ssjp03.go52pokemon.com
-  port: 54029
-  password: a26d9eef-4a6c-4881-921d-6ef2b57cc508
-  udp: true
-  sni: www.volcengine.com
-  skip-cert-verify: true
-  clash_delay: 1
-  region_info:
-    name: 日本
-    code: JP
-- name: 🇯🇵 日本 1|BGP|0.4X
-  type: vmess
-  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
-  port: 51041
-  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
-  alterId: 0
-  cipher: auto
-  udp: true
-  clash_delay: 1
-  region_info:
-    name: 日本
-    code: JP
-- name: 🇯🇵 日本 1|IEPL|1X
-  type: vmess
-  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
-  port: 51041
-  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
-  alterId: 0
-  cipher: auto
-  udp: true
-  clash_delay: 1
-  region_info:
-    name: 日本
-    code: JP
-- name: 🇯🇵 日本 22
-  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  port: 443
-  server: 73012ec5-t6uv40-t83bw1-1f596.jp.oshuawei.com
-  tls: true
-  type: http
-  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  clash_delay: 1
-  region_info:
-    name: 日本
-    code: JP
-- name: 🇯🇵 日本 CT
-  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  port: 27233
-  server: 4d26dbe5-t6uv40-t83bw1-1f596.cm5.oshuawei.com
-  tls: true
-  type: http
-  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  clash_delay: 1
-  region_info:
-    name: 日本
-    code: JP
-- name: 🇯🇵 日本 4
-  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  port: 443
-  server: 45049a88-t6uv40-t83bw1-1f596.jp4.oshuawei.com
-  tls: true
-  type: http
-  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
   clash_delay: 1
   region_info:
     name: 日本
@@ -672,6 +579,98 @@ proxies:
   region_info:
     name: 日本
     code: JP
+- name: 🇯🇵 日本 亚洲】01丨专线【3x
+  type: trojan
+  server: ssjp01.go52pokemon.com
+  port: 54225
+  password: a26d9eef-4a6c-4881-921d-6ef2b57cc508
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 1|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51041
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 22
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: 73012ec5-t6uv40-t83bw1-1f596.jp.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 1|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51041
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 4
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: 45049a88-t6uv40-t83bw1-1f596.jp4.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 亚洲】03丨专线【3x
+  type: trojan
+  server: ssjp02.go52pokemon.com
+  port: 54032
+  password: a26d9eef-4a6c-4881-921d-6ef2b57cc508
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 19
+  password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
+  port: 443
+  server: c9cb6059-t6uv40-t8em25-1o8ak.jp.oshuawei.com
+  tls: true
+  type: http
+  username: 8bb68d04-6973-11ee-b518-f23c9164ca5d
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 4 2
+  password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
+  port: 443
+  server: ed860532-t6uv40-t8em25-1o8ak.jp4.oshuawei.com
+  tls: true
+  type: http
+  username: 8bb68d04-6973-11ee-b518-f23c9164ca5d
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
 - name: 🇯🇵 日本 05
   type: trojan
   server: jp005.421421.xyz
@@ -724,13 +723,25 @@ proxies:
   region_info:
     name: 日本
     code: JP
-- name: 🇯🇵 日本 19
-  password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
-  port: 443
-  server: c9cb6059-t6uv40-t8em25-1o8ak.jp.oshuawei.com
+- name: 🇯🇵 日本 亚洲】09丨IPLC游戏专线【10x
+  type: trojan
+  server: ssjp03.go52pokemon.com
+  port: 54029
+  password: a26d9eef-4a6c-4881-921d-6ef2b57cc508
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
+  clash_delay: 1
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 CT
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 27233
+  server: 4d26dbe5-t6uv40-t83bw1-1f596.cm5.oshuawei.com
   tls: true
   type: http
-  username: 8bb68d04-6973-11ee-b518-f23c9164ca5d
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
   clash_delay: 1
   region_info:
     name: 日本
@@ -739,17 +750,6 @@ proxies:
   password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
   port: 27233
   server: 5324a4e2-t6uv40-t8em25-1o8ak.cm5.oshuawei.com
-  tls: true
-  type: http
-  username: 8bb68d04-6973-11ee-b518-f23c9164ca5d
-  clash_delay: 1
-  region_info:
-    name: 日本
-    code: JP
-- name: 🇯🇵 日本 4 2
-  password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
-  port: 443
-  server: ed860532-t6uv40-t8em25-1o8ak.jp4.oshuawei.com
   tls: true
   type: http
   username: 8bb68d04-6973-11ee-b518-f23c9164ca5d
@@ -779,174 +779,6 @@ proxies:
   region_info:
     name: 日本
     code: JP
-- name: 🇸🇬 新加坡 亚洲】04丨专线【3x
-  type: trojan
-  server: sssg02.go52pokemon.com
-  port: 55015
-  password: a26d9eef-4a6c-4881-921d-6ef2b57cc508
-  udp: true
-  sni: www.volcengine.com
-  skip-cert-verify: true
-  clash_delay: 1
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 亚洲】09丨IPLC【10x
-  type: trojan
-  server: sshk03.go52pokemon.com
-  port: 55017
-  password: a26d9eef-4a6c-4881-921d-6ef2b57cc508
-  udp: true
-  sni: www.volcengine.com
-  skip-cert-verify: true
-  clash_delay: 1
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 1|BGP|0.4X
-  type: vmess
-  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
-  port: 51031
-  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
-  alterId: 0
-  cipher: auto
-  udp: true
-  clash_delay: 1
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 1|IEPL|1X
-  type: vmess
-  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
-  port: 51031
-  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
-  alterId: 0
-  cipher: auto
-  udp: true
-  clash_delay: 1
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 2|BGP|0.4X
-  type: vmess
-  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
-  port: 51032
-  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
-  alterId: 0
-  cipher: auto
-  udp: true
-  clash_delay: 1
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 2|IEPL|1X
-  type: vmess
-  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
-  port: 51032
-  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
-  alterId: 0
-  cipher: auto
-  udp: true
-  clash_delay: 1
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 3|BGP|0.4X
-  type: vmess
-  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
-  port: 51033
-  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
-  alterId: 0
-  cipher: auto
-  udp: true
-  clash_delay: 1
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 3|IEPL|1X
-  type: vmess
-  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
-  port: 51033
-  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
-  alterId: 0
-  cipher: auto
-  udp: true
-  clash_delay: 1
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 4|BGP|0.4X
-  type: vmess
-  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
-  port: 51034
-  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
-  alterId: 0
-  cipher: auto
-  udp: true
-  clash_delay: 1
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 4|IEPL|1X
-  type: vmess
-  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
-  port: 51034
-  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
-  alterId: 0
-  cipher: auto
-  udp: true
-  clash_delay: 1
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 CT
-  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  port: 17235
-  server: 4d26dbe5-t6uv40-t83bw1-1f596.cm5.oshuawei.com
-  tls: true
-  type: http
-  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  clash_delay: 1
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 27
-  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  port: 443
-  server: 24886d45-t6uv40-t83bw1-1f596.sg.oshuawei.com
-  tls: true
-  type: http
-  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  clash_delay: 1
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 3
-  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  port: 443
-  server: 612572f2-t6uv40-t83bw1-1f596.sg3.oshuawei.com
-  tls: true
-  type: http
-  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  clash_delay: 1
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 rq
-  type: vmess
-  server: 210.61.97.241
-  port: 81
-  uuid: 2f38f848-a899-4c87-9807-207a41615e3c
-  alterId: 0
-  cipher: auto
-  network: grpc
-  tls: true
-  skip-cert-verify: false
-  ws-opts: {}
-  clash_delay: 1
-  region_info:
-    name: 新加坡
-    code: SG
 - name: 🇸🇬 新加坡 1|v6
   type: vmess
   server: 2a0e:97c0:7d4:ff05::a
@@ -1032,6 +864,192 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
+- name: 🇸🇬 新加坡 1|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51031
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 1|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51031
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 2|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51032
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 3|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51033
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 2|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51032
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 3|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51033
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 4|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51034
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 4|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51034
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 rq
+  type: vmess
+  server: 210.61.97.241
+  port: 81
+  uuid: 2f38f848-a899-4c87-9807-207a41615e3c
+  alterId: 0
+  cipher: auto
+  network: grpc
+  tls: true
+  skip-cert-verify: false
+  ws-opts: {}
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 亚洲】04丨专线【3x
+  type: trojan
+  server: sssg02.go52pokemon.com
+  port: 55015
+  password: a26d9eef-4a6c-4881-921d-6ef2b57cc508
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 亚洲】09丨IPLC【10x
+  type: trojan
+  server: sshk03.go52pokemon.com
+  port: 55017
+  password: a26d9eef-4a6c-4881-921d-6ef2b57cc508
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 3
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: 612572f2-t6uv40-t83bw1-1f596.sg3.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 27
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: 24886d45-t6uv40-t83bw1-1f596.sg.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 disney_netflix_ |10.60Mb
+  type: vmess
+  server: 68.183.178.131
+  port: 58607
+  uuid: c11c32cb-27b3-4afa-c0f3-fb250aa4959e
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: true
+  skip-cert-verify: false
+  ws-opts:
+    path: /
+    headers:
+      Host: www.12333.monster
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 CT
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 17235
+  server: 4d26dbe5-t6uv40-t83bw1-1f596.cm5.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 新加坡
+    code: SG
 - name: 🇸🇬 新加坡 05|流媒体
   type: trojan
   server: sg005.421421.xyz
@@ -1084,20 +1102,13 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
-- name: 🇸🇬 新加坡 disney_netflix_ |10.60Mb
-  type: vmess
-  server: 68.183.178.131
-  port: 58607
-  uuid: c11c32cb-27b3-4afa-c0f3-fb250aa4959e
-  alterId: 0
-  cipher: auto
-  network: ws
+- name: 🇸🇬 新加坡 3 2
+  password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
+  port: 443
+  server: 92346bde-t6uv40-t8em25-1o8ak.sg3.oshuawei.com
   tls: true
-  skip-cert-verify: false
-  ws-opts:
-    path: /
-    headers:
-      Host: www.12333.monster
+  type: http
+  username: 8bb68d04-6973-11ee-b518-f23c9164ca5d
   clash_delay: 1
   region_info:
     name: 新加坡
@@ -1117,17 +1128,6 @@ proxies:
   password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
   port: 443
   server: d9de68b8-t6uv40-t8em25-1o8ak.sg.oshuawei.com
-  tls: true
-  type: http
-  username: 8bb68d04-6973-11ee-b518-f23c9164ca5d
-  clash_delay: 1
-  region_info:
-    name: 新加坡
-    code: SG
-- name: 🇸🇬 新加坡 3 2
-  password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
-  port: 443
-  server: 92346bde-t6uv40-t8em25-1o8ak.sg3.oshuawei.com
   tls: true
   type: http
   username: 8bb68d04-6973-11ee-b518-f23c9164ca5d
@@ -1177,6 +1177,183 @@ proxies:
   region_info:
     name: 美国
     code: US
+- name: 🇺🇸 美国 01 | 合适下载使用-pq
+  type: vless
+  server: 104.18.20.69
+  port: 443
+  uuid: 6bff6f9b-f402-48f9-8a69-142d30d7c41e
+  encryption: none
+  flow: ''
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  host: us1p.pqvip.top
+  path: /pq/us1
+  sni: us1p.pqvip.top
+  ws-opts:
+    path: /pq/us1
+    headers:
+      Host: us1p.pqvip.top
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 洛杉磯HY
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  ports: 30000-60000
+  server: 0dd02a06-t6uv40-t83bw1-1f596.us.hyhuawei.com
+  type: hysteria2
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 西雅图
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: d34843ad-t6uv40-t83bw1-1f596.se.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 硅谷2
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: 492d4823-t6uv40-t83bw1-1f596.sj.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 圣何塞
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: 201c74bf-t6uv40-t83bw1-1f596.sjc.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 洛杉磯HY 2
+  type: hysteria2
+  server: 44b38e95-t729s0-tg8syu-1nyy5.us.hyhuawei.com
+  port: 443
+  auth: 8f7cb770-1305-11ee-b107-f23c91cfbbc9
+  protocol: udp
+  insecure: true
+  obfs: ''
+  obfs-password: ''
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 disney_netflix_ |40.82Mb
+  type: vmess
+  server: 38.14.99.163
+  port: 59807
+  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
+  alterId: 0
+  cipher: auto
+  network: tcp
+  tls: false
+  skip-cert-verify: false
+  ws-opts: {}
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 03
+  type: trojan
+  server: us003.421421.xyz
+  port: 20230
+  password: 0bfa2050-b165-4156-859c-70f36d300dce
+  udp: true
+  network: ws
+  sni: www.alibaba.com
+  skip-cert-verify: true
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 硅谷
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: c3d204f5-t6uv40-t83bw1-1f596.sj.gotochinatown.net
+  tls: true
+  type: socks5
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 disney_netflix_ |23.63Mb
+  type: vmess
+  server: 38.84.201.21
+  port: 53487
+  uuid: c3c1ec05-df2c-4975-9b42-e9b007564eb1
+  alterId: 0
+  cipher: auto
+  network: none
+  tls: false
+  skip-cert-verify: false
+  ws-opts: {}
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 04
+  type: trojan
+  server: us004.421421.xyz
+  port: 20230
+  password: 0bfa2050-b165-4156-859c-70f36d300dce
+  udp: true
+  network: ws
+  sni: www.alibaba.com
+  skip-cert-verify: true
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 洛杉矶
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: 852bab19-t6uv40-t83bw1-1f596.los.gotochinatown.net
+  tls: true
+  type: socks5
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 西雅图2
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: ec313335-t6uv40-t83bw1-1f596.sv.plebai.net
+  tls: true
+  type: socks5
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 洛杉磯HY 2 2
+  password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
+  port: 443
+  ports: 30000-60000
+  server: e7e10424-t6uv40-t8em25-1o8ak.us.hyhuawei.com
+  type: hysteria2
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
 - name: 🇺🇸 美国 北美洲】01丨专线【3x
   type: trojan
   server: ssus01.go52pokemon.com
@@ -1197,6 +1374,30 @@ proxies:
   udp: true
   sni: www.volcengine.com
   skip-cert-verify: true
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 1|BGP|0.4X
+  type: vmess
+  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
+  port: 51051
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 1|IEPL|1X
+  type: vmess
+  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
+  port: 51051
+  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
+  alterId: 0
+  cipher: auto
+  udp: true
   clash_delay: 1
   region_info:
     name: 美国
@@ -1227,52 +1428,6 @@ proxies:
   region_info:
     name: 美国
     code: US
-- name: 🇺🇸 美国 1|BGP|0.4X
-  type: vmess
-  server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
-  port: 51051
-  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
-  alterId: 0
-  cipher: auto
-  udp: true
-  clash_delay: 1
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 1|IEPL|1X
-  type: vmess
-  server: c80c993c-e6d4-548c-88c0-c4893b3d3d4d.blue-bgp.xyz
-  port: 51051
-  uuid: f8c9946b-c3d6-4f75-816e-dffdf1c11243
-  alterId: 0
-  cipher: auto
-  udp: true
-  clash_delay: 1
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 西雅图
-  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  port: 443
-  server: d34843ad-t6uv40-t83bw1-1f596.se.oshuawei.com
-  tls: true
-  type: http
-  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  clash_delay: 1
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 西雅图2
-  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  port: 443
-  server: ec313335-t6uv40-t83bw1-1f596.sv.plebai.net
-  tls: true
-  type: socks5
-  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  clash_delay: 1
-  region_info:
-    name: 美国
-    code: US
 - name: 🇺🇸 美国 洛杉矶[CU
   password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
   port: 15229
@@ -1280,151 +1435,6 @@ proxies:
   tls: true
   type: http
   username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  clash_delay: 1
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 洛杉磯HY
-  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  port: 443
-  ports: 30000-60000
-  server: 0dd02a06-t6uv40-t83bw1-1f596.us.hyhuawei.com
-  type: hysteria2
-  clash_delay: 1
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 硅谷
-  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  port: 443
-  server: c3d204f5-t6uv40-t83bw1-1f596.sj.gotochinatown.net
-  tls: true
-  type: socks5
-  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  clash_delay: 1
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 硅谷2
-  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  port: 443
-  server: 492d4823-t6uv40-t83bw1-1f596.sj.oshuawei.com
-  tls: true
-  type: http
-  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  clash_delay: 1
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 圣何塞
-  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  port: 443
-  server: 201c74bf-t6uv40-t83bw1-1f596.sjc.oshuawei.com
-  tls: true
-  type: http
-  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  clash_delay: 1
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 洛杉矶
-  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  port: 443
-  server: 852bab19-t6uv40-t83bw1-1f596.los.gotochinatown.net
-  tls: true
-  type: socks5
-  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  clash_delay: 1
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 01 | 合适下载使用-pq
-  type: vless
-  server: 104.18.20.69
-  port: 443
-  uuid: 6bff6f9b-f402-48f9-8a69-142d30d7c41e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: us1p.pqvip.top
-  path: /pq/us1
-  sni: us1p.pqvip.top
-  ws-opts:
-    path: /pq/us1
-    headers:
-      Host: us1p.pqvip.top
-  clash_delay: 1
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 洛杉磯HY 2
-  type: hysteria2
-  server: 44b38e95-t729s0-tg8syu-1nyy5.us.hyhuawei.com
-  port: 443
-  auth: 8f7cb770-1305-11ee-b107-f23c91cfbbc9
-  protocol: udp
-  insecure: true
-  obfs: ''
-  obfs-password: ''
-  udp: true
-  clash_delay: 1
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 03
-  type: trojan
-  server: us003.421421.xyz
-  port: 20230
-  password: 0bfa2050-b165-4156-859c-70f36d300dce
-  udp: true
-  network: ws
-  sni: www.alibaba.com
-  skip-cert-verify: true
-  clash_delay: 1
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 04
-  type: trojan
-  server: us004.421421.xyz
-  port: 20230
-  password: 0bfa2050-b165-4156-859c-70f36d300dce
-  udp: true
-  network: ws
-  sni: www.alibaba.com
-  skip-cert-verify: true
-  clash_delay: 1
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 disney_netflix_ |40.82Mb
-  type: vmess
-  server: 38.14.99.163
-  port: 59807
-  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
-  alterId: 0
-  cipher: auto
-  network: tcp
-  tls: false
-  skip-cert-verify: false
-  ws-opts: {}
-  clash_delay: 1
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 disney_netflix_ |23.63Mb
-  type: vmess
-  server: 38.84.201.21
-  port: 53487
-  uuid: c3c1ec05-df2c-4975-9b42-e9b007564eb1
-  alterId: 0
-  cipher: auto
-  network: none
-  tls: false
-  skip-cert-verify: false
-  ws-opts: {}
   clash_delay: 1
   region_info:
     name: 美国
@@ -1440,10 +1450,32 @@ proxies:
   region_info:
     name: 美国
     code: US
-- name: 🇺🇸 美国 西雅图2 2
+- name: 🇺🇸 美国 圣何塞 2
   password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
   port: 443
-  server: 806eaafa-t6uv40-t8em25-1o8ak.sv.plebai.net
+  server: 9203d821-t6uv40-t8em25-1o8ak.sjc.oshuawei.com
+  tls: true
+  type: http
+  username: 8bb68d04-6973-11ee-b518-f23c9164ca5d
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 硅谷2 2
+  password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
+  port: 443
+  server: 2bdb6f6e-t6uv40-t8em25-1o8ak.sj.oshuawei.com
+  tls: true
+  type: http
+  username: 8bb68d04-6973-11ee-b518-f23c9164ca5d
+  clash_delay: 1
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 硅谷 2
+  password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
+  port: 443
+  server: 6edbea61-t6uv40-t8em25-1o8ak.sj.gotochinatown.net
   tls: true
   type: socks5
   username: 8bb68d04-6973-11ee-b518-f23c9164ca5d
@@ -1462,44 +1494,12 @@ proxies:
   region_info:
     name: 美国
     code: US
-- name: 🇺🇸 美国 洛杉磯HY 2 2
+- name: 🇺🇸 美国 西雅图2 2
   password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
   port: 443
-  ports: 30000-60000
-  server: e7e10424-t6uv40-t8em25-1o8ak.us.hyhuawei.com
-  type: hysteria2
-  clash_delay: 1
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 硅谷 2
-  password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
-  port: 443
-  server: 6edbea61-t6uv40-t8em25-1o8ak.sj.gotochinatown.net
+  server: 806eaafa-t6uv40-t8em25-1o8ak.sv.plebai.net
   tls: true
   type: socks5
-  username: 8bb68d04-6973-11ee-b518-f23c9164ca5d
-  clash_delay: 1
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 硅谷2 2
-  password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
-  port: 443
-  server: 2bdb6f6e-t6uv40-t8em25-1o8ak.sj.oshuawei.com
-  tls: true
-  type: http
-  username: 8bb68d04-6973-11ee-b518-f23c9164ca5d
-  clash_delay: 1
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 圣何塞 2
-  password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
-  port: 443
-  server: 9203d821-t6uv40-t8em25-1o8ak.sjc.oshuawei.com
-  tls: true
-  type: http
   username: 8bb68d04-6973-11ee-b518-f23c9164ca5d
   clash_delay: 1
   region_info:
@@ -1527,6 +1527,45 @@ proxies:
   region_info:
     name: 美国
     code: US
+- name: 🇩🇪 德国 3|v6
+  type: vmess
+  server: 2a01:4f8:242:1d0e::1461:40
+  port: 24444
+  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /5e60be5f/
+    headers: {}
+  clash_delay: 1
+  region_info:
+    name: 德国
+    code: DE
+- name: 🇩🇪 德国 04
+  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  port: 443
+  server: ff8cb15f-t6uv40-t83bw1-1f596.de.oshuawei.com
+  tls: true
+  type: http
+  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
+  clash_delay: 1
+  region_info:
+    name: 德国
+    code: DE
+- name: 🇩🇪 德国 05
+  password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
+  port: 443
+  server: bc1bf232-t6uv40-t8em25-1o8ak.de.oshuawei.com
+  tls: true
+  type: http
+  username: 8bb68d04-6973-11ee-b518-f23c9164ca5d
+  clash_delay: 1
+  region_info:
+    name: 德国
+    code: DE
 - name: 🇩🇪 德国 1|BGP|0.4X
   type: vmess
   server: e4d7a1c2f3b80976a5e2c1d4b3f0a987.blue-bgp.xyz
@@ -1547,45 +1586,6 @@ proxies:
   alterId: 0
   cipher: auto
   udp: true
-  clash_delay: 1
-  region_info:
-    name: 德国
-    code: DE
-- name: 🇩🇪 德国 04
-  password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  port: 443
-  server: ff8cb15f-t6uv40-t83bw1-1f596.de.oshuawei.com
-  tls: true
-  type: http
-  username: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
-  clash_delay: 1
-  region_info:
-    name: 德国
-    code: DE
-- name: 🇩🇪 德国 3|v6
-  type: vmess
-  server: 2a01:4f8:242:1d0e::1461:40
-  port: 24444
-  uuid: 3cebc7fb-a486-4698-8998-41d15ca62ccc
-  alterId: 0
-  cipher: auto
-  network: ws
-  tls: false
-  skip-cert-verify: false
-  ws-opts:
-    path: /5e60be5f/
-    headers: {}
-  clash_delay: 1
-  region_info:
-    name: 德国
-    code: DE
-- name: 🇩🇪 德国 05
-  password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
-  port: 443
-  server: bc1bf232-t6uv40-t8em25-1o8ak.de.oshuawei.com
-  tls: true
-  type: http
-  username: 8bb68d04-6973-11ee-b518-f23c9164ca5d
   clash_delay: 1
   region_info:
     name: 德国
@@ -1615,10 +1615,10 @@ proxies:
 last_message_ids:
   '@fqDINYUE': 4660
   '@wxdy666': 6218
-  '@freeyule': 1927210
+  '@freeyule': 1927227
   '@ccbaohe': 14963
   '@duangvpsfs': 3673214
-  '@zzzjjjkkkoi': 607461
+  '@zzzjjjkkkoi': 607469
   '@xmdexw': 220108
   '@v2v2clash': 0
   '@dingyue_Center': 3893
