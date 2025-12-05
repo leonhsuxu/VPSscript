@@ -32,7 +32,7 @@ from collections import defaultdict
 from urllib.parse import urlparse, parse_qs, quote, unquote
 
 import requests
-from pytz import timezone
+from zoneinfo import ZoneInfo
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
 # --- 环境变量读取 ---
@@ -85,7 +85,7 @@ CUSTOM_REGEX_RULES = {
     '澳大利亚': {'code': 'AU', 'pattern': r'澳大利亚|AU|Australia'},
 }
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
-BJ_TZ = timezone(timedelta(hours=8))
+BJ_TZ = ZoneInfo("Asia/Shanghai")
 
 def get_country_flag_emoji(code):
     if not code or len(code) != 2:
