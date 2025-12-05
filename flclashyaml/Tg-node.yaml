@@ -1,10 +1,10 @@
 # TG频道节点自动抓取+测延迟精选订阅
-# 最后更新时间：2025-12-05 19:42:57 (北京时间)
-# 本次保留节点数：77 个（延迟最优）
+# 最后更新时间：2025-12-05 19:47:37 (北京时间)
+# 本次保留节点数：75 个（延迟最优）
 # 由 GitHub Actions 自动构建！
 
 proxies:
-- name: 🇭🇰 香港 154.21.201.83-7440 14 1 1 1 1
+- name: 🇭🇰 香港 154.21.201.83-7440 14 1 1 1 1 2
   server: 154.21.201.83
   port: 443
   type: vmess
@@ -21,8 +21,8 @@ proxies:
   region_info:
     name: 香港
     code: HK
-  tcp_delay: 170
-- name: 🇭🇰 香港 203.23.128.33-0398 22 5 5 5 5
+  tcp_delay: 212
+- name: 🇭🇰 香港 203.23.128.33-0398 22 5 5 5 5 5
   server: 203.23.128.33
   port: 990
   type: ss
@@ -32,8 +32,8 @@ proxies:
   region_info:
     name: 香港
     code: HK
-  tcp_delay: 263
-- name: 🇭🇰 香港 OJAN-23 | ee-nos 19 2 2 2 2
+  tcp_delay: 267
+- name: 🇭🇰 香港 OJAN-23 | ee-nos 19 2 2 2 2 1
   server: 58.152.30.120
   port: 443
   type: trojan
@@ -44,8 +44,8 @@ proxies:
   region_info:
     name: 香港
     code: HK
-  tcp_delay: 191
-- name: 🇭🇰 香港 46.3.26.12-1125 34 3 3 3 3
+  tcp_delay: 209
+- name: 🇭🇰 香港 46.3.26.12-1125 34 3 3 3 3 3
   server: 46.3.26.12
   port: 443
   type: vmess
@@ -63,8 +63,8 @@ proxies:
   region_info:
     name: 香港
     code: HK
-  tcp_delay: 192
-- name: 🇭🇰 香港 5.188.33.172-10310 45 4 4 4 4
+  tcp_delay: 219
+- name: 🇭🇰 香港 5.188.33.172-10310 45 4 4 4 4 4
   server: 5.188.33.172
   port: 443
   type: vmess
@@ -82,8 +82,8 @@ proxies:
   region_info:
     name: 香港
     code: HK
-  tcp_delay: 208
-- name: 🇨🇳 台湾 154.223.20.79-0451 1 1 1 1 1
+  tcp_delay: 231
+- name: 🇨🇳 台湾 154.223.20.79-0451 1 1 1 1 1 1
   server: 154.223.20.79
   port: 989
   type: ss
@@ -93,8 +93,8 @@ proxies:
   region_info:
     name: 台湾
     code: TW
-  tcp_delay: 314
-- name: 🇯🇵 日本 149.22.87.204-0335 6 1 3 1 1
+  tcp_delay: 298
+- name: 🇯🇵 日本 149.22.87.204-0335 6 1 3 1 1 1
   server: 149.22.87.204
   port: 443
   type: ss
@@ -104,8 +104,8 @@ proxies:
   region_info:
     name: 日本
     code: JP
-  tcp_delay: 118
-- name: 🇯🇵 日本 22 5 6 6 6 6
+  tcp_delay: 153
+- name: 🇯🇵 日本 22 5 6 6 6 6 6
   password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
   port: 443
   server: 73012ec5-t6uv40-t83bw1-1f596.jp.oshuawei.com
@@ -116,8 +116,8 @@ proxies:
   region_info:
     name: 日本
     code: JP
-  tcp_delay: 220
-- name: 🇯🇵 日本 161.129.34.126-3978 22 3 1 3 2
+  tcp_delay: 248
+- name: 🇯🇵 日本 161.129.34.126-3978 22 3 1 3 2 3
   server: 161.129.34.126
   port: 443
   type: vmess
@@ -134,8 +134,8 @@ proxies:
   region_info:
     name: 日本
     code: JP
-  tcp_delay: 119
-- name: 🇯🇵 日本 15.168.28.231-1535 10 4 4 4 4
+  tcp_delay: 164
+- name: 🇯🇵 日本 15.168.28.231-1535 10 4 4 4 4 5
   server: 15.168.28.231
   port: 443
   type: trojan
@@ -146,8 +146,8 @@ proxies:
   region_info:
     name: 日本
     code: JP
-  tcp_delay: 126
-- name: 🇯🇵 日本 172.104.78.98-3804 30 2 2 2 3
+  tcp_delay: 166
+- name: 🇯🇵 日本 172.104.78.98-3804 30 2 2 2 3 2
   server: 172.104.78.98
   port: 443
   type: vmess
@@ -163,8 +163,8 @@ proxies:
   region_info:
     name: 日本
     code: JP
-  tcp_delay: 118
-- name: 🇯🇵 日本 40.74.100.129-0559 42 5 5 5 5
+  tcp_delay: 159
+- name: 🇯🇵 日本 40.74.100.129-0559 42 5 5 5 5 4
   server: fullaccesstojapannetsubnode1.azurewebsites.net
   port: 443
   type: vmess
@@ -183,8 +183,8 @@ proxies:
   region_info:
     name: 日本
     code: JP
-  tcp_delay: 132
-- name: 🇸🇬 新加坡 26 20 12 12 10 9
+  tcp_delay: 164
+- name: 🇸🇬 新加坡 26 20 12 12 10 9 9
   password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
   port: 443
   server: d9de68b8-t6uv40-t8em25-1o8ak.sg.oshuawei.com
@@ -195,8 +195,8 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
-  tcp_delay: 230
-- name: 🇸🇬 新加坡 OJAN-21 | ee-nos 2 2 3 2 2
+  tcp_delay: 243
+- name: 🇸🇬 新加坡 OJAN-21 | ee-nos 2 2 3 2 2 2
   server: 160.16.150.76
   port: 1596
   type: trojan
@@ -207,8 +207,8 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
-  tcp_delay: 119
-- name: 🇸🇬 新加坡 109.123.237.41-4333 11 8 7 7 8
+  tcp_delay: 161
+- name: 🇸🇬 新加坡 109.123.237.41-4333 11 8 7 7 8 4
   server: 109.123.237.41
   port: 80
   type: vmess
@@ -224,8 +224,8 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
-  tcp_delay: 208
-- name: 🇸🇬 新加坡 OJAN-22 | ee-nos 5 3 2 1 1
+  tcp_delay: 222
+- name: 🇸🇬 新加坡 OJAN-22 | ee-nos 5 3 2 1 1 1
   server: 160.16.144.208
   port: 3145
   type: trojan
@@ -236,25 +236,8 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
-  tcp_delay: 118
-- name: 🇸🇬 新加坡 15.235.184.36-4301 10 6 4 4 4
-  server: 15.235.184.36
-  port: 80
-  type: vmess
-  uuid: 7ce525f5-3a9b-4627-ae0e-3ca0b57519e3
-  alterId: 0
-  cipher: auto
-  tls: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /
-  clash_delay: 22
-  region_info:
-    name: 新加坡
-    code: SG
-  tcp_delay: 190
-- name: 🇸🇬 新加坡 157.230.36.235-4588 12 7 6 5 5
+  tcp_delay: 160
+- name: 🇸🇬 新加坡 157.230.36.235-4588 12 7 6 5 5 5
   server: 157.230.36.235
   port: 80
   type: vmess
@@ -270,8 +253,25 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
-  tcp_delay: 190
-- name: 🇸🇬 新加坡 27 22 9 11 8 10
+  tcp_delay: 227
+- name: 🇸🇬 新加坡 15.235.184.36-4301 10 6 4 4 4 8
+  server: 15.235.184.36
+  port: 80
+  type: vmess
+  uuid: 7ce525f5-3a9b-4627-ae0e-3ca0b57519e3
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /
+  clash_delay: 22
+  region_info:
+    name: 新加坡
+    code: SG
+  tcp_delay: 233
+- name: 🇸🇬 新加坡 27 22 9 11 8 10 10
   password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
   port: 443
   server: 24886d45-t6uv40-t83bw1-1f596.sg.oshuawei.com
@@ -282,8 +282,8 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
-  tcp_delay: 248
-- name: 🇸🇬 新加坡 103.36.91.23-0412 16 10 9 9 7
+  tcp_delay: 308
+- name: 🇸🇬 新加坡 103.36.91.23-0412 16 10 9 9 7 6
   server: 103.36.91.23
   port: 8388
   type: ss
@@ -293,8 +293,8 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
-  tcp_delay: 205
-- name: 🇸🇬 新加坡 rq 18 4 10 3 3
+  tcp_delay: 228
+- name: 🇸🇬 新加坡 rq 18 4 10 3 3 3
   type: vmess
   server: 210.61.97.241
   port: 81
@@ -309,8 +309,8 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
-  tcp_delay: 158
-- name: 🇸🇬 新加坡 8.219.123.35-10596 32 5 5 6 6
+  tcp_delay: 194
+- name: 🇸🇬 新加坡 8.219.123.35-10596 32 5 5 6 6 7
   server: 8.219.123.35
   port: 80
   type: vmess
@@ -326,8 +326,8 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
-  tcp_delay: 190
-- name: 🇰🇷 韩国 158.247.205.87-4153 13 3 1 1 1
+  tcp_delay: 229
+- name: 🇰🇷 韩国 158.247.205.87-4153 13 3 1 1 1 1
   server: 158.247.205.87
   port: 443
   type: ss
@@ -337,19 +337,8 @@ proxies:
   region_info:
     name: 韩国
     code: KR
-  tcp_delay: 143
-- name: 🇰🇷 韩国 43.201.48.212-4014 10 2 2 2 2
-  server: 43.201.48.212
-  port: 443
-  type: ss
-  cipher: aes-256-cfb
-  password: amazonskr05
-  clash_delay: 26
-  region_info:
-    name: 韩国
-    code: KR
-  tcp_delay: 146
-- name: 🇰🇷 韩国 43.201.108.109-10726 11 1 3 3 3
+  tcp_delay: 179
+- name: 🇰🇷 韩国 43.201.108.109-10726 11 1 3 3 3 2
   server: 43.201.108.109
   port: 443
   type: ss
@@ -359,42 +348,19 @@ proxies:
   region_info:
     name: 韩国
     code: KR
-  tcp_delay: 146
-- name: 🇲🇾 马来西亚 47.250.45.234-7410 5 2 1 2 1
-  server: 47.250.45.234
-  port: 8613
-  type: vmess
-  uuid: 80039b4d-bac0-4f89-82c7-54fad3b0a1ea
-  alterId: 0
-  cipher: auto
-  tls: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /
-  clash_delay: 45
+  tcp_delay: 187
+- name: 🇰🇷 韩国 43.201.48.212-4014 10 2 2 2 2 3
+  server: 43.201.48.212
+  port: 443
+  type: ss
+  cipher: aes-256-cfb
+  password: amazonskr05
+  clash_delay: 26
   region_info:
-    name: 马来西亚
-    code: MY
-  tcp_delay: 202
-- name: 🇲🇾 马来西亚 47.250.45.234-7409 4 1 2 1 2
-  server: 47.250.45.234
-  port: 43063
-  type: vmess
-  uuid: c77f48f5-4be3-4461-b52b-49998e7b897b
-  alterId: 0
-  cipher: auto
-  tls: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /
-  clash_delay: 45
-  region_info:
-    name: 马来西亚
-    code: MY
-  tcp_delay: 202
-- name: 🇮🇩 印度 103.180.95.29-6753 20 3 3 3 3
+    name: 韩国
+    code: KR
+  tcp_delay: 189
+- name: 🇮🇩 印度 103.180.95.29-6753 20 3 3 3 3 3
   server: lms.uin-antasari.ac.id
   port: 80
   type: vmess
@@ -412,8 +378,8 @@ proxies:
   region_info:
     name: 印度
     code: IN
-  tcp_delay: 343
-- name: 🇮🇳 印度 103.111.114.29-0374 2 2 2 2 2
+  tcp_delay: 436
+- name: 🇮🇳 印度 103.111.114.29-0374 2 2 2 2 2 2
   server: 103.111.114.29
   port: 57456
   type: ss
@@ -423,8 +389,8 @@ proxies:
   region_info:
     name: 印度
     code: IN
-  tcp_delay: 235
-- name: 🇮🇳 印度 152.67.190.105-10237 9 1 1 1 1
+  tcp_delay: 225
+- name: 🇮🇳 印度 152.67.190.105-10237 9 1 1 1 1 1
   server: 152.67.190.105
   port: 443
   type: vmess
@@ -442,8 +408,8 @@ proxies:
   region_info:
     name: 印度
     code: IN
-  tcp_delay: 235
-- name: 🇻🇳 越南 103.186.154.20-7693 3 2 3 3 6
+  tcp_delay: 207
+- name: 🇻🇳 越南 103.186.154.20-7693 3 2 3 3 6 3
   server: 103.186.154.20
   port: 38388
   type: ss
@@ -453,8 +419,8 @@ proxies:
   region_info:
     name: 越南
     code: VN
-  tcp_delay: 226
-- name: 🇻🇳 越南 103.186.155.20-7254 2 4 6 9 9
+  tcp_delay: 263
+- name: 🇻🇳 越南 103.186.155.20-7254 2 4 6 9 9 9
   server: 103.186.155.20
   port: 38388
   type: ss
@@ -464,8 +430,8 @@ proxies:
   region_info:
     name: 越南
     code: VN
-  tcp_delay: 231
-- name: 🇻🇳 越南 103.186.154.21-7241 5 7 5 6 2
+  tcp_delay: 274
+- name: 🇻🇳 越南 103.186.154.21-7241 5 7 5 6 2 5
   server: 103.186.154.21
   port: 38388
   type: ss
@@ -475,8 +441,8 @@ proxies:
   region_info:
     name: 越南
     code: VN
-  tcp_delay: 224
-- name: 🇻🇳 越南 103.186.155.21-7253 6 3 4 7 3
+  tcp_delay: 265
+- name: 🇻🇳 越南 103.186.155.21-7253 6 3 4 7 3 6
   server: 103.186.155.21
   port: 38388
   type: ss
@@ -486,8 +452,8 @@ proxies:
   region_info:
     name: 越南
     code: VN
-  tcp_delay: 224
-- name: 🇻🇳 越南 103.186.154.22-7244 7 5 2 4 4
+  tcp_delay: 265
+- name: 🇻🇳 越南 103.186.154.22-7244 7 5 2 4 4 2
   server: 103.186.154.22
   port: 38388
   type: ss
@@ -497,8 +463,8 @@ proxies:
   region_info:
     name: 越南
     code: VN
-  tcp_delay: 225
-- name: 🇻🇳 越南 103.186.155.22-7685 8 8 7 8 5
+  tcp_delay: 261
+- name: 🇻🇳 越南 103.186.155.22-7685 8 8 7 8 5 7
   server: 103.186.155.22
   port: 38388
   type: ss
@@ -508,8 +474,8 @@ proxies:
   region_info:
     name: 越南
     code: VN
-  tcp_delay: 226
-- name: 🇻🇳 越南 103.186.154.23-7684 10 9 8 5 7
+  tcp_delay: 265
+- name: 🇻🇳 越南 103.186.154.23-7684 10 9 8 5 7 4
   server: 103.186.154.23
   port: 38388
   type: ss
@@ -519,8 +485,8 @@ proxies:
   region_info:
     name: 越南
     code: VN
-  tcp_delay: 228
-- name: 🇻🇳 越南 103.186.155.23-7250 9 6 9 2 8
+  tcp_delay: 263
+- name: 🇻🇳 越南 103.186.155.23-7250 9 6 9 2 8 8
   server: 103.186.155.23
   port: 38388
   type: ss
@@ -530,8 +496,8 @@ proxies:
   region_info:
     name: 越南
     code: VN
-  tcp_delay: 230
-- name: 🇻🇳 越南 103.195.236.24-1990 11 1 1 1 1
+  tcp_delay: 265
+- name: 🇻🇳 越南 103.195.236.24-1990 11 1 1 1 1 1
   server: 103.195.236.24
   port: 443
   type: trojan
@@ -541,8 +507,8 @@ proxies:
   region_info:
     name: 越南
     code: VN
-  tcp_delay: 208
-- name: 🇺🇸 美国 20.246.127.166-10262 13 2 3 4 3
+  tcp_delay: 246
+- name: 🇺🇸 美国 20.246.127.166-10262 13 2 3 4 3 3
   server: 20.246.127.166
   port: 443
   type: vmess
@@ -561,8 +527,8 @@ proxies:
   region_info:
     name: 美国
     code: US
-  tcp_delay: 45
-- name: 🇺🇸 美国 67.21.75.40-9824 47 1 5 1 1
+  tcp_delay: 5
+- name: 🇺🇸 美国 67.21.75.40-9824 47 1 5 1 1 4
   server: 67.21.75.40
   port: 45555
   type: vmess
@@ -580,8 +546,8 @@ proxies:
   region_info:
     name: 美国
     code: US
-  tcp_delay: 29
-- name: 🇺🇸 美国 23.22.130.173-7005 56 8 4 7 6
+  tcp_delay: 55
+- name: 🇺🇸 美国 23.22.130.173-7005 56 8 4 7 6 1
   server: mycfwork.herokuapp.com
   port: 443
   type: vmess
@@ -599,8 +565,8 @@ proxies:
   region_info:
     name: 美国
     code: US
-  tcp_delay: 87
-- name: 🇺🇸 美国 SS--NF解锁自制剧-ChatGPT-TikTok-YouTube-23.95.75.146:443 59 6 2 5 2
+  tcp_delay: 7
+- name: 🇺🇸 美国 SS--NF解锁自制剧-ChatGPT-TikTok-YouTube-23.95.75.146:443 59 6 2 5 2 2
   server: 23.95.75.146
   port: 443
   type: ss
@@ -610,8 +576,8 @@ proxies:
   region_info:
     name: 美国
     code: US
-  tcp_delay: 41
-- name: 🇺🇸 美国 硅谷 2 807 4 9 6 7
+  tcp_delay: 8
+- name: 🇺🇸 美国 硅谷 2 807 4 9 6 7 7
   password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
   port: 443
   server: 6edbea61-t6uv40-t8em25-1o8ak.sj.gotochinatown.net
@@ -622,8 +588,8 @@ proxies:
   region_info:
     name: 美国
     code: US
-  tcp_delay: 112
-- name: 🇺🇸 美国 洛杉矶 2 214 3 6 2 5
+  tcp_delay: 76
+- name: 🇺🇸 美国 洛杉矶 2 214 3 6 2 5 6
   password: 8bb68d04-6973-11ee-b518-f23c9164ca5d
   port: 443
   server: d27dd670-t6uv40-t8em25-1o8ak.los.gotochinatown.net
@@ -634,8 +600,8 @@ proxies:
   region_info:
     name: 美国
     code: US
-  tcp_delay: 76
-- name: 🇺🇸 美国 VMESS--ChatGPT-TikTok-YouTube-cg1c04.waimaojd.com:443 1049 7 8 3 4
+  tcp_delay: 68
+- name: 🇺🇸 美国 VMESS--ChatGPT-TikTok-YouTube-cg1c04.waimaojd.com:443 1049 7 8 3 4 8
   server: cg1c04.waimaojd.com
   port: 443
   type: vmess
@@ -653,8 +619,8 @@ proxies:
   region_info:
     name: 美国
     code: US
-  tcp_delay: 66
-- name: 🇺🇸 美国 洛杉矶 164 5 7 8 8
+  tcp_delay: 86
+- name: 🇺🇸 美国 洛杉矶 164 5 7 8 8 5
   password: e3975a05-b89e-11ec-a50d-f23c91cfbbc9
   port: 443
   server: 852bab19-t6uv40-t83bw1-1f596.los.gotochinatown.net
@@ -665,8 +631,8 @@ proxies:
   region_info:
     name: 美国
     code: US
-  tcp_delay: 167
-- name: 🇫🇷 法国 51.77.20.137-1174 4 5 1 5 6
+  tcp_delay: 62
+- name: 🇫🇷 法国 51.77.20.137-1174 4 5 1 5 6 1
   server: 51.77.20.137
   port: 443
   type: vmess
@@ -684,8 +650,8 @@ proxies:
   region_info:
     name: 法国
     code: FR
-  tcp_delay: 133
-- name: 🇫🇷 法国 未知 OJAN-1400 | ee-nos 32 4 5 1 1
+  tcp_delay: 84
+- name: 🇫🇷 法国 未知 OJAN-1400 | ee-nos 32 4 5 1 1 3
   server: 160.16.81.84
   port: 2760
   type: trojan
@@ -696,8 +662,8 @@ proxies:
   region_info:
     name: 法国
     code: FR
-  tcp_delay: 118
-- name: 🇫🇷 法国 未知 OJAN-1349 | ee-nos 31 3 4 2 2
+  tcp_delay: 156
+- name: 🇫🇷 法国 未知 OJAN-1349 | ee-nos 31 3 4 2 2 4
   server: 160.16.124.55
   port: 2760
   type: trojan
@@ -708,8 +674,8 @@ proxies:
   region_info:
     name: 法国
     code: FR
-  tcp_delay: 119
-- name: 🇫🇷 法国 未知 OJAN-203 | ee-nos 26 1 3 3 3
+  tcp_delay: 159
+- name: 🇫🇷 法国 未知 OJAN-203 | ee-nos 26 1 3 3 3 5
   server: 160.16.236.32
   port: 2760
   type: trojan
@@ -720,8 +686,8 @@ proxies:
   region_info:
     name: 法国
     code: FR
-  tcp_delay: 119
-- name: 🇫🇷 法国 未知 OJAN-818 | ee-nos 28 2 6 4 4
+  tcp_delay: 159
+- name: 🇫🇷 法国 未知 OJAN-818 | ee-nos 28 2 6 4 4 6
   server: 160.16.214.6
   port: 2760
   type: trojan
@@ -732,8 +698,8 @@ proxies:
   region_info:
     name: 法国
     code: FR
-  tcp_delay: 118
-- name: 🇫🇷 法国 195.154.119.77-0336 258 6 2 6 5
+  tcp_delay: 160
+- name: 🇫🇷 法国 195.154.119.77-0336 258 6 2 6 5 2
   server: 195.154.119.77
   port: 989
   type: ss
@@ -743,8 +709,8 @@ proxies:
   region_info:
     name: 法国
     code: FR
-  tcp_delay: 131
-- name: 🇫🇷 法国 未知 OJAN-441 | ee-nos 431 7 7 7 7
+  tcp_delay: 88
+- name: 🇫🇷 法国 未知 OJAN-441 | ee-nos 431 7 7 7 7 7
   server: 159.65.147.91
   port: 443
   type: trojan
@@ -754,8 +720,8 @@ proxies:
   region_info:
     name: 法国
     code: FR
-  tcp_delay: 234
-- name: 🇬🇧 英国 82.38.31.202-0385 16 1 3 5 2
+  tcp_delay: 199
+- name: 🇬🇧 英国 82.38.31.202-0385 16 1 3 5 2 2
   server: 82.38.31.202
   port: 8080
   type: ss
@@ -765,8 +731,8 @@ proxies:
   region_info:
     name: 英国
     code: GB
-  tcp_delay: 123
-- name: 🇬🇧 英国 82.38.31.205-0291 17 3 5 3 3
+  tcp_delay: 82
+- name: 🇬🇧 英国 82.38.31.205-0291 17 3 5 3 3 3
   server: 82.38.31.205
   port: 8080
   type: ss
@@ -776,8 +742,8 @@ proxies:
   region_info:
     name: 英国
     code: GB
-  tcp_delay: 124
-- name: 🇬🇧 英国 82.38.31.218-0289 14 5 2 6 6
+  tcp_delay: 81
+- name: 🇬🇧 英国 82.38.31.218-0289 14 5 2 6 6 5
   server: 82.38.31.218
   port: 8080
   type: ss
@@ -787,8 +753,8 @@ proxies:
   region_info:
     name: 英国
     code: GB
-  tcp_delay: 129
-- name: 🇬🇧 英国 172.99.190.50-10076 89 4 4 1 4
+  tcp_delay: 81
+- name: 🇬🇧 英国 172.99.190.50-10076 89 4 4 1 4 1
   server: 172.99.190.50
   port: 443
   type: vmess
@@ -806,8 +772,8 @@ proxies:
   region_info:
     name: 英国
     code: GB
-  tcp_delay: 125
-- name: 🇬🇧 英国 132.145.51.172-1507 90 2 6 4 1
+  tcp_delay: 80
+- name: 🇬🇧 英国 132.145.51.172-1507 90 2 6 4 1 4
   server: 132.145.51.172
   port: 443
   type: trojan
@@ -817,8 +783,8 @@ proxies:
   region_info:
     name: 英国
     code: GB
-  tcp_delay: 117
-- name: 🇬🇧 英国 149.7.16.248-10028 154 6 1 2 5
+  tcp_delay: 81
+- name: 🇬🇧 英国 149.7.16.248-10028 154 6 1 2 5 6
   server: 149.7.16.248
   port: 443
   type: vmess
@@ -836,8 +802,8 @@ proxies:
   region_info:
     name: 英国
     code: GB
-  tcp_delay: 125
-- name: 🇩🇪 德国 157.90.20.18-5447 3 3 7 6 3
+  tcp_delay: 85
+- name: 🇩🇪 德国 157.90.20.18-5447 3 3 7 6 3 4
   server: 157.90.20.18
   port: 443
   type: vmess
@@ -855,27 +821,8 @@ proxies:
   region_info:
     name: 德国
     code: DE
-  tcp_delay: 132
-- name: 🇩🇪 德国 23.158.56.145-10194 16 1 1 1 1
-  server: 23.158.56.145
-  port: 443
-  type: vmess
-  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
-  alterId: 1
-  cipher: auto
-  tls: true
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: 23.158.56.145
-  clash_delay: 23
-  region_info:
-    name: 德国
-    code: DE
-  tcp_delay: 130
-- name: 🇩🇪 德国 23.158.56.81-1208 11 4 3 3 2
+  tcp_delay: 92
+- name: 🇩🇪 德国 23.158.56.81-1208 11 4 3 3 2 1
   server: 23.158.56.81
   port: 443
   type: vmess
@@ -893,8 +840,27 @@ proxies:
   region_info:
     name: 德国
     code: DE
-  tcp_delay: 131
-- name: 🇩🇪 德国 23.157.88.6-1229 12 6 2 2 4
+  tcp_delay: 87
+- name: 🇩🇪 德国 23.158.56.145-10194 16 1 1 1 1 2
+  server: 23.158.56.145
+  port: 443
+  type: vmess
+  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
+  alterId: 1
+  cipher: auto
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: 23.158.56.145
+  clash_delay: 23
+  region_info:
+    name: 德国
+    code: DE
+  tcp_delay: 88
+- name: 🇩🇪 德国 23.157.88.6-1229 12 6 2 2 4 3
   server: 23.157.88.6
   port: 443
   type: vmess
@@ -912,8 +878,8 @@ proxies:
   region_info:
     name: 德国
     code: DE
-  tcp_delay: 133
-- name: 🇮🇹 意大利 212.102.54.45-0314 3 1 1 1 1
+  tcp_delay: 89
+- name: 🇮🇹 意大利 212.102.54.45-0314 3 1 1 1 1 1
   server: 212.102.54.45
   port: 990
   type: ss
@@ -923,8 +889,8 @@ proxies:
   region_info:
     name: 意大利
     code: IT
-  tcp_delay: 135
-- name: 🇧🇷 巴西 95.164.4.88-0816 1 3 3 1 2
+  tcp_delay: 96
+- name: 🇧🇷 巴西 95.164.4.88-0816 1 3 3 1 2 2
   server: pq-brazil1.09vpn.com
   port: 80
   type: vmess
@@ -942,8 +908,8 @@ proxies:
   region_info:
     name: 巴西
     code: BR
-  tcp_delay: 222
-- name: 🇧🇷 巴西 38.54.57.90-0449 4 2 2 2 1
+  tcp_delay: 206
+- name: 🇧🇷 巴西 38.54.57.90-0449 4 2 2 2 1 1
   server: 38.54.57.90
   port: 989
   type: ss
@@ -953,8 +919,8 @@ proxies:
   region_info:
     name: 巴西
     code: BR
-  tcp_delay: 213
-- name: 🇦🇷 阿根廷 38.54.45.129-0406 1 1 1 1 1
+  tcp_delay: 157
+- name: 🇦🇷 阿根廷 38.54.45.129-0406 1 1 1 1 1 1
   server: 38.54.45.129
   port: 990
   type: ss
@@ -964,8 +930,8 @@ proxies:
   region_info:
     name: 阿根廷
     code: AR
-  tcp_delay: 225
-- name: 🇹🇷 土耳其 45.94.169.142-10691 5 1 1 1 1
+  tcp_delay: 212
+- name: 🇹🇷 土耳其 45.94.169.142-10691 5 1 1 1 1 1
   server: 45.94.169.142
   port: 443
   type: vmess
@@ -981,8 +947,8 @@ proxies:
   region_info:
     name: 土耳其
     code: TR
-  tcp_delay: 133
-- name: 🇦🇺 澳大利亚 103.224.212.211-2921 20 5 2 2 5
+  tcp_delay: 90
+- name: 🇦🇺 澳大利亚 103.224.212.211-2921 20 5 2 2 5 4
   server: 36.72img.xyz
   port: 443
   type: vmess
@@ -1000,8 +966,8 @@ proxies:
   region_info:
     name: 澳大利亚
     code: AU
-  tcp_delay: 213
-- name: 🇦🇺 澳大利亚 103.224.212.215-4597 22 2 5 6 8
+  tcp_delay: 128
+- name: 🇦🇺 澳大利亚 103.224.212.215-4597 22 2 5 6 8 5
   server: vus4.0bad.com
   port: 443
   type: vmess
@@ -1019,19 +985,8 @@ proxies:
   region_info:
     name: 澳大利亚
     code: AU
-  tcp_delay: 498
-- name: 🇦🇺 澳大利亚 45.79.238.129-10702 5 7 8 8 3
-  server: 45.79.238.129
-  port: 443
-  type: ss
-  cipher: chacha20-ietf-poly1305
-  password: YUWX6COLZYmaHlUGiKwDaN
-  clash_delay: 26
-  region_info:
-    name: 澳大利亚
-    code: AU
-  tcp_delay: 159
-- name: 🇦🇺 澳大利亚 139.99.135.182-6226 4 8 7 7 4
+  tcp_delay: 143
+- name: 🇦🇺 澳大利亚 139.99.135.182-6226 4 8 7 7 4 6
   server: 139.99.135.182
   port: 80
   type: vmess
@@ -1047,8 +1002,19 @@ proxies:
   region_info:
     name: 澳大利亚
     code: AU
-  tcp_delay: 160
-- name: 🇦🇺 澳大利亚 103.224.212.211-2947 33 4 1 1 1
+  tcp_delay: 198
+- name: 🇦🇺 澳大利亚 45.79.238.129-10702 5 7 8 8 3 7
+  server: 45.79.238.129
+  port: 443
+  type: ss
+  cipher: chacha20-ietf-poly1305
+  password: YUWX6COLZYmaHlUGiKwDaN
+  clash_delay: 26
+  region_info:
+    name: 澳大利亚
+    code: AU
+  tcp_delay: 198
+- name: 🇦🇺 澳大利亚 103.224.212.211-2947 33 4 1 1 1 2
   server: 29.72img.xyz
   port: 443
   type: vmess
@@ -1066,8 +1032,8 @@ proxies:
   region_info:
     name: 澳大利亚
     code: AU
-  tcp_delay: 97
-- name: 🇦🇺 澳大利亚 103.224.212.213-3620 36 1 3 5 2
+  tcp_delay: 68
+- name: 🇦🇺 澳大利亚 103.224.212.213-3620 36 1 3 5 2 1
   server: sg-5.0rd.net
   port: 443
   type: vmess
@@ -1086,8 +1052,8 @@ proxies:
   region_info:
     name: 澳大利亚
     code: AU
-  tcp_delay: 103
-- name: 🇦🇺 澳大利亚 103.224.212.215-10362 39 6 4 4 7
+  tcp_delay: 68
+- name: 🇦🇺 澳大利亚 103.224.212.215-10362 39 6 4 4 7 3
   server: vus5.0bad.com
   port: 443
   type: vmess
@@ -1105,8 +1071,8 @@ proxies:
   region_info:
     name: 澳大利亚
     code: AU
-  tcp_delay: 263
-- name: 🇦🇺 澳大利亚 103.224.212.215-0257 14 3 6 3 6
+  tcp_delay: 68
+- name: 🇦🇺 澳大利亚 103.224.212.215-0257 14 3 6 3 6 8
   server: vjp3.0bad.com
   port: 443
   type: vmess
@@ -1124,19 +1090,19 @@ proxies:
   region_info:
     name: 澳大利亚
     code: AU
-  tcp_delay: 218
+  tcp_delay: 213
 last_message_ids:
   '@fqDINYUE': 4660
   '@wxdy666': 6218
-  '@freeyule': 1927601
+  '@freeyule': 1927626
   '@ccbaohe': 14968
-  '@duangvpsfs': 3674136
-  '@zzzjjjkkkoi': 607825
+  '@duangvpsfs': 3674140
+  '@zzzjjjkkkoi': 607909
   '@xmdexw': 220174
   '@v2v2clash': 0
   '@dingyue_Center': 3895
   '@tempssrlink': 22
-  '@sorenab2': 36890
-update_time: '2025-12-05 19:42:57'
-total_nodes: 77
+  '@sorenab2': 36901
+update_time: '2025-12-05 19:47:37'
+total_nodes: 75
 note: 由 GitHub Actions 自动生成，每4小时更新一次，已按延迟排序并智能限量
