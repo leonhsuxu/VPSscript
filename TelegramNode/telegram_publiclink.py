@@ -1099,7 +1099,7 @@ async def main():
     print("[4/5] 节点重命名和限制总数处理")   
    
     # 重命名（带国旗 + 地区 + 序号）
-    renamed_proxies = rename_proxies(nodes_to_rename)
+    renamed_proxies = rename_proxies(final_tested_nodes)
     
     # 按地区+延迟限制最大节点数量（默认不超过600个）
     final_proxies = limit_proxy_counts(renamed_proxies, max_total=600)
