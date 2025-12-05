@@ -20,29 +20,54 @@ jobs:
         uses: actions/cache@v4
         with:
           path: mihomo
-          key: mihomo-${{ hashFiles('https://api.github.com/repos/MetaCubeX/mihomo/releases/latest') }}
-          restore-keys: mihomo-
+          key: mihomo-linux-amd64-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: mihomo-linux-amd64-
 
-      - name: Download Mihomo（首次或更新时）
+      # 2. 下载 Mihomo（兼容新老文件名）
+      - name: Download Mihomo (latest)
         if: steps.cache-mihomo.outputs.cache-hit != 'true'
         run: |
-          URL=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | grep -o 'https.*clash.meta-linux-amd64[^"]*')
-          wget -qO mihomo "$URL" && chmod +x mihomo
+          set -e
+          echo "正在获取最新版 Mihomo 下载链接..."
+          # 兼容新旧文件名写法（优先找带 compatible 的，再找普通版）
+          URL=$(curl -s https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | \
+                grep -i "browser_download_url.*linux-amd64" | \
+                grep -i -E "(mihomo|clash\.meta)" | \
+                cut -d '"' -f 4 | head -1)
 
-      # 2. 缓存 xiecang/speedtest-clash
+          if [[ -z "$URL" ]]; then
+            echo "Error: 没找到下载链接，项目可能又改名了"
+            exit 1
+          fi
+
+          echo "下载地址: $URL"
+          wget -q --show-progress -O mihomo "$URL"
+          chmod +x mihomo
+          ./mihomo --version   # 验证一下是否正常
+          
+
+      # 缓存 xiecang/speedtest-clash
       - name: Cache xiecang/speedtest-clash
         id: cache-xc
         uses: actions/cache@v4
         with:
           path: xcspeedtest
-          key: xc-${{ hashFiles('https://api.github.com/repos/xiecang/speedtest-clash/releases/latest') }}
+          key: xc-${{ github.run_id }}-${{ github.run_attempt }}
           restore-keys: xc-
 
+      # 下载 xiecang/speedtest-clash
       - name: Download xiecang/speedtest-clash
         if: steps.cache-xc.outputs.cache-hit != 'true'
         run: |
-          URL=$(curl -s https://api.github.com/repos/xiecang/speedtest-clash/releases/latest | grep -o 'https.*linux-amd64[^"]*')
-          wget -qO xcspeedtest "$URL" && chmod +x xcspeedtest
+          set -e
+          URL=$(curl -s https://api.github.com/repos/xiecang/speedtest-clash/releases/latest | \
+                grep -i "browser_download_url.*linux.*amd64" | \
+                cut -d '"' -f 4 | head -1)
+
+          echo "下载地址: $URL"
+          wget -q --show-progress -O xcspeedtest "$URL"
+          chmod +x xcspeedtest
+          ./xcspeedtest --help | head -5
 
       # 3. 运行你的 TG 抓取脚本（生成 flclashyaml/Tg-node.yaml）
       - name: Run TG scraper
