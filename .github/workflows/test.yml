@@ -1,8 +1,8 @@
-name: TG频道抓取 → xiecang/speedtest-clash 测速（带版本变量）
+name: TG频道抓取 → xiecang/speedtest-clash 测速（指定版本，无轮询）
 
 on:
   schedule:
-    - cron: '10 */4 * * *'
+    - cron: '10 */4 * * *'      # 每4小时执行
   workflow_dispatch:
 
 env:
@@ -12,7 +12,7 @@ env:
 jobs:
   test-and-optimize:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
 
     steps:
       - name: Checkout repository
@@ -39,13 +39,18 @@ jobs:
           key: mihomo-amd64-${{ env.MIHOMO_VERSION }}-${{ github.run_id }}
           restore-keys: mihomo-amd64-${{ env.MIHOMO_VERSION }}-
 
-      - name: Download Mihomo
+      - name: Download Mihomo 指定版本
         if: steps.cache-mihomo.outputs.cache-hit != 'true'
         run: |
-          wget -q --show-progress \
-            https://github.com/MetaCubeX/mihomo/releases/download/${MIHOMO_VERSION}/mihomo-linux-amd64.gz
-          gunzip mihomo-linux-amd64.gz
-          mv mihomo-linux-amd64 mihomo
+          set -e
+          TAG=${{ env.MIHOMO_VERSION }}
+          echo "下载 Mihomo 版本: $TAG"
+          URL="https://github.com/MetaCubeX/mihomo/releases/download/${TAG}/mihomo-linux-amd64-${TAG}.gz"
+          echo "下载地址: $URL"
+          curl --head --fail -s "$URL" || (echo "下载链接不可用，退出" && exit 1)
+          wget --tries=5 --timeout=60 --progress=bar:force "$URL"
+          gunzip "mihomo-linux-amd64-${TAG}.gz"
+          mv "mihomo-linux-amd64-${TAG}" mihomo
           chmod +x mihomo
           ./mihomo --version
 
@@ -60,7 +65,7 @@ jobs:
       - name: Download xiecang speedtest-clash
         if: steps.cache-xc.outputs.cache-hit != 'true'
         run: |
-          URL=$(curl -s https://api.github.com/repos/xiecang/speedtest-clash/releases/tag/${SPEEDTEST_VERSION} \
+          URL=$(curl -s https://api.github.com/repos/xiecang/speedtest-clash/releases/tag/${{ env.SPEEDTEST_VERSION }} \
                 | grep "browser_download_url.*speedtest_linux_amd64" | cut -d '"' -f4)
           if [ -z "$URL" ]; then
             URL=$(curl -s https://api.github.com/repos/xiecang/speedtest-clash/releases/latest \
@@ -160,9 +165,4 @@ jobs:
           git diff --quiet --staged || git commit -m "Auto: 更新优化节点 $(date -u +%F_%H-%M)"
           git push || echo "无变化"
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: TG优化节点
-          path: flclashyaml/Tg-node-optimized.yaml
-          retention-days: 7
+     
