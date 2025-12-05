@@ -33,6 +33,8 @@ from urllib.parse import urlparse, parse_qs, quote, unquote
 import threading
 import requests
 from zoneinfo import ZoneInfo
+from telethon import TelegramClient
+from telethon.sessions import StringSession
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from telethon import TelegramClient
 print_lock = threading.Lock()
