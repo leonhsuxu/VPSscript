@@ -34,6 +34,7 @@ import threading
 import requests
 from zoneinfo import ZoneInfo
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from telethon import TelegramClient
 print_lock = threading.Lock()
 
 # --- 环境变量读取 ---
