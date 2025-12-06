@@ -1355,13 +1355,13 @@ async def main():
         print(f"❌ 写出配置文件失败: {e}")
         sys.exit(1)
 
-def main():
+def sync_main():
     if not ENABLE_SPEED_TEST:
         print("测速功能未启用，跳过测速。")
         return
-    
+
     ret = run_speedtest(enable_tcp_log=ENABLE_TCP_LOG)
-    print(f"测速进程返回码：{ret}")   
+    print(f"测速进程返回码：{ret}")    
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(main())  # 调用异步主函数
