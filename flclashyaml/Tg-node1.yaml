@@ -1,5 +1,5 @@
 # TG频道节点自动抓取+测延迟精选订阅
-# 最后更新时间：2025-12-06 19:57:54 (北京时间)
+# 最后更新时间：2025-12-06 20:20:07 (北京时间)
 # 本次保留节点数：174 个（延迟最优）
 # 由 GitHub Actions 自动构建！
 
@@ -2388,15 +2388,15 @@ proxies:
 last_message_ids:
   '@fqDINYUE': 4669
   '@wxdy666': 6228
-  '@freeyule': 1928648
+  '@freeyule': 1928671
   '@ccbaohe': 14983
-  '@duangvpsfs': 3676319
-  '@zzzjjjkkkoi': 611066
-  '@xmdexw': 220712
+  '@duangvpsfs': 3676470
+  '@zzzjjjkkkoi': 611119
+  '@xmdexw': 220745
   '@v2v2clash': 0
   '@dingyue_Center': 3897
   '@tempssrlink': 63
   '@sorenab2': 36985
-update_time: '2025-12-06 19:57:54'
+update_time: '2025-12-06 20:20:07'
 total_nodes: 174
 note: 由 GitHub Actions 自动生成，每4小时更新一次，已按延迟排序并智能限量
