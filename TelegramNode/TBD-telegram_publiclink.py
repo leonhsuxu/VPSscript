@@ -282,7 +282,7 @@ def extract_valid_subscribe_links(text: str):
                 print(f"  订阅即将过期（剩 {hours_left:.1f}h），跳过: {url[:60]}...")
                 continue
         final_links.append(url)
-        print(f"  成功提取订阅链接: {url}")  # 调试用，可删
+        print(f"成功提取链接🔗: {url}")  # 调试用，可删
     
     return final_links
 
