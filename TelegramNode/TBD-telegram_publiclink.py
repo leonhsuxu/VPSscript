@@ -1000,9 +1000,10 @@ def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=32):
 
 # clash 测速
 
-def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
+def xcspeedtest_test_proxy(speedtest_path, proxy, debug=True):
     """
     使用 speedtest-clash 二进制以 -fast 参数测试代理延迟，成功返回延迟(ms)，失败返回None。
+    debug=True 时打印测速日志和延迟信息。
     """
     try:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -1024,20 +1025,31 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
             result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                     timeout=25, text=True)
             output = result.stdout + result.stderr
+
             if debug:
-                print(f"speedtest-clash 输出: {output}")
+                print(f"[speedtest-clash 日志] 输出:\n{output}")
+
+            import re
             m = re.search(r"delay[:\s]*([0-9\.]+)\s*ms", output, re.I)
             if m:
                 delay = int(float(m.group(1)))
+                if debug:
+                    print(f"[speedtest-clash 日志] 代理 {proxy.get('name')} 延迟: {delay} ms")
                 if 1 < delay < 800:
                     return delay
+
+            # 如果没捕获到 delay 关键字，则尝试抓取所有合理数字最小的作为备用
             delays = re.findall(r'(\d+)', output)
             delays = [int(d) for d in delays if 1 < int(d) < 800]
             if delays:
-                return min(delays)
+                delay = min(delays)
+                if debug:
+                    print(f"[speedtest-clash 日志] 代理 {proxy.get('name')} 替代延迟: {delay} ms")
+                return delay
+
     except Exception as e:
         if debug:
-            print(f"speedtest-clash测速异常: {e}")
+            print(f"[speedtest-clash 日志] 测速异常: {e}")
     return None
 
 
