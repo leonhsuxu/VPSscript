@@ -59,7 +59,7 @@ SPEEDTEST_MODE = os.getenv('SPEEDTEST_MODE', 'tcp_first').lower()  # 默认推�
 
 # TCP 和Clash 测速专属参数
 TCP_TIMEOUT = 4.0          # 单次 TCP 连接超时时间（秒），建议 3~5
-TCP_MAX_WORKERS = 200      # TCP 测速最大并发（可以比 Clash 高很多，非常快）
+TCP_MAX_WORKERS = 512      # TCP 测速最大并发（可以比 Clash 高很多，非常快）
 TCP_MAX_DELAY = 1000       # TCP 延迟阈值，超过此值直接丢弃（ms）
 ENABLE_TCP_LOG = False     # 默认关闭TCP日志
 ENABLE_SPEEDTEST_LOG = True  # 默认关闭 speedtest 详细日志
