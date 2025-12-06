@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-文件名: Telegram.Node_xc
-脚本说明:
+文件名: Telegram.Node_Final V1.R1 
+脚本说明:使用XC speedtest测速
 本脚本实现从指定 Telegram 频道自动爬取订阅链接；
 下载并解析各种代理订阅节点（包括 vmess, vless, ssr, ss, trojan, hysteria及hysteria2等协议），
 支持节点去重、地区识别与重命名，并使用 Clash 核心程序进行节点测速（延迟测试）；
@@ -69,10 +69,10 @@ TCP_TIMEOUT = 3.5          # 单次 TCP 连接超时时间（秒），建议 3~5
 TCP_MAX_WORKERS = 512      # TCP 测速最大并发（可以比 Clash 高很多，非常快）
 TCP_MAX_DELAY = 1000       # TCP 延迟阈值，超过此值直接丢弃（ms）
 ENABLE_TCP_LOG = False     # 默认关闭TCP日志
-ENABLE_SPEEDTEST_LOG = True  # 默认关闭 speedtest 详细日志
+ENABLE_SPEEDTEST_LOG = False  # 默认关闭 speedtest 详细日志False / True打开
 
 
-MAX_TEST_WORKERS = 96    # 速度测试时最大并发工作线程数，控制测试的并行度。建议64-96
+MAX_TEST_WORKERS = 128    # 速度测试时最大并发工作线程数，控制测试的并行度。建议64-96
 SOCKET_TIMEOUT = 3       # 套接字连接超时时间，单位为秒
 HTTP_TIMEOUT = 5         # HTTP请求超时时间，单位为秒
 TEST_URLS = [
