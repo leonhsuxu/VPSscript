@@ -62,7 +62,7 @@ TCP_TIMEOUT = 4.0          # 单次 TCP 连接超时时间（秒），建议 3~5
 TCP_MAX_WORKERS = 200      # TCP 测速最大并发（可以比 Clash 高很多，非常快）
 TCP_MAX_DELAY = 1000       # TCP 延迟阈值，超过此值直接丢弃（ms）
 ENABLE_TCP_LOG = False     # 默认关闭TCP日志
-ENABLE_SPEEDTEST_LOG = False  # 或者绑定 ENABLE_SPEED_TEST
+ENABLE_SPEEDTEST_LOG = True  # 默认关闭 speedtest 详细日志
 
 
 MAX_TEST_WORKERS = 128    # 速度测试时最大并发工作线程数，控制测试的并行度。
@@ -1186,10 +1186,13 @@ async def main():
     print("Telegram.Node_Clash-Speedtest测试版 V1")
     print(datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S"))
     print("=" * 60)
+
     preprocess_regex_rules()
+
     print("[1/5] 加载原有节点和抓取状态")
     existing_proxies, last_message_ids = load_existing_proxies_and_state()
     print(f"已有节点数: {len(existing_proxies)}")
+
     print("[2/5] 抓取 Telegram 新订阅链接")
     urls, last_message_ids = await scrape_telegram_links(last_message_ids)
     new_proxies = []
@@ -1200,6 +1203,7 @@ async def main():
             if proxies:
                 new_proxies.extend(proxies)
     print(f"新增节点数: {len(new_proxies)}")
+
     all_proxies_map = {
         get_proxy_key(p): p for p in existing_proxies if is_valid_proxy(p)
     }
@@ -1210,30 +1214,33 @@ async def main():
             all_proxies_map[key] = p
             added_count += 1
     print(f"合并去重后总节点数: {len(all_proxies_map)}，新增有效节点: {added_count}")
+
     all_nodes = list(all_proxies_map.values())
     if not all_nodes:
         sys.exit("❌ 无任何节点可用，程序退出")
-        # =============================================
+        
+
     # [3/5] 开始节点测速（支持多种模式）
-    # =============================================
     print("[3/5] 开始节点测速（模式: %s）" % SPEEDTEST_MODE)
     clash_path = 'clash_core/clash'
     need_clash = 'clash' in SPEEDTEST_MODE
     if need_clash and not (os.path.isfile(clash_path) and os.access(clash_path, os.X_OK)):
         sys.exit(f"clash 核心缺失或不可执行: {clash_path}")
-    # 最终进入后续处理（重命名、限量、排序）的节点列表
+
     final_tested_nodes = all_nodes.copy()
-    
     clash_path = './xcspeedtest'  # 你的 speedtest-clash 二进制的路径
 
     if SPEEDTEST_MODE == "tcp_only":
         print("使用【纯 TCP 测速】模式")
         final_tested_nodes = batch_tcp_test(all_nodes)
-
     elif SPEEDTEST_MODE == "clash_only":
         print("使用【纯 speedtest-clash 测速】模式")
-        final_tested_nodes = batch_test_proxies_speedtest(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
-
+        final_tested_nodes = batch_test_proxies_speedtest(
+            clash_path,
+            all_nodes,
+            max_workers=MAX_TEST_WORKERS,
+            debug=ENABLE_SPEEDTEST_LOG
+        )
     elif SPEEDTEST_MODE == "tcp_first":
         print("使用【TCP 粗筛 → speedtest-clash 精测】两阶段模式")
         print("阶段1：TCP 超高并发粗筛...")
@@ -1241,28 +1248,52 @@ async def main():
         print(f"TCP 粗筛完成：{len(all_nodes)} → {len(tcp_passed)}")
         if not tcp_passed:
             print("TCP 全死，降级使用纯 speedtest-clash 模式")
-            final_tested_nodes = batch_test_proxies_speedtest(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
+            final_tested_nodes = batch_test_proxies_speedtest(
+                clash_path,
+                all_nodes,
+                max_workers=MAX_TEST_WORKERS,
+                debug=ENABLE_SPEEDTEST_LOG
+            )
         else:
             print("阶段2：对 TCP 存活节点进行 speedtest-clash 精准测速...")
-            final_tested_nodes = batch_test_proxies_speedtest(clash_path, tcp_passed, max_workers=MAX_TEST_WORKERS)
-
+            final_tested_nodes = batch_test_proxies_speedtest(
+                clash_path,
+                tcp_passed,
+                max_workers=MAX_TEST_WORKERS,
+                debug=ENABLE_SPEEDTEST_LOG
+            )
     elif SPEEDTEST_MODE == "clash_first":
         print("使用【speedtest-clash 先测 → TCP 后验】模式")
-        clash_passed = batch_test_proxies_speedtest(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
+        clash_passed = batch_test_proxies_speedtest(
+            clash_path,
+            all_nodes,
+            max_workers=MAX_TEST_WORKERS,
+            debug=ENABLE_SPEEDTEST_LOG
+        )
         final_tested_nodes = [p for p in clash_passed if tcp_ping(p) is not None]
-
     else:
         print("未知模式，使用默认 tcp_first")
         tcp_passed = batch_tcp_test(all_nodes)
         if not tcp_passed:
-            final_tested_nodes = batch_test_proxies_speedtest(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
+            final_tested_nodes = batch_test_proxies_speedtest(
+                clash_path,
+                all_nodes,
+                max_workers=MAX_TEST_WORKERS,
+                debug=ENABLE_SPEEDTEST_LOG
+            )
         else:
-            final_tested_nodes = batch_test_proxies_speedtest(clash_path, tcp_passed, max_workers=MAX_TEST_WORKERS)
-    
+            final_tested_nodes = batch_test_proxies_speedtest(
+                clash_path,
+                tcp_passed,
+                max_workers=MAX_TEST_WORKERS,
+                debug=ENABLE_SPEEDTEST_LOG
+            )
+
     # 测速结果统计
     success_count = len(final_tested_nodes)
     print(f"测速完成，最终存活优质节点：{success_count} 个")
-    # 如果测速后一个节点都没活，启动保底回退
+
+    # 保底回退机制
     if success_count == 0:
         print("测速全死，启动保底回退策略（热门地区未测速保留）")
         fallback_regions = [
@@ -1280,12 +1311,14 @@ async def main():
             selected.extend(grouped[r][:30])
         final_tested_nodes = selected[:500]
         print(f"回退保留 {len(final_tested_nodes)} 个热门地区节点（未测速）")
+
     # [4/5] 节点名称统一规范化处理
     print("[4/5] 节点名称统一规范化处理")
     normalized_proxies = normalize_proxy_names(final_tested_nodes)
     final_proxies = limit_proxy_counts(normalized_proxies, max_total=600)
     if not final_proxies:
         sys.exit("❌ 节点重命名和限量后无有效节点，程序退出")
+
     # [5/5] 最终排序并生成配置文件
     print("[5/5] 最终排序并生成配置文件")
     final_proxies.sort(
@@ -1294,8 +1327,10 @@ async def main():
             p.get('clash_delay', p.get('tcp_delay', 9999))
         )
     )
+
     total_count = len(final_proxies)
     update_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
+
     final_config = {
         'proxies': final_proxies,
         'last_message_ids': last_message_ids,
@@ -1303,6 +1338,7 @@ async def main():
         'total_nodes': total_count,
         'note': '由 GitHub Actions 自动生成，每4小时更新一次，已按延迟排序并智能限量'
     }
+
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     try:
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
