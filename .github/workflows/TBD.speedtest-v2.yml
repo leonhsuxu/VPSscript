@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 env:
   MIHOMO_VERSION: v1.19.17
-  SPEEDTEST_VERSION: v0.3.12 # 请根据需要更新到您希望的版本，例如 v0.4.1
+  SPEEDTEST_VERSION: v0.4.1 # 请根据需要更新到您希望的版本，例如 v0.4.1
   
   TELEGRAM_CHANNEL_IDS: |
     # 订阅转发-频道
