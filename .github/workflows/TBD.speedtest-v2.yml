@@ -151,7 +151,7 @@ jobs:
           TELEGRAM_CHANNEL_IDS: ${{ env.TELEGRAM_CHANNEL_IDS }}
         run: |
           mkdir -p flclashyaml
-          python TelegramNode/telegram_publiclink.py
+          python TelegramNode/TBD-telegram_publiclink.py
       - name: 提交生成的 Clash 配置到仓库
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
