@@ -28,7 +28,13 @@ env:
     # ※个人的订阅收集 leon
     @tempssrlink
     # (乱七八糟名字)
-    @sorenab2   
+    @sorenab2
+    # 公益机场
+    @proxyshareCN
+
+
+
+
 jobs:
   build:
     runs-on: ubuntu-latest
