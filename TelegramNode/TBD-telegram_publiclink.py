@@ -1135,10 +1135,8 @@ def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=MAX_TEST_W
 
 def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
     """
-    2025 终极兼容版：
-    - 提取 clash_delay（最准）
-    - 额外提取真实下载带宽（如 86.95MB/s）
-    返回：(delay_ms, bandwidth_str) 或者 None
+    2025-12-06 终极兼容版：同时支持有/无 clash_delay 的所有 xcspeedtest 版本
+    优先级：clash_delay（最准） → 表格延迟列 → 完全失败
     """
     try:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -1159,16 +1157,18 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
             cmd = [speedtest_path, '-c', config_path]
             result = subprocess.run(
                 cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                timeout=35, text=True, encoding='utf-8', errors='ignore'
+                timeout=40, text=True, encoding='utf-8', errors='ignore'
             )
             output = result.stdout + result.stderr
 
             if debug:
                 print(f"[speedtest-clash] 原始输出:\n{output}")
 
-            # 1. 先提取 clash_delay（最准）
             delay = None
-            json_matches = re.findall(r'"message"\s*:\s*"json:\s*(\[.*)', output, re.DOTALL)
+            bandwidth = None
+
+            # === 第一优先：从 JSON 里提取 clash_delay（最准，最快）===
+            json_matches = re.findall(r'"message"\s*:\s*"json:\s*(\[.*?[\]}]\s*\])"', output, re.DOTALL)
             if not json_matches:
                 json_matches = re.findall(r'json:\s*(\[.*)', output, re.DOTALL)
 
@@ -1178,18 +1178,33 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
                 if j.count('[') > j.count(']'): j += ']'
                 try:
                     data = json.loads(j)
-                    if data and isinstance(data, list):
-                        d = data[0].get("clash_delay")
-                        if isinstance(d, (int, float)) and d > 1:
-                            delay = int(d)
+                    if data and isinstance(data, list) and data[0].get("clash_delay") is not None:
+                        d = int(data[0]["clash_delay"])
+                        if 1 <= d <= 3000:
+                            delay = d
+                            if debug:
+                                print(f"JSON clash_delay 命中 → {delay}ms ← {proxy['name']}")
                             break
                 except:
                     continue
 
-            # 2. 再提取带宽（表格那一行最长的 server 字段前面的就是带宽）
-            bandwidth = None
-            # 匹配类似：86.95MB/s  1.53s  1317
-            bw_match = re.search(r'([0-9\.]+ ?[KMGT]?B/s)\s+[0-9]+\.[0-9]+s\s+[0-9]+', output)
+            # === 第二优先：如果 JSON 没有，就用表格延迟列（你日志里一定有）===
+            if delay is None:
+                delay_match = re.search(r'延迟.*?([0-9]+)\s+[^0-9]*?$', output, re.MULTILINE | re.DOTALL)
+                if not delay_match:
+                    delay_match = re.search(r'延迟\s+[0-9\.]+\s+[0-9]+\s+([0-9]+)', output)
+                if delay_match:
+                    try:
+                        d = int(delay_match.group(1))
+                        if 1 <= d <= 3000:
+                            delay = d
+                            if debug:
+                                print(f"表格延迟命中 → {delay}ms ← {proxy['name']}")
+                    except:
+                        pass
+
+            # === 提取带宽（永远尝试）===
+            bw_match = re.search(r'([0-9\.]+ ?[KMGT]?B/s)\s+[0-9\.]', output)
             if bw_match:
                 bandwidth = bw_match.group(1).strip()
 
@@ -1199,12 +1214,12 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
                 return delay, bandwidth
 
             if debug:
-                print(f"仅提取到带宽但无延迟 → 丢弃 {proxy['name']}")
+                print(f"完全失败 → 丢弃 {proxy['name']}")
             return None
 
     except Exception as e:
         if debug:
-            print(f"测速异常: {e}")
+            print(f"异常: {e}")
         return None
 
 
