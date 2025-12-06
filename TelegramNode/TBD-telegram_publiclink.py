@@ -50,7 +50,6 @@ OUTPUT_FILE = 'flclashyaml/Tg-node1.yaml'  # 输出文件路径，用于保存�
 # === 新增：测速策略开关（推荐保留这几个选项）===
 # 测速模式：
 ENABLE_SPEED_TEST = True  # 是否启用整体速度测试功能，True表示启用。测试顺序如下
-        sys.exit(1)
 
 
 
