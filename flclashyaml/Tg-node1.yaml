@@ -1,839 +1,10 @@
 # TG频道节点自动抓取+测延迟精选订阅
-# 最后更新时间：2025-12-06 19:23:56 (北京时间)
-# 本次保留节点数：600 个（延迟最优）
+# 最后更新时间：2025-12-06 19:38:25 (北京时间)
+# 本次保留节点数：129 个（延迟最优）
 # 由 GitHub Actions 自动构建！
 
 proxies:
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 74
-  password: f8f7aCzcPKbsF8p3
-  port: 989
-  server: 103.163.218.2
-  type: ss
-  tcp_delay: 221
-  clash_delay: 2
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 67
-  network: ws
-  port: 20086
-  server: 173.249.209.146
-  tls: false
-  type: vmess
-  uuid: 3935c2dc-dbb0-43f7-b367-fe89abe87fdf
-  ws-opts:
-    headers: {}
-    path: /
-  tcp_delay: 47
-  clash_delay: 2
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 68
-  network: ws
-  port: 80
-  server: bbbbbbbbb.222769.xyz
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 2e65577e-8fdb-4bb1-a495-96f3122099a7
-  ws-opts:
-    headers:
-      Host: bbbbbbbbb.222769.xyz
-    path: /f6taOMcOSZb9TPR
-  tcp_delay: 66
-  clash_delay: 2
-- name: 🇺🇸 美国 76
-  password: gs4BXwT6SW
-  port: 10988
-  server: 154.26.192.123
-  type: http
-  username: fQ67Dpe5dU
-  tcp_delay: 63
-  clash_delay: 2
-- alterId: 0
-  cipher: auto
-  client-fingerprint: ''
-  name: 🇺🇸 美国 94
-  network: ws
-  port: 80
-  server: NnnNNNnNnNNNNN.222769.xYZ
-  tls: false
-  type: vmess
-  uuid: 2e65577e-8fdb-4bb1-a495-96f3122099a7
-  ws-opts:
-    headers:
-      Host: nnnnnnnnnnnnnn.222769.xyz
-    path: /f6taOMcOSZb9TPR
-  tcp_delay: 72
-  clash_delay: 2
-- cipher: aes-128-gcm
-  name: 🇺🇸 美国 113
-  password: shadowsocks
-  port: 443
-  server: 156.146.38.170
-  type: ss
-  tcp_delay: 21
-  clash_delay: 2
-- alterId: 0
-  cipher: auto
-  client-fingerprint: chrome
-  name: 🇺🇸 美国 118
-  network: tcp
-  port: 443
-  server: 165.140.216.141
-  skip-cert-verify: true
-  tfo: true
-  type: vmess
-  udp: true
-  uuid: e7d72a8d-26f2-4b54-b366-0c43e0bcba7d
-  tcp_delay: 46
-  clash_delay: 2
-- cipher: aes-256-gcm
-  name: 🇺🇸 美国 124
-  password: 8JCsPssfgS8tiRwiMlhARg==
-  port: 12000
-  server: 15.204.247.49
-  type: ss
-  tcp_delay: 23
-  clash_delay: 2
-- client-fingerprint: chrome
-  encryption: none
-  name: 🇺🇸 美国 125
-  network: ws
-  port: 2096
-  server: 166.62.114.253
-  skip-cert-verify: false
-  tls: true
-  type: vless
-  uuid: 7556317c-dff6-46e8-ad29-b408f2a6456e
-  ws-opts:
-    early-data-header-name: Sec-WebSocket-Protocol
-    headers:
-      Host: vless.muzheng.top
-    max-early-data: 2560
-    path: /Telegram+@WangCai2+/
-  servername: vless.muzheng.top
-  tcp_delay: 12
-  clash_delay: 2
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇸 美国 133
-  password: NDRySIABARbErNIVsCNVkyYAHiBzhveT
-  port: 443
-  server: 23.95.75.146
-  type: ss
-  udp: true
-  tcp_delay: 44
-  clash_delay: 2
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇸 美国 135
-  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
-  port: 990
-  server: 173.234.29.2
-  type: ss
-  tcp_delay: 14
-  clash_delay: 2
-- name: 🇺🇸 美国 141
-  network: tcp
-  port: 443
-  server: zorox-net.senu-zer.online
-  skip-cert-verify: false
-  tls: true
-  type: vless
-  uuid: 224629c2-342b-4e54-bb75-b56cb7dabf30
-  servername: zorox-net.senu-zer.online
-  tcp_delay: 93
-  clash_delay: 2
-- encryption: none
-  name: 🇺🇸 美国 144
-  network: ws
-  port: 8443
-  server: www.udacity.com
-  servername: www.x-aniu-h-k.netlib.re
-  tls: true
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  ws-opts:
-    headers:
-      Host: www.x-aniu-h-k.netlib.re
-    path: /?ed=2560
-  tcp_delay: 98
-  clash_delay: 2
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇸 美国 145
-  password: UAMVtHm54uahd6SiN5WcD16rsPSdabPG
-  port: 443
-  server: 23.95.72.81
-  type: ss
-  tcp_delay: 39
-  clash_delay: 2
-- name: 🇺🇸 美国 151
-  type: vless
-  server: 104.21.71.83
-  port: 443
-  uuid: 3c2f5010-bc17-46d7-a5d3-7489f3a8dded
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: a32e1893-496a-5d3e-d34f-a8674b22b993.777162.xyz
-  path: /GJuqYfsZSA3HxKLVmdalbjJm7kb1B
-  sni: a32e1893-496a-5d3e-d34f-a8674b22b993.777162.xyz
-  ws-opts:
-    path: /GJuqYfsZSA3HxKLVmdalbjJm7kb1B
-    headers:
-      Host: a32e1893-496a-5d3e-d34f-a8674b22b993.777162.xyz
-  tcp_delay: 13
-  clash_delay: 2
-- name: 🇺🇸 美国 165
-  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  port: 443
-  server: 02d98e3d-t6ykg0-thmjbt-1rk9y.los.gotochinatown.net
-  tls: true
-  type: socks5
-  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 98
-  clash_delay: 2
-- name: 🇺🇸 美国 174
-  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  port: 443
-  server: 5a6c96e7-t6ykg0-thmjbt-1rk9y.sj.gotochinatown.net
-  tls: true
-  type: socks5
-  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 167
-  clash_delay: 2
-- name: 🇺🇸 美国 175
-  password: 79314e99f0a473fe86efc7827942ad00
-  port: 2890
-  server: 160.16.131.243
-  skip-cert-verify: true
-  sni: www.nintendogames.net
-  type: trojan
-  tcp_delay: 132
-  clash_delay: 2
-- name: 🇺🇸 美国 176
-  server: www.shopify.com
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 32
-  clash_delay: 2
-- name: 🇺🇸 美国 178
-  server: 172.64.50.7
-  port: 2087
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 17
-  clash_delay: 2
-- name: 🇺🇸 美国 180
-  server: 172.67.174.112
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu-h-k.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu-h-k.netlib.re
-  tcp_delay: 14
-  clash_delay: 2
-- name: 🇺🇸 美国 181
-  server: 172.64.229.167
-  port: 2087
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 12
-  clash_delay: 2
-- name: 🇺🇸 美国 189
-  server: 172.66.45.120
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu-h-k.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu-h-k.netlib.re
-  tcp_delay: 12
-  clash_delay: 2
-- name: 🇺🇸 美国 190
-  server: clyde.ns.cloudflare.com
-  port: 443
-  type: vless
-  uuid: 02e46039-200d-4ae4-ac90-b0d619f72034
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: redlabell.info
-  network: ws
-  ws-opts:
-    path: /aafeuws
-    headers:
-      Host: redlabell.info
-  tcp_delay: 15
-  clash_delay: 2
-- name: 🇺🇸 美国 197
-  server: 172.64.35.201
-  port: 2087
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 15
-  clash_delay: 2
-- client-fingerprint: chrome
-  name: 🇺🇸 美国 199
-  password: 79314e99f0a473fe86efc7827942ad00
-  port: 2890
-  server: 160.16.116.227
-  skip-cert-verify: true
-  sni: www.nintendogames.net
-  type: trojan
-  tcp_delay: 132
-  clash_delay: 2
-- name: 🇺🇸 美国 200
-  server: 172.67.79.85
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 9
-  clash_delay: 2
-- name: 🇺🇸 美国 202
-  password: 79314e99f0a473fe86efc7827942ad00
-  port: 4054
-  server: 160.16.236.32
-  sni: www.nintendogames.net
-  type: trojan
-  tcp_delay: 132
-  clash_delay: 2
-- name: 🇺🇸 美国 211
-  server: 172.64.144.36
-  port: 2087
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu-h-k.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu-h-k.netlib.re
-  tcp_delay: 14
-  clash_delay: 2
-- client-fingerprint: chrome
-  name: 🇺🇸 美国 222
-  network: ws
-  port: 8443
-  server: ovhwuxian.pai50288.uk
-  skip-cert-verify: false
-  tls: true
-  type: vless
-  uuid: 57ba2ab1-a283-42eb-82ee-dc3561a805b8
-  ws-opts:
-    headers:
-      Host: ovhwuxian.pai50288.uk
-    path: /57ba2ab1
-  servername: ovhwuxian.pai50288.uk
-  tcp_delay: 46
-  clash_delay: 2
-- alterId: 0
-  cipher: auto
-  client-fingerprint: chrome
-  name: 🇺🇸 美国 223
-  network: ws
-  port: 443
-  server: 209.126.84.189
-  skip-cert-verify: true
-  tfo: true
-  type: vmess
-  udp: true
-  uuid: 2c981164-9b93-4bca-94ff-b78d3f8498d7
-  ws-opts:
-    headers:
-      Host: 209.126.84.189
-    path: /vmessws
-  tcp_delay: 125
-  clash_delay: 2
-- name: 🇺🇸 美国 258
-  network: ws
-  port: 443
-  server: betty.ns.cloudflare.com
-  servername: vangoghh.info
-  skip-cert-verify: false
-  tls: true
-  type: vless
-  uuid: 94daa8ad-75ed-4dbf-a6de-d05036d98df5
-  ws-opts:
-    headers:
-      Host: vangoghh.info
-    path: /tixvuws
-  tcp_delay: 28
-  clash_delay: 2
-- name: 🇺🇸 美国 263
-  network: ws
-  port: 2096
-  server: 185.193.31.253
-  servername: fast01.0860852.xyz
-  skip-cert-verify: false
-  tfo: false
-  tls: true
-  type: vless
-  udp: true
-  uuid: 2456f90c-5183-476d-b069-16ae74ce120f
-  ws-opts:
-    headers:
-      Host: fast01.0860852.xyz
-    path: /Telegram🇨🇳
-  tcp_delay: 14
-  clash_delay: 2
-- client-fingerprint: chrome
-  flow: xtls-rprx-vision
-  name: 🇺🇸 美国 265
-  network: tcp
-  port: 443
-  reality-opts:
-    public-key: xdNyDss0OLTu3z6kcdg8X2wfTOLtmDTobE2on3vKe34
-    short-id: ab1cd2
-  server: russia.whitenet.online
-  servername: vk.com
-  skip-cert-verify: false
-  tls: true
-  type: vless
-  uuid: 4ce38652-b84c-5aab-8b2c-f897a217b41b
-  tcp_delay: 599
-  clash_delay: 2
-- name: 🇺🇸 美国 266
-  network: ws
-  port: 443
-  server: cosmin.ns.cloudflare.com
-  servername: 639003456256484486.giulia-amsis.info
-  skip-cert-verify: false
-  tls: true
-  type: vless
-  uuid: 4f590914-6d75-4f1d-a361-2fddb3cdf669
-  ws-opts:
-    headers:
-      Host: 639003456256484486.giulia-amsis.info
-    path: /ccemutws
-  tcp_delay: 14
-  clash_delay: 2
-- name: 🇺🇸 美国 267
-  server: 154.21.85.156
-  port: 10210
-  type: vless
-  uuid: 69310d96-7045-c206-a2d0-f8ae6e49b726
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: act12.sni565.netlib.re
-  network: ws
-  ws-opts:
-    path: /proxyip=tw.sni2025.netlib.re
-    headers:
-      Host: act12.sni565.netlib.re
-  tcp_delay: 42
-  clash_delay: 2
-- name: 🇺🇸 美国 269
-  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  port: 15229
-  server: 18a80e67-t6ykg0-thmjbt-1rk9y.cu.oshuawei.com
-  tls: true
-  type: http
-  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 334
-  clash_delay: 2
-- name: 🇺🇸 美国 270
-  network: ws
-  port: 443
-  server: serena.ns.cloudflare.com
-  servername: freudd.info
-  skip-cert-verify: false
-  tls: true
-  type: vless
-  uuid: f028a8c0-6763-4558-aee3-2563db9d7825
-  ws-opts:
-    headers:
-      Host: freudd.info
-    path: /xxvclws
-  tcp_delay: 18
-  clash_delay: 2
-- client-fingerprint: chrome
-  name: 🇺🇸 美国 271
-  network: ws
-  port: 2096
-  server: 25.25.25.253
-  servername: spplesh.hatlikarious.org
-  skip-cert-verify: false
-  tls: true
-  type: vless
-  uuid: 38021ff2-6778-4363-92b1-d70ac11acf51
-  ws-opts:
-    headers:
-      Host: spplesh.hatlikarious.org
-    path: /
-  tcp_delay: 13
-  clash_delay: 2
-- alterId: 0
-  cipher: auto
-  h2-opts: {}
-  http-opts: {}
-  name: 🇺🇸 美国 272
-  network: ws
-  port: 443
-  server: v2ray.codefyinc.com
-  skip-cert-verify: true
-  type: vmess
-  uuid: 2c981164-9b93-4bca-94ff-b78d3f8498d7
-  ws-opts:
-    headers:
-      Host: v2ray.codefyinc.com
-    path: /vmessws
-  tcp_delay: 152
-  clash_delay: 2
-- http-opts:
-    headers:
-      Host:
-      - varzesh3.ir
-    path:
-    - /
-  name: 🇩🇪 德国 15
-  network: http
-  port: 33801
-  server: m39a.vip784.com
-  skip-cert-verify: false
-  tls: false
-  type: vless
-  uuid: c99262ae-ee77-4dac-8437-2d7f68fd3938
-  tcp_delay: 143
-  clash_delay: 2
-- client-fingerprint: chrome
-  flow: xtls-rprx-vision
-  name: 🇩🇪 德国 38
-  network: tcp
-  port: 443
-  reality-opts:
-    public-key: esHsu3-Fj0aZ0xuNBV6qW1zu1hLbas8YDn7AO0QGsBw
-    short-id: 0ff58d687a4c6c
-  server: 179.61.251.78
-  servername: refersion.com
-  skip-cert-verify: false
-  tls: true
-  type: vless
-  uuid: fabc8a38-76c5-48fe-ada7-a9e52dd16225
-  tcp_delay: 162
-  clash_delay: 2
-- name: 🇩🇪 德国 117
-  network: ws
-  port: 443
-  server: delilah.ns.cloudflare.com
-  skip-cert-verify: false
-  tls: true
-  type: vless
-  uuid: 5b687f17-0176-495e-84a1-0835f8feec91
-  ws-opts:
-    headers:
-      Host: 639002592262919469.sentra-amsir.info
-    path: /egakxows
-  servername: 639002592262919469.sentra-amsir.info
-  tcp_delay: 39
-  clash_delay: 2
-- alterId: 0
-  cipher: auto
-  name: 🇨🇦 加拿大 14
-  network: ws
-  port: 80
-  server: 15.235.41.200
-  tls: false
-  type: vmess
-  uuid: 58fe1542-5290-40ad-815a-77707a81afe5
-  ws-opts:
-    headers: {}
-    path: /IOebhLMhl1CTbFHbL95myfRX2
-  tcp_delay: 56
-  clash_delay: 2
-- cipher: aes-256-cfb
-  name: 🇨🇦 加拿大 18
-  password: f8f7aCzcPKbsF8p3
-  port: 989
-  server: 79.127.233.170
-  type: ss
-  tcp_delay: 50
-  clash_delay: 2
-- alterId: 0
-  cipher: auto
-  client-fingerprint: chrome
-  name: 🇨🇦 加拿大 36
-  network: ws
-  port: 80
-  server: 51.79.102.253
-  skip-cert-verify: true
-  tfo: true
-  type: vmess
-  udp: true
-  uuid: 58fe1542-5290-40ad-815a-77707a81afe5
-  ws-opts:
-    headers:
-      Host: wrmelmwxlf.gktevlrqznwqqozy.fabpfs66gizmnojhcvqxwl.kytrcfzqla87gvgvs6c7kjnrubuh.cc
-    path: /IOebhLMhl1CTbFHbL95myfRX2
-  tcp_delay: 48
-  clash_delay: 2
-- name: 🇨🇦 加拿大 37
-  password: .ie4rghJuMkcf0oF
-  port: 18509
-  server: 38.96.254.102
-  sni: shoppingmall.electricbanana.click
-  type: trojan
-  tcp_delay: 60
-  clash_delay: 2
-- alpn:
-  - h2
-  - http/1.1
-  client-fingerprint: chrome
-  name: 🇨🇦 加拿大 39
-  network: tcp
-  port: 7070
-  server: 86.107.168.100
-  skip-cert-verify: false
-  tls: true
-  type: vless
-  uuid: be32c9ad-92e1-485b-dc74-2a65e9dae480
-  servername: src.smnsoft.com
-  tcp_delay: 76
-  clash_delay: 2
-- name: 🇺🇳 16 2
-  server: 162.159.4.126
-  port: 2087
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 8
-  clash_delay: 2
-- name: 🇺🇳 16 3
-  server: 162.159.38.138
-  port: 2087
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 27
-  clash_delay: 2
-- name: 🇺🇳 16 4
-  server: 162.159.62.132
-  port: 2087
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 14
-  clash_delay: 2
-- name: 🇺🇳 16 5
-  server: 162.159.12.249
-  port: 2087
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu-h-k.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu-h-k.netlib.re
-  tcp_delay: 11
-  clash_delay: 2
-- name: 🇺🇳 16 6
-  server: 162.159.7.100
-  port: 2087
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 9
-  clash_delay: 2
-- name: 🇺🇳 16 7
-  server: 162.159.19.30
-  port: 2087
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu-h-k.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu-h-k.netlib.re
-  tcp_delay: 13
-  clash_delay: 2
-- name: 🇺🇳 16 8
-  server: 162.159.44.148
-  port: 2087
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 28
-  clash_delay: 2
-- cipher: chacha20-ietf-poly1305
-  name: 🇷🇺 俄罗斯 6
-  password: qFAJdBEqsI71jaSML67nHoPBCGhX94uk
-  port: 443
-  server: 45.138.157.162
-  type: ss
-  tcp_delay: 140
-  clash_delay: 2
-- name: 🇷🇺 俄罗斯 15
-  server: 46.3.193.14
-  port: 30003
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 211
-  clash_delay: 2
-- name: 🇷🇺 俄罗斯 17
-  type: vless
-  server: russia.whitenet.online
-  port: 443
-  uuid: russia
-  encryption: none
-  udp: true
-  skip-cert-verify: false
-  tfo: false
-  flow: xtls-rprx-vision
-  tls: true
-  reality-opts:
-    public-key: xdNyDss0OLTu3z6kcdg8X2wfTOLtmDTobE2on3vKe34
-    short-id: ab1cd2
-  servername: vk.com
-  client-fingerprint: chrome
-  network: tcp
-  tcp_delay: 751
-  clash_delay: 2
-- name: 🇷🇺 俄罗斯 18
-  server: 178.236.16.98
-  port: 35728
-  type: vless
-  uuid: a00d89f6-ab7e-4e30-a5e5-54c701d62c93
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  reality-opts:
-    public-key: vhUFNoFcvtZAVMo8y5K5eU2V43m5q6yjmWIhp5RkFng
-    short-id: 69a2
-  servername: yahoo.com
-  client-fingerprint: chrome
-  network: tcp
-  tcp_delay: 230
-  clash_delay: 2
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇳 ES 3
-  password: f8f7aCzcPKbsF8p3
-  port: 990
-  server: 45.154.206.192
-  type: ss
-  tcp_delay: 142
-  clash_delay: 2
-- name: 🇭🇰 香港 9
+- name: 🇭🇰 香港 1
   network: ws
   port: 2087
   server: 162.159.3.210
@@ -848,15 +19,21 @@ proxies:
   servername: www.x-aniu-h-k.netlib.re
   tcp_delay: 15
   clash_delay: 2
+  region_info:
+    name: 香港
+    code: HK
 - cipher: aes-256-cfb
-  name: 🇭🇰 香港 11
+  name: 🇭🇰 香港 2
   password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
   port: 38388
   server: 216.250.97.82
   type: ss
   tcp_delay: 182
   clash_delay: 2
-- name: 🇭🇰 香港 23
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 3
   network: ws
   port: 8443
   server: 154.21.203.45
@@ -871,7 +48,10 @@ proxies:
   servername: www.x-aniu-h-k.netlib.re
   tcp_delay: 185
   clash_delay: 2
-- name: 🇭🇰 香港 25
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 4
   type: vless
   server: 43.161.222.233
   port: 443
@@ -890,7 +70,10 @@ proxies:
       Host: www.x-aniu---jp.netlib.re
   tcp_delay: 186
   clash_delay: 2
-- name: 🇭🇰 香港 27
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 5
   type: vless
   server: 8.218.189.27
   port: 443
@@ -909,9 +92,12 @@ proxies:
       Host: www.x-aniu-h-k.netlib.re
   tcp_delay: 187
   clash_delay: 2
+  region_info:
+    name: 香港
+    code: HK
 - alterId: 2
   cipher: auto
-  name: 🇭🇰 香港 29
+  name: 🇭🇰 香港 6
   network: ws
   port: 80
   server: 34013157-sunz40-taz53d-1j0y6.hk3.p5pv.com
@@ -925,7 +111,10 @@ proxies:
     path: /
   tcp_delay: 214
   clash_delay: 2
-- name: 🇭🇰 香港 32
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 7
   network: ws
   port: 443
   server: 34.92.187.216
@@ -940,9 +129,12 @@ proxies:
   servername: www.x-aniu-h-k.netlib.re
   tcp_delay: 185
   clash_delay: 2
+  region_info:
+    name: 香港
+    code: HK
 - alterId: 2
   cipher: auto
-  name: 🇭🇰 香港 36
+  name: 🇭🇰 香港 8
   network: ws
   port: 80
   server: 865c5c01-sv4n40-t65a3e-tqgz.hk3.p5pv.com
@@ -956,7 +148,10 @@ proxies:
     path: /
   tcp_delay: 218
   clash_delay: 2
-- name: 🇭🇰 香港 38
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 9
   type: vless
   server: 8.212.57.67
   port: 443
@@ -975,9 +170,12 @@ proxies:
       Host: www.x-aniu-h-k.netlib.re
   tcp_delay: 187
   clash_delay: 2
+  region_info:
+    name: 香港
+    code: HK
 - alterId: 2
   cipher: auto
-  name: 🇭🇰 香港 39
+  name: 🇭🇰 香港 10
   network: ws
   port: 80
   server: 814047e3-sv2sg0-t09t13-z7a1.hk3.p5pv.com
@@ -991,9 +189,12 @@ proxies:
     path: /
   tcp_delay: 241
   clash_delay: 2
+  region_info:
+    name: 香港
+    code: HK
 - alterId: 2
   cipher: auto
-  name: 🇭🇰 香港 40
+  name: 🇭🇰 香港 11
   network: ws
   port: 80
   server: fe3a9432-sv0xs0-sywkhi-1o4kv.hk3.p5pv.com
@@ -1007,7 +208,10 @@ proxies:
     path: /
   tcp_delay: 247
   clash_delay: 2
-- name: 🇭🇰 香港 43
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 12
   server: 58.152.25.242
   port: 443
   type: trojan
@@ -1015,7 +219,10 @@ proxies:
   skip-cert-verify: true
   tcp_delay: 196
   clash_delay: 2
-- name: 🇭🇰 香港 45
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 13
   password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
   port: 443
   server: b0ade92e-t6ykg0-thmjbt-1rk9y.hkt2.cdnhuawei.com
@@ -1024,9 +231,12 @@ proxies:
   username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
   tcp_delay: 228
   clash_delay: 2
+  region_info:
+    name: 香港
+    code: HK
 - alterId: 2
   cipher: auto
-  name: 🇭🇰 香港 46
+  name: 🇭🇰 香港 14
   network: ws
   port: 80
   server: 7fbb6673-t6ykg0-thmjbt-1rk9y.hk3.p5pv.com
@@ -1039,7 +249,10 @@ proxies:
   ws-path: /
   tcp_delay: 245
   clash_delay: 2
-- name: 🇭🇰 香港 48
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 15
   server: 43.161.222.97
   port: 443
   type: vless
@@ -1055,7 +268,10 @@ proxies:
       Host: www.x-aniu---jp.netlib.re
   tcp_delay: 185
   clash_delay: 2
-- name: 🇭🇰 香港 49
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 16
   network: ws
   port: 2096
   server: x.cf.090227.xyz
@@ -1070,7 +286,10 @@ proxies:
   servername: www.x-aniu-h-k.netlib.re
   tcp_delay: 574
   clash_delay: 2
-- name: 🇭🇰 香港 50
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 17
   server: 58.152.30.120
   port: 443
   type: trojan
@@ -1079,7 +298,10 @@ proxies:
   skip-cert-verify: true
   tcp_delay: 206
   clash_delay: 2
-- name: 🇭🇰 香港 51
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 18
   password: <password>
   port: 8443
   server: 574807cf-t6ykg0-thmjbt-1rk9y.hkt.cdnhuawei.com
@@ -1088,7 +310,10 @@ proxies:
   username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
   tcp_delay: 240
   clash_delay: 2
-- name: 🇭🇰 香港 52
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 19
   server: 58.152.25.20
   port: 443
   type: trojan
@@ -1097,7 +322,10 @@ proxies:
   skip-cert-verify: true
   tcp_delay: 195
   clash_delay: 2
-- name: 🇭🇰 香港 53
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 20
   type: trojan
   server: 58.152.53.8
   port: 443
@@ -1110,7 +338,10 @@ proxies:
   network: tcp
   tcp_delay: 246
   clash_delay: 2
-- name: 🇭🇰 香港 54
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 21
   server: 219.79.186.107
   port: 443
   type: trojan
@@ -1119,9 +350,12 @@ proxies:
   skip-cert-verify: true
   tcp_delay: 196
   clash_delay: 2
+  region_info:
+    name: 香港
+    code: HK
 - alterId: 2
   cipher: auto
-  name: 🇭🇰 香港 56
+  name: 🇭🇰 香港 22
   network: ws
   port: 80
   server: 87a8ce25-sv2sg0-tbicd9-1go3q.hk3.p5pv.com
@@ -1135,9 +369,12 @@ proxies:
     path: /
   tcp_delay: 309
   clash_delay: 2
+  region_info:
+    name: 香港
+    code: HK
 - alterId: 2
   cipher: auto
-  name: 🇭🇰 香港 57
+  name: 🇭🇰 香港 23
   network: ws
   port: 80
   server: 7dfe4b59-svc1s0-tc67m2-1tjc4.hk3.p5pv.com
@@ -1151,7 +388,10 @@ proxies:
     path: /
   tcp_delay: 239
   clash_delay: 2
-- name: 🇭🇰 香港 58
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 24
   password: <password>
   port: 443
   server: b0ade92e-t6ykg0-thmjbt-1rk9y.hkt2.cdnhuawei.com
@@ -1160,7 +400,10 @@ proxies:
   username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
   tcp_delay: 227
   clash_delay: 2
-- name: 🇭🇰 香港 59
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 25
   password: 79314e99f0a473fe86efc7827942ad00
   port: 443
   server: 58.152.110.154
@@ -1169,7 +412,39 @@ proxies:
   type: trojan
   tcp_delay: 196
   clash_delay: 2
-- name: 🇯🇵 日本 9
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 26
+  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
+  port: 5228
+  server: 29fd8735-t6ykg0-thmjbt-1rk9y.cm4.oshuawei.com
+  tls: true
+  type: http
+  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
+  tcp_delay: 248
+  clash_delay: 3
+  region_info:
+    name: 香港
+    code: HK
+- alterId: 0
+  cipher: auto
+  name: 🇭🇰 香港 27
+  network: ws
+  port: 8080
+  server: 8.218.199.111
+  skip-cert-verify: false
+  tls: false
+  type: vmess
+  uuid: f55db42d-ee52-4a47-880b-6f7b123ab222
+  ws-opts:
+    path: /
+  tcp_delay: 185
+  clash_delay: 4
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇯🇵 日本 1
   server: 18.181.50.232
   port: 443
   type: vless
@@ -1185,7 +460,10 @@ proxies:
       Host: www.x-aniu-h-k.netlib.re
   tcp_delay: 132
   clash_delay: 2
-- name: 🇯🇵 日本 11
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 2
   server: 116.206.93.131
   port: 443
   type: vless
@@ -1201,7 +479,10 @@ proxies:
       Host: www.x-aniu-h-k.netlib.re
   tcp_delay: 132
   clash_delay: 2
-- name: 🇯🇵 日本 13
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 3
   server: 54.248.56.163
   port: 443
   type: vless
@@ -1217,7 +498,10 @@ proxies:
       Host: www.x-aniu-h-k.netlib.re
   tcp_delay: 133
   clash_delay: 2
-- name: 🇯🇵 日本 16
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 4
   server: 35.73.93.31
   port: 443
   type: vless
@@ -1233,7 +517,10 @@ proxies:
       Host: www.x-aniu---jp.netlib.re
   tcp_delay: 133
   clash_delay: 2
-- name: 🇯🇵 日本 19
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 5
   password: 79314e99f0a473fe86efc7827942ad00
   port: 3169
   server: 153.121.65.107
@@ -1242,7 +529,10 @@ proxies:
   type: trojan
   tcp_delay: 132
   clash_delay: 2
-- name: 🇯🇵 日本 25
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 6
   password: 79314e99f0a473fe86efc7827942ad00
   port: 4054
   server: 160.16.214.6
@@ -1251,7 +541,10 @@ proxies:
   type: trojan
   tcp_delay: 132
   clash_delay: 2
-- name: 🇯🇵 日本 26
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 7
   password: 79314e99f0a473fe86efc7827942ad00
   port: 3093
   server: 160.16.130.66
@@ -1260,15 +553,21 @@ proxies:
   type: trojan
   tcp_delay: 132
   clash_delay: 2
+  region_info:
+    name: 日本
+    code: JP
 - cipher: chacha20-ietf-poly1305
-  name: 🇯🇵 日本 27
+  name: 🇯🇵 日本 8
   password: XLOrvLWkCBBBxLqSEe9S8lnC5PLsNfRh
   port: 443
   server: 103.75.118.125
   type: ss
   tcp_delay: 132
   clash_delay: 2
-- name: 🇯🇵 日本 28
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 9
   password: 79314e99f0a473fe86efc7827942ad00
   port: 507
   server: 160.16.107.37
@@ -1277,7 +576,10 @@ proxies:
   type: trojan
   tcp_delay: 132
   clash_delay: 2
-- name: 🇯🇵 日本 29
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 10
   password: FDIypSwe64a3DA7un2R8DFjYXZO3NS05gKZTTOC8SxO0Fy3cqYg3EaFDA3ABaEYKNx39D
   port: 443
   server: kuame.missionsec.us
@@ -1286,7 +588,10 @@ proxies:
   type: trojan
   tcp_delay: 270
   clash_delay: 2
-- name: 🇯🇵 日本 30
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 11
   password: 79314e99f0a473fe86efc7827942ad00
   port: 127
   server: 160.16.131.243
@@ -1295,7 +600,10 @@ proxies:
   type: trojan
   tcp_delay: 132
   clash_delay: 2
-- name: 🇯🇵 日本 32
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 12
   password: 79314e99f0a473fe86efc7827942ad00
   port: 1331
   server: 153.121.65.107
@@ -1304,7 +612,10 @@ proxies:
   type: trojan
   tcp_delay: 132
   clash_delay: 2
-- name: 🇯🇵 日本 33
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 13
   password: 79314e99f0a473fe86efc7827942ad00
   port: 3169
   server: 160.16.87.174
@@ -1313,7 +624,10 @@ proxies:
   type: trojan
   tcp_delay: 132
   clash_delay: 2
-- name: 🇯🇵 日本 34
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 14
   password: 79314e99f0a473fe86efc7827942ad00
   port: 3145
   server: 160.16.144.208
@@ -1322,7 +636,10 @@ proxies:
   type: trojan
   tcp_delay: 141
   clash_delay: 2
-- name: 🇯🇵 日本 35
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 15
   password: 79314e99f0a473fe86efc7827942ad00
   port: 1596
   server: 160.16.68.250
@@ -1331,7 +648,10 @@ proxies:
   type: trojan
   tcp_delay: 139
   clash_delay: 2
-- name: 🇯🇵 日本 36
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 16
   password: 79314e99f0a473fe86efc7827942ad00
   port: 4054
   server: 153.121.39.240
@@ -1340,337 +660,58 @@ proxies:
   type: trojan
   tcp_delay: 133
   clash_delay: 2
-- name: 🇺🇳 10 1
-  server: 104.16.15.121
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 14
-  clash_delay: 2
-- name: 🇺🇳 10 4
-  server: 104.21.239.62
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 14
-  clash_delay: 2
-- name: 🇺🇳 10 5
-  server: 104.18.79.54
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 15
-  clash_delay: 2
-- name: 🇺🇳 10 6
-  server: 104.21.30.206
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu-h-k.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu-h-k.netlib.re
-  tcp_delay: 14
-  clash_delay: 2
-- name: 🇺🇳 10 7
-  server: 104.18.191.57
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu-h-k.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu-h-k.netlib.re
-  tcp_delay: 14
-  clash_delay: 2
-- name: 🇺🇳 10 8
-  server: 104.19.173.47
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu-h-k.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu-h-k.netlib.re
-  tcp_delay: 14
-  clash_delay: 2
-- name: 🇺🇳 10 9
-  server: 104.17.254.251
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu-h-k.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu-h-k.netlib.re
-  tcp_delay: 10
-  clash_delay: 2
-- name: 🇺🇳 10 10
-  server: 104.21.31.17
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu-h-k.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu-h-k.netlib.re
-  tcp_delay: 14
-  clash_delay: 2
-- name: 🇺🇳 10 11
-  server: 104.17.255.9
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu-h-k.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu-h-k.netlib.re
-  tcp_delay: 14
-  clash_delay: 2
-- name: 🇺🇳 10 12
-  server: 104.21.237.158
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 14
-  clash_delay: 2
-- name: 🇺🇳 10 13
-  server: 104.21.30.29
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 14
-  clash_delay: 2
-- name: 🇺🇳 10 14
-  server: 104.21.238.187
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu-h-k.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu-h-k.netlib.re
-  tcp_delay: 14
-  clash_delay: 2
-- name: 🇺🇳 10 15
-  server: 104.17.254.180
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 12
-  clash_delay: 2
-- name: 🇺🇳 10 16
-  server: 104.16.45.135
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu-h-k.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu-h-k.netlib.re
-  tcp_delay: 15
-  clash_delay: 2
-- name: 🇺🇳 10 17
-  server: 104.18.15.207
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 14
-  clash_delay: 2
-- name: 🇺🇳 10 18
-  server: 104.17.238.33
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu-s-g.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu-s-g.netlib.re
-  tcp_delay: 12
-  clash_delay: 2
-- name: 🇺🇳 10 19
-  server: 104.18.63.16
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu-h-k.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu-h-k.netlib.re
-  tcp_delay: 13
-  clash_delay: 2
-- name: 🇺🇳 10 20
-  server: 104.18.77.53
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu-h-k.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu-h-k.netlib.re
-  tcp_delay: 13
-  clash_delay: 2
-- name: 🇮🇩 印度尼西亚 2
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 17
+  password: 79314e99f0a473fe86efc7827942ad00
+  port: 4054
+  server: 160.16.81.84
+  skip-cert-verify: false
+  sni: www.nintendogames.net
+  type: trojan
+  tcp_delay: 132
+  clash_delay: 3
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 18
   password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  port: 32233
-  server: c084cc39-t6ykg0-thmjbt-1rk9y.id.oshuawei.com
+  port: 443
+  server: c529a1ed-t6ykg0-thmjbt-1rk9y.jp.oshuawei.com
   tls: true
   type: http
   username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 261
-  clash_delay: 2
-- name: 🇬🇧 英国 4
-  server: 82.38.31.187
-  port: 8080
-  type: ss
-  cipher: chacha20-ietf-poly1305
-  password: k1dBOmOB4oqi7Ump37a1bQ
-  tcp_delay: 103
-  clash_delay: 2
-- cipher: chacha20-ietf-poly1305
-  name: 🇬🇧 英国 9
-  password: k1dBOmOB4oqi7Ump37a1bQ
-  port: 8080
-  server: 82.38.31.179
-  type: ss
-  tcp_delay: 103
-  clash_delay: 2
-- cipher: chacha20-ietf-poly1305
-  name: 🇬🇧 英国 10
-  password: k1dBOmOB4oqi7Ump37a1bQ
-  port: 8080
-  server: 82.38.31.202
-  type: ss
-  tcp_delay: 106
-  clash_delay: 2
-- name: 🇬🇧 英国 11
+  tcp_delay: 148
+  clash_delay: 3
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 19
   password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
   port: 443
-  server: 851db2a2-t6ykg0-thmjbt-1rk9y.uk.oshuawei.com
+  server: 4ffbf33f-t6ykg0-thmjbt-1rk9y.jp4.oshuawei.com
   tls: true
   type: http
   username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 123
-  clash_delay: 2
-- name: 🇸🇬 新加坡 10
+  tcp_delay: 178
+  clash_delay: 3
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 20
+  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
+  port: 27233
+  server: 29fd8735-t6ykg0-thmjbt-1rk9y.cm4.oshuawei.com
+  tls: true
+  type: http
+  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
+  tcp_delay: 219
+  clash_delay: 3
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇸🇬 新加坡 1
   server: 20.247.137.183
   port: 443
   type: vless
@@ -1686,7 +727,10 @@ proxies:
       Host: www.x-aniu---jp.netlib.re
   tcp_delay: 204
   clash_delay: 2
-- name: 🇸🇬 新加坡 12
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 2
   server: 18.143.145.77
   port: 50001
   type: ss
@@ -1694,7 +738,10 @@ proxies:
   password: c5d45d2b-c425-4b24-8794-613b831d5f0c
   tcp_delay: 201
   clash_delay: 2
-- name: 🇸🇬 新加坡 16
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 3
   password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
   port: 443
   server: efec8665-t6ykg0-thmjbt-1rk9y.sg3.oshuawei.com
@@ -1703,7 +750,45 @@ proxies:
   username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
   tcp_delay: 325
   clash_delay: 2
-- name: 🇰🇷 韩国 4
+  region_info:
+    name: 新加坡
+    code: SG
+- cipher: chacha20-ietf
+  name: 🇸🇬 新加坡 4
+  password: asd123456
+  port: 8388
+  server: 103.36.91.23
+  type: ss
+  tcp_delay: 218
+  clash_delay: 3
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 5
+  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
+  port: 17235
+  server: 29fd8735-t6ykg0-thmjbt-1rk9y.cm4.oshuawei.com
+  tls: true
+  type: http
+  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
+  tcp_delay: 219
+  clash_delay: 3
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 6
+  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
+  port: 443
+  server: f7e1f401-t6ykg0-thmjbt-1rk9y.sg.oshuawei.com
+  tls: true
+  type: http
+  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
+  tcp_delay: 237
+  clash_delay: 3
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇰🇷 韩国 1
   password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
   port: 31433
   server: b434f9f5-t6ykg0-thmjbt-1rk9y.kr.oshuawei.com
@@ -1712,463 +797,742 @@ proxies:
   username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
   tcp_delay: 339
   clash_delay: 2
-- name: 🇫🇷 法国 1
-  server: 141.227.162.151
-  port: 33919
-  type: vless
-  uuid: 9eee43b5-6b7d-494a-a5b3-fb45b7ee4976
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  network: grpc
-  grpc-opts:
-    grpc-mode: gun
-    grpc-service-name: ZEDMODEON-ZEDMODEON-bia-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON
-  tcp_delay: 105
-  clash_delay: 2
-- name: 🇫🇷 法国 2
-  server: 141.227.136.51
-  port: 25687
-  type: vless
-  uuid: a03e540d-7fa2-4187-b0d0-5202a22cf9a0
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  network: grpc
-  grpc-opts:
-    grpc-mode: gun
-    grpc-service-name: ZEDMODEON-ZEDMODEON-bia-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON
-  tcp_delay: 107
-  clash_delay: 2
-- name: 🇫🇷 法国 3
-  server: 141.227.140.217
-  port: 23990
-  type: vless
-  uuid: 5afe0624-a873-4cb8-b4eb-cea6c41a9e52
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  network: grpc
-  grpc-opts:
-    grpc-mode: gun
-    grpc-service-name: ZEDMODEON-ZEDMODEON-bia-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON
-  tcp_delay: 115
-  clash_delay: 2
-- client-fingerprint: chrome
-  name: 🇫🇷 法国 15
-  network: tcp
-  port: 2066
-  reality-opts:
-    public-key: -Z0BnqW2MHBXjDsB2a8-KPfg8GqTO1uIPXriHQAMhSY
-    short-id: 6b245ab1
-  server: 185.193.17.80
-  servername: yahoo.com
-  skip-cert-verify: false
-  tls: true
-  type: vless
-  uuid: 44830663-914e-4127-a9b3-412406f59cbe
-  tcp_delay: 114
-  clash_delay: 2
-- name: 🇫🇷 法国 17
-  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  port: 8443
-  server: fc63286e-t6ykg0-thmjbt-1rk9y.fr.cdnkuaishou.com
-  tls: true
-  type: http
-  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 151
-  clash_delay: 2
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇳 NL 5
-  password: oZIoA69Q8yhcQV8ka3Pa3A
-  port: 8080
-  server: 193.29.139.140
-  type: ss
-  tcp_delay: 109
-  clash_delay: 2
-- client-fingerprint: chrome
-  flow: xtls-rprx-vision
-  name: 🇺🇳 NL 6
-  network: tcp
-  port: 8443
-  reality-opts:
-    public-key: UBwue-cEE6w4gTS4dngQng5JEykNTR6d9f65p6RyA2w
-    short-id: 50c860b05993532d
-  server: 89.110.68.47
-  servername: cdn.discordapp.com
-  skip-cert-verify: false
-  tls: true
-  type: vless
-  uuid: 787ae54e-40ad-4caf-899b-ad3a19ff1103
-  tcp_delay: 103
-  clash_delay: 2
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇳 NL 7
-  password: 4a2rfixophdjffa8KVA4Aa
-  port: 8080
-  server: 193.29.139.157
-  type: ss
-  tcp_delay: 106
-  clash_delay: 2
-- cipher: aes-256-cfb
-  name: 🇮🇳 印度 3
-  password: f8f7aCzcPKbsF8p3
-  port: 989
-  server: 134.209.147.198
-  type: ss
-  udp: true
-  tcp_delay: 219
-  clash_delay: 2
-- cipher: aes-256-cfb
-  name: 🇺🇳 PL 5
-  password: p9z5BVADH2YFs3MN
-  port: 9040
-  server: 217.30.10.70
-  type: ss
-  tcp_delay: 119
-  clash_delay: 2
-- name: 🇺🇳 PL 6
-  password: .+QAJot50sDi6mvb
-  port: 11790
-  server: 5.188.108.13
-  skip-cert-verify: false
-  sni: runningshoes.purpletornado.click
-  type: trojan
-  tcp_delay: 137
-  clash_delay: 2
-- name: 🇺🇳 SE 2
-  password: BaeSzHdfJIR13l67
-  port: 11930
-  server: 70.34.218.149
-  skip-cert-verify: false
-  sni: softpillow.silentrocket.click
-  type: trojan
-  tcp_delay: 116
-  clash_delay: 2
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇳 LT 1
-  password: oZIoA69Q8yhcQV8ka3Pa3A
-  port: 8080
-  server: 45.87.175.69
-  type: ss
-  tcp_delay: 103
-  clash_delay: 2
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇳 LT 3
-  password: oZIoA69Q8yhcQV8ka3Pa3A
-  port: 8080
-  server: 45.158.171.70
-  type: ss
-  tcp_delay: 103
-  clash_delay: 2
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇳 LT 4
-  password: 4a2rfixophdjffa8KVA4Aa
-  port: 8080
-  server: 45.87.175.154
-  type: ss
-  tcp_delay: 103
-  clash_delay: 2
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇳 PA 1
-  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
-  port: 990
-  server: 138.186.142.80
-  type: ss
-  tcp_delay: 99
-  clash_delay: 2
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇳 PA 2
-  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
-  port: 990
-  server: 138.186.142.81
-  type: ss
-  tcp_delay: 108
-  clash_delay: 2
-- cipher: chacha20-ietf-poly1305
-  name: 🇮🇹 意大利 1
-  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
-  port: 990
-  server: 212.102.54.45
-  type: ss
-  tcp_delay: 124
-  clash_delay: 2
-- client-fingerprint: chrome
-  flow: xtls-rprx-vision
-  name: 🇮🇹 意大利 2
-  network: tcp
-  port: 1114
-  reality-opts:
-    public-key: WfkCF0eEuIoO0MyJsKOddU89QrTzCZ4y2dzCJbH99CQ
-    short-id: 79a1e14b
-  server: 204.216.216.23
-  servername: yahoo.com
-  skip-cert-verify: false
-  tls: true
-  type: vless
-  uuid: 6ba2eac6-0ec9-44ca-a42b-a8e23aafb530
-  tcp_delay: 113
-  clash_delay: 2
-- name: 🇺🇳 LB 1
-  server: plr.strelkavpn.ru
-  port: 8443
-  type: vless
-  uuid: 0e0df131-29f5-4725-b9a3-7b1a6cac4c95
-  tls: true
-  tfo: false
-  flow: xtls-rprx-vision
-  skip-cert-verify: true
-  reality-opts:
-    public-key: i1XUXx_YHZJ8LiZG7yGYG-jXr1JHASvat25lf9SmnzM
-    short-id: 5626dfc4162fd4f2
-  servername: plr.strelkavpn.ru
-  client-fingerprint: chrome
-  network: tcp
-  tcp_delay: 230
-  clash_delay: 2
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇳 CY 1
-  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
-  port: 990
-  server: 91.148.135.31
-  type: ss
-  tcp_delay: 146
-  clash_delay: 2
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇳 KZ 1
-  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
-  port: 990
-  server: 109.61.39.28
-  type: ss
-  tcp_delay: 211
-  clash_delay: 2
-- cipher: aes-256-cfb
-  name: 🇺🇳 SI 1
-  password: f8f7aCzcPKbsF8p3
-  port: 989
-  server: 192.71.244.150
-  type: ss
-  tcp_delay: 133
-  clash_delay: 2
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇳 MD 4
-  password: 6VAcll4P8xPTUVVtHeST3onRmLoVIBSU
-  port: 443
-  server: 94.131.104.147
-  type: ss
-  tcp_delay: 146
-  clash_delay: 2
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇳 MD 5
-  password: yCbQ4bry4otfifK7oel71NaXpPL9pYJb
-  port: 443
-  server: 89.221.225.15
-  type: ss
-  tcp_delay: 141
-  clash_delay: 2
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇳 BG 1
-  password: pQmnC03JObbPhdh5FBJHgD6jnTLchsRA
-  port: 443
-  server: 95.164.116.33
-  type: ss
-  tcp_delay: 156
-  clash_delay: 2
-- cipher: chacha20-ietf-poly1305
-  name: 🇦🇷 阿根廷 1
-  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
-  port: 990
-  server: 190.103.176.32
-  type: ss
-  tcp_delay: 161
-  clash_delay: 2
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇳 ZA 1
-  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
-  port: 990
-  server: 156.38.168.58
-  type: ss
-  tcp_delay: 253
-  clash_delay: 2
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇳 AE 1
-  password: YzH4id7ZEyKpfy39F2YcOmzCsBklGwh8
-  port: 443
-  server: 95.174.68.33
-  type: ss
-  tcp_delay: 245
-  clash_delay: 2
-- cipher: aes-256-cfb
-  name: 🇺🇸 美国 28
-  password: f8f7aCzcPKbsF8p3
-  port: 989
-  server: 104.192.226.106
-  type: ss
-  tcp_delay: 38
-  clash_delay: 3
-- cipher: aes-128-gcm
-  name: 🇺🇸 美国 121
-  password: shadowsocks
-  port: 443
-  server: 156.146.38.168
-  type: ss
-  tcp_delay: 21
-  clash_delay: 3
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇸 美国 129
-  password: f8f7aCzcPKbsF8p3
-  port: 990
-  server: 104.192.226.106
-  type: ss
-  tcp_delay: 38
-  clash_delay: 3
+  region_info:
+    name: 韩国
+    code: KR
 - alterId: 0
   cipher: auto
-  name: 🇺🇸 美国 146
-  port: 59807
-  server: 38.14.99.179
-  skip-cert-verify: true
+  name: 🇺🇸 美国 1
+  network: ws
+  port: 20086
+  server: 173.249.209.146
   tls: false
   type: vmess
-  udp: true
-  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
+  uuid: 3935c2dc-dbb0-43f7-b367-fe89abe87fdf
+  ws-opts:
+    headers: {}
+    path: /
   tcp_delay: 47
-  clash_delay: 3
-- cipher: rc4-md5
-  name: 🇺🇸 美国 147
-  password: 14fFPrbezE3HDZzsMOr6
-  port: 8080
-  server: 107.151.182.253
-  type: ss
-  tcp_delay: 37
-  clash_delay: 3
-- name: 🇺🇸 美国 162
-  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  port: 443
-  server: abab5d5a-t6ykg0-thmjbt-1rk9y.sj.oshuawei.com
-  tls: true
-  type: http
-  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 166
-  clash_delay: 3
-- client-fingerprint: chrome
-  name: 🇺🇸 美国 163
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 2
   network: ws
-  port: 21275
-  server: 45.45.218.166
+  port: 80
+  server: bbbbbbbbb.222769.xyz
+  skip-cert-verify: false
+  tls: false
+  type: vmess
+  uuid: 2e65577e-8fdb-4bb1-a495-96f3122099a7
+  ws-opts:
+    headers:
+      Host: bbbbbbbbb.222769.xyz
+    path: /f6taOMcOSZb9TPR
+  tcp_delay: 66
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 3
+  password: gs4BXwT6SW
+  port: 10988
+  server: 154.26.192.123
+  type: http
+  username: fQ67Dpe5dU
+  tcp_delay: 63
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- alterId: 0
+  cipher: auto
+  client-fingerprint: ''
+  name: 🇺🇸 美国 4
+  network: ws
+  port: 80
+  server: NnnNNNnNnNNNNN.222769.xYZ
+  tls: false
+  type: vmess
+  uuid: 2e65577e-8fdb-4bb1-a495-96f3122099a7
+  ws-opts:
+    headers:
+      Host: nnnnnnnnnnnnnn.222769.xyz
+    path: /f6taOMcOSZb9TPR
+  tcp_delay: 72
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- cipher: aes-128-gcm
+  name: 🇺🇸 美国 5
+  password: shadowsocks
+  port: 443
+  server: 156.146.38.170
+  type: ss
+  tcp_delay: 21
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- alterId: 0
+  cipher: auto
+  client-fingerprint: chrome
+  name: 🇺🇸 美国 6
+  network: tcp
+  port: 443
+  server: 165.140.216.141
   skip-cert-verify: true
   tfo: true
-  tls: true
-  type: vless
+  type: vmess
   udp: true
-  uuid: 678a8311-6184-4a1f-a651-84be3cc82e37
-  ws-opts:
-    headers:
-      Host: ula347.tiri-viri.com
-      User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-    path: /
-  servername: ula347.tiri-viri.com
-  tcp_delay: 50
-  clash_delay: 3
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇸 美国 168
-  password: pNqnYf3kHesOpCchRvUZxfwTafRsOj7g
-  port: 443
-  server: 213.159.76.21
+  uuid: e7d72a8d-26f2-4b54-b366-0c43e0bcba7d
+  tcp_delay: 46
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- cipher: aes-256-gcm
+  name: 🇺🇸 美国 7
+  password: 8JCsPssfgS8tiRwiMlhARg==
+  port: 12000
+  server: 15.204.247.49
   type: ss
-  tcp_delay: 174
-  clash_delay: 3
-- name: 🇺🇸 美国 169
-  server: 69.84.182.13
-  port: 443
-  type: vless
-  uuid: 04f3ed37-bfd4-46d3-b4eb-e62d1f32b6f9
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: fr-1-fr-1.aiopen.sbs
+  tcp_delay: 23
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- client-fingerprint: chrome
+  encryption: none
+  name: 🇺🇸 美国 8
   network: ws
-  ws-opts:
-    path: /kbjc/fr1
-    headers:
-      Host: fr-1-fr-1.aiopen.sbs
-  tcp_delay: 11
-  clash_delay: 3
-- name: 🇺🇸 美国 170
-  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  port: 443
-  server: 1a932f71-t6ykg0-thmjbt-1rk9y.sjc.oshuawei.com
+  port: 2096
+  server: 166.62.114.253
+  skip-cert-verify: false
   tls: true
-  type: http
-  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 106
-  clash_delay: 3
-- name: 🇺🇸 美国 173
+  type: vless
+  uuid: 7556317c-dff6-46e8-ad29-b408f2a6456e
+  ws-opts:
+    early-data-header-name: Sec-WebSocket-Protocol
+    headers:
+      Host: vless.muzheng.top
+    max-early-data: 2560
+    path: /Telegram+@WangCai2+/
+  servername: vless.muzheng.top
+  tcp_delay: 12
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- cipher: chacha20-ietf-poly1305
+  name: 🇺🇸 美国 9
+  password: NDRySIABARbErNIVsCNVkyYAHiBzhveT
+  port: 443
+  server: 23.95.75.146
+  type: ss
+  udp: true
+  tcp_delay: 44
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- cipher: chacha20-ietf-poly1305
+  name: 🇺🇸 美国 10
+  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
+  port: 990
+  server: 173.234.29.2
+  type: ss
+  tcp_delay: 14
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 11
+  network: tcp
+  port: 443
+  server: zorox-net.senu-zer.online
+  skip-cert-verify: false
+  tls: true
+  type: vless
+  uuid: 224629c2-342b-4e54-bb75-b56cb7dabf30
+  servername: zorox-net.senu-zer.online
+  tcp_delay: 93
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- encryption: none
+  name: 🇺🇸 美国 12
+  network: ws
+  port: 8443
+  server: www.udacity.com
+  servername: www.x-aniu-h-k.netlib.re
+  tls: true
+  type: vless
+  uuid: e258977b-e413-4718-a3af-02d75492c349
+  ws-opts:
+    headers:
+      Host: www.x-aniu-h-k.netlib.re
+    path: /?ed=2560
+  tcp_delay: 98
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- cipher: chacha20-ietf-poly1305
+  name: 🇺🇸 美国 13
+  password: UAMVtHm54uahd6SiN5WcD16rsPSdabPG
+  port: 443
+  server: 23.95.72.81
+  type: ss
+  tcp_delay: 39
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 14
+  type: vless
+  server: 104.21.71.83
+  port: 443
+  uuid: 3c2f5010-bc17-46d7-a5d3-7489f3a8dded
+  encryption: none
+  flow: ''
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  host: a32e1893-496a-5d3e-d34f-a8674b22b993.777162.xyz
+  path: /GJuqYfsZSA3HxKLVmdalbjJm7kb1B
+  sni: a32e1893-496a-5d3e-d34f-a8674b22b993.777162.xyz
+  ws-opts:
+    path: /GJuqYfsZSA3HxKLVmdalbjJm7kb1B
+    headers:
+      Host: a32e1893-496a-5d3e-d34f-a8674b22b993.777162.xyz
+  tcp_delay: 13
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 15
   password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
   port: 443
-  server: bb303bbe-t6ykg0-thmjbt-1rk9y.sv.plebai.net
+  server: 02d98e3d-t6ykg0-thmjbt-1rk9y.los.gotochinatown.net
   tls: true
   type: socks5
   username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 99
-  clash_delay: 3
-- name: 🇺🇸 美国 191
-  server: news.zoom.us
-  port: 8443
-  type: vless
-  uuid: 353103ee-6f14-440b-b57a-b17b1f77155c
+  tcp_delay: 98
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 16
+  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
+  port: 443
+  server: 5a6c96e7-t6ykg0-thmjbt-1rk9y.sj.gotochinatown.net
   tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: premium.vkehi.shop
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: premium.vkehi.shop
-  tcp_delay: 68
-  clash_delay: 3
-- name: 🇺🇸 美国 194
+  type: socks5
+  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
+  tcp_delay: 167
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 17
   password: 79314e99f0a473fe86efc7827942ad00
   port: 2890
-  server: 160.16.151.196
-  sni: www.nintendogames.net
-  type: trojan
-  tcp_delay: 138
-  clash_delay: 3
-- name: 🇺🇸 美国 201
-  password: 79314e99f0a473fe86efc7827942ad00
-  port: 4054
-  server: 160.16.63.16
+  server: 160.16.131.243
+  skip-cert-verify: true
   sni: www.nintendogames.net
   type: trojan
   tcp_delay: 132
-  clash_delay: 3
-- name: 🇺🇸 美国 205
-  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 18
+  server: www.shopify.com
   port: 443
-  server: 82a42e07-t6ykg0-thmjbt-1rk9y.se.oshuawei.com
+  type: vless
+  uuid: e258977b-e413-4718-a3af-02d75492c349
   tls: true
-  type: http
-  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 190
-  clash_delay: 3
-- name: 🇺🇸 美国 236
+  tfo: false
+  skip-cert-verify: true
+  servername: www.x-aniu---jp.netlib.re
   network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: www.x-aniu---jp.netlib.re
+  tcp_delay: 32
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 19
+  server: 172.64.50.7
+  port: 2087
+  type: vless
+  uuid: e258977b-e413-4718-a3af-02d75492c349
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: www.x-aniu---jp.netlib.re
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: www.x-aniu---jp.netlib.re
+  tcp_delay: 17
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 20
+  server: 172.67.174.112
   port: 443
-  server: norman.ns.cloudflare.com
-  servername: azizoarjmand.info
+  type: vless
+  uuid: e258977b-e413-4718-a3af-02d75492c349
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: www.x-aniu-h-k.netlib.re
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: www.x-aniu-h-k.netlib.re
+  tcp_delay: 14
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 21
+  server: 172.64.229.167
+  port: 2087
+  type: vless
+  uuid: e258977b-e413-4718-a3af-02d75492c349
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: www.x-aniu---jp.netlib.re
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: www.x-aniu---jp.netlib.re
+  tcp_delay: 12
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 22
+  server: 172.66.45.120
+  port: 443
+  type: vless
+  uuid: e258977b-e413-4718-a3af-02d75492c349
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: www.x-aniu-h-k.netlib.re
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: www.x-aniu-h-k.netlib.re
+  tcp_delay: 12
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 23
+  server: clyde.ns.cloudflare.com
+  port: 443
+  type: vless
+  uuid: 02e46039-200d-4ae4-ac90-b0d619f72034
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: redlabell.info
+  network: ws
+  ws-opts:
+    path: /aafeuws
+    headers:
+      Host: redlabell.info
+  tcp_delay: 15
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 24
+  server: 172.64.35.201
+  port: 2087
+  type: vless
+  uuid: e258977b-e413-4718-a3af-02d75492c349
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: www.x-aniu---jp.netlib.re
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: www.x-aniu---jp.netlib.re
+  tcp_delay: 15
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- client-fingerprint: chrome
+  name: 🇺🇸 美国 25
+  password: 79314e99f0a473fe86efc7827942ad00
+  port: 2890
+  server: 160.16.116.227
+  skip-cert-verify: true
+  sni: www.nintendogames.net
+  type: trojan
+  tcp_delay: 132
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 26
+  server: 172.67.79.85
+  port: 443
+  type: vless
+  uuid: e258977b-e413-4718-a3af-02d75492c349
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: www.x-aniu---jp.netlib.re
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: www.x-aniu---jp.netlib.re
+  tcp_delay: 9
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 27
+  password: 79314e99f0a473fe86efc7827942ad00
+  port: 4054
+  server: 160.16.236.32
+  sni: www.nintendogames.net
+  type: trojan
+  tcp_delay: 132
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- name: 🇺🇸 美国 28
+  server: 172.64.144.36
+  port: 2087
+  type: vless
+  uuid: e258977b-e413-4718-a3af-02d75492c349
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: www.x-aniu-h-k.netlib.re
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: www.x-aniu-h-k.netlib.re
+  tcp_delay: 14
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- client-fingerprint: chrome
+  name: 🇺🇸 美国 29
+  network: ws
+  port: 8443
+  server: ovhwuxian.pai50288.uk
   skip-cert-verify: false
   tls: true
   type: vless
-  uuid: ee122f13-9b54-49b6-abc5-aa47b464fdb3
+  uuid: 57ba2ab1-a283-42eb-82ee-dc3561a805b8
   ws-opts:
     headers:
-      Host: azizoarjmand.info
-    path: /yhowcws
-  tcp_delay: 13
+      Host: ovhwuxian.pai50288.uk
+    path: /57ba2ab1
+  servername: ovhwuxian.pai50288.uk
+  tcp_delay: 46
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- alterId: 0
+  cipher: auto
+  client-fingerprint: chrome
+  name: 🇺🇸 美国 30
+  network: ws
+  port: 443
+  server: 209.126.84.189
+  skip-cert-verify: true
+  tfo: true
+  type: vmess
+  udp: true
+  uuid: 2c981164-9b93-4bca-94ff-b78d3f8498d7
+  ws-opts:
+    headers:
+      Host: 209.126.84.189
+    path: /vmessws
+  tcp_delay: 125
+  clash_delay: 2
+  region_info:
+    name: 美国
+    code: US
+- alterId: 0
+  cipher: auto
+  name: 🇨🇦 加拿大 1
+  network: ws
+  port: 80
+  server: 15.235.41.200
+  tls: false
+  type: vmess
+  uuid: 58fe1542-5290-40ad-815a-77707a81afe5
+  ws-opts:
+    headers: {}
+    path: /IOebhLMhl1CTbFHbL95myfRX2
+  tcp_delay: 56
+  clash_delay: 2
+  region_info:
+    name: 加拿大
+    code: CA
+- cipher: aes-256-cfb
+  name: 🇨🇦 加拿大 2
+  password: f8f7aCzcPKbsF8p3
+  port: 989
+  server: 79.127.233.170
+  type: ss
+  tcp_delay: 50
+  clash_delay: 2
+  region_info:
+    name: 加拿大
+    code: CA
+- alterId: 0
+  cipher: auto
+  client-fingerprint: chrome
+  name: 🇨🇦 加拿大 3
+  network: ws
+  port: 80
+  server: 51.79.102.253
+  skip-cert-verify: true
+  tfo: true
+  type: vmess
+  udp: true
+  uuid: 58fe1542-5290-40ad-815a-77707a81afe5
+  ws-opts:
+    headers:
+      Host: wrmelmwxlf.gktevlrqznwqqozy.fabpfs66gizmnojhcvqxwl.kytrcfzqla87gvgvs6c7kjnrubuh.cc
+    path: /IOebhLMhl1CTbFHbL95myfRX2
+  tcp_delay: 48
+  clash_delay: 2
+  region_info:
+    name: 加拿大
+    code: CA
+- name: 🇨🇦 加拿大 4
+  password: .ie4rghJuMkcf0oF
+  port: 18509
+  server: 38.96.254.102
+  sni: shoppingmall.electricbanana.click
+  type: trojan
+  tcp_delay: 60
+  clash_delay: 2
+  region_info:
+    name: 加拿大
+    code: CA
+- alpn:
+  - h2
+  - http/1.1
+  client-fingerprint: chrome
+  name: 🇨🇦 加拿大 5
+  network: tcp
+  port: 7070
+  server: 86.107.168.100
+  skip-cert-verify: false
+  tls: true
+  type: vless
+  uuid: be32c9ad-92e1-485b-dc74-2a65e9dae480
+  servername: src.smnsoft.com
+  tcp_delay: 76
+  clash_delay: 2
+  region_info:
+    name: 加拿大
+    code: CA
+- cipher: rc4-md5
+  name: 🇨🇦 加拿大 6
+  password: 14fFPrbezE3HDZzsMOr6
+  port: 8080
+  server: 137.184.174.93
+  type: ss
+  tcp_delay: 22
   clash_delay: 3
-- name: 🇩🇪 德国 5
+  region_info:
+    name: 加拿大
+    code: CA
+- cipher: chacha20-ietf-poly1305
+  name: 🇨🇦 加拿大 7
+  password: f8f7aCzcPKbsF8p3
+  port: 990
+  server: 64.74.163.82
+  type: ss
+  tcp_delay: 44
+  clash_delay: 3
+  region_info:
+    name: 加拿大
+    code: CA
+- cipher: chacha20-ietf-poly1305
+  name: 🇨🇦 加拿大 8
+  password: f8f7aCzcPKbsF8p3
+  port: 990
+  server: 79.127.233.170
+  type: ss
+  tcp_delay: 57
+  clash_delay: 3
+  region_info:
+    name: 加拿大
+    code: CA
+- name: 🇨🇦 加拿大 9
+  password: 6pRjKQJ0CWyFtG.9
+  port: 12990
+  server: 198.57.27.27
+  sni: diningtable.electricbanana.click
+  type: trojan
+  tcp_delay: 32
+  clash_delay: 4
+  region_info:
+    name: 加拿大
+    code: CA
+- cipher: chacha20-ietf-poly1305
+  name: 🇨🇦 加拿大 10
+  password: JIhN6rBKkaEboLNXVSv5rq
+  port: 80
+  server: 142.4.216.225
+  type: ss
+  tcp_delay: 29
+  clash_delay: 4
+  region_info:
+    name: 加拿大
+    code: CA
+- name: 🇬🇧 英国 1
+  server: 82.38.31.187
+  port: 8080
+  type: ss
+  cipher: chacha20-ietf-poly1305
+  password: k1dBOmOB4oqi7Ump37a1bQ
+  tcp_delay: 103
+  clash_delay: 2
+  region_info:
+    name: 英国
+    code: GB
+- cipher: chacha20-ietf-poly1305
+  name: 🇬🇧 英国 2
+  password: k1dBOmOB4oqi7Ump37a1bQ
+  port: 8080
+  server: 82.38.31.179
+  type: ss
+  tcp_delay: 103
+  clash_delay: 2
+  region_info:
+    name: 英国
+    code: GB
+- cipher: chacha20-ietf-poly1305
+  name: 🇬🇧 英国 3
+  password: k1dBOmOB4oqi7Ump37a1bQ
+  port: 8080
+  server: 82.38.31.202
+  type: ss
+  tcp_delay: 106
+  clash_delay: 2
+  region_info:
+    name: 英国
+    code: GB
+- name: 🇬🇧 英国 4
+  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
+  port: 443
+  server: 851db2a2-t6ykg0-thmjbt-1rk9y.uk.oshuawei.com
+  tls: true
+  type: http
+  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
+  tcp_delay: 123
+  clash_delay: 2
+  region_info:
+    name: 英国
+    code: GB
+- cipher: chacha20-ietf-poly1305
+  name: 🇬🇧 英国 5
+  password: k1dBOmOB4oqi7Ump37a1bQ
+  port: 8080
+  server: 82.38.31.218
+  type: ss
+  udp: true
+  tcp_delay: 106
+  clash_delay: 3
+  region_info:
+    name: 英国
+    code: GB
+- http-opts:
+    headers:
+      Host:
+      - varzesh3.ir
+    path:
+    - /
+  name: 🇩🇪 德国 1
+  network: http
+  port: 33801
+  server: m39a.vip784.com
+  skip-cert-verify: false
+  tls: false
+  type: vless
+  uuid: c99262ae-ee77-4dac-8437-2d7f68fd3938
+  tcp_delay: 143
+  clash_delay: 2
+  region_info:
+    name: 德国
+    code: DE
+- client-fingerprint: chrome
+  flow: xtls-rprx-vision
+  name: 🇩🇪 德国 2
+  network: tcp
+  port: 443
+  reality-opts:
+    public-key: esHsu3-Fj0aZ0xuNBV6qW1zu1hLbas8YDn7AO0QGsBw
+    short-id: 0ff58d687a4c6c
+  server: 179.61.251.78
+  servername: refersion.com
+  skip-cert-verify: false
+  tls: true
+  type: vless
+  uuid: fabc8a38-76c5-48fe-ada7-a9e52dd16225
+  tcp_delay: 162
+  clash_delay: 2
+  region_info:
+    name: 德国
+    code: DE
+- name: 🇩🇪 德国 3
+  network: ws
+  port: 443
+  server: delilah.ns.cloudflare.com
+  skip-cert-verify: false
+  tls: true
+  type: vless
+  uuid: 5b687f17-0176-495e-84a1-0835f8feec91
+  ws-opts:
+    headers:
+      Host: 639002592262919469.sentra-amsir.info
+    path: /egakxows
+  servername: 639002592262919469.sentra-amsir.info
+  tcp_delay: 39
+  clash_delay: 2
+  region_info:
+    name: 德国
+    code: DE
+- name: 🇩🇪 德国 4
   network: ws
   password: 8r<[9'l6hAO#8ZQi
   port: 8443
@@ -2179,7 +1543,10 @@ proxies:
     path: /tro8sFW1S91B6sZrM1?ed=2560
   tcp_delay: 46
   clash_delay: 3
-- name: 🇩🇪 德国 40
+  region_info:
+    name: 德国
+    code: DE
+- name: 🇩🇪 德国 5
   password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
   port: 443
   server: df443049-t6ykg0-thmjbt-1rk9y.de.oshuawei.com
@@ -2188,10 +1555,13 @@ proxies:
   username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
   tcp_delay: 178
   clash_delay: 3
+  region_info:
+    name: 德国
+    code: DE
 - alterId: 0
   cipher: auto
   client-fingerprint: chrome
-  name: 🇩🇪 德国 88
+  name: 🇩🇪 德国 6
   network: tcp
   port: 40878
   server: 85.195.101.122
@@ -2202,7 +1572,10 @@ proxies:
   uuid: f3d4167e-b15e-4e46-82e9-9286ef93fda7
   tcp_delay: 116
   clash_delay: 3
-- name: 🇩🇪 德国 110
+  region_info:
+    name: 德国
+    code: DE
+- name: 🇩🇪 德国 7
   network: ws
   port: 80
   server: 37.120.184.180
@@ -2216,213 +1589,10 @@ proxies:
     path: /news
   tcp_delay: 126
   clash_delay: 3
-- cipher: rc4-md5
-  name: 🇨🇦 加拿大 8
-  password: 14fFPrbezE3HDZzsMOr6
-  port: 8080
-  server: 137.184.174.93
-  type: ss
-  tcp_delay: 22
-  clash_delay: 3
-- cipher: chacha20-ietf-poly1305
-  name: 🇨🇦 加拿大 21
-  password: f8f7aCzcPKbsF8p3
-  port: 990
-  server: 64.74.163.82
-  type: ss
-  tcp_delay: 44
-  clash_delay: 3
-- cipher: chacha20-ietf-poly1305
-  name: 🇨🇦 加拿大 24
-  password: f8f7aCzcPKbsF8p3
-  port: 990
-  server: 79.127.233.170
-  type: ss
-  tcp_delay: 57
-  clash_delay: 3
-- cipher: chacha20-ietf-poly1305
-  name: 🇷🇺 俄罗斯 16
-  password: ixPymFma6P7U41wk9MNP7znPnvax3mjd
-  port: 443
-  server: 45.89.55.173
-  type: ss
-  tcp_delay: 150
-  clash_delay: 3
-- name: 🇭🇰 香港 55
-  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  port: 5228
-  server: 29fd8735-t6ykg0-thmjbt-1rk9y.cm4.oshuawei.com
-  tls: true
-  type: http
-  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 248
-  clash_delay: 3
-- name: 🇯🇵 日本 31
-  password: 79314e99f0a473fe86efc7827942ad00
-  port: 4054
-  server: 160.16.81.84
-  skip-cert-verify: false
-  sni: www.nintendogames.net
-  type: trojan
-  tcp_delay: 132
-  clash_delay: 3
-- name: 🇯🇵 日本 37
-  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  port: 443
-  server: c529a1ed-t6ykg0-thmjbt-1rk9y.jp.oshuawei.com
-  tls: true
-  type: http
-  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 148
-  clash_delay: 3
-- name: 🇯🇵 日本 38
-  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  port: 443
-  server: 4ffbf33f-t6ykg0-thmjbt-1rk9y.jp4.oshuawei.com
-  tls: true
-  type: http
-  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 178
-  clash_delay: 3
-- name: 🇯🇵 日本 39
-  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  port: 27233
-  server: 29fd8735-t6ykg0-thmjbt-1rk9y.cm4.oshuawei.com
-  tls: true
-  type: http
-  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 219
-  clash_delay: 3
-- cipher: chacha20-ietf-poly1305
-  name: 🇬🇧 英国 6
-  password: k1dBOmOB4oqi7Ump37a1bQ
-  port: 8080
-  server: 82.38.31.218
-  type: ss
-  udp: true
-  tcp_delay: 106
-  clash_delay: 3
-- cipher: chacha20-ietf
-  name: 🇸🇬 新加坡 14
-  password: asd123456
-  port: 8388
-  server: 103.36.91.23
-  type: ss
-  tcp_delay: 218
-  clash_delay: 3
-- name: 🇸🇬 新加坡 15
-  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  port: 17235
-  server: 29fd8735-t6ykg0-thmjbt-1rk9y.cm4.oshuawei.com
-  tls: true
-  type: http
-  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 219
-  clash_delay: 3
-- name: 🇸🇬 新加坡 17
-  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  port: 443
-  server: f7e1f401-t6ykg0-thmjbt-1rk9y.sg.oshuawei.com
-  tls: true
-  type: http
-  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 237
-  clash_delay: 3
-- client-fingerprint: chrome
-  flow: xtls-rprx-vision
-  name: 🇺🇳 NL 4
-  network: tcp
-  port: 443
-  reality-opts:
-    public-key: yP1V_oAX1Sehc_102nMHuQgTOYk7T9KbJQmTlK4maVE
-    short-id: 5485e4d782145257
-  server: 72.56.69.193
-  servername: sun6-22.userapi.com
-  skip-cert-verify: false
-  tls: true
-  type: vless
-  uuid: 90c9c25c-df6c-4438-83d3-ef97166a9184
-  tcp_delay: 106
-  clash_delay: 3
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇳 LT 2
-  password: oZIoA69Q8yhcQV8ka3Pa3A
-  port: 8080
-  server: 45.87.175.28
-  type: ss
-  tcp_delay: 103
-  clash_delay: 3
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇳 MD 1
-  password: uo7EbtqIwgZXXHmMv5LbLcOxptyPlNkh
-  port: 443
-  server: 178.23.190.238
-  type: ss
-  tcp_delay: 107
-  clash_delay: 3
-- cipher: aes-256-cfb
-  name: 🇺🇳 MD 2
-  password: f8f7aCzcPKbsF8p3
-  port: 989
-  server: 185.153.197.5
-  type: ss
-  tcp_delay: 148
-  clash_delay: 3
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇳 MD 3
-  password: mbhqsStnFQT1cTZYCdsmkugGUC6GT6rp
-  port: 443
-  server: 213.159.67.124
-  type: ss
-  tcp_delay: 137
-  clash_delay: 3
-- cipher: aes-256-gcm
-  name: 🇺🇳 CL 1
-  password: kDWvXYZoTBcGkC4
-  port: 8881
-  server: 38.54.20.59
-  type: ss
-  tcp_delay: 131
-  clash_delay: 3
-- name: 🇲🇾 马来西亚 1
-  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  port: 31233
-  server: 1bf7b035-t6ykg0-thmjbt-1rk9y.my.oshuawei.com
-  tls: true
-  type: http
-  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 338
-  clash_delay: 3
-- name: 🇹🇭 泰国 1
-  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  port: 32232
-  server: c084cc39-t6ykg0-thmjbt-1rk9y.id.oshuawei.com
-  tls: true
-  type: http
-  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 281
-  clash_delay: 3
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇸 美国 17
-  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
-  port: 990
-  server: 167.160.90.178
-  type: ss
-  tcp_delay: 45
-  clash_delay: 4
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 22
-  port: 59807
-  server: 38.14.99.163
-  skip-cert-verify: true
-  tls: false
-  type: vmess
-  udp: true
-  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
-  tcp_delay: 46
-  clash_delay: 4
-- name: 🇩🇪 德国 1
+  region_info:
+    name: 德国
+    code: DE
+- name: 🇩🇪 德国 8
   network: ws
   port: 80
   server: 37.120.186.241
@@ -2436,7 +1606,10 @@ proxies:
     path: /news
   tcp_delay: 171
   clash_delay: 4
-- name: 🇩🇪 德国 58
+  region_info:
+    name: 德国
+    code: DE
+- name: 🇩🇪 德国 9
   network: ws
   port: 443
   server: www.speedtest.net
@@ -2451,4198 +1624,32 @@ proxies:
   servername: kalam.mrconfigur.site
   tcp_delay: 85
   clash_delay: 4
-- name: 🇨🇦 加拿大 16
-  password: 6pRjKQJ0CWyFtG.9
-  port: 12990
-  server: 198.57.27.27
-  sni: diningtable.electricbanana.click
-  type: trojan
-  tcp_delay: 32
-  clash_delay: 4
-- cipher: chacha20-ietf-poly1305
-  name: 🇨🇦 加拿大 29
-  password: JIhN6rBKkaEboLNXVSv5rq
-  port: 80
-  server: 142.4.216.225
-  type: ss
-  tcp_delay: 29
-  clash_delay: 4
-- alterId: 0
-  cipher: auto
-  name: 🇭🇰 香港 26
-  network: ws
-  port: 8080
-  server: 8.218.199.111
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: f55db42d-ee52-4a47-880b-6f7b123ab222
-  ws-opts:
-    path: /
-  tcp_delay: 185
-  clash_delay: 4
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 73
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.45
-  type: ss
-  tcp_delay: 236
-  clash_delay: 5
-- cipher: aes-256-cfb
-  country: VN
-  delay: 831
-  name: 🇻🇳 越南 111
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.85
-  type: ss
-  tcp_delay: 251
-  clash_delay: 5
-- cipher: aes-128-gcm
-  name: 🇺🇸 美国 15
-  password: shadowsocks
-  port: 443
-  server: 37.19.198.236
-  type: ss
-  tcp_delay: 41
-  clash_delay: 5
-- cipher: aes-128-gcm
-  name: 🇺🇸 美国 16
-  password: shadowsocks
-  port: 443
-  server: 156.146.38.167
-  type: ss
-  tcp_delay: 13
-  clash_delay: 5
-- cipher: aes-128-gcm
-  name: 🇺🇸 美国 227
-  password: shadowsocks
-  port: 443
-  server: 156.146.38.169
-  type: ss
-  tcp_delay: 13
-  clash_delay: 5
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 1
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.60
-  type: ss
-  tcp_delay: 252
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 2
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.13
-  type: ss
-  tcp_delay: 252
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 3
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.69
-  type: ss
-  tcp_delay: 225
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 4
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.195
-  type: ss
-  tcp_delay: 250
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 5
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.205
-  type: ss
-  tcp_delay: 225
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 6
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.236
-  type: ss
-  tcp_delay: 223
-  clash_delay: 6
-- name: 🇻🇳 越南 7
-  password: 6b4ced5e-835a-4a7a-9d03-6a46e94668cb
-  port: 443
-  server: 103.195.236.24
-  skip-cert-verify: false
-  type: trojan
-  tcp_delay: 225
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 8
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.253
-  type: ss
-  tcp_delay: 225
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 9
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.135
-  type: ss
-  tcp_delay: 231
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 10
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.123
-  type: ss
-  tcp_delay: 254
-  clash_delay: 6
-- cipher: aes-256-cfb
-  country: VN
-  delay: 850
-  name: 🇻🇳 越南 11
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.232
-  type: ss
-  tcp_delay: 251
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 12
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.29
-  type: ss
-  tcp_delay: 221
-  clash_delay: 6
-- cipher: aes-256-cfb
-  client-fingerprint: chrome
-  name: 🇻🇳 越南 13
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.52
-  type: ss
-  tcp_delay: 230
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 14
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.200
-  type: ss
-  tcp_delay: 252
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 15
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.8
-  type: ss
-  tcp_delay: 229
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 16
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.204
-  type: ss
-  udp: true
-  tcp_delay: 225
-  clash_delay: 6
-- cipher: aes-256-cfb
-  country: VN
-  delay: 843
-  name: 🇻🇳 越南 17
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.219
-  type: ss
-  tcp_delay: 227
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 18
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.12
-  type: ss
-  tcp_delay: 254
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 19
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.109
-  type: ss
-  tcp_delay: 223
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 20
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.3
-  type: ss
-  tcp_delay: 222
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 21
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.140
-  type: ss
-  tcp_delay: 252
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 22
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.178
-  type: ss
-  tcp_delay: 227
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 23
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.247
-  type: ss
-  tcp_delay: 247
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 24
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.34
-  type: ss
-  tcp_delay: 225
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 25
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.202
-  type: ss
-  tcp_delay: 223
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 26
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.254
-  type: ss
-  tcp_delay: 230
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 27
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.129
-  type: ss
-  tcp_delay: 237
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 28
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.115
-  type: ss
-  tcp_delay: 254
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 29
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.11
-  type: ss
-  tcp_delay: 222
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 30
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.228
-  type: ss
-  tcp_delay: 254
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 31
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.43
-  type: ss
-  tcp_delay: 227
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 32
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.235
-  type: ss
-  tcp_delay: 231
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 33
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.176
-  type: ss
-  tcp_delay: 224
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 34
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.231
-  type: ss
-  tcp_delay: 251
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 35
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.142
-  type: ss
-  udp: true
-  tcp_delay: 247
-  clash_delay: 6
-- cipher: aes-256-cfb
-  country: VN
-  delay: 1807
-  name: 🇻🇳 越南 36
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.44
-  type: ss
-  tcp_delay: 253
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 37
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.181
-  type: ss
-  tcp_delay: 253
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 38
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.190
-  type: ss
-  tcp_delay: 251
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 39
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.141
-  type: ss
-  tcp_delay: 222
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 40
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.191
-  type: ss
-  tcp_delay: 226
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 41
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.237
-  type: ss
-  tcp_delay: 223
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 42
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.121
-  type: ss
-  tcp_delay: 228
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 43
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.52
-  type: ss
-  tcp_delay: 237
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 44
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.239
-  type: ss
-  udp: true
-  tcp_delay: 248
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 45
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.198
-  type: ss
-  tcp_delay: 223
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 46
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.137
-  type: ss
-  tcp_delay: 229
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 47
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.56
-  type: ss
-  tcp_delay: 217
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 48
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.180
-  type: ss
-  tcp_delay: 253
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 49
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.62
-  type: ss
-  tcp_delay: 221
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 50
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.101
-  type: ss
-  tcp_delay: 230
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 51
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.61
-  type: ss
-  tcp_delay: 251
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 52
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.188
-  type: ss
-  tcp_delay: 256
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 53
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.40
-  type: ss
-  tcp_delay: 230
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 54
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.5
-  type: ss
-  tcp_delay: 251
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 55
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.117
-  type: ss
-  tcp_delay: 250
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 56
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.217
-  type: ss
-  tcp_delay: 233
-  clash_delay: 6
-- cipher: aes-256-cfb
-  country: VN
-  delay: 871
-  name: 🇻🇳 越南 57
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.182
-  type: ss
-  tcp_delay: 253
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 58
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.35
-  type: ss
-  udp: true
-  tcp_delay: 222
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 59
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.153
-  type: ss
-  tcp_delay: 230
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 60
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.24
-  type: ss
-  tcp_delay: 226
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 61
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.126
-  type: ss
-  tcp_delay: 228
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 62
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.238
-  type: ss
-  tcp_delay: 256
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 63
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.212
-  type: ss
-  tcp_delay: 221
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 64
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.59
-  type: ss
-  tcp_delay: 227
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 65
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.206
-  type: ss
-  tcp_delay: 252
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 66
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.134
-  type: ss
-  tcp_delay: 250
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 67
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.199
-  type: ss
-  tcp_delay: 231
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 68
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.154
-  type: ss
-  tcp_delay: 224
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 69
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.234
-  type: ss
-  tcp_delay: 255
-  clash_delay: 6
-- cipher: aes-256-cfb
-  client-fingerprint: chrome
-  name: 🇻🇳 越南 70
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.138
-  type: ss
-  tcp_delay: 222
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 71
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.208
-  type: ss
-  udp: true
-  tcp_delay: 230
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 72
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.227
-  type: ss
-  tcp_delay: 258
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 75
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.183
-  type: ss
-  udp: true
-  tcp_delay: 230
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 76
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.186
-  type: ss
-  tcp_delay: 228
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 77
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.118
-  type: ss
-  tcp_delay: 252
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 78
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.211
-  type: ss
-  tcp_delay: 220
-  clash_delay: 6
-- cipher: aes-256-cfb
-  country: VN
-  delay: 1839
-  name: 🇻🇳 越南 79
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.31
-  type: ss
-  tcp_delay: 221
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 80
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.226
-  type: ss
-  tcp_delay: 226
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 81
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.177
-  type: ss
-  tcp_delay: 252
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 82
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.216
-  type: ss
-  tcp_delay: 252
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 83
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.202
-  type: ss
-  tcp_delay: 227
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 84
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.65
-  type: ss
-  tcp_delay: 237
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 85
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.184
-  type: ss
-  tcp_delay: 226
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 86
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.175
-  type: ss
-  tcp_delay: 260
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 87
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.230
-  type: ss
-  tcp_delay: 244
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 88
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.173
-  type: ss
-  tcp_delay: 250
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 89
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.145
-  type: ss
-  tcp_delay: 252
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 90
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.227
-  type: ss
-  tcp_delay: 226
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 91
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.106
-  type: ss
-  tcp_delay: 227
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 92
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.60
-  type: ss
-  tcp_delay: 253
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 93
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.241
-  type: ss
-  tcp_delay: 233
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 94
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.211
-  type: ss
-  tcp_delay: 249
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 95
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.172
-  type: ss
-  tcp_delay: 229
-  clash_delay: 6
-- cipher: aes-256-cfb
-  country: VN
-  delay: 2439
-  name: 🇻🇳 越南 96
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.201
-  type: ss
-  tcp_delay: 223
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 97
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.203
-  type: ss
-  tcp_delay: 231
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 98
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.183
-  type: ss
-  tcp_delay: 255
-  clash_delay: 6
-- name: 🇻🇳 越南 99
-  type: ss
-  server: 103.186.154.32
-  port: 38388
-  cipher: aes-256-cfb
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  udp: true
-  skip-cert-verify: true
-  tfo: false
-  tcp_delay: 228
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 100
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.224
-  type: ss
-  tcp_delay: 229
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 101
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.143
-  type: ss
-  tcp_delay: 225
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 102
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.55
-  type: ss
-  tcp_delay: 230
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 103
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.252
-  type: ss
-  tcp_delay: 233
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 104
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.174
-  type: ss
-  tcp_delay: 225
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 105
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.107
-  type: ss
-  tcp_delay: 252
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 106
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.75
-  type: ss
-  tcp_delay: 227
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 107
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.213
-  type: ss
-  tcp_delay: 222
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 108
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.37
-  type: ss
-  tcp_delay: 224
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 109
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.67
-  type: ss
-  tcp_delay: 253
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 110
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.15
-  type: ss
-  tcp_delay: 228
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 112
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.207
-  type: ss
-  tcp_delay: 226
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 113
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.4
-  type: ss
-  tcp_delay: 250
-  clash_delay: 6
-- cipher: aes-256-cfb
-  country: VN
-  delay: 864
-  name: 🇻🇳 越南 114
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.222
-  type: ss
-  tcp_delay: 220
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 115
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.46
-  type: ss
-  tcp_delay: 225
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 116
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.41
-  type: ss
-  tcp_delay: 238
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 117
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.28
-  type: ss
-  tcp_delay: 257
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 118
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.185
-  type: ss
-  tcp_delay: 230
-  clash_delay: 6
-- cipher: aes-256-cfb
-  country: ZZ
-  delay: 969
-  name: 🇻🇳 越南 119
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.120
-  type: ss
-  tcp_delay: 256
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 120
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.27
-  type: ss
-  tcp_delay: 220
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 121
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.196
-  type: ss
-  tcp_delay: 230
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 122
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.225
-  type: ss
-  tcp_delay: 245
-  clash_delay: 6
-- cipher: aes-256-cfb
-  delay: 825
-  name: 🇻🇳 越南 123
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.154.215
-  type: ss
-  tcp_delay: 252
-  clash_delay: 6
-- cipher: aes-256-cfb
-  name: 🇻🇳 越南 124
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 103.186.155.149
-  type: ss
-  tcp_delay: 228
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 1
-  network: ws
-  port: 443
-  server: 172.67.193.108
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: bc864078-dcf3-4bf4-8dbf-ca9f200b56be
-  ws-opts:
-    headers:
-      Host: gwdef.sbs
-    path: /
-  tcp_delay: 12
-  clash_delay: 6
-- name: 🇺🇸 美国 2
-  server: 162.159.44.63
-  port: 8443
-  type: vless
-  uuid: 10c330fc-1a4d-46d8-8d60-ab9c7e9a3896
-  tls: true
-  skip-cert-verify: true
-  servername: ooooooooooooooooooooooooooooooooooooooooooo.oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo0.de5.net
-  network: ws
-  ws-opts:
-    path: /live/ad/
-    headers:
-      Host: ooooooooooooooooooooooooooooooooooooooooooo.oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo0.de5.net
-  tcp_delay: 28
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 3
-  network: ws
-  port: 443
-  server: 141.101.115.30
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 40d496a6-ceeb-4096-baeb-4cc52b205621
-  ws-opts:
-    path: /ECTCJ0DF
-  tcp_delay: 14
-  clash_delay: 6
-- name: 🇺🇸 美国 4
-  network: ws
-  password: vip
-  port: 443
-  server: www.ipaddress.my
-  skip-cert-verify: false
-  sni: heihu880.pages.dev
-  type: trojan
-  ws-opts:
-    headers:
-      Host: heihu880.pages.dev
-    path: /?ed=2560
-  tcp_delay: 51
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 5
-  network: ws
-  port: 443
-  server: news.microsoft.com
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 0764a598-82c4-4b41-ba10-551a625beed5
-  ws-opts:
-    headers:
-      Host: uk2.v2rayserv.com
-    path: /
-  tcp_delay: 34
-  clash_delay: 6
-- name: 🇺🇸 美国 6
-  network: ws
-  password: vip
-  port: 443
-  server: fbi.gov
-  skip-cert-verify: false
-  sni: heihu880.pages.dev
-  type: trojan
-  ws-opts:
-    headers:
-      Host: heihu880.pages.dev
-    path: /?ed=2560
-  tcp_delay: 14
-  clash_delay: 6
-- client-fingerprint: chrome
-  name: 🇺🇸 美国 7
-  network: ws
-  port: 443
-  server: 104.18.86.131
-  skip-cert-verify: false
-  tfo: false
-  tls: true
-  type: vless
-  udp: true
-  uuid: c98a16e4-0dc5-42f0-b3db-30f04525c123
-  ws-opts:
-    headers:
-      Host: vless5-edu.pages.dev
-    path: /?ed
-  servername: vless5-edu.pages.dev
-  tcp_delay: 13
-  clash_delay: 6
-- name: 🇺🇸 美国 8
-  network: ws
-  password: d0728e94-82c2-456b-b5d4-eeab540599df
-  port: 443
-  server: 172.67.192.215
-  skip-cert-verify: false
-  sni: joss.krikkrik.xyz
-  type: trojan
-  ws-opts:
-    headers:
-      Host: joss.krikkrik.xyz
-    path: /Free-VPN-CF-Geo-Project/AE5
-  tcp_delay: 14
-  clash_delay: 6
-- encryption: none
-  name: 🇺🇸 美国 9
-  network: ws
-  port: 8080
-  server: fbi.gov
-  servername: dawn-hill-7bc8.exhume-skirt-smirk.workers.dev
-  type: vless
-  uuid: 379e6e2a-761b-4e4d-8c9b-00e020acb051
-  ws-opts:
-    headers:
-      Host: dawn-hill-7bc8.exhume-skirt-smirk.workers.dev
-    path: /WeSC6uBZUBAU3UhXT0
-  tcp_delay: 70
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 10
-  network: ws
-  port: 443
-  server: 104.18.71.193
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: b3a21def-5fcc-47a8-a6a0-a34e29d5288a
-  ws-opts:
-    path: /wss51068
-  tcp_delay: 14
-  clash_delay: 6
-- client-fingerprint: chrome
-  name: 🇺🇸 美国 11
-  network: ws
-  port: 443
-  server: 104.16.3.5
-  servername: gulf-d96.pages.dev
-  skip-cert-verify: true
-  tfo: true
-  tls: true
-  type: vless
-  udp: true
-  uuid: 963816bd-b6e7-4648-abff-8af25bc07d87
-  ws-opts:
-    headers:
-      Host: gulf-d96.pages.dev
-      User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-    path: /ecY3gziM8W6ud5yj?ed
-  tcp_delay: 14
-  clash_delay: 6
-- name: 🇺🇸 美国 12
-  type: vless
-  server: 154.17.225.73
-  port: 443
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: kuangbao.xiejiang.dpdns.org
-  path: /?ed=2560
-  sni: kuangbao.xiejiang.dpdns.org
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: kuangbao.xiejiang.dpdns.org
-  tcp_delay: 45
-  clash_delay: 6
-- client-fingerprint: randomized
-  name: 🇺🇸 美国 13
-  network: ws
-  port: 2095
-  server: blog.cloudflare.com
-  skip-cert-verify: true
-  tfo: false
-  tls: false
-  type: vless
-  uuid: 86c50e3a-5b87-49dd-bd20-03c7f2735e40
-  ws-opts:
-    headers:
-      Host: freedom.pusytroller.cf
-    path: /
-  tcp_delay: 32
-  clash_delay: 6
-- name: 🇺🇸 美国 14
-  password: 2fec7227-9abe-46f2-af18-78302b836c45
-  port: 443
-  server: 104.21.30.167
-  skip-cert-verify: false
-  sni: 3y.2032.pp.ua
-  type: trojan
-  tcp_delay: 11
-  clash_delay: 6
-- name: 🇺🇸 美国 18
-  type: vless
-  server: all.tellmethetrue.shop
-  port: 443
-  uuid: e4824193-4f54-453b-d037-88368e85ef0e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: grpc
-  host: ''
-  path: ''
-  sni: pqh30v5.hiddendom.shop
-  tcp_delay: 92
-  clash_delay: 6
-- client-fingerprint: random
-  name: 🇺🇸 美国 19
-  network: ws
-  port: 443
-  server: 188.114.98.213
-  servername: pumpkinsinfo.top
-  skip-cert-verify: false
-  tfo: false
-  tls: true
-  type: vless
-  udp: true
-  uuid: 83e1bfe8-d5a0-41b1-aad3-c95507f6f8f9
-  ws-opts:
-    headers:
-      Host: pumpkinsinfo.top
-    path: /?ed=2560
-  tcp_delay: 14
-  clash_delay: 6
-- name: 🇺🇸 美国 20
-  type: vless
-  server: 193.124.18.13
-  port: 443
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: kuangbao.xiejiang.dpdns.org
-  path: /?ed=2560
-  sni: kuangbao.xiejiang.dpdns.org
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: kuangbao.xiejiang.dpdns.org
-  tcp_delay: 14
-  clash_delay: 6
-- dialer-proxy: 自动选择
-  name: 🇺🇸 美国 21
-  network: ws
-  port: 443
-  server: usa.visa.com
-  servername: damp-poetry-a017.o1a7je4n.workers.dev
-  tls: true
-  type: vless
-  udp: false
-  uuid: 243d344a-4edc-4b6d-bc26-f695a5cb2740
-  ws-opts:
-    headers:
-      Host: damp-poetry-a017.o1a7je4n.workers.dev
-    path: /?ed=2560
-  tcp_delay: 14
-  clash_delay: 6
-- name: 🇺🇸 美国 23
-  server: 172.66.156.81
-  port: 80
-  type: vless
-  uuid: 76cc986c-8e30-4f81-91bb-2bd66fb4e713
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy
-    headers:
-      Host: websocket.network.www.speedtest.net.flutter.dev.russia.pyt.digitalcity5.xyz.
-  tcp_delay: 14
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 24
-  network: ws
-  port: 443
-  server: 172.67.209.79
-  servername: ggggbbhyuuui.999834.xyz
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 91362cdb-81f8-4fd3-9b9f-2b24a8146a25
-  ws-opts:
-    headers:
-      Host: ggggbbhyuuui.999834.xyz
-    path: /ODznTT5fgkUw3VH0GJ
-  tcp_delay: 15
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 25
-  network: ws
-  port: 443
-  server: www.gov.ua
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: ce6e649d-c4c1-4bd4-b708-090e5e2766c8
-  ws-opts:
-    headers:
-      Host: 20250930kubaxixi.goubi.ggff.net
-    path: /?ed=2048
-  tcp_delay: 44
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 26
-  network: ws
-  port: 80
-  server: 104.31.16.29
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 8abe9496-5e24-4e49-b566-dcf86116017d
-  ws-opts:
-    path: /i99LgvSaslbsPLLQQ7j6Z
-  tcp_delay: 13
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 27
-  network: ws
-  port: 8080
-  server: 172.64.150.57
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: e3fa5050-67f5-4625-a778-5d9283f4334f
-  ws-opts:
-    path: /m1
-  tcp_delay: 9
-  clash_delay: 6
-- name: 🇺🇸 美国 29
-  type: vless
-  server: 108.162.198.11
-  port: 2096
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: kuangbao.xiejiang.dpdns.org
-  path: /?ed=2560
-  sni: kuangbao.xiejiang.dpdns.org
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: kuangbao.xiejiang.dpdns.org
-  tcp_delay: 14
-  clash_delay: 6
-- name: 🇺🇸 美国 30
-  password: 265f092f-418b-30c9-a479-4800fd44dd19mielink
-  port: 443
-  server: kaizen-tw-2.mielink-dns2.com
-  skip-cert-verify: false
-  sni: paydiu.com
-  type: trojan
-  tcp_delay: 110
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 31
-  network: ws
-  port: 443
-  server: 104.17.137.141
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 8f74ec8a-971c-11ed-a8fc-0242ac120002
-  ws-opts:
-    path: /d84ee332-1284-11ee-a5c8-8213fd3be4b9
-  tcp_delay: 14
-  clash_delay: 6
-- name: 🇺🇸 美国 32
-  network: ws
-  port: 2095
-  server: developers.cloudflare.com
-  tls: false
-  type: vless
-  uuid: 86c50e3a-5b87-49dd-bd20-03c7f2735e40
-  ws-opts:
-    headers:
-      Host: freedom.pusytroller.cf
-    path: /
-  servername: freedom.pusytroller.cf
-  tcp_delay: 38
-  clash_delay: 6
-- name: 🇺🇸 美国 33
-  server: 8.35.211.108
-  port: 2096
-  type: vless
-  uuid: 10c330fc-1a4d-46d8-8d60-ab9c7e9a3896
-  tls: true
-  skip-cert-verify: true
-  servername: ooooooooooooooooooooooooooooooooooooooooooo.oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo0.de5.net
-  network: ws
-  ws-opts:
-    path: /go.php/reg/
-    headers:
-      Host: ooooooooooooooooooooooooooooooooooooooooooo.oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo0.de5.net
-  tcp_delay: 14
-  clash_delay: 6
-- name: 🇺🇸 美国 34
-  network: ws
-  port: 8080
-  server: 92.118.230.124
-  skip-cert-verify: false
-  tls: false
-  type: vless
-  uuid: 9dc11620-987c-4344-9088-f46fdfae4054
-  ws-opts:
-    path: /?ed
-  tcp_delay: 125
-  clash_delay: 6
-- name: 🇺🇸 美国 35
-  network: ws
-  port: 443
-  server: 190.93.244.135
-  servername: lc.kpcloud.eu.org
-  skip-cert-verify: false
-  tfo: false
-  tls: true
-  type: vless
-  udp: true
-  uuid: a13df940-020c-465f-bc89-ee5279b5cd6a
-  ws-opts:
-    headers:
-      Host: lc.kpcloud.eu.org
-    path: /?ed=2048
-  tcp_delay: 14
-  clash_delay: 6
-- client-fingerprint: chrome
-  name: 🇺🇸 美国 36
-  network: ws
-  port: 443
-  server: autotrader.co.uk
-  servername: hdfynpv2c1.farvaharforever.com
-  skip-cert-verify: true
-  tfo: true
-  tls: true
-  type: vless
-  udp: true
-  uuid: 4e1f0fc6-a7f8-4642-bd35-6a3aa0bb2fc8
-  ws-opts:
-    headers:
-      Host: hdfynpv2c1.farvaharforever.com
-      User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-    path: /Iyq035lnud9R8ruNNrqGxZZ2
-  tcp_delay: 55
-  clash_delay: 6
-- dialer-proxy: 自动选择
-  name: 🇺🇸 美国 37
-  network: ws
-  port: 443
-  server: usa.visa.com
-  servername: v-aged-violet-fa26-less.cloudflare-temp1.workers.dev
-  tls: true
-  type: vless
-  udp: false
-  uuid: c42a5375-2d49-4bcd-8a66-f64b2532644d
-  ws-opts:
-    headers:
-      Host: v-aged-violet-fa26-less.cloudflare-temp1.workers.dev
-    path: /?ed=2560
-  tcp_delay: 42
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 38
-  network: ws
-  port: 443
-  server: 15.204.64.211
-  servername: kampong.org
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
-  ws-opts:
-    headers:
-      Host: kampong.org
-    path: linkvws
-  tcp_delay: 53
-  clash_delay: 6
+  region_info:
+    name: 德国
+    code: DE
 - type: vless
-  name: 🇺🇸 美国 39
-  server: ilta-wzxrxkdhbjpnprhkkpplsjwawhssvollvxzdhqshiqckwdgrdm.orbnet.xyz
-  port: 443
-  uuid: 0e8a6896-ad90-4a3b-89a3-77d64aa409e2
-  skip-cert-verify: true
-  network: tcp
-  flow: xtls-rprx-vision
-  servername: i2pd.website
-  tls: false
-  udp: true
-  tcp_delay: 177
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 40
-  network: ws
-  port: 443
-  server: klo.986986.shop
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: b75c9731-408d-4aa6-8ae9-3857205113a1
-  ws-opts:
-    headers:
-      Host: klo.986986.shop
-    path: /nvjx6j7kbDQIQMZvbeVA9
-  tcp_delay: 59
-  clash_delay: 6
-- name: 🇺🇸 美国 41
-  password: 265f092f-418b-30c9-a479-4800fd44dd19mielink
-  port: 443
-  server: kaizen-tw-3.mielink-dns2.com
-  skip-cert-verify: false
-  sni: paydiu.com
-  type: trojan
-  tcp_delay: 187
-  clash_delay: 6
-- name: 🇺🇸 美国 42
-  password: 892c4f6e-732b-4f71-ad04-6e77344f2d0e
-  port: 80
-  server: 135.148.148.4
-  skip-cert-verify: false
-  sni: us3.trojanvh.xyz
-  type: trojan
-  tcp_delay: 27
-  clash_delay: 6
-- encryption: none
-  name: 🇺🇸 美国 43
-  network: ws
-  port: 80
-  server: www.speedtest.net
-  servername: websocket.network.www.speedtest.net.flutter.dev.russia.pyt.digitalcity5.xyz.
-  type: vless
-  uuid: 76cc986c-8e30-4f81-91bb-2bd66fb4e713
-  ws-opts:
-    headers:
-      Host: websocket.network.www.speedtest.net.flutter.dev.russia.pyt.digitalcity5.xyz.
-    path: /@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy
-  tcp_delay: 13
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 44
-  network: ws
-  port: 443
-  server: 203.30.190.191
-  servername: oplg1.zhujicn2.com
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 56a2188b-2ab7-402c-b9b8-34847fdf0958
-  ws-opts:
-    path: /5QNROSRV
-  tcp_delay: 12
-  clash_delay: 6
-- client-fingerprint: randomized
-  name: 🇺🇸 美国 45
-  network: ws
-  port: 2095
-  server: openai.com
-  skip-cert-verify: true
-  tfo: false
-  tls: false
-  type: vless
-  uuid: 86c50e3a-5b87-49dd-bd20-03c7f2735e40
-  ws-opts:
-    headers:
-      Host: freedom.pusytroller.cf
-    path: /
-  tcp_delay: 16
-  clash_delay: 6
-- name: 🇺🇸 美国 46
-  network: ws
-  password: vip
-  port: 443
-  server: www.wto.org
-  skip-cert-verify: false
-  sni: heihu880.pages.dev
-  type: trojan
-  ws-opts:
-    headers:
-      Host: heihu880.pages.dev
-    path: /?ed=2560
-  tcp_delay: 171
-  clash_delay: 6
-- name: 🇺🇸 美国 47
-  network: ws
-  password: abd16f44-12ca-4078-8345-11bcb4cd0fbd
-  port: 443
-  server: 104.21.70.241
-  skip-cert-verify: false
-  sni: gamang.gpj2.dpdns.org
-  type: trojan
-  ws-opts:
-    headers:
-      Host: gamang.gpj2.dpdns.org
-    path: /Free-VPN-Geo-Project/92.178.109.187-443
-  tcp_delay: 14
-  clash_delay: 6
-- name: 🇺🇸 美国 48
-  network: ws
-  password: 8r%3C%5B9%27l6hAO%238ZQi
-  port: 8443
-  server: koma-yt.pages.dev
-  skip-cert-verify: false
-  sni: Koma-YT.PAGeS.Dev
-  type: trojan
-  ws-opts:
-    headers:
-      Host: Koma-YT.PAGeS.Dev
-    path: /tro8sFW1S91B6sZrM1?ed=2560
-  tcp_delay: 15
-  clash_delay: 6
-- name: 🇺🇸 美国 49
-  type: vless
-  server: 108.162.198.24
-  port: 2096
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: kuangbao.xiejiang.dpdns.org
-  path: /?ed=2560
-  sni: kuangbao.xiejiang.dpdns.org
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: kuangbao.xiejiang.dpdns.org
-  tcp_delay: 14
-  clash_delay: 6
-- client-fingerprint: random
-  name: 🇺🇸 美国 50
-  network: splithttp
-  port: 443
-  server: 172.66.44.207
-  servername: nxginix.pages.dev
-  skip-cert-verify: true
-  tfo: false
-  tls: true
-  type: vless
-  udp: true
-  uuid: 5fdd5a95-61e1-4c6f-b48a-efccc1156350
-  tcp_delay: 9
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  h2-opts: {}
-  http-opts: {}
-  name: 🇺🇸 美国 51
-  network: ws
-  port: 443
-  server: sy4.620720.xyz
-  skip-cert-verify: true
-  tls: true
-  type: vmess
-  uuid: 516d8a7a-3f0b-41d3-bad0-246116381516
-  ws-opts:
-    headers:
-      Host: sy4.620720.xyz
-    path: /
-  tcp_delay: 51
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 52
-  network: ws
-  port: 443
-  server: 104.31.16.65
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 927094d3-d678-4763-8591-e240d0bcae87
-  ws-opts:
-    path: /vin1.0bad.com:443/chat
-  tcp_delay: 13
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 53
-  network: ws
-  port: 443
-  server: 104.17.14.48
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 8f28bbbd-7dc3-4427-a8a7-595796d9ff7d
-  ws-opts:
-    path: /vmess
-  tcp_delay: 12
-  clash_delay: 6
-- name: 🇺🇸 美国 54
-  type: vless
-  server: brenna.ns.cloudflare.com
-  port: 443
-  uuid: 65a9530f-4a4e-4db1-9689-9213385e9dfb
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: ''
-  path: /dweubbws
-  sni: 638996620466180706.passat-amsih.info
-  ws-opts:
-    path: /dweubbws
-    headers: {}
-  tcp_delay: 35
-  clash_delay: 6
-- name: 🇺🇸 美国 55
-  server: 172.64.228.171
-  port: 443
-  type: vless
-  uuid: 10c330fc-1a4d-46d8-8d60-ab9c7e9a3896
-  tls: true
-  skip-cert-verify: true
-  servername: ooooooooooooooooooooooooooooooooooooooooooo.oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo0.de5.net
-  network: ws
-  ws-opts:
-    path: /code/stars/admin/
-    headers:
-      Host: ooooooooooooooooooooooooooooooooooooooooooo.oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo0.de5.net
-  tcp_delay: 15
-  clash_delay: 6
-- grpc-opts:
-    grpc-service-name: db
-  name: 🇺🇸 美国 56
-  network: grpc
-  password: 3c4e10af98c30972
-  port: 443
-  server: 23.247.137.64
-  skip-cert-verify: false
-  sni: n2.gladns.com
-  type: trojan
-  tcp_delay: 47
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 57
-  network: ws
-  port: 2095
-  server: 172.67.116.151
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 417d27fb-cb93-3bd8-9bf7-71cd91319821
-  ws-opts:
-    path: /hgcefomn
-  tcp_delay: 12
-  clash_delay: 6
-- name: 🇺🇸 美国 58
-  network: ws
-  port: 80
-  server: usaa.fastlynew.hosting-ip.com
-  skip-cert-verify: false
-  tls: false
-  type: vless
-  uuid: 13c72182-9869-4956-83bb-f8ec486e0a1b
-  ws-opts:
-    headers:
-      Host: mojhsjd.global.ssl.fastly.net
-    path: /
-  tcp_delay: 42
-  clash_delay: 6
-- name: 🇺🇸 美国 59
-  network: ws
-  port: 10005
-  server: 18.180.249.33
-  skip-cert-verify: false
-  tfo: false
-  tls: true
-  type: vless
-  uuid: aa7f42cc-616f-4550-9a87-4b85bb409121
-  ws-opts:
-    headers:
-      Host: vless3.datatestvless.click
-    path: /?ed=2560&Telegram+@WangCai2
-  servername: vless3.datatestvless.click
-  tcp_delay: 134
-  clash_delay: 6
-- client-fingerprint: random
-  name: 🇺🇸 美国 60
-  network: ws
-  port: 443
-  server: 172.66.44.223
-  servername: cfpage-39t.pages.dev
-  skip-cert-verify: false
-  tfo: false
-  tls: true
-  type: vless
-  udp: true
-  uuid: bba5ce00-09e4-4fce-8d26-35db5b4e38d4
-  ws-opts:
-    headers:
-      Host: cfpage-39t.pages.dev
-    path: /Telegram-------V2rayi_net_-_-_-_-Telegram-------V2rayi_net/?ed=2560
-  tcp_delay: 11
-  clash_delay: 6
-- name: 🇺🇸 美国 61
-  server: 8.39.125.27
-  port: 443
-  type: vless
-  uuid: 10c330fc-1a4d-46d8-8d60-ab9c7e9a3896
-  tls: true
-  skip-cert-verify: true
-  servername: ooooooooooooooooooooooooooooooooooooooooooo.oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo0.de5.net
-  network: ws
-  ws-opts:
-    path: /shows/cb/
-    headers:
-      Host: ooooooooooooooooooooooooooooooooooooooooooo.oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo0.de5.net
-  tcp_delay: 12
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 62
-  network: ws
-  port: 2082
-  server: 104.19.45.11
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 5f3f09ad-89cb-4e94-a7ad-aa8239913555
-  ws-opts:
-    headers:
-      Host: ip3.6929198.xyz
-    path: github.com/Alvin9999
-  tcp_delay: 9
-  clash_delay: 6
-- name: 🇺🇸 美国 63
-  password: 265f092f-418b-30c9-a479-4800fd44dd19mielink
-  port: 443
-  server: kaizen-tw-1.mielink-dns2.com
-  skip-cert-verify: false
-  sni: paydiu.com
-  type: trojan
-  tcp_delay: 103
-  clash_delay: 6
-- name: 🇺🇸 美国 64
-  type: vless
-  server: www.speedtest.net
-  port: 2083
-  uuid: 8fcf07a3-a8ed-446b-acf5-2bb9ade31318
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: golestan.hajalwi.ir.
-  path: /---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN?ed=8080
-  sni: golestan.hajalwi.ir.
-  ws-opts:
-    path: /---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN---Golestanv_VPN?ed=8080
-    headers:
-      Host: golestan.hajalwi.ir.
-  tcp_delay: 12
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 65
-  network: ws
-  port: 443
-  server: 203.30.191.10
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: c5a2d7b8-bf84-4f97-8577-b9b87f2baaf7
-  ws-opts:
-    path: /AUIKN8AU
-  tcp_delay: 12
-  clash_delay: 6
-- name: 🇺🇸 美国 66
-  server: 8.35.211.49
-  port: 2096
-  type: vless
-  uuid: 10c330fc-1a4d-46d8-8d60-ab9c7e9a3896
-  tls: true
-  skip-cert-verify: true
-  servername: ooooooooooooooooooooooooooooooooooooooooooo.oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo0.de5.net
-  network: ws
-  ws-opts:
-    path: /logout/document/team/
-    headers:
-      Host: ooooooooooooooooooooooooooooooooooooooooooo.oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo0.de5.net
-  tcp_delay: 14
-  clash_delay: 6
-- name: 🇺🇸 美国 69
-  password: c0fde6ac-a07c-4f60-84ae-e7ed4da78a6f
-  port: 80
-  server: 15.204.210.176
-  skip-cert-verify: false
-  type: trojan
-  tcp_delay: 24
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 70
-  network: ws
-  port: 8443
-  server: 173.245.49.23
-  servername: us-171-78.shoptunnel.live
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: a6a37e04-5e81-44c9-be53-baa3ff46eb8b
-  ws-opts:
-    headers:
-      Host: us-171-78.shoptunnel.live
-    path: /
-  tcp_delay: 9
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 71
-  network: ws
-  port: 443
-  server: hohm.microsoft.com
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 2b214122-1906-428a-bbb7-a039cbb7cd5c
-  ws-opts:
-    headers:
-      Host: fr1.trump2023.org
-    path: /9JZFDTKE
-  tcp_delay: 180
-  clash_delay: 6
-- name: 🇺🇸 美国 72
-  network: ws
-  password: vip
-  port: 443
-  server: 104.18.42.163
-  skip-cert-verify: false
-  sni: heihu880.pages.dev
-  type: trojan
-  ws-opts:
-    headers:
-      Host: heihu880.pages.dev
-    path: /?ed=2560
-  tcp_delay: 12
-  clash_delay: 6
-- name: 🇺🇸 美国 73
-  network: ws
-  password: f8b7cd5e-60c4-4e95-9b7b-d561ef4eed8c
-  port: 443
-  server: 104.21.112.1
-  skip-cert-verify: false
-  sni: yellow-cloud-d53f.vavovi6084.workers.dev
-  type: trojan
-  ws-opts:
-    headers:
-      Host: yellow-cloud-d53f.vavovi6084.workers.dev
-    path: /?ed=2560
-  tcp_delay: 11
-  clash_delay: 6
-- name: 🇺🇸 美国 74
-  server: 172.64.228.243
-  port: 2096
-  type: vless
-  uuid: 10c330fc-1a4d-46d8-8d60-ab9c7e9a3896
-  tls: true
-  skip-cert-verify: true
-  servername: ooooooooooooooooooooooooooooooooooooooooooo.oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo0.de5.net
-  network: ws
-  ws-opts:
-    path: /city/
-    headers:
-      Host: ooooooooooooooooooooooooooooooooooooooooooo.oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo0.de5.net
-  tcp_delay: 13
-  clash_delay: 6
-- name: 🇺🇸 美国 75
-  network: ws
-  password: vip
-  port: 443
-  server: www.pcmag.com
-  skip-cert-verify: false
-  sni: heihu880.pages.dev
-  type: trojan
-  ws-opts:
-    headers:
-      Host: heihu880.pages.dev
-    path: /?ed=2560
-  tcp_delay: 43
-  clash_delay: 6
-- client-fingerprint: chrome
-  name: 🇺🇸 美国 77
-  network: ws
-  port: 443
-  server: 162.159.192.149
-  servername: Noshteri.hooplnqpb.ir
-  skip-cert-verify: false
-  tfo: false
-  tls: true
-  type: vless
-  udp: true
-  uuid: 4f9219f6-ba56-4e5a-a676-0978d8b613e4
-  ws-opts:
-    headers:
-      Host: Noshteri.hooplnqpb.ir
-    path: /Telegram-------
-  tcp_delay: 14
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 78
-  network: ws
-  port: 2095
-  server: 172.67.244.14
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 417d27fb-cb93-3bd8-9bf7-71cd91319821
-  ws-opts:
-    path: /hgcefomn
-  tcp_delay: 11
-  clash_delay: 6
-- name: 🇺🇸 美国 79
-  network: ws
-  password: vip
-  port: 443
-  server: whatismyipaddress.com
-  skip-cert-verify: false
-  sni: heihu880.pages.dev
-  type: trojan
-  ws-opts:
-    headers:
-      Host: heihu880.pages.dev
-    path: /?ed=2560
-  tcp_delay: 57
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 80
-  network: ws
-  port: 443
-  server: 172.67.131.108
-  servername: glweidf.cfd
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 1052f24e-7b09-45eb-b0c5-d858eb124192
-  ws-opts:
-    headers:
-      Host: glweidf.cfd
-    path: /linkws
-  tcp_delay: 9
-  clash_delay: 6
-- name: 🇺🇸 美国 81
-  port: 2096
-  server: 88.216.69.54
-  skip-cert-verify: false
-  tfo: false
-  tls: true
-  type: vless
-  udp: true
-  uuid: 12345678-1234-1234-1234-123456789123
-  tcp_delay: 15
-  clash_delay: 6
-- name: 🇺🇸 美国 82
-  network: ws
-  port: 80
-  server: 63.141.128.31
-  servername: e.jOin.zEdMoDeOn.oNl.
-  skip-cert-verify: false
-  tfo: false
-  tls: true
-  type: vless
-  udp: true
-  uuid: 00a87d0f-6eb9-4b10-9793-7b8bd4553617
-  ws-opts:
-    headers:
-      Host: e.jOin.zEdMoDeOn.oNl.
-    path: /Join-ZEDMODEON-ZEDMODEON-ZEDMODEON-bia-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON
-  tcp_delay: 14
-  clash_delay: 6
-- client-fingerprint: chrome
-  name: 🇺🇸 美国 83
-  network: ws
-  packet-addr: false
-  packet-encoding: xudp
-  port: 80
-  server: 172.66.40.99
-  skip-cert-verify: true
-  tfo: true
-  tls: false
-  type: vless
-  udp: true
-  uuid: bb867c2e-b692-4b7c-b48e-435598787308
-  ws-opts:
-    headers:
-      Host: d.jOin.zEdMoDeOn.oNl.
-      User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-    path: /Join-ZEDMODEON-ZEDMODEON-ZEDMODEON-bia-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON
-  xudp: true
-  tcp_delay: 14
-  clash_delay: 6
-- dialer-proxy: 自动选择
-  name: 🇺🇸 美国 84
-  network: ws
-  password: Stt6UBtiLVhuyWo5
-  port: 443
-  server: usa.visa.com
-  sni: lively-meadow-5f20.zwqt934jv49.workers.dev
-  type: trojan
-  udp: false
-  ws-opts:
-    headers:
-      Host: lively-meadow-5f20.zwqt934jv49.workers.dev
-    path: /?ed=2560
-  tcp_delay: 30
-  clash_delay: 6
-- alterId: 1
-  cipher: auto
-  name: 🇺🇸 美国 85
-  network: ws
-  port: 443
-  server: 104.21.48.182
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
-  ws-opts:
-    headers:
-      Host: bs.masjidd.homes
-    path: linkvws
-  tcp_delay: 14
-  clash_delay: 6
-- name: 🇺🇸 美国 86
-  network: ws
-  password: vip
-  port: 443
-  server: www.udemy.com
-  skip-cert-verify: false
-  sni: heihu880.pages.dev
-  type: trojan
-  ws-opts:
-    headers:
-      Host: heihu880.pages.dev
-    path: /?ed=2560
-  tcp_delay: 30
-  clash_delay: 6
-- name: 🇺🇸 美国 87
-  password: wkmY1R4EcP
-  port: 443
-  server: 45.63.110.20
-  skip-cert-verify: false
-  sni: z-v2-003281.kailib.com
-  type: trojan
-  tcp_delay: 45
-  clash_delay: 6
-- type: trojan
-  name: 🇺🇸 美国 88
-  server: 209.200.246.53
-  port: 36774
-  password: Fv7ogJ6vfz
-  udp: true
-  skip-cert-verify: true
-  sni: cloudflare.com
-  network: grpc
-  tcp_delay: 29
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 89
-  network: ws
-  port: 2053
-  server: fastcup.net
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 8b0a592f-1fee-4da0-add6-f8e108611164
-  ws-opts:
-    headers:
-      Host: cdn-node-oss-94.paofu.de
-    path: /profile/telegram
-  tcp_delay: 41
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 90
-  network: ws
-  port: 2082
-  server: 104.19.45.47
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 5f3f09ad-89cb-4e94-a7ad-aa8239913555
-  ws-opts:
-    headers:
-      Host: ip3.6929198.xyz
-    path: github.com/Alvin9999
-  tcp_delay: 14
-  clash_delay: 6
-- name: 🇺🇸 美国 91
-  network: ws
-  password: iwangjie
-  port: 15805
-  server: 158.101.11.204
-  skip-cert-verify: false
-  sni: nodes.830901.xyz
-  type: trojan
-  ws-opts:
-    headers:
-      Host: nodes.830901.xyz
-    path: /?ed=2560
-  tcp_delay: 50
-  clash_delay: 6
-- alterId: 64
-  cipher: auto
-  name: 🇺🇸 美国 92
-  network: ws
-  port: 31004
-  server: 199.188.105.59
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
-  ws-opts:
-    headers:
-      Host: www.46554484.xyz
-    path: /
-  tcp_delay: 47
-  clash_delay: 6
-- name: 🇺🇸 美国 93
-  password: 265f092f-418b-30c9-a479-4800fd44dd19mielink
-  port: 443
-  server: kaizen-ru-2.mielink-dns2.com
-  skip-cert-verify: false
-  sni: $paydiu.com
-  type: trojan
-  tcp_delay: 96
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 95
-  network: ws
-  port: 443
-  server: www.digitalocean.com
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 3a3e263d-223f-49cc-bbdb-f7e07a55e6fe
-  ws-opts:
-    headers:
-      Host: www.digitalocean.com
-    path: /111111.online
-  tcp_delay: 27
-  clash_delay: 6
-- name: 🇺🇸 美国 96
-  password: e35026da-e985-49ca-b43b-276062a535a6
-  port: 443
-  server: 104.21.79.246
-  skip-cert-verify: false
-  sni: notdirect.howhealthyistoomajreally.homes
-  type: trojan
-  tcp_delay: 30
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 97
-  network: ws
-  port: 80
-  server: 51.81.220.195
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 6fea1649-425b-4092-bf53-29792152c925
-  ws-opts:
-    path: /sshkit/Variu88/634dab7abadf1/
-  tcp_delay: 53
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 98
-  port: 180
-  server: 82.198.246.97
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
-  tcp_delay: 38
-  clash_delay: 6
-- name: 🇺🇸 美国 99
-  network: ws
-  password: vip
-  port: 443
-  server: www.ipget.net
-  skip-cert-verify: false
-  sni: heihu880.pages.dev
-  type: trojan
-  ws-opts:
-    headers:
-      Host: heihu880.pages.dev
-    path: /?ed=2560
-  tcp_delay: 63
-  clash_delay: 6
-- name: 🇺🇸 美国 100
-  network: ws
-  port: 8443
-  server: ipw.gfdv54cvghhgfhgj-njhgj64.info
-  servername: IyFpLkXk10.jOoLaJoOlA.OrG
-  skip-cert-verify: false
-  tfo: false
-  tls: true
-  type: vless
-  udp: true
-  uuid: 96a1b724-68d2-4f4d-ab25-38ecd83577bc
-  ws-opts:
-    headers:
-      Host: IyFpLkXk10.jOoLaJoOlA.OrG
-    path: /
-  tcp_delay: 163
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 101
-  network: ws
-  port: 2095
-  server: 141.101.122.233
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 417d27fb-cb93-3bd8-9bf7-71cd91319821
-  ws-opts:
-    path: /hgcefomn
-  tcp_delay: 13
-  clash_delay: 6
-- name: 🇺🇸 美国 102
-  network: ws
-  port: 443
-  server: 188.114.98.61
-  servername: ab.ylks.xyz
-  skip-cert-verify: false
-  tfo: false
-  tls: true
-  type: vless
-  udp: true
-  uuid: 48198295-b7ba-4b5c-8d85-085d55a6c869
-  ws-opts:
-    headers:
-      Host: ab.ylks.xyz
-    path: /?ed=2048
-  tcp_delay: 15
-  clash_delay: 6
-- name: 🇺🇸 美国 103
-  network: ws
-  password: auto
-  port: 443
-  server: dcf741e8.epeius-2gy.pages.dev
-  skip-cert-verify: false
-  sni: dcf741e8.epeius-2gy.pages.dev
-  type: trojan
-  ws-opts:
-    headers:
-      Host: dcf741e8.epeius-2gy.pages.dev
-    path: /?ed=2560
-  tcp_delay: 49
-  clash_delay: 6
-- encryption: none
-  name: 🇺🇸 美国 104
-  network: ws
-  port: 2083
-  server: 141.101.114.197
-  skip-cert-verify: false
-  tls: true
-  type: vless
-  uuid: ac51ad36-5052-460a-842a-e13455d30cb8
-  ws-opts:
-    headers:
-      Host: RR-FF.pages.DEV
-    path: /assets
-  servername: RR-FF.pages.DEV
-  tcp_delay: 13
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 105
-  network: ws
-  port: 443
-  server: discord.com
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: b3a21def-5fcc-47a8-a6a0-a34e29d5288a
-  ws-opts:
-    headers:
-      Host: discord.com
-    path: /wss51068
-  tcp_delay: 37
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 106
-  network: ws
-  port: 80
-  server: 104.31.16.37
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 8abe9496-5e24-4e49-b566-dcf86116017d
-  ws-opts:
-    path: /i99LgvSaslbsPLLQQ7j6Z
-  tcp_delay: 9
-  clash_delay: 6
-- name: 🇺🇸 美国 107
-  network: ws
-  password: vip
-  port: 2087
-  server: time.is
-  skip-cert-verify: false
-  sni: heihu880.pages.dev
-  type: trojan
-  ws-opts:
-    headers:
-      Host: heihu880.pages.dev
-    path: /?ed=2560
-  tcp_delay: 56
-  clash_delay: 6
-- name: 🇺🇸 美国 108
-  password: 265f092f-418b-30c9-a479-4800fd44dd19mielink
-  port: 443
-  server: kaizen-us-6.mielink-dns2.com
-  skip-cert-verify: false
-  sni: paydiu.com
-  type: trojan
-  tcp_delay: 108
-  clash_delay: 6
-- name: 🇺🇸 美国 109
-  network: ws
-  password: vip
-  port: 443
-  server: www.udacity.com
-  skip-cert-verify: false
-  sni: heihu880.pages.dev
-  type: trojan
-  ws-opts:
-    headers:
-      Host: heihu880.pages.dev
-    path: /?ed=2560
-  tcp_delay: 45
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 110
-  network: ws
-  port: 443
-  server: 45.149.12.53
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 05641cf5-58d2-4ba4-a9f1-b3cda0b1fb1d
-  ws-opts:
-    headers:
-      Host: obdii.cfd
-    path: /
-  tcp_delay: 14
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 111
-  network: ws
-  port: 443
-  server: 104.21.9.236
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 62aa5f80-0328-4004-a375-7f5a59df4022
-  ws-opts:
-    headers:
-      Host: hms19.best-tizi.top
-    path: /linkws
-  tcp_delay: 11
-  clash_delay: 6
-- name: 🇺🇸 美国 112
-  server: 108.162.198.146
-  port: 2053
-  type: vless
-  uuid: 10c330fc-1a4d-46d8-8d60-ab9c7e9a3896
-  tls: true
-  skip-cert-verify: true
-  servername: ooooooooooooooooooooooooooooooooooooooooooo.oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo0.de5.net
-  network: ws
-  ws-opts:
-    path: /redirect.php/city/topic/
-    headers:
-      Host: ooooooooooooooooooooooooooooooooooooooooooo.oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo0.de5.net
-  tcp_delay: 13
-  clash_delay: 6
-- alterId: 64
-  cipher: auto
-  name: 🇺🇸 美国 114
-  network: ws
-  port: 37007
-  server: 38.38.153.217
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
-  ws-opts:
-    headers:
-      Host: www.19644859.xyz
-    path: /
-  tcp_delay: 52
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 115
-  network: ws
-  port: 443
-  server: 190.93.245.170
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 4612618c-24cd-4379-9924-cfdf3d61fa5a
-  ws-opts:
-    path: /IYKLD53M
-  tcp_delay: 9
-  clash_delay: 6
-- type: vless
-  name: 🇺🇸 美国 116
-  server: www.speedtest.net
-  port: 2082
-  uuid: ad954139-7c6b-4b56-d121-97b0893633a5
-  skip-cert-verify: true
-  udp: true
-  tls: true
-  network: ws
-  servername: novinsoft.ir.oradoshop.com.persiangsm.ir.digikala.com.abadis.ir.shad.ir.divar.ir.downloadly.com.aparat.com.cafebazar.ir.varzesh3.com.ninisite.com.abadis.ir.bama.ir.p30download.ir.telewebion.bmi.ir.shad.ir.mayket.com.ninisite.top.
-  ws-opts:
-    path: /@spikevpn-@spikevpn-@spikevpn-@spikevpn-@spikevpn-@spikevpn?ed=2082
-    headers:
-      host: novinsoft.ir.oradoshop.com.persiangsm.ir.digikala.com.abadis.ir.shad.ir.divar.ir.downloadly.com.aparat.com.cafebazar.ir.varzesh3.com.ninisite.com.abadis.ir.bama.ir.p30download.ir.telewebion.bmi.ir.shad.ir.mayket.com.ninisite.top.
-  tcp_delay: 14
-  clash_delay: 6
-- name: 🇺🇸 美国 117
-  network: ws
-  port: 4399
-  server: 139.162.83.106
-  skip-cert-verify: false
-  tfo: false
-  tls: true
-  type: vless
-  uuid: aa7f42cc-616f-4550-9a87-4b85bb409121
-  ws-opts:
-    headers:
-      Host: vless3.datatestvless.click
-    path: /
-  servername: vless3.datatestvless.click
-  tcp_delay: 132
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 119
-  network: ws
-  port: 443
-  server: www.glassdoor.com
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: ce6e649d-c4c1-4bd4-b708-090e5e2766c8
-  ws-opts:
-    headers:
-      Host: 20250930kubaxixi.goubi.ggff.net
-    path: /?ed=2048
-  tcp_delay: 71
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 120
-  network: ws
-  port: 443
-  server: wto.org
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: d57ac173-5615-43db-a3f4-dd1aebb2c6e8
-  ws-opts:
-    headers:
-      Host: us01.secntre.com
-    path: /d57ac173-5615-43db-a3f4-dd1aebb2c6e8-vm?ed=2048
-  tcp_delay: 213
-  clash_delay: 6
-- name: 🇺🇸 美国 122
-  server: 172.67.203.94
-  port: 2086
-  type: vless
-  uuid: 7890ce31-9a25-4fd4-90e7-80e5823ff510
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: iioo.iioou.workers.dev
-  tcp_delay: 9
-  clash_delay: 6
-- client-fingerprint: random
-  name: 🇺🇸 美国 123
-  network: ws
-  port: 443
-  server: 84.8.145.58
-  skip-cert-verify: false
-  tls: true
-  type: vless
-  uuid: 78fc9ba9-9c68-4b49-891f-ea9e38bd3b56
-  ws-opts:
-    headers:
-      Host: ak.suoni.nyc.mn
-    path: /proxyip=sjc.o00o.ooo
-  servername: ak.suoni.nyc.mn
-  tcp_delay: 100
-  clash_delay: 6
-- client-fingerprint: chrome
-  name: 🇺🇸 美国 126
-  network: ws
-  port: 24443
-  server: 178.239.123.216
-  skip-cert-verify: false
-  tls: true
-  type: vless
-  udp: true
-  uuid: aa7f42cc-616f-4550-9a87-4b85bb409121
-  ws-opts:
-    headers:
-      Host: vless3.datatestvless.click
-    path: /?ed=2560
-  servername: vless3.datatestvless.click
-  tcp_delay: 204
-  clash_delay: 6
-- name: 🇺🇸 美国 127
-  type: vless
-  server: 5.34.222.200
-  port: 443
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: kuangbao.xiejiang.dpdns.org
-  path: /?ed=2560
-  sni: kuangbao.xiejiang.dpdns.org
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: kuangbao.xiejiang.dpdns.org
-  tcp_delay: 132
-  clash_delay: 6
-- name: 🇺🇸 美国 128
-  type: vless
-  server: cosmin.ns.cloudflare.com
-  port: 443
-  uuid: 2000ec36-ee09-40a3-8d37-ca5de1040b5d
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: 638996735062000656.highlander-amsih.info
-  path: /brxigzws
-  sni: 638996735062000656.highlander-amsih.info
-  ws-opts:
-    path: /brxigzws
-    headers:
-      Host: 638996735062000656.highlander-amsih.info
-  tcp_delay: 10
-  clash_delay: 6
-- alterId: 0
-  cipher: aes-128-gcm
-  name: 🇺🇸 美国 130
-  network: ws
-  port: 80
-  server: 172.67.143.129
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 4a47e680-d860-4e63-9fa6-813857fb0f42
-  ws-opts:
-    path: 4a47e680
-  tcp_delay: 11
-  clash_delay: 6
-- name: 🇺🇸 美国 131
-  network: ws
-  password: vip
-  port: 443
-  server: www.gco.gov.qa
-  skip-cert-verify: false
-  sni: heihu880.pages.dev
-  type: trojan
-  ws-opts:
-    headers:
-      Host: heihu880.pages.dev
-    path: /?ed=2560
-  tcp_delay: 237
-  clash_delay: 6
-- client-fingerprint: chrome
-  name: 🇺🇸 美国 132
-  network: ws
-  port: 8443
-  server: ip1-cloudflare.cimport.ir
-  servername: telegram.turbooo-server.com
-  skip-cert-verify: false
-  tfo: false
-  tls: true
-  type: vless
-  udp: true
-  uuid: turboo-server
-  ws-opts:
-    headers:
-      Host: telegram.turbooo-server.com
-    path: /ed=256
-  tcp_delay: 246
-  clash_delay: 6
-- name: 🇺🇸 美国 134
-  password: 4d048fc6-d944-41dd-b327-10856adcc82d
-  port: 443
-  server: zi.you.usdtvfk.top
-  skip-cert-verify: false
-  sni: zi.you.usdtvfk.top
-  type: trojan
-  tcp_delay: 218
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 136
-  network: ws
-  port: 2052
-  server: 104.16.60.8
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: f584de15-2034-4170-a723-f48c2bae5e0f
-  ws-opts:
-    headers:
-      Host: worker-mute-bar-1719.nifotok993.workers.dev
-    path: /
-  tcp_delay: 14
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 137
-  network: ws
-  port: 80
-  server: test3.flha.ru
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 0730d4e1-3c84-4e06-8b2c-22ab4f591ff6
-  ws-opts:
-    headers:
-      Host: sims-museum-mental-listening.trycloudflare.com
-    path: /0730d4e1-3c84-4e06-8b2c-22ab4f591ff6-vm?ed=2048
-  tcp_delay: 257
-  clash_delay: 6
-- name: 🇺🇸 美国 138
-  type: trojan
-  server: 107.174.82.102.sslip.io
-  port: 443
-  password: bb824a22-b7ce-427b-9ed6-1adf0751da02
-  sni: 107.174.82.102.sslip.io
-  skip-cert-verify: false
-  udp: true
-  alpn:
-  - http/1.1
-  tls: true
-  tcp_delay: 221
-  clash_delay: 6
-- alterId: 1
-  cipher: auto
-  name: 🇺🇸 美国 139
-  network: ws
-  port: 443
-  server: e.masjide.org
-  servername: e.masjide.org
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
-  ws-opts:
-    headers:
-      Host: e.masjide.org
-    path: /
-  tcp_delay: 242
-  clash_delay: 6
-- name: 🇺🇸 美国 140
-  network: ws
-  password: YwuvGJk36B
-  port: 2053
-  server: creativecommons.org
-  skip-cert-verify: false
-  sni: kotlet.arshiacomplus.dpdns.org
-  type: trojan
-  ws-opts:
-    headers:
-      Host: kotlet.arshiacomplus.dpdns.org
-    path: /yamtekodasayahhh
-  tcp_delay: 63
-  clash_delay: 6
-- client-fingerprint: random
-  name: 🇺🇸 美国 142
-  network: ws
-  port: 7443
-  server: 172.233.108.62
-  skip-cert-verify: false
-  tls: true
-  type: vless
-  uuid: 78fc9ba9-9c68-4b49-891f-ea9e38bd3b56
-  ws-opts:
-    headers:
-      Host: ak.suoni.nyc.mn
-    path: /proxyip=sjc.o00o.ooo
-  servername: ak.suoni.nyc.mn
-  tcp_delay: 121
-  clash_delay: 6
-- name: 🇺🇸 美国 143
-  network: ws
-  password: vip
-  port: 443
-  server: www.iplocation.net
-  skip-cert-verify: false
-  sni: heihu880.pages.dev
-  type: trojan
-  ws-opts:
-    headers:
-      Host: heihu880.pages.dev
-    path: /?ed=2560
-  tcp_delay: 157
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 148
-  network: ws
-  port: 443
-  server: 104.31.16.196
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: b3a21def-5fcc-47a8-a6a0-a34e29d5288a
-  ws-opts:
-    path: /wss51068
-  tcp_delay: 14
-  clash_delay: 6
-- type: trojan
-  name: 🇺🇸 美国 149
-  server: bestcdn4.868863.xyz
-  port: 2087
-  password: d111d85a-f8ef-4468-8c56-148c0166f822
-  udp: true
-  skip-cert-verify: true
-  sni: 17648294796401.796812.xyz
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      host: 17648294797657.796812.xyz
-  tcp_delay: 258
-  clash_delay: 6
-- name: 🇺🇸 美国 150
-  type: trojan
-  server: bestcdn4.868863.xyz
-  port: 8443
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642202687386.796812.xyz
-  skip-cert-verify: false
-  udp: true
-  alpn: []
-  tls: true
-  tcp_delay: 178
-  clash_delay: 6
-- name: 🇺🇸 美国 152
-  type: trojan
-  server: bestcdn4.868863.xyz
-  port: 2096
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642202685713.796812.xyz
-  skip-cert-verify: false
-  udp: true
-  alpn: []
-  tls: true
-  tcp_delay: 172
-  clash_delay: 6
-- type: trojan
-  name: 🇺🇸 美国 153
-  server: bestcdn4.868863.xyz
-  port: 2083
-  password: d111d85a-f8ef-4468-8c56-148c0166f822
-  udp: true
-  skip-cert-verify: true
-  sni: 17648294797081.206355.xyz
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      host: 17648294796013.206355.xyz
-  tcp_delay: 243
-  clash_delay: 6
-- type: trojan
-  name: 🇺🇸 美国 154
-  server: bestcdn4.868863.xyz
-  port: 2053
-  password: d111d85a-f8ef-4468-8c56-148c0166f822
-  udp: true
-  skip-cert-verify: true
-  sni: 17648294796476.796812.xyz
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      host: 17648294795787.796812.xyz
-  tcp_delay: 243
-  clash_delay: 6
-- name: 🇺🇸 美国 155
-  type: trojan
-  server: bestcdn4.868863.xyz
-  port: 2053
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642202687785.796812.xyz
-  skip-cert-verify: false
-  udp: true
-  alpn: []
-  tls: true
-  tcp_delay: 176
-  clash_delay: 6
-- type: trojan
-  name: 🇺🇸 美国 156
-  server: bestcdn4.868863.xyz
-  port: 2096
-  password: d111d85a-f8ef-4468-8c56-148c0166f822
-  udp: true
-  skip-cert-verify: true
-  sni: 17648294793893.796812.xyz
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      host: 17648294792427.796812.xyz
-  tcp_delay: 283
-  clash_delay: 6
-- type: trojan
-  name: 🇺🇸 美国 157
-  server: bestcdn4.868863.xyz
-  port: 8443
-  password: d111d85a-f8ef-4468-8c56-148c0166f822
-  udp: true
-  skip-cert-verify: true
-  sni: 17648294792147.796813.xyz
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      host: 17648294794688.796813.xyz
-  tcp_delay: 256
-  clash_delay: 6
-- name: 🇺🇸 美国 158
-  type: trojan
-  server: bestcdn4.868863.xyz
-  port: 2053
-  password: 0e08c130-7574-493c-a935-07a53fe58f9f
-  sni: 17641461821895.796812.xyz
-  skip-cert-verify: false
-  udp: true
-  alpn: []
-  tls: true
-  tcp_delay: 186
-  clash_delay: 6
-- name: 🇺🇸 美国 159
-  type: trojan
-  server: bestcdn4.868863.xyz
-  port: 8443
-  password: 0e08c130-7574-493c-a935-07a53fe58f9f
-  sni: 17641461826563.796812.xyz
-  skip-cert-verify: false
-  udp: true
-  alpn: []
-  tls: true
-  tcp_delay: 178
-  clash_delay: 6
-- name: 🇺🇸 美国 160
-  type: vless
-  server: 68.64.176.135
-  port: 443
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: kuangbao.xiejiang.dpdns.org
-  path: /?ed=2560
-  sni: kuangbao.xiejiang.dpdns.org
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: kuangbao.xiejiang.dpdns.org
-  tcp_delay: 191
-  clash_delay: 6
-- name: 🇺🇸 美国 161
-  type: trojan
-  server: bestcdn4.868863.xyz
-  port: 2083
-  password: 0e08c130-7574-493c-a935-07a53fe58f9f
-  sni: 17641461827377.206355.xyz
-  skip-cert-verify: false
-  udp: true
-  alpn: []
-  tls: true
-  tcp_delay: 177
-  clash_delay: 6
-- name: 🇺🇸 美国 164
-  type: vless
-  server: 144.31.18.7
-  port: 443
-  uuid: b127d2d2-277a-491e-bf80-2e8688fa85e2
-  encryption: none
-  flow: xtls-rprx-vision
-  tls: true
-  skip-cert-verify: false
-  network: tcp
-  host: ''
-  path: ''
-  sni: www.apple.com
-  tcp_delay: 133
-  clash_delay: 6
-- name: 🇺🇸 美国 166
-  network: ws
-  password: vip
-  port: 443
-  server: www.visa.com.tw
-  skip-cert-verify: false
-  sni: heihu880.pages.dev
-  type: trojan
-  ws-opts:
-    headers:
-      Host: heihu880.pages.dev
-    path: /?ed=2560
-  tcp_delay: 236
-  clash_delay: 6
-- client-fingerprint: chrome
-  name: 🇺🇸 美国 167
-  network: ws
-  port: 80
-  server: 104.20.43.81
-  skip-cert-verify: true
-  tfo: true
-  tls: false
-  type: vless
-  udp: true
-  uuid: 64d6d0d4-3706-4837-b154-cda2816adcc5
-  ws-opts:
-    headers:
-      Host: crazy-identity.oneeat.co
-      User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-    path: /
-  tcp_delay: 14
-  clash_delay: 6
-- client-fingerprint: random
-  name: 🇺🇸 美国 171
-  network: ws
-  port: 2053
-  server: 104.24.210.245
-  servername: 20061024.xyz
-  skip-cert-verify: false
-  tfo: false
-  tls: true
-  type: vless
-  udp: true
-  uuid: 1ddb6da9-1b82-4ec0-a84d-cdf269410fdf
-  ws-opts:
-    headers:
-      Host: 20061024.xyz
-    path: /?ed=2560
-  tcp_delay: 12
-  clash_delay: 6
-- name: 🇺🇸 美国 172
-  network: ws
-  port: 2053
-  server: axe.soyet2j.ir
-  servername: mojito.soyet2j.ir
-  skip-cert-verify: false
-  tfo: false
-  tls: true
-  type: vless
-  udp: true
-  uuid: a086f073-c027-4748-a603-931366f3b7a7
-  ws-opts:
-    headers:
-      Host: mojito.soyet2j.ir
-    path: /homepage?ed=2560
-  tcp_delay: 235
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 177
-  network: ws
-  port: 443
-  server: 104.21.53.183
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 1052f24e-7b09-45eb-b0c5-d858eb124192
-  ws-opts:
-    headers:
-      Host: glweidf.cfd
-    path: /
-  tcp_delay: 14
-  clash_delay: 6
-- name: 🇺🇸 美国 179
-  type: trojan
-  server: bestcdn4.868863.xyz
-  port: 2096
-  password: 0e08c130-7574-493c-a935-07a53fe58f9f
-  sni: 17641461824798.796812.xyz
-  skip-cert-verify: false
-  udp: true
-  alpn: []
-  tls: true
-  tcp_delay: 177
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 182
-  network: ws
-  port: 2052
-  server: 104.16.68.38
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: fe5edf04-c2af-4ac5-84ee-16d43024decb
-  ws-opts:
-    headers:
-      Host: lu.wx.alue.link
-    path: /
-  tcp_delay: 14
-  clash_delay: 6
-- name: 🇺🇸 美国 183
-  type: vless
-  server: 98.70.151.190
-  port: 443
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: kuangbao.xiejiang.dpdns.org
-  path: /?ed=2560
-  sni: kuangbao.xiejiang.dpdns.org
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: kuangbao.xiejiang.dpdns.org
-  tcp_delay: 228
-  clash_delay: 6
-- name: 🇺🇸 美国 184
-  type: trojan
-  server: bestcdn2.868863.xyz
-  port: 2083
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642202684963.796812.xyz
-  skip-cert-verify: false
-  udp: true
-  alpn: []
-  tls: true
-  tcp_delay: 234
-  clash_delay: 6
-- name: 🇺🇸 美国 185
-  network: ws
-  port: 443
-  server: 104.21.10.181
-  servername: gamang.gpj1.dpdns.org
-  skip-cert-verify: false
-  tfo: false
-  tls: true
-  type: vless
-  udp: true
-  uuid: 3beeaf86-5522-4278-a1e9-b24a776552cd
-  ws-opts:
-    headers:
-      Host: gamang.gpj1.dpdns.org
-    path: /Free-VPN-Geo-Project/181.41.194.176-15565
-  tcp_delay: 12
-  clash_delay: 6
-- name: 🇺🇸 美国 186
-  type: trojan
-  server: bestcdn2.868863.xyz
-  port: 2096
-  password: 0e08c130-7574-493c-a935-07a53fe58f9f
-  sni: 17641461821986.206355.xyz
-  skip-cert-verify: false
-  udp: true
-  alpn: []
-  tls: true
-  tcp_delay: 230
-  clash_delay: 6
-- type: trojan
-  name: 🇺🇸 美国 187
-  server: bestcdn2.868863.xyz
-  port: 2083
-  password: d111d85a-f8ef-4468-8c56-148c0166f822
-  udp: true
-  skip-cert-verify: true
-  sni: 17648294792981.796812.xyz
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      host: 17648294796085.796812.xyz
-  tcp_delay: 281
-  clash_delay: 6
-- name: 🇺🇸 美国 188
-  type: trojan
-  server: bestcdn2.868863.xyz
-  port: 2083
-  password: 0e08c130-7574-493c-a935-07a53fe58f9f
-  sni: 17641461825177.796812.xyz
-  skip-cert-verify: false
-  udp: true
-  alpn: []
-  tls: true
-  tcp_delay: 231
-  clash_delay: 6
-- type: trojan
-  name: 🇺🇸 美国 192
-  server: bestcdn2.868863.xyz
-  port: 2096
-  password: d111d85a-f8ef-4468-8c56-148c0166f822
-  udp: true
-  skip-cert-verify: true
-  sni: 17648294792353.206355.xyz
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      host: 17648294796601.206355.xyz
-  tcp_delay: 267
-  clash_delay: 6
-- name: 🇺🇸 美国 193
-  server: news.zoom.us
-  port: 2096
-  type: vless
-  uuid: 57c35f0a-8c6c-4eb1-8a91-35f133de432c
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: lordgrim.qzz.io
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: lordgrim.qzz.io
-  tcp_delay: 56
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 195
-  network: ws
-  port: 443
-  server: 190.93.245.3
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 56a2188b-2ab7-402c-b9b8-34847fdf0958
-  ws-opts:
-    path: /5QNROSRV
-  tcp_delay: 12
-  clash_delay: 6
-- name: 🇺🇸 美国 196
-  server: 38.59.241.155
-  port: 443
-  type: vless
-  uuid: 69310d96-7045-c206-a2d0-f8ae6e49b726
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: act12.sni565.netlib.re
-  network: ws
-  ws-opts:
-    path: /proxyip=tw.sni2025.netlib.re
-    headers:
-      Host: act12.sni565.netlib.re
-  tcp_delay: 38
-  clash_delay: 6
-- type: trojan
-  name: 🇺🇸 美国 198
-  server: bestcdn2.868863.xyz
-  port: 2087
-  password: d111d85a-f8ef-4468-8c56-148c0166f822
-  udp: true
-  skip-cert-verify: true
-  sni: 17648294794284.796813.xyz
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      host: 17648294793077.796813.xyz
-  tcp_delay: 273
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 203
-  network: ws
-  port: 2095
-  server: 162.159.250.202
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 417d27fb-cb93-3bd8-9bf7-71cd91319821
-  ws-opts:
-    path: /hgcefomn
-  tcp_delay: 11
-  clash_delay: 6
-- name: 🇺🇸 美国 204
-  network: ws
-  password: vip
-  port: 443
-  server: www.gov.se
-  skip-cert-verify: false
-  sni: heihu880.pages.dev
-  type: trojan
-  ws-opts:
-    headers:
-      Host: heihu880.pages.dev
-    path: /?ed=2560
-  tcp_delay: 341
-  clash_delay: 6
-- encryption: none
-  name: 🇺🇸 美国 206
-  network: ws
-  port: 443
-  server: 141.101.120.187
-  servername: What.The.Fxxk.cloudns.org
-  skip-cert-verify: false
-  tls: true
-  type: vless
-  uuid: d342d11e-d424-4583-b36e-524ab1f0afa4
-  ws-opts:
-    headers:
-      Host: What.The.Fxxk.cloudns.org
-    path: /snippets/ip
-  tcp_delay: 12
-  clash_delay: 6
-- client-fingerprint: chrome
-  name: 🇺🇸 美国 207
-  network: ws
-  port: 2096
-  server: 77.75.199.61
-  servername: vless.hubp.de
-  skip-cert-verify: true
-  tfo: false
-  tls: true
-  type: vless
-  uuid: 12345678-1234-1234-1234-123456789123
-  ws-opts:
-    headers:
-      Host: vless.hubp.de
-    path: /snippets
-  tcp_delay: 12
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 208
-  network: ws
-  port: 80
-  server: 154.92.9.81
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: dd41b5cb-b72e-4a8c-c75a-3ecc928d6eb3
-  ws-opts:
-    path: /blue
-  tcp_delay: 15
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 209
-  network: ws
-  port: 80
-  server: 104.26.8.44
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 5180444a-4756-43b4-960b-49eb9052e4e8
-  ws-opts:
-    path: /
-  tcp_delay: 14
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 210
-  network: ws
-  port: 443
-  server: 141.193.213.20
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 4612618c-24cd-4379-9924-cfdf3d61fa5a
-  ws-opts:
-    headers:
-      Host: opfr1.v2rayfree1.xyz
-    path: /IYKLD53M
-  tcp_delay: 14
-  clash_delay: 6
-- type: trojan
-  name: 🇺🇸 美国 212
-  server: bestcdn5.868863.xyz
-  port: 2053
-  password: d111d85a-f8ef-4468-8c56-148c0166f822
-  udp: true
-  skip-cert-verify: true
-  sni: 17648294799740.796813.xyz
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      host: 17648294792583.796813.xyz
-  tcp_delay: 511
-  clash_delay: 6
-- name: 🇺🇸 美国 213
-  password: qj1Dz1CJmFQRhWr1SP80aA
-  port: 443
-  server: 172.67.204.84
-  skip-cert-verify: false
-  sni: cdn-21.gsmxreality.com
-  type: trojan
-  tcp_delay: 14
-  clash_delay: 6
-- name: 🇺🇸 美国 214
-  type: trojan
-  server: bestcdn5.868863.xyz
-  port: 8443
-  password: 0e08c130-7574-493c-a935-07a53fe58f9f
-  sni: 17641461828427.796812.xyz
-  skip-cert-verify: false
-  udp: true
-  alpn: []
-  tls: true
-  tcp_delay: 427
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 215
-  network: ws
-  port: 8443
-  server: 173.245.49.10
-  servername: us-171-78.shoptunnel.live
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: a6a37e04-5e81-44c9-be53-baa3ff46eb8b
-  ws-opts:
-    headers:
-      Host: us-171-78.shoptunnel.live
-    path: /
-  tcp_delay: 14
-  clash_delay: 6
-- name: 🇺🇸 美国 216
-  type: trojan
-  server: bestcdn5.868863.xyz
-  port: 8443
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642202688998.796812.xyz
-  skip-cert-verify: false
-  udp: true
-  alpn: []
-  tls: true
-  tcp_delay: 427
-  clash_delay: 6
-- type: trojan
-  name: 🇺🇸 美国 217
-  server: bestcdn5.868863.xyz
-  port: 8443
-  password: d111d85a-f8ef-4468-8c56-148c0166f822
-  udp: true
-  skip-cert-verify: true
-  sni: 17648294797645.206355.xyz
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      host: 17648294796859.206355.xyz
-  tcp_delay: 533
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 218
-  network: ws
-  port: 443
-  server: 23.227.38.23
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: c5a2d7b8-bf84-4f97-8577-b9b87f2baaf7
-  ws-opts:
-    headers:
-      Host: oplg1.cfcdn2.xyz
-    path: /AUIKN8AU
-  tcp_delay: 13
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 219
-  network: ws
-  port: 443
-  server: 188.114.96.3
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 05641cf5-58d2-4ba4-a9f1-b3cda0b1fb1d
-  ws-opts:
-    headers:
-      Host: obdii.cfd
-    path: /linkws
-  tcp_delay: 12
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  client-fingerprint: ''
-  name: 🇺🇸 美国 220
-  network: ws
-  port: 443
-  server: cf.fovi.tk
-  tls: true
-  type: vmess
-  uuid: bf67437e-6c90-45ca-abc2-c7240a5ce2aa
-  ws-opts:
-    headers:
-      Host: foxlux.fovi.tk
-    path: /eisasqa
-  servername: cf.fovi.tk
-  tcp_delay: 598
-  clash_delay: 6
-- name: 🇺🇸 美国 221
-  password: 4863e1b2-ec2f-4c71-b862-ce533028e57e
-  port: 443
-  server: trus.moonfree.top
-  skip-cert-verify: false
-  type: trojan
-  tcp_delay: 365
-  clash_delay: 6
-- type: trojan
-  name: 🇺🇸 美国 224
-  server: bestcdn1.868863.xyz
-  port: 2096
-  password: d111d85a-f8ef-4468-8c56-148c0166f822
-  udp: true
-  skip-cert-verify: true
-  sni: 17648294795485.796813.xyz
-  network: ws
-  ws-opts:
-    path: /agrbniuh
-    headers:
-      host: 17648294791199.796813.xyz
-  tcp_delay: 797
-  clash_delay: 6
-- name: 🇺🇸 美国 225
-  type: trojan
-  server: bestcdn1.868863.xyz
-  port: 2053
-  password: b8fc461c-4a96-422c-a2ed-dba1c0b50b14
-  sni: 17642202687941.796812.xyz
-  skip-cert-verify: false
-  udp: true
-  alpn: []
-  tls: true
-  tcp_delay: 723
-  clash_delay: 6
-- name: 🇺🇸 美国 226
-  network: ws
-  password: redfree8
-  port: 443
-  server: 104.17.148.22
-  skip-cert-verify: false
-  sni: redfree8-p1.pooriashop.ir
-  type: trojan
-  ws-opts:
-    headers:
-      Host: redfree8-p1.pooriashop.ir
-    path: /trTelegram
-  tcp_delay: 12
-  clash_delay: 6
-- type: trojan
-  name: 🇺🇸 美国 228
-  server: bestcdn1.868863.xyz
-  port: 2087
-  password: d111d85a-f8ef-4468-8c56-148c0166f822
-  udp: true
-  skip-cert-verify: true
-  sni: 17648294795509.206355.xyz
-  network: ws
-  ws-opts:
-    path: /videomuaawe
-    headers:
-      host: 17648294797877.206355.xyz
-  tcp_delay: 807
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 229
-  network: ws
-  port: 80
-  server: 154.92.9.96
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: dd41b5cb-b72e-4a8c-c75a-3ecc928d6eb3
-  ws-opts:
-    path: /blue
-  tcp_delay: 14
-  clash_delay: 6
-- name: 🇺🇸 美国 230
-  type: trojan
-  server: bestcdn1.868863.xyz
-  port: 2087
-  password: 0e08c130-7574-493c-a935-07a53fe58f9f
-  sni: 17641461828265.206355.xyz
-  skip-cert-verify: false
-  udp: true
-  alpn: []
-  tls: true
-  tcp_delay: 725
-  clash_delay: 6
-- name: 🇺🇸 美国 231
-  server: download.yunzhongzhuan.com
-  port: 2087
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 605
-  clash_delay: 6
-- type: trojan
-  name: 🇺🇸 美国 232
-  server: bestcdn1.868863.xyz
-  port: 2053
-  password: d111d85a-f8ef-4468-8c56-148c0166f822
-  udp: true
-  skip-cert-verify: true
-  sni: 17648294793940.796812.xyz
-  network: ws
-  ws-opts:
-    path: /agraeabtegrrh
-    headers:
-      host: 17648294792299.796812.xyz
-  tcp_delay: 795
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 233
-  network: ws
-  port: 2095
-  server: 162.159.254.44
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 417d27fb-cb93-3bd8-9bf7-71cd91319821
-  ws-opts:
-    path: /hgcefomn
-  tcp_delay: 11
-  clash_delay: 6
-- name: 🇺🇸 美国 234
-  type: trojan
-  server: bestcdn1.868863.xyz
-  port: 2053
-  password: 0e08c130-7574-493c-a935-07a53fe58f9f
-  sni: 17641461823271.796812.xyz
-  skip-cert-verify: false
-  udp: true
-  alpn: []
-  tls: true
-  tcp_delay: 738
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 235
-  network: ws
-  port: 443
-  server: 188.114.97.6
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: edbb1059-1633-4271-b66e-ed4fba47a1bf
-  ws-opts:
-    headers:
-      Host: linde06.indiavideo.sbs
-    path: /linkws
-  tcp_delay: 13
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 237
-  network: ws
-  port: 443
-  server: 104.25.188.126
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 824c58b1-65ba-4680-a609-663a000dbb92
-  ws-opts:
-    path: /wss13889
-  tcp_delay: 8
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 238
-  network: ws
-  port: 443
-  server: 203.23.106.157
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: c13277ce-cda6-4d01-cedc-1e3605a0eb72
-  ws-opts:
-    path: /12796
-  tcp_delay: 14
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 239
-  network: ws
-  port: 80
-  server: 104.31.16.31
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 8abe9496-5e24-4e49-b566-dcf86116017d
-  ws-opts:
-    path: /i99LgvSaslbsPLLQQ7j6Z
-  tcp_delay: 15
-  clash_delay: 6
-- alterId: 1
-  cipher: auto
-  name: 🇺🇸 美国 240
-  network: ws
-  port: 443
-  server: 172.67.155.187
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
-  ws-opts:
-    headers:
-      Host: bs.masjidd.homes
-    path: linkvws
-  tcp_delay: 15
-  clash_delay: 6
-- name: 🇺🇸 美国 241
-  password: 414dff55-922a-4dc8-b5d3-b6517942b25a
-  port: 15006
-  server: east.eeeeeef998.buzz
-  skip-cert-verify: false
-  sni: data.steamdownload.top
-  type: trojan
-  tcp_delay: 498
-  clash_delay: 6
-- client-fingerprint: random
-  name: 🇺🇸 美国 242
-  network: ws
-  port: 443
-  server: 104.21.34.163
-  servername: crolinde.carlotta.cloudns.org
-  skip-cert-verify: false
-  tfo: false
-  tls: true
-  type: vless
-  udp: true
-  uuid: 4d3e4850-83e4-4e9e-a4c1-0f11c43663e7
-  ws-opts:
-    headers:
-      Host: crolinde.carlotta.cloudns.org
-    path: /telegram
-  tcp_delay: 12
-  clash_delay: 6
-- name: 🇺🇸 美国 243
-  network: ws
-  password: auto
-  port: 443
-  server: 172.66.46.254
-  skip-cert-verify: false
-  sni: dcf741e8.epeius-2gy.pages.dev
-  type: trojan
-  ws-opts:
-    headers:
-      Host: dcf741e8.epeius-2gy.pages.dev
-    path: /?ed=2560
-  tcp_delay: 9
-  clash_delay: 6
-- name: 🇺🇸 美国 244
-  password: f282b878-8711-45a1-8c69-5564172123c1
-  port: 443
-  server: 172.67.181.173
-  skip-cert-verify: false
-  sni: vpn.stupidworld.web.id
-  type: trojan
-  tcp_delay: 12
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 245
-  network: ws
-  port: 443
-  server: 104.21.4.6
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 1052f24e-7b09-45eb-b0c5-d858eb124192
-  ws-opts:
-    headers:
-      Host: glweidf.cfd
-    path: /linkws
-  tcp_delay: 12
-  clash_delay: 6
-- client-fingerprint: randomized
-  name: 🇺🇸 美国 246
-  network: ws
-  port: 443
-  server: 172.66.47.200
-  servername: mIDsuMMer-bpb.PAgEs.DeV
-  skip-cert-verify: false
-  tfo: false
-  tls: true
-  type: vless
-  udp: true
-  uuid: c6d299d4-db0b-4444-8b56-b23bbdcbcd67
-  ws-opts:
-    headers:
-      Host: mIDsuMMer-bpb.PAgEs.DeV
-    path: /Telegram-
-  tcp_delay: 11
-  clash_delay: 6
-- name: 🇺🇸 美国 247
-  network: ws
-  password: redfree8
-  port: 80
-  server: 104.17.148.22
-  skip-cert-verify: false
-  sni: redfree8-p1.pooriashop.ir
-  type: trojan
-  ws-opts:
-    headers:
-      Host: redfree8-p1.pooriashop.ir
-    path: /trLwW5jwrnymnOdqki?ed=2560
-  tcp_delay: 15
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 248
-  network: ws
-  port: 18393
-  server: 149.30.232.103
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 2c1807ce-6a63-4451-9add-a778d2507160
-  ws-opts:
-    path: /arki?ed=2048
-  tcp_delay: 378
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 249
-  network: ws
-  port: 443
-  server: 104.21.7.50
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: b3a21def-5fcc-47a8-a6a0-a34e29d5288a
-  ws-opts:
-    path: /wss51068
-  tcp_delay: 12
-  clash_delay: 6
-- client-fingerprint: chrome
-  name: 🇺🇸 美国 250
-  network: ws
-  port: 443
-  server: 170.114.46.175
-  servername: I78nThHk0Q.sOlEnTrAa.InFo
-  skip-cert-verify: false
-  tfo: false
-  tls: true
-  type: vless
-  udp: true
-  uuid: e999db7a-1b17-4da6-bc37-c9fa24af2e93
-  ws-opts:
-    headers:
-      Host: I78nThHk0Q.sOlEnTrAa.InFo
-    path: /
-  tcp_delay: 12
-  clash_delay: 6
-- name: 🇺🇸 美国 251
-  type: vmess
-  server: us24-3.998998.best
-  port: 443
-  uuid: 24254866-770c-41b4-9404-3f50524f425b
-  alterId: 0
-  cipher: auto
-  udp: true
-  tls: true
-  skip-cert-verify: true
-  servername: www2.elgioesr.cloud-ip.cc
-  network: ws
-  ws-opts:
-    path: /rioutghewiuorrh9823r
-    headers:
-      Host: www2.elgioesr.cloud-ip.cc
-  tcp_delay: 520
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 252
-  network: ws
-  port: 443
-  server: 172.66.44.197
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: fa4cb529-3ac9-4268-bb04-ed4253813508
-  ws-opts:
-    path: /mR17oBKzZ7
-  tcp_delay: 13
-  clash_delay: 6
-- name: 🇺🇸 美国 253
-  password: a0514d9b-d109-47fd-b173-1e7f83268f21
-  port: 443
-  server: 104.16.183.101
-  skip-cert-verify: false
-  sni: tws23.kallepache.store
-  type: trojan
-  tcp_delay: 13
-  clash_delay: 6
-- alterId: 1
-  cipher: auto
-  name: 🇺🇸 美国 254
-  network: ws
-  port: 443
-  server: 104.19.110.34
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 4cdb016f-f14e-30b3-97d6-453c741a5c80
-  ws-opts:
-    headers:
-      Host: 104.19.110.34
-    path: /y475
-  tcp_delay: 9
-  clash_delay: 6
-- name: 🇺🇸 美国 255
-  network: ws
-  port: 80
-  server: 92.38.145.145
-  servername: ipcfgermany.dev
-  skip-cert-verify: false
-  tfo: false
-  tls: true
-  type: vless
-  udp: true
-  uuid: 0f494b87-2fdd-4978-b467-04f58d7375ce
-  ws-opts:
-    headers:
-      Host: ipcfgermany.dev
-    path: /
-  tcp_delay: 15
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 256
-  network: ws
-  port: 443
-  server: 203.30.190.192
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 17b2a313-37a0-4945-a8e4-e63375506b4a
-  ws-opts:
-    path: /A2DJOPFT
-  tcp_delay: 12
-  clash_delay: 6
-- alterId: 1
-  cipher: auto
-  name: 🇺🇸 美国 257
-  network: ws
-  port: 443
-  server: 104.21.63.90
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
-  ws-opts:
-    headers:
-      Host: b.besar.homes
-    path: linkvws
-  tcp_delay: 9
-  clash_delay: 6
-- name: 🇺🇸 美国 259
-  password: psycho
-  port: 443
-  server: 104.21.80.1
-  skip-cert-verify: false
-  sni: PSYchO.SueX12.Ir
-  type: trojan
-  tcp_delay: 14
-  clash_delay: 6
-- client-fingerprint: chrome
-  name: 🇺🇸 美国 260
-  network: ws
-  port: 80
-  server: 104.24.47.130
-  servername: icy-bar-399d-ppal03.pomoyes509.workers.dev
-  skip-cert-verify: false
-  tfo: false
-  tls: true
-  type: vless
-  udp: true
-  uuid: 7711fc80-c163-4f35-80c4-d5e61c69659d
-  ws-opts:
-    headers:
-      Host: icy-bar-399d-ppal03.pomoyes509.workers.dev
-    path: /?ed
-  tcp_delay: 14
-  clash_delay: 6
-- name: 🇺🇸 美国 261
-  password: dreDeMpIQpnv
-  port: 2053
-  server: 104.21.44.185
-  skip-cert-verify: false
-  sni: aryanews.onetwothree123.ir
-  type: trojan
-  tcp_delay: 15
-  clash_delay: 6
-- client-fingerprint: chrome
-  name: 🇺🇸 美国 262
-  network: ws
-  port: 2096
-  server: 192.169.223.61
-  servername: vless.hubp.de
-  skip-cert-verify: true
-  tfo: false
-  tls: true
-  type: vless
-  uuid: 12345678-1234-1234-1234-123456789123
-  ws-opts:
-    headers:
-      Host: vless.hubp.de
-    path: /snippets
-  tcp_delay: 9
-  clash_delay: 6
-- name: 🇺🇸 美国 264
-  network: ws
-  password: rXzh%3B%3FnW1GGKB(K8
-  port: 443
-  server: 104.21.18.192
-  skip-cert-verify: false
-  sni: sAiKOXpUbGm.ZhkinGkuRD13.WorkErs.dEV
-  type: trojan
-  ws-opts:
-    headers:
-      Host: sAiKOXpUbGm.ZhkinGkuRD13.WorkErs.dEV
-    path: /tr4BCdusB84159lWnu
-  tcp_delay: 13
-  clash_delay: 6
-- name: 🇺🇸 美国 268
-  password: 414dff55-922a-4dc8-b5d3-b6517942b25a
-  port: 15002
-  server: east.eeeeeef998.buzz
-  skip-cert-verify: false
-  sni: data.steamdownload.top
-  type: trojan
-  tcp_delay: 11
-  clash_delay: 6
-- type: vless
-  name: 🇩🇪 德国 2
+  name: 🇩🇪 德国 10
   server: wangcai245.cloudflare.182682.xyz
   port: 443
   uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
   skip-cert-verify: true
   tcp_delay: 409
   clash_delay: 6
+  region_info:
+    name: 德国
+    code: DE
 - type: vless
-  name: 🇩🇪 德国 3
+  name: 🇩🇪 德国 11
   server: wangcai89.cloudflare.182682.xyz
   port: 443
   uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
   skip-cert-verify: true
   tcp_delay: 259
   clash_delay: 6
-- name: 🇩🇪 德国 4
+  region_info:
+    name: 德国
+    code: DE
+- name: 🇩🇪 德国 12
   type: vless
   server: 51.195.102.180
   port: 8443
@@ -6661,7 +1668,10 @@ proxies:
       Host: kuangbao.xiejiang.dpdns.org
   tcp_delay: 129
   clash_delay: 6
-- name: 🇩🇪 德国 6
+  region_info:
+    name: 德国
+    code: DE
+- name: 🇩🇪 德国 13
   type: vless
   server: www-de.slotplanet88vip.com
   port: 8443
@@ -6680,31 +1690,43 @@ proxies:
   network: tcp
   tcp_delay: 184
   clash_delay: 6
+  region_info:
+    name: 德国
+    code: DE
 - type: vless
-  name: 🇩🇪 德国 7
+  name: 🇩🇪 德国 14
   server: wangcai205.cloudflare.182682.xyz
   port: 443
   uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
   skip-cert-verify: true
   tcp_delay: 393
   clash_delay: 6
+  region_info:
+    name: 德国
+    code: DE
 - type: vless
-  name: 🇩🇪 德国 8
+  name: 🇩🇪 德国 15
   server: wangcai79.cloudflare.182682.xyz
   port: 443
   uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
   skip-cert-verify: true
   tcp_delay: 604
   clash_delay: 6
+  region_info:
+    name: 德国
+    code: DE
 - type: vless
-  name: 🇩🇪 德国 9
+  name: 🇩🇪 德国 16
   server: wangcai121.cloudflare.182682.xyz
   port: 443
   uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
   skip-cert-verify: true
   tcp_delay: 524
   clash_delay: 6
-- name: 🇩🇪 德国 10
+  region_info:
+    name: 德国
+    code: DE
+- name: 🇩🇪 德国 17
   network: xhttp
   port: 443
   server: 91.99.7.237
@@ -6716,15 +1738,21 @@ proxies:
   uuid: c99f45df-5daf-4610-81ea-b9b4ea7258f4
   tcp_delay: 123
   clash_delay: 6
+  region_info:
+    name: 德国
+    code: DE
 - type: vless
-  name: 🇩🇪 德国 11
+  name: 🇩🇪 德国 18
   server: wangcai115.cloudflare.182682.xyz
   port: 443
   uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
   skip-cert-verify: true
   tcp_delay: 262
   clash_delay: 6
-- name: 🇩🇪 德国 12
+  region_info:
+    name: 德国
+    code: DE
+- name: 🇩🇪 德国 19
   type: trojan
   server: 62.60.246.168
   port: 443
@@ -6736,7 +1764,10 @@ proxies:
   tls: true
   tcp_delay: 116
   clash_delay: 6
-- name: 🇩🇪 德国 13
+  region_info:
+    name: 德国
+    code: DE
+- name: 🇩🇪 德国 20
   type: vless
   server: de2.ultima.foundation
   port: 8443
@@ -6755,65 +1786,89 @@ proxies:
   network: tcp
   tcp_delay: 393
   clash_delay: 6
+  region_info:
+    name: 德国
+    code: DE
 - type: vless
-  name: 🇩🇪 德国 14
+  name: 🇩🇪 德国 21
   server: wangcai185.cloudflare.182682.xyz
   port: 443
   uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
   skip-cert-verify: true
   tcp_delay: 255
   clash_delay: 6
+  region_info:
+    name: 德国
+    code: DE
 - type: vless
-  name: 🇩🇪 德国 16
+  name: 🇩🇪 德国 22
   server: wangcai91.cloudflare.182682.xyz
   port: 443
   uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
   skip-cert-verify: true
   tcp_delay: 511
   clash_delay: 6
+  region_info:
+    name: 德国
+    code: DE
 - type: vless
-  name: 🇩🇪 德国 17
+  name: 🇩🇪 德国 23
   server: wangcai161.cloudflare.182682.xyz
   port: 443
   uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
   skip-cert-verify: true
   tcp_delay: 580
   clash_delay: 6
+  region_info:
+    name: 德国
+    code: DE
 - type: vless
-  name: 🇩🇪 德国 18
+  name: 🇩🇪 德国 24
   server: wangcai61.cloudflare.182682.xyz
   port: 443
   uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
   skip-cert-verify: true
   tcp_delay: 605
   clash_delay: 6
+  region_info:
+    name: 德国
+    code: DE
 - type: vless
-  name: 🇩🇪 德国 19
+  name: 🇩🇪 德国 25
   server: wangcai209.cloudflare.182682.xyz
   port: 443
   uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
   skip-cert-verify: true
   tcp_delay: 598
   clash_delay: 6
+  region_info:
+    name: 德国
+    code: DE
 - type: vless
-  name: 🇩🇪 德国 20
+  name: 🇩🇪 德国 26
   server: wangcai25.cloudflare.182682.xyz
   port: 443
   uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
   skip-cert-verify: true
   tcp_delay: 270
   clash_delay: 6
+  region_info:
+    name: 德国
+    code: DE
 - type: vless
-  name: 🇩🇪 德国 21
+  name: 🇩🇪 德国 27
   server: wangcai241.cloudflare.182682.xyz
   port: 443
   uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
   skip-cert-verify: true
   tcp_delay: 507
   clash_delay: 6
+  region_info:
+    name: 德国
+    code: DE
 - alterId: 0
   cipher: auto
-  name: 🇩🇪 德国 22
+  name: 🇩🇪 德国 28
   network: ws
   port: 443
   server: 57.129.64.199
@@ -6827,9 +1882,12 @@ proxies:
     path: /
   tcp_delay: 115
   clash_delay: 6
+  region_info:
+    name: 德国
+    code: DE
 - alterId: 0
   cipher: auto
-  name: 🇩🇪 德国 23
+  name: 🇩🇪 德国 29
   network: ws
   port: 443
   server: 57.129.59.195
@@ -6844,422 +1902,32 @@ proxies:
     path: linkvws
   tcp_delay: 118
   clash_delay: 6
+  region_info:
+    name: 德国
+    code: DE
 - type: vless
-  name: 🇩🇪 德国 24
+  name: 🇩🇪 德国 30
   server: wangcai255.cloudflare.182682.xyz
   port: 443
   uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
   skip-cert-verify: true
   tcp_delay: 507
   clash_delay: 6
-- type: vless
-  name: 🇩🇪 德国 25
-  server: wangcai3.cloudflare.182682.xyz
-  port: 443
-  uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
-  skip-cert-verify: true
-  tcp_delay: 389
-  clash_delay: 6
-- type: vless
-  name: 🇩🇪 德国 26
-  server: wangcai169.cloudflare.182682.xyz
-  port: 443
-  uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
-  skip-cert-verify: true
-  tcp_delay: 400
-  clash_delay: 6
-- type: vless
-  name: 🇩🇪 德国 27
-  server: wangcai41.cloudflare.182682.xyz
-  port: 443
-  uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
-  skip-cert-verify: true
-  tcp_delay: 259
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇩🇪 德国 28
-  network: ws
-  port: 443
-  server: 57.129.28.64
-  servername: serkat.org
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
-  ws-opts:
-    headers:
-      Host: serkat.org
-    path: linkvws
-  tcp_delay: 115
-  clash_delay: 6
-- client-fingerprint: chrome
-  flow: xtls-rprx-vision
-  name: 🇩🇪 德国 29
-  network: tcp
-  port: 443
-  reality-opts:
-    public-key: YbcsLbM-ZxDJJZj3IYGsSReprZPs2chlo1tSFpnk2C0
-    short-id: bc541f8a6ad839c3
-  server: 178.17.51.244
-  servername: firebase.com
-  skip-cert-verify: false
-  tls: true
-  type: vless
-  uuid: b127d2d2-277a-491e-bf80-2e8688fa85e2
-  tcp_delay: 131
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇩🇪 德国 30
-  network: ws
-  port: 443
-  server: 57.129.28.215
-  servername: serkat.org
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
-  ws-opts:
-    headers:
-      Host: serkat.org
-    path: linkvws
-  tcp_delay: 118
-  clash_delay: 6
-- type: vless
-  name: 🇩🇪 德国 31
-  server: wangcai99.cloudflare.182682.xyz
-  port: 443
-  uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
-  skip-cert-verify: true
-  tcp_delay: 501
-  clash_delay: 6
-- type: vless
-  name: 🇩🇪 德国 32
-  server: wangcai177.cloudflare.182682.xyz
-  port: 443
-  uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
-  skip-cert-verify: true
-  tcp_delay: 400
-  clash_delay: 6
-- type: vless
-  name: 🇩🇪 德国 33
-  server: wangcai165.cloudflare.182682.xyz
-  port: 443
-  uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
-  skip-cert-verify: true
-  tcp_delay: 310
-  clash_delay: 6
-- type: vless
-  name: 🇩🇪 德国 34
-  server: wangcai171.cloudflare.182682.xyz
-  port: 443
-  uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
-  skip-cert-verify: true
-  tcp_delay: 386
-  clash_delay: 6
-- type: vless
-  name: 🇩🇪 德国 35
-  server: wangcai253.cloudflare.182682.xyz
-  port: 443
-  uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
-  skip-cert-verify: true
-  tcp_delay: 391
-  clash_delay: 6
-- type: vless
-  name: 🇩🇪 德国 36
-  server: wangcai47.cloudflare.182682.xyz
-  port: 443
-  uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
-  skip-cert-verify: true
-  tcp_delay: 402
-  clash_delay: 6
-- type: vless
-  name: 🇩🇪 德国 37
-  server: wangcai249.cloudflare.182682.xyz
-  port: 443
-  uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
-  skip-cert-verify: true
-  tcp_delay: 576
-  clash_delay: 6
-- type: vless
-  name: 🇩🇪 德国 39
-  server: wangcai179.cloudflare.182682.xyz
-  port: 443
-  uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
-  skip-cert-verify: true
-  tcp_delay: 585
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  http-opts:
-    method: GET
-    path:
-    - /
-  name: 🇩🇪 德国 41
-  network: http
-  port: 443
-  server: 157.90.20.18
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 6b7cbc41-fb80-41a8-8eb6-b5bdb0e86147
-  tcp_delay: 123
-  clash_delay: 6
-- type: vless
-  name: 🇩🇪 德国 42
-  server: wangcai13.cloudflare.182682.xyz
-  port: 443
-  uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
-  skip-cert-verify: true
-  tcp_delay: 299
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇩🇪 德国 43
-  network: ws
-  port: 443
-  server: 57.129.28.214
-  servername: kampong.org
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
-  ws-opts:
-    headers:
-      Host: kampong.org
-    path: linkvws
-  tcp_delay: 119
-  clash_delay: 6
-- name: 🇩🇪 德国 44
-  network: grpc
-  port: 443
-  server: 91.99.196.0
-  skip-cert-verify: false
-  tfo: false
-  tls: true
-  type: vless
-  udp: true
-  uuid: 0711cb9e-5925-4425-b59d-eae99375fa27
-  tcp_delay: 119
-  clash_delay: 6
-- type: vless
-  name: 🇩🇪 德国 45
-  server: wangcai181.cloudflare.182682.xyz
-  port: 443
-  uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
-  skip-cert-verify: true
-  tcp_delay: 246
-  clash_delay: 6
-- type: vless
-  name: 🇩🇪 德国 46
-  server: wangcai199.cloudflare.182682.xyz
-  port: 443
-  uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
-  skip-cert-verify: true
-  tcp_delay: 379
-  clash_delay: 6
-- cipher: aes-256-gcm
-  name: 🇩🇪 德国 47
-  password: 8JCsPssfgS8tiRwiMlhARg==
-  port: 12000
-  server: 57.128.214.100
-  type: ss
-  tcp_delay: 133
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇩🇪 德国 48
-  network: ws
-  port: 443
-  server: btbu996.icu
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 16702ec2-3808-46e6-a7b5-582c062be13d
-  ws-opts:
-    headers:
-      Host: btbu996.icu
-    path: /
-  tcp_delay: 397
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇩🇪 德国 49
-  network: ws
-  port: 443
-  server: 57.129.28.212
-  servername: fapeng.org
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
-  ws-opts:
-    headers:
-      Host: fapeng.org
-    path: linkvws
-  tcp_delay: 120
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇩🇪 德国 50
-  network: ws
-  port: 443
-  server: 57.129.25.24
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
-  ws-opts:
-    headers:
-      Host: pelang.org
-    path: linkvws
-  tcp_delay: 119
-  clash_delay: 6
-- type: vless
-  name: 🇩🇪 德国 51
-  server: wangcai7.cloudflare.182682.xyz
-  port: 443
-  uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
-  skip-cert-verify: true
-  tcp_delay: 580
-  clash_delay: 6
-- type: vless
-  name: 🇩🇪 德国 52
-  server: wangcai129.cloudflare.182682.xyz
-  port: 443
-  uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
-  skip-cert-verify: true
-  tcp_delay: 380
-  clash_delay: 6
-- name: 🇩🇪 德国 53
-  type: vless
-  server: 142.132.140.130
-  port: 443
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: kuangbao.xiejiang.dpdns.org
-  path: /?ed=2560
-  sni: kuangbao.xiejiang.dpdns.org
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: kuangbao.xiejiang.dpdns.org
-  tcp_delay: 125
-  clash_delay: 6
-- type: vless
-  name: 🇩🇪 德国 54
-  server: wangcai227.cloudflare.182682.xyz
-  port: 443
-  uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
-  skip-cert-verify: true
-  tcp_delay: 395
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇩🇪 德国 55
-  network: ws
-  port: 443
-  server: 57.129.24.131
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
-  ws-opts:
-    headers:
-      Host: kampong.org
-    path: /
-  tcp_delay: 116
-  clash_delay: 6
-- alterId: 1
-  cipher: auto
-  name: 🇩🇪 德国 56
-  network: ws
-  port: 443
-  server: 57.129.25.20
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
-  ws-opts:
-    headers:
-      Host: 57.129.25.20
-    path: /
-  tcp_delay: 118
-  clash_delay: 6
-- type: vless
-  name: 🇩🇪 德国 57
-  server: wangcai131.cloudflare.182682.xyz
-  port: 443
-  uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
-  skip-cert-verify: true
-  tcp_delay: 548
-  clash_delay: 6
-- alterId: 0
-  cipher: auto
-  name: 🇩🇪 德国 59
-  network: ws
-  port: 443
-  server: 57.129.25.22
-  servername: wrmelmwxlf.gktevlrqznwqqozy.fabpfs66gizmnojhcvqxwl.kytrcfzqla87gvgvs6c7kjnrubuh.cc
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
-  ws-opts:
-    headers:
-      Host: o.metuji.com
-    path: /linkvws
-  tcp_delay: 117
-  clash_delay: 6
-- type: vless
-  name: 🇩🇪 德国 60
-  server: wangcai117.cloudflare.182682.xyz
-  port: 443
-  uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
-  skip-cert-verify: true
-  tcp_delay: 469
-  clash_delay: 6
-- type: vless
-  name: 🇩🇪 德国 61
-  server: wangcai85.cloudflare.182682.xyz
-  port: 443
-  uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
-  skip-cert-verify: true
-  tcp_delay: 574
-  clash_delay: 6
-- type: vless
-  name: 🇩🇪 德国 62
-  server: wangcai173.cloudflare.182682.xyz
-  port: 443
-  uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
-  skip-cert-verify: true
-  tcp_delay: 282
-  clash_delay: 6
-- type: vless
-  name: 🇩🇪 德国 63
-  server: wangcai23.cloudflare.182682.xyz
-  port: 443
-  uuid: 9d847ad3-1896-48f9-b89c-13fe345e2bff
-  skip-cert-verify: true
-  tcp_delay: 507
-  clash_delay: 6
+  region_info:
+    name: 德国
+    code: DE
 last_message_ids:
   '@fqDINYUE': 4669
   '@wxdy666': 6228
-  '@freeyule': 1928626
+  '@freeyule': 1928629
   '@ccbaohe': 14983
-  '@duangvpsfs': 3676171
-  '@zzzjjjkkkoi': 610979
+  '@duangvpsfs': 3676204
+  '@zzzjjjkkkoi': 611005
   '@xmdexw': 220712
   '@v2v2clash': 0
   '@dingyue_Center': 3897
   '@tempssrlink': 63
   '@sorenab2': 36985
-update_time: '2025-12-06 19:23:56'
-total_nodes: 600
+update_time: '2025-12-06 19:38:25'
+total_nodes: 129
 note: 由 GitHub Actions 自动生成，每4小时更新一次，已按延迟排序并智能限量
