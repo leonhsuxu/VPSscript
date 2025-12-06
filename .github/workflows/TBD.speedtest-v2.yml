@@ -1,4 +1,4 @@
-name: ⏳ TG频道&群抓取节点测速 XC-speedtest测速版)
+name: ⏳ TG频道和群抓取节点测速 XC-speedtest测速版
 on:
   schedule:
     - cron: '10 */4 * * *'  # 每4小时执行
@@ -64,8 +64,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: mihomo
-          key: mihomo-amd64-${{ env.MIHOMO_VERSION }}-${{ github.run_id }}
-          restore-keys: mihomo-amd64-${{ env.MIHOMO_VERSION }}-
+          key: mihomo-amd64-${{ env.MIHOMO_VERSION }}
+          restore-keys: mihomo-amd64-${{ env.MIHOMO_VERSION }}
           
       - name: Download Mihomo 指定版本
         if: steps.cache-mihomo.outputs.cache-hit != 'true'
@@ -87,8 +87,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: xcspeedtest
-          key: xiecang-${{ env.SPEEDTEST_VERSION }}-${{ github.run_id }}
-          restore-keys: xiecang-${{ env.SPEEDTEST_VERSION }}-
+          key: xiecang-${{ env.SPEEDTEST_VERSION }}
+          restore-keys: xiecang-${{ env.SPEEDTEST_VERSION }}
       - name: Download xiecang speedtest-clash
         if: steps.cache-xc.outputs.cache-hit != 'true'
         run: |
