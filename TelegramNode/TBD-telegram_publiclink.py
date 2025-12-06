@@ -1007,7 +1007,6 @@ def test_proxy_with_clash(clash_path, proxy):
 
 
 def batch_tcp_test(proxies, max_workers=TCP_MAX_WORKERS):
-    """超高并发 TCP 测速"""
     results = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
         future_to_proxy = {executor.submit(tcp_ping, p): p for p in proxies}
@@ -1015,12 +1014,13 @@ def batch_tcp_test(proxies, max_workers=TCP_MAX_WORKERS):
             proxy = future_to_proxy[future]
             delay = future.result()
             if delay is not None and delay <= TCP_MAX_DELAY:
-                proxy = proxy.copy()  # 避免修改原字典
+                proxy = proxy.copy()
                 proxy['tcp_delay'] = delay
                 results.append(proxy)
-                print(f"TCP PASS: {delay:4d}ms → {proxy.get('name', '')[:40]}")
+                if ENABLE_TCP_LOG:
+                    print(f"TCP PASS: {delay:4d}ms → {proxy.get('name', '')[:40]}")
             else:
-                if delay:
+                if delay and ENABLE_TCP_LOG:
                     print(f"TCP SLOW: {delay:4d}ms → 丢弃 {proxy.get('name', '')[:40]}")
     return results
 
@@ -1083,7 +1083,7 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=True):
             with open(config_path, 'w', encoding='utf-8') as f:
                 yaml.dump(config, f, allow_unicode=True, sort_keys=False)
 
-            cmd = [speedtest_path, '-c', config_path, '-fast']
+            cmd = [speedtest_path, '-c', config_path]
             result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                     timeout=25, text=True)
             output = result.stdout + result.stderr
