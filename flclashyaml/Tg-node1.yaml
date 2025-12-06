@@ -1,8 +1,8 @@
 # ==================================================
 #  TG 免费节点 · 自动测速精选订阅（Clash 格式）
 # ==================================================
-# 更新时间   : 2025-12-06 21:33:43 (北京时间)
-# 节点总数   : 80 个优质节点
+# 更新时间   : 2025-12-06 22:19:27 (北京时间)
+# 节点总数   : 231 个优质节点
 # 筛选规则   : 延迟排序 + 带宽 ≥ 25.0MB/s
 # 地区优先级 : 香港 → 台湾 → 日本 → 新加坡 → 美国 → 韩国 → ...
 # 构建方式   : GitHub Actions 全自动，每4小时更新一次
@@ -10,32 +10,20 @@
 # ==================================================
 
 proxies:
-- cipher: aes-256-cfb
-  name: 🇭🇰 香港 1
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
-  port: 38388
-  server: 216.250.97.82
-  type: ss
-  tcp_delay: 153
-  clash_delay: 42
-  region_info:
-    name: 香港
-    code: HK
-  bandwidth: 32.43MB/s
-- name: 🇯🇵 日本 9
+- name: 🇯🇵 日本 7
   password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  port: 27233
-  server: 29fd8735-t6ykg0-thmjbt-1rk9y.cm4.oshuawei.com
+  port: 443
+  server: 4ffbf33f-t6ykg0-thmjbt-1rk9y.jp4.oshuawei.com
   tls: true
   type: http
   username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 212
-  clash_delay: 1
+  tcp_delay: 191
+  clash_delay: 2
   region_info:
     name: 日本
     code: JP
-  bandwidth: 84.50MB/s
-- name: 🇯🇵 日本 6
+  bandwidth: 78.36MB/s
+- name: 🇯🇵 日本 4
   password: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
   port: 443
   server: c8665174-t6ykg0-tpaqgu-1smhu.jp.oshuawei.com
@@ -45,36 +33,10 @@ proxies:
   region_info:
     name: 日本
     code: JP
-  tcp_delay: 118
-  clash_delay: 6
-  bandwidth: 96.62MB/s
-- name: 🇯🇵 日本 7
-  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  port: 443
-  server: c529a1ed-t6ykg0-thmjbt-1rk9y.jp.oshuawei.com
-  tls: true
-  type: http
-  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 118
-  clash_delay: 8
-  region_info:
-    name: 日本
-    code: JP
-  bandwidth: 94.67MB/s
-- name: 🇯🇵 日本 10
-  password: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
-  port: 27233
-  server: b06f3318-t6ykg0-tpaqgu-1smhu.cm4.oshuawei.com
-  tls: true
-  type: http
-  username: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
-  region_info:
-    name: 日本
-    code: JP
-  tcp_delay: 262
-  clash_delay: 8
-  bandwidth: 82.23MB/s
-- name: 🇯🇵 日本 5
+  tcp_delay: 204
+  clash_delay: 25
+  bandwidth: 79.42MB/s
+- name: 🇯🇵 日本 6
   password: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
   port: 443
   server: 8f31a2be-t6ykg0-tpaqgu-1smhu.jp4.oshuawei.com
@@ -84,10 +46,10 @@ proxies:
   region_info:
     name: 日本
     code: JP
-  tcp_delay: 118
-  clash_delay: 9
-  bandwidth: 92.41MB/s
-- name: 🇯🇵 日本 4
+  tcp_delay: 186
+  clash_delay: 31
+  bandwidth: 82.59MB/s
+- name: 🇯🇵 日本 2
   server: 35.73.93.31
   port: 443
   type: vless
@@ -101,125 +63,118 @@ proxies:
     path: /?ed=2560
     headers:
       Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 105
-  clash_delay: 68
+  tcp_delay: 119
+  clash_delay: 46
   region_info:
     name: 日本
     code: JP
-  bandwidth: 62.00MB/s
-- name: 🇯🇵 日本 8
+  bandwidth: 56.06MB/s
+- name: 🇯🇵 日本 3
   password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
   port: 443
-  server: 4ffbf33f-t6ykg0-thmjbt-1rk9y.jp4.oshuawei.com
+  server: c529a1ed-t6ykg0-thmjbt-1rk9y.jp.oshuawei.com
   tls: true
   type: http
   username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 172
-  clash_delay: 2325
+  tcp_delay: 178
+  clash_delay: 78
   region_info:
     name: 日本
     code: JP
-  bandwidth: 90.02MB/s
-- name: 🇸🇬 新加坡 4
-  server: 18.143.145.77
-  port: 50001
-  type: ss
-  cipher: aes-256-gcm
-  password: c5d45d2b-c425-4b24-8794-613b831d5f0c
-  tcp_delay: 171
-  clash_delay: 9
-  region_info:
-    name: 新加坡
-    code: SG
-  bandwidth: 53.53MB/s
-- name: 🇸🇬 新加坡 7
+  bandwidth: 79.24MB/s
+- name: 🇯🇵 日本 20
   password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  port: 443
-  server: f7e1f401-t6ykg0-thmjbt-1rk9y.sg.oshuawei.com
+  port: 27233
+  server: 29fd8735-t6ykg0-thmjbt-1rk9y.cm4.oshuawei.com
   tls: true
   type: http
   username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 241
-  clash_delay: 24
+  tcp_delay: 278
+  clash_delay: 383
   region_info:
-    name: 新加坡
-    code: SG
-  bandwidth: 121.42MB/s
-- name: 🇸🇬 新加坡 6
+    name: 日本
+    code: JP
+  bandwidth: 60.32MB/s
+- name: 🇸🇬 新加坡 14
   password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
   port: 443
   server: efec8665-t6ykg0-thmjbt-1rk9y.sg3.oshuawei.com
   tls: true
   type: http
   username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 185
-  clash_delay: 97
+  tcp_delay: 244
+  clash_delay: 2
   region_info:
     name: 新加坡
     code: SG
-  bandwidth: 95.03MB/s
-- name: 🇺🇸 美国 14
-  server: www.shopify.com
+  bandwidth: 69.54MB/s
+- name: 🇸🇬 新加坡 15
+  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
   port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
+  server: f7e1f401-t6ykg0-thmjbt-1rk9y.sg.oshuawei.com
   tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 4
-  clash_delay: 1
+  type: http
+  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
+  tcp_delay: 247
+  clash_delay: 4
   region_info:
-    name: 美国
-    code: US
-  bandwidth: 74.82MB/s
+    name: 新加坡
+    code: SG
+  bandwidth: 79.75MB/s
+- name: 🇸🇬 新加坡 9
+  server: 18.143.145.77
+  port: 50001
+  type: ss
+  cipher: aes-256-gcm
+  password: c5d45d2b-c425-4b24-8794-613b831d5f0c
+  tcp_delay: 187
+  clash_delay: 531
+  region_info:
+    name: 新加坡
+    code: SG
+  bandwidth: 41.24MB/s
 - cipher: chacha20-ietf-poly1305
-  name: 🇺🇸 美国 10
+  name: 🇺🇸 美国 11
   password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
   port: 990
   server: 173.234.29.2
   type: ss
-  tcp_delay: 48
-  clash_delay: 3
+  tcp_delay: 30
+  clash_delay: 2
   region_info:
     name: 美国
     code: US
-  bandwidth: 67.60MB/s
+  bandwidth: 68.86MB/s
 - client-fingerprint: chrome
-  name: 🇺🇸 美国 16
+  name: 🇺🇸 美国 21
   password: 79314e99f0a473fe86efc7827942ad00
   port: 2890
   server: 160.16.116.227
   skip-cert-verify: true
   sni: www.nintendogames.net
   type: trojan
-  tcp_delay: 105
-  clash_delay: 5
+  tcp_delay: 119
+  clash_delay: 2
   region_info:
     name: 美国
     code: US
-  bandwidth: 60.89MB/s
-- name: 🇺🇸 美国 13
+  bandwidth: 57.80MB/s
+- name: 🇺🇸 美国 32
   password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
   port: 443
   server: 5a6c96e7-t6ykg0-thmjbt-1rk9y.sj.gotochinatown.net
   tls: true
   type: socks5
   username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 27
-  clash_delay: 7
+  tcp_delay: 126
+  clash_delay: 40
   region_info:
     name: 美国
     code: US
-  bandwidth: 89.37MB/s
+  bandwidth: 45.74MB/s
 - alterId: 0
   cipher: auto
-  name: 🇺🇸 美国 11
+  name: 🇺🇸 美国 12
   network: ws
   port: 80
   server: bbbbbbbbb.222769.xyz
@@ -231,90 +186,66 @@ proxies:
     headers:
       Host: bbbbbbbbb.222769.xyz
     path: /f6taOMcOSZb9TPR
-  tcp_delay: 22
-  clash_delay: 61
+  tcp_delay: 76
+  clash_delay: 2680
   region_info:
     name: 美国
     code: US
-  bandwidth: 69.93MB/s
+  bandwidth: 77.37MB/s
 - cipher: chacha20-ietf-poly1305
-  name: 🇨🇦 加拿大 5
-  password: JIhN6rBKkaEboLNXVSv5rq
-  port: 80
-  server: 142.4.216.225
+  name: 🇨🇦 加拿大 3
+  password: f8f7aCzcPKbsF8p3
+  port: 990
+  server: 79.127.233.170
   type: ss
-  tcp_delay: 64
-  clash_delay: 5
+  tcp_delay: 56
+  clash_delay: 18
   region_info:
     name: 加拿大
     code: CA
-  bandwidth: 71.98MB/s
-- name: 🇨🇦 加拿大 3
+  bandwidth: 60.70MB/s
+- name: 🇨🇦 加拿大 1
   password: .ie4rghJuMkcf0oF
   port: 18509
   server: 38.96.254.102
   sni: shoppingmall.electricbanana.click
   type: trojan
-  tcp_delay: 24
-  clash_delay: 6
+  tcp_delay: 61
+  clash_delay: 2025
   region_info:
     name: 加拿大
     code: CA
   bandwidth: 89.83MB/s
-- cipher: chacha20-ietf-poly1305
-  name: 🇨🇦 加拿大 2
-  password: f8f7aCzcPKbsF8p3
-  port: 990
-  server: 79.127.233.170
-  type: ss
-  tcp_delay: 23
-  clash_delay: 8
-  region_info:
-    name: 加拿大
-    code: CA
-  bandwidth: 77.76MB/s
-- cipher: aes-256-cfb
-  name: 🇨🇦 加拿大 4
-  password: f8f7aCzcPKbsF8p3
-  port: 989
-  server: 79.127.233.170
-  type: ss
-  tcp_delay: 23
-  clash_delay: 40
-  region_info:
-    name: 加拿大
-    code: CA
-  bandwidth: 47.21MB/s
-- name: 🇬🇧 英国 12
+- name: 🇬🇧 英国 7
   password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
   port: 443
   server: 851db2a2-t6ykg0-thmjbt-1rk9y.uk.oshuawei.com
   tls: true
   type: http
   username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 154
-  clash_delay: 1
+  tcp_delay: 174
+  clash_delay: 30
   region_info:
     name: 英国
     code: GB
-  bandwidth: 92.12MB/s
+  bandwidth: 71.86MB/s
 - cipher: chacha20-ietf-poly1305
-  name: 🇬🇧 英国 7
+  name: 🇬🇧 英国 5
   password: k1dBOmOB4oqi7Ump37a1bQ
   port: 8080
   server: 82.38.31.218
   type: ss
   udp: true
-  tcp_delay: 145
-  clash_delay: 8
+  tcp_delay: 127
+  clash_delay: 79
   region_info:
     name: 英国
     code: GB
-  bandwidth: 59.76MB/s
+  bandwidth: 53.01MB/s
 - alterId: 0
   cipher: auto
   client-fingerprint: chrome
-  name: 🇩🇪 德国 5
+  name: 🇩🇪 德国 1
   network: tcp
   port: 40878
   server: 85.195.101.122
@@ -323,87 +254,28 @@ proxies:
   type: vmess
   udp: true
   uuid: f3d4167e-b15e-4e46-82e9-9286ef93fda7
-  tcp_delay: 154
-  clash_delay: 2
+  tcp_delay: 125
+  clash_delay: 1
   region_info:
     name: 德国
     code: DE
-  bandwidth: 63.35MB/s
-- http-opts:
-    headers:
-      Host:
-      - varzesh3.ir
-    path:
-    - /
-  name: 🇩🇪 德国 3
-  network: http
-  port: 33801
-  server: m39a.vip784.com
-  skip-cert-verify: false
-  tls: false
-  type: vless
-  uuid: c99262ae-ee77-4dac-8437-2d7f68fd3938
-  tcp_delay: 176
-  clash_delay: 3
-  region_info:
-    name: 德国
-    code: DE
-  bandwidth: 96.45MB/s
-- name: 🇩🇪 德国 2
-  network: ws
-  password: 8r<[9'l6hAO#8ZQi
+  bandwidth: 52.44MB/s
+- name: 🇺🇸 美国 19
+  server: news.zoom.us
   port: 8443
-  server: koma-yt.pages.dev
-  sni: Koma-YT.PAGeS.Dev
-  type: trojan
-  ws-opts:
-    path: /tro8sFW1S91B6sZrM1?ed=2560
-  tcp_delay: 62
-  clash_delay: 327
-  region_info:
-    name: 德国
-    code: DE
-  bandwidth: 51.15MB/s
-- name: 🇺🇸 美国 12
-  server: usvless.yydzx.xyz
-  port: 17993
   type: vless
-  uuid: 4e084535-bd62-458b-84a2-a0dc57c957aa
+  uuid: 353103ee-6f14-440b-b57a-b17b1f77155c
   tls: true
-  flow: xtls-rprx-vision
-  servername: usvless.yydzx.xyz
-  client-fingerprint: chrome
-  network: tcp
-  udp: true
-  tcp_delay: 97
-  clash_delay: 1
-  bandwidth: 183.61MB/s
-- cipher: aes-256-gcm
-  name: 🇬🇧 英国 10
-  password: kDWvXYZoTBcGkC4
-  port: 8881
-  server: 38.54.20.59
-  type: ss
-  tcp_delay: 153
-  clash_delay: 1
-  bandwidth: 62.67MB/s
-- name: 🇺🇸 美国 17
-  server: download.yunzhongzhuan.com
-  port: 2087
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
+  servername: premium.vkehi.shop
   network: ws
   ws-opts:
-    path: /?ed=2560
+    path: /
     headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 168
+      Host: premium.vkehi.shop
+  udp: true
+  tcp_delay: 18
   clash_delay: 2
-  bandwidth: 166.37MB/s
+  bandwidth: 87.54MB/s
 - name: 🇷🇺 俄罗斯 3
   server: 46.3.193.14
   port: 30003
@@ -418,126 +290,29 @@ proxies:
     path: /?ed=2560
     headers:
       Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 181
-  clash_delay: 5
-  bandwidth: 74.47MB/s
-- name: 🇺🇳 10 3
-  server: 104.16.15.121
+  tcp_delay: 198
+  clash_delay: 2
+  bandwidth: 41.33MB/s
+- name: 🇹🇼 台湾 12
+  password: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
   port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 2
-  clash_delay: 6
-  bandwidth: 65.34MB/s
-- name: 🇫🇷 法国 1
-  server: 141.227.136.51
-  port: 25687
-  type: vless
-  uuid: a03e540d-7fa2-4187-b0d0-5202a22cf9a0
-  tls: false
-  network: grpc
-  grpc-opts:
-    grpc-mode: gun
-    grpc-service-name: ZEDMODEON-ZEDMODEON-bia-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON
-  udp: true
-  tcp_delay: 150
-  clash_delay: 6
-  bandwidth: 61.25MB/s
-- name: 🇺🇳 10 5
-  server: 104.21.30.124
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu-s-g.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu-s-g.netlib.re
-  tcp_delay: 2
-  clash_delay: 8
-  bandwidth: 57.09MB/s
-- name: 🇺🇸 美国 9
-  server: 104.234.4.149
-  port: 56282
-  type: vless
-  uuid: aafc1774-1fe6-4f6e-807c-1bfde06bf5a2
-  tls: true
-  flow: xtls-rprx-vision
-  reality-opts:
-    public-key: 2Nov0xmA_JD1kkGLof-1PQdGcS5kY661cpFXbPV3J2A
-  servername: updates.cdn-apple.com
-  client-fingerprint: firefox
-  network: tcp
-  udp: true
-  tcp_delay: 8
-  clash_delay: 8
-  bandwidth: 236.56MB/s
-- name: 🇮🇹 意大利 1
-  server: 141.227.140.217
-  port: 23990
-  type: vless
-  uuid: 5afe0624-a873-4cb8-b4eb-cea6c41a9e52
-  tls: false
-  network: grpc
-  grpc-opts:
-    grpc-mode: gun
-    grpc-service-name: ZEDMODEON-ZEDMODEON-bia-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON
-  udp: true
-  tcp_delay: 163
-  clash_delay: 8
-  bandwidth: 79.25MB/s
-- name: 🇬🇧 英国 24
-  password: test.+
-  port: 30446
-  server: testkr3.ssv.vc
-  skip-cert-verify: true
+  server: 6b24270b-t6ykg0-t7m3jq-1rnrp.tw3.p5pv.com
   tls: true
   type: http
-  udp: true
-  username: test
-  tcp_delay: 685
-  clash_delay: 18
-  bandwidth: 145.05MB/s
-- name: 🇩🇪 德国 4
+  username: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
+  tcp_delay: 197
+  clash_delay: 3
+  bandwidth: 50.61MB/s
+- name: 🇩🇪 德国 2
   password: 5BFVs5TE
   port: 26234
   server: 5.231.56.98
   type: http
   username: kZXMC3Z1
-  tcp_delay: 152
-  clash_delay: 29
-  bandwidth: 85.81MB/s
-- name: 🇺🇳 16 1
-  server: 162.159.44.148
-  port: 2087
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 9
-  clash_delay: 56
-  bandwidth: 58.77MB/s
-- name: 🇬🇧 英国 21
+  tcp_delay: 122
+  clash_delay: 3
+  bandwidth: 26.95MB/s
+- name: 🇬🇧 英国 15
   password: e515ce48-fdfa-11ee-9970-f23c91cfbbc9
   port: 32233
   server: a9964e2f-t5gv40-te0r6o-1r7vv.id.oshuawei.com
@@ -545,9 +320,45 @@ proxies:
   type: http
   udp: true
   username: e515ce48-fdfa-11ee-9970-f23c91cfbbc9
-  tcp_delay: 217
-  clash_delay: 67
-  bandwidth: 82.65MB/s
+  tcp_delay: 262
+  clash_delay: 4
+  bandwidth: 69.33MB/s
+- name: 🇺🇸 美国 18
+  password: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
+  port: 443
+  server: 5e894b61-t6ykg0-t7m3jq-1rnrp.sj.gotochinatown.net
+  tls: true
+  type: socks5
+  username: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
+  tcp_delay: 115
+  clash_delay: 5
+  bandwidth: 76.94MB/s
+- name: 🇫🇷 法国 1
+  server: 69.84.182.13
+  port: 443
+  type: vless
+  uuid: 04f3ed37-bfd4-46d3-b4eb-e62d1f32b6f9
+  tls: true
+  servername: fr-1-fr-1.aiopen.sbs
+  network: ws
+  ws-opts:
+    path: /kbjc/fr1
+    headers:
+      Host: fr-1-fr-1.aiopen.sbs
+  udp: true
+  tcp_delay: 19
+  clash_delay: 5
+  bandwidth: 71.98MB/s
+- name: 🇹🇭 泰国 1
+  password: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
+  port: 32232
+  server: ef944548-t6ykg0-t7m3jq-1rnrp.id.oshuawei.com
+  tls: true
+  type: http
+  username: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
+  tcp_delay: 247
+  clash_delay: 5
+  bandwidth: 62.67MB/s
 - name: 🇺🇳 16 2
   server: 162.159.38.138
   port: 2087
@@ -562,20 +373,57 @@ proxies:
     path: /?ed=2560
     headers:
       Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 8
-  clash_delay: 85
-  bandwidth: 78.78MB/s
-- name: 🇯🇵 日本 11
-  server: 160.16.72.33
-  port: 3093
-  type: trojan
-  password: 79314e99f0a473fe86efc7827942ad00
-  sni: www.nintendogames.net
-  skip-cert-verify: true
-  tcp_delay: 105
-  clash_delay: 98
-  bandwidth: 81.10MB/s
+  tcp_delay: 24
+  clash_delay: 6
+  bandwidth: 28.49MB/s
 - name: 🇺🇳 10 2
+  server: 104.16.15.121
+  port: 443
+  type: vless
+  uuid: e258977b-e413-4718-a3af-02d75492c349
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: www.x-aniu---jp.netlib.re
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: www.x-aniu---jp.netlib.re
+  tcp_delay: 18
+  clash_delay: 6
+  bandwidth: 56.55MB/s
+- name: 🇸🇬 新加坡 20
+  password: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
+  port: 17235
+  server: 57f80b22-t6ykg0-t7m3jq-1rnrp.cm4.oshuawei.com
+  tls: true
+  type: http
+  username: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
+  tcp_delay: 266
+  clash_delay: 7
+  bandwidth: 67.06MB/s
+- name: 🇩🇪 德国 3
+  password: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
+  port: 443
+  server: 8a3a7a71-t6ykg0-t7m3jq-1rnrp.de.oshuawei.com
+  tls: true
+  type: http
+  username: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
+  tcp_delay: 190
+  clash_delay: 8
+  bandwidth: 87.58MB/s
+- name: 🇰🇷 韩国 8
+  password: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
+  port: 31433
+  server: 9d24afc1-t6ykg0-t7m3jq-1rnrp.kr.oshuawei.com
+  tls: true
+  type: http
+  username: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
+  tcp_delay: 269
+  clash_delay: 9
+  bandwidth: 48.91MB/s
+- name: 🇺🇳 10 3
   server: 104.21.237.158
   port: 443
   type: vless
@@ -589,29 +437,502 @@ proxies:
     path: /?ed=2560
     headers:
       Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 19
-  clash_delay: 238
-  bandwidth: 33.34MB/s
-- name: 🇺🇳 10 1
-  server: 104.19.175.74
+  tcp_delay: 17
+  clash_delay: 9
+  bandwidth: 56.29MB/s
+- name: 🇺🇸 美国 13
+  password: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
   port: 443
+  server: bb5d3687-t6ykg0-t7m3jq-1rnrp.los.gotochinatown.net
+  tls: true
+  type: socks5
+  username: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
+  tcp_delay: 76
+  clash_delay: 18
+  bandwidth: 96.89MB/s
+- name: 🇮🇩 印度尼西亚 1
+  password: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
+  port: 32233
+  server: ef944548-t6ykg0-t7m3jq-1rnrp.id.oshuawei.com
+  tls: true
+  type: http
+  username: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
+  tcp_delay: 246
+  clash_delay: 26
+  bandwidth: 65.09MB/s
+- name: 🇺🇸 美国 15
+  password: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
+  port: 443
+  server: 29afdc30-t6ykg0-t7m3jq-1rnrp.sjc.oshuawei.com
+  tls: true
+  type: http
+  username: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
+  tcp_delay: 50
+  clash_delay: 38
+  bandwidth: 116.83MB/s
+- cipher: aes-256-gcm
+  name: 🇬🇧 英国 6
+  password: kDWvXYZoTBcGkC4
+  port: 8881
+  server: 38.54.20.59
+  type: ss
+  tcp_delay: 135
+  clash_delay: 565
+  bandwidth: 50.36MB/s
+- name: 🇺🇸 美国 30
+  server: 104.234.4.149
+  port: 56282
   type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
+  uuid: aafc1774-1fe6-4f6e-807c-1bfde06bf5a2
+  tls: true
+  flow: xtls-rprx-vision
+  reality-opts:
+    public-key: 2Nov0xmA_JD1kkGLof-1PQdGcS5kY661cpFXbPV3J2A
+  servername: updates.cdn-apple.com
+  client-fingerprint: firefox
+  network: tcp
+  udp: true
+  tcp_delay: 27
+  clash_delay: 799
+  bandwidth: 110.08MB/s
+- name: 🇯🇵 日本 11
+  password: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
+  port: 443
+  server: 1105c27a-t6ykg0-t7m3jq-1rnrp.jp4.oshuawei.com
+  tls: true
+  type: http
+  username: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
+  tcp_delay: 166
+  clash_delay: 966
+  bandwidth: 72.91MB/s
+- name: 🇬🇧 英国 11
+  password: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
+  port: 443
+  server: 8aba6923-t6ykg0-t7m3jq-1rnrp.uk.oshuawei.com
+  tls: true
+  type: http
+  username: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
+  tcp_delay: 180
+  clash_delay: 971
+  bandwidth: 79.08MB/s
+- name: 🇮🇹 意大利 3
+  server: 141.227.140.217
+  port: 23990
+  type: vless
+  uuid: 5afe0624-a873-4cb8-b4eb-cea6c41a9e52
+  tls: false
+  network: grpc
+  grpc-opts:
+    grpc-mode: gun
+    grpc-service-name: ZEDMODEON-ZEDMODEON-bia-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON
+  udp: true
+  tcp_delay: 133
+  clash_delay: 1721
+  bandwidth: 56.50MB/s
+- name: 🇭🇰 香港 1
+  password: <password>
+  port: 8443
+  server: 70e1f605-t6ykg0-t7m3jq-1rnrp.hkt.cdnhuawei.com
+  tls: true
+  type: http
+  username: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
+  tcp_delay: 230
+  clash_delay: 2025
+- name: 🇭🇰 香港 2
+  password: <password>
+  port: 443
+  server: fa0e55f2-t6ykg0-t7m3jq-1rnrp.hkt2.cdnhuawei.com
+  tls: true
+  type: socks5
+  username: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
+  tcp_delay: 238
+  clash_delay: 2025
+- name: 🇭🇰 香港 3
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8760
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 341
+  clash_delay: 2025
+- name: 🇭🇰 香港 4
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8713
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 342
+  clash_delay: 2025
+- name: 🇭🇰 香港 5
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8717
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 340
+  clash_delay: 2025
+- name: 🇭🇰 香港 6
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8754
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 346
+  clash_delay: 2025
+- name: 🇭🇰 香港 7
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8719
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 342
+  clash_delay: 2025
+- name: 🇭🇰 香港 8
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8757
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 343
+  clash_delay: 2025
+- name: 🇭🇰 香港 9
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8720
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 344
+  clash_delay: 2025
+- name: 🇭🇰 香港 10
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8711
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 345
+  clash_delay: 2025
+- name: 🇭🇰 香港 11
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8759
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 345
+  clash_delay: 2025
+- name: 🇭🇰 香港 12
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8758
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 347
+  clash_delay: 2025
+- name: 🇭🇰 香港 13
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8755
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 349
+  clash_delay: 2025
+- name: 🇭🇰 香港 14
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8756
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 348
+  clash_delay: 2025
+- name: 🇭🇰 香港 15
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8716
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 353
+  clash_delay: 2025
+- name: 🇭🇰 香港 17
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8715
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 360
+  clash_delay: 2025
+- name: 🇭🇰 香港 19
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8752
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 351
+  clash_delay: 2025
+- name: 🇭🇰 香港 21
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8712
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 346
+  clash_delay: 2025
+- name: 🇭🇰 香港 22
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8753
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 366
+  clash_delay: 2025
+- name: 🇭🇰 香港 23
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8751
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 348
+  clash_delay: 2025
+- name: 🇭🇰 香港 25
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8714
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 367
+  clash_delay: 2025
+- name: 🇭🇰 香港 27
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8718
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 368
+  clash_delay: 2025
+- name: 🇸🇬 新加坡 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8728
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 336
+  clash_delay: 2025
+- name: 🇸🇬 新加坡 2
+  server: 43.165.190.11
+  port: 42841
+  type: vless
+  uuid: 00000000-0000-4000-8000-000000000000
   tls: true
   tfo: false
   skip-cert-verify: true
-  servername: www.x-aniu-s-g.netlib.re
+  servername: mot.morisi.ggff.net
   network: ws
   ws-opts:
-    path: /?ed=2560
+    path: /@Marisa_kristi
     headers:
-      Host: www.x-aniu-s-g.netlib.re
-  tcp_delay: 2
+      Host: mot.morisi.ggff.net
+  tcp_delay: 118
   clash_delay: 2025
-- name: 🇺🇸 美国 1
+- name: 🇸🇬 新加坡 3
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8730
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 337
+  clash_delay: 2025
+- name: 🇸🇬 新加坡 4
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8724
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 339
+  clash_delay: 2025
+- name: 🇸🇬 新加坡 5
+  server: sg004.421421.xyz
+  port: 20230
+  type: vless
+  uuid: 0bfa2050-b165-4156-859c-70f36d300dce
+  tls: true
+  reality-opts:
+    public-key: Bkxd25PPovqeYw6AevM-L266KM2kLDJomgmorzvGFmM
+    short-id: 2c846487
+  servername: www.nvidia.com
+  client-fingerprint: firefox
+  network: grpc
+  grpc-opts:
+    grpc-mode: gun
+    grpc-service-name: tj
+  udp: true
+  tcp_delay: 268
+  clash_delay: 2025
+- name: 🇸🇬 新加坡 6
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8723
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 340
+  clash_delay: 2025
+- name: 🇸🇬 新加坡 7
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8722
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 340
+  clash_delay: 2025
+- name: 🇸🇬 新加坡 8
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8727
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 343
+  clash_delay: 2025
+- name: 🇸🇬 新加坡 10
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8729
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 340
+  clash_delay: 2025
+- name: 🇸🇬 新加坡 11
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8726
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 340
+  clash_delay: 2025
+- name: 🇸🇬 新加坡 13
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8725
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 347
+  clash_delay: 2025
+- name: 🇸🇬 新加坡 16
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
-  port: 2052
+  port: 8880
   uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
   alterId: 0
   cipher: auto
@@ -621,127 +942,59 @@ proxies:
     path: /
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
-  tcp_delay: 182
+  tcp_delay: 404
   clash_delay: 2025
-- name: 🇺🇸 美国 2
-  type: vless
-  server: 144.31.90.29
-  port: 2095
-  uuid: 63798568-8555-424a-81c4-4c2f181d8de3
-  encryption: none
-  flow: ''
-  tls: false
-  skip-cert-verify: false
-  network: ws
-  host: ''
-  path: /GunService
-  sni: ''
-  ws-opts:
-    path: /GunService
-    headers: {}
-  tcp_delay: 157
-  clash_delay: 2025
-  bandwidth: 87.56MB/s
-- name: 🇺🇸 美国 3
-  server: 172.66.156.81
-  port: 80
-  type: vless
-  uuid: 76cc986c-8e30-4f81-91bb-2bd66fb4e713
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy
-    headers:
-      Host: websocket.network.www.speedtest.net.flutter.dev.russia.pyt.digitalcity5.xyz.
-  tcp_delay: 2
-  clash_delay: 2025
-- name: 🇺🇸 美国 4
-  server: 38.59.241.155
-  port: 443
-  type: vless
-  uuid: 69310d96-7045-c206-a2d0-f8ae6e49b726
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: act12.sni565.netlib.re
-  network: ws
-  ws-opts:
-    path: /proxyip=tw.sni2025.netlib.re
-    headers:
-      Host: act12.sni565.netlib.re
-  tcp_delay: 3
-  clash_delay: 2025
-  bandwidth: 55.61MB/s
-- name: 🇺🇸 美国 5
-  server: news.zoom.us
-  port: 2096
-  type: vless
-  uuid: 57c35f0a-8c6c-4eb1-8a91-35f133de432c
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: lordgrim.qzz.io
+- name: 🇸🇬 新加坡 17
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 8880
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  alterId: 0
+  cipher: auto
+  udp: true
   network: ws
   ws-opts:
     path: /
     headers:
-      Host: lordgrim.qzz.io
-  tcp_delay: 7
+      Host: baipiaoyyds.huahuasuansuan.cfd
+  tcp_delay: 375
   clash_delay: 2025
-- name: 🇺🇸 美国 6
-  server: 154.21.85.156
-  port: 10210
+- name: 🇸🇬 新加坡 19
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8721
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 366
+  clash_delay: 2025
+- name: 🇺🇳 np 1
+  server: npmjs.com
+  port: 80
   type: vless
-  uuid: 69310d96-7045-c206-a2d0-f8ae6e49b726
-  tls: true
-  servername: act12.sni565.netlib.re
-  network: ws
-  ws-opts:
-    path: /proxyip=tw.sni2025.netlib.re
-    headers:
-      Host: act12.sni565.netlib.re
-  udp: true
-  tcp_delay: 9
-  clash_delay: 2025
-- name: 🇺🇸 美国 7
-  server: usvless.yydzx.xyz
-  port: 17793
-  type: vless
-  uuid: 4e084535-bd62-458b-84a2-a0dc57c957aa
-  tls: true
-  flow: xtls-rprx-vision
-  servername: usvless.yydzx.xyz
-  client-fingerprint: chrome
-  network: tcp
-  udp: true
-  tcp_delay: 83
-  clash_delay: 2025
-- name: 🇨🇦 加拿大 1
-  server: 209.200.246.53
-  port: 36774
-  type: trojan
-  password: Fv7ogJ6vfz
-  sni: cloudflare.com
-  skip-cert-verify: true
-  network: grpc
-  tcp_delay: 65
-  clash_delay: 2025
-- name: 🇺🇳 fb 1
-  server: fbi.gov
-  port: 8080
-  type: vless
-  uuid: 379e6e2a-761b-4e4d-8c9b-00e020acb051
+  uuid: 82de262c-cd5e-402f-a709-f6979fc7c93e
   tls: false
   tfo: false
   skip-cert-verify: true
   network: ws
   ws-opts:
-    path: /WeSC6uBZUBAU3UhXT0
+    path: /
     headers:
-      Host: dawn-hill-7bc8.exhume-skirt-smirk.workers.dev
-  tcp_delay: 79
+      Host: fragrant-star-ebf2.daheg47484.workers.dev
+  tcp_delay: 69
+  clash_delay: 2025
+- name: 🇮🇳 印度 1
+  server: 180.131.145.161
+  port: 23274
+  type: trojan
+  password: FodSUXysuS
+  sni: cloudflare.com
+  skip-cert-verify: true
+  network: grpc
+  tcp_delay: 70
   clash_delay: 2025
 - name: 🇰🇷 韩国 1
   server: 175.205.95.168
@@ -757,9 +1010,70 @@ proxies:
     path: /proxyip=tw.sni2025.netlib.re
     headers:
       Host: act12.sni565.netlib.re
-  tcp_delay: 141
+  tcp_delay: 154
   clash_delay: 2025
 - name: 🇰🇷 韩国 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8602
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 333
+  clash_delay: 2025
+- name: 🇰🇷 韩国 3
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8601
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 334
+  clash_delay: 2025
+- name: 🇰🇷 韩国 4
+  server: 218.237.185.230
+  port: 4652
+  type: ss
+  cipher: aes-256-cfb
+  password: qwerREWQ@@
+  udp: true
+  tcp_delay: 152
+  clash_delay: 2025
+- name: 🇰🇷 韩国 5
+  server: kranytls01.yytls.top
+  port: 27008
+  type: anytls
+  password: 4e084535-bd62-458b-84a2-a0dc57c957aa
+  client-fingerprint: chrome
+  udp: true
+  skip-cert-verify: false
+  alpn:
+  - h2
+  - http/1.1
+  tcp_delay: 605
+  clash_delay: 2025
+- name: 🇰🇷 韩国 6
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 2082
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+  tcp_delay: 374
+  clash_delay: 2025
+- name: 🇰🇷 韩国 7
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
   port: 2082
@@ -772,63 +1086,146 @@ proxies:
     path: /
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
-  tcp_delay: 182
+  tcp_delay: 407
   clash_delay: 2025
-- name: 🇺🇳 np 1
-  server: npmjs.com
-  port: 80
+- alterId: 0
+  cipher: auto
+  name: 🇺🇳 线路 1
+  network: tcp
+  port: 443
+  server: hostloc.com
+  tls: true
+  type: vmess
+  uuid: 989aa406-ea9b-11ef-97da-f23c91cfbbc9
+  tcp_delay: 93
+  clash_delay: 2025
+- name: 🇺🇳 线路 2
+  type: vmess
+  server: hostloc.com
+  port: 443
+  uuid: 6d56436c-150d-11f0-b0c8-f23c913c8d2b
+  alterId: 0
+  cipher: auto
+  network: tcp
+  tls: true
+  skip-cert-verify: false
+  ws-opts: {}
+  tcp_delay: 93
+  clash_delay: 2025
+- name: 🇺🇳 fb 1
+  server: fbi.gov
+  port: 8080
   type: vless
-  uuid: 82de262c-cd5e-402f-a709-f6979fc7c93e
+  uuid: 379e6e2a-761b-4e4d-8c9b-00e020acb051
   tls: false
   tfo: false
   skip-cert-verify: true
   network: ws
   ws-opts:
-    path: /
+    path: /WeSC6uBZUBAU3UhXT0
     headers:
-      Host: fragrant-star-ebf2.daheg47484.workers.dev
-  tcp_delay: 6
+      Host: dawn-hill-7bc8.exhume-skirt-smirk.workers.dev
+  tcp_delay: 94
   clash_delay: 2025
-- name: 🇯🇵 日本 1
-  type: vmess
-  server: baipiaojichangink.huahuasuansuan.cfd
-  port: 8080
-  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
-  alterId: 0
-  cipher: auto
-  udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: baipiaoyyds.huahuasuansuan.cfd
-  tcp_delay: 182
-  clash_delay: 2025
-- name: 🇯🇵 日本 2
-  server: 54.248.56.163
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu-h-k.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu-h-k.netlib.re
-  tcp_delay: 107
-  clash_delay: 2025
-- cipher: chacha20-ietf
-  name: 🇨🇳 英国 1
-  password: asd123456
-  port: 8388
-  server: 103.141.221.124
+- name: 🇻🇳 越南 1
+  server: 103.186.155.55
+  port: 38388
   type: ss
-  tcp_delay: 156
+  cipher: aes-256-cfb
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  udp: true
+  tcp_delay: 238
   clash_delay: 2025
-- name: 🇬🇧 英国 2
+- name: 🇻🇳 越南 2
+  server: 103.186.154.19
+  port: 38388
+  type: ss
+  cipher: aes-256-cfb
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  udp: true
+  tcp_delay: 224
+  clash_delay: 2025
+- name: 🇻🇳 越南 3
+  server: 103.186.154.75
+  port: 38388
+  type: ss
+  cipher: aes-256-cfb
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  udp: true
+  tcp_delay: 227
+  clash_delay: 2025
+- name: 🇻🇳 越南 4
+  server: 103.186.154.46
+  port: 38388
+  type: ss
+  cipher: aes-256-cfb
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  udp: true
+  tcp_delay: 223
+  clash_delay: 2025
+- name: 🇻🇳 越南 5
+  server: 103.186.154.33
+  port: 38388
+  type: ss
+  cipher: aes-256-cfb
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  udp: true
+  tcp_delay: 225
+  clash_delay: 2025
+- name: 🇻🇳 越南 6
+  server: 103.186.155.122
+  port: 38388
+  type: ss
+  cipher: aes-256-cfb
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  udp: true
+  tcp_delay: 226
+  clash_delay: 2025
+- name: 🇻🇳 越南 7
+  server: 103.186.154.231
+  port: 38388
+  type: ss
+  cipher: aes-256-cfb
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  udp: true
+  tcp_delay: 221
+  clash_delay: 2025
+- name: 🇻🇳 越南 8
+  server: 103.186.155.223
+  port: 38388
+  type: ss
+  cipher: aes-256-cfb
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  udp: true
+  tcp_delay: 221
+  clash_delay: 2025
+- name: 🇬🇧 英国 1
+  network: tcp
+  password: BxceQaOe
+  port: 443
+  server: 58.152.18.95
+  skip-cert-verify: true
+  sni: t.me%2Fripaojiedian
+  type: trojan
+  tcp_delay: 195
+  clash_delay: 2025
+- client-fingerprint: chrome
+  flow: xtls-rprx-vision
+  name: 🇬🇧 英国 2
+  network: tcp
+  port: 6093
+  reality-opts:
+    public-key: W91d6Qp8Avflj9K7rMYGGdhxV_W0Ds_FSu_c996zknk
+    short-id: 57e13c11bb421329
+  server: easygovpnkeys16.com
+  servername: eas1goauth.com
+  skip-cert-verify: false
+  tls: true
+  type: vless
+  uuid: e5603527-ac9b-4f69-906e-34bea11c5835
+  tcp_delay: 245
+  clash_delay: 2025
+- name: 🇬🇧 英国 3
   server: 185.138.164.228
   port: 700
   type: vless
@@ -842,43 +1239,53 @@ proxies:
     path: /@Marisa_kristi
     headers:
       Host: zybs.worker.ddns-ip.net
-  tcp_delay: 149
+  tcp_delay: 140
   clash_delay: 2025
-- cipher: chacha20-ietf
-  name: 🇨🇳 英国 3
-  password: asd123456
-  port: 8388
-  server: 103.149.182.105
-  type: ss
-  tcp_delay: 156
-  clash_delay: 2025
-- name: 🇨🇳 英国 4
-  network: tcp
-  password: BxceQaOe
+- cipher: chacha20-ietf-poly1305
+  name: 🇬🇧 英国 4
+  password: L2fN5ZhwKrkgY02gyZUyTt
   port: 443
-  server: 58.152.18.95
+  server: 92.62.251.201
+  type: ss
+  udp: true
+  tcp_delay: 146
+  clash_delay: 2025
+- alterId: 0
+  cipher: aes-256-gcm
+  name: 🇬🇧 英国 8
+  password: '123'
+  port: 6100
+  server: 14.18.106.88
   skip-cert-verify: true
-  sni: t.me%2Fripaojiedian
-  type: trojan
-  tcp_delay: 162
-  clash_delay: 2025
-- client-fingerprint: chrome
-  flow: xtls-rprx-vision
-  name: 🇬🇧 英国 5
-  network: tcp
-  port: 6093
-  reality-opts:
-    public-key: W91d6Qp8Avflj9K7rMYGGdhxV_W0Ds_FSu_c996zknk
-    short-id: 57e13c11bb421329
-  server: easygovpnkeys16.com
-  servername: eas1goauth.com
-  skip-cert-verify: false
   tls: true
-  type: vless
-  uuid: e5603527-ac9b-4f69-906e-34bea11c5835
-  tcp_delay: 205
+  type: ss
+  tcp_delay: 227
   clash_delay: 2025
-- name: 🇬🇧 英国 6
+- name: 🇬🇧 英国 10
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8787
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 332
+  clash_delay: 2025
+- name: 🇬🇧 英国 12
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8786
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 335
+  clash_delay: 2025
+- name: 🇬🇧 英国 14
   password: 13eb9352-7d04-4523-af91-4d7e84066a95
   port: 12210
   server: oss-ydniddsasa-3.7.baidu.jjuu.shrestart.com
@@ -886,107 +1293,279 @@ proxies:
   sni: m.ctrip.com
   type: trojan
   udp: true
-  tcp_delay: 689
-  clash_delay: 2025
-- cipher: chacha20-ietf
-  name: 🇨🇳 英国 8
-  password: asd123456
-  port: 8388
-  server: 103.149.183.200
-  type: ss
-  tcp_delay: 156
-  clash_delay: 2025
-- cipher: chacha20-ietf-poly1305
-  name: 🇵🇱 英国 9
-  password: L2fN5ZhwKrkgY02gyZUyTt
-  port: 443
-  server: 92.62.251.201
-  type: ss
-  udp: true
-  tcp_delay: 163
+  tcp_delay: 980
   clash_delay: 2025
 - alterId: 2
   cipher: auto
-  name: 🇬🇧 英国 13
+  name: 🇬🇧 英国 16
   port: 30807
   server: v10.hdacd.com
   skip-cert-verify: false
   tls: false
   type: vmess
   uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
-  tcp_delay: 213
+  tcp_delay: 449
   clash_delay: 2025
-- alterId: 0
-  cipher: aes-256-gcm
-  name: 🇨🇳 英国 15
-  password: '123'
-  port: 6100
-  server: 14.18.106.88
+- name: 🇨🇦 加拿大 2
+  server: 209.200.246.53
+  port: 36774
+  type: trojan
+  password: Fv7ogJ6vfz
+  sni: cloudflare.com
   skip-cert-verify: true
-  tls: true
-  type: ss
-  tcp_delay: 219
+  network: grpc
+  tcp_delay: 52
   clash_delay: 2025
-- cipher: aes-256-cfb
-  country: 🏁 ZZ
-  name: 🇵🇹 英国 17
-  password: f8f7aCzcPKbsF8p3
-  port: 989
-  server: 185.231.233.112
+- name: 🇨🇦 加拿大 5
   type: ss
-  tcp_delay: 296
+  server: cn01.efan8867801.xyz
+  port: 8781
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 351
   clash_delay: 2025
-- client-fingerprint: chrome
-  flow: xtls-rprx-vision
-  name: 🇬🇧 英国 19
-  network: tcp
-  port: 443
-  reality-opts:
-    public-key: v5phvruLtbRahHL0xJtl77s4sXHiuSHzUTPq2znyCF4
-    short-id: f5b76860a3c9c3f5
-  server: bg.fasssst.ru
-  servername: bg.fasssst.ru
-  skip-cert-verify: false
-  tls: true
+- name: 🇨🇦 加拿大 6
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8782
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 357
+  clash_delay: 2025
+- name: 🇺🇸 美国 1
+  server: usvless.yydzx.xyz
+  port: 17793
   type: vless
-  uuid: c1853115-eb6b-4592-b01f-05037d33505d
-  tcp_delay: 366
-  clash_delay: 2025
-- name: 🇩🇪 德国 1
-  type: vmess
-  server: baipiaojichangink.huahuasuansuan.cfd
-  port: 2086
-  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
-  alterId: 0
-  cipher: auto
+  uuid: 4e084535-bd62-458b-84a2-a0dc57c957aa
+  tls: true
+  flow: xtls-rprx-vision
+  servername: usvless.yydzx.xyz
+  client-fingerprint: chrome
+  network: tcp
   udp: true
+  tcp_delay: 118
+  clash_delay: 2025
+- name: 🇺🇸 美国 2
+  server: 172.66.156.81
+  port: 80
+  type: vless
+  uuid: 76cc986c-8e30-4f81-91bb-2bd66fb4e713
+  tls: false
+  tfo: false
+  skip-cert-verify: true
   network: ws
   ws-opts:
-    path: /
+    path: /@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy
     headers:
-      Host: baipiaoyyds.huahuasuansuan.cfd
-  tcp_delay: 182
+      Host: websocket.network.www.speedtest.net.flutter.dev.russia.pyt.digitalcity5.xyz.
+  tcp_delay: 20
   clash_delay: 2025
-- name: 🇸🇬 新加坡 1
-  server: 43.165.190.11
-  port: 42841
+- name: 🇺🇸 美国 3
+  server: 172.66.44.230
+  port: 8443
+  type: trojan
+  password: 8r<[9'l6hAO#8ZQi
+  sni: Koma-YT.PAGeS.Dev
+  network: ws
+  ws-opts:
+    path: /tro8sFW1S91B6sZrM1?ed=2560
+    headers:
+      Host: Koma-YT.PAGeS.Dev
+  udp: true
+  tcp_delay: 17
+  clash_delay: 2025
+- name: 🇺🇸 美国 4
+  server: usvless.yydzx.xyz
+  port: 17993
   type: vless
-  uuid: 00000000-0000-4000-8000-000000000000
+  uuid: 4e084535-bd62-458b-84a2-a0dc57c957aa
+  tls: true
+  flow: xtls-rprx-vision
+  servername: usvless.yydzx.xyz
+  client-fingerprint: chrome
+  network: tcp
+  udp: true
+  tcp_delay: 94
+  clash_delay: 2025
+  bandwidth: 183.61MB/s
+- name: 🇺🇸 美国 5
+  type: vless
+  server: 144.31.90.29
+  port: 2095
+  uuid: 63798568-8555-424a-81c4-4c2f181d8de3
+  encryption: none
+  flow: ''
+  tls: false
+  skip-cert-verify: false
+  network: ws
+  host: ''
+  path: /GunService
+  sni: ''
+  ws-opts:
+    path: /GunService
+    headers: {}
+  tcp_delay: 158
+  clash_delay: 2025
+  bandwidth: 87.56MB/s
+- name: 🇺🇸 美国 6
+  server: 38.59.241.155
+  port: 443
+  type: vless
+  uuid: 69310d96-7045-c206-a2d0-f8ae6e49b726
   tls: true
   tfo: false
   skip-cert-verify: true
-  servername: mot.morisi.ggff.net
+  servername: act12.sni565.netlib.re
   network: ws
   ws-opts:
-    path: /@Marisa_kristi
+    path: /proxyip=tw.sni2025.netlib.re
     headers:
-      Host: mot.morisi.ggff.net
-  tcp_delay: 105
+      Host: act12.sni565.netlib.re
+  tcp_delay: 26
   clash_delay: 2025
-- name: 🇸🇬 新加坡 2
+  bandwidth: 55.61MB/s
+- name: 🇺🇸 美国 7
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8775
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 333
+  clash_delay: 2025
+- name: 🇺🇸 美国 8
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8777
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 334
+  clash_delay: 2025
+- name: 🇺🇸 美国 9
+  server: news.zoom.us
+  port: 2096
+  type: vless
+  uuid: 57c35f0a-8c6c-4eb1-8a91-35f133de432c
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: lordgrim.qzz.io
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: lordgrim.qzz.io
+  tcp_delay: 82
+  clash_delay: 2025
+- name: 🇺🇸 美国 10
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8772
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 335
+  clash_delay: 2025
+- name: 🇺🇸 美国 14
+  server: 104.17.254.251
+  port: 443
+  type: vless
+  uuid: e258977b-e413-4718-a3af-02d75492c349
+  tls: true
+  servername: www.x-aniu-h-k.netlib.re
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: www.x-aniu-h-k.netlib.re
+  udp: true
+  tcp_delay: 17
+  clash_delay: 2025
+- name: 🇺🇸 美国 16
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8778
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 336
+  clash_delay: 2025
+- name: 🇺🇸 美国 17
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8773
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 337
+  clash_delay: 2025
+- name: 🇺🇸 美国 29
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8771
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 340
+  clash_delay: 2025
+- name: 🇺🇸 美国 31
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8776
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 340
+  clash_delay: 2025
+- name: 🇺🇸 美国 34
   type: vmess
   server: baipiaojichangink.huahuasuansuan.cfd
-  port: 8880
+  port: 2052
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+  tcp_delay: 375
+  clash_delay: 2025
+- name: 🇺🇸 美国 35
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 2052
   uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
   alterId: 0
   cipher: auto
@@ -996,35 +1575,117 @@ proxies:
     path: /
     headers:
       Host: baipiaoyyds.huahuasuansuan.cfd
-  tcp_delay: 182
+  tcp_delay: 410
   clash_delay: 2025
-- name: 🇸🇬 新加坡 3
-  server: sganytls01.yytls.top
-  port: 27003
-  type: anytls
-  password: 4e084535-bd62-458b-84a2-a0dc57c957aa
-  client-fingerprint: chrome
-  udp: true
-  skip-cert-verify: false
-  alpn:
-  - h2
-  - http/1.1
-  tcp_delay: 566
+- name: 🇺🇸 美国 36
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8780
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 354
   clash_delay: 2025
-- name: 🇺🇳 Te 1
-  type: vmess
-  server: baipiaojichangink.huahuasuansuan.cfd
-  port: 80
-  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
-  alterId: 0
-  cipher: auto
-  udp: true
+- name: 🇺🇸 美国 39
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8779
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 354
+  clash_delay: 2025
+- name: 🇺🇸 美国 40
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8774
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 339
+  clash_delay: 2025
+- name: 🇺🇸 美国 41
+  server: download.yunzhongzhuan.com
+  port: 2087
+  type: vless
+  uuid: e258977b-e413-4718-a3af-02d75492c349
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: www.x-aniu---jp.netlib.re
   network: ws
   ws-opts:
-    path: /
+    path: /?ed=2560
     headers:
-      Host: baipiaoyyds.huahuasuansuan.cfd
-  tcp_delay: 182
+      Host: www.x-aniu---jp.netlib.re
+  tcp_delay: 504
+  clash_delay: 2025
+  bandwidth: 166.37MB/s
+- cipher: chacha20-ietf-poly1305
+  name: 🇷🇺 俄罗斯 1
+  password: d3837224ed465f00
+  port: 57456
+  server: 45.139.26.173
+  type: ss
+  tcp_delay: 157
+  clash_delay: 2025
+- cipher: aes-256-cfb
+  name: 🇷🇺 俄罗斯 2
+  password: f8f7aCzcPKbsF8p3
+  port: 989
+  server: 38.60.223.8
+  type: ss
+  udp: true
+  tcp_delay: 163
+  clash_delay: 2025
+- name: 🇷🇺 俄罗斯 4
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8637
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 351
+  clash_delay: 2025
+- name: 🇷🇺 俄罗斯 5
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8638
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 358
+  clash_delay: 2025
+- name: 🇺🇳 10 1
+  server: 104.19.175.74
+  port: 443
+  type: vless
+  uuid: e258977b-e413-4718-a3af-02d75492c349
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: www.x-aniu-s-g.netlib.re
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: www.x-aniu-s-g.netlib.re
+  tcp_delay: 18
   clash_delay: 2025
 - name: 🇺🇳 ww 1
   server: www.speedtest.net
@@ -1039,21 +1700,311 @@ proxies:
     path: /@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy
     headers:
       Host: websocket.network.www.speedtest.net.flutter.dev.russia.pyt.digitalcity5.xyz.
-  tcp_delay: 46
+  tcp_delay: 259
   clash_delay: 2025
-- name: 🇮🇳 印度 1
-  server: 180.131.145.161
-  port: 23274
-  type: trojan
-  password: FodSUXysuS
-  sni: cloudflare.com
-  skip-cert-verify: true
-  network: grpc
-  tcp_delay: 24
+- name: 🇺🇳 匈牙 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8618
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 325
   clash_delay: 2025
-- name: 🇹🇭 泰国 1
-  server: thanytls01.yytls.top
-  port: 27007
+- name: 🇺🇳 匈牙 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8617
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 329
+  clash_delay: 2025
+- name: 🇺🇳 斯洛 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8633
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 324
+  clash_delay: 2025
+- name: 🇺🇳 斯洛 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8650
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 327
+  clash_delay: 2025
+- name: 🇺🇳 斯洛 3
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8634
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 330
+  clash_delay: 2025
+- name: 🇺🇳 斯洛 4
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8649
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 332
+  clash_delay: 2025
+- name: 🇦🇺 澳大利亚 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8799
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 328
+  clash_delay: 2025
+- name: 🇦🇺 澳大利亚 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8800
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 352
+  clash_delay: 2025
+- name: 🇹🇼 台湾 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8745
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 337
+  clash_delay: 2025
+- name: 🇹🇼 台湾 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8741
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 340
+  clash_delay: 2025
+- name: 🇹🇼 台湾 3
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8739
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 338
+  clash_delay: 2025
+- name: 🇹🇼 台湾 4
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8746
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 341
+  clash_delay: 2025
+- name: 🇹🇼 台湾 5
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8747
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 349
+  clash_delay: 2025
+- name: 🇹🇼 台湾 6
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8743
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 339
+  clash_delay: 2025
+- name: 🇹🇼 台湾 7
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8744
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 343
+  clash_delay: 2025
+- name: 🇹🇼 台湾 8
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8742
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 345
+  clash_delay: 2025
+- name: 🇹🇼 台湾 9
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8750
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 357
+  clash_delay: 2025
+- name: 🇹🇼 台湾 10
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8748
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 362
+  clash_delay: 2025
+- name: 🇹🇼 台湾 11
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8749
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 363
+  clash_delay: 2025
+- name: 🇮🇹 意大利 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8736
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 328
+  clash_delay: 2025
+- name: 🇮🇹 意大利 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8610
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 331
+  clash_delay: 2025
+- name: 🇮🇹 意大利 4
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8735
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 352
+  clash_delay: 2025
+- name: 🇮🇹 意大利 5
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8609
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 348
+  clash_delay: 2025
+- name: 🇺🇳 荷兰 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8793
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 329
+  clash_delay: 2025
+- name: 🇺🇳 荷兰 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8791
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 338
+  clash_delay: 2025
+- name: 🇺🇳 荷兰 3
+  server: nlanytls01.yytls.top
+  port: 27017
   type: anytls
   password: 4e084535-bd62-458b-84a2-a0dc57c957aa
   client-fingerprint: chrome
@@ -1062,55 +2013,878 @@ proxies:
   alpn:
   - h2
   - http/1.1
-  tcp_delay: 557
+  tcp_delay: 559
   clash_delay: 2025
-- name: 🇻🇳 越南 1
-  server: 103.186.154.19
-  port: 38388
+- name: 🇺🇳 挪威 1
   type: ss
-  cipher: aes-256-cfb
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  server: cn01.efan8867801.xyz
+  port: 8628
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 327
+  clash_delay: 2025
+- name: 🇺🇳 挪威 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8627
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 331
+  clash_delay: 2025
+- name: 🇺🇳 波兰 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8632
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 326
+  clash_delay: 2025
+- name: 🇺🇳 波兰 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8631
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 333
+  clash_delay: 2025
+- name: 🇯🇵 日本 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8770
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 335
+  clash_delay: 2025
+- name: 🇯🇵 日本 8
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8768
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 339
+  clash_delay: 2025
+- name: 🇯🇵 日本 9
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8764
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 355
+  clash_delay: 2025
+- name: 🇯🇵 日本 10
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8763
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 355
+  clash_delay: 2025
+- name: 🇯🇵 日本 12
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8761
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 340
+  clash_delay: 2025
+- name: 🇯🇵 日本 13
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8767
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 352
+  clash_delay: 2025
+- name: 🇯🇵 日本 14
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 8080
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  alterId: 0
+  cipher: auto
   udp: true
-  tcp_delay: 215
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+  tcp_delay: 406
   clash_delay: 2025
-- name: 🇻🇳 越南 2
-  server: 103.186.155.55
-  port: 38388
-  type: ss
-  cipher: aes-256-cfb
-  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+- name: 🇯🇵 日本 15
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 8080
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  alterId: 0
+  cipher: auto
   udp: true
-  tcp_delay: 212
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+  tcp_delay: 375
   clash_delay: 2025
-- cipher: chacha20-ietf-poly1305
-  name: 🇷🇺 俄罗斯 1
-  password: d3837224ed465f00
-  port: 57456
-  server: 45.139.26.173
+- name: 🇯🇵 日本 16
   type: ss
-  tcp_delay: 183
+  server: cn01.efan8867801.xyz
+  port: 8765
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 356
   clash_delay: 2025
-- cipher: aes-256-cfb
-  name: 🇷🇺 俄罗斯 2
-  password: f8f7aCzcPKbsF8p3
-  port: 989
-  server: 38.60.223.8
+- name: 🇯🇵 日本 17
   type: ss
+  server: cn01.efan8867801.xyz
+  port: 8762
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 346
+  clash_delay: 2025
+- name: 🇯🇵 日本 18
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8766
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 361
+  clash_delay: 2025
+- name: 🇯🇵 日本 19
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8769
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 362
+  clash_delay: 2025
+- name: 🇩🇪 德国 4
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8794
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 335
+  clash_delay: 2025
+- name: 🇩🇪 德国 5
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 2086
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  alterId: 0
+  cipher: auto
   udp: true
-  tcp_delay: 188
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+  tcp_delay: 374
+  clash_delay: 2025
+- name: 🇩🇪 德国 6
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 2086
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+  tcp_delay: 405
+  clash_delay: 2025
+- name: 🇩🇪 德国 7
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8796
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 350
+  clash_delay: 2025
+- name: 🇹🇷 土耳其 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8788
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 330
+  clash_delay: 2025
+- name: 🇹🇷 土耳其 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8789
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 339
+  clash_delay: 2025
+- name: 🇺🇳 塞尔 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8644
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 326
+  clash_delay: 2025
+- name: 🇺🇳 塞尔 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8643
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 330
+  clash_delay: 2025
+- name: 🇺🇳 乌克 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8790
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 332
+  clash_delay: 2025
+- name: 🇺🇳 乌克 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8785
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 354
+  clash_delay: 2025
+- name: 🇫🇷 法国 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8783
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 353
+  clash_delay: 2025
+- name: 🇫🇷 法国 3
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8784
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 341
+  clash_delay: 2025
+- name: 🇺🇳 以色 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8645
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 328
+  clash_delay: 2025
+- name: 🇺🇳 以色 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8646
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 332
+  clash_delay: 2025
+- name: 🇺🇳 哈萨 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8642
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 330
+  clash_delay: 2025
+- name: 🇺🇳 哈萨 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8641
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 334
+  clash_delay: 2025
+- name: 🇺🇳 丹麦 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8624
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 340
+  clash_delay: 2025
+- name: 🇺🇳 丹麦 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8623
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 354
+  clash_delay: 2025
+- name: 🇺🇳 爱尔 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8640
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 330
+  clash_delay: 2025
+- name: 🇺🇳 爱尔 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8639
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 350
+  clash_delay: 2025
+- name: 🇺🇳 捷克 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8615
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 334
+  clash_delay: 2025
+- name: 🇺🇳 捷克 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8616
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 334
+  clash_delay: 2025
+- name: 🇺🇳 奥地 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8656
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 327
+  clash_delay: 2025
+- name: 🇺🇳 奥地 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8655
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 329
+  clash_delay: 2025
+- name: 🇺🇳 比利 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8738
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 334
+  clash_delay: 2025
+- name: 🇺🇳 比利 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8737
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 344
+  clash_delay: 2025
+- name: 🇺🇳 摩尔 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8608
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 331
+  clash_delay: 2025
+- name: 🇺🇳 摩尔 3
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8607
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 346
+  clash_delay: 2025
+- name: 🇺🇳 立陶 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8636
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 345
+  clash_delay: 2025
+- name: 🇺🇳 立陶 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8635
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 349
+  clash_delay: 2025
+- name: 🇺🇳 保加 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8626
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 330
+  clash_delay: 2025
+- name: 🇺🇳 保加 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8625
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 351
+  clash_delay: 2025
+- name: 🇺🇳 冰岛 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8612
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 330
+  clash_delay: 2025
+- name: 🇺🇳 冰岛 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8611
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 336
+  clash_delay: 2025
+- name: 🇺🇳 北马 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8652
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 343
+  clash_delay: 2025
+- name: 🇺🇳 北马 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8651
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 336
+  clash_delay: 2025
+- name: 🇺🇳 葡萄 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8622
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 345
+  clash_delay: 2025
+- name: 🇺🇳 葡萄 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8621
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 351
+  clash_delay: 2025
+- name: 🇲🇾 马来西亚 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8605
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 337
+  clash_delay: 2025
+- name: 🇲🇾 马来西亚 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8606
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 356
+  clash_delay: 2025
+- name: 🇧🇷 巴西 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8648
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 334
+  clash_delay: 2025
+- name: 🇧🇷 巴西 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8647
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 330
+  clash_delay: 2025
+- name: 🇺🇳 Te 1
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 80
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+  tcp_delay: 404
+  clash_delay: 2025
+- name: 🇺🇳 Te 2
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 80
+  uuid: ae6ab92f-e34e-46ed-99c2-3dce5f23cf9e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+  tcp_delay: 376
+  clash_delay: 2025
+- name: 🇺🇳 西班 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8798
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 346
+  clash_delay: 2025
+- name: 🇺🇳 西班 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8797
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 355
+  clash_delay: 2025
+- name: 🇺🇳 芬兰 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8620
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 352
+  clash_delay: 2025
+- name: 🇺🇳 芬兰 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8619
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 345
+  clash_delay: 2025
+- name: 🇺🇳 瑞士 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8731
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 351
+  clash_delay: 2025
+- name: 🇺🇳 瑞士 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8732
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 356
+  clash_delay: 2025
+- name: 🇺🇳 拉脱 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8654
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 348
+  clash_delay: 2025
+- name: 🇺🇳 拉脱 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8653
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 349
+  clash_delay: 2025
+- name: 🇺🇳 希腊 1
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8734
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 354
+  clash_delay: 2025
+- name: 🇺🇳 希腊 2
+  type: ss
+  server: cn01.efan8867801.xyz
+  port: 8733
+  cipher: rc4-md5
+  password: efanccyun
+  plugin: obfs
+  plugin-opts:
+    mode: http
+    host: 202509121565513-LUEpIR0Pwo.download.microsoft.com
+  tcp_delay: 337
   clash_delay: 2025
 last_message_ids:
-  '@fqDINYUE': 4669
-  '@wxdy666': 6228
-  '@freeyule': 1928716
+  '@fqDINYUE': 4672
+  '@wxdy666': 6230
+  '@freeyule': 1928737
   '@ccbaohe': 14985
-  '@duangvpsfs': 3676606
-  '@zzzjjjkkkoi': 611343
-  '@xmdexw': 220753
+  '@duangvpsfs': 3676682
+  '@zzzjjjkkkoi': 611483
+  '@xmdexw': 220786
   '@v2v2clash': 0
   '@dingyue_Center': 3897
-  '@tempssrlink': 63
-  '@sorenab2': 36991
-update_time: '2025-12-06 21:33:43'
-total_nodes: 80
+  '@tempssrlink': 69
+  '@sorenab2': 36996
+update_time: '2025-12-06 22:19:27'
+total_nodes: 231
 note: 由 GitHub Actions 自动生成，每4小时更新一次，已按延迟排序并智能限量
