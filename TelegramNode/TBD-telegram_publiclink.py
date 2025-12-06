@@ -1135,8 +1135,8 @@ def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=MAX_TEST_W
 
 def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
     """
-    2025-12-06 终极兼容版：同时支持有/无 clash_delay 的所有 xcspeedtest 版本
-    优先级：clash_delay（最准） → 表格延迟列 → 完全失败
+    2025-12-06 终极无敌版
+    兼容所有版本 xcspeedtest（有/无 clash_delay、引号残缺、换行截断、带宽表格等）
     """
     try:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -1167,18 +1167,17 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
             delay = None
             bandwidth = None
 
-            # === 第一优先：从 JSON 里提取 clash_delay（最准，最快）===
-            json_matches = re.findall(r'"message"\s*:\s*"json:\s*(\[.*?[\]}]\s*\])"', output, re.DOTALL)
-            if not json_matches:
-                json_matches = re.findall(r'json:\s*(\[.*)', output, re.DOTALL)
-
-            for j in json_matches:
-                j = j.strip().rstrip('"').strip()
+            # === 1. 优先从 JSON 提取 clash_delay（最准！）===
+            # 适配各种残缺引号、换行、截断情况
+            json_pattern = re.compile(r'json:\s*(\[[\s\S]*?\])', re.IGNORECASE)
+            for match in json_pattern.finditer(output):
+                j = match.group(1)
+                # 补全括号
                 if j.count('{') > j.count('}'): j += '}'
                 if j.count('[') > j.count(']'): j += ']'
                 try:
                     data = json.loads(j)
-                    if data and isinstance(data, list) and data[0].get("clash_delay") is not None:
+                    if isinstance(data, list) and data and "clash_delay" in data[0]:
                         d = int(data[0]["clash_delay"])
                         if 1 <= d <= 3000:
                             delay = d
@@ -1188,25 +1187,23 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
                 except:
                     continue
 
-            # === 第二优先：如果 JSON 没有，就用表格延迟列（你日志里一定有）===
+            # === 2. 兜底：表格延迟列（一定有）===
             if delay is None:
-                delay_match = re.search(r'延迟.*?([0-9]+)\s+[^0-9]*?$', output, re.MULTILINE | re.DOTALL)
-                if not delay_match:
-                    delay_match = re.search(r'延迟\s+[0-9\.]+\s+[0-9]+\s+([0-9]+)', output)
-                if delay_match:
+                m = re.search(r'延迟.*?([0-9]+)\s*(?:[^0-9]|$)', output, re.DOTALL)
+                if m:
                     try:
-                        d = int(delay_match.group(1))
+                        d = int(m.group(1))
                         if 1 <= d <= 3000:
                             delay = d
                             if debug:
-                                print(f"表格延迟命中 → {delay}ms ← {proxy['name']}")
+                                print(f"表格延迟兜底 → {delay}ms ← {proxy['name']}")
                     except:
                         pass
 
-            # === 提取带宽（永远尝试）===
-            bw_match = re.search(r'([0-9\.]+ ?[KMGT]?B/s)\s+[0-9\.]', output)
-            if bw_match:
-                bandwidth = bw_match.group(1).strip()
+            # === 3. 提取带宽 ===
+            bw = re.search(r'([0-9\.]+ ?[KMGT]B/s)', output)
+            if bw:
+                bandwidth = bw.group(1).strip()
 
             if delay is not None:
                 if debug:
@@ -1214,12 +1211,12 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
                 return delay, bandwidth
 
             if debug:
-                print(f"完全失败 → 丢弃 {proxy['name']}")
+                print(f"测速失败 → 丢弃 {proxy['name']}")
             return None
 
     except Exception as e:
         if debug:
-            print(f"异常: {e}")
+            print(f"测速异常: {e}")
         return None
 
 
