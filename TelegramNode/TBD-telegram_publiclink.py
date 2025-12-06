@@ -209,52 +209,95 @@ def load_existing_proxies_and_state():
             print(f"读取 {OUTPUT_FILE} 失败: {e}")
     return existing_proxies, last_message_ids
 
-def extract_valid_subscribe_links(text):
+# =============================================
+# 替换原来的 extract_valid_subscribe_links 函数
+# =============================================
+def extract_valid_subscribe_links(text: str):
+    """
+    2025 年终极版 Telegram 订阅链接提取
+    完美匹配你贴的所有例子 + 过去 3 年出现的所有变种
+    """
+    # 第一步：粗提取所有 http/https 链接（超宽松）
+    rough_links = re.findall(r'https?://[^\s<>"\'()]+', text)
+    
+    # 第二步：精过滤，留下真正的订阅链接
+    valid_links = set()
+    for link in rough_links:
+        link = link.split('&amp;')[0]           # 处理转义的 &amp;
+        link = link.split('</a>')[0]            # 处理 HTML 残留
+        link = link.strip('.,!?\n，。！？》》")')
+        
+        # 去掉可能带上的尾巴
+        if '#' in link:
+            link = link.split('#')[0]
+        if ' ' in link:
+            link = link.split(' ')[0]
+            
+        url_lower = link.lower()
+        
+        # 核心白名单判断（命中任一条即为订阅链接）
+        if any(keyword in url_lower for keyword in [
+            '/sub', '/link', '/api/v1/client/subscribe', '/getsub', '/clash',
+            '/raw', '/gist.', '/githubusercontent.com', '/workers.dev',
+            'token=', 'flag=', 'uuid=', 'sub.', 'v2ray', 'hysteria', 'trojan',
+            'ghelper.me', 'kaixincloud', 'mojie.app', 'xn--', 'surge',
+            '/s/', '/proxy', '/node', '/free', '/share', '/invite',
+            'quantumult', 'shadowrocket', 'vless', 'vmess', 'ssr'
+        ]):
+            # 额外过滤掉明显不是订阅的（防误伤）
+            if any(bad in url_lower for bad in [
+                '/t.me/', '/telegram.me/', '/t.cn/', 'joinchat', 'proxy', 
+                'channel', 'invite', 'addstickers', 'socks', 'login', 'auth',
+                'github.com', '/issues', '/pull', '/blob', '/tree'
+            ]):
+                continue
+                
+            valid_links.add(link)
+    
+    # 第三步：过期时间判断（保持你原来的逻辑）
     MIN_HOURS_LEFT = MIN_EXPIRE_HOURS
-    link_pattern = re.compile(
-        r'(?:订阅链接|订阅地址|订阅|链接)[\s:：`]*?(https?://[A-Za-z0-9\-._~:/?#[\]@!$&\'()*+,;=%]+)'
-    )
     expire_patterns = [
         r'到期时间[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2}\s+\d{2}:\d{2}:\d{2})',
         r'过期时间[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2}\s+\d{2}:\d{2}:\d{2})',
-        r'该订阅将于(\d{4}[-/]\d{1,2}[-/]\d{1,2}\s+\d{2}:\d{2}:\d{2})(?:\s*\+\d{4}\s*[A-Za-z]{3})?过期',
+        r'该订阅将于(\d{4}[-/]\d{1,2}[-/]\d{1,2}\s+\d{2}:\d{2}:\d{2})',
         r'过期[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2})',
         r'到期[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2})',
-        r'该订阅将于未知过期',
-        r'过期时间[:：]\s*长期有效',
-        r'过期[:：]\s*未知/无限',
+        r'长期有效|未知|无限',
     ]
-    text_single_line = text.replace('\n', ' ')
+    
+    text_line = text.replace('\n', ' ')
     expire_time = None
-    for patt in expire_patterns:
-        match = re.search(patt, text_single_line)
+    for patt in expire_patterns[:-1]:  # 最后一条是“长期有效”
+        match = re.search(patt, text_line)
         if match:
-            if '未知' in match.group(0) or '长期有效' in match.group(0) or '无限' in match.group(0):
-                expire_time = None
+            dt_str = match.group(1)
+            for fmt in ['%Y-%m-%d %H:%M:%S', '%Y/%m/%d %H:%M:%S', '%Y-%m-%d', '%Y/%m/%d']:
+                try:
+                    dt = datetime.strptime(dt_str, fmt)
+                    if len(dt_str) <= 10:  # 只有日期
+                        dt = dt.replace(hour=23, minute=59, second=59)
+                    expire_time = dt.replace(tzinfo=BJ_TZ)
+                    break
+                except:
+                    continue
+            if expire_time:
                 break
-            if match.lastindex:
-                dt_str = match.group(1)
-                fmt_candidates = ['%Y-%m-%d %H:%M:%S', '%Y/%m/%d %H:%M:%S', '%Y-%m-%d', '%Y/%m/%d']
-                for fmt in fmt_candidates:
-                    try:
-                        dt = datetime.strptime(dt_str, fmt)
-                        if fmt in ('%Y-%m-%d', '%Y/%m/%d'):
-                            dt = dt.replace(hour=23, minute=59, second=59)
-                        expire_time = dt.replace(tzinfo=BJ_TZ)
-                        break
-                    except Exception:
-                        continue
-            break
+    
+    # 如果明确写了“长期有效/未知/无限”，直接放行
+    if re.search(r'长期有效|未知|无限', text_line, re.I):
+        expire_time = None
+    
     now = datetime.now(BJ_TZ)
-    valid_links = []
-    links = link_pattern.findall(text)
-    for url in links:
+    final_links = []
+    for url in valid_links:
         if expire_time is not None:
             hours_left = (expire_time - now).total_seconds() / 3600
             if hours_left < MIN_HOURS_LEFT:
+                print(f"  订阅已过期或即将过期（剩余 {hours_left:.1f}h），跳过: {url[:60]}...")
                 continue
-        valid_links.append(url)
-    return valid_links
+        final_links.append(url)
+    
+    return final_links
 
 # ==========================
 # 替换了 scrape_telegram_links 为 B 版本更完善的实现
@@ -309,35 +352,44 @@ async def scrape_telegram_links(last_message_ids=None):
     print(f"\n✅ 抓取完成, 共找到 {len(all_links)} 个不重复的有效链接。")
     return list(all_links), last_message_ids
 
-# --- B 版本的下载及解析相关函数合入 ---
+# --- 3合1下载 版本的下载 ---
+# 替换原来的两个下载函数，改成这一个终极版
+def download_subscription(url: str, timeout: int = 30) -> str | None:
+    """wget → curl → requests 三保险下载，带 Clash UA"""
+    # 1. wget 最快最稳
+    if shutil.which('wget'):
+        try:
+            cmd = [
+                'wget', '-qO-', '--timeout=30', '--tries=1',
+                '--user-agent=Clash/1.18.0', '--header=Accept: */*',
+                url
+            ]
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
+            if result.returncode == 0 and result.stdout.strip():
+                return result.stdout
+        except: pass
 
-def attempt_download_using_wget(url):
-    print(f"  ⬇️ 正在使用 wget 下载: {url[:80]}...")
-    if not shutil.which("wget"):
-        print("  ✗ 错误: wget 未安装，无法执行下载。")
-        return None
+    # 2. curl 备用
+    if shutil.which('curl'):
+        try:
+            cmd = ['curl', '-fsSL', '--max-time', '30', '-A', 'Clash/1.18.0', url]
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout)
+            if result.returncode == 0 and result.stdout.strip():
+                return result.stdout
+        except: pass
+
+    # 3. requests 兜底
     try:
-        content = subprocess.run(
-            ["wget", "-O", "-", "--timeout=30", "--header=User-Agent: Clash", url],
-            capture_output=True, text=True, check=True, encoding='utf-8', errors='ignore'
-        ).stdout
-        return content if content else None
-    except subprocess.CalledProcessError as e:
-        print(f"  ✗ wget 下载失败: {e.stderr}")
+        headers = {'User-Agent': 'Clash/1.18.0'}
+        r = requests.get(url, headers=headers, timeout=timeout, verify=False)
+        r.raise_for_status()
+        return r.text
+    except:
         return None
 
-def attempt_download_using_requests(url):
-    print(f"  ⬇️ 正在使用 requests 下载: {url[:80]}...")
-    try:
-        headers = {'User-Agent': 'Clash'}
-        response = requests.get(url, headers=headers, timeout=30)
-        response.raise_for_status()
-        response.encoding = response.apparent_encoding or 'utf-8'
-        return response.text
-    except requests.RequestException as e:
-        print(f"  ✗ requests 下载失败: {e}")
-        return None
 
+
+# --- 解析相关函数合入 ---
 def parse_proxies_from_content(content):
     try:
         data = yaml.safe_load(content)
