@@ -117,6 +117,10 @@ CUSTOM_REGEX_RULES = {
     },
     '加拿大': {'code': 'CA', 'pattern': r'加拿大|枫叶|多伦多|温哥华|蒙特利尔|CA|Canada'},
     '澳大利亚': {'code': 'AU', 'pattern': r'澳大利亚|澳洲|悉尼|AU|Australia'},
+    '越南': {'code': 'VN', 'pattern': r'越南|VN|Vietnam'},
+    '印度': {'code': 'IN', 'pattern': r'印度|IN|India'},
+    '马来西亚': {'code': 'MY', 'pattern': r'马来西亚|MY|Malaysia'},
+    '法国': {'code': 'FR', 'pattern': r'法国|FR|France'},
 }
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
 BJ_TZ = timezone(timedelta(hours=8))
