@@ -83,28 +83,40 @@ REGION_PRIORITY = [
     '阿根廷', '土耳其', '澳大利亚'
 ]
 CUSTOM_REGEX_RULES = {
-    '香港': {'code': 'HK', 'pattern': r'香港|港|HK|Hong\s*Kong'},
-    '台湾': {'code': 'TW', 'pattern': r'台湾|台|TW|Taiwan'},
-    '日本': {'code': 'JP', 'pattern': r'日本|日|JP|Japan'},
-    '新加坡': {'code': 'SG', 'pattern': r'新加坡|SG|Singapore'},
-    '韩国': {'code': 'KR', 'pattern': r'韩国|南朝鲜|KR|Korea'},
-    '马来西亚': {'code': 'MY', 'pattern': r'马来西亚|MY|Malaysia'},
-    '泰国': {'code': 'TH', 'pattern': r'泰国|TH|Thailand'},
-    '印度': {'code': 'IN', 'pattern': r'印度|IN|India'},
-    '菲律宾': {'code': 'PH', 'pattern': r'菲律宾|PH|Philippines'},
-    '印度尼西亚': {'code': 'ID', 'pattern': r'印度尼西亚|印尼|ID|Indonesia'},
-    '越南': {'code': 'VN', 'pattern': r'越南|VN|Vietnam'},
-    '美国': {'code': 'US', 'pattern': r'美国|US|USA|United States'},
-    '加拿大': {'code': 'CA', 'pattern': r'加拿大|CA|Canada'},
-    '法国': {'code': 'FR', 'pattern': r'法国|FR|France'},
-    '英国': {'code': 'GB', 'pattern': r'英国|GB|UK|United Kingdom'},
-    '德国': {'code': 'DE', 'pattern': r'德国|DE|Germany'},
-    '俄罗斯': {'code': 'RU', 'pattern': r'俄罗斯|RU|Russia'},
-    '意大利': {'code': 'IT', 'pattern': r'意大利|IT|Italy'},
-    '巴西': {'code': 'BR', 'pattern': r'巴西|BR|Brazil'},
-    '阿根廷': {'code': 'AR', 'pattern': r'阿根廷|AR|Argentina'},
-    '土耳其': {'code': 'TR', 'pattern': r'土耳其|TR|Turkey'},
-    '澳大利亚': {'code': 'AU', 'pattern': r'澳大利亚|AU|Australia'},
+    '香港': {
+        'code': 'HK',
+        'pattern': r'香港|港|HK|Hong\s*Kong|HongKong|HKBN|HGC|PCCW|WTT|HKT|九龙|沙田|屯门|荃湾|深水埗|油尖旺'
+    },
+    '日本': {
+        'code': 'JP',
+        'pattern': r'日本|日|川日|东京|大阪|泉日|沪日|深日|京日|广日|JP|Japan|Tokyo|Osaka|Saitama|埼玉|名古屋|Nagoya|福冈|Fukuoka|横滨|Yokohama|NTT|IIJ|GMO|Linode'
+    },
+    '新加坡': {
+        'code': 'SG',
+        'pattern': r'新加坡|坡|狮城|狮|新|SG|Singapore|SG\d+|SGP|星|狮子城'
+    },
+    '美国': {
+        'code': 'US',
+        'pattern': r'美国|美|波特兰|达拉斯|Oregon|俄勒冈|凤凰城|硅谷|拉斯维加斯|洛杉矶|圣何塞|西雅图|芝加哥|纽约|迈阿密|亚特兰大|US|USA|United\s*States|America|LA|NYC|SF|San\s*Francisco|Washington|华盛顿|Kansas|堪萨斯|Denver|丹佛|Phoenix|Seattle|Chicago|Boston|波士顿|Atlanta|Miami|Las\s*Vegas'
+    },
+    '台湾': {
+        'code': 'TW',
+        'pattern': r'台湾|湾省|台|TW|Taiwan|TWN|台北|Taipei|台中|Taichung|高雄|Kaohsiung|新北|彰化|Hinet|中华电信'
+    },
+    '韩国': {
+        'code': 'KR',
+        'pattern': r'韩国|韩|南朝鲜|首尔|釜山|仁川|KR|Korea|KOR|韓|Seoul|Busan|KT|SK|LG'
+    },
+    '德国': {
+        'code': 'DE',
+        'pattern': r'德国|德|法兰克福|慕尼黑|柏林|DE|Germany|Frankfurt|Munich|Berlin|Hetzner'
+    },
+    '英国': {
+        'code': 'GB',
+        'pattern': r'英国|英|伦敦|曼彻斯特|UK|GB|United\s*Kingdom|Britain|England|London|Manchester'
+    },
+    '加拿大': {'code': 'CA', 'pattern': r'加拿大|枫叶|多伦多|温哥华|蒙特利尔|CA|Canada'},
+    '澳大利亚': {'code': 'AU', 'pattern': r'澳大利亚|澳洲|悉尼|AU|Australia'},
 }
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
 BJ_TZ = timezone(timedelta(hours=8))
