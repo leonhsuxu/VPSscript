@@ -1100,14 +1100,11 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=True):
                 if 1 < delay < 800:
                     return delay
 
-            # 如果没捕获到 delay 关键字，则尝试抓取所有合理数字最小的作为备用
-            delays = re.findall(r'(\d+)', output)
-            delays = [int(d) for d in delays if 1 < int(d) < 800]
-            if delays:
-                delay = min(delays)
-                if debug:
-                    print(f"[speedtest-clash 日志] 代理 {proxy.get('name')} 替代延迟: {delay} ms")
-                return delay
+            # 取消下面替代延迟逻辑，直接返回 None
+           if debug:
+               print(f"[speedtest-clash 日志] 未找到有效延迟字段，测速视为失败")
+           return None
+
 
     except Exception as e:
         if debug:
