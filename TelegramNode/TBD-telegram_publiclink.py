@@ -43,7 +43,7 @@ STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')
 TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS', '')
 TIME_WINDOW_HOURS = 4  # 抓取多长时间的消息，单位为小时。
 MIN_EXPIRE_HOURS = 2   # 订阅地址剩余时间最小过期，单位为小时。
-OUTPUT_FILE = 'flclashyaml/Tg-node.yaml'  # 输出文件路径，用于保存生成的配置或结果。
+OUTPUT_FILE = 'flclashyaml/Tg-node1.yaml'  # 输出文件路径，用于保存生成的配置或结果。
 
 
 
