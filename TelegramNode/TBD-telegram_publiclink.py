@@ -1149,30 +1149,42 @@ async def main():
         sys.exit(f"clash 核心缺失或不可执行: {clash_path}")
     # 最终进入后续处理（重命名、限量、排序）的节点列表
     final_tested_nodes = all_nodes.copy()
+    
+    clash_path = './xcspeedtest'  # 你的 speedtest-clash 二进制的路径
+
     if SPEEDTEST_MODE == "tcp_only":
         print("使用【纯 TCP 测速】模式")
         final_tested_nodes = batch_tcp_test(all_nodes)
+
     elif SPEEDTEST_MODE == "clash_only":
-        print("使用【纯 Clash -fast 测速】模式")
-        final_tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
-    elif SPEEDTEST_MODE == "tcp_first":  # 推荐！
-        print("使用【TCP 粗筛 → Clash 精测】两阶段模式")
+        print("使用【纯 speedtest-clash 测速】模式")
+        final_tested_nodes = batch_test_proxies_speedtest(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
+
+    elif SPEEDTEST_MODE == "tcp_first":
+        print("使用【TCP 粗筛 → speedtest-clash 精测】两阶段模式")
         print("阶段1：TCP 超高并发粗筛...")
         tcp_passed = batch_tcp_test(all_nodes)
         print(f"TCP 粗筛完成：{len(all_nodes)} → {len(tcp_passed)}")
         if not tcp_passed:
-            print("TCP 全死，降级使用纯 Clash 模式")
-            final_tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
+            print("TCP 全死，降级使用纯 speedtest-clash 模式")
+            final_tested_nodes = batch_test_proxies_speedtest(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
         else:
-            print("阶段2：对 TCP 存活节点进行 Clash 精准测速...")
-            final_tested_nodes = batch_test_proxies_clash(clash_path, tcp_passed, max_workers=MAX_TEST_WORKERS)
+            print("阶段2：对 TCP 存活节点进行 speedtest-clash 精准测速...")
+            final_tested_nodes = batch_test_proxies_speedtest(clash_path, tcp_passed, max_workers=MAX_TEST_WORKERS)
+
     elif SPEEDTEST_MODE == "clash_first":
-        print("使用【Clash 先测 → TCP 后验】模式")
-        clash_passed = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
+        print("使用【speedtest-clash 先测 → TCP 后验】模式")
+        clash_passed = batch_test_proxies_speedtest(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
         final_tested_nodes = [p for p in clash_passed if tcp_ping(p) is not None]
+
     else:
         print("未知模式，使用默认 tcp_first")
-        # 同 tcp_first 逻辑...
+        tcp_passed = batch_tcp_test(all_nodes)
+        if not tcp_passed:
+            final_tested_nodes = batch_test_proxies_speedtest(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS)
+        else:
+            final_tested_nodes = batch_test_proxies_speedtest(clash_path, tcp_passed, max_workers=MAX_TEST_WORKERS)
+    
     # 测速结果统计
     success_count = len(final_tested_nodes)
     print(f"测速完成，最终存活优质节点：{success_count} 个")
