@@ -1,6 +1,6 @@
 # TG频道节点自动抓取+测延迟精选订阅
-# 最后更新时间：2025-12-06 19:38:25 (北京时间)
-# 本次保留节点数：129 个（延迟最优）
+# 最后更新时间：2025-12-06 19:57:54 (北京时间)
+# 本次保留节点数：174 个（延迟最优）
 # 由 GitHub Actions 自动构建！
 
 proxies:
@@ -444,6 +444,108 @@ proxies:
   region_info:
     name: 香港
     code: HK
+- name: 🇭🇰 香港 28
+  password: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  port: 5228
+  server: b06f3318-t6ykg0-tpaqgu-1smhu.cm4.oshuawei.com
+  tls: true
+  type: http
+  username: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 29
+  password: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  port: 443
+  server: 3cbfa08c-t6ykg0-tpaqgu-1smhu.hkt2.cdnhuawei.com
+  tls: true
+  type: http
+  username: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇭🇰 香港 30
+  password: <password>
+  port: 8443
+  server: c1a81985-t6ykg0-tpaqgu-1smhu.hkt.cdnhuawei.com
+  tls: true
+  type: http
+  username: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  region_info:
+    name: 香港
+    code: HK
+- name: 🇹🇼 台湾 1
+  password: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  port: 443
+  server: e89e22a9-t6ykg0-tpaqgu-1smhu.tw3.p5pv.com
+  tls: true
+  type: http
+  username: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇹🇼 台湾 2
+  type: vmess
+  server: ffye.hsiphone.top
+  port: 29502
+  uuid: a10b9c69-5843-4680-8769-37226e902589
+  alterId: 0
+  cipher: auto
+  udp: true
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇹🇼 台湾 3
+  type: vmess
+  server: beiyong.sdnlv0.cn
+  port: 29502
+  uuid: a10b9c69-5843-4680-8769-37226e902589
+  alterId: 0
+  cipher: auto
+  udp: true
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇹🇼 台湾 4
+  type: ss
+  server: syiepl.suyin.lol
+  port: 11962
+  cipher: chacha20-ietf-poly1305
+  password: eb4b943c-a6cf-44e6-8f5c-e58826efb5f8
+  udp: true
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇹🇼 台湾 5
+  type: ss
+  server: syiepl.suyin.lol
+  port: 19804
+  cipher: chacha20-ietf-poly1305
+  password: eb4b943c-a6cf-44e6-8f5c-e58826efb5f8
+  udp: true
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇹🇼 台湾 6
+  type: ss
+  server: syiepl.suyin.lol
+  port: 32626
+  cipher: chacha20-ietf-poly1305
+  password: eb4b943c-a6cf-44e6-8f5c-e58826efb5f8
+  udp: true
+  region_info:
+    name: 台湾
+    code: TW
+- name: 🇹🇼 台湾 7
+  type: ss
+  server: syiepl.suyin.lol
+  port: 30475
+  cipher: chacha20-ietf-poly1305
+  password: eb4b943c-a6cf-44e6-8f5c-e58826efb5f8
+  udp: true
+  region_info:
+    name: 台湾
+    code: TW
 - name: 🇯🇵 日本 1
   server: 18.181.50.232
   port: 443
@@ -711,6 +813,112 @@ proxies:
   region_info:
     name: 日本
     code: JP
+- name: 🇯🇵 日本 21
+  password: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  port: 443
+  server: c8665174-t6ykg0-tpaqgu-1smhu.jp.oshuawei.com
+  tls: true
+  type: http
+  username: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 22
+  password: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  port: 27233
+  server: b06f3318-t6ykg0-tpaqgu-1smhu.cm4.oshuawei.com
+  tls: true
+  type: http
+  username: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 23
+  password: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  port: 443
+  server: 8f31a2be-t6ykg0-tpaqgu-1smhu.jp4.oshuawei.com
+  tls: true
+  type: http
+  username: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 24
+  type: vmess
+  server: ffye.hsiphone.top
+  port: 59503
+  uuid: a10b9c69-5843-4680-8769-37226e902589
+  alterId: 0
+  cipher: auto
+  udp: true
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 25
+  type: vmess
+  server: ffye.hsiphone.top
+  port: 59515
+  uuid: a10b9c69-5843-4680-8769-37226e902589
+  alterId: 0
+  cipher: auto
+  udp: true
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 26
+  type: vmess
+  server: beiyong.sdnlv0.cn
+  port: 59503
+  uuid: a10b9c69-5843-4680-8769-37226e902589
+  alterId: 0
+  cipher: auto
+  udp: true
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 27
+  type: trojan
+  server: ssjp01.go52pokemon.com
+  port: 54225
+  password: 7e7d80f1-a2c4-4268-bdee-2bba20904abb
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 28
+  type: trojan
+  server: ssjp02.go52pokemon.com
+  port: 54032
+  password: 7e7d80f1-a2c4-4268-bdee-2bba20904abb
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 29
+  type: trojan
+  server: ssjp03.go52pokemon.com
+  port: 54029
+  password: 7e7d80f1-a2c4-4268-bdee-2bba20904abb
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
+  region_info:
+    name: 日本
+    code: JP
+- name: 🇯🇵 日本 30
+  type: ss
+  server: syiepl.suyin.lol
+  port: 23140
+  cipher: chacha20-ietf-poly1305
+  password: eb4b943c-a6cf-44e6-8f5c-e58826efb5f8
+  udp: true
+  region_info:
+    name: 日本
+    code: JP
 - name: 🇸🇬 新加坡 1
   server: 20.247.137.183
   port: 443
@@ -788,6 +996,120 @@ proxies:
   region_info:
     name: 新加坡
     code: SG
+- name: 🇸🇬 新加坡 7
+  password: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  port: 17235
+  server: b06f3318-t6ykg0-tpaqgu-1smhu.cm4.oshuawei.com
+  tls: true
+  type: http
+  username: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 8
+  password: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  port: 443
+  server: 70e03218-t6ykg0-tpaqgu-1smhu.sg.oshuawei.com
+  tls: true
+  type: http
+  username: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 9
+  password: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  port: 443
+  server: 6debc9f2-t6ykg0-tpaqgu-1smhu.sg3.oshuawei.com
+  tls: true
+  type: http
+  username: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 10
+  type: vmess
+  server: ffye.hsiphone.top
+  port: 59510
+  uuid: a10b9c69-5843-4680-8769-37226e902589
+  alterId: 0
+  cipher: auto
+  udp: true
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 11
+  type: vmess
+  server: beiyong.sdnlv0.cn
+  port: 59510
+  uuid: a10b9c69-5843-4680-8769-37226e902589
+  alterId: 0
+  cipher: auto
+  udp: true
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 12
+  type: trojan
+  server: sssg02.go52pokemon.com
+  port: 55015
+  password: 7e7d80f1-a2c4-4268-bdee-2bba20904abb
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 13
+  type: trojan
+  server: sshk03.go52pokemon.com
+  port: 55017
+  password: 7e7d80f1-a2c4-4268-bdee-2bba20904abb
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 14
+  type: ss
+  server: syiepl.suyin.lol
+  port: 28957
+  cipher: chacha20-ietf-poly1305
+  password: eb4b943c-a6cf-44e6-8f5c-e58826efb5f8
+  udp: true
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 15
+  type: ss
+  server: syiepl.suyin.lol
+  port: 18724
+  cipher: chacha20-ietf-poly1305
+  password: eb4b943c-a6cf-44e6-8f5c-e58826efb5f8
+  udp: true
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 16
+  type: ss
+  server: syiepl.suyin.lol
+  port: 27921
+  cipher: chacha20-ietf-poly1305
+  password: eb4b943c-a6cf-44e6-8f5c-e58826efb5f8
+  udp: true
+  region_info:
+    name: 新加坡
+    code: SG
+- name: 🇸🇬 新加坡 17
+  type: ss
+  server: syiepl.suyin.lol
+  port: 26196
+  cipher: chacha20-ietf-poly1305
+  password: eb4b943c-a6cf-44e6-8f5c-e58826efb5f8
+  udp: true
+  region_info:
+    name: 新加坡
+    code: SG
 - name: 🇰🇷 韩国 1
   password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
   port: 31433
@@ -797,6 +1119,49 @@ proxies:
   username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
   tcp_delay: 339
   clash_delay: 2
+  region_info:
+    name: 韩国
+    code: KR
+- name: 🇰🇷 韩国 2
+  password: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  port: 31433
+  server: 146d4675-t6ykg0-tpaqgu-1smhu.kr.oshuawei.com
+  tls: true
+  type: http
+  username: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  region_info:
+    name: 韩国
+    code: KR
+- name: 🇰🇷 韩国 3
+  type: vmess
+  server: ffye.hsiphone.top
+  port: 59511
+  uuid: a10b9c69-5843-4680-8769-37226e902589
+  alterId: 0
+  cipher: auto
+  udp: true
+  region_info:
+    name: 韩国
+    code: KR
+- name: 🇰🇷 韩国 4
+  type: trojan
+  server: sskr01.go52pokemon.com
+  port: 59110
+  password: 7e7d80f1-a2c4-4268-bdee-2bba20904abb
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
+  region_info:
+    name: 韩国
+    code: KR
+- name: 🇰🇷 韩国 5
+  type: trojan
+  server: sskr02.go52pokemon.com
+  port: 59099
+  password: 7e7d80f1-a2c4-4268-bdee-2bba20904abb
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
   region_info:
     name: 韩国
     code: KR
@@ -1419,6 +1784,27 @@ proxies:
   region_info:
     name: 加拿大
     code: CA
+- name: 🇨🇦 加拿大 11
+  type: vmess
+  server: ffye.hsiphone.top
+  port: 59507
+  uuid: a10b9c69-5843-4680-8769-37226e902589
+  alterId: 0
+  cipher: auto
+  udp: true
+  region_info:
+    name: 加拿大
+    code: CA
+- name: 🇨🇦 加拿大 12
+  type: ss
+  server: syiepl.suyin.lol
+  port: 15618
+  cipher: chacha20-ietf-poly1305
+  password: eb4b943c-a6cf-44e6-8f5c-e58826efb5f8
+  udp: true
+  region_info:
+    name: 加拿大
+    code: CA
 - name: 🇬🇧 英国 1
   server: 82.38.31.187
   port: 8080
@@ -1473,6 +1859,89 @@ proxies:
   udp: true
   tcp_delay: 106
   clash_delay: 3
+  region_info:
+    name: 英国
+    code: GB
+- name: 🇬🇧 英国 6
+  type: ss
+  server: car.com
+  port: 22
+  cipher: chacha20-ietf-poly1305
+  password: 24254866-770c-41b4-9404-3f50524f425b
+  udp: true
+  region_info:
+    name: 英国
+    code: GB
+- name: 🇬🇧 英国 7
+  password: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  port: 443
+  server: b6ba6faa-t6ykg0-tpaqgu-1smhu.uk.oshuawei.com
+  tls: true
+  type: http
+  username: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  region_info:
+    name: 英国
+    code: GB
+- name: 🇬🇧 英国 8
+  type: vmess
+  server: ffye.hsiphone.top
+  port: 59509
+  uuid: a10b9c69-5843-4680-8769-37226e902589
+  alterId: 0
+  cipher: auto
+  udp: true
+  region_info:
+    name: 英国
+    code: GB
+- name: 🇬🇧 英国 9
+  type: vmess
+  server: ffye.hsiphone.top
+  port: 59506
+  uuid: a10b9c69-5843-4680-8769-37226e902589
+  alterId: 0
+  cipher: auto
+  udp: true
+  region_info:
+    name: 英国
+    code: GB
+- name: 🇬🇧 英国 10
+  type: trojan
+  server: sssg01.go52pokemon.com
+  port: 55016
+  password: 7e7d80f1-a2c4-4268-bdee-2bba20904abb
+  udp: true
+  sni: www.volcengine.com
+  skip-cert-verify: true
+  region_info:
+    name: 英国
+    code: GB
+- name: 🇬🇧 英国 11
+  type: ss
+  server: syiepl.suyin.lol
+  port: 27266
+  cipher: chacha20-ietf-poly1305
+  password: eb4b943c-a6cf-44e6-8f5c-e58826efb5f8
+  udp: true
+  region_info:
+    name: 英国
+    code: GB
+- name: 🇬🇧 英国 12
+  type: ss
+  server: syiepl.suyin.lol
+  port: 48240
+  cipher: chacha20-ietf-poly1305
+  password: eb4b943c-a6cf-44e6-8f5c-e58826efb5f8
+  udp: true
+  region_info:
+    name: 英国
+    code: GB
+- name: 🇬🇧 英国 13
+  type: ss
+  server: syiepl.suyin.lol
+  port: 20813
+  cipher: chacha20-ietf-poly1305
+  password: eb4b943c-a6cf-44e6-8f5c-e58826efb5f8
+  udp: true
   region_info:
     name: 英国
     code: GB
@@ -1919,15 +2388,15 @@ proxies:
 last_message_ids:
   '@fqDINYUE': 4669
   '@wxdy666': 6228
-  '@freeyule': 1928629
+  '@freeyule': 1928648
   '@ccbaohe': 14983
-  '@duangvpsfs': 3676204
-  '@zzzjjjkkkoi': 611005
+  '@duangvpsfs': 3676319
+  '@zzzjjjkkkoi': 611066
   '@xmdexw': 220712
   '@v2v2clash': 0
   '@dingyue_Center': 3897
   '@tempssrlink': 63
   '@sorenab2': 36985
-update_time: '2025-12-06 19:38:25'
-total_nodes: 129
+update_time: '2025-12-06 19:57:54'
+total_nodes: 174
 note: 由 GitHub Actions 自动生成，每4小时更新一次，已按延迟排序并智能限量
