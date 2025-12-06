@@ -49,18 +49,21 @@ OUTPUT_FILE = 'flclashyaml/Tg-node1.yaml'  # 输出文件路径，用于保存�
 
 # === 新增：测速策略开关（推荐保留这几个选项）===
 # 测速模式：
+ENABLE_SPEED_TEST = True  # 是否启用整体速度测试功能，True表示启用。测试顺序如下
+
+SPEEDTEST_MODE = os.getenv('SPEEDTEST_MODE', 'tcp_first').lower()  # 默认推荐 tcp_first,下边的命令
 #   "tcp_only"      → 只用 TCP 测速（最快，最严格，适合节点特别多的情况）
 #   "clash_only"    → 只用 Clash -fast 测速（最准）
 #   "tcp_first"     → 先 TCP 粗筛（<800ms）→ 再 Clash 精测（推荐！平衡速度与质量）
 #   "clash_first"   → 先 Clash → 再 TCP（一般用不上）
-SPEEDTEST_MODE = os.getenv('SPEEDTEST_MODE', 'tcp_first').lower()  # 默认推荐 tcp_first,上边的命令
 
 # TCP 测速专属参数
 TCP_TIMEOUT = 4.0          # 单次 TCP 连接超时时间（秒），建议 3~5
 TCP_MAX_WORKERS = 200      # TCP 测速最大并发（可以比 Clash 高很多，非常快）
-TCP_MAX_DELAY = 1000        # TCP 延迟阈值，超过此值直接丢弃（ms）
+TCP_MAX_DELAY = 1000       # TCP 延迟阈值，超过此值直接丢弃（ms）
+ENABLE_TCP_LOG = False     # 默认关闭TCP日志
 
-ENABLE_SPEED_TEST = True  # 是否启用速度测试功能，True表示启用。
+
 MAX_TEST_WORKERS = 128    # 速度测试时最大并发工作线程数，控制测试的并行度。
 SOCKET_TIMEOUT = 3       # 套接字连接超时时间，单位为秒
 HTTP_TIMEOUT = 5         # HTTP请求超时时间，单位为秒
@@ -156,6 +159,13 @@ CUSTOM_REGEX_RULES = {
 }
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
 BJ_TZ = timezone(timedelta(hours=8))
+
+def do_speed_test():
+    if not ENABLE_SPEED_TEST:
+        print("测速功能未启用，跳过。")
+        return
+    # 启用测速并打印日志
+    run_speedtest(enable_tcp_log=False)
 
 def get_country_flag_emoji(code):
     if not code or len(code) != 2:
@@ -930,7 +940,36 @@ def generate_config(proxies, last_message_ids):
     }
 
 
-#TCP 测速
+#TCP 测速,测速默认关闭
+def run_speedtest(enable_tcp_log=False):
+    cmd = ['./xcspeedtest', '--verbose']  # 具体参数视版本而定
+    process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+
+    while True:
+        line = process.stdout.readline()
+        if line == '' and process.poll() is not None:
+            break
+        if line:
+            if 'TCP' in line:
+                if enable_tcp_log:
+                    print(line.strip())
+                else:
+                    # TCP日志关闭 不打印
+                    pass
+            else:
+                print(line.strip())
+                
+    stderr_lines = process.stderr.read().splitlines()
+    for line in stderr_lines:
+        if 'TCP' in line:
+            if enable_tcp_log:
+                print(line.strip())
+        else:
+            print(line.strip())
+    
+    return process.poll()
+
+
 def tcp_ping(proxy, timeout=TCP_TIMEOUT):
     """
     纯 TCP 连接测延迟，返回延迟（ms）或 None
@@ -1257,7 +1296,13 @@ async def main():
         print(f"❌ 写出配置文件失败: {e}")
         sys.exit(1)
 
-   
+def main():
+    if not ENABLE_SPEED_TEST:
+        print("测速功能未启用，跳过测速。")
+        return
+    
+    ret = run_speedtest(enable_tcp_log=ENABLE_TCP_LOG)
+    print(f"测速进程返回码：{ret}")   
 
 if __name__ == "__main__":
     asyncio.run(main())
