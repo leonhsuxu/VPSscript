@@ -1,0 +1,405 @@
+# TG频道节点自动抓取+测延迟精选订阅
+# 最后更新时间：2025-12-06 12:30:08 (北京时间)
+# 本次保留节点数：39 个（延迟最优）
+# 由 GitHub Actions 自动构建！
+
+proxies:
+- cipher: aes-256-cfb
+  name: 🇲🇩 英国 1
+  password: f8f7aCzcPKbsF8p3
+  port: 989
+  server: 185.153.197.5
+  type: ss
+  tcp_delay: 159
+  clash_delay: 5
+- name: 🇨🇳 英国 2
+  password: 76nlxJLO35
+  port: 36855
+  server: 172.93.165.193
+  type: http
+  username: xZedCGy2A5
+  tcp_delay: 167
+  clash_delay: 5
+- name: 🇨🇳 英国 3
+  password: BxceQaOe
+  port: 443
+  server: 58.152.25.242
+  skip-cert-verify: true
+  sni: t.me%2Fripaojiedian
+  type: trojan
+  tcp_delay: 168
+  clash_delay: 5
+- cipher: chacha20-ietf
+  name: 🇨🇳 英国 4
+  password: asd123456
+  port: 8388
+  server: 103.149.182.79
+  type: ss
+  tcp_delay: 172
+  clash_delay: 5
+- cipher: chacha20-ietf
+  name: 🇨🇳 英国 5
+  password: asd123456
+  port: 8388
+  server: 103.141.221.124
+  type: ss
+  tcp_delay: 171
+  clash_delay: 5
+- cipher: chacha20-ietf-poly1305
+  name: 🇳🇱 英国 6
+  password: k1dBOmOB4oqi7Ump37a1bQ
+  port: 8080
+  server: 82.38.31.218
+  type: ss
+  tcp_delay: 128
+  clash_delay: 5
+- name: 🇨🇳 英国 7
+  password: BxceQaOe
+  port: 443
+  server: 219.79.186.107
+  skip-cert-verify: true
+  sni: t.me%2Fripaojiedian
+  type: trojan
+  tcp_delay: 174
+  clash_delay: 5
+- cipher: chacha20-ietf
+  name: 🇨🇳 英国 8
+  password: asd123456
+  port: 8388
+  server: 103.149.183.200
+  type: ss
+  tcp_delay: 171
+  clash_delay: 5
+- cipher: chacha20-ietf-poly1305
+  name: 🇳🇱 英国 9
+  password: k1dBOmOB4oqi7Ump37a1bQ
+  port: 8080
+  server: 82.38.31.187
+  type: ss
+  tcp_delay: 123
+  clash_delay: 5
+- cipher: chacha20-ietf-poly1305
+  name: 🇬🇧 英国 10
+  password: g5RQoxQuVtnFv3Xxsa8edPisXNPnyWKy
+  port: 443
+  server: 45.83.20.206
+  type: ss
+  tcp_delay: 128
+  clash_delay: 5
+- cipher: aes-256-gcm
+  name: 🇬🇧 英国 11
+  password: kDWvXYZoTBcGkC4
+  port: 8881
+  server: 38.54.20.59
+  type: ss
+  tcp_delay: 135
+  clash_delay: 5
+- name: 🇨🇳 英国 12
+  password: wanghui1
+  port: 3000
+  server: 43.252.229.243
+  type: http
+  username: wanghui1
+  tcp_delay: 171
+  clash_delay: 5
+- cipher: chacha20-ietf
+  name: 🇨🇳 英国 13
+  password: asd123456
+  port: 8388
+  server: 103.149.182.105
+  type: ss
+  tcp_delay: 175
+  clash_delay: 5
+- name: 🇨🇳 英国 14
+  network: tcp
+  password: BxceQaOe
+  port: 443
+  server: 58.152.25.20
+  skip-cert-verify: true
+  sni: t.me%2Fripaojiedian
+  type: trojan
+  tcp_delay: 184
+  clash_delay: 5
+- cipher: chacha20-ietf-poly1305
+  name: 🇵🇱 英国 15
+  password: L2fN5ZhwKrkgY02gyZUyTt
+  port: 443
+  server: 92.62.251.201
+  type: ss
+  udp: true
+  tcp_delay: 135
+  clash_delay: 5
+- name: 🇨🇳 英国 16
+  network: tcp
+  password: BxceQaOe
+  port: 443
+  server: 58.152.30.120
+  skip-cert-verify: true
+  sni: t.me%2Fripaojiedian
+  type: trojan
+  tcp_delay: 184
+  clash_delay: 5
+- alterId: 2
+  cipher: auto
+  name: 🇬🇧 英国 17
+  port: 30807
+  server: v10.hdacd.com
+  skip-cert-verify: false
+  tls: false
+  type: vmess
+  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
+  tcp_delay: 214
+  clash_delay: 5
+- name: 🇨🇳 英国 18
+  password: nOEy3w0R
+  port: 20344
+  server: 8.218.207.5
+  type: http
+  username: kZXMC3Z1
+  tcp_delay: 176
+  clash_delay: 5
+- cipher: aes-256-cfb
+  country: 🏁 ZZ
+  name: 🇵🇹 英国 19
+  password: f8f7aCzcPKbsF8p3
+  port: 989
+  server: 185.231.233.112
+  type: ss
+  tcp_delay: 277
+  clash_delay: 5
+- name: 🇨🇳 英国 20
+  network: tcp
+  password: BxceQaOe
+  port: 443
+  server: 58.152.18.95
+  skip-cert-verify: true
+  sni: t.me%2Fripaojiedian
+  type: trojan
+  tcp_delay: 215
+  clash_delay: 5
+- client-fingerprint: chrome
+  flow: xtls-rprx-vision
+  name: 🇬🇧 英国 21
+  network: tcp
+  port: 6093
+  reality-opts:
+    public-key: W91d6Qp8Avflj9K7rMYGGdhxV_W0Ds_FSu_c996zknk
+    short-id: 57e13c11bb421329
+  server: easygovpnkeys16.com
+  servername: eas1goauth.com
+  skip-cert-verify: false
+  tls: true
+  type: vless
+  uuid: e5603527-ac9b-4f69-906e-34bea11c5835
+  tcp_delay: 217
+  clash_delay: 5
+- client-fingerprint: chrome
+  flow: xtls-rprx-vision
+  name: 🇬🇧 英国 22
+  network: tcp
+  port: 8443
+  reality-opts:
+    public-key: i1XUXx_YHZJ8LiZG7yGYG-jXr1JHASvat25lf9SmnzM
+    short-id: 5626dfc4162fd4f2
+  server: plr.strelkavpn.ru
+  servername: plr.strelkavpn.ru
+  skip-cert-verify: false
+  tls: true
+  type: vless
+  uuid: 0e0df131-29f5-4725-b9a3-7b1a6cac4c95
+  tcp_delay: 370
+  clash_delay: 5
+- alterId: 0
+  cipher: aes-256-gcm
+  name: 🇨🇳 英国 23
+  password: '123'
+  port: 6100
+  server: 14.18.106.88
+  skip-cert-verify: true
+  tls: true
+  type: ss
+  tcp_delay: 225
+  clash_delay: 5
+- name: 🇬🇧 英国 24
+  password: 13eb9352-7d04-4523-af91-4d7e84066a95
+  port: 12210
+  server: oss-ydniddsasa-3.7.baidu.jjuu.shrestart.com
+  skip-cert-verify: true
+  sni: m.ctrip.com
+  type: trojan
+  udp: true
+  tcp_delay: 966
+  clash_delay: 5
+- name: 🇬🇧 英国 25
+  password: test.+
+  port: 30446
+  server: testkr3.ssv.vc
+  skip-cert-verify: true
+  tls: true
+  type: http
+  udp: true
+  username: test
+  tcp_delay: 812
+  clash_delay: 5
+- name: 🇬🇧 英国 26
+  password: e515ce48-fdfa-11ee-9970-f23c91cfbbc9
+  port: 32233
+  server: a9964e2f-t5gv40-te0r6o-1r7vv.id.oshuawei.com
+  tls: true
+  type: http
+  udp: true
+  username: e515ce48-fdfa-11ee-9970-f23c91cfbbc9
+  tcp_delay: 275
+  clash_delay: 5
+- alterId: 2
+  cipher: auto
+  country: 🇭🇰HK
+  h2-opts: {}
+  http-opts: {}
+  name: 🇬🇧 英国 27
+  network: tcp
+  port: 30824
+  server: v24.hdacd.com
+  skip-cert-verify: true
+  type: vmess
+  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
+  tcp_delay: 397
+  clash_delay: 5
+- client-fingerprint: chrome
+  name: 🇬🇧 英国 28
+  port: 52900
+  reality-opts:
+    public-key: AjYSCSFHfqOg-NbP_ngiRvJkKNKZXuHNDa1sJd4TRRQ
+    short-id: 1fbc
+  server: wolfy.ufavpn.ru
+  servername: ozon.ru
+  skip-cert-verify: false
+  tls: true
+  type: vless
+  udp: true
+  uuid: 97e7c83c-9346-49b4-85a5-1e3bbf7488b9
+  tcp_delay: 657
+  clash_delay: 5
+- client-fingerprint: chrome
+  name: 🇰🇿 英国 29
+  port: 35728
+  reality-opts:
+    public-key: vhUFNoFcvtZAVMo8y5K5eU2V43m5q6yjmWIhp5RkFng
+    short-id: 69a2
+  server: 178.236.16.98
+  servername: yahoo.com
+  skip-cert-verify: false
+  tls: true
+  type: vless
+  udp: true
+  uuid: a00d89f6-ab7e-4e30-a5e5-54c701d62c93
+  tcp_delay: 256
+  clash_delay: 5
+- client-fingerprint: chrome
+  flow: xtls-rprx-vision
+  name: 🇬🇧 英国 30
+  network: tcp
+  port: 443
+  reality-opts:
+    public-key: v5phvruLtbRahHL0xJtl77s4sXHiuSHzUTPq2znyCF4
+    short-id: f5b76860a3c9c3f5
+  server: bg.fasssst.ru
+  servername: bg.fasssst.ru
+  skip-cert-verify: false
+  tls: true
+  type: vless
+  uuid: c1853115-eb6b-4592-b01f-05037d33505d
+  tcp_delay: 402
+  clash_delay: 5
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 1
+  port: 180
+  server: 82.198.246.97
+  skip-cert-verify: false
+  tls: false
+  type: vmess
+  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
+  tcp_delay: 33
+  clash_delay: 5
+- name: 🇺🇸 美国 2
+  password: http
+  port: 8080
+  server: 107.173.31.37
+  type: http
+  username: http
+  tcp_delay: 52
+  clash_delay: 5
+- name: 🇺🇸 美国 3
+  password: gs4BXwT6SW
+  port: 10988
+  server: 154.26.192.123
+  type: http
+  username: fQ67Dpe5dU
+  tcp_delay: 44
+  clash_delay: 5
+- cipher: aes-256-cfb
+  name: 🇷🇺 俄罗斯 1
+  password: f8f7aCzcPKbsF8p3
+  port: 989
+  server: 38.60.223.8
+  type: ss
+  udp: true
+  tcp_delay: 181
+  clash_delay: 5
+- cipher: chacha20-ietf-poly1305
+  name: 🇷🇺 俄罗斯 2
+  password: d3837224ed465f00
+  port: 57456
+  server: 45.139.26.173
+  type: ss
+  tcp_delay: 158
+  clash_delay: 5
+- name: 🇩🇪 德国 1
+  password: 5BFVs5TE
+  port: 26234
+  server: 5.231.56.98
+  type: http
+  username: kZXMC3Z1
+  tcp_delay: 138
+  clash_delay: 5
+- cipher: aes-256-cfb
+  country: 🇰🇷 KR
+  name: 🇰🇷 韩国 1
+  password: qwerREWQ@@
+  port: 4652
+  server: 218.237.185.230
+  type: ss
+  tcp_delay: 150
+  clash_delay: 5
+- name: 🇵🇭 菲律宾 1
+  password: Ejtp4SfY82
+  port: 10881
+  server: 38.54.87.34
+  type: http
+  username: 09ahaEWmXn
+  tcp_delay: 222
+  clash_delay: 5
+- name: 🇸🇬 新加坡 1
+  password: Uxhl4WjczX
+  port: 31319
+  server: 103.229.96.181
+  type: http
+  username: uxOwbuiu1s
+  tcp_delay: 201
+  clash_delay: 5
+last_message_ids:
+  '@fqDINYUE': 4669
+  '@wxdy666': 6228
+  '@freeyule': 1928266
+  '@ccbaohe': 14976
+  '@duangvpsfs': 3675532
+  '@zzzjjjkkkoi': 610081
+  '@xmdexw': 220583
+  '@v2v2clash': 0
+  '@dingyue_Center': 0
+  '@tempssrlink': 0
+  '@sorenab2': 0
+update_time: '2025-12-06 12:30:08'
+total_nodes: 39
+note: 由 GitHub Actions 自动生成，每4小时更新一次，已按延迟排序并智能限量
