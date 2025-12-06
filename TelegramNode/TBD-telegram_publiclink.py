@@ -1082,15 +1082,12 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=True):
             }
             with open(config_path, 'w', encoding='utf-8') as f:
                 yaml.dump(config, f, allow_unicode=True, sort_keys=False)
-
             cmd = [speedtest_path, '-c', config_path]
             result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                                     timeout=25, text=True)
             output = result.stdout + result.stderr
-
             if debug:
                 print(f"[speedtest-clash 日志] 输出:\n{output}")
-
             import re
             m = re.search(r"delay[:\s]*([0-9\.]+)\s*ms", output, re.I)
             if m:
@@ -1099,12 +1096,10 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=True):
                     print(f"[speedtest-clash 日志] 代理 {proxy.get('name')} 延迟: {delay} ms")
                 if 1 < delay < 800:
                     return delay
-
             # 取消下面替代延迟逻辑，直接返回 None
-           if debug:
-               print(f"[speedtest-clash 日志] 未找到有效延迟字段，测速视为失败")
-           return None
-
+            if debug:
+                print(f"[speedtest-clash 日志] 未找到有效延迟字段，测速视为失败")
+            return None
 
     except Exception as e:
         if debug:
