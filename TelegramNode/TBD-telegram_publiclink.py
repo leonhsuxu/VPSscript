@@ -217,92 +217,72 @@ def load_existing_proxies_and_state():
     return existing_proxies, last_message_ids
 
 # =============================================
-# 替换原来的 extract_valid_subscribe_links 函数
+# 多匹配的 extract_valid_subscribe_links 函数
 # =============================================
 def extract_valid_subscribe_links(text: str):
     """
-    2025 年终极版 Telegram 订阅链接提取
-    完美匹配你贴的所有例子 + 过去 3 年出现的所有变种
+    2025年12月终极防漏版
+    完美解决：反引号、引号、括号、换行、中文标点污染链接问题
     """
-    # 第一步：粗提取所有 http/https 链接（超宽松）
-    rough_links = re.findall(r'https?://[^\s<>"\'()]+', text)
+    # 第一步：狂暴提取所有疑似链接（超宽松）
+    rough_links = re.findall(r'https?://[^\s<>"\'`\]]+', text)
     
-    # 第二步：精过滤，留下真正的订阅链接
     valid_links = set()
     for link in rough_links:
-        link = link.split('&amp;')[0]           # 处理转义的 &amp;
-        link = link.split('</a>')[0]            # 处理 HTML 残留
-        link = link.strip('.,!?\n，。！？》》")')
+        # 清理常见尾巴污染字符
+        link = link.split('&amp;')[0]
+        link = re.sub(r'[`\'")\]，。、！!？\?>\n\r]+$', '', link)  # 重点：干掉反引号、引号、括号、中文标点
+        link = link.strip()
         
-        # 去掉可能带上的尾巴
-        if '#' in link:
-            link = link.split('#')[0]
-        if ' ' in link:
-            link = link.split(' ')[0]
+        if not link:
+            continue
             
         url_lower = link.lower()
         
-        # 核心白名单判断（命中任一条即为订阅链接）
-        if any(keyword in url_lower for keyword in [
-            '/sub', '/link', '/api/v1/client/subscribe', '/getsub', '/clash',
-            '/raw', '/gist.', '/githubusercontent.com', '/workers.dev',
-            'token=', 'flag=', 'uuid=', 'sub.', 'v2ray', 'hysteria', 'trojan',
-            'ghelper.me', 'kaixincloud', 'mojie.app', 'xn--', 'surge',
-            '/s/', '/proxy', '/node', '/free', '/share', '/invite',
-            'quantumult', 'shadowrocket', 'vless', 'vmess', 'ssr'
+        # 白名单关键词（命中即为订阅链接）
+        if any(k in url_lower for k in [
+            '/s/', '/sub', '/link', '/clash', '/raw', '/api/v1/client/subscribe',
+            'token=', 'flag=', 'sub.', 'ghelper', 'kaixincloud', 'mojie.app',
+            'de5.net', 'oooooooo', 'xn--', 'gist.', 'workers.dev'
         ]):
-            # 额外过滤掉明显不是订阅的（防误伤）
-            if any(bad in url_lower for bad in [
-                '/t.me/', '/telegram.me/', '/t.cn/', 'joinchat', 'proxy', 
-                'channel', 'invite', 'addstickers', 'socks', 'login', 'auth',
-                'github.com', '/issues', '/pull', '/blob', '/tree'
-            ]):
+            # 排除明显不是订阅的
+            if any(bad in url_lower for bad in ['/t.me/', '/joinchat', '/channel', '/invite']):
                 continue
-                
             valid_links.add(link)
     
-    # 第三步：过期时间判断（保持你原来的逻辑）
+    # === 过期时间判断（保持你原来的逻辑）===
     MIN_HOURS_LEFT = MIN_EXPIRE_HOURS
-    expire_patterns = [
-        r'到期时间[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2}\s+\d{2}:\d{2}:\d{2})',
-        r'过期时间[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2}\s+\d{2}:\d{2}:\d{2})',
-        r'该订阅将于(\d{4}[-/]\d{1,2}[-/]\d{1,2}\s+\d{2}:\d{2}:\d{2})',
-        r'过期[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2})',
-        r'到期[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2})',
-        r'长期有效|未知|无限',
-    ]
-    
     text_line = text.replace('\n', ' ')
     expire_time = None
-    for patt in expire_patterns[:-1]:  # 最后一条是“长期有效”
-        match = re.search(patt, text_line)
-        if match:
-            dt_str = match.group(1)
-            for fmt in ['%Y-%m-%d %H:%M:%S', '%Y/%m/%d %H:%M:%S', '%Y-%m-%d', '%Y/%m/%d']:
+    
+    # 常见过期关键词
+    if re.search(r'长期有效|未知|无限|2099', text_line, re.I):
+        expire_time = None  # 长期有效
+    else:
+        for patt in [
+            r'过期时间[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2})',
+            r'到期时间[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2})',
+            r'(\d{4}[-/]\d{1,2}[-/]\d{1,2})\s*(?:到期|过期)',
+        ]:
+            m = re.search(patt, text_line)
+            if m:
                 try:
-                    dt = datetime.strptime(dt_str, fmt)
-                    if len(dt_str) <= 10:  # 只有日期
-                        dt = dt.replace(hour=23, minute=59, second=59)
-                    expire_time = dt.replace(tzinfo=BJ_TZ)
+                    dt = datetime.strptime(m.group(1), '%Y-%m-%d')
+                    expire_time = dt.replace(hour=23, minute=59, second=59, tzinfo=BJ_TZ)
                     break
                 except:
                     continue
-            if expire_time:
-                break
-    
-    # 如果明确写了“长期有效/未知/无限”，直接放行
-    if re.search(r'长期有效|未知|无限', text_line, re.I):
-        expire_time = None
     
     now = datetime.now(BJ_TZ)
     final_links = []
     for url in valid_links:
-        if expire_time is not None:
+        if expire_time:
             hours_left = (expire_time - now).total_seconds() / 3600
             if hours_left < MIN_HOURS_LEFT:
-                print(f"  订阅已过期或即将过期（剩余 {hours_left:.1f}h），跳过: {url[:60]}...")
+                print(f"  订阅即将过期（剩 {hours_left:.1f}h），跳过: {url[:60]}...")
                 continue
         final_links.append(url)
+        print(f"  成功提取订阅链接: {url}")  # 调试用，可删
     
     return final_links
 
