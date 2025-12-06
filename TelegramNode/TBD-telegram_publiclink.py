@@ -57,11 +57,12 @@ SPEEDTEST_MODE = os.getenv('SPEEDTEST_MODE', 'tcp_first').lower()  # 默认推�
 #   "tcp_first"     → 先 TCP 粗筛（<800ms）→ 再 Clash 精测（推荐！平衡速度与质量）
 #   "clash_first"   → 先 Clash → 再 TCP（一般用不上）
 
-# TCP 测速专属参数
+# TCP 和Clash 测速专属参数
 TCP_TIMEOUT = 4.0          # 单次 TCP 连接超时时间（秒），建议 3~5
 TCP_MAX_WORKERS = 200      # TCP 测速最大并发（可以比 Clash 高很多，非常快）
 TCP_MAX_DELAY = 1000       # TCP 延迟阈值，超过此值直接丢弃（ms）
 ENABLE_TCP_LOG = False     # 默认关闭TCP日志
+ENABLE_SPEEDTEST_LOG = False  # 或者绑定 ENABLE_SPEED_TEST
 
 
 MAX_TEST_WORKERS = 128    # 速度测试时最大并发工作线程数，控制测试的并行度。
@@ -1023,17 +1024,39 @@ def batch_tcp_test(proxies, max_workers=TCP_MAX_WORKERS):
                     print(f"TCP SLOW: {delay:4d}ms → 丢弃 {proxy.get('name', '')[:40]}")
     return results
 
-def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=32):
+def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=32, debug=False):
+    """
+    使用 speedtest-clash 批量测试代理延迟。
+    :param speedtest_path: speedtest-clash 二进制路径
+    :param proxies: 代理节点列表
+    :param max_workers: 最大并发数
+    :param debug: 是否打印详细测速日志
+    :return: 测速成功并带延迟字段的代理列表
+    """
+        
     results = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
-        futures = {executor.submit(xcspeedtest_test_proxy, speedtest_path, p): p for p in proxies}
+        futures = {
+            executor.submit(xcspeedtest_test_proxy, speedtest_path, proxy, debug): proxy
+            for proxy in proxies
+        }
         for future in concurrent.futures.as_completed(futures):
             proxy = futures[future]
-            delay = future.result()
+            try:
+                delay = future.result()
+            except Exception as e:
+                if debug:
+                    print(f"[speedtest-clash] 测速异常: 节点 {proxy.get('name')} 错误: {e}")
+                delay = None
             if delay is not None:
                 pcopy = proxy.copy()
                 pcopy['clash_delay'] = delay
+                if debug:
+                    print(f"[speedtest-clash] 节点 {proxy.get('name')} 测速延迟: {delay} ms")
                 results.append(pcopy)
+            else:
+                if debug:
+                    print(f"[speedtest-clash] 节点 {proxy.get('name')} 测速失败或超时")
     return results
 
 
