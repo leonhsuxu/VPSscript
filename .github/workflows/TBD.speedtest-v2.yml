@@ -57,25 +57,90 @@ jobs:
           pip install -r requirements.txt
           
           
-      - name: 缓存 clash-speedtest 核心 (clash_core/)
-        id: cache-clash-speedtest
+      - name: Cache Mihomo
+        id: cache-mihomo
         uses: actions/cache@v4
         with:
-          path: clash_core/
-          key: ${{ runner.os }}-clash-speedtest-${{ env.CLASH_SPEEDTEST_VERSION }}
-      
-      - name: 下载并解压 clash-speedtest 到 clash_core/clash
-        if: steps.cache-clash-speedtest.outputs.cache-hit != 'true'
+          path: mihomo
+          key: mihomo-amd64-${{ env.MIHOMO_VERSION }}-${{ github.run_id }}
+          restore-keys: mihomo-amd64-${{ env.MIHOMO_VERSION }}-
+          
+      - name: Download Mihomo 指定版本
+        if: steps.cache-mihomo.outputs.cache-hit != 'true'
         run: |
-          mkdir -p clash_core
-          URL="https://github.com/faceair/clash-speedtest/releases/download/${{ env.CLASH_SPEEDTEST_VERSION }}/clash-speedtest_Linux_x86_64.tar.gz"
-          echo "正在下载 clash-speedtest 核心..."
-          wget -q -O clash-speedtest.tar.gz "$URL"
-          tar -xzf clash-speedtest.tar.gz -C clash_core
-          rm -f clash-speedtest.tar.gz
-          mv clash_core/clash-speedtest clash_core/clash
-          chmod +x clash_core/clash
-          echo "clash-speedtest 下载并解压完成。"
+          set -e
+          TAG=${{ env.MIHOMO_VERSION }}
+          echo "下载 Mihomo 版本: $TAG"
+          URL="https://github.com/MetaCubeX/mihomo/releases/download/${TAG}/mihomo-linux-amd64-${TAG}.gz"
+          echo "下载地址: $URL"
+          curl --head --fail -s "$URL" || (echo "下载链接不可用，退出" && exit 1)
+          wget --tries=5 --timeout=60 --progress=bar:force "$URL"
+          gunzip "mihomo-linux-amd64-${TAG}.gz"
+          mv "mihomo-linux-amd64-${TAG}" mihomo
+          chmod +x mihomo
+          ./mihomo -v
+          
+      - name: Cache xiecang speedtest-clash
+        id: cache-xc
+        uses: actions/cache@v4
+        with:
+          path: xcspeedtest
+          key: xiecang-${{ env.SPEEDTEST_VERSION }}-${{ github.run_id }}
+          restore-keys: xiecang-${{ env.SPEEDTEST_VERSION }}-
+      - name: Download xiecang speedtest-clash
+        if: steps.cache-xc.outputs.cache-hit != 'true'
+        run: |
+          set -e # 确保任何命令失败都会导致脚本退出
+          RELEASE_TAG=${{ env.SPEEDTEST_VERSION }}
+          echo "尝试下载 speedtest-clash 版本: $RELEASE_TAG"
+          # 尝试从指定版本获取下载链接
+          # 查找包含 "browser_download_url" 且资产名称中包含 "speedtest-clash_Linux_x86_64" 的链接
+          URL=$(curl -s "https://api.github.com/repos/xiecang/speedtest-clash/releases/tags/${RELEASE_TAG}" \
+                | grep "browser_download_url.*speedtest-clash_Linux_x86_64" | cut -d '"' -f4)
+          # 如果在指定版本中未能找到，则尝试从最新版本获取（保留原脚本的健壮性）
+          if [ -z "$URL" ]; then
+            echo "警告: 未在指定版本 ${RELEASE_TAG} 找到 speedtest-clash_Linux_x86_64 资产，尝试从最新版本获取。"
+            URL=$(curl -s https://api.github.com/repos/xiecang/speedtest-clash/releases/latest \
+                | grep "browser_download_url.*speedtest-clash_Linux_x86_64" | cut -d '"' -f4)
+          fi
+          if [ -z "$URL" ]; then
+            echo "错误: 未找到 speedtest-clash 的下载链接 (需要包含 speedtest-clash_Linux_x86_64)。请检查版本号或仓库。退出。"
+            exit 1
+          fi
+          FILENAME=$(basename "$URL") # 获取下载文件名，例如 speedtest-clash_Linux_x86_64.tar.gz 或 speedtest-clash_Linux_x86_64
+          echo "xiecang speedtest-clash 下载地址: $URL"
+          echo "下载到文件: $FILENAME"
+          wget --tries=5 --timeout=60 --progress=bar:force -O "${FILENAME}" "$URL"
+          # 检查是否为 tar.gz 压缩包
+          if [[ "$FILENAME" == *.tar.gz ]]; then
+            echo "检测到 .tar.gz 压缩包，进行解压..."
+            tar -xzf "${FILENAME}"
+            # 假设解压后的二进制文件名为 'speedtest-clash'
+            if [ -f "speedtest-clash" ]; then
+              echo "找到解压后的二进制文件 'speedtest-clash'。"
+              mv speedtest-clash xcspeedtest
+            else
+              echo "警告: 未在 .tar.gz 解压目录中找到 'speedtest-clash' 二进制文件。尝试查找其他可执行文件..."
+              # 更通用的查找可执行文件的方法
+              EXTRACTED_BINARY_PATH=$(find . -maxdepth 1 -type f -executable -name "speedtest-clash*" -print -quit)
+              if [ -n "$EXTRACTED_BINARY_PATH" ]; then
+                echo "找到可执行文件: $(basename "$EXTRACTED_BINARY_PATH")"
+                mv "$EXTRACTED_BINARY_PATH" xcspeedtest
+              else
+                echo "错误: 未能在解压目录中找到任何 'speedtest-clash' 相关的可执行文件。退出。"
+                exit 1
+              fi
+            fi
+            rm "${FILENAME}" # 清理下载的压缩包
+          else
+            # 如果是直接的二进制文件
+            echo "下载的是直接的二进制文件。"
+            mv "${FILENAME}" xcspeedtest
+          fi
+          chmod +x xcspeedtest
+          echo "xcspeedtest 下载并准备完成。"
+          ./xcspeedtest --help | head -3
+          
       - name: 运行 Telegram 抓取及 Clash 测速脚本
         env:
           TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
