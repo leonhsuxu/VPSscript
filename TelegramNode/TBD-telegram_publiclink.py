@@ -1064,7 +1064,7 @@ def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=32, debug=
 
 def xcspeedtest_test_proxy(speedtest_path, proxy, debug=True):
     """
-    兼容 2024-2025 新版 speedtest-clash（输出最后一行 JSON）
+    终极兼容版：适配 2025-12 最新 xcspeedtest（可能缺少末尾引号、带行号、JSON被截断等所有奇葩情况）
     """
     try:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -1085,48 +1085,59 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=True):
             cmd = [speedtest_path, '-c', config_path]
             result = subprocess.run(
                 cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                timeout=30, text=True, encoding='utf-8', errors='ignore'
+                timeout=35, text=True, encoding='utf-8', errors='ignore'
             )
             output = result.stdout + result.stderr
 
             if debug:
                 print(f"[speedtest-clash] 原始输出:\n{output}")
 
-            # 方法1：优先找最后一行有效的 JSON（新版特征）
-            lines = output.strip().splitlines()
-            for line in reversed(lines):
-                line = line.strip()
-                if line.startswith('{"time":') and '"message":"json:' in line:
-                    try:
-                        # 提取 json: 后面的内容
-                        json_str = line.split('"message":"json: ', 1)[1].rstrip('"')
-                        data = json.loads(json_str)
-                        if isinstance(data, list) and data:
-                            delay = data[0].get("clash_delay")
-                            if isinstance(delay, (int, float)) and delay > 1:
-                                if debug:
-                                    print(f"JSON解析成功 → 延迟 {delay}ms ← {proxy['name']}")
-                                return int(delay)
-                    except:
-                        continue
-
-            # 方法2：兼容老版本表格里的延迟数字（备选）
+            # === 方法1：超级鲁棒的 JSON 提取（支持残缺引号、带行号、换行等）===
             import re
-            matches = re.findall(r'延迟\s+[0-9.]+\s+([0-9]+)', output)
-            if matches:
-                delays = [int(x) for x in matches if int(x) < 3000]
+            # 找到所有看起来像 json: [...] 的内容
+            json_matches = re.findall(r'"message"\s*:\s*"json:\s*(\[.*?[\]}]\s*\])"', output, re.DOTALL)
+            if not json_matches:
+                # 再尝试更宽松的匹配（你这种情况）
+                json_matches = re.findall(r'json:\s*(\[.*)', output, re.DOTALL)
+            
+            for json_str in json_matches:
+                # 清理常见干扰字符
+                json_str = json_str.strip().rstrip('"').strip()
+                # 尝试补全缺少的括号
+                if json_str.count('{') > json_str.count('}'):
+                    json_str += '}'
+                if json_str.count('[') > json_str.count(']'):
+                    json_str += ']'
+                
+                try:
+                    data = json.loads(json_str)
+                    if isinstance(data, list) and data:
+                        delay = data[0].get("clash_delay")
+                        if isinstance(delay, (int, float)) and delay > 1:
+                            if debug:
+                                print(f"终极JSON解析成功 → {delay}ms ← {proxy['name']}")
+                            return int(delay)
+                except:
+                    continue
+
+            # === 方法2：表格兜底 ===
+            delay_matches = re.findall(r'延迟\s+[0-9.]+\s+([0-9]+)', output, re.I)
+            if delay_matches:
+                delays = [int(x) for x in delay_matches if int(x) < 3000]
                 if delays:
                     delay = min(delays)
                     if delay > 1:
+                        if debug:
+                            print(f"表格兜底成功 → {delay}ms ← {proxy['name']}")
                         return delay
 
             if debug:
-                print(f"未提取到有效延迟 → 丢弃 {proxy['name']}")
+                print(f"所有方法都失败 → 丢弃 {proxy['name']}")
             return None
 
     except Exception as e:
         if debug:
-            print(f"[speedtest-clash] 异常: {e}")
+            print(f"测速异常: {e}")
         return None
 
 
