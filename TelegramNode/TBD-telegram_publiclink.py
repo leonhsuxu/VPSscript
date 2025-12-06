@@ -73,7 +73,17 @@ TEST_URLS = [
     'http://www.youtube.com',
 ]
 
+# ==================== 带宽筛选配置（新增） ====================
+# 是否启用带宽筛选（True=启用，False=关闭）
+ENABLE_BANDWIDTH_FILTER = os.getenv('ENABLE_BANDWIDTH_FILTER', 'true').lower() == 'true'
 
+# 最低带宽阈值（单位：MB/s）
+# 支持环境变量设置，例如在 GitHub Actions 里这样写：
+# ENABLE_BANDWIDTH_FILTER=true
+# MIN_BANDWIDTH_MB=30
+MIN_BANDWIDTH_MB = float(os.getenv('MIN_BANDWIDTH_MB', '25'))  # 筛选测速宽度的速度。默认 25MB/s，可自由改
+
+# ==================== 国家匹配配置 ====================
 ALLOWED_REGIONS = {
     '香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国',
     '印度', '菲律宾', '印度尼西亚', '越南', '美国', '加拿大',
@@ -875,8 +885,72 @@ def normalize_proxy_names(proxies):
 
     return final_list
 
-# ----
+# 在生成最终列表前加这一段（推荐放在 normalize_proxy_names 之后）
+def filter_by_bandwidth(proxies, min_mb=20):
+    """只保留带宽 ≥20MB/s 的才保留"""
+    filtered = []
+    for p in proxies:
+        bw = p.get('bandwidth', '')
+        if not bw:
+            filtered.append(p)
+            continue
+        # 提取数字部分
+        import re
+        m = re.search(r'([0-9\.]+)', bw)
+        if m:
+            num = float(m.group(1))
+            if 'GB/s' in bw:
+                num *= 1000
+            elif 'KB/s' in bw:
+                num /= 1000
+            if num >= min_mb:  # 20MB/s 以上
+                filtered.append(p)
+        else:
+            filtered.append(p)
+    return filtered
 
+# 使用方法（放在 main() 最后排序前）：
+final_proxies = filter_by_bandwidth(final_proxies, min_mb=25)  # 只保留 ≥25MB/s 的
+
+# ----根据实测带宽进行二次筛选
+def filter_by_bandwidth(proxies, min_mb=25, enable=True):
+    """
+    根据实测带宽进行二次筛选
+    """
+    if not enable:
+        return proxies
+    
+    filtered = []
+    for p in proxies:
+        bw_str = p.get('bandwidth', '').strip()
+        if not bw_str:
+            # 没有带宽数据的节点直接保留（防止误杀）
+            filtered.append(p)
+            continue
+        
+        # 解析带宽数字（支持 MB/s、GB/s、KB/s）
+        import re
+        match = re.search(r'([0-9\.]+)\s*(KB|MB|GB)/?s', bw_str, re.I)
+        if not match:
+            filtered.append(p)
+            continue
+        
+        num = float(match.group(1))
+        unit = match.group(2).upper()
+        if unit == 'GB':
+            num *= 1000
+        elif unit == 'KB':
+            num /= 1000
+        
+        if num >= min_mb:
+            filtered.append(p)
+            # 可选：把带宽写进节点名，方便一看就知道速度
+            # p['name'] = f"{p['name']} | {bw_str}"
+        # else:
+        #     print(f"带宽太低丢弃: {num:.1f}MB/s → {p['name']}")
+    
+    print(f"带宽筛选完成：≥{min_mb}MB/s 保留 {len(filtered)}/{len(proxies)} 个节点")
+    return filtered
 
 def limit_proxy_counts(proxies, max_total=600):
     """
@@ -1024,7 +1098,7 @@ def batch_tcp_test(proxies, max_workers=TCP_MAX_WORKERS):
                     print(f"TCP SLOW: {delay:4d}ms → 丢弃 {proxy.get('name', '')[:40]}")
     return results
 
-def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=32, debug=False):
+def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=MAX_TEST_WORKERS, debug=False):
     """
     使用 speedtest-clash 批量测试代理延迟。
     :param speedtest_path: speedtest-clash 二进制路径
@@ -1033,7 +1107,7 @@ def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=32, debug=
     :param debug: 是否打印详细测速日志
     :return: 测速成功并带延迟字段的代理列表
     """
-        
+    
     results = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
         futures = {
@@ -1043,28 +1117,30 @@ def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=32, debug=
         for future in concurrent.futures.as_completed(futures):
             proxy = futures[future]
             try:
-                delay = future.result()
+                result = future.result()
+                if result is not None:
+                    delay, bandwidth = result
+                    pcopy = proxy.copy()
+                    pcopy['clash_delay'] = delay
+                    if bandwidth:
+                        pcopy['bandwidth'] = bandwidth  # 存下来！
+                    results.append(pcopy)
+                    if debug:
+                        print(f"成功: {delay}ms | {bandwidth or 'N/A'} → {proxy.get('name')}")
             except Exception as e:
                 if debug:
-                    print(f"[speedtest-clash] 测速异常: 节点 {proxy.get('name')} 错误: {e}")
-                delay = None
-            if delay is not None:
-                pcopy = proxy.copy()
-                pcopy['clash_delay'] = delay
-                if debug:
-                    print(f"[speedtest-clash] 节点 {proxy.get('name')} 测速延迟: {delay} ms")
-                results.append(pcopy)
-            else:
-                if debug:
-                    print(f"[speedtest-clash] 节点 {proxy.get('name')} 测速失败或超时")
+                    print(f"异常: {proxy.get('name')} → {e}")
     return results
 
 
 # clash 测速
 
-def xcspeedtest_test_proxy(speedtest_path, proxy, debug=True):
+def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
     """
-    终极兼容版：适配 2025-12 最新 xcspeedtest（可能缺少末尾引号、带行号、JSON被截断等所有奇葩情况）
+    2025 终极兼容版：
+    - 提取 clash_delay（最准）
+    - 额外提取真实下载带宽（如 86.95MB/s）
+    返回：(delay_ms, bandwidth_str) 或者 None
     """
     try:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -1092,47 +1168,40 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=True):
             if debug:
                 print(f"[speedtest-clash] 原始输出:\n{output}")
 
-            # === 方法1：超级鲁棒的 JSON 提取（支持残缺引号、带行号、换行等）===
-            import re
-            # 找到所有看起来像 json: [...] 的内容
-            json_matches = re.findall(r'"message"\s*:\s*"json:\s*(\[.*?[\]}]\s*\])"', output, re.DOTALL)
+            # 1. 先提取 clash_delay（最准）
+            delay = None
+            json_matches = re.findall(r'"message"\s*:\s*"json:\s*(\[.*)', output, re.DOTALL)
             if not json_matches:
-                # 再尝试更宽松的匹配（你这种情况）
                 json_matches = re.findall(r'json:\s*(\[.*)', output, re.DOTALL)
-            
-            for json_str in json_matches:
-                # 清理常见干扰字符
-                json_str = json_str.strip().rstrip('"').strip()
-                # 尝试补全缺少的括号
-                if json_str.count('{') > json_str.count('}'):
-                    json_str += '}'
-                if json_str.count('[') > json_str.count(']'):
-                    json_str += ']'
-                
+
+            for j in json_matches:
+                j = j.strip().rstrip('"').strip()
+                if j.count('{') > j.count('}'): j += '}'
+                if j.count('[') > j.count(']'): j += ']'
                 try:
-                    data = json.loads(json_str)
-                    if isinstance(data, list) and data:
-                        delay = data[0].get("clash_delay")
-                        if isinstance(delay, (int, float)) and delay > 1:
-                            if debug:
-                                print(f"终极JSON解析成功 → {delay}ms ← {proxy['name']}")
-                            return int(delay)
+                    data = json.loads(j)
+                    if data and isinstance(data, list):
+                        d = data[0].get("clash_delay")
+                        if isinstance(d, (int, float)) and d > 1:
+                            delay = int(d)
+                            break
                 except:
                     continue
 
-            # === 方法2：表格兜底 ===
-            delay_matches = re.findall(r'延迟\s+[0-9.]+\s+([0-9]+)', output, re.I)
-            if delay_matches:
-                delays = [int(x) for x in delay_matches if int(x) < 3000]
-                if delays:
-                    delay = min(delays)
-                    if delay > 1:
-                        if debug:
-                            print(f"表格兜底成功 → {delay}ms ← {proxy['name']}")
-                        return delay
+            # 2. 再提取带宽（表格那一行最长的 server 字段前面的就是带宽）
+            bandwidth = None
+            # 匹配类似：86.95MB/s  1.53s  1317
+            bw_match = re.search(r'([0-9\.]+ ?[KMGT]?B/s)\s+[0-9]+\.[0-9]+s\s+[0-9]+', output)
+            if bw_match:
+                bandwidth = bw_match.group(1).strip()
+
+            if delay is not None:
+                if debug:
+                    print(f"测速成功 → {delay}ms | 带宽 {bandwidth or 'N/A'} ← {proxy['name']}")
+                return delay, bandwidth
 
             if debug:
-                print(f"所有方法都失败 → 丢弃 {proxy['name']}")
+                print(f"仅提取到带宽但无延迟 → 丢弃 {proxy['name']}")
             return None
 
     except Exception as e:
@@ -1347,6 +1416,13 @@ async def main():
 
     # [5/5] 最终排序并生成配置文件
     print("[5/5] 最终排序并生成配置文件")
+    # 新增：带宽二次筛选（可通过环境变量完全控制）
+    final_proxies = filter_by_bandwidth(
+        final_proxies, 
+        min_mb=MIN_BANDWIDTH_MB, 
+        enable=ENABLE_BANDWIDTH_FILTER
+    )
+    
     final_proxies.sort(
         key=lambda p: (
             REGION_PRIORITY.index(p['region_info']['name']) if p.get('region_info') and p['region_info']['name'] in REGION_PRIORITY else 99,
