@@ -740,7 +740,7 @@ def download_and_parse(url):
     content = None
 
     # === 第一优先级：专杀超级反爬机场 ===
-    if any(domain in url.lower() for domain in ['de5.net', 'feiniu', 'oooooooo', 'ooo.ooo']):
+    if any(domain in url.lower() for domain in ['de5.net', 'feiniu', 'oooooooo', 'ooo.ooo', 'ooo.o', 'feiniu', 'sub.free']):
         print(f"  检测到超级反爬机场，启用浏览器级绕过: {url[:70]}...")
         content = download_anti_crawl_subscription(url)
         if content:
@@ -1506,23 +1506,47 @@ async def main():
     print(f"测速完成，最终存活优质节点：{success_count} 个")
 
     # 保底回退机制
-    if success_count == 0:
-        print("测速全死，启动保底回退策略（热门地区未测速保留）")
-        fallback_regions = [
-            '香港', '台湾', '日本', '新加坡',
-            '美国', '韩国', '德国', '英国', '加拿大'
-        ]
-        candidates = identify_regions_only(all_nodes)
-        selected = []
-        grouped = defaultdict(list)
-        for p in candidates:
-            region = p.get('region_info', {}).get('name')
-            if region in fallback_regions:
-                grouped[region].append(p)
-        for r in fallback_regions:
-            selected.extend(grouped[r][:30])
-        final_tested_nodes = selected[:500]
-        print(f"回退保留 {len(final_tested_nodes)} 个热门地区节点（未测速）")
+    if success_count < 50:   # 少于80个就触发保底（可自行调整 50~100 之间）
+        print(f"测速结果过少（{success_count}个），启动超级保底策略，保留热门地区节点")
+        
+        # 优先保留这些地区（你最常用的）
+        priority_regions = ['香港', '台湾', '日本', '新加坡', '美国', '韩国', '德国', '加拿大']
+        
+        backup_nodes = []
+        seen_keys = set()  # 防止同一节点重复加入
+        
+        for proxy in all_nodes:   # all_nodes 是所有原始解析出来的节点
+            if len(backup_nodes) >= 600:  # 最多保底600个
+                break
+                
+            key = get_proxy_key(proxy)
+            if key in seen_keys:
+                continue
+            seen_keys.add(key)
+            
+            region = proxy.get('region_info', {}).get('name')
+            if region in priority_regions:
+                # 给这些节点一个假的超大延迟，排到后面但不会被删掉
+                proxy = proxy.copy()
+                proxy['clash_delay'] = 9999
+                backup_nodes.append(proxy)
+        
+        # 如果热门地区还是不够，就从剩余节点里随便补
+        if len(backup_nodes) < 200:
+            for proxy in all_nodes:
+                if len(backup_nodes) >= 400:
+                    break
+                key = get_proxy_key(proxy)
+                if key not in seen_keys:
+                    p = proxy.copy()
+                    p['clash_delay'] = 9999
+                    backup_nodes.append(p)
+                    seen_keys.add(key)
+        
+        final_tested_nodes = backup_nodes
+        success_count = len(final_tested_nodes)
+        print(f"超级保底成功！强制保留 {success_count} 个热门地区节点（未测速，仅用于应急）")
+    # ============================================================
 
     # [4/5] 节点名称统一规范化处理
     print("[4/5] 节点名称统一规范化处理")
@@ -1560,18 +1584,26 @@ async def main():
 
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     try:
+        os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-            f.write(f"# TG频道节点自动抓取+测延迟精选订阅\n")
-            f.write(f"# 最后更新时间：{update_time} (北京时间)\n")
-            f.write(f"# 本次保留节点数：{total_count} 个（延迟最优）\n")
-            f.write(f"# 由 GitHub Actions 自动构建！\n\n")
-            yaml.dump(final_config, f, allow_unicode=True, sort_keys=False, indent=2, width=4096)
+            f.write("# ==================================================\n")
+            f.write("#  TG 免费节点 · 自动测速精选订阅（Clash 格式）\n")
+            f.write("# ==================================================\n")
+            f.write(f"# 更新时间   : {update_time} (北京时间)\n")
+            f.write(f"# 节点总数   : {total_count} 个优质节点\n")
+            f.write(f"# 筛选规则   : 延迟排序 + 带宽 ≥ {MIN_BANDWIDTH_MB}MB/s\n")
+            f.write(f"# 地区优先级 : 香港 → 台湾 → 日本 → 新加坡 → 美国 → 韩国 → ...\n")
+            f.write("# 构建方式   : GitHub Actions 全自动，每4小时更新一次\n")
+            f.write("# 项目地址   : https://github.com/你的用户名/你的仓库\n")
+            f.write("# ==================================================\n\n")
+            yaml.dump(final_config, f, allow_unicode=True, sort_keys=False, indent=2, width=4096, default_flow_style=False)
+
         print(f"✅ 配置文件已成功保存至 {OUTPUT_FILE}")
         print(f"   本次共保留 {total_count} 个优质节点")
         print(f"   更新时间：{update_time}")
-        print("🎉 全部任务完成！")
+        print("🎉 全部任务圆满完成！")
     except Exception as e:
-        print(f"❌ 写出配置文件失败: {e}")
+        print(f"写出配置文件失败: {e}")
         sys.exit(1)
 
 def sync_main():
