@@ -1,4 +1,4 @@
-name: ⏳ TG频道&群抓取节点测速 (clash-speedtest测速版)
+name: ⏳ TG频道&群抓取节点测速 XC-speedtest测速版)
 on:
   schedule:
     - cron: '10 */4 * * *'  # 每4小时执行
