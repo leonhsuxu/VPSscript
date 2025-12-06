@@ -6,7 +6,6 @@ on:
 env:
   MIHOMO_VERSION: v1.19.17
   SPEEDTEST_VERSION: v0.4.1 # 请根据需要更新到您希望的版本，例如 v0.4.1
-
   TELEGRAM_CHANNEL_IDS: |
     # 订阅转发-频道
     @fqDINYUE
@@ -30,7 +29,6 @@ env:
     @tempssrlink
     # (乱七八糟名字)
     @sorenab2   
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -147,10 +145,10 @@ jobs:
           mkdir -p flclashyaml
           python TelegramNode/TBD-telegram_publiclink.py
           
-      - name: 运行 speedtest-clash 进行测速
-        run: |
-          ./xcspeedtest -c flclashyaml/Tg-node1.yaml -output flclashyaml/speedtest_result.yaml
-
+      # - name: 运行 speedtest-clash 进行测速
+      #   run: |
+      #     ./xcspeedtest -c flclashyaml/Tg-node1.yaml -output flclashyaml/speedtest_result.yaml
+      
       - name: 提交生成的 Clash 配置到仓库
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
