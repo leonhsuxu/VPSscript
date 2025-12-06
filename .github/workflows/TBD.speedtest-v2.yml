@@ -6,7 +6,7 @@ on:
 env:
   MIHOMO_VERSION: v1.19.17
   SPEEDTEST_VERSION: v0.4.1 # 请根据需要更新到您希望的版本，例如 v0.4.1
-  
+
   TELEGRAM_CHANNEL_IDS: |
     # 订阅转发-频道
     @fqDINYUE
@@ -30,7 +30,7 @@ env:
     @tempssrlink
     # (乱七八糟名字)
     @sorenab2   
-    
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -92,53 +92,50 @@ jobs:
       - name: Download xiecang speedtest-clash
         if: steps.cache-xc.outputs.cache-hit != 'true'
         run: |
-          set -e # 确保任何命令失败都会导致脚本退出
+          set -e
           RELEASE_TAG=${{ env.SPEEDTEST_VERSION }}
           echo "尝试下载 speedtest-clash 版本: $RELEASE_TAG"
-          # 尝试从指定版本获取下载链接
           URL=$(curl -s "https://api.github.com/repos/xiecang/speedtest-clash/releases/tags/${RELEASE_TAG}" \
                 | grep "browser_download_url.*speedtest-clash_Linux_x86_64" | cut -d '"' -f4)
           if [ -z "$URL" ]; then
-            echo "警告: 未在指定版本 ${RELEASE_TAG} 找到 speedtest-clash_Linux_x86_64 资产，尝试从最新版本获取。"
+            echo "警告: 未找到指定版本 ${RELEASE_TAG} 的 speedtest-clash_Linux_x86_64 资产，尝试获取最新版本。"
             URL=$(curl -s https://api.github.com/repos/xiecang/speedtest-clash/releases/latest \
                 | grep "browser_download_url.*speedtest-clash_Linux_x86_64" | cut -d '"' -f4)
           fi
           if [ -z "$URL" ]; then
-            echo "错误: 未找到 speedtest-clash 的下载链接 (需要包含 speedtest-clash_Linux_x86_64)。请检查版本号或仓库。退出。"
+            echo "错误: 未能找到 speedtest-clash 的下载链接，退出。"
             exit 1
           fi
           FILENAME=$(basename "$URL")
-          echo "xiecang speedtest-clash 下载地址: $URL"
-          echo "下载到文件: $FILENAME"
-          wget --tries=5 --timeout=60 --progress=bar:force -O "${FILENAME}" "$URL"
+          echo "下载地址：$URL"
+          echo "保存到文件：$FILENAME"
+          wget --tries=5 --timeout=60 --progress=bar:force -O "$FILENAME" "$URL"
           if [[ "$FILENAME" == *.tar.gz ]]; then
-            echo "检测到 .tar.gz 压缩包，进行解压..."
-            tar -xzf "${FILENAME}"
+            echo "检测到压缩包，开始解压..."
+            tar -xzf "$FILENAME"
             if [ -f "speedtest-clash" ]; then
               echo "找到解压后的二进制文件 'speedtest-clash'。"
               mv speedtest-clash xcspeedtest
             else
-              echo "警告: 未在 .tar.gz 解压目录中找到 'speedtest-clash' 二进制文件。尝试查找其他可执行文件..."
-              EXTRACTED_BINARY_PATH=$(find . -maxdepth 1 -type f -executable -name "speedtest-clash*" -print -quit)
-              if [ -n "$EXTRACTED_BINARY_PATH" ]; then
-                echo "找到可执行文件: $(basename "$EXTRACTED_BINARY_PATH")"
-                mv "$EXTRACTED_BINARY_PATH" xcspeedtest
+              echo "未找到标准二进制文件，尝试查找其他可执行文件..."
+              EXE_PATH=$(find . -maxdepth 1 -type f -executable -name "speedtest-clash*" -print -quit)
+              if [ -n "$EXE_PATH" ]; then
+                echo "找到可执行文件：$EXE_PATH"
+                mv "$EXE_PATH" xcspeedtest
               else
-                echo "错误: 未能在解压目录中找到任何 'speedtest-clash' 相关的可执行文件。退出。"
+                echo "错误：未找到 speedtest-clash 可执行文件，退出。"
                 exit 1
               fi
             fi
-            rm "${FILENAME}"
+            rm "$FILENAME"
           else
-            echo "下载的是直接的二进制文件。"
-            mv "${FILENAME}" xcspeedtest
+            echo "下载的文件为直接可执行文件，重命名为 xcspeedtest。"
+            mv "$FILENAME" xcspeedtest
           fi
           chmod +x xcspeedtest
-          echo "xcspeedtest 下载并准备完成。"
+          echo "speedtest-clash 下载并准备完成。"
           echo "显示帮助信息："
           ./xcspeedtest --help
-          echo "进行测速并输出详细日志："
-          ./xcspeedtest --verbose --log-level debug || ./xcspeedtest -v || ./xcspeedtest --debug
           
       - name: 运行 Telegram 抓取及 Clash 测速脚本
         env:
@@ -150,6 +147,10 @@ jobs:
           mkdir -p flclashyaml
           python TelegramNode/TBD-telegram_publiclink.py
           
+      - name: 运行 speedtest-clash 进行测速
+        run: |
+          ./xcspeedtest -c flclashyaml/Tg-node1.yaml -output flclashyaml/speedtest_result.yaml
+
       - name: 提交生成的 Clash 配置到仓库
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
