@@ -56,8 +56,7 @@ jobs:
       - name: 安装 Python 依赖
         run: |
           python -m pip install --upgrade pip          
-          pip install -r requirements.txt
-          
+          pip install -r requirements.txt          
           
       - name: Cache Mihomo
         id: cache-mihomo
@@ -89,6 +88,7 @@ jobs:
           path: xcspeedtest
           key: xiecang-${{ env.SPEEDTEST_VERSION }}
           restore-keys: xiecang-${{ env.SPEEDTEST_VERSION }}
+          
       - name: Download xiecang speedtest-clash
         if: steps.cache-xc.outputs.cache-hit != 'true'
         run: |
@@ -96,10 +96,8 @@ jobs:
           RELEASE_TAG=${{ env.SPEEDTEST_VERSION }}
           echo "尝试下载 speedtest-clash 版本: $RELEASE_TAG"
           # 尝试从指定版本获取下载链接
-          # 查找包含 "browser_download_url" 且资产名称中包含 "speedtest-clash_Linux_x86_64" 的链接
           URL=$(curl -s "https://api.github.com/repos/xiecang/speedtest-clash/releases/tags/${RELEASE_TAG}" \
                 | grep "browser_download_url.*speedtest-clash_Linux_x86_64" | cut -d '"' -f4)
-          # 如果在指定版本中未能找到，则尝试从最新版本获取（保留原脚本的健壮性）
           if [ -z "$URL" ]; then
             echo "警告: 未在指定版本 ${RELEASE_TAG} 找到 speedtest-clash_Linux_x86_64 资产，尝试从最新版本获取。"
             URL=$(curl -s https://api.github.com/repos/xiecang/speedtest-clash/releases/latest \
@@ -109,21 +107,18 @@ jobs:
             echo "错误: 未找到 speedtest-clash 的下载链接 (需要包含 speedtest-clash_Linux_x86_64)。请检查版本号或仓库。退出。"
             exit 1
           fi
-          FILENAME=$(basename "$URL") # 获取下载文件名，例如 speedtest-clash_Linux_x86_64.tar.gz 或 speedtest-clash_Linux_x86_64
+          FILENAME=$(basename "$URL")
           echo "xiecang speedtest-clash 下载地址: $URL"
           echo "下载到文件: $FILENAME"
           wget --tries=5 --timeout=60 --progress=bar:force -O "${FILENAME}" "$URL"
-          # 检查是否为 tar.gz 压缩包
           if [[ "$FILENAME" == *.tar.gz ]]; then
             echo "检测到 .tar.gz 压缩包，进行解压..."
             tar -xzf "${FILENAME}"
-            # 假设解压后的二进制文件名为 'speedtest-clash'
             if [ -f "speedtest-clash" ]; then
               echo "找到解压后的二进制文件 'speedtest-clash'。"
               mv speedtest-clash xcspeedtest
             else
               echo "警告: 未在 .tar.gz 解压目录中找到 'speedtest-clash' 二进制文件。尝试查找其他可执行文件..."
-              # 更通用的查找可执行文件的方法
               EXTRACTED_BINARY_PATH=$(find . -maxdepth 1 -type f -executable -name "speedtest-clash*" -print -quit)
               if [ -n "$EXTRACTED_BINARY_PATH" ]; then
                 echo "找到可执行文件: $(basename "$EXTRACTED_BINARY_PATH")"
@@ -133,15 +128,17 @@ jobs:
                 exit 1
               fi
             fi
-            rm "${FILENAME}" # 清理下载的压缩包
+            rm "${FILENAME}"
           else
-            # 如果是直接的二进制文件
             echo "下载的是直接的二进制文件。"
             mv "${FILENAME}" xcspeedtest
           fi
           chmod +x xcspeedtest
           echo "xcspeedtest 下载并准备完成。"
-          ./xcspeedtest --help | head -3
+          echo "显示帮助信息："
+          ./xcspeedtest --help
+          echo "进行测速并输出详细日志："
+          ./xcspeedtest --verbose --log-level debug || ./xcspeedtest -v || ./xcspeedtest --debug
           
       - name: 运行 Telegram 抓取及 Clash 测速脚本
         env:
@@ -152,6 +149,7 @@ jobs:
         run: |
           mkdir -p flclashyaml
           python TelegramNode/TBD-telegram_publiclink.py
+          
       - name: 提交生成的 Clash 配置到仓库
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
