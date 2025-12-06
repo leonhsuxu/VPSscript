@@ -1451,7 +1451,7 @@ async def main():
             clash_path,
             all_nodes,
             max_workers=MAX_TEST_WORKERS,
-            debug=ENABLE_SPEEDTEST_LOG
+            debug=ENABLE_SPEEDTEST_LOG   # False  如果，则只输出个人定义的打印项目print
         )
     elif SPEEDTEST_MODE == "tcp_first":
         print("使用【TCP 粗筛 → speedtest-clash 精测】两阶段模式")
