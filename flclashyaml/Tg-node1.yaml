@@ -1,132 +1,41 @@
-# TG频道节点自动抓取+测延迟精选订阅
-# 最后更新时间：2025-12-06 21:02:05 (北京时间)
-# 本次保留节点数：71 个（延迟最优）
-# 由 GitHub Actions 自动构建！
+# ==================================================
+#  TG 免费节点 · 自动测速精选订阅（Clash 格式）
+# ==================================================
+# 更新时间   : 2025-12-06 21:33:43 (北京时间)
+# 节点总数   : 80 个优质节点
+# 筛选规则   : 延迟排序 + 带宽 ≥ 25.0MB/s
+# 地区优先级 : 香港 → 台湾 → 日本 → 新加坡 → 美国 → 韩国 → ...
+# 构建方式   : GitHub Actions 全自动，每4小时更新一次
+# 项目地址   : https://github.com/你的用户名/你的仓库
+# ==================================================
 
 proxies:
-- name: 🇭🇰 香港 8
-  password: <password>
-  port: 8443
-  server: c1a81985-t6ykg0-tpaqgu-1smhu.hkt.cdnhuawei.com
-  tls: true
-  type: http
-  username: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
-  region_info:
-    name: 香港
-    code: HK
-  tcp_delay: 181
-  clash_delay: 4
-  bandwidth: 120.52MB/s
-- name: 🇭🇰 香港 2
-  network: ws
-  port: 8443
-  server: 154.21.203.45
-  skip-cert-verify: false
-  tls: true
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  ws-opts:
-    headers:
-      Host: www.x-aniu-h-k.netlib.re
-    path: /?ed=2560
-  servername: www.x-aniu-h-k.netlib.re
-  tcp_delay: 157
-  clash_delay: 9
-  region_info:
-    name: 香港
-    code: HK
-  bandwidth: 40.53MB/s
 - cipher: aes-256-cfb
   name: 🇭🇰 香港 1
   password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
   port: 38388
   server: 216.250.97.82
   type: ss
-  tcp_delay: 154
-  clash_delay: 58
+  tcp_delay: 153
+  clash_delay: 42
   region_info:
     name: 香港
     code: HK
-  bandwidth: 41.22MB/s
-- name: 🇭🇰 香港 9
-  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  port: 443
-  server: b0ade92e-t6ykg0-thmjbt-1rk9y.hkt2.cdnhuawei.com
-  tls: true
-  type: http
-  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 189
-  clash_delay: 88
-  region_info:
-    name: 香港
-    code: HK
-  bandwidth: 30.42MB/s
-- name: 🇯🇵 日本 13
-  password: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
-  port: 27233
-  server: b06f3318-t6ykg0-tpaqgu-1smhu.cm4.oshuawei.com
-  tls: true
-  type: http
-  username: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
-  region_info:
-    name: 日本
-    code: JP
-  tcp_delay: 214
-  clash_delay: 1
-  bandwidth: 83.29MB/s
-- name: 🇯🇵 日本 11
-  password: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
-  port: 443
-  server: 8f31a2be-t6ykg0-tpaqgu-1smhu.jp4.oshuawei.com
-  tls: true
-  type: http
-  username: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
-  region_info:
-    name: 日本
-    code: JP
-  tcp_delay: 128
-  clash_delay: 5
-  bandwidth: 118.33MB/s
+  bandwidth: 32.43MB/s
 - name: 🇯🇵 日本 9
-  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  port: 443
-  server: 4ffbf33f-t6ykg0-thmjbt-1rk9y.jp4.oshuawei.com
-  tls: true
-  type: http
-  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 128
-  clash_delay: 7
-  region_info:
-    name: 日本
-    code: JP
-  bandwidth: 117.57MB/s
-- name: 🇯🇵 日本 12
   password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
   port: 27233
   server: 29fd8735-t6ykg0-thmjbt-1rk9y.cm4.oshuawei.com
   tls: true
   type: http
   username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 213
-  clash_delay: 7
+  tcp_delay: 212
+  clash_delay: 1
   region_info:
     name: 日本
     code: JP
-  bandwidth: 86.13MB/s
-- name: 🇯🇵 日本 10
-  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  port: 443
-  server: c529a1ed-t6ykg0-thmjbt-1rk9y.jp.oshuawei.com
-  tls: true
-  type: http
-  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 119
-  clash_delay: 12
-  region_info:
-    name: 日本
-    code: JP
-  bandwidth: 110.89MB/s
-- name: 🇯🇵 日本 8
+  bandwidth: 84.50MB/s
+- name: 🇯🇵 日本 6
   password: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
   port: 443
   server: c8665174-t6ykg0-tpaqgu-1smhu.jp.oshuawei.com
@@ -136,23 +45,49 @@ proxies:
   region_info:
     name: 日本
     code: JP
-  tcp_delay: 119
-  clash_delay: 74
-  bandwidth: 106.88MB/s
-- name: 🇯🇵 日本 2
-  password: 79314e99f0a473fe86efc7827942ad00
-  port: 1331
-  server: 153.121.65.107
-  skip-cert-verify: false
-  sni: www.nintendogames.net
-  type: trojan
-  tcp_delay: 104
-  clash_delay: 2025
+  tcp_delay: 118
+  clash_delay: 6
+  bandwidth: 96.62MB/s
+- name: 🇯🇵 日本 7
+  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
+  port: 443
+  server: c529a1ed-t6ykg0-thmjbt-1rk9y.jp.oshuawei.com
+  tls: true
+  type: http
+  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
+  tcp_delay: 118
+  clash_delay: 8
   region_info:
     name: 日本
     code: JP
-  bandwidth: 57.63MB/s
+  bandwidth: 94.67MB/s
+- name: 🇯🇵 日本 10
+  password: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  port: 27233
+  server: b06f3318-t6ykg0-tpaqgu-1smhu.cm4.oshuawei.com
+  tls: true
+  type: http
+  username: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  region_info:
+    name: 日本
+    code: JP
+  tcp_delay: 262
+  clash_delay: 8
+  bandwidth: 82.23MB/s
 - name: 🇯🇵 日本 5
+  password: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  port: 443
+  server: 8f31a2be-t6ykg0-tpaqgu-1smhu.jp4.oshuawei.com
+  tls: true
+  type: http
+  username: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
+  region_info:
+    name: 日本
+    code: JP
+  tcp_delay: 118
+  clash_delay: 9
+  bandwidth: 92.41MB/s
+- name: 🇯🇵 日本 4
   server: 35.73.93.31
   port: 443
   type: vless
@@ -166,25 +101,37 @@ proxies:
     path: /?ed=2560
     headers:
       Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 106
-  clash_delay: 2335
+  tcp_delay: 105
+  clash_delay: 68
   region_info:
     name: 日本
     code: JP
-  bandwidth: 75.25MB/s
-- name: 🇸🇬 新加坡 4
+  bandwidth: 62.00MB/s
+- name: 🇯🇵 日本 8
   password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
   port: 443
-  server: efec8665-t6ykg0-thmjbt-1rk9y.sg3.oshuawei.com
+  server: 4ffbf33f-t6ykg0-thmjbt-1rk9y.jp4.oshuawei.com
   tls: true
   type: http
   username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 198
-  clash_delay: 2
+  tcp_delay: 172
+  clash_delay: 2325
+  region_info:
+    name: 日本
+    code: JP
+  bandwidth: 90.02MB/s
+- name: 🇸🇬 新加坡 4
+  server: 18.143.145.77
+  port: 50001
+  type: ss
+  cipher: aes-256-gcm
+  password: c5d45d2b-c425-4b24-8794-613b831d5f0c
+  tcp_delay: 171
+  clash_delay: 9
   region_info:
     name: 新加坡
     code: SG
-  bandwidth: 105.92MB/s
+  bandwidth: 53.53MB/s
 - name: 🇸🇬 新加坡 7
   password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
   port: 443
@@ -192,389 +139,27 @@ proxies:
   tls: true
   type: http
   username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 261
-  clash_delay: 3
+  tcp_delay: 241
+  clash_delay: 24
   region_info:
     name: 新加坡
     code: SG
-  bandwidth: 124.08MB/s
+  bandwidth: 121.42MB/s
 - name: 🇸🇬 新加坡 6
-  password: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
-  port: 17235
-  server: b06f3318-t6ykg0-tpaqgu-1smhu.cm4.oshuawei.com
-  tls: true
-  type: http
-  username: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
-  region_info:
-    name: 新加坡
-    code: SG
-  tcp_delay: 214
-  clash_delay: 9
-  bandwidth: 85.28MB/s
-- name: 🇸🇬 新加坡 3
-  server: 20.247.137.183
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 174
-  clash_delay: 225
-  region_info:
-    name: 新加坡
-    code: SG
-  bandwidth: 75.12MB/s
-- name: 🇸🇬 新加坡 2
-  server: 18.143.145.77
-  port: 50001
-  type: ss
-  cipher: aes-256-gcm
-  password: c5d45d2b-c425-4b24-8794-613b831d5f0c
-  tcp_delay: 171
-  clash_delay: 475
-  region_info:
-    name: 新加坡
-    code: SG
-  bandwidth: 78.23MB/s
-- name: 🇸🇬 新加坡 5
-  password: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
-  port: 443
-  server: 70e03218-t6ykg0-tpaqgu-1smhu.sg.oshuawei.com
-  tls: true
-  type: http
-  username: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
-  region_info:
-    name: 新加坡
-    code: SG
-  tcp_delay: 256
-  clash_delay: 905
-  bandwidth: 122.68MB/s
-- name: 🇰🇷 韩国 2
-  password: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
-  port: 31433
-  server: 146d4675-t6ykg0-tpaqgu-1smhu.kr.oshuawei.com
-  tls: true
-  type: http
-  username: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
-  region_info:
-    name: 韩国
-    code: KR
-  tcp_delay: 269
-  clash_delay: 7
-  bandwidth: 82.60MB/s
-- cipher: chacha20-ietf-poly1305
-  name: 🇺🇸 美国 11
-  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
-  port: 990
-  server: 173.234.29.2
-  type: ss
-  tcp_delay: 56
-  clash_delay: 4
-  region_info:
-    name: 美国
-    code: US
-  bandwidth: 67.83MB/s
-- name: 🇺🇸 美国 10
-  server: 172.64.229.167
-  port: 2087
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 2
-  clash_delay: 5
-  region_info:
-    name: 美国
-    code: US
-  bandwidth: 64.13MB/s
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 12
-  network: ws
-  port: 80
-  server: bbbbbbbbb.222769.xyz
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 2e65577e-8fdb-4bb1-a495-96f3122099a7
-  ws-opts:
-    headers:
-      Host: bbbbbbbbb.222769.xyz
-    path: /f6taOMcOSZb9TPR
-  tcp_delay: 43
-  clash_delay: 5
-  region_info:
-    name: 美国
-    code: US
-  bandwidth: 79.76MB/s
-- name: 🇺🇸 美国 7
   password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
   port: 443
-  server: 5a6c96e7-t6ykg0-thmjbt-1rk9y.sj.gotochinatown.net
+  server: efec8665-t6ykg0-thmjbt-1rk9y.sg3.oshuawei.com
   tls: true
-  type: socks5
+  type: http
   username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 17
-  clash_delay: 7
+  tcp_delay: 185
+  clash_delay: 97
   region_info:
-    name: 美国
-    code: US
-  bandwidth: 162.33MB/s
-- client-fingerprint: chrome
-  name: 🇺🇸 美国 16
-  password: 79314e99f0a473fe86efc7827942ad00
-  port: 2890
-  server: 160.16.116.227
-  skip-cert-verify: true
-  sni: www.nintendogames.net
-  type: trojan
-  tcp_delay: 105
-  clash_delay: 7
-  region_info:
-    name: 美国
-    code: US
-  bandwidth: 57.34MB/s
-- name: 🇺🇸 美国 9
+    name: 新加坡
+    code: SG
+  bandwidth: 95.03MB/s
+- name: 🇺🇸 美国 14
   server: www.shopify.com
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 9
-  clash_delay: 9
-  region_info:
-    name: 美国
-    code: US
-  bandwidth: 51.29MB/s
-- cipher: aes-128-gcm
-  name: 🇺🇸 美国 8
-  password: shadowsocks
-  port: 443
-  server: 156.146.38.170
-  type: ss
-  tcp_delay: 44
-  clash_delay: 23
-  region_info:
-    name: 美国
-    code: US
-  bandwidth: 116.68MB/s
-- name: 🇺🇸 美国 13
-  network: tcp
-  port: 443
-  server: zorox-net.senu-zer.online
-  skip-cert-verify: false
-  tls: true
-  type: vless
-  uuid: 224629c2-342b-4e54-bb75-b56cb7dabf30
-  servername: zorox-net.senu-zer.online
-  tcp_delay: 67
-  clash_delay: 36
-  region_info:
-    name: 美国
-    code: US
-  bandwidth: 86.36MB/s
-- name: 🇺🇸 美国 15
-  password: 79314e99f0a473fe86efc7827942ad00
-  port: 2890
-  server: 160.16.131.243
-  skip-cert-verify: true
-  sni: www.nintendogames.net
-  type: trojan
-  tcp_delay: 104
-  clash_delay: 80
-  region_info:
-    name: 美国
-    code: US
-  bandwidth: 31.45MB/s
-- name: 🇺🇸 美国 4
-  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  port: 443
-  server: 02d98e3d-t6ykg0-thmjbt-1rk9y.los.gotochinatown.net
-  tls: true
-  type: socks5
-  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 13
-  clash_delay: 258
-  region_info:
-    name: 美国
-    code: US
-  bandwidth: 180.97MB/s
-- cipher: rc4-md5
-  name: 🇨🇦 加拿大 5
-  password: 14fFPrbezE3HDZzsMOr6
-  port: 8080
-  server: 137.184.174.93
-  type: ss
-  tcp_delay: 64
-  clash_delay: 2
-  region_info:
-    name: 加拿大
-    code: CA
-  bandwidth: 44.07MB/s
-- cipher: chacha20-ietf-poly1305
-  name: 🇨🇦 加拿大 6
-  password: JIhN6rBKkaEboLNXVSv5rq
-  port: 80
-  server: 142.4.216.225
-  type: ss
-  tcp_delay: 64
-  clash_delay: 7
-  region_info:
-    name: 加拿大
-    code: CA
-  bandwidth: 80.92MB/s
-- cipher: aes-256-cfb
-  name: 🇨🇦 加拿大 4
-  password: f8f7aCzcPKbsF8p3
-  port: 989
-  server: 79.127.233.170
-  type: ss
-  tcp_delay: 22
-  clash_delay: 43
-  region_info:
-    name: 加拿大
-    code: CA
-  bandwidth: 53.65MB/s
-- cipher: chacha20-ietf-poly1305
-  name: 🇨🇦 加拿大 3
-  password: f8f7aCzcPKbsF8p3
-  port: 990
-  server: 79.127.233.170
-  type: ss
-  tcp_delay: 21
-  clash_delay: 182
-  region_info:
-    name: 加拿大
-    code: CA
-  bandwidth: 92.84MB/s
-- name: 🇨🇦 加拿大 2
-  password: .ie4rghJuMkcf0oF
-  port: 18509
-  server: 38.96.254.102
-  sni: shoppingmall.electricbanana.click
-  type: trojan
-  tcp_delay: 23
-  clash_delay: 2025
-  region_info:
-    name: 加拿大
-    code: CA
-  bandwidth: 98.70MB/s
-- name: 🇬🇧 英国 6
-  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  port: 443
-  server: 851db2a2-t6ykg0-thmjbt-1rk9y.uk.oshuawei.com
-  tls: true
-  type: http
-  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
-  tcp_delay: 163
-  clash_delay: 7
-  region_info:
-    name: 英国
-    code: GB
-  bandwidth: 123.25MB/s
-- cipher: chacha20-ietf-poly1305
-  name: 🇬🇧 英国 3
-  password: k1dBOmOB4oqi7Ump37a1bQ
-  port: 8080
-  server: 82.38.31.218
-  type: ss
-  udp: true
-  tcp_delay: 146
-  clash_delay: 65
-  region_info:
-    name: 英国
-    code: GB
-  bandwidth: 79.43MB/s
-- name: 🇬🇧 英国 5
-  password: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
-  port: 443
-  server: b6ba6faa-t6ykg0-tpaqgu-1smhu.uk.oshuawei.com
-  tls: true
-  type: http
-  username: 62f2374c-891b-11ef-a3f6-f23c9164ca5d
-  region_info:
-    name: 英国
-    code: GB
-  tcp_delay: 164
-  clash_delay: 96
-  bandwidth: 114.96MB/s
-- alterId: 0
-  cipher: auto
-  client-fingerprint: chrome
-  name: 🇩🇪 德国 2
-  network: tcp
-  port: 40878
-  server: 85.195.101.122
-  skip-cert-verify: true
-  tfo: true
-  type: vmess
-  udp: true
-  uuid: f3d4167e-b15e-4e46-82e9-9286ef93fda7
-  tcp_delay: 151
-  clash_delay: 3
-  region_info:
-    name: 德国
-    code: DE
-  bandwidth: 81.01MB/s
-- name: 🇩🇪 德国 1
-  network: ws
-  password: 8r<[9'l6hAO#8ZQi
-  port: 8443
-  server: koma-yt.pages.dev
-  sni: Koma-YT.PAGeS.Dev
-  type: trojan
-  ws-opts:
-    path: /tro8sFW1S91B6sZrM1?ed=2560
-  tcp_delay: 15
-  clash_delay: 4
-  region_info:
-    name: 德国
-    code: DE
-  bandwidth: 62.93MB/s
-- http-opts:
-    headers:
-      Host:
-      - varzesh3.ir
-    path:
-    - /
-  name: 🇩🇪 德国 3
-  network: http
-  port: 33801
-  server: m39a.vip784.com
-  skip-cert-verify: false
-  tls: false
-  type: vless
-  uuid: c99262ae-ee77-4dac-8437-2d7f68fd3938
-  tcp_delay: 158
-  clash_delay: 766
-  region_info:
-    name: 德国
-    code: DE
-  bandwidth: 99.85MB/s
-- name: 🇺🇳 10 6
-  server: 104.17.254.180
   port: 443
   type: vless
   uuid: e258977b-e413-4718-a3af-02d75492c349
@@ -589,8 +174,254 @@ proxies:
       Host: www.x-aniu---jp.netlib.re
   tcp_delay: 4
   clash_delay: 1
-  bandwidth: 30.98MB/s
-- name: 🇺🇳 10 5
+  region_info:
+    name: 美国
+    code: US
+  bandwidth: 74.82MB/s
+- cipher: chacha20-ietf-poly1305
+  name: 🇺🇸 美国 10
+  password: ARgvGZywA+gacgGV26Bvmu05+wZmRW/j+AdU+Z8Bt44=
+  port: 990
+  server: 173.234.29.2
+  type: ss
+  tcp_delay: 48
+  clash_delay: 3
+  region_info:
+    name: 美国
+    code: US
+  bandwidth: 67.60MB/s
+- client-fingerprint: chrome
+  name: 🇺🇸 美国 16
+  password: 79314e99f0a473fe86efc7827942ad00
+  port: 2890
+  server: 160.16.116.227
+  skip-cert-verify: true
+  sni: www.nintendogames.net
+  type: trojan
+  tcp_delay: 105
+  clash_delay: 5
+  region_info:
+    name: 美国
+    code: US
+  bandwidth: 60.89MB/s
+- name: 🇺🇸 美国 13
+  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
+  port: 443
+  server: 5a6c96e7-t6ykg0-thmjbt-1rk9y.sj.gotochinatown.net
+  tls: true
+  type: socks5
+  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
+  tcp_delay: 27
+  clash_delay: 7
+  region_info:
+    name: 美国
+    code: US
+  bandwidth: 89.37MB/s
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 11
+  network: ws
+  port: 80
+  server: bbbbbbbbb.222769.xyz
+  skip-cert-verify: false
+  tls: false
+  type: vmess
+  uuid: 2e65577e-8fdb-4bb1-a495-96f3122099a7
+  ws-opts:
+    headers:
+      Host: bbbbbbbbb.222769.xyz
+    path: /f6taOMcOSZb9TPR
+  tcp_delay: 22
+  clash_delay: 61
+  region_info:
+    name: 美国
+    code: US
+  bandwidth: 69.93MB/s
+- cipher: chacha20-ietf-poly1305
+  name: 🇨🇦 加拿大 5
+  password: JIhN6rBKkaEboLNXVSv5rq
+  port: 80
+  server: 142.4.216.225
+  type: ss
+  tcp_delay: 64
+  clash_delay: 5
+  region_info:
+    name: 加拿大
+    code: CA
+  bandwidth: 71.98MB/s
+- name: 🇨🇦 加拿大 3
+  password: .ie4rghJuMkcf0oF
+  port: 18509
+  server: 38.96.254.102
+  sni: shoppingmall.electricbanana.click
+  type: trojan
+  tcp_delay: 24
+  clash_delay: 6
+  region_info:
+    name: 加拿大
+    code: CA
+  bandwidth: 89.83MB/s
+- cipher: chacha20-ietf-poly1305
+  name: 🇨🇦 加拿大 2
+  password: f8f7aCzcPKbsF8p3
+  port: 990
+  server: 79.127.233.170
+  type: ss
+  tcp_delay: 23
+  clash_delay: 8
+  region_info:
+    name: 加拿大
+    code: CA
+  bandwidth: 77.76MB/s
+- cipher: aes-256-cfb
+  name: 🇨🇦 加拿大 4
+  password: f8f7aCzcPKbsF8p3
+  port: 989
+  server: 79.127.233.170
+  type: ss
+  tcp_delay: 23
+  clash_delay: 40
+  region_info:
+    name: 加拿大
+    code: CA
+  bandwidth: 47.21MB/s
+- name: 🇬🇧 英国 12
+  password: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
+  port: 443
+  server: 851db2a2-t6ykg0-thmjbt-1rk9y.uk.oshuawei.com
+  tls: true
+  type: http
+  username: 88f6e3c4-1d01-11ef-812c-f23c91cfbbc9
+  tcp_delay: 154
+  clash_delay: 1
+  region_info:
+    name: 英国
+    code: GB
+  bandwidth: 92.12MB/s
+- cipher: chacha20-ietf-poly1305
+  name: 🇬🇧 英国 7
+  password: k1dBOmOB4oqi7Ump37a1bQ
+  port: 8080
+  server: 82.38.31.218
+  type: ss
+  udp: true
+  tcp_delay: 145
+  clash_delay: 8
+  region_info:
+    name: 英国
+    code: GB
+  bandwidth: 59.76MB/s
+- alterId: 0
+  cipher: auto
+  client-fingerprint: chrome
+  name: 🇩🇪 德国 5
+  network: tcp
+  port: 40878
+  server: 85.195.101.122
+  skip-cert-verify: true
+  tfo: true
+  type: vmess
+  udp: true
+  uuid: f3d4167e-b15e-4e46-82e9-9286ef93fda7
+  tcp_delay: 154
+  clash_delay: 2
+  region_info:
+    name: 德国
+    code: DE
+  bandwidth: 63.35MB/s
+- http-opts:
+    headers:
+      Host:
+      - varzesh3.ir
+    path:
+    - /
+  name: 🇩🇪 德国 3
+  network: http
+  port: 33801
+  server: m39a.vip784.com
+  skip-cert-verify: false
+  tls: false
+  type: vless
+  uuid: c99262ae-ee77-4dac-8437-2d7f68fd3938
+  tcp_delay: 176
+  clash_delay: 3
+  region_info:
+    name: 德国
+    code: DE
+  bandwidth: 96.45MB/s
+- name: 🇩🇪 德国 2
+  network: ws
+  password: 8r<[9'l6hAO#8ZQi
+  port: 8443
+  server: koma-yt.pages.dev
+  sni: Koma-YT.PAGeS.Dev
+  type: trojan
+  ws-opts:
+    path: /tro8sFW1S91B6sZrM1?ed=2560
+  tcp_delay: 62
+  clash_delay: 327
+  region_info:
+    name: 德国
+    code: DE
+  bandwidth: 51.15MB/s
+- name: 🇺🇸 美国 12
+  server: usvless.yydzx.xyz
+  port: 17993
+  type: vless
+  uuid: 4e084535-bd62-458b-84a2-a0dc57c957aa
+  tls: true
+  flow: xtls-rprx-vision
+  servername: usvless.yydzx.xyz
+  client-fingerprint: chrome
+  network: tcp
+  udp: true
+  tcp_delay: 97
+  clash_delay: 1
+  bandwidth: 183.61MB/s
+- cipher: aes-256-gcm
+  name: 🇬🇧 英国 10
+  password: kDWvXYZoTBcGkC4
+  port: 8881
+  server: 38.54.20.59
+  type: ss
+  tcp_delay: 153
+  clash_delay: 1
+  bandwidth: 62.67MB/s
+- name: 🇺🇸 美国 17
+  server: download.yunzhongzhuan.com
+  port: 2087
+  type: vless
+  uuid: e258977b-e413-4718-a3af-02d75492c349
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: www.x-aniu---jp.netlib.re
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: www.x-aniu---jp.netlib.re
+  tcp_delay: 168
+  clash_delay: 2
+  bandwidth: 166.37MB/s
+- name: 🇷🇺 俄罗斯 3
+  server: 46.3.193.14
+  port: 30003
+  type: vless
+  uuid: e258977b-e413-4718-a3af-02d75492c349
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: www.x-aniu---jp.netlib.re
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: www.x-aniu---jp.netlib.re
+  tcp_delay: 181
+  clash_delay: 5
+  bandwidth: 74.47MB/s
+- name: 🇺🇳 10 3
   server: 104.16.15.121
   port: 443
   type: vless
@@ -605,241 +436,23 @@ proxies:
     headers:
       Host: www.x-aniu---jp.netlib.re
   tcp_delay: 2
-  clash_delay: 7
-  bandwidth: 60.86MB/s
-- name: 🇺🇸 美国 18
-  server: x.cf.090227.xyz
-  port: 2096
+  clash_delay: 6
+  bandwidth: 65.34MB/s
+- name: 🇫🇷 法国 1
+  server: 141.227.136.51
+  port: 25687
   type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu-h-k.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu-h-k.netlib.re
-  tcp_delay: 396
-  clash_delay: 8
-  bandwidth: 43.78MB/s
-- name: 🇺🇸 美国 19
-  server: download.yunzhongzhuan.com
-  port: 2087
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 363
-  clash_delay: 12
-  bandwidth: 194.18MB/s
-- name: 🇺🇳 16 3
-  server: 162.159.44.148
-  port: 2087
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 9
-  clash_delay: 14
-  bandwidth: 64.49MB/s
-- name: 🇺🇸 美国 20
-  server: 38.59.241.155
-  port: 443
-  type: vless
-  uuid: 69310d96-7045-c206-a2d0-f8ae6e49b726
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: act12.sni565.netlib.re
-  network: ws
-  ws-opts:
-    path: /proxyip=tw.sni2025.netlib.re
-    headers:
-      Host: act12.sni565.netlib.re
-  tcp_delay: 3
-  clash_delay: 51
-  bandwidth: 55.61MB/s
-- name: 🇺🇳 10 8
-  server: 104.21.237.158
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 21
-  clash_delay: 82
-  bandwidth: 47.29MB/s
-- name: 🇺🇳 10 4
-  server: 104.21.30.29
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 3
-  clash_delay: 259
-  bandwidth: 72.56MB/s
-- name: 🇭🇰 香港 4
-  server: 8.212.57.67
-  port: 443
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu-h-k.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu-h-k.netlib.re
-  tcp_delay: 160
-  clash_delay: 504
-  bandwidth: 46.56MB/s
-- name: 🇺🇳 16 4
-  server: 162.159.38.138
-  port: 2087
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 9
-  clash_delay: 587
-  bandwidth: 61.35MB/s
-- name: 🇺🇳 ww 1
-  server: www.speedtest.net
-  port: 80
-  type: vless
-  uuid: 76cc986c-8e30-4f81-91bb-2bd66fb4e713
+  uuid: a03e540d-7fa2-4187-b0d0-5202a22cf9a0
   tls: false
-  tfo: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy
-    headers:
-      Host: websocket.network.www.speedtest.net.flutter.dev.russia.pyt.digitalcity5.xyz.
-  tcp_delay: 6
-  clash_delay: 2025
-- name: 🇺🇳 16 1
-  server: 162.159.153.4
-  port: 443
-  type: vless
-  uuid: f2a73750-3087-48ff-a763-1348c15dce68
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: rAyAn-007.mAxImA.DpDnS.OrG
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: rAyAn-007.mAxImA.DpDnS.OrG
-  tcp_delay: 2
-  clash_delay: 2025
-- name: 🇺🇸 美国 1
-  server: 172.67.203.94
-  port: 2086
-  type: vless
-  uuid: 7890ce31-9a25-4fd4-90e7-80e5823ff510
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: iioo.iioou.workers.dev
-  tcp_delay: 2
-  clash_delay: 2025
-- name: 🇺🇸 美国 2
-  server: 172.66.156.81
-  port: 80
-  type: vless
-  uuid: 76cc986c-8e30-4f81-91bb-2bd66fb4e713
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy
-    headers:
-      Host: websocket.network.www.speedtest.net.flutter.dev.russia.pyt.digitalcity5.xyz.
-  tcp_delay: 2
-  clash_delay: 2025
-- name: 🇺🇸 美国 3
-  type: vless
-  server: 144.31.90.29
-  port: 2095
-  uuid: 63798568-8555-424a-81c4-4c2f181d8de3
-  encryption: none
-  flow: ''
-  tls: false
-  skip-cert-verify: false
-  network: ws
-  host: ''
-  path: /GunService
-  sni: ''
-  ws-opts:
-    path: /GunService
-    headers: {}
-  tcp_delay: 161
-  clash_delay: 2025
-  bandwidth: 87.56MB/s
-- name: 🇺🇸 美国 5
-  server: news.zoom.us
-  port: 2096
-  type: vless
-  uuid: 57c35f0a-8c6c-4eb1-8a91-35f133de432c
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: lordgrim.qzz.io
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: lordgrim.qzz.io
-  tcp_delay: 14
-  clash_delay: 2025
-- name: 🇺🇳 10 1
+  network: grpc
+  grpc-opts:
+    grpc-mode: gun
+    grpc-service-name: ZEDMODEON-ZEDMODEON-bia-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON
+  udp: true
+  tcp_delay: 150
+  clash_delay: 6
+  bandwidth: 61.25MB/s
+- name: 🇺🇳 10 5
   server: 104.21.30.124
   port: 443
   type: vless
@@ -854,24 +467,132 @@ proxies:
     headers:
       Host: www.x-aniu-s-g.netlib.re
   tcp_delay: 2
-  clash_delay: 2025
+  clash_delay: 8
+  bandwidth: 57.09MB/s
+- name: 🇺🇸 美国 9
+  server: 104.234.4.149
+  port: 56282
+  type: vless
+  uuid: aafc1774-1fe6-4f6e-807c-1bfde06bf5a2
+  tls: true
+  flow: xtls-rprx-vision
+  reality-opts:
+    public-key: 2Nov0xmA_JD1kkGLof-1PQdGcS5kY661cpFXbPV3J2A
+  servername: updates.cdn-apple.com
+  client-fingerprint: firefox
+  network: tcp
+  udp: true
+  tcp_delay: 8
+  clash_delay: 8
+  bandwidth: 236.56MB/s
+- name: 🇮🇹 意大利 1
+  server: 141.227.140.217
+  port: 23990
+  type: vless
+  uuid: 5afe0624-a873-4cb8-b4eb-cea6c41a9e52
+  tls: false
+  network: grpc
+  grpc-opts:
+    grpc-mode: gun
+    grpc-service-name: ZEDMODEON-ZEDMODEON-bia-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON
+  udp: true
+  tcp_delay: 163
+  clash_delay: 8
+  bandwidth: 79.25MB/s
+- name: 🇬🇧 英国 24
+  password: test.+
+  port: 30446
+  server: testkr3.ssv.vc
+  skip-cert-verify: true
+  tls: true
+  type: http
+  udp: true
+  username: test
+  tcp_delay: 685
+  clash_delay: 18
+  bandwidth: 145.05MB/s
+- name: 🇩🇪 德国 4
+  password: 5BFVs5TE
+  port: 26234
+  server: 5.231.56.98
+  type: http
+  username: kZXMC3Z1
+  tcp_delay: 152
+  clash_delay: 29
+  bandwidth: 85.81MB/s
+- name: 🇺🇳 16 1
+  server: 162.159.44.148
+  port: 2087
+  type: vless
+  uuid: e258977b-e413-4718-a3af-02d75492c349
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: www.x-aniu---jp.netlib.re
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: www.x-aniu---jp.netlib.re
+  tcp_delay: 9
+  clash_delay: 56
+  bandwidth: 58.77MB/s
+- name: 🇬🇧 英国 21
+  password: e515ce48-fdfa-11ee-9970-f23c91cfbbc9
+  port: 32233
+  server: a9964e2f-t5gv40-te0r6o-1r7vv.id.oshuawei.com
+  tls: true
+  type: http
+  udp: true
+  username: e515ce48-fdfa-11ee-9970-f23c91cfbbc9
+  tcp_delay: 217
+  clash_delay: 67
+  bandwidth: 82.65MB/s
+- name: 🇺🇳 16 2
+  server: 162.159.38.138
+  port: 2087
+  type: vless
+  uuid: e258977b-e413-4718-a3af-02d75492c349
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: www.x-aniu---jp.netlib.re
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: www.x-aniu---jp.netlib.re
+  tcp_delay: 8
+  clash_delay: 85
+  bandwidth: 78.78MB/s
+- name: 🇯🇵 日本 11
+  server: 160.16.72.33
+  port: 3093
+  type: trojan
+  password: 79314e99f0a473fe86efc7827942ad00
+  sni: www.nintendogames.net
+  skip-cert-verify: true
+  tcp_delay: 105
+  clash_delay: 98
+  bandwidth: 81.10MB/s
 - name: 🇺🇳 10 2
-  server: 104.17.238.33
+  server: 104.21.237.158
   port: 443
   type: vless
   uuid: e258977b-e413-4718-a3af-02d75492c349
   tls: true
   tfo: false
   skip-cert-verify: true
-  servername: www.x-aniu-s-g.netlib.re
+  servername: www.x-aniu---jp.netlib.re
   network: ws
   ws-opts:
     path: /?ed=2560
     headers:
-      Host: www.x-aniu-s-g.netlib.re
-  tcp_delay: 2
-  clash_delay: 2025
-- name: 🇺🇳 10 3
+      Host: www.x-aniu---jp.netlib.re
+  tcp_delay: 19
+  clash_delay: 238
+  bandwidth: 33.34MB/s
+- name: 🇺🇳 10 1
   server: 104.19.175.74
   port: 443
   type: vless
@@ -887,21 +608,115 @@ proxies:
       Host: www.x-aniu-s-g.netlib.re
   tcp_delay: 2
   clash_delay: 2025
-- name: 🇸🇬 新加坡 1
-  server: 43.165.190.11
-  port: 42841
+- name: 🇺🇸 美国 1
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 2052
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+  tcp_delay: 182
+  clash_delay: 2025
+- name: 🇺🇸 美国 2
   type: vless
-  uuid: 00000000-0000-4000-8000-000000000000
+  server: 144.31.90.29
+  port: 2095
+  uuid: 63798568-8555-424a-81c4-4c2f181d8de3
+  encryption: none
+  flow: ''
+  tls: false
+  skip-cert-verify: false
+  network: ws
+  host: ''
+  path: /GunService
+  sni: ''
+  ws-opts:
+    path: /GunService
+    headers: {}
+  tcp_delay: 157
+  clash_delay: 2025
+  bandwidth: 87.56MB/s
+- name: 🇺🇸 美国 3
+  server: 172.66.156.81
+  port: 80
+  type: vless
+  uuid: 76cc986c-8e30-4f81-91bb-2bd66fb4e713
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy
+    headers:
+      Host: websocket.network.www.speedtest.net.flutter.dev.russia.pyt.digitalcity5.xyz.
+  tcp_delay: 2
+  clash_delay: 2025
+- name: 🇺🇸 美国 4
+  server: 38.59.241.155
+  port: 443
+  type: vless
+  uuid: 69310d96-7045-c206-a2d0-f8ae6e49b726
   tls: true
   tfo: false
   skip-cert-verify: true
-  servername: mot.morisi.ggff.net
+  servername: act12.sni565.netlib.re
   network: ws
   ws-opts:
-    path: /@Marisa_kristi
+    path: /proxyip=tw.sni2025.netlib.re
     headers:
-      Host: mot.morisi.ggff.net
-  tcp_delay: 107
+      Host: act12.sni565.netlib.re
+  tcp_delay: 3
+  clash_delay: 2025
+  bandwidth: 55.61MB/s
+- name: 🇺🇸 美国 5
+  server: news.zoom.us
+  port: 2096
+  type: vless
+  uuid: 57c35f0a-8c6c-4eb1-8a91-35f133de432c
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: lordgrim.qzz.io
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: lordgrim.qzz.io
+  tcp_delay: 7
+  clash_delay: 2025
+- name: 🇺🇸 美国 6
+  server: 154.21.85.156
+  port: 10210
+  type: vless
+  uuid: 69310d96-7045-c206-a2d0-f8ae6e49b726
+  tls: true
+  servername: act12.sni565.netlib.re
+  network: ws
+  ws-opts:
+    path: /proxyip=tw.sni2025.netlib.re
+    headers:
+      Host: act12.sni565.netlib.re
+  udp: true
+  tcp_delay: 9
+  clash_delay: 2025
+- name: 🇺🇸 美国 7
+  server: usvless.yydzx.xyz
+  port: 17793
+  type: vless
+  uuid: 4e084535-bd62-458b-84a2-a0dc57c957aa
+  tls: true
+  flow: xtls-rprx-vision
+  servername: usvless.yydzx.xyz
+  client-fingerprint: chrome
+  network: tcp
+  udp: true
+  tcp_delay: 83
   clash_delay: 2025
 - name: 🇨🇦 加拿大 1
   server: 209.200.246.53
@@ -926,22 +741,7 @@ proxies:
     path: /WeSC6uBZUBAU3UhXT0
     headers:
       Host: dawn-hill-7bc8.exhume-skirt-smirk.workers.dev
-  tcp_delay: 25
-  clash_delay: 2025
-- name: 🇺🇳 np 1
-  server: npmjs.com
-  port: 80
-  type: vless
-  uuid: 82de262c-cd5e-402f-a709-f6979fc7c93e
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: fragrant-star-ebf2.daheg47484.workers.dev
-  tcp_delay: 26
+  tcp_delay: 79
   clash_delay: 2025
 - name: 🇰🇷 韩国 1
   server: 175.205.95.168
@@ -957,9 +757,78 @@ proxies:
     path: /proxyip=tw.sni2025.netlib.re
     headers:
       Host: act12.sni565.netlib.re
-  tcp_delay: 139
+  tcp_delay: 141
   clash_delay: 2025
-- name: 🇬🇧 英国 1
+- name: 🇰🇷 韩国 2
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 2082
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+  tcp_delay: 182
+  clash_delay: 2025
+- name: 🇺🇳 np 1
+  server: npmjs.com
+  port: 80
+  type: vless
+  uuid: 82de262c-cd5e-402f-a709-f6979fc7c93e
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: fragrant-star-ebf2.daheg47484.workers.dev
+  tcp_delay: 6
+  clash_delay: 2025
+- name: 🇯🇵 日本 1
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 8080
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+  tcp_delay: 182
+  clash_delay: 2025
+- name: 🇯🇵 日本 2
+  server: 54.248.56.163
+  port: 443
+  type: vless
+  uuid: e258977b-e413-4718-a3af-02d75492c349
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: www.x-aniu-h-k.netlib.re
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: www.x-aniu-h-k.netlib.re
+  tcp_delay: 107
+  clash_delay: 2025
+- cipher: chacha20-ietf
+  name: 🇨🇳 英国 1
+  password: asd123456
+  port: 8388
+  server: 103.141.221.124
+  type: ss
+  tcp_delay: 156
+  clash_delay: 2025
+- name: 🇬🇧 英国 2
   server: 185.138.164.228
   port: 700
   type: vless
@@ -975,43 +844,204 @@ proxies:
       Host: zybs.worker.ddns-ip.net
   tcp_delay: 149
   clash_delay: 2025
-- name: 🇬🇧 英国 2
-  server: 82.198.246.97
-  port: 180
+- cipher: chacha20-ietf
+  name: 🇨🇳 英国 3
+  password: asd123456
+  port: 8388
+  server: 103.149.182.105
+  type: ss
+  tcp_delay: 156
+  clash_delay: 2025
+- name: 🇨🇳 英国 4
+  network: tcp
+  password: BxceQaOe
+  port: 443
+  server: 58.152.18.95
+  skip-cert-verify: true
+  sni: t.me%2Fripaojiedian
+  type: trojan
+  tcp_delay: 162
+  clash_delay: 2025
+- client-fingerprint: chrome
+  flow: xtls-rprx-vision
+  name: 🇬🇧 英国 5
+  network: tcp
+  port: 6093
+  reality-opts:
+    public-key: W91d6Qp8Avflj9K7rMYGGdhxV_W0Ds_FSu_c996zknk
+    short-id: 57e13c11bb421329
+  server: easygovpnkeys16.com
+  servername: eas1goauth.com
+  skip-cert-verify: false
+  tls: true
+  type: vless
+  uuid: e5603527-ac9b-4f69-906e-34bea11c5835
+  tcp_delay: 205
+  clash_delay: 2025
+- name: 🇬🇧 英国 6
+  password: 13eb9352-7d04-4523-af91-4d7e84066a95
+  port: 12210
+  server: oss-ydniddsasa-3.7.baidu.jjuu.shrestart.com
+  skip-cert-verify: true
+  sni: m.ctrip.com
+  type: trojan
+  udp: true
+  tcp_delay: 689
+  clash_delay: 2025
+- cipher: chacha20-ietf
+  name: 🇨🇳 英国 8
+  password: asd123456
+  port: 8388
+  server: 103.149.183.200
+  type: ss
+  tcp_delay: 156
+  clash_delay: 2025
+- cipher: chacha20-ietf-poly1305
+  name: 🇵🇱 英国 9
+  password: L2fN5ZhwKrkgY02gyZUyTt
+  port: 443
+  server: 92.62.251.201
+  type: ss
+  udp: true
+  tcp_delay: 163
+  clash_delay: 2025
+- alterId: 2
+  cipher: auto
+  name: 🇬🇧 英国 13
+  port: 30807
+  server: v10.hdacd.com
+  skip-cert-verify: false
+  tls: false
   type: vmess
-  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
+  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
+  tcp_delay: 213
+  clash_delay: 2025
+- alterId: 0
+  cipher: aes-256-gcm
+  name: 🇨🇳 英国 15
+  password: '123'
+  port: 6100
+  server: 14.18.106.88
+  skip-cert-verify: true
+  tls: true
+  type: ss
+  tcp_delay: 219
+  clash_delay: 2025
+- cipher: aes-256-cfb
+  country: 🏁 ZZ
+  name: 🇵🇹 英国 17
+  password: f8f7aCzcPKbsF8p3
+  port: 989
+  server: 185.231.233.112
+  type: ss
+  tcp_delay: 296
+  clash_delay: 2025
+- client-fingerprint: chrome
+  flow: xtls-rprx-vision
+  name: 🇬🇧 英国 19
+  network: tcp
+  port: 443
+  reality-opts:
+    public-key: v5phvruLtbRahHL0xJtl77s4sXHiuSHzUTPq2znyCF4
+    short-id: f5b76860a3c9c3f5
+  server: bg.fasssst.ru
+  servername: bg.fasssst.ru
+  skip-cert-verify: false
+  tls: true
+  type: vless
+  uuid: c1853115-eb6b-4592-b01f-05037d33505d
+  tcp_delay: 366
+  clash_delay: 2025
+- name: 🇩🇪 德国 1
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 2086
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
   alterId: 0
   cipher: auto
-  tls: false
-  skip-cert-verify: true
-  tcp_delay: 13
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+  tcp_delay: 182
   clash_delay: 2025
-- name: 🇯🇵 日本 1
-  server: 160.16.72.33
-  port: 3093
-  type: trojan
-  password: 79314e99f0a473fe86efc7827942ad00
-  sni: www.nintendogames.net
-  skip-cert-verify: true
-  tcp_delay: 105
-  clash_delay: 2025
-- name: 🇯🇵 日本 3
-  server: 54.248.56.163
-  port: 443
+- name: 🇸🇬 新加坡 1
+  server: 43.165.190.11
+  port: 42841
   type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
+  uuid: 00000000-0000-4000-8000-000000000000
   tls: true
   tfo: false
   skip-cert-verify: true
-  servername: www.x-aniu-h-k.netlib.re
+  servername: mot.morisi.ggff.net
   network: ws
   ws-opts:
-    path: /?ed=2560
+    path: /@Marisa_kristi
     headers:
-      Host: www.x-aniu-h-k.netlib.re
+      Host: mot.morisi.ggff.net
   tcp_delay: 105
   clash_delay: 2025
-- name: 🇮🇩 印度尼西亚 1
+- name: 🇸🇬 新加坡 2
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 8880
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+  tcp_delay: 182
+  clash_delay: 2025
+- name: 🇸🇬 新加坡 3
+  server: sganytls01.yytls.top
+  port: 27003
+  type: anytls
+  password: 4e084535-bd62-458b-84a2-a0dc57c957aa
+  client-fingerprint: chrome
+  udp: true
+  skip-cert-verify: false
+  alpn:
+  - h2
+  - http/1.1
+  tcp_delay: 566
+  clash_delay: 2025
+- name: 🇺🇳 Te 1
+  type: vmess
+  server: baipiaojichangink.huahuasuansuan.cfd
+  port: 80
+  uuid: 38de4713-7609-49fd-b7aa-71e5f6d72e0e
+  alterId: 0
+  cipher: auto
+  udp: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: baipiaoyyds.huahuasuansuan.cfd
+  tcp_delay: 182
+  clash_delay: 2025
+- name: 🇺🇳 ww 1
+  server: www.speedtest.net
+  port: 80
+  type: vless
+  uuid: 76cc986c-8e30-4f81-91bb-2bd66fb4e713
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy----@Shh_Proxy
+    headers:
+      Host: websocket.network.www.speedtest.net.flutter.dev.russia.pyt.digitalcity5.xyz.
+  tcp_delay: 46
+  clash_delay: 2025
+- name: 🇮🇳 印度 1
   server: 180.131.145.161
   port: 23274
   type: trojan
@@ -1019,45 +1049,68 @@ proxies:
   sni: cloudflare.com
   skip-cert-verify: true
   network: grpc
-  tcp_delay: 26
+  tcp_delay: 24
   clash_delay: 2025
-- name: 🇭🇰 香港 10
-  server: 58.152.53.8
-  port: 443
-  type: trojan
-  password: BxceQaOe
-  sni: t.me/ripaojiedian
-  skip-cert-verify: true
-  tcp_delay: 195
+- name: 🇹🇭 泰国 1
+  server: thanytls01.yytls.top
+  port: 27007
+  type: anytls
+  password: 4e084535-bd62-458b-84a2-a0dc57c957aa
+  client-fingerprint: chrome
+  udp: true
+  skip-cert-verify: false
+  alpn:
+  - h2
+  - http/1.1
+  tcp_delay: 557
   clash_delay: 2025
-- name: 🇷🇺 俄罗斯 1
-  server: 46.3.193.14
-  port: 30003
-  type: vless
-  uuid: e258977b-e413-4718-a3af-02d75492c349
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: www.x-aniu---jp.netlib.re
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: www.x-aniu---jp.netlib.re
-  tcp_delay: 180
+- name: 🇻🇳 越南 1
+  server: 103.186.154.19
+  port: 38388
+  type: ss
+  cipher: aes-256-cfb
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  udp: true
+  tcp_delay: 215
+  clash_delay: 2025
+- name: 🇻🇳 越南 2
+  server: 103.186.155.55
+  port: 38388
+  type: ss
+  cipher: aes-256-cfb
+  password: Xn8jKdmDM00IeO%#$#fJAMtsEAEUOpH/YWYtYqDFnT0SV
+  udp: true
+  tcp_delay: 212
+  clash_delay: 2025
+- cipher: chacha20-ietf-poly1305
+  name: 🇷🇺 俄罗斯 1
+  password: d3837224ed465f00
+  port: 57456
+  server: 45.139.26.173
+  type: ss
+  tcp_delay: 183
+  clash_delay: 2025
+- cipher: aes-256-cfb
+  name: 🇷🇺 俄罗斯 2
+  password: f8f7aCzcPKbsF8p3
+  port: 989
+  server: 38.60.223.8
+  type: ss
+  udp: true
+  tcp_delay: 188
   clash_delay: 2025
 last_message_ids:
   '@fqDINYUE': 4669
   '@wxdy666': 6228
-  '@freeyule': 1928699
-  '@ccbaohe': 14983
-  '@duangvpsfs': 3676518
-  '@zzzjjjkkkoi': 611264
+  '@freeyule': 1928716
+  '@ccbaohe': 14985
+  '@duangvpsfs': 3676606
+  '@zzzjjjkkkoi': 611343
   '@xmdexw': 220753
   '@v2v2clash': 0
   '@dingyue_Center': 3897
   '@tempssrlink': 63
   '@sorenab2': 36991
-update_time: '2025-12-06 21:02:05'
-total_nodes: 71
+update_time: '2025-12-06 21:33:43'
+total_nodes: 80
 note: 由 GitHub Actions 自动生成，每4小时更新一次，已按延迟排序并智能限量
