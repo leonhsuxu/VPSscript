@@ -694,31 +694,79 @@ def decode_base64_and_parse(content):
         print(f"  - Base64 解码解析异常: {e}")
         return []
 
+# ==================== 替换整个 download_and_parse 函数 ====================
 def download_and_parse(url):
-    # 用 B 版本的下载解析逻辑替代 A 里原 download_and_parse 体
-    content = attempt_download_using_wget(url)
-    if content is None:
-        content = attempt_download_using_requests(url)
-    if content is None:
-        print(f"  ❌ 下载失败: {url}")
+    """
+    2025终极版下载+解析函数
+    支持 wget → curl → requests 三保险，伪装 Clash UA，几乎无敌
+    """
+    content = None
+
+    # 1. wget 首选（最稳最快）
+    if shutil.which('wget'):
+        try:
+            cmd = [
+                'wget', '-qO-', '--timeout=25', '--tries=2',
+                '--user-agent=Clash/1.18.0',
+                '--header=Accept: text/html,application/xhtml+xml,*/*',
+                url
+            ]
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=35)
+            if result.returncode == 0 and result.stdout.strip():
+                content = result.stdout
+                print(f"  wget 下载成功: {url[:60]}...")
+        except Exception as e:
+            print(f"  wget 失败: {e}")
+
+    # 2. curl 备用
+    if not content and shutil.which('curl'):
+        try:
+            cmd = ['curl', '-fsSL', '--max-time', '30', '-A', 'Clash/1.18.0', url]
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=35)
+            if result.returncode == 0 and result.stdout.strip():
+                content = result.stdout
+                print(f"  curl 下载成功: {url[:60]}...")
+        except Exception as e:
+            print(f"  curl 失败: {e}")
+
+    # 3. requests 兜底（GitHub Actions 自带 Python 环境必有）
+    if not content:
+        try:
+            headers = {
+                'User-Agent': 'Clash/1.18.0',
+                'Accept': '*/*',
+                'Referer': 'https://www.google.com/'
+            }
+            response = requests.get(url, headers=headers, timeout=30, verify=False)
+            response.raise_for_status()
+            content = response.text
+            print(f"  requests 下载成功: {url[:60]}...")
+        except Exception as e:
+            print(f"  requests 下载失败: {e}")
+
+    if not content:
+        print(f"  所有方式下载失败，跳过: {url}")
         return []
+
+    # ====================== 解析逻辑保持不变 ======================
     proxies = parse_proxies_from_content(content)
     if proxies:
-        print(f"  - 直接 YAML 解析获取 {len(proxies)} 个节点")
+        print(f"  直接 YAML 解析成功: {len(proxies)} 个节点")
         return proxies
+
     proxies = parse_plain_nodes_from_text(content)
     if proxies:
-        print(f"  - 明文内容解析获取 {len(proxies)} 个节点")
+        print(f"  明文链接解析成功: {len(proxies)} 个节点")
         return proxies
+
     if is_base64(content):
-        print(f"  - 内容为 Base64 编码，正在解码解析...")
+        print(f"  检测到 Base64 编码，正在解码...")
         proxies = decode_base64_and_parse(content)
         if proxies:
+            print(f"  Base64 解码解析成功: {len(proxies)} 个节点")
             return proxies
-        else:
-            print(f"  - Base64 解码无有效节点")
-            return []
-    print(f"  - 内容不符合已知格式，未找到有效节点")
+
+    print(f"  未知格式，解析失败: {url[:80]}")
     return []
 
 # --- 下面保持原A版测速、去重、排序等逻辑 ---
