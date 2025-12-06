@@ -1064,8 +1064,7 @@ def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=32, debug=
 
 def xcspeedtest_test_proxy(speedtest_path, proxy, debug=True):
     """
-    使用 speedtest-clash 二进制以 -fast 参数测试代理延迟，成功返回延迟(ms)，失败返回None。
-    debug=True 时打印测速日志和延迟信息。
+    兼容 2024-2025 新版 speedtest-clash（输出最后一行 JSON）
     """
     try:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -1082,29 +1081,53 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=True):
             }
             with open(config_path, 'w', encoding='utf-8') as f:
                 yaml.dump(config, f, allow_unicode=True, sort_keys=False)
+
             cmd = [speedtest_path, '-c', config_path]
-            result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                                    timeout=25, text=True)
+            result = subprocess.run(
+                cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                timeout=30, text=True, encoding='utf-8', errors='ignore'
+            )
             output = result.stdout + result.stderr
+
             if debug:
-                print(f"[speedtest-clash 日志] 输出:\n{output}")
+                print(f"[speedtest-clash] 原始输出:\n{output}")
+
+            # 方法1：优先找最后一行有效的 JSON（新版特征）
+            lines = output.strip().splitlines()
+            for line in reversed(lines):
+                line = line.strip()
+                if line.startswith('{"time":') and '"message":"json:' in line:
+                    try:
+                        # 提取 json: 后面的内容
+                        json_str = line.split('"message":"json: ', 1)[1].rstrip('"')
+                        data = json.loads(json_str)
+                        if isinstance(data, list) and data:
+                            delay = data[0].get("clash_delay")
+                            if isinstance(delay, (int, float)) and delay > 1:
+                                if debug:
+                                    print(f"JSON解析成功 → 延迟 {delay}ms ← {proxy['name']}")
+                                return int(delay)
+                    except:
+                        continue
+
+            # 方法2：兼容老版本表格里的延迟数字（备选）
             import re
-            m = re.search(r"delay[:\s]*([0-9\.]+)\s*ms", output, re.I)
-            if m:
-                delay = int(float(m.group(1)))
-                if debug:
-                    print(f"[speedtest-clash 日志] 代理 {proxy.get('name')} 延迟: {delay} ms")
-                if 1 < delay < 800:
-                    return delay
-            # 取消下面替代延迟逻辑，直接返回 None
+            matches = re.findall(r'延迟\s+[0-9.]+\s+([0-9]+)', output)
+            if matches:
+                delays = [int(x) for x in matches if int(x) < 3000]
+                if delays:
+                    delay = min(delays)
+                    if delay > 1:
+                        return delay
+
             if debug:
-                print(f"[speedtest-clash 日志] 未找到有效延迟字段，测速视为失败")
+                print(f"未提取到有效延迟 → 丢弃 {proxy['name']}")
             return None
 
     except Exception as e:
         if debug:
-            print(f"[speedtest-clash 日志] 测速异常: {e}")
-    return None
+            print(f"[speedtest-clash] 异常: {e}")
+        return None
 
 
 
