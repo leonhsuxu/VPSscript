@@ -909,8 +909,6 @@ def filter_by_bandwidth(proxies, min_mb=20):
             filtered.append(p)
     return filtered
 
-# 使用方法（放在 main() 最后排序前）：
-final_proxies = filter_by_bandwidth(final_proxies, min_mb=25)  # 只保留 ≥25MB/s 的
 
 # ----根据实测带宽进行二次筛选
 def filter_by_bandwidth(proxies, min_mb=25, enable=True):
