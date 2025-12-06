@@ -121,6 +121,38 @@ CUSTOM_REGEX_RULES = {
     '印度': {'code': 'IN', 'pattern': r'印度|IN|India'},
     '马来西亚': {'code': 'MY', 'pattern': r'马来西亚|MY|Malaysia'},
     '法国': {'code': 'FR', 'pattern': r'法国|FR|France'},
+    '泰国': {
+    'code': 'TH',
+    'pattern': r'泰国|TH|Thailand|曼谷|Bangkok'
+},
+    '菲律宾': {
+    'code': 'PH',
+    'pattern': r'菲律宾|PH|Philippines|马尼拉|Manila'
+},
+    '印度尼西亚': {
+    'code': 'ID',
+    'pattern': r'印度尼西亚|印尼|ID|Indonesia|雅加达|Jakarta'
+},
+    '俄罗斯': {
+    'code': 'RU',
+    'pattern': r'俄罗斯|RU|Russia|莫斯科|Moscow'
+},
+    '意大利': {
+    'code': 'IT',
+    'pattern': r'意大利|IT|Italy|罗马|Rome'
+},
+    '巴西': {
+    'code': 'BR',
+    'pattern': r'巴西|BR|Brazil|圣保罗|São\s*Paulo'
+},
+    '阿根廷': {
+    'code': 'AR',
+    'pattern': r'阿根廷|AR|Argentina|布宜诺斯艾利斯|Buenos\s*Aires'
+},
+    '土耳其': {
+    'code': 'TR',
+    'pattern': r'土耳其|TR|Turkey|伊斯坦布尔|Istanbul'
+}
 }
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
 BJ_TZ = timezone(timedelta(hours=8))
