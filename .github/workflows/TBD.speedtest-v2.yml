@@ -1,0 +1,98 @@
+name: ⏳ TG频道&群抓取节点测速 (clash-speedtest测速版)
+on:
+  schedule:
+    - cron: '10 */4 * * *'  # 每4小时执行
+  workflow_dispatch:
+env:
+  CLASH_SPEEDTEST_VERSION: v1.7.0  # 请根据需要替换为目标版本
+  TELEGRAM_CHANNEL_IDS: |
+    # 订阅转发-频道
+    @fqDINYUE
+    # 机场订阅节点VPN分享社
+    @wxdy666
+    # 白嫖订阅&节点分享群
+    @freeyule
+    # CC宝盒
+    @ccbaohe
+    # Duang VPS交流群
+    @duangvpsfs         
+    # 白嫖机场交流群   
+    @zzzjjjkkkoi
+    # M麦当劳 全家桶
+    @xmdexw
+    # v2clash 免费分享中心
+    @v2v2clash
+    # 订阅分享中心
+    @dingyue_Center
+    # ※个人的订阅收集 leon
+    @tempssrlink
+    # (乱七八糟名字)
+    @sorenab2   
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码仓库
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0      # 确保完整历史，方便推送改动
+      
+      - name: 设置 Python 环境
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: 缓存 Python 依赖
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      
+      - name: 安装 Python 依赖
+        run: |
+          python -m pip install --upgrade pip          
+          pip install -r requirements.txt
+          
+          
+      - name: 缓存 clash-speedtest 核心 (clash_core/)
+        id: cache-clash-speedtest
+        uses: actions/cache@v4
+        with:
+          path: clash_core/
+          key: ${{ runner.os }}-clash-speedtest-${{ env.CLASH_SPEEDTEST_VERSION }}
+      
+      - name: 下载并解压 clash-speedtest 到 clash_core/clash
+        if: steps.cache-clash-speedtest.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p clash_core
+          URL="https://github.com/faceair/clash-speedtest/releases/download/${{ env.CLASH_SPEEDTEST_VERSION }}/clash-speedtest_Linux_x86_64.tar.gz"
+          echo "正在下载 clash-speedtest 核心..."
+          wget -q -O clash-speedtest.tar.gz "$URL"
+          tar -xzf clash-speedtest.tar.gz -C clash_core
+          rm -f clash-speedtest.tar.gz
+          mv clash_core/clash-speedtest clash_core/clash
+          chmod +x clash_core/clash
+          echo "clash-speedtest 下载并解压完成。"
+      - name: 运行 Telegram 抓取及 Clash 测速脚本
+        env:
+          TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
+          TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
+          TELEGRAM_STRING_SESSION: ${{ secrets.TELEGRAM_STRING_SESSION }}
+          TELEGRAM_CHANNEL_IDS: ${{ env.TELEGRAM_CHANNEL_IDS }}
+        run: |
+          mkdir -p flclashyaml
+          python TelegramNode/telegram_publiclink.py
+      - name: 提交生成的 Clash 配置到仓库
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add flclashyaml/Tg-node.yaml
+          if ! git diff --staged --quiet; then
+            git commit -m "🕒 更新Tg-node.yaml 配置 $(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M:%S CST')"
+            git push
+          else
+            echo "文件无变化，无需提交。"
+          fi
