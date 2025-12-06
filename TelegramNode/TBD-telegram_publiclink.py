@@ -984,18 +984,61 @@ def batch_tcp_test(proxies, max_workers=TCP_MAX_WORKERS):
                     print(f"TCP SLOW: {delay:4d}ms → 丢弃 {proxy.get('name', '')[:40]}")
     return results
 
+def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=32):
+    results = []
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+        futures = {executor.submit(xcspeedtest_test_proxy, speedtest_path, p): p for p in proxies}
+        for future in concurrent.futures.as_completed(futures):
+            proxy = futures[future]
+            delay = future.result()
+            if delay is not None:
+                pcopy = proxy.copy()
+                pcopy['clash_delay'] = delay
+                results.append(pcopy)
+    return results
+
 
 # clash 测速
 
-def batch_test_proxies_clash(clash_path, proxies, max_workers=32):
-    results = []
-    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
-        futures = [executor.submit(test_proxy_with_clash, clash_path, p) for p in proxies]
-        for future in futures:
-            res = future.result()
-            if res:
-                results.append(res)
-    return results
+def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
+    """
+    使用 speedtest-clash 二进制以 -fast 参数测试代理延迟，成功返回延迟(ms)，失败返回None。
+    """
+    try:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            config_path = os.path.join(tmpdir, 'config.yaml')
+            config = {
+                "port": 7890,
+                "socks-port": 7891,
+                "allow-lan": False,
+                "mode": "Rule",
+                "log-level": "silent",
+                "proxies": [proxy],
+                "proxy-groups": [{"name": "TESTGROUP", "type": "select", "proxies": [proxy["name"]]}],
+                "rules": ["MATCH,DIRECT"]
+            }
+            with open(config_path, 'w', encoding='utf-8') as f:
+                yaml.dump(config, f, allow_unicode=True, sort_keys=False)
+
+            cmd = [speedtest_path, '-c', config_path, '-fast']
+            result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                                    timeout=25, text=True)
+            output = result.stdout + result.stderr
+            if debug:
+                print(f"speedtest-clash 输出: {output}")
+            m = re.search(r"delay[:\s]*([0-9\.]+)\s*ms", output, re.I)
+            if m:
+                delay = int(float(m.group(1)))
+                if 1 < delay < 800:
+                    return delay
+            delays = re.findall(r'(\d+)', output)
+            delays = [int(d) for d in delays if 1 < int(d) < 800]
+            if delays:
+                return min(delays)
+    except Exception as e:
+        if debug:
+            print(f"speedtest-clash测速异常: {e}")
+    return None
 
 
 
