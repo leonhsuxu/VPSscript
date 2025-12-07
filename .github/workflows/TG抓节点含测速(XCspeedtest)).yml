@@ -1,8 +1,9 @@
-name: ⏳ TG频道和群抓取节点测速 XC-speedtest测速版
+name: TG频道和群抓取节点测速 XC-speedtest测速版
 on:
   schedule:
     - cron: '10 */4 * * *'  # 每4小时执行
   workflow_dispatch:
+
 env:
   MIHOMO_VERSION: v1.19.17
   SPEEDTEST_VERSION: v0.4.1 # 请根据需要更新到您希望的版本，例如 v0.4.1
@@ -32,9 +33,6 @@ env:
     # 公益机场
     @proxyshareCN
 
-
-
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -42,7 +40,7 @@ jobs:
       - name: 检出代码仓库
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0      # 确保完整历史，方便推送改动
+          fetch-depth: 0
       
       - name: 设置 Python 环境
         uses: actions/setup-python@v5
@@ -61,7 +59,22 @@ jobs:
         run: |
           python -m pip install --upgrade pip          
           pip install -r requirements.txt          
-          
+
+      # ==================== 【方案2 核心】开启 Cloudflare Warp（免费模拟国内网络）===================
+      - name: 开启 Cloudflare Warp（模拟国内环境测速）
+        run: |
+          echo "正在安装并启动 Cloudflare Warp（免费、零成本、2025年12月稳定可用）"
+          curl -fsSL -o wgcf https://github.com/ViRb3/wgcf/releases/download/v2.2.19/wgcf_2.2.19_linux_amd64
+          chmod +x wgcf
+          ./wgcf register --accept-tos > /dev/null 2>&1 || true
+          ./wgcf generate
+          sudo mkdir -p /etc/wireguard
+          sudo mv wgcf-profile.conf /etc/wireguard/wgcf.conf
+          sudo wg-quick up wgcf && echo "Warp 启动成功！测速流量已走中国优化线路"
+          echo "当前出口IP："
+          curl -4 --max-time 5 https://ip.sb || true
+        # 如果启动失败也不影响后面执行，只是退化为海外测速
+
       - name: Cache Mihomo
         id: cache-mihomo
         uses: actions/cache@v4
@@ -77,8 +90,6 @@ jobs:
           TAG=${{ env.MIHOMO_VERSION }}
           echo "下载 Mihomo 版本: $TAG"
           URL="https://github.com/MetaCubeX/mihomo/releases/download/${TAG}/mihomo-linux-amd64-${TAG}.gz"
-          echo "下载地址: $URL"
-          curl --head --fail -s "$URL" || (echo "下载链接不可用，退出" && exit 1)
           wget --tries=5 --timeout=60 --progress=bar:force "$URL"
           gunzip "mihomo-linux-amd64-${TAG}.gz"
           mv "mihomo-linux-amd64-${TAG}" mihomo
@@ -102,20 +113,40 @@ jobs:
           URL=$(curl -s "https://api.github.com/repos/xiecang/speedtest-clash/releases/tags/${RELEASE_TAG}" \
                 | grep "browser_download_url.*speedtest-clash_Linux_x86_64" | cut -d '"' -f4)
           if [ -z "$URL" ]; then
-            echo "警告: 未找到指定版本 ${RELEASE_TAG} 的 speedtest-clash_Linux_x86_64 资产，尝试获取最新版本。"
+            echo "警告: 未找到指定版本，使用最新版"
             URL=$(curl -s https://api.github.com/repos/xiecang/speedtest-clash/releases/latest \
                 | grep "browser_download_url.*speedtest-clash_Linux_x86_64" | cut -d '"' -f4)
           fi
-          if [ -z "$URL" ]; then
-            echo "错误: 未能找到 speedtest-clash 的下载链接，退出。"
-            exit 1
-          fi
-          FILENAME=$(basename "$URL")
-          echo "下载地址：$URL"
-          echo "保存到文件：$FILENAME"
-          wget --tries=5 --timeout=60 --progress=bar:force -O "$FILENAME" "$URL"
-          if [[ "$FILENAME" == *.tar.gz ]]; then
-            echo "检测到压缩包，开始解压..."
+          wget --tries=5 --timeout=60 -O xcspeedtest "$URL"
+          chmod +x xcspeedtest
+          ./xcspeedtest --help
+
+      - name: 运行 Telegram 抓取及 Clash 测速脚本
+        env:
+          TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
+          TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
+          TELEGRAM_STRING_SESSION: ${{ secrets.TELEGRAM_STRING_SESSION }}
+          TELEGRAM_CHANNEL_IDS: ${{ env.TELEGRAM_CHANNEL_IDS }}
+        run: |
+          mkdir -p flclashyaml
+          python TelegramNode/TBD-telegram_publiclink.py
+
+      # 如果你还想再加一层 speedtest-clash 全局测速（可选）
+      # - name: 运行 speedtest-clash 进行二次测速（可选）
+      #   run: |
+      #     ./xcspeedtest -c flclashyaml/Tg-node1.yaml -output flclashyaml/speedtest_result.yaml
+
+      - name: 提交生成的 Clash 配置到仓库
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add flclashyaml/Tg-node1.yaml
+          if ! git diff --staged --quiet; then
+            git commit -m "更新Tg-node.yaml 配置 $(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M:%S CST')"
+            git push
+          else
+            echo "文件无变化，无需提交。"
+          fi            echo "检测到压缩包，开始解压..."
             tar -xzf "$FILENAME"
             if [ -f "speedtest-clash" ]; then
               echo "找到解压后的二进制文件 'speedtest-clash'。"
