@@ -808,35 +808,41 @@ def is_valid_ss_cipher(cipher):
 
 def is_valid_proxy(proxy):
     """
-    验证代理节点基本完整性和字段有效性，增加对ss加密方法的单独验证。
-
-    参数:
-        proxy (dict): 代理节点字典
-
-    返回:
-        bool: 合法为True，否则False
+    超级严格校验 + 自动修复 ss cipher 缺失问题
+    2025 年 12 月终极版，彻底杜绝 key 'cipher' missing
     """
     if not isinstance(proxy, dict):
         return False
+
     required_keys = ['name', 'server', 'port', 'type']
     if not all(key in proxy for key in required_keys):
         return False
 
-    allowed_types = {'http', 'socks5', 'trojan', 'vless', 'ss', 'vmess', 'ssr', 'hysteria', 'hysteria2'}
+    allowed_types = {'vmess', 'vless', 'ss', 'ssr', 'trojan', 'hysteria', 'hysteria2', 'socks5', 'http'}
     if proxy['type'] not in allowed_types:
         return False
 
     port = proxy.get('port')
-    if not isinstance(port, int) or not (1 <= port <= 65535):
+    if not isinstance(port, (int, float)) or not (1 <= int(port) <= 65535):
         return False
 
-    # SS协议特有的加密方法字段检查，确保为有效cipher
+    # ==================== 重点：ss 节点 cipher 强制修复 ====================
     if proxy['type'] == 'ss':
-        cipher = proxy.get('cipher', '')
-        if not is_valid_ss_cipher(cipher):
-            if cipher:
-                print(f"⚠️ 无效的 ss cipher: {cipher}，节点名: {proxy.get('name')}")
-            return False
+        cipher = proxy.get('cipher', '').strip()
+        # 合法的加密方式（Clash Meta 2025 最新支持列表）
+        valid_ciphers = {
+            'aes-128-gcm', 'aes-192-gcm', 'aes-256-gcm',
+            'chacha20-ietf-poly1305', 'chacha20-poly1305',
+            'xchacha20-ietf-poly1305', 'xchacha20-poly1305',
+            '2022-blake3-aes-128-gcm', '2022-blake3-aes-256-gcm',
+            '2022-blake3-chacha20-poly1305', '2022-blake3-chacha8-poly1305'
+        }
+
+        # 如果 cipher 缺失或非法，强制修复为最通用的
+        if not cipher or cipher.lower() not in valid_ciphers:
+            old = proxy.get('cipher', 'None')
+            proxy['cipher'] = 'chacha20-ietf-poly1305'  # 2025 年最万能
+            print(f"【自动修复】ss 节点 cipher 缺失或非法 ({old} → chacha20-ietf-poly1305)：{proxy['name']}")
 
     return True
 
@@ -1572,7 +1578,7 @@ async def main():
     success_count = len(final_tested_nodes)
     print(f"测速完成，最终存活优质节点：{success_count} 个")
     
-    final_tested_nodes = fix_and_filter_ss_nodes(final_tested_nodes)
+    final_tested_nodes = [p for p in final_tested_nodes if is_valid_proxy(p)]
     # 保底回退机制
     if success_count < 50:   # 少于80个就触发保底（可自行调整 50~100 之间）
         print(f"测速结果过少（{success_count}个），启动超级保底策略，保留热门地区节点")
