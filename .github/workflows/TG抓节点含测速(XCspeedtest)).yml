@@ -191,9 +191,11 @@ jobs:
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add flclashyaml/Tg-node1.yaml
-          if ! git diff --staged --quiet; then
-            git commit -m "🕒 更新Tg-node.yaml 配置 $(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M:%S CST')"
+          
+          if ! git diff --cached --exit-code; then
+            echo "检测到文件变更，正在提交..."
+            TZ=Asia/Shanghai git commit -m "更新节点 $(date '+%Y-%m-%d %H:%M') 北京时间"
             git push
           else
-            echo "文件无变化，无需提交。"
+            echo "文件无变化，跳过提交"
           fi
