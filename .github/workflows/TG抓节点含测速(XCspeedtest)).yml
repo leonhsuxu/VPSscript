@@ -1,52 +1,46 @@
 name: TG频道和群抓取节点测速 XC-speedtest测速版
+
 on:
   schedule:
-    - cron: '10 */4 * * *'  # 每4小时执行
-  workflow_dispatch:
+    - cron: '10 */4 * * *'  # 每4小时执行一次
+  workflow_dispatch:        # 支持手动触发
 
 env:
   MIHOMO_VERSION: v1.19.17
-  SPEEDTEST_VERSION: v0.4.1 # 请根据需要更新到您希望的版本，例如 v0.4.1
+  SPEEDTEST_VERSION: v0.4.1  # 需要时更新版本号
   TELEGRAM_CHANNEL_IDS: |
-    # 订阅转发-频道
+    # 频道和群列表，换行分隔
     @fqDINYUE
-    # 机场订阅节点VPN分享社
     @wxdy666
-    # 白嫖订阅&节点分享群
     @freeyule
-    # CC宝盒
     @ccbaohe
-    # Duang VPS交流群
     @duangvpsfs         
-    # 白嫖机场交流群   
     @zzzjjjkkkoi
-    # M麦当劳 全家桶
     @xmdexw
-    # v2clash 免费分享中心
     @v2v2clash
-    # 订阅分享中心
     @dingyue_Center
-    # ※个人的订阅收集 leon
     @tempssrlink
-    # (乱七八糟名字)
     @sorenab2
-    # 公益机场
     @proxyshareCN
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
+      # 1. 检出代码仓库
       - name: 检出代码仓库
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      
+
+      # 2. 设置 Python 环境
       - name: 设置 Python 环境
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      
+
+      # 3. 缓存 Python 依赖，加快后续构建速度
       - name: 缓存 Python 依赖
         uses: actions/cache@v4
         with:
@@ -54,27 +48,28 @@ jobs:
           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
-      
+
+      # 4. 安装 Python 依赖
       - name: 安装 Python 依赖
         run: |
-          python -m pip install --upgrade pip          
-          pip install -r requirements.txt          
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-      # ==================== 【方案2 核心】开启 Cloudflare Warp（免费模拟国内网络）===================
+      # 5. 开启 Cloudflare Warp 模拟国内网络环境（可选）
       - name: 开启 Cloudflare Warp（模拟国内环境测速）
         run: |
-          echo "正在安装并启动 Cloudflare Warp（免费、零成本、2025年12月稳定可用）"
+          echo "正在安装并启动 Cloudflare Warp（免费、零成本）"
           curl -fsSL -o wgcf https://github.com/ViRb3/wgcf/releases/download/v2.2.19/wgcf_2.2.19_linux_amd64
           chmod +x wgcf
           ./wgcf register --accept-tos > /dev/null 2>&1 || true
           ./wgcf generate
           sudo mkdir -p /etc/wireguard
           sudo mv wgcf-profile.conf /etc/wireguard/wgcf.conf
-          sudo wg-quick up wgcf && echo "Warp 启动成功！测速流量已走中国优化线路"
+          sudo wg-quick up wgcf && echo "Warp 启动成功！测速流量已走中国优化线路" || echo "Warp 启动失败，继续执行后续步骤"
           echo "当前出口IP："
           curl -4 --max-time 5 https://ip.sb || true
-        # 如果启动失败也不影响后面执行，只是退化为海外测速
 
+      # 6. 缓存 Mihomo 程序，避免重复下载
       - name: Cache Mihomo
         id: cache-mihomo
         uses: actions/cache@v4
@@ -82,7 +77,8 @@ jobs:
           path: mihomo
           key: mihomo-amd64-${{ env.MIHOMO_VERSION }}
           restore-keys: mihomo-amd64-${{ env.MIHOMO_VERSION }}
-          
+
+      # 7. 下载 Mihomo 指定版本（如果缓存未命中）
       - name: Download Mihomo 指定版本
         if: steps.cache-mihomo.outputs.cache-hit != 'true'
         run: |
@@ -95,7 +91,8 @@ jobs:
           mv "mihomo-linux-amd64-${TAG}" mihomo
           chmod +x mihomo
           ./mihomo -v
-          
+
+      # 8. 缓存 speedtest-clash 程序
       - name: Cache xiecang speedtest-clash
         id: cache-xc
         uses: actions/cache@v4
@@ -103,51 +100,29 @@ jobs:
           path: xcspeedtest
           key: xiecang-${{ env.SPEEDTEST_VERSION }}
           restore-keys: xiecang-${{ env.SPEEDTEST_VERSION }}
-          
+
+      # 9. 下载 speedtest-clash 指定版本（如果缓存未命中）
       - name: Download xiecang speedtest-clash
         if: steps.cache-xc.outputs.cache-hit != 'true'
         run: |
           set -e
           RELEASE_TAG=${{ env.SPEEDTEST_VERSION }}
           echo "尝试下载 speedtest-clash 版本: $RELEASE_TAG"
+
           URL=$(curl -s "https://api.github.com/repos/xiecang/speedtest-clash/releases/tags/${RELEASE_TAG}" \
                 | grep "browser_download_url.*speedtest-clash_Linux_x86_64" | cut -d '"' -f4)
+
           if [ -z "$URL" ]; then
             echo "警告: 未找到指定版本，使用最新版"
             URL=$(curl -s https://api.github.com/repos/xiecang/speedtest-clash/releases/latest \
                 | grep "browser_download_url.*speedtest-clash_Linux_x86_64" | cut -d '"' -f4)
           fi
-          wget --tries=5 --timeout=60 -O xcspeedtest "$URL"
-          chmod +x xcspeedtest
-          ./xcspeedtest --help
 
-      - name: 运行 Telegram 抓取及 Clash 测速脚本
-        env:
-          TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
-          TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
-          TELEGRAM_STRING_SESSION: ${{ secrets.TELEGRAM_STRING_SESSION }}
-          TELEGRAM_CHANNEL_IDS: ${{ env.TELEGRAM_CHANNEL_IDS }}
-        run: |
-          mkdir -p flclashyaml
-          python TelegramNode/TBD-telegram_publiclink.py
+          wget --tries=5 --timeout=60 -O downloaded_file "$URL"
 
-      # 如果你还想再加一层 speedtest-clash 全局测速（可选）
-      # - name: 运行 speedtest-clash 进行二次测速（可选）
-      #   run: |
-      #     ./xcspeedtest -c flclashyaml/Tg-node1.yaml -output flclashyaml/speedtest_result.yaml
-
-      - name: 提交生成的 Clash 配置到仓库
-        run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add flclashyaml/Tg-node1.yaml
-          if ! git diff --staged --quiet; then
-            git commit -m "更新Tg-node.yaml 配置 $(TZ=Asia/Shanghai date '+%Y-%m-%d %H:%M:%S CST')"
-            git push
-          else
-            echo "文件无变化，无需提交。"
-          fi            echo "检测到压缩包，开始解压..."
-            tar -xzf "$FILENAME"
+          if file downloaded_file | grep -q "gzip compressed data"; then
+            echo "检测到压缩包，开始解压..."
+            tar -xzf downloaded_file
             if [ -f "speedtest-clash" ]; then
               echo "找到解压后的二进制文件 'speedtest-clash'。"
               mv speedtest-clash xcspeedtest
@@ -162,16 +137,17 @@ jobs:
                 exit 1
               fi
             fi
-            rm "$FILENAME"
+            rm downloaded_file
           else
-            echo "下载的文件为直接可执行文件，重命名为 xcspeedtest。"
-            mv "$FILENAME" xcspeedtest
+            echo "下载的是可执行文件，重命名为 xcspeedtest。"
+            mv downloaded_file xcspeedtest
           fi
+
           chmod +x xcspeedtest
           echo "speedtest-clash 下载并准备完成。"
-          echo "显示帮助信息："
           ./xcspeedtest --help
-          
+
+      # 10. 运行 Telegram 节点抓取脚本
       - name: 运行 Telegram 抓取及 Clash 测速脚本
         env:
           TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
@@ -181,25 +157,28 @@ jobs:
         run: |
           mkdir -p flclashyaml
           python TelegramNode/TBD-telegram_publiclink.py
-          
-      # - name: 运行 speedtest-clash 进行测速
+
+      # 11. (可选) 运行 speedtest-clash 进行二次测速，留做扩展
+      # - name: 运行 speedtest-clash 进行二次测速（可选）
       #   run: |
       #     ./xcspeedtest -c flclashyaml/Tg-node1.yaml -output flclashyaml/speedtest_result.yaml
-      
+
+      # 12. 提交生成的 Clash 配置到仓库
       - name: 提交生成的 Clash 配置到仓库
         run: |
+          # 配置提交用户
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          
+
           git add flclashyaml/Tg-node1.yaml
-          
-          # 判断是否有实际改动
+
+          # 判断是否有变更
           if git diff --staged --quiet; then
             echo "文件无变化，跳过提交"
           else
             echo "检测到文件变更，正在提交..."
-            # 直接用 python 生成北京时间（最稳！）
-            COMMIT_TIME=$(python3 -c "from datetime import datetime, timedelta, timezone; print((datetime.utcnow() + timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S CST'))")
+            # 使用 Python 生成北京时间（更稳定）
+            COMMIT_TIME=$(python3 -c "from datetime import datetime, timedelta; print((datetime.utcnow() + timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S CST'))")
             git commit -m "更新节点配置 ${COMMIT_TIME}"
             git push
             echo "提交成功！"
