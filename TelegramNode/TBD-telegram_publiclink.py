@@ -927,6 +927,73 @@ def strip_starting_flags(s):
         s = s[2:]
     return s.strip()
 
+# 再次验证SS节点
+def fix_and_filter_ss_nodes(proxies):
+    """彻底解决 ss 节点缺少 cipher 或 cipher 非法的问题"""
+    valid_proxies = []
+    fixed_count = 0
+    dropped_count = 0
+    
+    for p in proxies:
+        if p.get('type') != 'ss':
+            valid_proxies.append(p)
+            continue
+            
+        cipher = p.get('cipher', '').strip().lower()
+        
+        # 白名单：Clash Premium/Meta 真正支持的加密方式
+        valid_ciphers = {
+            'aes-128-gcm', 'aes-192-gcm', 'aes-256-gcm',
+            'chacha20-ietf-poly1305', 'chacha20-poly1305',
+            'xchacha20-ietf-poly1305', 'xchacha20-poly1305',
+            '2022-blake3-aes-128-gcm', '2022-blake3-aes-256-gcm', '2022-blake3-chacha20-poly1305'
+        }
+        
+        if cipher in valid_ciphers:
+            valid_proxies.append(p)
+            continue
+            
+        # —— 尝试自动修复常见的错误写法 ——
+        auto_map = {
+            'aes-256-cfb': 'aes-256-gcm',
+            'aes-128-cfb': 'aes-128-gcm',
+            'chacha20': 'chacha20-ietf-poly1305',
+            'chacha20-ietf': 'chacha20-ietf-poly1305',
+            'rc4-md5': None,  # 已废弃，不救
+            'none': None,
+            'plain': None,
+            '': None,
+        }
+        
+        old_cipher = p.get('cipher', '')
+        if old_cipher.lower() in auto_map:
+            new_cipher = auto_map[old_cipher.lower()]
+            if new_cipher:
+                p['cipher'] = new_cipher
+                print(f"【修复】ss 节点 cipher {old_cipher} → {new_cipher} : {p['name']}")
+                valid_proxies.append(p)
+                fixed_count += 1
+            else:
+                print(f"【丢弃】ss 节点 cipher 无效且无法修复: {old_cipher} → {p['name']}")
+                dropped_count += 1
+        else:
+            # 完全没有 cipher 字段或乱码，直接尝试用最常见的默认值救活
+            if not cipher or len(cipher) > 50 or ' ' in cipher:
+                p['cipher'] = 'chacha20-ietf-poly1305'  # 2025 年最通用
+                print(f"【强救】ss 节点缺失/乱码 cipher，强制使用 chacha20-ietf-poly1305 : {p['name']}")
+                valid_proxies.append(p)
+                fixed_count += 1
+            else:
+                print(f"【丢弃】ss 节点 cipher 不支持且无法自动映射: {cipher} → {p['name']}")
+                dropped_count += 1
+    
+    print(f"ss 节点检查完成：修复 {fixed_count} 个，丢弃 {dropped_count} 个，剩余有效 ss 节点 {len([p for p in valid_proxies if p.get('type')=='ss'])} 个")
+    return valid_proxies
+
+
+
+
+
 def normalize_proxy_names(proxies):
     pattern_trailing_number = re.compile(r'\s*\d+\s*$')
     normalized = []
@@ -1504,7 +1571,8 @@ async def main():
     # 测速结果统计
     success_count = len(final_tested_nodes)
     print(f"测速完成，最终存活优质节点：{success_count} 个")
-
+    
+    final_tested_nodes = fix_and_filter_ss_nodes(final_tested_nodes)
     # 保底回退机制
     if success_count < 50:   # 少于80个就触发保底（可自行调整 50~100 之间）
         print(f"测速结果过少（{success_count}个），启动超级保底策略，保留热门地区节点")
