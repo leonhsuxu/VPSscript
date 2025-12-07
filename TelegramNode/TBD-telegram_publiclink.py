@@ -75,9 +75,12 @@ ENABLE_SPEEDTEST_LOG = False  # 默认关闭 speedtest 详细日志False / True�
 MAX_TEST_WORKERS = 128    # 速度测试时最大并发工作线程数，控制测试的并行度。建议64-96
 SOCKET_TIMEOUT = 3       # 套接字连接超时时间，单位为秒
 HTTP_TIMEOUT = 5         # HTTP请求超时时间，单位为秒
+# 【关键修改1】测速目标全部换成国内/Cloudflare中国节点
 TEST_URLS = [
-    'http://www.gstatic.com/generate_204',
-    'http://www.youtube.com',
+    'http://www.baidu.com/generate_204',           # 百度 204，最快最稳
+    'http://qq.com/generate_204',                    # 腾讯 204
+    'http://cp.cloudflare.com/generate_204',       # Cloudflare 中国大陆节点
+    'http://connectivitycheck.gstatic.com/generate_204',  # Google 204（国内也通）
 ]
 
 # ==================== 带宽筛选配置（新增） ====================
@@ -184,6 +187,26 @@ def do_speed_test():
         return
     # 启用测速并打印日志
     run_speedtest(enable_tcp_log=False)
+    
+
+# ==================== 【关键修改2】在最前面加入 Warp 启动函数 ====================
+def start_cloudflare_warp():
+    """在 GitHub Actions 里自动开启 Cloudflare Warp，模拟国内网络"""
+    print("正在启动 Cloudflare Warp（免费模拟国内环境）...")
+    try:
+        subprocess.run(["curl", "-fsSL", "https://github.com/ViRb3/wgcf/releases/download/v2.2.19/wgcf_2.2.19_linux_amd64", "-o", "wgcf"], check=True)
+        subprocess.run(["chmod", "+x", "wgcf"], check=True)
+        subprocess.run(["./wgcf", "register", "--accept-tos"], check=True, capture_output=True)
+        subprocess.run(["./wgcf", "generate"], check=True)
+        subprocess.run(["sudo", "mv", "wgcf-profile.conf", "/etc/wireguard/wgcf.conf"], check=True)
+        result = subprocess.run(["sudo", "wg-quick", "up", "wgcf"], capture_output=True, text=True)
+        if result.returncode == 0 or "interface" in result.stderr:
+            print("Cloudflare Warp 启动成功！测速流量已走中国优化线路")
+        else:
+            print("Warp 启动失败，降级使用原始网络")
+    except Exception as e:
+        print(f"Warp 启动异常: {e}，继续使用原始网络")
+
 
 def get_country_flag_emoji(code):
     if not code or len(code) != 2:
@@ -1471,6 +1494,12 @@ async def main():
     print("Telegram.Node_Clash-Speedtest测试版 V1")
     print(datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S"))
     print("=" * 60)
+    
+    # 关键：启动 Warp（只在 GitHub Actions 环境生效，本地运行会自动跳过）
+    if os.getenv('RUNNER_OS') == 'Linux' and 'GITHUB_ACTIONS' in os.environ:
+        start_cloudflare_warp()
+
+
 
     preprocess_regex_rules()
 
