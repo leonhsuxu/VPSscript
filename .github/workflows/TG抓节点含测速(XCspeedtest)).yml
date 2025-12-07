@@ -190,12 +190,17 @@ jobs:
         run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+          
           git add flclashyaml/Tg-node1.yaml
           
-          if ! git diff --cached --exit-code; then
-            echo "检测到文件变更，正在提交..."
-            TZ=Asia/Shanghai git commit -m "更新节点 $(date '+%Y-%m-%d %H:%M') 北京时间"
-            git push
-          else
+          # 判断是否有实际改动
+          if git diff --staged --quiet; then
             echo "文件无变化，跳过提交"
+          else
+            echo "检测到文件变更，正在提交..."
+            # 直接用 python 生成北京时间（最稳！）
+            COMMIT_TIME=$(python3 -c "from datetime import datetime, timedelta, timezone; print((datetime.utcnow() + timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S CST'))")
+            git commit -m "更新节点配置 ${COMMIT_TIME}"
+            git push
+            echo "提交成功！"
           fi
