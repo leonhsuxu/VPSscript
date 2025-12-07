@@ -278,7 +278,7 @@ async def scrape_telegram_links(last_message_ids=None):
                     for link in links:
                         if link not in all_links:
                             all_links.add(link)
-                            print(f"  ✅ 找到链接: {link[:70]}...")
+                            # print(f"  ✅ 找到链接: {link[:70]}...")    # 不打印这条日志
                 if message.id > max_id_found:
                     max_id_found = message.id
             last_message_ids[channel_id] = max_id_found
