@@ -1268,6 +1268,112 @@ def limit_proxy_counts(proxies, max_total=600):
         selected = selected[:max_total]
 
     return selected
+    
+
+# 节点评分
+
+def calculate_quality_score(proxy):
+    """
+    计算节点质量评分（0-100分）
+    考虑因素：延迟、带宽、地区优先级
+    """
+    score = 0
+    
+    # 延迟评分 (0-40分)
+    delay = proxy.get('clash_delay', proxy.get('tcp_delay', 9999))
+    if delay <= 50:
+        score += 40
+    elif delay <= 100:
+        score += 35
+    elif delay <= 200:
+        score += 30
+    elif delay <= 300:
+        score += 25
+    elif delay <= 500:
+        score += 15
+    elif delay <= 800:
+        score += 10
+    elif delay <= 1200:
+        score += 5
+    
+    # 带宽评分 (0-40分)
+    bw_str = proxy.get('bandwidth', '')
+    if bw_str:
+        import re
+        match = re.search(r'([0-9\.]+)\s*(KB|MB|GB)/?s', bw_str, re.I)
+        if match:
+            num = float(match.group(1))
+            unit = match.group(2).upper()
+            if unit == 'GB':
+                num *= 1000
+            elif unit == 'KB':
+                num /= 1000
+            
+            if num >= 100:  # ≥100MB/s
+                score += 40
+            elif num >= 50:
+                score += 30
+            elif num >= 30:
+                score += 20
+            elif num >= 15:
+                score += 10
+            elif num >= 5:
+                score += 5
+    
+    # 地区优先级加成 (0-20分)
+    region = proxy.get('region_info', {}).get('name', '')
+    region_bonus = {
+        '香港': 20, '台湾': 18, '日本': 16, '新加坡': 15,
+        '韩国': 12, '美国': 10, '德国': 8, '加拿大': 5
+    }
+    score += region_bonus.get(region, 0)
+    
+    return min(score, 100)
+
+
+def sort_proxies_by_quality(proxies):
+    """
+    按质量评分排序，同分时按延迟排序
+    并给高质量节点添加质量标签
+    """
+    # 计算每个节点的质量评分
+    for proxy in proxies:
+        proxy['quality_score'] = calculate_quality_score(proxy)
+        
+        # 根据质量评分添加标签
+        score = proxy['quality_score']
+        if score >= 80:
+            proxy['quality_tag'] = '🔥极品'
+        elif score >= 60:
+            proxy['quality_tag'] = '⭐优质'
+        elif score >= 40:
+            proxy['quality_tag'] = '✅良好'
+        else:
+            proxy['quality_tag'] = '⚡可用'
+    
+    # 按质量降序、延迟升序排序
+    return sorted(proxies, key=lambda p: (
+        -p['quality_score'],  # 质量分降序
+        p.get('clash_delay', p.get('tcp_delay', 9999))  # 延迟升序
+    ))
+
+
+def add_quality_to_name(proxies):
+    """
+    在节点名称中添加质量标签
+    例如: "🇭🇰 香港 01 [🔥极品]"
+    """
+    for proxy in proxies:
+        name = proxy['name']
+        quality_tag = proxy.get('quality_tag', '⚡可用')
+        
+        # 在名称末尾添加质量标签
+        if quality_tag not in name:
+            proxy['name'] = f"{name} [{quality_tag}]"
+    
+    return proxies
+
+
 
 
 def generate_config(proxies, last_message_ids):
@@ -1725,11 +1831,19 @@ async def main():
     print("[4/5] 节点名称统一规范化处理")
     normalized_proxies = normalize_proxy_names(final_tested_nodes)
     final_proxies = limit_proxy_counts(normalized_proxies, max_total=600)
+    
     if not final_proxies:
         sys.exit("❌ 节点重命名和限量后无有效节点，程序退出")
 
-    # [5/5] 最终排序并生成配置文件
-    print("[5/5] 最终排序并生成配置文件")
+    # [4.5/5] 计算质量评分并排序（新增步骤）
+    print("[4.5/5] 计算节点质量评分")
+    
+    # 计算质量评分并排序
+    final_proxies = sort_proxies_by_quality(final_proxies)
+    
+    # 在节点名称中添加质量标签
+    final_proxies = add_quality_to_name(final_proxies)
+    
     # 新增：带宽二次筛选（可通过环境变量完全控制）
     final_proxies = filter_by_bandwidth(
         final_proxies, 
@@ -1737,35 +1851,55 @@ async def main():
         enable=ENABLE_BANDWIDTH_FILTER
     )
     
-    final_proxies.sort(
-        key=lambda p: (
-            REGION_PRIORITY.index(p['region_info']['name']) if p.get('region_info') and p['region_info']['name'] in REGION_PRIORITY else 99,
-            p.get('clash_delay', p.get('tcp_delay', 9999))
-        )
-    )
-
+    # 统计质量分布
+    quality_stats = {'🔥极品': 0, '⭐优质': 0, '✅良好': 0, '⚡可用': 0}
+    for proxy in final_proxies:
+        tag = proxy.get('quality_tag', '⚡可用')
+        if tag in quality_stats:
+            quality_stats[tag] += 1
+    
+    print(f"  质量分布: {quality_stats}")
+    if final_proxies:
+        avg_score = sum(p.get('quality_score', 0) for p in final_proxies) / len(final_proxies)
+        print(f"  平均质量分: {avg_score:.1f}")
+    else:
+        print("  警告: 没有有效的节点")
+        sys.exit("❌ 没有有效的节点，程序退出")
+    
+    # [5/5] 最终排序并生成配置文件
+    print("[5/5] 生成最终配置文件")
+    
+    # 重新按质量排序（确保最终顺序）
+    final_proxies = sorted(final_proxies, key=lambda p: -p.get('quality_score', 0))
+    
     total_count = len(final_proxies)
     update_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
+    
+    # 计算平均质量
+    avg_quality = sum(p.get('quality_score', 0) for p in final_proxies) / total_count if total_count > 0 else 0
 
     final_config = {
         'proxies': final_proxies,
         'last_message_ids': last_message_ids,
         'update_time': update_time,
         'total_nodes': total_count,
-        'note': '由 GitHub Actions 自动生成，每4小时更新一次，已按延迟排序并智能限量'
+        'average_quality': round(avg_quality, 1),
+        'quality_stats': quality_stats,
+        'note': '由 GitHub Actions 自动生成，每4小时更新一次，已按质量评分排序'
     }
 
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     try:
-        os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
             f.write("# ==================================================\n")
             f.write("#  TG 免费节点 · 自动测速精选订阅（Clash 格式）\n")
             f.write("# ==================================================\n")
             f.write(f"# 更新时间   : {update_time} (北京时间)\n")
             f.write(f"# 节点总数   : {total_count} 个优质节点\n")
-            f.write(f"# 筛选规则   : 延迟排序 + 带宽 ≥ {MIN_BANDWIDTH_MB}MB/s\n")
-            f.write(f"# 地区优先级 : 香港 → 台湾 → 日本 → 新加坡 → 美国 → 韩国 → ...\n")
+            f.write(f"# 平均质量分 : {avg_quality:.1f}/100\n")
+            f.write(f"# 质量分布   : {quality_stats}\n")
+            f.write(f"# 带宽筛选   : ≥ {MIN_BANDWIDTH_MB}MB/s\n")
+            f.write("# 排序规则   : 质量评分 → 延迟 → 地区优先级\n")
             f.write("# 构建方式   : GitHub Actions 全自动，每4小时更新一次\n")
             f.write("# 项目地址   : https://github.com/你的用户名/你的仓库\n")
             f.write("# ==================================================\n\n")
@@ -1773,12 +1907,13 @@ async def main():
 
         print(f"✅ 配置文件已成功保存至 {OUTPUT_FILE}")
         print(f"   本次共保留 {total_count} 个优质节点")
+        print(f"   平均质量分: {avg_quality:.1f}/100")
+        print(f"   质量分布: {quality_stats}")
         print(f"   更新时间：{update_time}")
         print("🎉 全部任务圆满完成！")
     except Exception as e:
         print(f"写出配置文件失败: {e}")
         sys.exit(1)
-
 def sync_main():
     if not ENABLE_SPEED_TEST:
         print("测速功能未启用，跳过测速。")
