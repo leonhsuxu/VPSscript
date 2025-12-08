@@ -65,12 +65,18 @@ jobs:
       - name: Download wgcf tool
         if: steps.cache-wgcf.outputs.cache-hit != 'true'
         run: |
-          # 修正：使用 ${WGCF_VERSION#v} 移除版本号前的 'v'，以匹配实际文件名
+          # 正确的修正方式：在shell内部进行字符串处理
+          # 首先获取完整的版本字符串 (例如：v2.2.19)
+          WGCF_FULL_VERSION="${{ env.WGCF_VERSION }}"
+          # 然后在 shell 中使用 Bash 参数展开来移除 'v' 前缀
           # 例如：v2.2.19 -> 2.2.19
-          WGCF_FILENAME_VERSION=${{ env.WGCF_VERSION#v }} 
+          WGCF_FILENAME_VERSION="${WGCF_FULL_VERSION#v}" 
+          
           echo "正在下载 wgcf v${WGCF_FILENAME_VERSION}..."
           # 注意 URL 中 assets 部分的命名规则，通常是 wgcf_{版本号}_linux_amd64
-          curl -fsSL -o wgcf https://github.com/ViRb3/wgcf/releases/download/${{ env.WGCF_VERSION }}/wgcf_${WGCF_FILENAME_VERSION}_linux_amd64
+          # 下载链接路径仍然使用原始的 ${{ env.WGCF_VERSION }} (包含 v)
+          # 但文件名部分使用经过处理的 ${WGCF_FILENAME_VERSION} (不含 v)
+          curl -fsSL -o wgcf https://github.com/ViRb3/wgcf/releases/download/${WGCF_FULL_VERSION}/wgcf_${WGCF_FILENAME_VERSION}_linux_amd64
           if [ ! -f "wgcf" ]; then
             echo "错误：wgcf 下载失败！请检查版本号或网络连接。"
             exit 1
