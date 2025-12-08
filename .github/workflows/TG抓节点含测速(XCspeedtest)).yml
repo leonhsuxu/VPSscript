@@ -1,5 +1,5 @@
 name: TG频道和群抓取节点测速 XC-speedtest测速版
-
+# ==================== 触发条件配置 ====================
 on:
   schedule:
     - cron: '10 */4 * * *'
@@ -30,23 +30,20 @@ on:
           - tcp_only
           - clash_only
           - clash_first
-
+# ==================== 环境变量配置 ====================
 env:
   MIHOMO_VERSION: v1.19.17
   SPEEDTEST_VERSION: v0.4.1
   WGCF_VERSION: v2.2.29
-
   WARP_FOR_SCRAPING: "false"
   WARP_FOR_TCP: "true"
   WARP_FOR_SPEEDTEST: "true"
   WARP_FOR_FINAL: "false"
-
   SPEEDTEST_MODE: "tcp_first"
   ENABLE_BANDWIDTH_FILTER: "true"
   MIN_BANDWIDTH_MB: "25"
   ENABLE_TCP_LOG: "false"
   ENABLE_SPEEDTEST_LOG: "false"
-
   TELEGRAM_CHANNEL_IDS: |
     @fqDINYUE
     @wxdy666
@@ -60,132 +57,190 @@ env:
     @tempssrlink
     @sorenab2
     @proxyshareCN
-
+# ==================== 工作流任务定义 ====================
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 60   # 建议改为60分钟，测速偶尔会卡
-
+    timeout-minutes: 30
     steps:
       - name: 检出代码仓库
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
-
+          submodules: false
       - name: 设置 Python 环境
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: 'pip'
-
+          cache-dependency-path: '**/requirements.txt'
       - name: 缓存 Python 依赖
         uses: actions/cache@v4
+        id: cache-pip
         with:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
-          restore-keys: ${{ runner.os }}-pip-
-
-      - name: 安装依赖
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: 安装 Python 依赖及系统依赖
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           sudo apt-get update -qq
-          sudo apt-get install -y wireguard-tools curl resolvconf wget
-
-      - name: 缓存 Mihomo
+          sudo apt-get install -y \
+            wireguard-tools \
+            curl \
+            resolvconf \
+            wget
+      - name: 缓存 Mihomo 程序
         id: cache-mihomo
         uses: actions/cache@v4
         with:
           path: mihomo
           key: mihomo-amd64-${{ env.MIHOMO_VERSION }}
-
-      - name: 下载 Mihomo
+          restore-keys: mihomo-amd64-${{ env.MIHOMO_VERSION }}
+      - name: 下载 Mihomo 指定版本
         if: steps.cache-mihomo.outputs.cache-hit != 'true' || inputs.force_download == true
         run: |
+          set -e
           TAG=${{ env.MIHOMO_VERSION }}
           URL="https://github.com/MetaCubeX/mihomo/releases/download/${TAG}/mihomo-linux-amd64-${TAG}.gz"
+          echo "尝试访问下载链接: $URL"
+          if ! curl --head --fail "$URL"; then
+            echo "❌ 错误：下载地址不可用！"
+            exit 1
+          fi
           wget --tries=3 --timeout=30 -O mihomo.gz "$URL"
           gunzip -f mihomo.gz
           chmod +x mihomo
           ./mihomo -v
-
-      - name: 缓存 wgcf
+      - name: 缓存 wgcf 工具
         id: cache-wgcf
         uses: actions/cache@v4
         with:
           path: wgcf
           key: wgcf-linux-amd64-${{ env.WGCF_VERSION }}
-
-      - name: 下载 wgcf
+          restore-keys: wgcf-linux-amd64-${{ env.WGCF_VERSION }}
+      - name: 下载 wgcf 工具
         if: steps.cache-wgcf.outputs.cache-hit != 'true' || inputs.force_download == true
         run: |
-          V=${{ env.WGCF_VERSION }}
-          VER=${V#v}
-          curl -fsSL -o wgcf "https://github.com/ViRb3/wgcf/releases/download/${V}/wgcf_${VER}_linux_amd64"
+          WGCF_FULL_VERSION="${{ env.WGCF_VERSION }}"
+          WGCF_FILENAME_VERSION="${WGCF_FULL_VERSION#v}"
+          echo "正在下载 wgcf v${WGCF_FILENAME_VERSION}..."
+          curl -fsSL -o wgcf "https://github.com/ViRb3/wgcf/releases/download/${WGCF_FULL_VERSION}/wgcf_${WGCF_FILENAME_VERSION}_linux_amd64"
+          if [ ! -f "wgcf" ]; then
+            echo "❌ 错误：wgcf 下载失败！"
+            exit 1
+          fi
           chmod +x wgcf
-
-      - name: 缓存 speedtest-clash
+          echo "wgcf 下载完成。"
+      - name: 缓存 xiecang speedtest-clash
         id: cache-xc
         uses: actions/cache@v4
         with:
           path: xcspeedtest
           key: xiecang-${{ env.SPEEDTEST_VERSION }}
-
-      - name: 下载 speedtest-clash
+          restore-keys: xiecang-${{ env.SPEEDTEST_VERSION }}
+      - name: 下载 xiecang speedtest-clash
         if: steps.cache-xc.outputs.cache-hit != 'true' || inputs.force_download == true
         run: |
-          TAG=${{ env.SPEEDTEST_VERSION }}
-          URL=$(curl -s "https://api.github.com/repos/xiecang/speedtest-clash/releases/tags/${TAG}" | grep -o "https.*speedtest-clash_Linux_x86_64" || curl -s https://api.github.com/repos/xiecang/speedtest-clash/releases/latest | grep -o "https.*speedtest-clash_Linux_x86_64")
-          wget -t 5 -T 60 -O dl "$URL"
-          if file dl | grep -q gzip; then
-            tar -xzf dl
-            mv speedtest-clash* xcspeedtest 2>/dev/null || mv speedtest-clash xcspeedtest
+          set -e
+          RELEASE_TAG=${{ env.SPEEDTEST_VERSION }}
+          echo "尝试下载 speedtest-clash 版本: $RELEASE_TAG"
+          URL=$(curl -s "https://api.github.com/repos/xiecang/speedtest-clash/releases/tags/${RELEASE_TAG}" \
+                | grep "browser_download_url.*speedtest-clash_Linux_x86_64" | cut -d '"' -f4)
+          if [ -z "$URL" ]; then
+            echo "⚠️ 警告: 未找到指定版本 (${RELEASE_TAG})，尝试使用最新版本。"
+            URL=$(curl -s https://api.github.com/repos/xiecang/speedtest-clash/releases/latest \
+                | grep "browser_download_url.*speedtest-clash_Linux_x86_64" | cut -d '"' -f4)
+          fi
+          if [ -z "$URL" ]; then
+            echo "❌ 错误：未能找到 speedtest-clash 下载 URL，退出。"
+            exit 1
+          fi
+          wget --tries=5 --timeout=60 -O downloaded_file "$URL"
+          if file downloaded_file | grep -q "gzip compressed data"; then
+            echo "检测到压缩包，开始解压"
+            tar -xzf downloaded_file
+            if [ -f "speedtest-clash" ]; then
+              mv speedtest-clash xcspeedtest
+            else
+              EXE_PATH=$(find . -maxdepth 1 -type f -executable -name "speedtest-clash*" -print -quit)
+              if [ -n "$EXE_PATH" ]; then
+                mv "$EXE_PATH" xcspeedtest
+              else
+                echo "❌ 错误：未找到 speedtest-clash 可执行文件"
+                exit 1
+              fi
+            fi
+            rm downloaded_file
           else
-            mv dl xcspeedtest
+            echo "下载的是可执行文件，直接重命名为 xcspeedtest"
+            mv downloaded_file xcspeedtest
           fi
           chmod +x xcspeedtest
           ./xcspeedtest --help
-
       - name: 智能网络配置
         run: |
-          echo "=== 智能网络配置 ==="
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+          echo "=== 🌐 智能网络配置 ==="
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "手动触发工作流，网络配置模式: ${{ inputs.warp_config }}"
             case "${{ inputs.warp_config }}" in
-              all_warp)
+              "default")
+                echo "使用默认网络配置"
+                ;;
+              "all_warp")
+                echo "全流程使用Warp网络"
                 echo "WARP_FOR_SCRAPING=true" >> $GITHUB_ENV
                 echo "WARP_FOR_TCP=true" >> $GITHUB_ENV
                 echo "WARP_FOR_SPEEDTEST=true" >> $GITHUB_ENV
                 echo "WARP_FOR_FINAL=true" >> $GITHUB_ENV
                 ;;
-              all_github)
+              "all_github")
+                echo "全流程使用GitHub网络"
                 echo "WARP_FOR_SCRAPING=false" >> $GITHUB_ENV
                 echo "WARP_FOR_TCP=false" >> $GITHUB_ENV
                 echo "WARP_FOR_SPEEDTEST=false" >> $GITHUB_ENV
                 echo "WARP_FOR_FINAL=false" >> $GITHUB_ENV
                 ;;
-              test_mode)
-                cat >> $GITHUB_ENV <<'EOF'
-          TELEGRAM_CHANNEL_IDS=@fqDINYUE
-          @wxdy666
-          @freeyule
-          EOF
+              "test_mode")
+                echo "测试模式：减少抓取数量，使用Warp测速"
+                cat >> $GITHUB_ENV << EOF
+TELEGRAM_CHANNEL_IDS=@fqDINYUE
+@wxdy666
+@freeyule
+EOF
+                echo "WARP_FOR_SCRAPING=false" >> $GITHUB_ENV
+                echo "WARP_FOR_TCP=true" >> $GITHUB_ENV
+                echo "WARP_FOR_SPEEDTEST=true" >> $GITHUB_ENV
+                echo "WARP_FOR_FINAL=false" >> $GITHUB_ENV
                 ;;
             esac
-            [[ -n "${{ inputs.speedtest_mode }}" ]] && echo "SPEEDTEST_MODE=${{ inputs.speedtest_mode }}" >> $GITHUB_ENV
+            if [ -n "${{ inputs.speedtest_mode }}" ]; then
+              echo "SPEEDTEST_MODE=${{ inputs.speedtest_mode }}" >> $GITHUB_ENV
+              echo "测速模式覆盖为: ${{ inputs.speedtest_mode }}"
+            fi
+          else
+            echo "定时触发，使用默认网络配置"
           fi
-
-          cat <<-EOF
-
-          最终配置：
-            抓取阶段 Warp : ${{ env.WARP_FOR_SCRAPING }}
-            TCP测速 Warp   : ${{ env.WARP_FOR_TCP }}
-            Speedtest Warp : ${{ env.WARP_FOR_SPEEDTEST }}
-            最终阶段 Warp  : ${{ env.WARP_FOR_FINAL }}
-            测速模式       : ${{ env.SPEEDTEST_MODE }}
-          EOF
-
-      - name: 运行抓取与测速主脚本
+          echo ""
+          echo "📋 最终执行配置:"
+          echo "--------------------------------------------------"
+          echo "网络配置:"
+          echo "  - 抓取阶段 Warp: ${{ env.WARP_FOR_SCRAPING }}"
+          echo "  - TCP测速 Warp: ${{ env.WARP_FOR_TCP }}"
+          echo "  - Speedtest测速 Warp: ${{ env.WARP_FOR_SPEEDTEST }}"
+          echo "  - 最终阶段 Warp: ${{ env.WARP_FOR_FINAL }}"
+          echo ""
+          echo "测速配置:"
+          echo "  - 测速模式: ${{ env.SPEEDTEST_MODE }}"
+          echo "  - 带宽筛选: ${{ env.ENABLE_BANDWIDTH_FILTER }} (≥${{ env.MIN_BANDWIDTH_MB }}MB/s)"
+          echo "  - TCP日志: ${{ env.ENABLE_TCP_LOG }}"
+          echo "  - Speedtest日志: ${{ env.ENABLE_SPEEDTEST_LOG }}"
+          echo "--------------------------------------------------"
+          echo "=== ✅ 网络配置完成 ==="
+      - name: 运行 Telegram 抓取及 Clash 测速脚本
         env:
           TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
           TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
@@ -195,81 +250,178 @@ jobs:
           WARP_FOR_SPEEDTEST: ${{ env.WARP_FOR_SPEEDTEST }}
           WARP_FOR_FINAL: ${{ env.WARP_FOR_FINAL }}
           SPEEDTEST_MODE: ${{ env.SPEEDTEST_MODE }}
-          ENABLE_BANDWIDTH_FILTER: ${{ env.ENABLE_BANDWIDTH_FILTER }}
-          MIN_BANDWIDTH_MB: ${{ env.MIN_BANDWIDTH_MB }}
           ENABLE_TCP_LOG: ${{ env.ENABLE_TCP_LOG }}
           ENABLE_SPEEDTEST_LOG: ${{ env.ENABLE_SPEEDTEST_LOG }}
+          ENABLE_BANDWIDTH_FILTER: ${{ env.ENABLE_BANDWIDTH_FILTER }}
+          MIN_BANDWIDTH_MB: ${{ env.MIN_BANDWIDTH_MB }}
           TELEGRAM_CHANNEL_IDS: ${{ env.TELEGRAM_CHANNEL_IDS }}
+          GITHUB_ACTIONS: "true"
           PYTHONUNBUFFERED: "1"
         run: |
           mkdir -p flclashyaml
+          echo "=== 🚀 开始执行节点抓取和测速 ==="
+          echo "开始时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
+          echo ""
+          echo "📊 执行参数汇总:"
+          echo "--------------------------------------------------"
+          echo "网络配置:"
+          echo "  📡 抓取阶段: $( [ "$WARP_FOR_SCRAPING" = "true" ] && echo "使用Warp" || echo "使用GitHub" )"
+          echo "  🚀 TCP测速: $( [ "$WARP_FOR_TCP" = "true" ] && echo "使用Warp" || echo "使用GitHub" )"
+          echo "  ⚡ Speedtest: $( [ "$WARP_FOR_SPEEDTEST" = "true" ] && echo "使用Warp" || echo "使用GitHub" )"
+          echo "  📝 最终处理: $( [ "$WARP_FOR_FINAL" = "true" ] && echo "使用Warp" || echo "使用GitHub" )"
+          echo ""
+          echo "测速配置:"
+          echo "  🎯 测速模式: $SPEEDTEST_MODE"
+          echo "  📶 带宽筛选: $( [ "$ENABLE_BANDWIDTH_FILTER" = "true" ] && echo "启用 (≥${MIN_BANDWIDTH_MB}MB/s)" || echo "关闭" )"
+          echo "  📋 日志级别: TCP=$ENABLE_TCP_LOG, Speedtest=$ENABLE_SPEEDTEST_LOG"
+          echo "--------------------------------------------------"
+          echo ""
+          echo "▶️ 开始执行Python脚本..."
+          echo "--------------------------------------------------"
           python TelegramNode/TBD-telegram_publiclink.py
-
-      # ==================== 终极版 Warp 清理（关键！） ====================
-      - name: 终极清理 Warp（防止 push 被 CF 限流）
+          EXIT_CODE=$?
+          echo ""
+          echo "--------------------------------------------------"
+          if [ $EXIT_CODE -eq 0 ]; then
+            echo "✅ 节点抓取和测速完成"
+            if [ -f "flclashyaml/Tg-node1.yaml" ]; then
+              FILE_SIZE=$(stat -c%s "flclashyaml/Tg-node1.yaml" 2>/dev/null || stat -f%z "flclashyaml/Tg-node1.yaml" 2>/dev/null || echo "unknown")
+              echo "📁 配置文件生成成功: flclashyaml/Tg-node1.yaml (${FILE_SIZE} bytes)"
+              echo "📄 配置文件预览:"
+              head -20 flclashyaml/Tg-node1.yaml
+            else
+              echo "⚠️  配置文件未生成"
+            fi
+          else
+            echo "❌ Python脚本执行失败，退出码: $EXIT_CODE"
+            exit $EXIT_CODE
+          fi
+          echo ""
+          echo "结束时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
+          echo "=== ✅ 脚本执行完成 ==="
+      - name: 提交前清理 Warp 连接
         if: always()
         run: |
-          echo "=== 终极清理 WARP（防止 push 失败）==="
-          sudo pkill -f wgcf || true
-          sudo pkill -f mihomo || true
-
-          sudo wg-quick down wgcf 2>/dev/null || true
-          sudo ip link delete wgcf 2>/dev/null || true
-          sudo ip link delete wgcf-profile 2>/dev/null || true
-
-          # 清除残留路由
-          sudo ip route flush table main 2>/dev/null || true
-          for cidr in \
-            140.82.112.0/20 185.199.108.0/22 185.199.109.0/22 \
-            185.199.110.0/22 185.199.111.0/22 173.252.88.0/21 \
-            192.30.252.0/22; do
-            sudo ip route del $cidr 2>/dev/null || true
+          echo "=== 🧹 提交前清理 WARP 连接 ==="
+          echo "清理时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
+          echo ""
+          echo "1️⃣ 检查当前网络状态:"
+          CURRENT_IP=$(curl -4 -s --max-time 5 https://ip.sb 2>/dev/null || echo "无法获取")
+          echo "   当前出口 IP: $CURRENT_IP"
+          echo "2️⃣ 停止 WARP VPN..."
+          sudo wg-quick down wgcf 2>/dev/null || echo "   WARP未运行或停止失败"
+          echo "3️⃣ 清理网络接口..."
+          sudo ip link delete wgcf 2>/dev/null || echo "   接口不存在或删除失败"
+          echo "4️⃣ 清理智能路由配置..."
+          github_ranges=(
+            "140.82.112.0/20"
+            "185.199.108.0/22"
+            "185.199.109.0/22"
+            "185.199.110.0/22"
+            "185.199.111.0/22"
+          )
+          cleaned_count=0
+          for cidr in "${github_ranges[@]}"; do
+            sudo ip route del $cidr 2>/dev/null && cleaned_count=$((cleaned_count + 1)) || true
           done
-
-          sudo systemctl restart networking 2>/dev/null || true
-          sleep 8
-
-          echo "清理后出口IP: $(curl -4 --max-time 10 ip.sb || echo '未知')"
-
-      - name: 提交结果（超级稳推送）
+          echo "   已清理 $cleaned_count 个GitHub路由"
+          echo "5️⃣ 刷新DNS缓存..."
+          sudo systemctl restart systemd-resolved 2>/dev/null || echo "   DNS刷新失败"
+          echo "6️⃣ 测试GitHub连接..."
+          echo "   DNS解析测试:"
+          timeout 5 nslookup github.com 2>&1 | head -3 || echo "   DNS解析失败"
+          echo "   HTTP连接测试:"
+          timeout 5 curl -I --silent https://github.com 2>&1 | head -2 || echo "   HTTP连接失败"
+          echo "7️⃣ 等待网络稳定..."
+          sleep 3
+          echo "8️⃣ 验证清理结果:"
+          FINAL_IP=$(curl -4 -s --max-time 5 https://ip.sb 2>/dev/null || echo "无法获取")
+          echo "   最终出口 IP: $FINAL_IP"
+          if echo "$FINAL_IP" | grep -q "162.159\|172.64"; then
+            echo "   ⚠️  检测到可能仍是Warp IP，但已尽力清理"
+          else
+            echo "   ✅ 清理完成，已恢复原始网络"
+          fi
+          echo ""
+          echo "=== ✅ 网络清理完成 ==="
+      - name: 提交生成的 Clash 配置到仓库
         if: success()
         run: |
-          if ! git diff --quiet flclashyaml/Tg-node1.yaml; then
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git config user.name "github-actions[bot]"
+          echo "=== 提交变更到GitHub ==="
+          echo "提交时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
+          echo ""
+          echo "检查文件变更..."
+          if git status --porcelain | grep -q "flclashyaml/Tg-node1.yaml"; then
+            echo "检测到配置文件变更"
+            echo "配置Git用户..."
+            git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git config --local user.name "github-actions[bot]"
+            echo "添加变更文件..."
             git add flclashyaml/Tg-node1.yaml
-
-            NODE_INFO=$(python3 - <<'PY'
-          import yaml, sys
-          try:
-            d = yaml.safe_load(open("flclashyaml/Tg-node1.yaml"))
-            cnt = len(d.get("proxies",[]))
-            avg = d.get("average_quality","?")
-            print(f"{cnt}节点 | {avg}分")
-          except:
-            print("未知")
-          PY
-            )
-
-            TIME=$(date -u -d '+8 hours' '+%Y-%m-%d %H:%M:%S CST')
-            git commit -m "自动更新 ${TIME} (${NODE_INFO})"
-
-            BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@')
-
-            for i in {1..5}; do
-              git pull --rebase origin $BRANCH && \
-              git push origin HEAD:$BRANCH && \
-              echo "推送成功" && exit 0
-              echo "第 $i 次失败，10秒后重试..."
-              sleep 10
+            echo "生成提交信息..."
+            COMMIT_TIME=$(python3 -c 'from datetime import datetime, timedelta; print((datetime.utcnow() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S CST"))')
+            NODE_INFO=$(python3 -c 'import yaml, sys; \
+              try: \
+                with open("flclashyaml/Tg-node1.yaml","r",encoding="utf-8") as f: \
+                  data = yaml.safe_load(f); \
+                proxies = data.get("proxies", []); \
+                node_count = len(proxies) if isinstance(proxies,list) else 0; \
+                avg = data.get("average_quality","N/A"); \
+                qs = data.get("quality_stats",{}); \
+                qstr = " [" + " ".join([f"{k}{v}" for k,v in qs.items()]) + "]" if qs else ""; \
+                wt = data.get("speedtest_config",{}).get("warp_for_tcp","N/A"); \
+                ws = data.get("speedtest_config",{}).get("warp_for_speedtest","N/A"); \
+                print(f"{node_count} nodes | {avg}分{qstr} | TCP_Warp={wt} Speedtest_Warp={ws}"); \
+              except Exception: \
+                print("unknown nodes")' 2>/dev/null || echo "unknown nodes")
+            COMMIT_MESSAGE="自动更新节点配置 ${COMMIT_TIME} (${NODE_INFO})"
+            echo "提交信息: $COMMIT_MESSAGE"
+            echo "提交更改..."
+            git commit -m "$COMMIT_MESSAGE"
+            echo "开始推送（自动识别默认分支）..."
+            DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@' 2>/dev/null || echo "main")
+            echo "检测到默认分支: $DEFAULT_BRANCH"
+            MAX_RETRIES=3
+            RETRY=0
+            while [ $RETRY -lt $MAX_RETRIES ]; do
+              RETRY=$((RETRY + 1))
+              echo "第 $RETRY/$MAX_RETRIES 次推送尝试..."
+              if git push origin HEAD:"$DEFAULT_BRANCH"; then
+                echo "推送成功！"
+                break
+              else
+                echo "推送失败，5秒后重试..."
+                sleep 5
+                git pull --rebase origin "$DEFAULT_BRANCH" || true
+              fi
             done
-            echo "推送彻底失败" && exit 1
           else
             echo "文件无变化，跳过提交"
           fi
-
-      - name: 最终清理临时文件
+      - name: 最终清理和报告
         if: always()
         run: |
-          rm -f wgcf wgcf-profile.conf mihomo xcspeedtest downloaded_file dl mihomo.gz 2>/dev/null || true
-          echo "工作流结束 $(date '+%Y-%m-%d %H:%M:%S')"
+          echo "=== 最终清理 ==="
+          echo "清理时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
+          echo ""
+          echo "1️⃣ 确保Warp完全停止..."
+          sudo wg-quick down wgcf 2>/dev/null || true
+          sudo ip link delete wgcf 2>/dev/null || true
+          echo "2️⃣ 清理临时文件..."
+          rm -f wgcf wgcf-profile.conf mihomo.gz downloaded_file xcspeedtest mihomo 2>/dev/null || true
+          echo "3️⃣ 工作流执行总结:"
+          echo "   执行时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
+          echo "   运行器: ${{ runner.os }}"
+          if [ -f "flclashyaml/Tg-node1.yaml" ]; then
+            FILE_SIZE=$(stat -c%s "flclashyaml/Tg-node1.yaml" 2>/dev/null || echo "unknown")
+            NODE_COUNT=$(python3 -c 'import yaml; d=yaml.safe_load(open("flclashyaml/Tg-node1.yaml",encoding="utf-8")); print(len(d.get("proxies",[])) if isinstance(d.get("proxies"),list) else 0)' 2>/dev/null || echo "?")
+            echo "   配置文件: flclashyaml/Tg-node1.yaml (${FILE_SIZE} bytes)"
+            echo "   节点数量: ${NODE_COUNT} 个"
+          else
+            echo "   配置文件未生成"
+          fi
+          echo ""
+          echo "5️⃣ 最终网络状态:"
+          echo "   出口IP: $(curl -4 -s --max-time 5 https://ip.sb || echo '获取失败')"
+          echo ""
+          echo "=== 工作流全部结束 ==="
