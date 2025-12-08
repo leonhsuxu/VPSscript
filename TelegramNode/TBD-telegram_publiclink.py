@@ -842,7 +842,9 @@ def load_existing_proxies_and_state():
 
 # =============================================
 # 多匹配的 extract_valid_subscribe_links 函数
-# =============================================
+# ============================================= 
+
+
 def extract_valid_subscribe_links(text: str):
     """
     2025年12月终极防漏版
@@ -873,6 +875,8 @@ def extract_valid_subscribe_links(text: str):
             if any(bad in url_lower for bad in ['/t.me/', '/joinchat', '/channel', '/invite']):
                 continue
             valid_links.add(link)
+            # 显示完整链接地址
+            print(f"🔗 提取链接: {link}")
     
     # === 过期时间判断（保持你原来的逻辑）===
     MIN_HOURS_LEFT = MIN_EXPIRE_HOURS
@@ -903,15 +907,12 @@ def extract_valid_subscribe_links(text: str):
         if expire_time:
             hours_left = (expire_time - now).total_seconds() / 3600
             if hours_left < MIN_HOURS_LEFT:
-                # 注释掉过期警告
-                # print(f"  订阅即将过期（剩 {hours_left:.1f}h），跳过: {url[:60]}...")
+                # 静默跳过过期链接，不显示警告
                 continue
         final_links.append(url)
-        # 注释掉成功提取的调试信息
-        # print(f"🔗成功提取链接: {url}")  # 调试用，可删
     
-    return final_links
-
+    return final_links    
+   
 # ==========================
 # 替换了 scrape_telegram_links 为 B 版本更完善的实现
 async def scrape_telegram_links(last_message_ids=None):
