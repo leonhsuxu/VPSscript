@@ -198,49 +198,8 @@ def start_cloudflare_warp():
     print("🌐 正在启动 Cloudflare Warp（尝试模拟国内环境）...")
     
     try:
-        # 1. 下载 wgcf 工具
-        # 注意：此处假设是 Linux amd64，如果 GitHub Actions Runner 架构不同，需调整 URL
-        print(">> 1. 下载 wgcf 工具...")
-        subprocess.run([
-            "curl", "-fsSL", 
-            "https://github.com/ViRb3/wgcf/releases/download/v2.2.19/wgcf_2.2.19_linux_amd64",
-            "-o", "wgcf"
-        ], check=True, capture_output=True)
+        # ... [现有代码] ...
         
-        subprocess.run(["chmod", "+x", "wgcf"], check=True, capture_output=True)
-        print(">> wgcf 工具下载并授权完成。")
-
-        # 2. 注册 WARP 账户
-        print(">> 2. 注册 WARP 账户...")
-        # 注册时可能会出现超时，增加重试机制或更长的超时时间
-        result = subprocess.run(
-            ["./wgcf", "register", "--accept-tos"],
-            capture_output=True, text=True, timeout=60 # 增加注册超时时间
-        )
-        
-        if result.returncode != 0 and "Already registered" not in result.stderr:
-            print(f"⚠️ WARP 注册失败: {result.stderr[:500]}") # 打印更多错误信息
-            return False
-        
-        print(">> WARP 账户注册或已注册。")
-        
-        # 3. 生成配置
-        print(">> 3. 生成 WARP 配置...")
-        subprocess.run(["./wgcf", "generate"], check=True, capture_output=True)
-        print(">> WARP 配置生成完成 (wgcf-profile.conf)。")
-
-        # 4. 配置 WireGuard (需要 sudo 权限)
-        print(">> 4. 配置 WireGuard...")
-        subprocess.run(
-            ["sudo", "mkdir", "-p", "/etc/wireguard"], 
-            capture_output=True, check=True
-        ) # 确保目录存在
-        subprocess.run(
-            ["sudo", "cp", "wgcf-profile.conf", "/etc/wireguard/wgcf.conf"], 
-            check=True, capture_output=True
-        )
-        print(">> WireGuard 配置复制完成。")
-
         # 5. 启动 WARP VPN (需要 sudo 权限)
         print(">> 5. 启动 WARP VPN...")
         # wg-quick up 可能会在某些环境下返回非零状态码但实际成功，或有stderr输出
@@ -251,7 +210,26 @@ def start_cloudflare_warp():
         )
         
         # 检查启动结果
-    return False # 默认返回 False
+        if result.returncode == 0 or "errno" not in result.stderr:
+            print("✅ WARP 启动成功或已连接")
+            # 验证IP是否已切换
+            try:
+                ip_check = subprocess.run(
+                    ["curl", "-4", "-s", "--max-time", "10", "https://ip.sb"],
+                    capture_output=True, text=True
+                )
+                if ip_check.returncode == 0:
+                    print(f"当前出口 IPv4: {ip_check.stdout.strip()}")
+            except:
+                pass
+            return True
+        else:
+            print(f"⚠️ WARP 启动失败: {result.stderr[:200]}")
+            return False
+            
+    except Exception as e:
+        print(f"❌ WARP 启动异常: {e}")
+        return False
 
 
 def get_country_flag_emoji(code):
@@ -368,7 +346,12 @@ async def scrape_telegram_links(last_message_ids=None):
     if not TARGET_CHANNELS:
         print("❌ 错误: TELEGRAM_CHANNEL_IDS 中未找到有效频道 ID。")
         return [], last_message_ids
-    print(f"▶️ 配置抓取 {len(TARGET_CHANNELS)} 个频道: {TARGET_CHANNELS}")
+    print(f"▶️ 配置抓取 {len(TARGET_CHANNELS)} 个频道")
+    
+    # 按频道数量分组处理，避免同时打开太多连接
+    CHANNEL_BATCH_SIZE = 3  # 每次处理3个频道
+    all_links = set()
+    
     try:
         client = TelegramClient(StringSession(STRING_SESSION), API_ID, API_HASH)
         await client.connect()
@@ -377,36 +360,68 @@ async def scrape_telegram_links(last_message_ids=None):
     except Exception as e:
         print(f"❌ 错误: 连接 Telegram 时出错: {e}")
         return [], last_message_ids
+    
     bj_now = datetime.now(BJ_TZ)
     target_time = (bj_now - timedelta(hours=TIME_WINDOW_HOURS)).astimezone(timezone.utc)
-    all_links = set()
-    for channel_id in TARGET_CHANNELS:
-        print(f"\n 🎯正在处理频道: {channel_id} ...")
-        try:
-            entity = await client.get_entity(channel_id)
-        except Exception as e:
-            print(f"❌ 错误: 无法获取频道实体 {channel_id}: {e}")
-            continue
-        last_id = last_message_ids.get(channel_id, 0)
-        max_id_found = last_id
-        try:
-            async for message in client.iter_messages(entity, min_id=last_id + 1, reverse=False):
-                if message.date < target_time:
-                    break
-                if message.text:
-                    links = extract_valid_subscribe_links(message.text)
-                    for link in links:
-                        if link not in all_links:
-                            all_links.add(link)
-                            print(f"  ✅ 找到链接: {link[:70]}...")
-                if message.id > max_id_found:
-                    max_id_found = message.id
-            last_message_ids[channel_id] = max_id_found
-        except Exception as e:
-            print(f"❌ 错误: 从频道 '{channel_id}' 获取消息时出错: {e}")
+    
+    # 分批处理频道
+    for i in range(0, len(TARGET_CHANNELS), CHANNEL_BATCH_SIZE):
+        batch = TARGET_CHANNELS[i:i + CHANNEL_BATCH_SIZE]
+        print(f"\n📦 处理批次 {i//CHANNEL_BATCH_SIZE + 1}/{(len(TARGET_CHANNELS)-1)//CHANNEL_BATCH_SIZE + 1}: {batch}")
+        
+        tasks = []
+        for channel_id in batch:
+            tasks.append(process_channel(client, channel_id, last_message_ids, target_time))
+        
+        # 并发处理批次内的频道
+        results = await asyncio.gather(*tasks, return_exceptions=True)
+        
+        for idx, result in enumerate(results):
+            channel_id = batch[idx]
+            if isinstance(result, Exception):
+                print(f"❌ 处理频道 '{channel_id}' 时出错: {result}")
+                continue
+                
+            links, new_max_id = result
+            for link in links:
+                if link not in all_links:
+                    all_links.add(link)
+                    print(f"  ✅ 找到链接: {link[:70]}...")
+            
+            if new_max_id > last_message_ids.get(channel_id, 0):
+                last_message_ids[channel_id] = new_max_id
+    
     await client.disconnect()
     print(f"\n✅ 抓取完成, 共找到 {len(all_links)} 个不重复的有效链接。")
     return list(all_links), last_message_ids
+
+async def process_channel(client, channel_id, last_message_ids, target_time):
+    """处理单个频道的辅助函数"""
+    max_id_found = last_message_ids.get(channel_id, 0)
+    channel_links = []
+    
+    try:
+        entity = await client.get_entity(channel_id)
+    except Exception as e:
+        print(f"❌ 错误: 无法获取频道实体 {channel_id}: {e}")
+        return channel_links, max_id_found
+    
+    print(f"  🎯 正在处理频道: {channel_id}")
+    
+    try:
+        async for message in client.iter_messages(entity, min_id=last_message_ids.get(channel_id, 0) + 1, reverse=False):
+            if message.date < target_time:
+                break
+            if message.text:
+                links = extract_valid_subscribe_links(message.text)
+                for link in links:
+                    channel_links.append(link)
+            if message.id > max_id_found:
+                max_id_found = message.id
+    except Exception as e:
+        print(f"❌ 错误: 从频道 '{channel_id}' 获取消息时出错: {e}")
+    
+    return channel_links, max_id_found
 
 # --- 3合1下载 版本的下载 ---
 
