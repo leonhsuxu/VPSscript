@@ -903,10 +903,12 @@ def extract_valid_subscribe_links(text: str):
         if expire_time:
             hours_left = (expire_time - now).total_seconds() / 3600
             if hours_left < MIN_HOURS_LEFT:
-                print(f"  订阅即将过期（剩 {hours_left:.1f}h），跳过: {url[:60]}...")
+                # 注释掉过期警告
+                # print(f"  订阅即将过期（剩 {hours_left:.1f}h），跳过: {url[:60]}...")
                 continue
         final_links.append(url)
-        print(f"成功提取链接🔗: {url}")  # 调试用，可删
+        # 注释掉成功提取的调试信息
+        # print(f"🔗成功提取链接: {url}")  # 调试用，可删
     
     return final_links
 
@@ -993,11 +995,14 @@ async def process_channel(client, channel_id, last_message_ids, target_time):
                 links = extract_valid_subscribe_links(message.text)
                 for link in links:
                     channel_links.append(link)
+                    # 注释掉这行，不再打印找到的链接
+                    # print(f"  ✅ 找到链接: {link[:70]}...")
             if message.id > max_id_found:
                 max_id_found = message.id
     except Exception as e:
         print(f"❌ 错误: 从频道 '{channel_id}' 获取消息时出错: {e}")
     
+    print(f"  📊 频道 {channel_id} 找到 {len(channel_links)} 个链接")
     return channel_links, max_id_found
 
 # --- 3合1下载 版本的下载 ---
