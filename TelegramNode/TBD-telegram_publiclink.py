@@ -55,15 +55,6 @@ OUTPUT_FILE = 'flclashyaml/Tg-node1.yaml'  # 输出文件路径，用于保存�
 
 
 # === 新增：测速策略开关（推荐保留这几个选项）===
-# === 网络控制配置 使用国外网络还是模拟国内网络===
-WARP_FOR_SCRAPING = os.getenv('WARP_FOR_SCRAPING', 'false').lower() == 'true'
-WARP_FOR_TCP = os.getenv('WARP_FOR_TCP', 'false').lower() == 'true'
-WARP_FOR_SPEEDTEST = os.getenv('WARP_FOR_SPEEDTEST', 'true').lower() == 'true'
-WARP_FOR_FINAL = os.getenv('WARP_FOR_FINAL', 'false').lower() == 'true'
-
-   # stage_name: 'scraping', 'tcp', 'speedtest', 'final'
-
-   #require_warp: True=需要Warp网络, False=需要原始GitHub网络
 
 
 # 测速模式：
@@ -200,49 +191,486 @@ def do_speed_test():
     run_speedtest(enable_tcp_log=False)
     
 
-# ==================== 【关键修改2】在最前面加入 Warp 启动函数 ====================
+# ==================== 智能网络控制配置 ====================
+def get_network_config():
+    """
+    获取网络配置，如果环境变量不存在则使用智能默认值并警告
+    返回配置字典和是否所有配置都来自环境变量
+    """
+    config = {}
+    all_from_env = True
+    
+    # 配置映射表：环境变量名 -> 默认值 -> 描述
+    config_spec = {
+        'WARP_FOR_SCRAPING': {
+            'default': False, 
+            'desc': 'Telegram抓取阶段使用Warp网络',
+            'recommend': 'false（使用GitHub网络，速度快）'
+        },
+        'WARP_FOR_TCP': {
+            'default': True, 
+            'desc': 'TCP测速阶段使用Warp网络',
+            'recommend': 'true（使用Warp模拟国内环境）'
+        },
+        'WARP_FOR_SPEEDTEST': {
+            'default': True, 
+            'desc': 'Speedtest测速阶段使用Warp网络',
+            'recommend': 'true（使用Warp模拟国内环境）'
+        },
+        'WARP_FOR_FINAL': {
+            'default': False, 
+            'desc': '最终处理阶段使用Warp网络',
+            'recommend': 'false（切换回GitHub网络）'
+        },
+    }
+    
+    print("🔧 网络配置检查:")
+    print("-" * 50)
+    
+    for env_name, spec in config_spec.items():
+        env_value = os.getenv(env_name)
+        if env_value is None:
+            # 环境变量不存在，使用默认值
+            config[env_name] = spec['default']
+            all_from_env = False
+            print(f"⚠️  {env_name}: 未设置 → 使用默认值: {spec['default']}")
+            print(f"   描述: {spec['desc']}")
+            print(f"   建议: {spec['recommend']}")
+            print(f"   设置方法: 在GitHub Actions YML中添加: {env_name}: '{str(spec['default']).lower()}'")
+        else:
+            # 环境变量存在，转换为布尔值
+            config[env_name] = env_value.lower() == 'true'
+            print(f"✅  {env_name}: 已设置 → {env_value}")
+    
+    print("-" * 50)
+    
+    if not all_from_env:
+        print("📝 提示: 部分配置使用默认值，建议在GitHub Actions YML中完整配置")
+        print("       这样可以获得更可控的网络行为和更好的测速结果")
+    else:
+        print("🎯 所有网络配置均来自环境变量，配置完整！")
+    
+    return config
+
+# 获取网络配置
+network_config = get_network_config()
+WARP_FOR_SCRAPING = network_config['WARP_FOR_SCRAPING']
+WARP_FOR_TCP = network_config['WARP_FOR_TCP']
+WARP_FOR_SPEEDTEST = network_config['WARP_FOR_SPEEDTEST']
+WARP_FOR_FINAL = network_config['WARP_FOR_FINAL']
+
+# ==================== 完整的网络控制函数 ====================
+
+def get_current_ip():
+    """获取当前出口IP"""
+    try:
+        result = subprocess.run(
+            ["curl", "-4", "-s", "--max-time", "5", "https://ip.sb"],
+            capture_output=True, text=True
+        )
+        if result.returncode == 0:
+            ip = result.stdout.strip()
+            # 判断是否为Warp IP（常见的Warp出口IP段）
+            warp_prefixes = ['162.159.192.', '162.159.193.', '162.159.195.', 
+                           '172.64.240.', '172.64.241.', '172.64.242.', '172.64.243.']
+            for prefix in warp_prefixes:
+                if ip.startswith(prefix):
+                    return f"{ip} (🌐 Warp网络)"
+            return f"{ip} (💻 原始网络)"
+        return "unknown (无法获取IP)"
+    except Exception as e:
+        return f"unknown (获取失败: {str(e)[:50]})"
+
+def is_warp_enabled():
+    """检查Warp是否启用"""
+    try:
+        result = subprocess.run(
+            ["wg", "show"],
+            capture_output=True, text=True,
+            timeout=3
+        )
+        # 检查wgcf接口是否存在
+        if result.returncode == 0 and "wgcf" in result.stdout:
+            return True
+        
+        # 额外检查wg-quick状态
+        result2 = subprocess.run(
+            ["ip", "link", "show", "wgcf"],
+            capture_output=True, text=True,
+            timeout=2
+        )
+        return result2.returncode == 0
+        
+    except (subprocess.TimeoutExpired, FileNotFoundError, Exception) as e:
+        return False
+
 def start_cloudflare_warp():
     """
     在 GitHub Actions 中启用 Cloudflare Warp
     模拟国内网络环境，使测速结果对国内用户有效
     """
-    print("🌐 正在启动 Cloudflare Warp（尝试模拟国内环境）...")
+    print("🌐 正在启动 Cloudflare Warp（模拟国内网络环境）...")
+    print("=" * 60)
     
     try:
-        # ... [现有代码] ...
+        # 1. 先检查是否已经在Warp状态
+        if is_warp_enabled():
+            current_ip = get_current_ip()
+            print("✅ Warp已启用，当前状态:")
+            print(f"   IP地址: {current_ip}")
+            print("   📍 无需重新启动")
+            return True
         
-        # 5. 启动 WARP VPN (需要 sudo 权限)
-        print(">> 5. 启动 WARP VPN...")
-        # wg-quick up 可能会在某些环境下返回非零状态码但实际成功，或有stderr输出
-        # 允许一定程度的失败，但要检查实际效果
-        result = subprocess.run(
-            ["sudo", "wg-quick", "up", "wgcf"],
-            capture_output=True, text=True, timeout=30 # 启动超时
+        # 2. 清理可能存在的旧配置
+        print("1️⃣ 清理旧配置...")
+        subprocess.run(
+            ["sudo", "wg-quick", "down", "wgcf"],
+            capture_output=True, stderr=subprocess.DEVNULL, timeout=10
         )
         
-        # 检查启动结果
-        if result.returncode == 0 or "errno" not in result.stderr:
-            print("✅ WARP 启动成功或已连接")
-            # 验证IP是否已切换
+        # 等待清理完成
+        time.sleep(1)
+        
+        # 3. 检查并安装必要工具
+        print("2️⃣ 检查系统依赖...")
+        required_tools = ["wg-quick", "curl", "resolvconf"]
+        missing_tools = []
+        
+        for tool in required_tools:
+            if not shutil.which(tool):
+                missing_tools.append(tool)
+        
+        if missing_tools:
+            print(f"   安装缺失工具: {', '.join(missing_tools)}")
+            subprocess.run(
+                ["sudo", "apt-get", "update", "-qq"],
+                capture_output=True
+            )
+            subprocess.run(
+                ["sudo", "apt-get", "install", "-y", "wireguard-tools", "curl", "resolvconf"],
+                capture_output=True
+            )
+        else:
+            print("   ✅ 所有工具已安装")
+        
+        # 4. 下载 wgcf 工具（如果不存在）
+        wgcf_path = "./wgcf"
+        if not os.path.exists(wgcf_path) or not os.access(wgcf_path, os.X_OK):
+            print("3️⃣ 下载 wgcf 工具...")
             try:
-                ip_check = subprocess.run(
-                    ["curl", "-4", "-s", "--max-time", "10", "https://ip.sb"],
-                    capture_output=True, text=True
+                subprocess.run([
+                    "curl", "-fsSL", "-o", wgcf_path,
+                    "https://github.com/ViRb3/wgcf/releases/download/v2.2.29/wgcf_2.2.29_linux_amd64"
+                ], check=True, timeout=30)
+                os.chmod(wgcf_path, 0o755)
+                print("   ✅ wgcf 下载成功")
+            except Exception as e:
+                print(f"   ❌ wgcf 下载失败: {e}")
+                return False
+        else:
+            print("   ✅ wgcf 已存在")
+        
+        # 5. 生成配置文件
+        config_file = "wgcf-profile.conf"
+        if not os.path.exists(config_file):
+            print("4️⃣ 生成 WARP 配置文件...")
+            try:
+                # 注册Warp账户
+                register_result = subprocess.run(
+                    [wgcf_path, "register", "--accept-tos"],
+                    capture_output=True, text=True, timeout=60
                 )
-                if ip_check.returncode == 0:
-                    print(f"当前出口 IPv4: {ip_check.stdout.strip()}")
-            except:
-                pass
+                if register_result.returncode != 0:
+                    print(f"   ⚠️  注册警告: {register_result.stderr[:100]}")
+                
+                # 生成配置文件
+                generate_result = subprocess.run(
+                    [wgcf_path, "generate"],
+                    capture_output=True, text=True, timeout=60
+                )
+                
+                if generate_result.returncode == 0 and os.path.exists(config_file):
+                    print("   ✅ 配置文件生成成功")
+                else:
+                    print(f"   ❌ 配置文件生成失败: {generate_result.stderr[:100]}")
+                    # 尝试使用备用配置
+                    print("   尝试使用备用配置...")
+                    create_backup_config(config_file)
+                    
+            except Exception as e:
+                print(f"   ❌ 配置生成异常: {e}")
+                create_backup_config(config_file)
+        else:
+            print("   ✅ 配置文件已存在")
+        
+        # 6. 安装配置文件
+        print("5️⃣ 安装 WARP 配置...")
+        try:
+            subprocess.run(["sudo", "mkdir", "-p", "/etc/wireguard"], check=True)
+            subprocess.run(["sudo", "cp", config_file, "/etc/wireguard/wgcf.conf"], check=True)
+            print("   ✅ 配置文件安装成功")
+        except Exception as e:
+            print(f"   ❌ 配置文件安装失败: {e}")
+            return False
+        
+        # 7. 启动 WARP
+        print("6️⃣ 启动 WARP VPN...")
+        try:
+            start_result = subprocess.run(
+                ["sudo", "wg-quick", "up", "wgcf"],
+                capture_output=True, text=True, timeout=30
+            )
+            
+            # 检查启动结果
+            if start_result.returncode == 0:
+                print("   ✅ WARP 启动成功")
+            else:
+                # 检查是否已经有其他Warp连接
+                if "already exists" in start_result.stderr:
+                    print("   ⚠️  WARP连接已存在")
+                else:
+                    print(f"   ⚠️  WARP启动警告: {start_result.stderr[:200]}")
+        
+        except subprocess.TimeoutExpired:
+            print("   ⚠️  WARP启动超时，但可能已成功")
+        except Exception as e:
+            print(f"   ❌ WARP启动异常: {e}")
+            return False
+        
+        # 8. 验证启动结果
+        print("7️⃣ 验证连接状态...")
+        time.sleep(2)  # 等待网络稳定
+        
+        if is_warp_enabled():
+            current_ip = get_current_ip()
+            print(f"   ✅ Warp已成功启用")
+            print(f"   📍 当前出口 IP: {current_ip}")
+            
+            # 9. 设置智能路由（让GitHub走原始网络）
+            print("8️⃣ 设置智能路由...")
+            setup_smart_routing()
+            
             return True
         else:
-            print(f"⚠️ WARP 启动失败: {result.stderr[:200]}")
+            print("   ❌ Warp启动失败，接口未激活")
+            # 尝试备用方案
+            print("   尝试备用启动方案...")
+            return start_warp_fallback()
+            
+    except Exception as e:
+        print(f"❌ WARP 启动过程异常: {e}")
+        print("   尝试最终备用方案...")
+        return start_warp_fallback()
+
+def create_backup_config(config_file):
+    """创建备用Warp配置"""
+    try:
+        backup_config = """[Interface]
+PrivateKey = YOUR_PRIVATE_KEY_HERE
+Address = 172.16.0.2/32
+DNS = 1.1.1.1
+
+[Peer]
+PublicKey = bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=
+AllowedIPs = 0.0.0.0/0
+Endpoint = engage.cloudflareclient.com:2408"""
+        
+        with open(config_file, 'w') as f:
+            f.write(backup_config)
+        print("   ✅ 备用配置创建成功（需要有效的PrivateKey）")
+        return True
+    except Exception as e:
+        print(f"   ❌ 备用配置创建失败: {e}")
+        return False
+
+def setup_smart_routing():
+    """设置智能路由：GitHub走原始网络，其他走Warp"""
+    try:
+        # 获取默认网关
+        result = subprocess.run(
+            ["ip", "route", "show", "default"],
+            capture_output=True, text=True
+        )
+        
+        if result.returncode == 0:
+            lines = result.stdout.strip().split('\n')
+            default_gateway = ""
+            
+            for line in lines:
+                if "via" in line:
+                    parts = line.split()
+                    if len(parts) > 2:
+                        default_gateway = parts[2]
+                        break
+            
+            if default_gateway:
+                # GitHub IP范围
+                github_ranges = [
+                    "140.82.112.0/20", "185.199.108.0/22", "185.199.109.0/22",
+                    "185.199.110.0/22", "185.199.111.0/22", "192.30.252.0/22",
+                    "192.30.253.0/22", "192.30.254.0/22", "192.30.255.0/22"
+                ]
+                
+                print(f"   默认网关: {default_gateway}")
+                print("   设置GitHub路由...")
+                
+                added_count = 0
+                for cidr in github_ranges:
+                    try:
+                        subprocess.run([
+                            "sudo", "ip", "route", "add", cidr, "via", default_gateway
+                        ], stderr=subprocess.DEVNULL, check=True)
+                        added_count += 1
+                    except:
+                        pass
+                
+                print(f"   ✅ 已添加 {added_count}/{len(github_ranges)} 个GitHub路由")
+                return True
+            else:
+                print("   ⚠️  无法获取默认网关，跳过智能路由")
+                return False
+        else:
+            print("   ⚠️  无法获取路由信息，跳过智能路由")
             return False
             
     except Exception as e:
-        print(f"❌ WARP 启动异常: {e}")
+        print(f"   ⚠️  智能路由设置失败: {e}")
         return False
 
+def start_warp_fallback():
+    """启动Warp的备用方案"""
+    print("🔄 尝试备用Warp启动方案...")
+    
+    try:
+        # 尝试直接使用wg命令
+        config_path = "/etc/wireguard/wgcf.conf"
+        if os.path.exists(config_path):
+            print("   使用wg命令直接连接...")
+            result = subprocess.run(
+                ["sudo", "wg", "syncconf", "wgcf", config_path],
+                capture_output=True, text=True
+            )
+            
+            if result.returncode == 0:
+                # 设置接口
+                subprocess.run(["sudo", "ip", "link", "set", "wgcf", "up"], 
+                             stderr=subprocess.DEVNULL)
+                
+                time.sleep(2)
+                if is_warp_enabled():
+                    current_ip = get_current_ip()
+                    print(f"   ✅ 备用方案成功！当前IP: {current_ip}")
+                    return True
+        
+        print("   ❌ 所有备用方案失败")
+        return False
+        
+    except Exception as e:
+        print(f"   ❌ 备用方案异常: {e}")
+        return False
 
+def stop_cloudflare_warp():
+    """停止Warp连接，恢复原始网络"""
+    print("🌐 正在停止 Cloudflare Warp，恢复原始网络...")
+    print("=" * 60)
+    
+    try:
+        # 1. 停止Warp连接
+        print("1️⃣ 停止Warp连接...")
+        stop_result = subprocess.run(
+            ["sudo", "wg-quick", "down", "wgcf"],
+            capture_output=True, text=True, timeout=15
+        )
+        
+        # 2. 清理路由（移除智能路由）
+        print("2️⃣ 清理智能路由...")
+        github_ranges = [
+            "140.82.112.0/20", "185.199.108.0/22", "185.199.109.0/22",
+            "185.199.110.0/22", "185.199.111.0/22", "192.30.252.0/22",
+            "192.30.253.0/22", "192.30.254.0/22", "192.30.255.0/22"
+        ]
+        
+        cleaned_count = 0
+        for cidr in github_ranges:
+            try:
+                subprocess.run(
+                    ["sudo", "ip", "route", "del", cidr],
+                    stderr=subprocess.DEVNULL,
+                    timeout=3
+                )
+                cleaned_count += 1
+            except:
+                pass
+        
+        print(f"   ✅ 已清理 {cleaned_count}/{len(github_ranges)} 个路由")
+        
+        # 3. 等待网络稳定
+        print("3️⃣ 等待网络稳定...")
+        time.sleep(3)
+        
+        # 4. 验证恢复
+        current_ip = get_current_ip()
+        warp_status = is_warp_enabled()
+        
+        print("4️⃣ 验证恢复结果:")
+        print(f"   Warp状态: {'已启用' if warp_status else '已禁用'}")
+        print(f"   当前IP: {current_ip}")
+        
+        if not warp_status:
+            print("✅ Warp已成功停止，恢复原始网络")
+            return True
+        else:
+            print("⚠️  Warp可能未完全停止，但已尽力清理")
+            return False
+        
+    except Exception as e:
+        print(f"❌ 停止Warp失败: {e}")
+        return False
+
+def ensure_network_for_stage(stage_name, require_warp=False):
+    """
+    确保当前网络状态适合指定阶段
+    
+    参数:
+        stage_name: 阶段名称 ('scraping', 'tcp', 'speedtest', 'final')
+        require_warp: True=需要Warp网络, False=需要原始GitHub网络
+    
+    返回:
+        bool: 网络切换是否成功
+    """
+    if not os.getenv('GITHUB_ACTIONS') == 'true':
+        print(f"  ℹ️  非GitHub环境，跳过网络切换: {stage_name}")
+        return True
+    
+    current_warp = is_warp_enabled()
+    current_ip = get_current_ip()
+    
+    print(f"  🔄 阶段[{stage_name}]网络检查:")
+    print(f"     需要: {'🌐 Warp网络（模拟国内）' if require_warp else '💻 原始GitHub网络'}")
+    print(f"     当前: {'🌐 Warp网络' if current_warp else '💻 原始网络'} ({current_ip})")
+    
+    if require_warp and not current_warp:
+        print(f"     状态: 需要切换到Warp网络...")
+        if start_cloudflare_warp():
+            print(f"     结果: ✅ 已成功切换到Warp网络")
+            return True
+        else:
+            print(f"     结果: ⚠️  Warp切换失败，继续使用当前网络")
+            return False
+            
+    elif not require_warp and current_warp:
+        print(f"     状态: 需要切换到原始GitHub网络...")
+        if stop_cloudflare_warp():
+            print(f"     结果: ✅ 已成功切换到原始GitHub网络")
+            return True
+        else:
+            print(f"     结果: ⚠️  原始网络切换失败，继续使用Warp")
+            return False
+    else:
+        print(f"     状态: ✅ 网络状态正确，无需切换")
+        return True
+
+# ======= 国家国旗识别 ======
 def get_country_flag_emoji(code):
     if not code or len(code) != 2:
         return "❓"
@@ -1663,69 +2091,6 @@ def clash_test_proxy(clash_path, proxy, debug=False):
             pass
     return None
 
-
-# 测速使用的网络选择
-
-def ensure_network_for_stage(stage_name, require_warp=False):
-    """
-    确保当前网络状态适合指定阶段
-    stage_name: 'scraping', 'tcp', 'speedtest', 'final'
-    require_warp: True=需要Warp网络, False=需要原始GitHub网络
-    """
-    if not os.getenv('GITHUB_ACTIONS') == 'true':
-        print(f"非GitHub环境，跳过网络切换: {stage_name}")
-        return True
-    
-    current_ip = get_current_ip()
-    is_warp = is_warp_enabled()
-    
-    if require_warp and not is_warp:
-        print(f"⚠️ 阶段[{stage_name}]需要Warp网络但当前是原始网络，正在切换...")
-        return start_cloudflare_warp()
-    elif not require_warp and is_warp:
-        print(f"⚠️ 阶段[{stage_name}]需要原始网络但当前是Warp，正在切换...")
-        return stop_cloudflare_warp()
-    
-    print(f"✅ 阶段[{stage_name}]网络状态正常")
-    return True
-
-def get_current_ip():
-    """获取当前出口IP"""
-    try:
-        import subprocess
-        result = subprocess.run(
-            ["curl", "-4", "-s", "--max-time", "5", "https://ip.sb"],
-            capture_output=True, text=True
-        )
-        return result.stdout.strip() if result.returncode == 0 else "unknown"
-    except:
-        return "unknown"
-
-def is_warp_enabled():
-    """检查Warp是否启用"""
-    try:
-        import subprocess
-        result = subprocess.run(["wg", "show"], capture_output=True, text=True)
-        return "wgcf" in result.stdout
-    except:
-        return False
-
-def stop_cloudflare_warp():
-    """停止Warp连接，恢复原始网络"""
-    try:
-        subprocess.run(["sudo", "wg-quick", "down", "wgcf"], 
-                      capture_output=True, timeout=10)
-        
-        # 清理路由
-        subprocess.run(["sudo", "ip", "route", "del", "140.82.112.0/20"], 
-                      stderr=subprocess.DEVNULL)
-        # ... 其他路由清理 ...
-        
-        print("✅ Warp已停止，恢复原始网络")
-        return True
-    except Exception as e:
-        print(f"❌ 停止Warp失败: {e}")
-        return False
 
 
 
