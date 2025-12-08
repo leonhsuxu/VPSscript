@@ -2573,14 +2573,33 @@ async def main():
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     try:
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-            # 只写YAML内容，不写注释
+            # 写入配置文件注释头
+            f.write("# ==================================================\n")
+            f.write("#  TG 免费节点 · 自动测速精选订阅（Clash 格式）\n")
+            f.write("# ==================================================\n")
+            f.write(f"# 更新时间   : {update_time} (北京时间)\n")
+            f.write(f"# 节点总数   : {total_count} 个优质节点\n")
+            f.write(f"# 平均质量分 : {avg_quality:.1f}/100\n")
+            
+            # 质量分布格式化，去掉大括号
+            quality_stats_str = f"🔥极品: {quality_stats['🔥极品']}, ⭐优质: {quality_stats['⭐优质']}, ✅良好: {quality_stats['✅良好']}, ⚡可用: {quality_stats['⚡可用']}"
+            f.write(f"# 质量分布   : {quality_stats_str}\n")
+            
+            f.write(f"# 带宽筛选   : ≥ {MIN_BANDWIDTH_MB}MB/s\n")
+            f.write(f"# 测速模式   : {SPEEDTEST_MODE}\n")
+            f.write(f"# 网络配置   : TCP_Warp={WARP_FOR_TCP}, Speedtest_Warp={WARP_FOR_SPEEDTEST}\n")
+            f.write("# 排序规则   : 质量评分 → 延迟 → 地区优先级\n")
+            f.write("# 构建方式   : GitHub Actions 全自动，每4小时更新一次\n")
+            f.write("# ==================================================\n\n")
+            
+            # 写入YAML数据
             final_config = {
                 'proxies': final_proxies,
                 'last_message_ids': last_message_ids,
                 'update_time': update_time,
                 'total_nodes': total_count,
                 'average_quality': round(avg_quality, 1),
-                'quality_stats': quality_stats,
+                'quality_stats': quality_stats_str,  # 使用格式化后的字符串
                 'bandwidth_filter': {
                     'enabled': ENABLE_BANDWIDTH_FILTER,
                     'min_mb': MIN_BANDWIDTH_MB
@@ -2596,26 +2615,26 @@ async def main():
             
             yaml.dump(final_config, f, allow_unicode=True, sort_keys=False, indent=2, width=4096, default_flow_style=False)
 
-        print(f"✅ 配置文件已成功保存至 {OUTPUT_FILE}")
-        print(f"📊 本次处理完成:")
-        print(f"   节点总数   : {total_count} 个优质节点")
-        print(f"   平均质量分 : {avg_quality:.1f}/100")
-        print(f"   质量分布   : {quality_stats}")
-        print(f"   带宽筛选   : ≥ {MIN_BANDWIDTH_MB}MB/s")
-        print(f"   测速模式   : {SPEEDTEST_MODE}")
-        print(f"   更新时间   : {update_time}")
-        print("=" * 60)
-        print("🎉 全部任务圆满完成！")
-        
-        # 最终清理：确保切换回GitHub网络
-        if os.getenv('GITHUB_ACTIONS') == 'true' and WARP_FOR_FINAL == False:
-            print("🧹 最终清理：确保使用原始GitHub网络")
-            ensure_network_for_stage('cleanup', require_warp=False)
-            
     except Exception as e:
         print(f"❌ 写出配置文件失败: {e}")
         sys.exit(1)
-   
+    
+    # 显示处理结果（不显示配置文件内容）
+    print(f"✅ 配置文件已成功保存至 {OUTPUT_FILE}")
+    print(f"📊 本次处理完成:")
+    print(f"   节点总数   : {total_count} 个优质节点")
+    print(f"   平均质量分 : {avg_quality:.1f}/100")
+    print(f"   质量分布   : {quality_stats_str}")
+    print(f"   带宽筛选   : ≥ {MIN_BANDWIDTH_MB}MB/s")
+    print(f"   测速模式   : {SPEEDTEST_MODE}")
+    print(f"   更新时间   : {update_time}")
+    print("=" * 60)
+    print("🎉 全部任务圆满完成！")
+    
+    # 最终清理：确保切换回GitHub网络
+    if os.getenv('GITHUB_ACTIONS') == 'true' and WARP_FOR_FINAL == False:
+        print("🧹 最终清理：确保使用原始GitHub网络")
+        ensure_network_for_stage('cleanup', require_warp=False)
            
 
 
