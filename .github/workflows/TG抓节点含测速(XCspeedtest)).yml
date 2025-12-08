@@ -283,7 +283,7 @@ jobs:
                 ;;
               "test_mode")
                 echo "测试模式：减少抓取数量，使用Warp测速"
-                echo "TELEGRAM_CHANNEL_IDS=$'@fqDINYUE\n@wxdy666\n@freeyule'" >> $GITHUB_ENV
+                echo "TELEGRAM_CHANNEL_IDS=@fqDINYUE" >> $GITHUB_ENV
                 echo "WARP_FOR_SCRAPING=false" >> $GITHUB_ENV
                 echo "WARP_FOR_TCP=true" >> $GITHUB_ENV
                 echo "WARP_FOR_SPEEDTEST=true" >> $GITHUB_ENV
@@ -380,52 +380,68 @@ jobs:
           echo "结束时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
           echo "=== ✅ 脚本执行完成 ==="
       
-      # ==================== 步骤13：提交前清理Warp连接 ====================
-      - name: 提交前清理 Warp 连接
+      # ==================== 步骤13：确保网络正常（重要修复） ====================
+      - name: 确保网络正常
         if: always()
         run: |
-          echo "=== 🧹 提交前清理 WARP 连接 ==="
-          echo "清理时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
+          echo "=== 🔧 确保网络正常 ==="
+          echo "检查时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
           echo ""
-          echo "1️⃣ 检查当前网络状态:"
-          CURRENT_IP=$(curl -4 -s --max-time 5 https://ip.sb 2>/dev/null || echo "无法获取")
-          echo "   当前出口 IP: $CURRENT_IP"
-          echo "2️⃣ 停止 WARP VPN..."
-          sudo wg-quick down wgcf 2>/dev/null || echo "   WARP未运行或停止失败"
-          echo "3️⃣ 清理网络接口..."
-          sudo ip link delete wgcf 2>/dev/null || echo "   接口不存在或删除失败"
-          echo "4️⃣ 清理智能路由配置..."
-          github_ranges=(
-            "140.82.112.0/20"
-            "185.199.108.0/22"
-            "185.199.109.0/22"
-            "185.199.110.0/22"
-            "185.199.111.0/22"
-          )
-          cleaned_count=0
-          for cidr in "${github_ranges[@]}"; do
-            sudo ip route del $cidr 2>/dev/null && cleaned_count=$((cleaned_count + 1)) || true
+          
+          echo "1️⃣ 停止任何Warp连接..."
+          sudo wg-quick down wgcf 2>/dev/null || echo "   WARP未运行"
+          sudo ip link delete wgcf 2>/dev/null || echo "   接口不存在"
+          
+          echo "2️⃣ 清除Warp相关路由..."
+          for cidr in "140.82.112.0/20" "185.199.108.0/22" "185.199.109.0/22" "185.199.110.0/22" "185.199.111.0/22"; do
+            sudo ip route del $cidr 2>/dev/null || true
           done
-          echo "   已清理 $cleaned_count 个GitHub路由"
-          echo "5️⃣ 刷新DNS缓存..."
-          sudo systemctl restart systemd-resolved 2>/dev/null || echo "   DNS刷新失败"
-          echo "6️⃣ 测试GitHub连接..."
-          echo "   DNS解析测试:"
-          timeout 5 nslookup github.com 2>&1 | head -3 || echo "   DNS解析失败"
-          echo "   HTTP连接测试:"
-          timeout 5 curl -I --silent https://github.com 2>&1 | head -2 || echo "   HTTP连接失败"
-          echo "7️⃣ 等待网络稳定..."
-          sleep 3
-          echo "8️⃣ 验证清理结果:"
-          FINAL_IP=$(curl -4 -s --max-time 5 https://ip.sb 2>/dev/null || echo "无法获取")
-          echo "   最终出口 IP: $FINAL_IP"
-          if echo "$FINAL_IP" | grep -q "162.159\|172.64"; then
-            echo "   ⚠️  检测到可能仍是Warp IP，但已尽力清理"
-          else
-            echo "   ✅ 清理完成，已恢复原始网络"
+          
+          echo "3️⃣ 测试网络连接..."
+          echo "   测试IP查询服务..."
+          IP_SERVERS=(
+            "https://ip.sb"
+            "https://api.ipify.org"
+            "https://checkip.amazonaws.com"
+            "https://ipinfo.io/ip"
+          )
+          
+          SUCCESS=false
+          for server in "${IP_SERVERS[@]}"; do
+            echo "   尝试 $server ..."
+            if curl -4 -s --max-time 5 "$server" | grep -qE '^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$'; then
+              CURRENT_IP=$(curl -4 -s --max-time 5 "$server")
+              echo "   ✅ 成功获取IP: $CURRENT_IP (来自 $server)"
+              SUCCESS=true
+              break
+            else
+              echo "   ⚠️  $server 不可用"
+            fi
+          done
+          
+          if [ "$SUCCESS" = false ]; then
+            echo "   ❌ 所有IP查询服务都失败，使用备用方法..."
+            CURRENT_IP=$(hostname -I | awk '{print $1}' 2>/dev/null || echo "unknown")
+            echo "   备用IP: $CURRENT_IP"
           fi
+          
+          echo "4️⃣ 检查GitHub连接..."
+          if curl -I --silent --max-time 10 https://github.com | grep -q "200\|301\|302"; then
+            echo "   ✅ GitHub连接正常"
+          else
+            echo "   ⚠️  GitHub连接可能有问题，但继续执行..."
+          fi
+          
+          echo "5️⃣ 验证不是Warp IP..."
+          if echo "$CURRENT_IP" | grep -q "162\.159\." || echo "$CURRENT_IP" | grep -q "172\.64\."; then
+            echo "   ⚠️  检测到Warp IP，尝试强制清理..."
+            echo "   ℹ️  当前IP可能是Cloudflare Warp IP"
+          else
+            echo "   ✅ 当前不是Warp IP"
+          fi
+          
           echo ""
-          echo "=== ✅ 网络清理完成 ==="
+          echo "=== 🔧 网络检查完成 ==="
       
       # ==================== 步骤14：提交生成的Clash配置到仓库 ====================
       - name: 提交生成的 Clash 配置到仓库
@@ -434,7 +450,11 @@ jobs:
           echo "=== 提交变更到GitHub ==="
           echo "提交时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
           echo ""
-          echo "检查文件变更..."
+          
+          echo "1️⃣ 首先检查网络状态..."
+          echo "   当前IP: $(curl -4 -s --max-time 5 https://checkip.amazonaws.com 2>/dev/null || echo '无法获取')"
+          
+          echo "2️⃣ 检查文件变更..."
           if git status --porcelain | grep -q "flclashyaml/Tg-node1.yaml"; then
             echo "检测到配置文件变更"
             echo "配置Git用户..."
@@ -510,6 +530,6 @@ jobs:
           fi
           echo ""
           echo "5️⃣ 最终网络状态:"
-          echo "   出口IP: $(curl -4 -s --max-time 5 https://ip.sb || echo '获取失败')"
+          echo "   出口IP: $(curl -4 -s --max-time 5 https://checkip.amazonaws.com 2>/dev/null || echo '获取失败')"
           echo ""
           echo "=== 工作流全部结束 ==="
