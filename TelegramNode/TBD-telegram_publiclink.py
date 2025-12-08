@@ -191,21 +191,67 @@ def do_speed_test():
 
 # ==================== 【关键修改2】在最前面加入 Warp 启动函数 ====================
 def start_cloudflare_warp():
-    """在 GitHub Actions 里自动开启 Cloudflare Warp，模拟国内网络"""
-    print("正在启动 Cloudflare Warp（免费模拟国内环境）...")
+    """
+    在 GitHub Actions 中启用 Cloudflare Warp
+    模拟国内网络环境，使测速结果对国内用户有效
+    """
+    print("🌐 正在启动 Cloudflare Warp（尝试模拟国内环境）...")
+    
     try:
-        subprocess.run(["curl", "-fsSL", "https://github.com/ViRb3/wgcf/releases/download/v2.2.19/wgcf_2.2.19_linux_amd64", "-o", "wgcf"], check=True)
-        subprocess.run(["chmod", "+x", "wgcf"], check=True)
-        subprocess.run(["./wgcf", "register", "--accept-tos"], check=True, capture_output=True)
-        subprocess.run(["./wgcf", "generate"], check=True)
-        subprocess.run(["sudo", "mv", "wgcf-profile.conf", "/etc/wireguard/wgcf.conf"], check=True)
-        result = subprocess.run(["sudo", "wg-quick", "up", "wgcf"], capture_output=True, text=True)
-        if result.returncode == 0 or "interface" in result.stderr:
-            print("Cloudflare Warp 启动成功！测速流量已走中国优化线路")
-        else:
-            print("Warp 启动失败，降级使用原始网络")
-    except Exception as e:
-        print(f"Warp 启动异常: {e}，继续使用原始网络")
+        # 1. 下载 wgcf 工具
+        # 注意：此处假设是 Linux amd64，如果 GitHub Actions Runner 架构不同，需调整 URL
+        print(">> 1. 下载 wgcf 工具...")
+        subprocess.run([
+            "curl", "-fsSL", 
+            "https://github.com/ViRb3/wgcf/releases/download/v2.2.19/wgcf_2.2.19_linux_amd64",
+            "-o", "wgcf"
+        ], check=True, capture_output=True)
+        
+        subprocess.run(["chmod", "+x", "wgcf"], check=True, capture_output=True)
+        print(">> wgcf 工具下载并授权完成。")
+
+        # 2. 注册 WARP 账户
+        print(">> 2. 注册 WARP 账户...")
+        # 注册时可能会出现超时，增加重试机制或更长的超时时间
+        result = subprocess.run(
+            ["./wgcf", "register", "--accept-tos"],
+            capture_output=True, text=True, timeout=60 # 增加注册超时时间
+        )
+        
+        if result.returncode != 0 and "Already registered" not in result.stderr:
+            print(f"⚠️ WARP 注册失败: {result.stderr[:500]}") # 打印更多错误信息
+            return False
+        
+        print(">> WARP 账户注册或已注册。")
+        
+        # 3. 生成配置
+        print(">> 3. 生成 WARP 配置...")
+        subprocess.run(["./wgcf", "generate"], check=True, capture_output=True)
+        print(">> WARP 配置生成完成 (wgcf-profile.conf)。")
+
+        # 4. 配置 WireGuard (需要 sudo 权限)
+        print(">> 4. 配置 WireGuard...")
+        subprocess.run(
+            ["sudo", "mkdir", "-p", "/etc/wireguard"], 
+            capture_output=True, check=True
+        ) # 确保目录存在
+        subprocess.run(
+            ["sudo", "cp", "wgcf-profile.conf", "/etc/wireguard/wgcf.conf"], 
+            check=True, capture_output=True
+        )
+        print(">> WireGuard 配置复制完成。")
+
+        # 5. 启动 WARP VPN (需要 sudo 权限)
+        print(">> 5. 启动 WARP VPN...")
+        # wg-quick up 可能会在某些环境下返回非零状态码但实际成功，或有stderr输出
+        # 允许一定程度的失败，但要检查实际效果
+        result = subprocess.run(
+            ["sudo", "wg-quick", "up", "wgcf"],
+            capture_output=True, text=True, timeout=30 # 启动超时
+        )
+        
+        # 检查启动结果
+    return False # 默认返回 False
 
 
 def get_country_flag_emoji(code):
@@ -1495,10 +1541,19 @@ async def main():
     print(datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S"))
     print("=" * 60)
     
-    # 关键：启动 Warp（只在 GitHub Actions 环境生效，本地运行会自动跳过）
-    if os.getenv('RUNNER_OS') == 'Linux' and 'GITHUB_ACTIONS' in os.environ:
-        start_cloudflare_warp()
-
+    # 阶段 0: 在 GitHub Actions 中启动 Warp 模拟国内环境
+    # 仅在 GitHub Actions 环境下尝试启动 WARP
+    if os.getenv('GITHUB_ACTIONS') == 'true': # 确保环境变量名为 'true'
+        print("检测到 GitHub Actions 环境，尝试启动 Cloudflare Warp...")
+        warp_ok = start_cloudflare_warp()
+        if warp_ok:
+            print("✅ 国内优化网络环境已就绪。")
+            # 添加短暂延迟，确保网络稳定
+            await asyncio.sleep(5) 
+        else:
+            print("⚠️ Warp 启动失败，将使用 GitHub Actions 的默认海外网络环境进行测速。")
+    else:
+        print("未在 GitHub Actions 环境中运行，跳过 WARP 启动。")
 
 
     preprocess_regex_rules()
