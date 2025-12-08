@@ -963,24 +963,37 @@ async def scrape_telegram_links(last_message_ids=None):
         # 并发处理批次内的频道
         results = await asyncio.gather(*tasks, return_exceptions=True)
         
+        # 跟踪批次中是否有任何链接
+        batch_has_links = False
+        
         for idx, result in enumerate(results):
             channel_id = batch[idx]
             if isinstance(result, Exception):
-                print(f"❌ 处理频道 '{channel_id}' 时出错: {result}")
+                # 静默处理错误
                 continue
                 
             links, new_max_id = result
             for link in links:
                 if link not in all_links:
                     all_links.add(link)
-                    print(f"  ✅ 找到链接: {link[:70]}...")
+                    batch_has_links = True
+                    # 🔗提取链接已经在extract_valid_subscribe_links中打印了
             
             if new_max_id > last_message_ids.get(channel_id, 0):
                 last_message_ids[channel_id] = new_max_id
+        
+        # 如果整个批次都没有提取到链接，显示N/A
+        if not batch_has_links:
+            # 显示该批次每个频道都没有链接
+            for channel_id in batch:
+                channel_display = channel_id.replace('@', '')
+                print(f"🔗 [{channel_display}] 提取链接: N/A")
     
     await client.disconnect()
     print(f"\n✅ 抓取完成, 共找到 {len(all_links)} 个不重复的有效链接。")
     return list(all_links), last_message_ids
+    
+
 
 async def process_channel(client, channel_id, last_message_ids, target_time):
     """处理单个频道的辅助函数"""
@@ -990,7 +1003,7 @@ async def process_channel(client, channel_id, last_message_ids, target_time):
     try:
         entity = await client.get_entity(channel_id)
     except Exception as e:
-        # 静默处理错误
+        # 无法获取频道实体，返回空结果
         return channel_links, max_id_found
     
     try:
@@ -1009,6 +1022,8 @@ async def process_channel(client, channel_id, last_message_ids, target_time):
         pass
     
     return channel_links, max_id_found
+    
+
 
 # --- 3合1下载 版本的下载 ---
 
