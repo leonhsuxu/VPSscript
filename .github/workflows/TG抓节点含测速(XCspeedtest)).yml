@@ -5,10 +5,9 @@ on:
   workflow_dispatch:        # 支持手动触发
 env:
   MIHOMO_VERSION: v1.19.17
-  SPEEDTEST_VERSION: v0.4.1  # 需要时更新版本号
-  WGCF_VERSION: v2.2.29      # WARP wgcf 工具版本
+  SPEEDTEST_VERSION: v0.4.1
+  WGCF_VERSION: v2.2.29
   TELEGRAM_CHANNEL_IDS: |
-    # 频道和群列表，换行分隔
     @fqDINYUE
     @wxdy666
     @freeyule
@@ -23,13 +22,14 @@ env:
     @proxyshareCN
 jobs:
   build:
-    runs-on: ubuntu-latest # 使用 Ubuntu Linux Runner
+    runs-on: ubuntu-latest
     steps:
       # 1. 检出代码仓库
       - name: 检出代码仓库
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
       
       # 2. 设置 Python 环境
       - name: 设置 Python 环境
@@ -53,9 +53,6 @@ jobs:
           pip install -r requirements.txt
           sudo apt-get update -qq
           sudo apt-get install -y wireguard-tools curl resolvconf
-          echo "检查 WireGuard 模块状态:"
-          sudo modprobe wireguard 2>&1 || true
-          lsmod | grep wireguard || echo "⚠️ WireGuard 模块可能未加载"
       
       # 5. 缓存 Mihomo 程序
       - name: Cache Mihomo
@@ -157,153 +154,68 @@ jobs:
           chmod +x xcspeedtest
           ./xcspeedtest --help
       
-      # 11. 启动 Cloudflare Warp (终极修复版)
-      - name: Start Cloudflare Warp (终极修复版)
+      # 11. 启动 Cloudflare Warp（智能路由版）
+      - name: Start Cloudflare Warp（智能路由版）
         run: |
-          set +e  # 允许错误继续执行
-          echo "=== Cloudflare Warp 设置开始 ==="
+          set +e
+          echo "=== 智能 WARP 设置 ==="
           
-          # 0. 清理可能的冲突
-          echo "清理可能存在的冲突..."
-          sudo systemctl stop wg-quick@wgcf 2>/dev/null || true
-          sudo wg-quick down wgcf 2>/dev/null || true
-          sudo ip link delete wgcf 2>/dev/null || true
-          sleep 2
-          
-          # 1. 确保 wgcf 工具存在
-          if [ ! -f "./wgcf" ] || [ ! -x "./wgcf" ]; then
-            echo "下载 wgcf 工具..."
-            WGCF_VERSION="v2.2.29"
-            WGCF_FILENAME_VERSION="${WGCF_VERSION#v}"
-            curl -fsSL -o wgcf "https://github.com/ViRb3/wgcf/releases/download/${WGCF_VERSION}/wgcf_${WGCF_FILENAME_VERSION}_linux_amd64"
-            chmod +x wgcf
-            echo "wgcf 工具准备就绪"
-          fi
-          
-          # 2. 检查是否已有账户文件
-          if [ ! -f "wgcf-account.toml" ]; then
-            echo "注册 WARP 账户..."
-            ./wgcf register --accept-tos 2>&1
-            echo "账户注册完成"
+          # 测试原始网络
+          echo "测试原始网络连接..."
+          if curl -4 --max-time 5 -s https://ip.sb >/dev/null 2>&1; then
+            echo "✅ 原始网络正常，跳过 WARP"
+            WARP_ENABLED=false
           else
-            echo "使用现有 WARP 账户"
+            echo "⚠️ 原始网络异常，尝试启用 WARP"
+            WARP_ENABLED=true
           fi
           
-          # 3. 生成配置文件
-          if [ ! -f "wgcf-profile.conf" ]; then
-            echo "生成 WireGuard 配置文件..."
-            ./wgcf generate 2>&1
-            echo "配置文件生成完成"
-          else
-            echo "使用现有配置文件"
-          fi
-          
-          # 4. 验证配置文件
-          if [ ! -f "wgcf-profile.conf" ]; then
-            echo "❌ 错误：未生成配置文件"
-            exit 1
-          fi
-          
-          echo "配置文件内容预览:"
-          head -20 wgcf-profile.conf
-          echo "..."
-          
-          # 5. 安装到系统目录
-          echo "安装配置文件到系统..."
-          sudo mkdir -p /etc/wireguard
-          sudo cp -f wgcf-profile.conf /etc/wireguard/wgcf.conf
-          sudo chmod 600 /etc/wireguard/wgcf.conf
-          
-          # 6. 检查 WireGuard 模块
-          echo "检查 WireGuard 模块..."
-          sudo modprobe wireguard 2>/dev/null || true
-          if lsmod | grep -q wireguard; then
-            echo "✅ WireGuard 模块已加载"
-          else
-            echo "⚠️ WireGuard 模块未加载，尝试安装..."
-            sudo apt-get update -qq
-            sudo apt-get install -y linux-modules-extra-$(uname -r) wireguard-tools 2>/dev/null || true
-          fi
-          
-          # 7. 启动 WireGuard（多种方法尝试）
-          echo "启动 WireGuard 连接..."
-          
-          # 方法1：使用 wg-quick
-          echo "尝试方法1: wg-quick up wgcf"
-          if timeout 15 sudo wg-quick up wgcf 2>&1; then
-            echo "✅ 方法1成功"
-          else
-            echo "方法1失败，尝试方法2..."
+          if [ "$WARP_ENABLED" = true ]; then
+            # 清理旧配置
+            sudo wg-quick down wgcf 2>/dev/null || true
             
-            # 方法2：手动配置
-            echo "尝试方法2: 手动配置"
-            sudo ip link add dev wgcf type wireguard 2>/dev/null || true
-            sudo wg setconf wgcf /etc/wireguard/wgcf.conf 2>&1
-            sudo ip -4 address add 172.16.0.2/32 dev wgcf 2>/dev/null || true
-            sudo ip -6 address add 2606:4700:110:8e6c:9b1e:ecb1:da84:a80c/128 dev wgcf 2>/dev/null || true
-            sudo ip link set mtu 1280 up dev wgcf 2>/dev/null || true
+            # 确保工具存在
+            if [ ! -f "./wgcf" ] || [ ! -x "./wgcf" ]; then
+              echo "下载 wgcf 工具..."
+              curl -fsSL -o wgcf https://github.com/ViRb3/wgcf/releases/download/v2.2.29/wgcf_2.2.29_linux_amd64
+              chmod +x wgcf
+            fi
             
-            # 检查是否成功
-            if sudo wg show wgcf 2>/dev/null | grep -q "interface: wgcf"; then
-              echo "✅ 方法2成功"
-            else
-              echo "⚠️ 两种方法都失败，但继续执行..."
+            # 生成配置（如果不存在）
+            if [ ! -f "wgcf-profile.conf" ]; then
+              ./wgcf register --accept-tos 2>/dev/null
+              ./wgcf generate 2>/dev/null
+            fi
+            
+            if [ -f "wgcf-profile.conf" ]; then
+              # 安装配置
+              sudo mkdir -p /etc/wireguard
+              sudo cp wgcf-profile.conf /etc/wireguard/wgcf.conf
+              
+              # 启动 WARP（仅用于测速）
+              echo "启动 WARP 用于节点测速..."
+              sudo wg-quick up wgcf 2>&1 | tail -5
+              
+              # 检查是否成功
+              if sudo wg show wgcf 2>/dev/null; then
+                echo "✅ WARP 启动成功，用于节点测速"
+                # 设置路由：GitHub 走原始网络，其他走 WARP
+                echo "设置智能路由：GitHub 走直连..."
+                sudo ip route add 140.82.112.0/20 via $(ip route show default | awk '{print $3}') 2>/dev/null || true
+                sudo ip route add 140.82.113.0/20 via $(ip route show default | awk '{print $3}') 2>/dev/null || true
+                sudo ip route add 140.82.114.0/20 via $(ip route show default | awk '{print $3}') 2>/dev/null || true
+                sudo ip route add 140.82.115.0/20 via $(ip route show default | awk '{print $3}') 2>/dev/null || true
+                sudo ip route add 140.82.116.0/20 via $(ip route show default | awk '{print $3}') 2>/dev/null || true
+              else
+                echo "⚠️ WARP 启动失败，继续使用原始网络"
+                WARP_ENABLED=false
+              fi
             fi
           fi
           
-          # 8. 验证连接状态
-          echo "=== 连接状态验证 ==="
-          
-          # 检查接口
-          echo "WireGuard 接口状态:"
-          ip link show wgcf 2>/dev/null || echo "未找到 wgcf 接口"
-          
-          # 检查 wg 状态
-          echo "WireGuard 配置状态:"
-          sudo wg show wgcf 2>/dev/null || echo "wgcf 未运行"
-          
-          # 测试连接
-          echo "网络连接测试:"
-          
-          # 测试1：直接连接
-          if curl -4 --max-time 5 -s https://ip.sb 2>/dev/null; then
-            echo "✅ IPv4 连接正常"
-          else
-            echo "⚠️ IPv4 连接失败，尝试通过 Warp..."
-            
-            # 测试2：通过 Warp 接口
-            if ip route show table all 2>/dev/null | grep -q wgcf; then
-              echo "检测到 Warp 路由"
-              curl -4 --interface wgcf --max-time 5 -s https://ip.sb 2>/dev/null && echo "✅ Warp IPv4 连接成功" || echo "⚠️ Warp 连接也失败"
-            fi
-          fi
-          
-          # 9. 设置路由（如果Warp没有默认路由）
-          echo "设置网络路由..."
-          
-          # 获取当前网关
-          DEFAULT_GW=$(ip route show default | awk '/default/ {print $3}')
-          if [ -n "$DEFAULT_GW" ]; then
-            echo "默认网关: $DEFAULT_GW"
-            
-            # 确保 WARP 流量走 WARP 接口
-            sudo ip route add 0.0.0.0/1 dev wgcf 2>/dev/null || true
-            sudo ip route add 128.0.0.0/1 dev wgcf 2>/dev/null || true
-          fi
-          
-          # 10. 最终检查
-          echo "=== 最终检查 ==="
-          echo "当前所有网络接口:"
-          ip -4 addr show | grep inet
-          
-          echo "路由表:"
-          ip route show | head -10
-          
-          echo "DNS 设置:"
-          cat /etc/resolv.conf 2>/dev/null | head -5
-          
-          echo "=== Warp 设置完成 ==="
-          echo "注意：即使 Warp 不完全成功，脚本也会继续执行后续步骤"
+          echo "当前网络状态:"
+          echo "WARP 启用: $WARP_ENABLED"
+          curl -4 --max-time 5 -s https://ip.sb || echo "IP 查询失败"
           echo "等待 3 秒让网络稳定..."
           sleep 3
       
@@ -316,34 +228,95 @@ jobs:
           TELEGRAM_CHANNEL_IDS: ${{ env.TELEGRAM_CHANNEL_IDS }}
         run: |
           mkdir -p flclashyaml
+          echo "开始执行节点抓取和测速..."
           python TelegramNode/TBD-telegram_publiclink.py
       
-      # 13. (可选) 运行 speedtest-clash 进行二次测速
-      # - name: 运行 speedtest-clash 进行二次测速（可选）
-      #   run: |
-      #     ./xcspeedtest -c flclashyaml/Tg-node1.yaml -output flclashyaml/speedtest_result.yaml
+      # 13. 提交前清理 WARP 连接（确保 GitHub 访问正常）
+      - name: 提交前清理 WARP 连接
+        run: |
+          echo "=== 清理 WARP 连接以确保 GitHub 访问 ==="
+          sudo wg-quick down wgcf 2>/dev/null || true
+          
+          # 恢复默认路由
+          echo "恢复默认网络路由..."
+          sudo ip route del 140.82.112.0/20 2>/dev/null || true
+          sudo ip route del 140.82.113.0/20 2>/dev/null || true
+          sudo ip route del 140.82.114.0/20 2>/dev/null || true
+          sudo ip route del 140.82.115.0/20 2>/dev/null || true
+          sudo ip route del 140.82.116.0/20 2>/dev/null || true
+          
+          # 测试 GitHub 连接
+          echo "测试 GitHub 连接..."
+          nslookup github.com || echo "DNS 解析测试失败"
+          curl -I --max-time 5 https://github.com 2>&1 | head -5 || echo "GitHub 连接测试失败"
+          
+          echo "等待 2 秒确保网络稳定..."
+          sleep 2
       
       # 14. 提交生成的 Clash 配置到仓库
       - name: 提交生成的 Clash 配置到仓库
         run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git add flclashyaml/Tg-node1.yaml
-          if git diff --staged --quiet; then
-            echo "文件无变化，跳过提交"
-          else
-            echo "检测到文件变更，正在提交..."
+          echo "=== 提交变更 ==="
+          
+          # 检查是否有文件变更
+          if git status --porcelain | grep -q "flclashyaml/Tg-node1.yaml"; then
+            echo "检测到配置文件变更"
+            
+            # 配置 git
+            git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git config --local user.name "github-actions[bot]"
+            
+            # 添加文件
+            git add flclashyaml/Tg-node1.yaml
+            
+            # 生成提交信息
             COMMIT_TIME=$(python3 -c "from datetime import datetime, timedelta; print((datetime.utcnow() + timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S CST'))")
-            git commit -m "更新节点配置 ${COMMIT_TIME}"
-            git push
-            echo "提交成功！"
+            NODE_COUNT=$(python3 -c "
+import yaml, sys
+try:
+    with open('flclashyaml/Tg-node1.yaml', 'r', encoding='utf-8') as f:
+        data = yaml.safe_load(f)
+        count = len(data.get('proxies', []))
+        print(f'{count} nodes')
+except:
+    print('unknown nodes')
+")
+            
+            # 提交
+            git commit -m "自动更新节点配置 ${COMMIT_TIME} (${NODE_COUNT})"
+            
+            # 尝试推送（带重试）
+            echo "尝试推送变更到 GitHub..."
+            MAX_RETRIES=3
+            RETRY_COUNT=0
+            
+            while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+              if git push; then
+                echo "✅ 提交成功！"
+                break
+              else
+                RETRY_COUNT=$((RETRY_COUNT + 1))
+                echo "⚠️ 推送失败，尝试 $RETRY_COUNT/$MAX_RETRIES..."
+                
+                if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then
+                  echo "等待 5 秒后重试..."
+                  sleep 5
+                  
+                  # 清理并重试
+                  git pull --rebase origin master
+                else
+                  echo "❌ 推送失败已达最大重试次数"
+                fi
+              fi
+            done
+          else
+            echo "文件无变化，跳过提交"
           fi
       
-      # 15. 清理 Warp 连接（无论成功与否都执行）
-      - name: 清理 Warp 连接
+      # 15. 最终清理
+      - name: 最终清理
         if: always()
         run: |
-          echo "=== 清理阶段 ==="
-          echo "关闭 Warp 连接..."
+          echo "=== 最终清理 ==="
           sudo wg-quick down wgcf 2>/dev/null || true
           echo "清理完成"
