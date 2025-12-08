@@ -1876,29 +1876,41 @@ def limit_proxy_counts(proxies, max_total=600):
 
 def calculate_quality_score(proxy):
     """
-    计算节点质量评分（0-100分）
-    考虑因素：延迟、带宽、地区优先级
+    重新设计更合理的质量评分系统（0-100分）
+    2025-12-08优化版
     """
     score = 0
     
-    # 延迟评分 (0-40分)
+    # 1. 延迟评分 (0-60分) - 更宽松的评分标准
     delay = proxy.get('clash_delay', proxy.get('tcp_delay', 9999))
     if delay <= 50:
-        score += 40
+        score += 60
     elif delay <= 100:
-        score += 35
+        score += 55
+    elif delay <= 150:
+        score += 50
     elif delay <= 200:
-        score += 30
+        score += 45
     elif delay <= 300:
-        score += 25
+        score += 40
+    elif delay <= 400:
+        score += 35
     elif delay <= 500:
-        score += 15
+        score += 30
+    elif delay <= 600:
+        score += 25
     elif delay <= 800:
+        score += 20
+    elif delay <= 1000:
+        score += 15
+    elif delay <= 1500:
         score += 10
-    elif delay <= 1200:
+    elif delay <= 2000:
         score += 5
+    else:
+        score += 2  # 超时节点也有基础分
     
-    # 带宽评分 (0-40分)
+    # 2. 带宽评分 (0-30分) - 如果没有带宽数据给基础分
     bw_str = proxy.get('bandwidth', '')
     if bw_str:
         import re
@@ -1911,22 +1923,36 @@ def calculate_quality_score(proxy):
             elif unit == 'KB':
                 num /= 1000
             
+            # 更合理的带宽评分
             if num >= 100:  # ≥100MB/s
-                score += 40
-            elif num >= 50:
                 score += 30
+            elif num >= 50:
+                score += 25
             elif num >= 30:
                 score += 20
-            elif num >= 15:
+            elif num >= 20:
+                score += 15
+            elif num >= 10:
                 score += 10
             elif num >= 5:
                 score += 5
+            elif num >= 2:
+                score += 3
+            else:
+                score += 1  # 低速也有基础分
+    else:
+        # 没有带宽数据给基础分，不惩罚
+        score += 10
     
-    # 地区优先级加成 (0-20分)
+    # 3. 地区优先级加成 (0-10分) - 扩大地区范围
     region = proxy.get('region_info', {}).get('name', '')
     region_bonus = {
-        '香港': 20, '台湾': 18, '日本': 16, '新加坡': 15,
-        '韩国': 12, '美国': 10, '德国': 8, '加拿大': 5
+        '香港': 10, '台湾': 9, '日本': 8, '新加坡': 7,
+        '韩国': 6, '马来西亚': 5, '泰国': 4, '越南': 4,
+        '美国': 3, '加拿大': 3, '德国': 2, '英国': 2,
+        '法国': 2, '澳大利亚': 2, '俄罗斯': 1, '意大利': 1,
+        '巴西': 1, '阿根廷': 1, '土耳其': 1, '印度': 1,
+        '菲律宾': 1, '印度尼西亚': 1
     }
     score += region_bonus.get(region, 0)
     
@@ -1942,13 +1968,13 @@ def sort_proxies_by_quality(proxies):
     for proxy in proxies:
         proxy['quality_score'] = calculate_quality_score(proxy)
         
-        # 根据质量评分添加标签
+        # 根据质量评分添加标签 - 更合理的分布
         score = proxy['quality_score']
-        if score >= 80:
+        if score >= 70:
             proxy['quality_tag'] = '🔥极品'
-        elif score >= 60:
+        elif score >= 50:
             proxy['quality_tag'] = '⭐优质'
-        elif score >= 40:
+        elif score >= 30:
             proxy['quality_tag'] = '✅良好'
         else:
             proxy['quality_tag'] = '⚡可用'
@@ -1958,26 +1984,38 @@ def sort_proxies_by_quality(proxies):
         -p['quality_score'],  # 质量分降序
         p.get('clash_delay', p.get('tcp_delay', 9999))  # 延迟升序
     ))
+    
 
 
+# ===节点质量标签
 def add_quality_to_name(proxies):
     """
-    在节点名称中添加质量标签
-    例如: "🇭🇰 香港 01 [🔥极品]"
+    在节点名称中添加质量标签（放在国旗后面）
+    例如: "🇭🇰 [🔥极品] 香港 01"
     """
     for proxy in proxies:
         name = proxy['name']
         quality_tag = proxy.get('quality_tag', '⚡可用')
         
-        # 在名称末尾添加质量标签
-        if quality_tag not in name:
-            proxy['name'] = f"{name} [{quality_tag}]"
+        # 检查是否已经有质量标签（以防重复）
+        for tag in ['🔥极品', '⭐优质', '✅良好', '⚡可用']:
+            name = name.replace(f" [{tag}]", "").replace(f"[{tag}] ", "").replace(f"[{tag}]", "")
+        
+        # 查找国旗emoji的位置
+        flag_match = re.search(r'[\U0001F1E6-\U0001F1FF]{2}', name)
+        if flag_match:
+            # 在国旗emoji后面添加质量标签
+            flag_end = flag_match.end()
+            proxy['name'] = name[:flag_end] + f" [{quality_tag}]" + name[flag_end:]
+        else:
+            # 没有国旗emoji，就在最前面添加
+            proxy['name'] = f"[{quality_tag}] {name}"
     
     return proxies
 
 
 
-
+# ===
 def generate_config(proxies, last_message_ids):
     return {
         'proxies': proxies,
@@ -2535,20 +2573,7 @@ async def main():
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     try:
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-            f.write("# ==================================================\n")
-            f.write("#  TG 免费节点 · 自动测速精选订阅（Clash 格式）\n")
-            f.write("# ==================================================\n")
-            f.write(f"# 更新时间   : {update_time} (北京时间)\n")
-            f.write(f"# 节点总数   : {total_count} 个优质节点\n")
-            f.write(f"# 平均质量分 : {avg_quality:.1f}/100\n")
-            f.write(f"# 质量分布   : {quality_stats}\n")
-            f.write(f"# 带宽筛选   : ≥ {MIN_BANDWIDTH_MB}MB/s\n")
-            f.write(f"# 测速模式   : {SPEEDTEST_MODE}\n")
-            f.write(f"# 网络配置   : TCP_Warp={WARP_FOR_TCP}, Speedtest_Warp={WARP_FOR_SPEEDTEST}\n")
-            f.write("# 排序规则   : 质量评分 → 延迟 → 地区优先级\n")
-            f.write("# 构建方式   : GitHub Actions 全自动，每4小时更新一次\n")
-            f.write("# ==================================================\n\n")
-            
+            # 只写YAML内容，不写注释
             final_config = {
                 'proxies': final_proxies,
                 'last_message_ids': last_message_ids,
@@ -2572,14 +2597,12 @@ async def main():
             yaml.dump(final_config, f, allow_unicode=True, sort_keys=False, indent=2, width=4096, default_flow_style=False)
 
         print(f"✅ 配置文件已成功保存至 {OUTPUT_FILE}")
-        print("=" * 60)
-        print(f"📊 统计信息:")
+        print(f"📊 本次处理完成:")
         print(f"   节点总数   : {total_count} 个优质节点")
         print(f"   平均质量分 : {avg_quality:.1f}/100")
         print(f"   质量分布   : {quality_stats}")
         print(f"   带宽筛选   : ≥ {MIN_BANDWIDTH_MB}MB/s")
         print(f"   测速模式   : {SPEEDTEST_MODE}")
-        print(f"   网络配置   : TCP_Warp={WARP_FOR_TCP}, Speedtest_Warp={WARP_FOR_SPEEDTEST}")
         print(f"   更新时间   : {update_time}")
         print("=" * 60)
         print("🎉 全部任务圆满完成！")
@@ -2592,6 +2615,8 @@ async def main():
     except Exception as e:
         print(f"❌ 写出配置文件失败: {e}")
         sys.exit(1)
+   
+           
 
 
                   
