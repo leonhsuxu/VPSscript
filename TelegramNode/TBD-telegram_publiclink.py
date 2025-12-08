@@ -51,7 +51,7 @@ TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS', '')
 TIME_WINDOW_HOURS = 4  # 抓取多长时间的消息，单位为小时。
 MIN_EXPIRE_HOURS = 2   # 订阅地址剩余时间最小过期，单位为小时。
 OUTPUT_FILE = 'flclashyaml/Tg-node1.yaml'  # 输出文件路径，用于保存生成的配置或结果。
-
+last_warp_start_time = 0
 
 
 # === 新增：测速策略开关（推荐保留这几个选项）===
@@ -342,6 +342,9 @@ def is_warp_enabled():
     except (subprocess.TimeoutExpired, FileNotFoundError, Exception) as e:
         return False
 
+
+
+# ==           
 def start_cloudflare_warp():
     """
     在 GitHub Actions 中启用 Cloudflare Warp
@@ -350,26 +353,43 @@ def start_cloudflare_warp():
     print("🌐 正在启动 Cloudflare Warp（模拟国内网络环境）...")
     print("=" * 60)
     
+    # 先检查是否已经在Warp状态
+    current_warp = is_warp_enabled()
+    if current_warp:
+        current_ip = get_current_ip()
+        print("✅ Warp已启用，当前状态:")
+        print(f"   IP地址: {current_ip}")
+        print("   📍 无需重新启动")
+        return True
+    
+    # 记录开始时间，避免短时间内重复启动
+    global last_warp_start_time
+    current_time = time.time()
+    
+    # 如果上次启动在30秒内，直接返回
+    if 'last_warp_start_time' in globals() and current_time - last_warp_start_time < 30:
+        print("🕒 上次启动不到30秒，跳过重复启动")
+        return True
+    
+    last_warp_start_time = current_time
+    
     try:
-        # 1. 先检查是否已经在Warp状态
-        if is_warp_enabled():
-            current_ip = get_current_ip()
-            print("✅ Warp已启用，当前状态:")
-            print(f"   IP地址: {current_ip}")
-            print("   📍 无需重新启动")
-            return True
-        
-        # 2. 清理可能存在的旧配置
+        # 1. 清理可能存在的旧配置（安全清理）
         print("1️⃣ 清理旧配置...")
-        subprocess.run(
-            ["sudo", "wg-quick", "down", "wgcf"],
-            capture_output=True, stderr=subprocess.DEVNULL, timeout=10
-        )
+        # 使用正确的subprocess调用方式
+        try:
+            subprocess.run(
+                ["sudo", "wg-quick", "down", "wgcf"],
+                capture_output=True,  # 只使用capture_output
+                timeout=10
+            )
+        except subprocess.TimeoutExpired:
+            print("   ⏰ 清理超时，继续执行")
         
         # 等待清理完成
         time.sleep(1)
         
-        # 3. 检查并安装必要工具
+        # 2. 检查并安装必要工具
         print("2️⃣ 检查系统依赖...")
         required_tools = ["wg-quick", "curl", "resolvconf"]
         missing_tools = []
@@ -382,33 +402,53 @@ def start_cloudflare_warp():
             print(f"   安装缺失工具: {', '.join(missing_tools)}")
             subprocess.run(
                 ["sudo", "apt-get", "update", "-qq"],
-                capture_output=True
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL
             )
             subprocess.run(
                 ["sudo", "apt-get", "install", "-y", "wireguard-tools", "curl", "resolvconf"],
-                capture_output=True
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL
             )
         else:
             print("   ✅ 所有工具已安装")
         
-        # 4. 下载 wgcf 工具（如果不存在）
+        # 3. 下载 wgcf 工具（如果不存在）
         wgcf_path = "./wgcf"
         if not os.path.exists(wgcf_path) or not os.access(wgcf_path, os.X_OK):
             print("3️⃣ 下载 wgcf 工具...")
             try:
-                subprocess.run([
+                # 修正：使用正确的curl参数
+                result = subprocess.run([
                     "curl", "-fsSL", "-o", wgcf_path,
                     "https://github.com/ViRb3/wgcf/releases/download/v2.2.29/wgcf_2.2.29_linux_amd64"
-                ], check=True, timeout=30)
-                os.chmod(wgcf_path, 0o755)
-                print("   ✅ wgcf 下载成功")
+                ], timeout=30)
+                
+                if result.returncode == 0:
+                    os.chmod(wgcf_path, 0o755)
+                    print("   ✅ wgcf 下载成功")
+                else:
+                    print(f"   ❌ wgcf 下载失败，返回码: {result.returncode}")
+                    # 尝试备用下载源
+                    print("   尝试备用下载源...")
+                    subprocess.run([
+                        "wget", "-qO", wgcf_path,
+                        "https://github.com/ViRb3/wgcf/releases/download/v2.2.29/wgcf_2.2.29_linux_amd64"
+                    ], timeout=30)
+                    if os.path.exists(wgcf_path):
+                        os.chmod(wgcf_path, 0o755)
+                        print("   ✅ wgcf 备用下载成功")
+                    else:
+                        print("   ❌ wgcf 下载全部失败")
+                        return False
+                        
             except Exception as e:
-                print(f"   ❌ wgcf 下载失败: {e}")
+                print(f"   ❌ wgcf 下载异常: {e}")
                 return False
         else:
             print("   ✅ wgcf 已存在")
         
-        # 5. 生成配置文件
+        # 4. 生成配置文件
         config_file = "wgcf-profile.conf"
         if not os.path.exists(config_file):
             print("4️⃣ 生成 WARP 配置文件...")
@@ -416,7 +456,10 @@ def start_cloudflare_warp():
                 # 注册Warp账户
                 register_result = subprocess.run(
                     [wgcf_path, "register", "--accept-tos"],
-                    capture_output=True, text=True, timeout=60
+                    stdout=subprocess.PIPE,  # 分开指定
+                    stderr=subprocess.PIPE,
+                    text=True,
+                    timeout=60
                 )
                 if register_result.returncode != 0:
                     print(f"   ⚠️  注册警告: {register_result.stderr[:100]}")
@@ -424,7 +467,10 @@ def start_cloudflare_warp():
                 # 生成配置文件
                 generate_result = subprocess.run(
                     [wgcf_path, "generate"],
-                    capture_output=True, text=True, timeout=60
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    text=True,
+                    timeout=60
                 )
                 
                 if generate_result.returncode == 0 and os.path.exists(config_file):
@@ -441,22 +487,29 @@ def start_cloudflare_warp():
         else:
             print("   ✅ 配置文件已存在")
         
-        # 6. 安装配置文件
+        # 5. 安装配置文件
         print("5️⃣ 安装 WARP 配置...")
         try:
-            subprocess.run(["sudo", "mkdir", "-p", "/etc/wireguard"], check=True)
-            subprocess.run(["sudo", "cp", config_file, "/etc/wireguard/wgcf.conf"], check=True)
+            subprocess.run(["sudo", "mkdir", "-p", "/etc/wireguard"], 
+                         stdout=subprocess.DEVNULL,
+                         stderr=subprocess.DEVNULL)
+            subprocess.run(["sudo", "cp", config_file, "/etc/wireguard/wgcf.conf"], 
+                         stdout=subprocess.DEVNULL,
+                         stderr=subprocess.DEVNULL)
             print("   ✅ 配置文件安装成功")
         except Exception as e:
             print(f"   ❌ 配置文件安装失败: {e}")
             return False
         
-        # 7. 启动 WARP
+        # 6. 启动 WARP
         print("6️⃣ 启动 WARP VPN...")
         try:
             start_result = subprocess.run(
                 ["sudo", "wg-quick", "up", "wgcf"],
-                capture_output=True, text=True, timeout=30
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                timeout=30
             )
             
             # 检查启动结果
@@ -475,7 +528,7 @@ def start_cloudflare_warp():
             print(f"   ❌ WARP启动异常: {e}")
             return False
         
-        # 8. 验证启动结果
+        # 7. 验证启动结果
         print("7️⃣ 验证连接状态...")
         time.sleep(2)  # 等待网络稳定
         
@@ -484,7 +537,7 @@ def start_cloudflare_warp():
             print(f"   ✅ Warp已成功启用")
             print(f"   📍 当前出口 IP: {current_ip}")
             
-            # 9. 设置智能路由（让GitHub走原始网络）
+            # 8. 设置智能路由（让GitHub走原始网络）
             print("8️⃣ 设置智能路由...")
             setup_smart_routing()
             
@@ -499,7 +552,11 @@ def start_cloudflare_warp():
         print(f"❌ WARP 启动过程异常: {e}")
         print("   尝试最终备用方案...")
         return start_warp_fallback()
+        
 
+
+        
+# ===创建warp备用配置
 def create_backup_config(config_file):
     """创建备用Warp配置"""
     try:
@@ -665,6 +722,10 @@ def stop_cloudflare_warp():
         print(f"❌ 停止Warp失败: {e}")
         return False
 
+
+    
+
+# ===确保网络状态合适
 def ensure_network_for_stage(stage_name, require_warp=False):
     """
     确保当前网络状态适合指定阶段
@@ -680,6 +741,16 @@ def ensure_network_for_stage(stage_name, require_warp=False):
     if not os.getenv('GITHUB_ACTIONS') == 'true':
         print(f"  ℹ️  非GitHub环境，跳过网络切换: {stage_name}")
         return True
+    
+    # 如果是TCP阶段，检查是否刚完成Warp启动（避免重复）
+    if stage_name == 'speedtest' and require_warp:
+        global last_warp_start_time
+        current_time = time.time()
+        
+        # 如果上次启动在60秒内，直接返回成功
+        if 'last_warp_start_time' in globals() and current_time - last_warp_start_time < 60:
+            print(f"  ⚡ Warp刚刚启动完成（{int(current_time - last_warp_start_time)}秒前），跳过重复启动")
+            return True
     
     current_warp = is_warp_enabled()
     current_ip = get_current_ip()
@@ -700,14 +771,7 @@ def ensure_network_for_stage(stage_name, require_warp=False):
         success = start_cloudflare_warp()
         if success:
             print(f"     结果: ✅ 已成功切换到Warp网络")
-            # 验证切换成功
-            time.sleep(2)
-            if is_warp_enabled():
-                print(f"     验证: Warp连接已激活")
-                return True
-            else:
-                print(f"     警告: Warp可能未完全激活，继续执行")
-                return True
+            return True
         else:
             print(f"     结果: ⚠️  Warp切换失败，继续使用当前网络")
             return False
