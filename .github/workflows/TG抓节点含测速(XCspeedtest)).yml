@@ -443,32 +443,8 @@ jobs:
           echo ""
           echo "=== 🔧 网络检查完成 ==="
       
-      # ==================== 步骤14：文件生成报告 ====================
-      - name: 文件生成报告
-        if: success()
-        run: |
-          echo "=== 📋 文件生成报告 ==="
-          echo "报告时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
-          echo ""
-          
-          if [ -f "flclashyaml/Tg-node1.yaml" ]; then
-            FILE_SIZE=$(stat -c%s "flclashyaml/Tg-node1.yaml" 2>/dev/null || echo "unknown")
-            NODE_COUNT=$(python3 -c 'import yaml; d=yaml.safe_load(open("flclashyaml/Tg-node1.yaml",encoding="utf-8")); print(len(d.get("proxies",[])))' 2>/dev/null || echo "?")
-            echo "✅ 配置文件已生成"
-            echo "📁 文件: flclashyaml/Tg-node1.yaml"
-            echo "📊 大小: ${FILE_SIZE} bytes"
-            echo "🎯 节点: ${NODE_COUNT} 个"
-            
-            echo "📄 预览:"
-            head -15 flclashyaml/Tg-node1.yaml
-          else
-            echo "❌ 配置文件未生成"
-          fi
-          
-          echo ""
-          echo "=== 📋 报告完成 ==="
-      
-      # ==================== 步骤15：自动提交更改 ====================
+     
+      # ==================== 步骤14：自动提交更改 ====================
       - name: 自动提交更改
         if: success()
         run: |
