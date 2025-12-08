@@ -6,7 +6,7 @@ on:
 env:
   MIHOMO_VERSION: v1.19.17
   SPEEDTEST_VERSION: v0.4.1  # 需要时更新版本号
-  WGCF_VERSION: v2.2.19      # WARP wgcf 工具版本
+  WGCF_VERSION: v2.2.29      # WARP wgcf 工具版本（升级为 2.2.29）
   TELEGRAM_CHANNEL_IDS: |
     # 频道和群列表，换行分隔
     @fqDINYUE
@@ -23,19 +23,21 @@ env:
     @proxyshareCN
 jobs:
   build:
-    runs-on: ubuntu-latest # GitHub Actions 默认使用 Ubuntu Linux Runner
+    runs-on: ubuntu-latest # 使用 Ubuntu Linux Runner
     steps:
       # 1. 检出代码仓库
       - name: 检出代码仓库
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       # 2. 设置 Python 环境
       - name: 设置 Python 环境
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11' # 或您脚本所需的Python版本
-      # 3. 缓存 Python 依赖，加快后续构建速度
+          python-version: '3.11'
+
+      # 3. 缓存 Python 依赖
       - name: 缓存 Python 依赖
         uses: actions/cache@v4
         with:
@@ -43,81 +45,16 @@ jobs:
           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
-      # 4. 安装 Python 依赖 及 WARP 相关工具
-      - name: 安装 Python 依赖及 WARP 相关工具
+
+      # 4. 安装 Python 依赖及系统依赖（wireguard-tools、curl）
+      - name: 安装 Python 依赖及系统依赖
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          # 安装 wireguard-tools 是为了 wg-quick 命令
           sudo apt-get update -qq
           sudo apt-get install -y wireguard-tools curl
-      
-      # 5. 缓存 wgcf 工具
-      - name: Cache wgcf tool
-        id: cache-wgcf
-        uses: actions/cache@v4
-        with:
-          path: wgcf # 缓存 wgcf 可执行文件本身
-          key: wgcf-linux-amd64-${{ env.WGCF_VERSION }}
-          restore-keys: wgcf-linux-amd64-${{ env.WGCF_VERSION }}
 
-      # 6. 下载 wgcf 工具（如果缓存未命中）
-      - name: Download wgcf tool
-        if: steps.cache-wgcf.outputs.cache-hit != 'true'
-        run: |
-          # 正确的修正方式：在shell内部进行字符串处理
-          # 首先获取完整的版本字符串 (例如：v2.2.19)
-          WGCF_FULL_VERSION="${{ env.WGCF_VERSION }}"
-          # 然后在 shell 中使用 Bash 参数展开来移除 'v' 前缀
-          # 例如：v2.2.19 -> 2.2.19
-          WGCF_FILENAME_VERSION="${WGCF_FULL_VERSION#v}" 
-          
-          echo "正在下载 wgcf v${WGCF_FILENAME_VERSION}..."
-          # 注意 URL 中 assets 部分的命名规则，通常是 wgcf_{版本号}_linux_amd64
-          # 下载链接路径仍然使用原始的 ${{ env.WGCF_VERSION }} (包含 v)
-          # 但文件名部分使用经过处理的 ${WGCF_FILENAME_VERSION} (不含 v)
-          curl -fsSL -o wgcf https://github.com/ViRb3/wgcf/releases/download/${WGCF_FULL_VERSION}/wgcf_${WGCF_FILENAME_VERSION}_linux_amd64
-          if [ ! -f "wgcf" ]; then
-            echo "错误：wgcf 下载失败！请检查版本号或网络连接。"
-            exit 1
-          fi
-          echo "wgcf 下载完成。"
-      
-      # 7. 启动 Cloudflare Warp 模拟国内网络环境
-      - name: Start Cloudflare Warp (Simulate Domestic Environment)
-        run: |
-          echo "正在设置并启动 Cloudflare Warp..."
-          chmod +x wgcf
-          # 注册 WARP 账户，如果已注册则不报错
-          # 将所有输出重定向到 /dev/null，只显示自定义 echo 信息
-          ./wgcf register --accept-tos > /dev/null 2>&1 || true
-          echo "WARP 账户注册或已注册。"
-          
-          # 生成 WireGuard 配置文件
-          ./wgcf generate
-          echo "WARP 配置生成完成。"
-          
-          # 创建 WireGuard 配置目录并移动配置文件
-          sudo mkdir -p /etc/wireguard
-          sudo mv wgcf-profile.conf /etc/wireguard/wgcf.conf
-          echo "WireGuard 配置已复制到 /etc/wireguard/wgcf.conf。"
-          
-          # 启动 Warp VPN，并检查状态
-          # wg-quick up 命令可能会输出到 stderr 但实际成功，这里尝试捕获并判断
-          if sudo wg-quick up wgcf; then
-            echo "✅ Warp 启动成功！测速流量已走 Cloudflare WARP 网络。"
-            echo "尝试验证当前出口IP："
-            # 使用 curl -4 确保获取 IPv4 地址
-            # 增加超时时间，避免网络不稳定导致卡住
-            curl -4 --max-time 10 https://ip.sb || echo "IP验证失败或超时，这不影响后续测速。"
-            sleep 5 # 给予网络一定时间稳定，确保 WARP 路由生效
-          else
-            echo "⚠️ Warp 启动失败，将继续使用 GitHub Actions 默认网络进行测速。"
-            echo "尝试验证当前出口IP (可能未改变)："
-            curl -4 --max-time 10 https://ip.sb || echo "IP验证失败或超时，这不影响后续测速。"
-          fi
-
-      # 8. 缓存 Mihomo 程序，避免重复下载 (原 6)
+      # 5. 缓存 Mihomo 程序
       - name: Cache Mihomo
         id: cache-mihomo
         uses: actions/cache@v4
@@ -125,20 +62,49 @@ jobs:
           path: mihomo
           key: mihomo-amd64-${{ env.MIHOMO_VERSION }}
           restore-keys: mihomo-amd64-${{ env.MIHOMO_VERSION }}
-      # 9. 下载 Mihomo 指定版本（如果缓存未命中）(原 7)
+
+      # 6. 下载 Mihomo 指定版本（如果缓存未命中）
       - name: Download Mihomo 指定版本
         if: steps.cache-mihomo.outputs.cache-hit != 'true'
         run: |
-          set -e # 任何命令失败都将退出脚本
+          set -e
           TAG=${{ env.MIHOMO_VERSION }}
-          echo "下载 Mihomo 版本: $TAG"
           URL="https://github.com/MetaCubeX/mihomo/releases/download/${TAG}/mihomo-linux-amd64-${TAG}.gz"
-          wget --tries=5 --timeout=60 --progress-bar "$URL" # 使用 --progress-bar 替代 :force
-          gunzip "mihomo-linux-amd64-${TAG}.gz"
-          mv "mihomo-linux-amd64-${TAG}" mihomo
+          echo "尝试访问下载链接"
+          if ! curl --head --fail "$URL"; then
+            echo "下载地址不可用！"
+            exit 1
+          fi
+          wget --tries=3 --timeout=30 -O mihomo.gz "$URL"
+          gunzip -f mihomo.gz
           chmod +x mihomo
           ./mihomo -v
-      # 10. 缓存 speedtest-clash 程序 (原 8)
+
+      # 7. 缓存 wgcf 工具（二进制文件）
+      - name: Cache wgcf tool
+        id: cache-wgcf
+        uses: actions/cache@v4
+        with:
+          path: wgcf
+          key: wgcf-linux-amd64-${{ env.WGCF_VERSION }}
+          restore-keys: wgcf-linux-amd64-${{ env.WGCF_VERSION }}
+
+      # 8. 下载 wgcf 工具（如果缓存未命中）
+      - name: Download wgcf tool
+        if: steps.cache-wgcf.outputs.cache-hit != 'true'
+        run: |
+          WGCF_FULL_VERSION="${{ env.WGCF_VERSION }}"
+          WGCF_FILENAME_VERSION="${WGCF_FULL_VERSION#v}" 
+          echo "正在下载 wgcf v${WGCF_FILENAME_VERSION}..."
+          curl -fsSL -o wgcf https://github.com/ViRb3/wgcf/releases/download/${WGCF_FULL_VERSION}/wgcf_${WGCF_FILENAME_VERSION}_linux_amd64
+          if [ ! -f "wgcf" ]; then
+            echo "错误：wgcf 下载失败！"
+            exit 1
+          fi
+          chmod +x wgcf
+          echo "wgcf 下载完成。"
+
+      # 9. 缓存 speedtest-clash 程序
       - name: Cache xiecang speedtest-clash
         id: cache-xc
         uses: actions/cache@v4
@@ -146,14 +112,14 @@ jobs:
           path: xcspeedtest
           key: xiecang-${{ env.SPEEDTEST_VERSION }}
           restore-keys: xiecang-${{ env.SPEEDTEST_VERSION }}
-      # 11. 下载 speedtest-clash 指定版本（如果缓存未命中）(原 9)
+
+      # 10. 下载 speedtest-clash 指定版本（如果缓存未命中）
       - name: Download xiecang speedtest-clash
         if: steps.cache-xc.outputs.cache-hit != 'true'
         run: |
-          set -e # 任何命令失败都将退出脚本
+          set -e
           RELEASE_TAG=${{ env.SPEEDTEST_VERSION }}
           echo "尝试下载 speedtest-clash 版本: $RELEASE_TAG"
-          # 使用 API 获取下载 URL
           URL=$(curl -s "https://api.github.com/repos/xiecang/speedtest-clash/releases/tags/${RELEASE_TAG}" \
                 | grep "browser_download_url.*speedtest-clash_Linux_x86_64" | cut -d '"' -f4)
           if [ -z "$URL" ]; then
@@ -162,40 +128,66 @@ jobs:
                 | grep "browser_download_url.*speedtest-clash_Linux_x86_64" | cut -d '"' -f4)
           fi
           if [ -z "$URL" ]; then
-            echo "错误：未能找到 speedtest-clash 的下载 URL，退出。"
+            echo "错误：未能找到 speedtest-clash 下载 URL，退出。"
             exit 1
           fi
-          
-          # 下载文件
           wget --tries=5 --timeout=60 -O downloaded_file "$URL"
-          
-          # 解压和重命名
+
           if file downloaded_file | grep -q "gzip compressed data"; then
-            echo "检测到压缩包，开始解压..."
+            echo "检测到压缩包，开始解压"
             tar -xzf downloaded_file
             if [ -f "speedtest-clash" ]; then
-              echo "找到解压后的二进制文件 'speedtest-clash'。"
               mv speedtest-clash xcspeedtest
             else
-              echo "未找到标准二进制文件，尝试查找其他可执行文件..."
               EXE_PATH=$(find . -maxdepth 1 -type f -executable -name "speedtest-clash*" -print -quit)
               if [ -n "$EXE_PATH" ]; then
-                echo "找到可执行文件：$EXE_PATH"
                 mv "$EXE_PATH" xcspeedtest
               else
-                echo "错误：未找到 speedtest-clash 可执行文件，退出。"
+                echo "错误：未找到 speedtest-clash 可执行文件"
                 exit 1
               fi
             fi
             rm downloaded_file
           else
-            echo "下载的是可执行文件，重命名为 xcspeedtest。"
+            echo "下载的是可执行文件，直接重命名为 xcspeedtest"
             mv downloaded_file xcspeedtest
           fi
           chmod +x xcspeedtest
-          echo "speedtest-clash 下载并准备完成。"
-          ./xcspeedtest --help # 运行帮助命令验证是否成功
-      # 12. 运行 Telegram 节点抓取脚本 (原 10)
+          ./xcspeedtest --help
+
+      # 11. 启动 Cloudflare Warp (Simulate Domestic Environment)
+      - name: Start Cloudflare Warp (Simulate Domestic Environment)
+        run: |
+          set -e
+          chmod +x wgcf
+
+          # 仅在配置文件不存在时注册和生成，避免重复卡住
+          if [ ! -f wgcf-profile.conf ]; then
+            ./wgcf register --accept-tos > /dev/null 2>&1 || true
+            ./wgcf generate
+          fi
+
+          sudo mkdir -p /etc/wireguard
+          sudo mv -f wgcf-profile.conf /etc/wireguard/wgcf.conf
+
+          sudo modprobe wireguard || true
+
+          sudo wg-quick down wgcf || true
+
+          if timeout 30s sudo wg-quick up wgcf; then
+            echo "✅ Warp 启动成功"
+          else
+            echo "⚠️ Warp 启动超时或失败，继续后续步骤"
+          fi
+
+          echo "当前出口 IP:"
+          if ! curl -4 --max-time 10 https://ip.sb; then
+            echo "⚠️ IP查询失败，Warp可能未成功"
+          fi
+
+          sleep 5
+
+      # 12. 运行 Telegram 抓取及 Clash 测速脚本
       - name: 运行 Telegram 抓取及 Clash 测速脚本
         env:
           TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
@@ -203,30 +195,25 @@ jobs:
           TELEGRAM_STRING_SESSION: ${{ secrets.TELEGRAM_STRING_SESSION }}
           TELEGRAM_CHANNEL_IDS: ${{ env.TELEGRAM_CHANNEL_IDS }}
         run: |
-          mkdir -p flclashyaml # 确保输出目录存在
+          mkdir -p flclashyaml
           python TelegramNode/TBD-telegram_publiclink.py
-      # 13. (可选) 运行 speedtest-clash 进行二次测速，留做扩展 (原 11)
+
+      # 13. (可选) 运行 speedtest-clash 进行二次测速
       # - name: 运行 speedtest-clash 进行二次测速（可选）
       #   run: |
       #     ./xcspeedtest -c flclashyaml/Tg-node1.yaml -output flclashyaml/speedtest_result.yaml
-      # 14. 提交生成的 Clash 配置到仓库 (原 12)
+
+      # 14. 提交生成的 Clash 配置到仓库
       - name: 提交生成的 Clash 配置到仓库
         run: |
-          # 配置提交用户
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          # 添加生成的 Clash 配置文件到暂存区
           git add flclashyaml/Tg-node1.yaml
-          # 判断是否有变更
           if git diff --staged --quiet; then
             echo "文件无变化，跳过提交"
           else
             echo "检测到文件变更，正在提交..."
-            # 使用 Python 生成北京时间（更稳定）
             COMMIT_TIME=$(python3 -c "from datetime import datetime, timedelta; print((datetime.utcnow() + timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S CST'))")
-            # 提交变更
             git commit -m "更新节点配置 ${COMMIT_TIME}"
-            # 推送到远程仓库
             git push
             echo "提交成功！"
-          fi
