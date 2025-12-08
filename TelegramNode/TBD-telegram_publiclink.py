@@ -1992,8 +1992,8 @@ def sort_proxies_by_quality(proxies):
 # ===节点质量标签
 def add_quality_to_name(proxies):
     """
-    在节点名称中添加质量标签（放在国旗后面）
-    例如: "🇭🇰 [🔥极品] 香港 01"
+    在节点名称末尾添加质量标签
+    例如: "🇭🇰 香港 01 [🔥极品]"
     """
     for proxy in proxies:
         name = proxy['name']
@@ -2003,15 +2003,8 @@ def add_quality_to_name(proxies):
         for tag in ['🔥极品', '⭐优质', '✅良好', '⚡可用']:
             name = name.replace(f" [{tag}]", "").replace(f"[{tag}] ", "").replace(f"[{tag}]", "")
         
-        # 查找国旗emoji的位置
-        flag_match = re.search(r'[\U0001F1E6-\U0001F1FF]{2}', name)
-        if flag_match:
-            # 在国旗emoji后面添加质量标签
-            flag_end = flag_match.end()
-            proxy['name'] = name[:flag_end] + f" [{quality_tag}]" + name[flag_end:]
-        else:
-            # 没有国旗emoji，就在最前面添加
-            proxy['name'] = f"[{quality_tag}] {name}"
+        # 在名称末尾添加质量标签
+        proxy['name'] = f"{name} [{quality_tag}]".strip()
     
     return proxies
 
