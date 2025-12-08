@@ -367,8 +367,6 @@ jobs:
             if [ -f "flclashyaml/Tg-node1.yaml" ]; then
               FILE_SIZE=$(stat -c%s "flclashyaml/Tg-node1.yaml" 2>/dev/null || stat -f%z "flclashyaml/Tg-node1.yaml" 2>/dev/null || echo "unknown")
               echo "📁 配置文件生成成功: flclashyaml/Tg-node1.yaml (${FILE_SIZE} bytes)"
-              echo "📄 配置文件预览:"
-              head -20 flclashyaml/Tg-node1.yaml
             else
               echo "⚠️  配置文件未生成"
             fi
