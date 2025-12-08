@@ -2238,7 +2238,7 @@ def clash_test_proxy(clash_path, proxy, debug=False):
 
 
 # 主函数
-
+               
 async def main():
     print("=" * 60)
     print("Telegram.Node_Clash-Speedtest测试版 V1")
@@ -2571,8 +2571,7 @@ async def main():
             
     except Exception as e:
         print(f"❌ 写出配置文件失败: {e}")
-        sys.exit(1)            
-
+        sys.exit(1)
 
 
                   
