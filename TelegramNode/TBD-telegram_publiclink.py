@@ -954,7 +954,9 @@ async def scrape_telegram_links(last_message_ids=None):
     # 分批处理频道
     for i in range(0, len(TARGET_CHANNELS), CHANNEL_BATCH_SIZE):
         batch = TARGET_CHANNELS[i:i + CHANNEL_BATCH_SIZE]
-        print(f"\n📦 处理批次 {i//CHANNEL_BATCH_SIZE + 1}/{(len(TARGET_CHANNELS)-1)//CHANNEL_BATCH_SIZE + 1}: {batch}")
+        # 去掉引号显示频道名
+        batch_display = ', '.join(batch)
+        print(f"\n📦 处理批次 {i//CHANNEL_BATCH_SIZE + 1}/{(len(TARGET_CHANNELS)-1)//CHANNEL_BATCH_SIZE + 1}: {batch_display}")
         
         tasks = []
         for channel_id in batch:
