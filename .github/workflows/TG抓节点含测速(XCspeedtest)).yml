@@ -489,89 +489,74 @@ jobs:
       
       # ==================== 步骤14：提交生成的Clash配置到仓库 ====================
       - name: 提交生成的 Clash 配置到仓库
-        if: success()
-        run: |
-          echo "=== 📤 提交变更到GitHub ==="
-          echo "提交时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
-          echo ""
-          
-          echo "🔍 检查文件变更..."
-          if git status --porcelain | grep -q "flclashyaml/Tg-node1.yaml"; then
-            echo "✅ 检测到配置文件变更"
-            
-            echo "👤 配置Git用户..."
-            git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git config --local user.name "github-actions[bot]"
-            
-            echo "📝 添加变更文件..."
-            git add flclashyaml/Tg-node1.yaml
-            
-            echo "📋 生成提交信息..."
-            
-            # 修正单行python命令
-            COMMIT_TIME=$(python3 -c 'from datetime import datetime, timedelta; print((datetime.utcnow() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S CST"))')
-            
-            NODE_INFO=$(python3 -c 'import yaml, sys; \
-try: \
-    with open("flclashyaml/Tg-node1.yaml", "r", encoding="utf-8") as f: \
-        data = yaml.safe_load(f); \
-        proxies = data.get("proxies", []); \
-        node_count = len(proxies) if isinstance(proxies, list) else 0; \
-        avg_quality = data.get("average_quality", "N/A"); \
-        quality_stats = data.get("quality_stats", {}); \
-        warp_tcp = data.get("speedtest_config", {}).get("warp_for_tcp", "N/A"); \
-        warp_speedtest = data.get("speedtest_config", {}).get("warp_for_speedtest", "N/A"); \
-        quality_str = ""; \
-        if isinstance(quality_stats, dict): \
-            parts = [f"{k}{v}" for k,v in quality_stats.items()]; \
-            quality_str = "[" + " ".join(parts) + "]" if parts else ""; \
-        print(f"{node_count} nodes | {avg_quality}分 {quality_str} | TCP_Warp={warp_tcp} Speedtest_Warp={warp_speedtest}"); \
-except Exception as e: \
-    print(f"读取失败: {str(e)[:50]}"); \
-    print("unknown nodes");')
-            
-            COMMIT_MESSAGE="🤖 自动更新节点配置 ${COMMIT_TIME} (${NODE_INFO})"
-            
-            echo "提交信息: $COMMIT_MESSAGE"
-            
-            echo "💾 提交更改..."
-            git commit -m "$COMMIT_MESSAGE"
-            
-            echo "🔄 尝试推送变更到 GitHub..."
-            MAX_RETRIES=3
-            RETRY_COUNT=0
-            PUSH_SUCCESS=false
-            
-            while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-              echo "推送尝试 $((RETRY_COUNT + 1))/$MAX_RETRIES"
-              
-              if git push; then
-                echo "✅ 提交成功！"
-                PUSH_SUCCESS=true
-                break
-              else
-                RETRY_COUNT=$((RETRY_COUNT + 1))
-                echo "⚠️ 推送失败，尝试 $RETRY_COUNT/$MAX_RETRIES..."
-                
-                if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then
-                  echo "等待 5 秒后重试..."
-                  sleep 5
-                  
-                  echo "拉取最新代码..."
-                  git pull --rebase origin main || git pull --rebase origin master
-                else
-                  echo "❌ 推送失败已达最大重试次数"
-                fi
-              fi
-            done
-            
-            if [ "$PUSH_SUCCESS" = false ]; then
-              echo "⚠️ 提交失败，但工作流将继续执行"
-            fi
-            
+  if: success()
+  run: |
+    echo "=== 📤 提交变更到GitHub ==="
+    echo "提交时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
+    echo ""
+
+    echo "🔍 检查文件变更..."
+    if git status --porcelain | grep -q "flclashyaml/Tg-node1.yaml"; then
+      echo "✅ 检测到配置文件变更"
+
+      echo "👤 配置Git用户..."
+      git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+      git config --local user.name "github-actions[bot]"
+
+      echo "📝 添加变更文件..."
+      git add flclashyaml/Tg-node1.yaml
+
+      echo "📋 生成提交信息..."
+
+      # python脚本单行版本，避免引号冲突
+      COMMIT_TIME=$(python3 -c 'from datetime import datetime, timedelta; print((datetime.utcnow() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S CST"))')
+
+      NODE_INFO=$(python3 -c 'import yaml, sys; try: with open("flclashyaml/Tg-node1.yaml","r",encoding="utf-8") as f: data = yaml.safe_load(f); proxies=data.get("proxies",[]); node_count = len(proxies) if isinstance(proxies,list) else 0; avg_quality = data.get("average_quality","N/A"); quality_stats=data.get("quality_stats",{}); warp_tcp=data.get("speedtest_config",{}).get("warp_for_tcp","N/A"); warp_speedtest=data.get("speedtest_config",{}).get("warp_for_speedtest","N/A"); quality_str=""; \
+if isinstance(quality_stats,dict): parts=[f"{k}{v}" for k,v in quality_stats.items()]; quality_str = "[" + " ".join(parts) + "]" if parts else ""; print(f"{node_count} nodes | {avg_quality}分 {quality_str} | TCP_Warp={warp_tcp} Speedtest_Warp={warp_speedtest}"); \
+except Exception as e: print(f"读取失败: {str(e)[:50]}"); print("unknown nodes")')
+
+      COMMIT_MESSAGE="🤖 自动更新节点配置 ${COMMIT_TIME} (${NODE_INFO})"
+
+      echo "提交信息: $COMMIT_MESSAGE"
+
+      echo "💾 提交更改..."
+      git commit -m "$COMMIT_MESSAGE"
+
+      echo "🔄 尝试推送变更到 GitHub..."
+      MAX_RETRIES=3
+      RETRY_COUNT=0
+      PUSH_SUCCESS=false
+
+      while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+        echo "推送尝试 $((RETRY_COUNT + 1))/$MAX_RETRIES"
+
+        if git push; then
+          echo "✅ 提交成功！"
+          PUSH_SUCCESS=true
+          break
+        else
+          RETRY_COUNT=$((RETRY_COUNT + 1))
+          echo "⚠️ 推送失败，尝试 $RETRY_COUNT/$MAX_RETRIES..."
+
+          if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then
+            echo "等待 5 秒后重试..."
+            sleep 5
+
+            echo "拉取最新代码..."
+            git pull --rebase origin main || git pull --rebase origin master
           else
-            echo "📭 文件无变化，跳过提交"
+            echo "❌ 推送失败已达最大重试次数"
           fi
+        fi
+      done
+
+      if [ "$PUSH_SUCCESS" = false ]; then
+        echo "⚠️ 提交失败，但工作流将继续执行"
+      fi
+
+    else
+      echo "📭 文件无变化，跳过提交"
+    fi
       
       # ==================== 步骤15：最终清理和报告 ====================
       - name: 最终清理和报告
