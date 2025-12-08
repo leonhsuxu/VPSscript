@@ -385,7 +385,7 @@ jobs:
         if: always()
         run: |
           echo "=== 🔧 确保网络正常 ==="
-          echo "检查时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
+          echo "检查时间: $(date '+%Y-%m-d %H:%M:%S %Z')"
           echo ""
           
           echo "1️⃣ 停止任何Warp连接..."
@@ -443,93 +443,56 @@ jobs:
           echo ""
           echo "=== 🔧 网络检查完成 ==="
       
-      # ==================== 步骤14：提交生成的Clash配置到仓库 ====================
-      - name: 提交生成的 Clash 配置到仓库
+      # ==================== 步骤14：文件生成报告 ====================
+      - name: 文件生成报告
         if: success()
         run: |
-          echo "=== 提交变更到GitHub ==="
+          echo "=== 📋 文件生成报告 ==="
+          echo "报告时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
+          echo ""
+          
+          if [ -f "flclashyaml/Tg-node1.yaml" ]; then
+            FILE_SIZE=$(stat -c%s "flclashyaml/Tg-node1.yaml" 2>/dev/null || echo "unknown")
+            NODE_COUNT=$(python3 -c 'import yaml; d=yaml.safe_load(open("flclashyaml/Tg-node1.yaml",encoding="utf-8")); print(len(d.get("proxies",[])))' 2>/dev/null || echo "?")
+            echo "✅ 配置文件已生成"
+            echo "📁 文件: flclashyaml/Tg-node1.yaml"
+            echo "📊 大小: ${FILE_SIZE} bytes"
+            echo "🎯 节点: ${NODE_COUNT} 个"
+            
+            echo "📄 预览:"
+            head -15 flclashyaml/Tg-node1.yaml
+          else
+            echo "❌ 配置文件未生成"
+          fi
+          
+          echo ""
+          echo "=== 📋 报告完成 ==="
+      
+      # ==================== 步骤15：自动提交更改 ====================
+      - name: 自动提交更改
+        if: success()
+        run: |
+          echo "=== 📤 自动提交更改 ==="
           echo "提交时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
           echo ""
           
-          echo "1️⃣ 首先检查网络状态..."
-          echo "   当前IP: $(curl -4 -s --max-time 5 https://checkip.amazonaws.com 2>/dev/null || echo '无法获取')"
-          
-          echo "2️⃣ 检查文件变更..."
-          if git status --porcelain | grep -q "flclashyaml/Tg-node1.yaml"; then
-            echo "检测到配置文件变更"
-            echo "配置Git用户..."
+          if git diff --quiet flclashyaml/Tg-node1.yaml 2>/dev/null; then
+            echo "📝 文件无变化，跳过提交"
+          else
+            echo "📝 检测到文件变化，准备提交..."
+            
             git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git config --local user.name "github-actions[bot]"
-            echo "添加变更文件..."
             git add flclashyaml/Tg-node1.yaml
-            echo "生成提交信息..."
-            # 北京时间 + 节点信息（带质量统计）
-            COMMIT_TIME=$(python3 -c 'from datetime import datetime, timedelta; print((datetime.utcnow() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S CST"))')
-            NODE_INFO=$(python3 -c 'import yaml, sys; \
-              try: \
-                with open("flclashyaml/Tg-node1.yaml","r",encoding="utf-8") as f: \
-                  data = yaml.safe_load(f); \
-                proxies = data.get("proxies", []); \
-                node_count = len(proxies) if isinstance(proxies,list) else 0; \
-                avg = data.get("average_quality","N/A"); \
-                qs = data.get("quality_stats",{}); \
-                qstr = " [" + " ".join([f"{k}{v}" for k,v in qs.items()]) + "]" if qs else ""; \
-                wt = data.get("speedtest_config",{}).get("warp_for_tcp","N/A"); \
-                ws = data.get("speedtest_config",{}).get("warp_for_speedtest","N/A"); \
-                print(f"{node_count} nodes | {avg}分{qstr} | TCP_Warp={wt} Speedtest_Warp={ws}"); \
-              except Exception: \
-                print("unknown nodes")' 2>/dev/null || echo "unknown nodes")
-            COMMIT_MESSAGE="自动更新节点配置 ${COMMIT_TIME} (${NODE_INFO})"
-            echo "提交信息: $COMMIT_MESSAGE"
-            echo "提交更改..."
-            git commit -m "$COMMIT_MESSAGE"
-            echo "开始推送（自动识别默认分支）..."
-            # 自动获取默认分支（支持 main / master / 其他）
-            DEFAULT_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD | sed 's@^refs/remotes/origin/@@' 2>/dev/null || echo "main")
-            echo "检测到默认分支: $DEFAULT_BRANCH"
-            MAX_RETRIES=3
-            RETRY=0
-            while [ $RETRY -lt $MAX_RETRIES ]; do
-              RETRY=$((RETRY+1))
-              echo "第 $RETRY/$MAX_RETRIES 次推送尝试..."
-              if git push origin HEAD:"$DEFAULT_BRANCH"; then
-                echo "推送成功！"
-                break
-              else
-                echo "推送失败，5秒后重试..."
-                sleep 5
-                git pull --rebase origin "$DEFAULT_BRANCH" || true
-              fi
-            done
-          else
-            echo "文件无变化，跳过提交"
+            
+            COMMIT_TIME=$(date '+%Y-%m-%d %H:%M:%S')
+            NODE_COUNT=$(python3 -c 'import yaml; d=yaml.safe_load(open("flclashyaml/Tg-node1.yaml",encoding="utf-8")); print(len(d.get("proxies",[])))' 2>/dev/null || echo "?")
+            COMMIT_MESSAGE="🚀 自动更新：Telegram节点配置 (${NODE_COUNT}节点) - ${COMMIT_TIME}"
+            
+            echo "提交信息: ${COMMIT_MESSAGE}"
+            git commit -m "${COMMIT_MESSAGE}"
+            echo "开始推送..."
+            git push origin HEAD
+            
+            echo "✅ 提交完成"
           fi
-      
-      # ==================== 步骤15：最终清理和报告 ====================
-      - name: 最终清理和报告
-        if: always()
-        run: |
-          echo "=== 最终清理 ==="
-          echo "清理时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
-          echo ""
-          echo "1️⃣ 确保Warp完全停止..."
-          sudo wg-quick down wgcf 2>/dev/null || true
-          sudo ip link delete wgcf 2>/dev/null || true
-          echo "2️⃣ 清理临时文件..."
-          rm -f wgcf wgcf-profile.conf mihomo.gz downloaded_file xcspeedtest mihomo 2>/dev/null || true
-          echo "3️⃣ 工作流执行总结:"
-          echo "   执行时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
-          echo "   运行器: ${{ runner.os }}"
-          if [ -f "flclashyaml/Tg-node1.yaml" ]; then
-            FILE_SIZE=$(stat -c%s "flclashyaml/Tg-node1.yaml" 2>/dev/null || echo "unknown")
-            NODE_COUNT=$(python3 -c 'import yaml; d=yaml.safe_load(open("flclashyaml/Tg-node1.yaml",encoding="utf-8")); print(len(d.get("proxies",[])) if isinstance(d.get("proxies"),list) else 0)' 2>/dev/null || echo "?")
-            echo "   配置文件: flclashyaml/Tg-node1.yaml (${FILE_SIZE} bytes)"
-            echo "   节点数量: ${NODE_COUNT} 个"
-          else
-            echo "   配置文件未生成"
-          fi
-          echo ""
-          echo "5️⃣ 最终网络状态:"
-          echo "   出口IP: $(curl -4 -s --max-time 5 https://checkip.amazonaws.com 2>/dev/null || echo '获取失败')"
-          echo ""
-          echo "=== 工作流全部结束 ==="
