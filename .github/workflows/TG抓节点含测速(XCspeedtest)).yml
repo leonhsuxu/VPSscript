@@ -1,5 +1,4 @@
 name: TG频道和群抓取节点测速 XC-speedtest测速版
-
 # ==================== 触发条件配置 ====================
 on:
   # 定时执行配置
@@ -40,7 +39,6 @@ on:
           - tcp_only      # 只用TCP测速（最快）
           - clash_only    # 只用Speedtest测速（最准）
           - clash_first   # 先Speedtest，再TCP验证
-
 # ==================== 环境变量配置 ====================
 env:
   # ==================== 版本配置 ====================
@@ -103,7 +101,6 @@ env:
     @tempssrlink
     @sorenab2
     @proxyshareCN
-
 # ==================== 工作流任务定义 ====================
 jobs:
   # 主构建任务
@@ -318,7 +315,7 @@ jobs:
                 ;;
               "test_mode")
                 echo "测试模式：减少抓取数量，使用Warp测速"
-                echo "TELEGRAM_CHANNEL_IDS=\"@fqDINYUE\n@wxdy666\n@freeyule\"" >> $GITHUB_ENV
+                echo -e "TELEGRAM_CHANNEL_IDS=@fqDINYUE\n@wxdy666\n@freeyule" >> $GITHUB_ENV
                 echo "WARP_FOR_SCRAPING=false" >> $GITHUB_ENV
                 echo "WARP_FOR_TCP=true" >> $GITHUB_ENV
                 echo "WARP_FOR_SPEEDTEST=true" >> $GITHUB_ENV
@@ -511,41 +508,27 @@ jobs:
             
             echo "📋 生成提交信息..."
             
-            COMMIT_TIME=$(python3 -c "
-from datetime import datetime, timedelta
-print((datetime.utcnow() + timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S CST'))
-")
+            # 修正单行python命令
+            COMMIT_TIME=$(python3 -c 'from datetime import datetime, timedelta; print((datetime.utcnow() + timedelta(hours=8)).strftime("%Y-%m-%d %H:%M:%S CST"))')
             
-            NODE_INFO=$(python3 -c "
-import yaml, sys
-
-try:
-    with open('flclashyaml/Tg-node1.yaml', 'r', encoding='utf-8') as f:
-        data = yaml.safe_load(f)
-        
-        proxies = data.get('proxies', [])
-        node_count = len(proxies) if isinstance(proxies, list) else 0
-        
-        avg_quality = data.get('average_quality', 'N/A')
-        quality_stats = data.get('quality_stats', {})
-        
-        warp_tcp = data.get('speedtest_config', {}).get('warp_for_tcp', 'N/A')
-        warp_speedtest = data.get('speedtest_config', {}).get('warp_for_speedtest', 'N/A')
-        
-        quality_str = ''
-        if isinstance(quality_stats, dict):
-            parts = []
-            for key, value in quality_stats.items():
-                parts.append(f'{key}{value}')
-            if parts:
-                quality_str = '[' + ' '.join(parts) + ']'
-        
-        print(f'{node_count} nodes | {avg_quality}分 {quality_str} | TCP_Warp={warp_tcp} Speedtest_Warp={warp_speedtest}')
-        
-except Exception as e:
-    print(f'读取失败: {str(e)[:50]}')
-    print('unknown nodes')
-")
+            NODE_INFO=$(python3 -c 'import yaml, sys; \
+try: \
+    with open("flclashyaml/Tg-node1.yaml", "r", encoding="utf-8") as f: \
+        data = yaml.safe_load(f); \
+        proxies = data.get("proxies", []); \
+        node_count = len(proxies) if isinstance(proxies, list) else 0; \
+        avg_quality = data.get("average_quality", "N/A"); \
+        quality_stats = data.get("quality_stats", {}); \
+        warp_tcp = data.get("speedtest_config", {}).get("warp_for_tcp", "N/A"); \
+        warp_speedtest = data.get("speedtest_config", {}).get("warp_for_speedtest", "N/A"); \
+        quality_str = ""; \
+        if isinstance(quality_stats, dict): \
+            parts = [f"{k}{v}" for k,v in quality_stats.items()]; \
+            quality_str = "[" + " ".join(parts) + "]" if parts else ""; \
+        print(f"{node_count} nodes | {avg_quality}分 {quality_str} | TCP_Warp={warp_tcp} Speedtest_Warp={warp_speedtest}"); \
+except Exception as e: \
+    print(f"读取失败: {str(e)[:50]}"); \
+    print("unknown nodes");')
             
             COMMIT_MESSAGE="🤖 自动更新节点配置 ${COMMIT_TIME} (${NODE_INFO})"
             
@@ -614,19 +597,7 @@ except Exception as e:
             echo "   📁 配置文件: flclashyaml/Tg-node1.yaml (${FILE_SIZE} bytes)"
             
             if command -v python3 &> /dev/null; then
-              NODE_COUNT=$(python3 -c "
-try:
-    import yaml
-    with open('flclashyaml/Tg-node1.yaml', 'r', encoding='utf-8') as f:
-        data = yaml.safe_load(f)
-        proxies = data.get('proxies', [])
-        if isinstance(proxies, list):
-            print(len(proxies))
-        else:
-            print('格式错误')
-except Exception as e:
-    print('读取失败')
-")
+              NODE_COUNT=$(python3 -c 'try: import yaml; f=open("flclashyaml/Tg-node1.yaml","r",encoding="utf-8"); data=yaml.safe_load(f); f.close(); proxies=data.get("proxies",[]); print(len(proxies) if isinstance(proxies,list) else "格式错误"); except: print("读取失败")')
               echo "   🔗 节点数量: ${NODE_COUNT}"
             fi
           else
