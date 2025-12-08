@@ -30,13 +30,11 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       # 2. 设置 Python 环境
       - name: 设置 Python 环境
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-
       # 3. 缓存 Python 依赖
       - name: 缓存 Python 依赖
         uses: actions/cache@v4
@@ -45,15 +43,17 @@ jobs:
           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
-
       # 4. 安装 Python 依赖及系统依赖（wireguard-tools、curl）
       - name: 安装 Python 依赖及系统依赖
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           sudo apt-get update -qq
-          sudo apt-get install -y wireguard-tools curl
-
+          sudo apt-get install -y wireguard-tools curl resolvconf
+          # 检查 WireGuard 模块
+          echo "检查 WireGuard 模块状态:"
+          sudo modprobe wireguard 2>&1 || true
+          lsmod | grep wireguard || echo "⚠️ WireGuard 模块可能未加载"
       # 5. 缓存 Mihomo 程序
       - name: Cache Mihomo
         id: cache-mihomo
@@ -62,7 +62,6 @@ jobs:
           path: mihomo
           key: mihomo-amd64-${{ env.MIHOMO_VERSION }}
           restore-keys: mihomo-amd64-${{ env.MIHOMO_VERSION }}
-
       # 6. 下载 Mihomo 指定版本（如果缓存未命中）
       - name: Download Mihomo 指定版本
         if: steps.cache-mihomo.outputs.cache-hit != 'true'
@@ -79,7 +78,6 @@ jobs:
           gunzip -f mihomo.gz
           chmod +x mihomo
           ./mihomo -v
-
       # 7. 缓存 wgcf 工具（二进制文件）
       - name: Cache wgcf tool
         id: cache-wgcf
@@ -88,7 +86,6 @@ jobs:
           path: wgcf
           key: wgcf-linux-amd64-${{ env.WGCF_VERSION }}
           restore-keys: wgcf-linux-amd64-${{ env.WGCF_VERSION }}
-
       # 8. 下载 wgcf 工具（如果缓存未命中）
       - name: Download wgcf tool
         if: steps.cache-wgcf.outputs.cache-hit != 'true'
@@ -103,7 +100,6 @@ jobs:
           fi
           chmod +x wgcf
           echo "wgcf 下载完成。"
-
       # 9. 缓存 speedtest-clash 程序
       - name: Cache xiecang speedtest-clash
         id: cache-xc
@@ -112,7 +108,6 @@ jobs:
           path: xcspeedtest
           key: xiecang-${{ env.SPEEDTEST_VERSION }}
           restore-keys: xiecang-${{ env.SPEEDTEST_VERSION }}
-
       # 10. 下载 speedtest-clash 指定版本（如果缓存未命中）
       - name: Download xiecang speedtest-clash
         if: steps.cache-xc.outputs.cache-hit != 'true'
@@ -132,7 +127,6 @@ jobs:
             exit 1
           fi
           wget --tries=5 --timeout=60 -O downloaded_file "$URL"
-
           if file downloaded_file | grep -q "gzip compressed data"; then
             echo "检测到压缩包，开始解压"
             tar -xzf downloaded_file
@@ -154,39 +148,74 @@ jobs:
           fi
           chmod +x xcspeedtest
           ./xcspeedtest --help
-
       # 11. 启动 Cloudflare Warp (Simulate Domestic Environment)
       - name: Start Cloudflare Warp (Simulate Domestic Environment)
         run: |
-          set -e
+          set +e  # 允许错误继续执行
           chmod +x wgcf
-
-          # 仅在配置文件不存在时注册和生成，避免重复卡住
+          
+          echo "=== 开始设置 Cloudflare Warp ==="
+          
+          # 1. 检查并准备 WireGuard
+          echo "检查 WireGuard 状态..."
+          if lsmod | grep -q wireguard; then
+            echo "✅ WireGuard 模块已加载"
+          else
+            echo "尝试加载 WireGuard 模块..."
+            sudo modprobe wireguard 2>&1
+            if lsmod | grep -q wireguard; then
+              echo "✅ WireGuard 模块加载成功"
+            else
+              echo "⚠️ WireGuard 模块加载失败，尝试安装 linux-modules-extra"
+              sudo apt-get update
+              sudo apt-get install -y linux-modules-extra-$(uname -r) 2>&1 || true
+            fi
+          fi
+          
+          # 2. 清除可能存在的旧配置
+          echo "清理旧配置..."
+          sudo wg-quick down wgcf 2>/dev/null || true
+          sudo rm -f /etc/wireguard/wgcf.conf
+          
+          # 3. 注册和生成配置文件（如果不存在）
           if [ ! -f wgcf-profile.conf ]; then
-            ./wgcf register --accept-tos > /dev/null 2>&1 || true
+            echo "注册 Cloudflare Warp 账户..."
+            ./wgcf register --accept-tos 2>&1
+            echo "生成 WireGuard 配置文件..."
             ./wgcf generate
           fi
-
+          
+          if [ -f wgcf-profile.conf ]; then
+            echo "✅ 配置文件生成成功"
+          else
+            echo "❌ 配置文件生成失败，跳过 Warp 设置"
+            exit 0
+          fi
+          
+          # 4. 安装配置文件
           sudo mkdir -p /etc/wireguard
-          sudo mv -f wgcf-profile.conf /etc/wireguard/wgcf.conf
-
-          sudo modprobe wireguard || true
-
-          sudo wg-quick down wgcf || true
-
-          if timeout 30s sudo wg-quick up wgcf; then
+          sudo cp -f wgcf-profile.conf /etc/wireguard/wgcf.conf
+          
+          # 5. 尝试启动 Warp（带超时和详细日志）
+          echo "启动 Cloudflare Warp..."
+          if timeout 45s sudo wg-quick up wgcf 2>&1; then
             echo "✅ Warp 启动成功"
           else
-            echo "⚠️ Warp 启动超时或失败，继续后续步骤"
+            echo "⚠️ Warp 启动失败或超时"
           fi
-
-          echo "当前出口 IP:"
-          if ! curl -4 --max-time 10 https://ip.sb; then
-            echo "⚠️ IP查询失败，Warp可能未成功"
-          fi
-
-          sleep 5
-
+          
+          # 6. 验证连接
+          echo "=== 验证连接状态 ==="
+          sudo wg show 2>&1
+          
+          echo "当前出口 IPv4:"
+          curl -4 --max-time 10 -s https://ip.sb || echo "IPv4 查询失败"
+          
+          echo "当前出口 IPv6:"
+          curl -6 --max-time 10 -s https://ip.sb || echo "IPv6 查询失败"
+          
+          echo "=== Warp 设置完成 ==="
+          sleep 3
       # 12. 运行 Telegram 抓取及 Clash 测速脚本
       - name: 运行 Telegram 抓取及 Clash 测速脚本
         env:
@@ -197,12 +226,10 @@ jobs:
         run: |
           mkdir -p flclashyaml
           python TelegramNode/TBD-telegram_publiclink.py
-
       # 13. (可选) 运行 speedtest-clash 进行二次测速
       # - name: 运行 speedtest-clash 进行二次测速（可选）
       #   run: |
       #     ./xcspeedtest -c flclashyaml/Tg-node1.yaml -output flclashyaml/speedtest_result.yaml
-
       # 14. 提交生成的 Clash 配置到仓库
       - name: 提交生成的 Clash 配置到仓库
         run: |
@@ -217,3 +244,4 @@ jobs:
             git commit -m "更新节点配置 ${COMMIT_TIME}"
             git push
             echo "提交成功！"
+          fi
