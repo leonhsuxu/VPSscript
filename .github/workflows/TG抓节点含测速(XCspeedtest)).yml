@@ -6,7 +6,7 @@ on:
 env:
   MIHOMO_VERSION: v1.19.17
   SPEEDTEST_VERSION: v0.4.1  # 需要时更新版本号
-  WGCF_VERSION: v2.2.29      # WARP wgcf 工具版本
+  WGCF_VERSION: v2.2.19      # WARP wgcf 工具版本
   TELEGRAM_CHANNEL_IDS: |
     # 频道和群列表，换行分隔
     @fqDINYUE
@@ -23,7 +23,7 @@ env:
     @proxyshareCN
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # GitHub Actions 默认使用 Ubuntu Linux Runner
     steps:
       # 1. 检出代码仓库
       - name: 检出代码仓库
@@ -34,7 +34,7 @@ jobs:
       - name: 设置 Python 环境
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.11' # 或您脚本所需的Python版本
       # 3. 缓存 Python 依赖，加快后续构建速度
       - name: 缓存 Python 依赖
         uses: actions/cache@v4
@@ -57,7 +57,7 @@ jobs:
         id: cache-wgcf
         uses: actions/cache@v4
         with:
-          path: wgcf
+          path: wgcf # 缓存 wgcf 可执行文件本身
           key: wgcf-linux-amd64-${{ env.WGCF_VERSION }}
           restore-keys: wgcf-linux-amd64-${{ env.WGCF_VERSION }}
 
@@ -66,9 +66,10 @@ jobs:
         if: steps.cache-wgcf.outputs.cache-hit != 'true'
         run: |
           # 修正：使用 ${WGCF_VERSION#v} 移除版本号前的 'v'，以匹配实际文件名
+          # 例如：v2.2.19 -> 2.2.19
           WGCF_FILENAME_VERSION=${{ env.WGCF_VERSION#v }} 
           echo "正在下载 wgcf v${WGCF_FILENAME_VERSION}..."
-          # 注意 URL 中 assets 部分的命名规则
+          # 注意 URL 中 assets 部分的命名规则，通常是 wgcf_{版本号}_linux_amd64
           curl -fsSL -o wgcf https://github.com/ViRb3/wgcf/releases/download/${{ env.WGCF_VERSION }}/wgcf_${WGCF_FILENAME_VERSION}_linux_amd64
           if [ ! -f "wgcf" ]; then
             echo "错误：wgcf 下载失败！请检查版本号或网络连接。"
@@ -82,22 +83,28 @@ jobs:
           echo "正在设置并启动 Cloudflare Warp..."
           chmod +x wgcf
           # 注册 WARP 账户，如果已注册则不报错
+          # 将所有输出重定向到 /dev/null，只显示自定义 echo 信息
           ./wgcf register --accept-tos > /dev/null 2>&1 || true
           echo "WARP 账户注册或已注册。"
           
+          # 生成 WireGuard 配置文件
           ./wgcf generate
           echo "WARP 配置生成完成。"
           
+          # 创建 WireGuard 配置目录并移动配置文件
           sudo mkdir -p /etc/wireguard
           sudo mv wgcf-profile.conf /etc/wireguard/wgcf.conf
           echo "WireGuard 配置已复制到 /etc/wireguard/wgcf.conf。"
           
           # 启动 Warp VPN，并检查状态
+          # wg-quick up 命令可能会输出到 stderr 但实际成功，这里尝试捕获并判断
           if sudo wg-quick up wgcf; then
             echo "✅ Warp 启动成功！测速流量已走 Cloudflare WARP 网络。"
             echo "尝试验证当前出口IP："
+            # 使用 curl -4 确保获取 IPv4 地址
+            # 增加超时时间，避免网络不稳定导致卡住
             curl -4 --max-time 10 https://ip.sb || echo "IP验证失败或超时，这不影响后续测速。"
-            sleep 5 # 给予网络一定时间稳定
+            sleep 5 # 给予网络一定时间稳定，确保 WARP 路由生效
           else
             echo "⚠️ Warp 启动失败，将继续使用 GitHub Actions 默认网络进行测速。"
             echo "尝试验证当前出口IP (可能未改变)："
@@ -116,11 +123,11 @@ jobs:
       - name: Download Mihomo 指定版本
         if: steps.cache-mihomo.outputs.cache-hit != 'true'
         run: |
-          set -e
+          set -e # 任何命令失败都将退出脚本
           TAG=${{ env.MIHOMO_VERSION }}
           echo "下载 Mihomo 版本: $TAG"
           URL="https://github.com/MetaCubeX/mihomo/releases/download/${TAG}/mihomo-linux-amd64-${TAG}.gz"
-          wget --tries=5 --timeout=60 --progress=bar:force "$URL"
+          wget --tries=5 --timeout=60 --progress-bar "$URL" # 使用 --progress-bar 替代 :force
           gunzip "mihomo-linux-amd64-${TAG}.gz"
           mv "mihomo-linux-amd64-${TAG}" mihomo
           chmod +x mihomo
@@ -137,17 +144,26 @@ jobs:
       - name: Download xiecang speedtest-clash
         if: steps.cache-xc.outputs.cache-hit != 'true'
         run: |
-          set -e
+          set -e # 任何命令失败都将退出脚本
           RELEASE_TAG=${{ env.SPEEDTEST_VERSION }}
           echo "尝试下载 speedtest-clash 版本: $RELEASE_TAG"
+          # 使用 API 获取下载 URL
           URL=$(curl -s "https://api.github.com/repos/xiecang/speedtest-clash/releases/tags/${RELEASE_TAG}" \
                 | grep "browser_download_url.*speedtest-clash_Linux_x86_64" | cut -d '"' -f4)
           if [ -z "$URL" ]; then
-            echo "警告: 未找到指定版本，使用最新版"
+            echo "警告: 未找到指定版本 (${RELEASE_TAG})，尝试使用最新版本。"
             URL=$(curl -s https://api.github.com/repos/xiecang/speedtest-clash/releases/latest \
                 | grep "browser_download_url.*speedtest-clash_Linux_x86_64" | cut -d '"' -f4)
           fi
+          if [ -z "$URL" ]; then
+            echo "错误：未能找到 speedtest-clash 的下载 URL，退出。"
+            exit 1
+          fi
+          
+          # 下载文件
           wget --tries=5 --timeout=60 -O downloaded_file "$URL"
+          
+          # 解压和重命名
           if file downloaded_file | grep -q "gzip compressed data"; then
             echo "检测到压缩包，开始解压..."
             tar -xzf downloaded_file
@@ -172,7 +188,7 @@ jobs:
           fi
           chmod +x xcspeedtest
           echo "speedtest-clash 下载并准备完成。"
-          ./xcspeedtest --help
+          ./xcspeedtest --help # 运行帮助命令验证是否成功
       # 12. 运行 Telegram 节点抓取脚本 (原 10)
       - name: 运行 Telegram 抓取及 Clash 测速脚本
         env:
@@ -181,7 +197,7 @@ jobs:
           TELEGRAM_STRING_SESSION: ${{ secrets.TELEGRAM_STRING_SESSION }}
           TELEGRAM_CHANNEL_IDS: ${{ env.TELEGRAM_CHANNEL_IDS }}
         run: |
-          mkdir -p flclashyaml
+          mkdir -p flclashyaml # 确保输出目录存在
           python TelegramNode/TBD-telegram_publiclink.py
       # 13. (可选) 运行 speedtest-clash 进行二次测速，留做扩展 (原 11)
       # - name: 运行 speedtest-clash 进行二次测速（可选）
@@ -193,6 +209,7 @@ jobs:
           # 配置提交用户
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+          # 添加生成的 Clash 配置文件到暂存区
           git add flclashyaml/Tg-node1.yaml
           # 判断是否有变更
           if git diff --staged --quiet; then
@@ -201,7 +218,9 @@ jobs:
             echo "检测到文件变更，正在提交..."
             # 使用 Python 生成北京时间（更稳定）
             COMMIT_TIME=$(python3 -c "from datetime import datetime, timedelta; print((datetime.utcnow() + timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S CST'))")
+            # 提交变更
             git commit -m "更新节点配置 ${COMMIT_TIME}"
+            # 推送到远程仓库
             git push
             echo "提交成功！"
           fi
