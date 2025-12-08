@@ -55,6 +55,17 @@ OUTPUT_FILE = 'flclashyaml/Tg-node1.yaml'  # 输出文件路径，用于保存�
 
 
 # === 新增：测速策略开关（推荐保留这几个选项）===
+# === 网络控制配置 使用国外网络还是模拟国内网络===
+WARP_FOR_SCRAPING = os.getenv('WARP_FOR_SCRAPING', 'false').lower() == 'true'
+WARP_FOR_TCP = os.getenv('WARP_FOR_TCP', 'false').lower() == 'true'
+WARP_FOR_SPEEDTEST = os.getenv('WARP_FOR_SPEEDTEST', 'true').lower() == 'true'
+WARP_FOR_FINAL = os.getenv('WARP_FOR_FINAL', 'false').lower() == 'true'
+
+   # stage_name: 'scraping', 'tcp', 'speedtest', 'final'
+
+   #require_warp: True=需要Warp网络, False=需要原始GitHub网络
+
+
 # 测速模式：
 ENABLE_SPEED_TEST = True  # 是否启用整体速度测试功能，True表示启用。测试顺序如下
 
@@ -83,7 +94,7 @@ TEST_URLS = [
     'http://connectivitycheck.gstatic.com/generate_204',  # Google 204（国内也通）
 ]
 
-# ==================== 带宽筛选配置（新增） ====================
+# ==================== 测速结果_带宽筛选配置（新增） ====================
 # 是否启用带宽筛选（True=启用，False=关闭）
 ENABLE_BANDWIDTH_FILTER = os.getenv('ENABLE_BANDWIDTH_FILTER', 'true').lower() == 'true'
 
@@ -1652,6 +1663,69 @@ def clash_test_proxy(clash_path, proxy, debug=False):
             pass
     return None
 
+
+# 测速使用的网络选择
+
+def ensure_network_for_stage(stage_name, require_warp=False):
+    """
+    确保当前网络状态适合指定阶段
+    stage_name: 'scraping', 'tcp', 'speedtest', 'final'
+    require_warp: True=需要Warp网络, False=需要原始GitHub网络
+    """
+    if not os.getenv('GITHUB_ACTIONS') == 'true':
+        print(f"非GitHub环境，跳过网络切换: {stage_name}")
+        return True
+    
+    current_ip = get_current_ip()
+    is_warp = is_warp_enabled()
+    
+    if require_warp and not is_warp:
+        print(f"⚠️ 阶段[{stage_name}]需要Warp网络但当前是原始网络，正在切换...")
+        return start_cloudflare_warp()
+    elif not require_warp and is_warp:
+        print(f"⚠️ 阶段[{stage_name}]需要原始网络但当前是Warp，正在切换...")
+        return stop_cloudflare_warp()
+    
+    print(f"✅ 阶段[{stage_name}]网络状态正常")
+    return True
+
+def get_current_ip():
+    """获取当前出口IP"""
+    try:
+        import subprocess
+        result = subprocess.run(
+            ["curl", "-4", "-s", "--max-time", "5", "https://ip.sb"],
+            capture_output=True, text=True
+        )
+        return result.stdout.strip() if result.returncode == 0 else "unknown"
+    except:
+        return "unknown"
+
+def is_warp_enabled():
+    """检查Warp是否启用"""
+    try:
+        import subprocess
+        result = subprocess.run(["wg", "show"], capture_output=True, text=True)
+        return "wgcf" in result.stdout
+    except:
+        return False
+
+def stop_cloudflare_warp():
+    """停止Warp连接，恢复原始网络"""
+    try:
+        subprocess.run(["sudo", "wg-quick", "down", "wgcf"], 
+                      capture_output=True, timeout=10)
+        
+        # 清理路由
+        subprocess.run(["sudo", "ip", "route", "del", "140.82.112.0/20"], 
+                      stderr=subprocess.DEVNULL)
+        # ... 其他路由清理 ...
+        
+        print("✅ Warp已停止，恢复原始网络")
+        return True
+    except Exception as e:
+        print(f"❌ 停止Warp失败: {e}")
+        return False
 
 
 
