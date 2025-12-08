@@ -845,10 +845,14 @@ def load_existing_proxies_and_state():
 # ============================================= 
 
 
-def extract_valid_subscribe_links(text: str):
+def extract_valid_subscribe_links(text: str, channel_id=None):
     """
     2025年12月终极防漏版
     完美解决：反引号、引号、括号、换行、中文标点污染链接问题
+    
+    参数:
+        text: 消息文本
+        channel_id: 频道ID，用于显示来源
     """
     # 第一步：狂暴提取所有疑似链接（超宽松）
     rough_links = re.findall(r'https?://[^\s<>"\'`\]]+', text)
@@ -875,8 +879,11 @@ def extract_valid_subscribe_links(text: str):
             if any(bad in url_lower for bad in ['/t.me/', '/joinchat', '/channel', '/invite']):
                 continue
             valid_links.add(link)
-            # 显示完整链接地址
-            print(f"🔗 提取链接: {link}")
+            # 显示完整链接地址和频道来源
+            if channel_id:
+                print(f"🔗 [{channel_id}] 提取链接: {link}")
+            else:
+                print(f"🔗 提取链接: {link}")
     
     # === 过期时间判断（保持你原来的逻辑）===
     MIN_HOURS_LEFT = MIN_EXPIRE_HOURS
@@ -907,11 +914,11 @@ def extract_valid_subscribe_links(text: str):
         if expire_time:
             hours_left = (expire_time - now).total_seconds() / 3600
             if hours_left < MIN_HOURS_LEFT:
-                # 静默跳过过期链接，不显示警告
+                # 静默跳过过期链接
                 continue
         final_links.append(url)
     
-    return final_links    
+    return final_links 
    
 # ==========================
 # 替换了 scrape_telegram_links 为 B 版本更完善的实现
@@ -983,27 +990,24 @@ async def process_channel(client, channel_id, last_message_ids, target_time):
     try:
         entity = await client.get_entity(channel_id)
     except Exception as e:
-        print(f"❌ 错误: 无法获取频道实体 {channel_id}: {e}")
+        # 静默处理错误
         return channel_links, max_id_found
-    
-    print(f"  🎯 正在处理频道: {channel_id}")
     
     try:
         async for message in client.iter_messages(entity, min_id=last_message_ids.get(channel_id, 0) + 1, reverse=False):
             if message.date < target_time:
                 break
             if message.text:
-                links = extract_valid_subscribe_links(message.text)
+                # 传递频道ID参数
+                links = extract_valid_subscribe_links(message.text, channel_id=channel_id)
                 for link in links:
                     channel_links.append(link)
-                    # 注释掉这行，不再打印找到的链接
-                    # print(f"  ✅ 找到链接: {link[:70]}...")
             if message.id > max_id_found:
                 max_id_found = message.id
     except Exception as e:
-        print(f"❌ 错误: 从频道 '{channel_id}' 获取消息时出错: {e}")
+        # 静默处理错误
+        pass
     
-    print(f"  📊 频道 {channel_id} 找到 {len(channel_links)} 个链接")
     return channel_links, max_id_found
 
 # --- 3合1下载 版本的下载 ---
