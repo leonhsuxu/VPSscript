@@ -2507,26 +2507,6 @@ async def main():
     update_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
     avg_quality = sum(p.get('quality_score', 0) for p in final_proxies) / total_count if total_count > 0 else 0
 
-    final_config = {
-        'proxies': final_proxies,
-        'last_message_ids': last_message_ids,
-        'update_time': update_time,
-        'total_nodes': total_count,
-        'average_quality': round(avg_quality, 1),
-        'quality_stats': quality_stats,
-        'bandwidth_filter': {
-            'enabled': ENABLE_BANDWIDTH_FILTER,
-            'min_mb': MIN_BANDWIDTH_MB
-        },
-        'speedtest_config': {
-            'mode': SPEEDTEST_MODE,
-            'warp_for_tcp': WARP_FOR_TCP,
-            'warp_for_speedtest': WARP_FOR_SPEEDTEST,
-            'warp_for_scraping': WARP_FOR_SCRAPING
-        },
-        'note': '由 GitHub Actions 自动生成，每4小时更新一次，已按质量评分排序'
-    }
-
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     try:
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
@@ -2543,14 +2523,40 @@ async def main():
             f.write("# 排序规则   : 质量评分 → 延迟 → 地区优先级\n")
             f.write("# 构建方式   : GitHub Actions 全自动，每4小时更新一次\n")
             f.write("# ==================================================\n\n")
+            
+            final_config = {
+                'proxies': final_proxies,
+                'last_message_ids': last_message_ids,
+                'update_time': update_time,
+                'total_nodes': total_count,
+                'average_quality': round(avg_quality, 1),
+                'quality_stats': quality_stats,
+                'bandwidth_filter': {
+                    'enabled': ENABLE_BANDWIDTH_FILTER,
+                    'min_mb': MIN_BANDWIDTH_MB
+                },
+                'speedtest_config': {
+                    'mode': SPEEDTEST_MODE,
+                    'warp_for_tcp': WARP_FOR_TCP,
+                    'warp_for_speedtest': WARP_FOR_SPEEDTEST,
+                    'warp_for_scraping': WARP_FOR_SCRAPING
+                },
+                'note': '由 GitHub Actions 自动生成，每4小时更新一次，已按质量评分排序'
+            }
+            
             yaml.dump(final_config, f, allow_unicode=True, sort_keys=False, indent=2, width=4096, default_flow_style=False)
 
         print(f"✅ 配置文件已成功保存至 {OUTPUT_FILE}")
-        print(f"   本次共保留 {total_count} 个优质节点")
-        print(f"   平均质量分: {avg_quality:.1f}/100")
-        print(f"   质量分布: {quality_stats}")
-        print(f"   更新时间：{update_time}")
-        print(f"   网络配置: TCP测速Warp={WARP_FOR_TCP}, Speedtest测速Warp={WARP_FOR_SPEEDTEST}")
+        print("=" * 60)
+        print(f"📊 统计信息:")
+        print(f"   节点总数   : {total_count} 个优质节点")
+        print(f"   平均质量分 : {avg_quality:.1f}/100")
+        print(f"   质量分布   : {quality_stats}")
+        print(f"   带宽筛选   : ≥ {MIN_BANDWIDTH_MB}MB/s")
+        print(f"   测速模式   : {SPEEDTEST_MODE}")
+        print(f"   网络配置   : TCP_Warp={WARP_FOR_TCP}, Speedtest_Warp={WARP_FOR_SPEEDTEST}")
+        print(f"   更新时间   : {update_time}")
+        print("=" * 60)
         print("🎉 全部任务圆满完成！")
         
         # 最终清理：确保切换回GitHub网络
@@ -2560,8 +2566,7 @@ async def main():
             
     except Exception as e:
         print(f"❌ 写出配置文件失败: {e}")
-        sys.exit(1)
-
+        sys.exit(1)            
 
 
 
