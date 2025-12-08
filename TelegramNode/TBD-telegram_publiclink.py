@@ -262,24 +262,62 @@ WARP_FOR_FINAL = network_config['WARP_FOR_FINAL']
 # ==================== 完整的网络控制函数 ====================
 
 def get_current_ip():
-    """获取当前出口IP"""
+    """获取当前出口IP，增强容错性"""
     try:
-        result = subprocess.run(
-            ["curl", "-4", "-s", "--max-time", "5", "https://ip.sb"],
-            capture_output=True, text=True
-        )
-        if result.returncode == 0:
-            ip = result.stdout.strip()
-            # 判断是否为Warp IP（常见的Warp出口IP段）
-            warp_prefixes = ['162.159.192.', '162.159.193.', '162.159.195.', 
-                           '172.64.240.', '172.64.241.', '172.64.242.', '172.64.243.']
-            for prefix in warp_prefixes:
-                if ip.startswith(prefix):
-                    return f"{ip} (🌐 Warp网络)"
-            return f"{ip} (💻 原始网络)"
-        return "unknown (无法获取IP)"
+        # 尝试多个IP检测服务
+        ip_services = [
+            "https://api.ipify.org",
+            "https://ipinfo.io/ip",
+            "https://ifconfig.me/ip",
+            "https://ip.sb",
+            "https://checkip.amazonaws.com"
+        ]
+        
+        for service in ip_services:
+            try:
+                result = subprocess.run(
+                    ["curl", "-4", "-s", "--max-time", "5", service],
+                    capture_output=True, text=True, timeout=6
+                )
+                if result.returncode == 0 and result.stdout.strip():
+                    ip = result.stdout.strip()
+                    # 验证IP格式
+                    if re.match(r'^\d{1,3}(\.\d{1,3}){3}$', ip):
+                        # 判断是否为Warp IP
+                        warp_prefixes = ['162.159.192.', '162.159.193.', '162.159.195.', 
+                                       '172.64.240.', '172.64.241.', '172.64.242.', '172.64.243.']
+                        for prefix in warp_prefixes:
+                            if ip.startswith(prefix):
+                                return f"{ip} (🌐 Warp网络)"
+                        return f"{ip} (💻 原始网络)"
+            except:
+                continue
+        
+        # 如果所有服务都失败，尝试直接查询路由表
+        try:
+            result = subprocess.run(
+                ["ip", "route", "get", "1"],
+                capture_output=True, text=True, timeout=3
+            )
+            lines = result.stdout.split('\n')
+            for line in lines:
+                if 'src' in line:
+                    parts = line.split()
+                    for i, part in enumerate(parts):
+                        if part == 'src':
+                            ip = parts[i+1]
+                            if re.match(r'^\d{1,3}(\.\d{1,3}){3}$', ip):
+                                return f"{ip} (📡 本地路由)"
+        except:
+            pass
+        
+        return "unknown (无法获取)"
+        
     except Exception as e:
-        return f"unknown (获取失败: {str(e)[:50]})"
+        return f"unknown (异常: {str(e)[:30]})"
+        
+# == 检查warp ==
+
 
 def is_warp_enabled():
     """检查Warp是否启用"""
@@ -638,6 +676,7 @@ def ensure_network_for_stage(stage_name, require_warp=False):
     返回:
         bool: 网络切换是否成功
     """
+    # 非GitHub环境直接返回
     if not os.getenv('GITHUB_ACTIONS') == 'true':
         print(f"  ℹ️  非GitHub环境，跳过网络切换: {stage_name}")
         return True
@@ -646,29 +685,64 @@ def ensure_network_for_stage(stage_name, require_warp=False):
     current_ip = get_current_ip()
     
     print(f"  🔄 阶段[{stage_name}]网络检查:")
-    print(f"     需要: {'🌐 Warp网络（模拟国内）' if require_warp else '💻 原始GitHub网络'}")
-    print(f"     当前: {'🌐 Warp网络' if current_warp else '💻 原始网络'} ({current_ip})")
+    print(f"     需要: {'🌐 Warp网络' if require_warp else '💻 原始网络'}")
+    print(f"     当前: {'🌐 Warp网络' if current_warp else '💻 原始网络'}")
+    print(f"     IP检测: {current_ip}")
     
+    # 如果已经是正确状态，直接返回
+    if (require_warp and current_warp) or (not require_warp and not current_warp):
+        print(f"     状态: ✅ 网络状态正确，无需切换")
+        return True
+    
+    # 需要切换到Warp但当前不是Warp
     if require_warp and not current_warp:
         print(f"     状态: 需要切换到Warp网络...")
-        if start_cloudflare_warp():
+        success = start_cloudflare_warp()
+        if success:
             print(f"     结果: ✅ 已成功切换到Warp网络")
-            return True
+            # 验证切换成功
+            time.sleep(2)
+            if is_warp_enabled():
+                print(f"     验证: Warp连接已激活")
+                return True
+            else:
+                print(f"     警告: Warp可能未完全激活，继续执行")
+                return True
         else:
             print(f"     结果: ⚠️  Warp切换失败，继续使用当前网络")
             return False
-            
+    
+    # 需要切换到原始网络但当前是Warp
     elif not require_warp and current_warp:
         print(f"     状态: 需要切换到原始GitHub网络...")
-        if stop_cloudflare_warp():
-            print(f"     结果: ✅ 已成功切换到原始GitHub网络")
+        success = stop_cloudflare_warp()
+        if success:
+            print(f"     结果: ✅ 已成功切换到原始网络")
             return True
         else:
             print(f"     结果: ⚠️  原始网络切换失败，继续使用Warp")
             return False
-    else:
-        print(f"     状态: ✅ 网络状态正确，无需切换")
-        return True
+    
+    return True
+
+
+def simplified_network_check():
+    """简化版网络状态检查，只报告不切换"""
+    if not os.getenv('GITHUB_ACTIONS') == 'true':
+        print("  ℹ️  非GitHub环境，使用当前网络")
+        return
+    
+    print("  📡 网络状态检查:")
+    warp_enabled = is_warp_enabled()
+    ip_info = get_current_ip()
+    
+    status = "🌐 Warp网络" if warp_enabled else "💻 原始GitHub网络"
+    print(f"    当前状态: {status}")
+    print(f"    出口IP: {ip_info}")
+    
+    return warp_enabled
+    
+
 
 # ======= 国家国旗识别 ======
 def get_country_flag_emoji(code):
@@ -2095,7 +2169,7 @@ def clash_test_proxy(clash_path, proxy, debug=False):
 
 
 # 主函数
-               
+
 async def main():
     print("=" * 60)
     print("Telegram.Node_Clash-Speedtest测试版 V1")
@@ -2110,6 +2184,14 @@ async def main():
     print(f"  - 最终阶段 Warp: {WARP_FOR_FINAL}")
     print("-" * 40)
     
+    # 只在GitHub Actions中启用网络控制
+    if os.getenv('GITHUB_ACTIONS') == 'true':
+        print("🏗️ GitHub Actions环境检测到，启用网络控制")
+        # 初始网络状态检查
+        simplified_network_check()
+    else:
+        print("💻 本地环境，跳过网络控制")
+    
     # 初始化网络状态
     preprocess_regex_rules()
 
@@ -2119,10 +2201,9 @@ async def main():
 
     # === 阶段1：Telegram抓取（根据配置使用网络）===
     print("[2/5] 抓取 Telegram 新订阅链接")
+    # 只检查，不强制切换
     if os.getenv('GITHUB_ACTIONS') == 'true':
         ensure_network_for_stage('scraping', require_warp=WARP_FOR_SCRAPING)
-    else:
-        print("非GitHub环境，使用当前网络进行抓取")
     
     urls, last_message_ids = await scrape_telegram_links(last_message_ids)
     
@@ -2415,7 +2496,11 @@ async def main():
             
     except Exception as e:
         print(f"❌ 写出配置文件失败: {e}")
-        sys.exit(1)   
+        sys.exit(1)
 
+
+
+
+                  
 if __name__ == "__main__":
     asyncio.run(main())  # 调用异步主函数
