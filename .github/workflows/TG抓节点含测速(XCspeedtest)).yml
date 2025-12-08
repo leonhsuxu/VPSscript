@@ -6,7 +6,7 @@ on:
 env:
   MIHOMO_VERSION: v1.19.17
   SPEEDTEST_VERSION: v0.4.1  # 需要时更新版本号
-  WGCF_VERSION: v2.2.19      # WARP wgcf 工具版本
+  WGCF_VERSION: v2.2.29      # WARP wgcf 工具版本
   TELEGRAM_CHANNEL_IDS: |
     # 频道和群列表，换行分隔
     @fqDINYUE
@@ -65,8 +65,11 @@ jobs:
       - name: Download wgcf tool
         if: steps.cache-wgcf.outputs.cache-hit != 'true'
         run: |
-          echo "正在下载 wgcf v${{ env.WGCF_VERSION }}..."
-          curl -fsSL -o wgcf https://github.com/ViRb3/wgcf/releases/download/${{ env.WGCF_VERSION }}/wgcf_${{ env.WGCF_VERSION }}_linux_amd64
+          # 修正：使用 ${WGCF_VERSION#v} 移除版本号前的 'v'，以匹配实际文件名
+          WGCF_FILENAME_VERSION=${{ env.WGCF_VERSION#v }} 
+          echo "正在下载 wgcf v${WGCF_FILENAME_VERSION}..."
+          # 注意 URL 中 assets 部分的命名规则
+          curl -fsSL -o wgcf https://github.com/ViRb3/wgcf/releases/download/${{ env.WGCF_VERSION }}/wgcf_${WGCF_FILENAME_VERSION}_linux_amd64
           if [ ! -f "wgcf" ]; then
             echo "错误：wgcf 下载失败！请检查版本号或网络连接。"
             exit 1
