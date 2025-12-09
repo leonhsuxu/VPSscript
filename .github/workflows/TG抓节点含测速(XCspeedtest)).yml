@@ -12,10 +12,10 @@ on:
       warp_config:
         description: '选择网络配置模式'
         required: false
-        default: '默认配置'
+        default: 'default'
         type: choice
         options:
-          - default        # 默认配置：抓取用GitHub，测速用Warp
+          - 默认配置        # 默认配置：抓取用GitHub，测速用Warp
           - all_warp       # 全流程使用Warp网络
           - all_github     # 全流程使用GitHub网络
           - test_mode      # 测试模式（只抓取少量节点）
