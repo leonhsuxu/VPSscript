@@ -12,7 +12,7 @@ on:
       warp_config:
         description: '选择网络配置模式'
         required: false
-        default: 'default'
+        default: '默认配置'
         type: choice
         options:
           - default        # 默认配置：抓取用GitHub，测速用Warp
@@ -65,7 +65,7 @@ env:
   ENABLE_BANDWIDTH_FILTER: "true"
   # 最低带宽阈值（单位：MB/s）
   # 只保留带宽大于等于此值的节点
-  MIN_BANDWIDTH_MB: "25"
+  MIN_BANDWIDTH_MB: "35"
   # ==================== 日志配置 ====================
   # 是否启用TCP测速详细日志（生产环境建议关闭）
   ENABLE_TCP_LOG: "false"
