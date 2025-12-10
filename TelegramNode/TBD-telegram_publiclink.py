@@ -2113,8 +2113,12 @@ def batch_tcp_test(proxies, max_workers=TCP_MAX_WORKERS):
 
 def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=128, debug=False):
     results = []
+    valid_count = 0
+    invalid_count = 0
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
-        futures = {executor.submit(xcspeedtest_test_proxy, speedtest_path, p, debug): p for p in proxies}
+        futures = {
+            executor.submit(xcspeedtest_test_proxy, speedtest_path, p, debug): p for p in proxies
+        }
         for future in concurrent.futures.as_completed(futures):
             proxy = futures[future]
             try:
@@ -2125,13 +2129,19 @@ def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=128, debug
                     pcopy['clash_delay'] = delay
                     pcopy['bandwidth'] = bandwidth
                     results.append(pcopy)
+                    valid_count += 1
                     if debug:
-                        print(f"成功: {delay}ms | {bandwidth or 'N/A'} → {proxy.get('name')}")
+                        print(f"有效测速: {delay}ms | {bandwidth or 'N/A'} → {proxy.get('name')}")
+                else:
+                    invalid_count += 1
+                    if debug:
+                        print(f"无效测速 → 丢弃 {proxy.get('name')}")
             except Exception as e:
+                invalid_count += 1
                 if debug:
-                    print(f"异常: {proxy.get('name')} → {e}")
+                    print(f"异常: {proxy.get('name')} 测速异常 {e}")
+    print(f"[测速统计] 总数: {len(proxies)}, 有效: {valid_count}, 无效: {invalid_count}")
     return results
-
 
 # clash 测速
 def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
