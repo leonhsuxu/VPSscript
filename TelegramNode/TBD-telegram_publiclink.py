@@ -184,6 +184,26 @@ CUSTOM_REGEX_RULES = {
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
 BJ_TZ = timezone(timedelta(hours=8))
 
+
+
+# === 日志变量
+def str_to_bool(s: str) -> bool:
+    return s.strip().lower() in ('true', '1', 'yes')
+
+ENABLE_TCP_LOG = str_to_bool(os.getenv('ENABLE_TCP_LOG', 'false'))
+ENABLE_SPEEDTEST_LOG = str_to_bool(os.getenv('ENABLE_SPEEDTEST_LOG', 'false'))
+
+if ENABLE_TCP_LOG:
+    print("TCP 日志已开启")
+else:
+    print("TCP 日志关闭")
+
+if ENABLE_SPEEDTEST_LOG:
+    print("Speedtest 日志已开启")
+else:
+    print("Speedtest 日志关闭")
+
+
 def do_speed_test():
     if not ENABLE_SPEED_TEST:
         print("测速功能未启用，跳过。")
