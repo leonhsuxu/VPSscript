@@ -2268,6 +2268,23 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
         return None
 
 
+
+
+
+
+def xcspeedtest_test_proxy_with_retry(speedtest_path, proxy, debug=False, retries=3, delay=1):
+    for attempt in range(1, retries + 1):
+        if debug:
+            print(f"尝试第 {attempt} 次测速代理：{proxy['name']}")
+        result = xcspeedtest_test_proxy(speedtest_path, proxy, debug)
+        if result is not None:
+            return result
+        if attempt < retries:
+            time.sleep(delay)
+    if debug:
+        print(f"重试 {retries} 次均失败，丢弃代理：{proxy['name']}")
+    return None
+
 # clash 测速
 
 def xcspeedtest_test_proxy(
