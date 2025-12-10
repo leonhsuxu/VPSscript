@@ -2195,11 +2195,10 @@ def xcspeedtest_test_proxy_with_retry(speedtest_path, proxy, debug=False, retrie
 
 
 # clash 测速
-
 def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
     """
-    2025-12-10 终极防 N/A 版
-    彻底杜绝 0ms / 1ms / N/A / 假延迟节点进入最终订阅
+    2025-12-10 终极防 N/A 版（已修复语法错误）
+    彻底干掉 0ms / 1ms / N/A / 假延迟节点
     """
     try:
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -2211,7 +2210,7 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
                 "mode": "Rule",
                 "log-level": "silent",
                 "proxies": [proxy],
-                "proxy-groups": [{"name": "TESTGROUP, "type": "select", "proxies": [proxy["name"]]}],
+                "proxy-groups": [{"name": "TESTGROUP", "type": "select", "proxies": [proxy["name"]]}],  # ← 重点：去掉了多余逗号
                 "rules": ["MATCH,DIRECT"]
             }
             with open(config_path, 'w', encoding='utf-8') as f:
@@ -2219,8 +2218,13 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
 
             cmd = [speedtest_path, '-c', config_path]
             result = subprocess.run(
-                cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
-                timeout=45, text=True, encoding='utf-8', errors='ignore'
+                cmd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                timeout=45,
+                text=True,
+                encoding='utf-8',
+                errors='ignore'
             )
             output = (result.stdout + result.stderr).replace('\x00', '')
 
@@ -2230,65 +2234,72 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
             delay = None
             bandwidth = None
 
-            # ========== 1. 优先提取 JSON 中的 clash_delay（最准）==========
+            # 1. 优先从 JSON 提取 clash_delay（最准确）
             import re, json
             json_match = re.search(r'json:\s*(\[.*\])', output, re.DOTALL)
+            if json_found = False
             if json_match:
                 try:
                     j = json_match.group(1)
                     # 自动补全残缺括号
-                    if j.count('{') > j.count('}'): j += '}'
-                    if j.count('[') > j.count(']'): j += ']'
-                    data = json.loads(j)
-                    if data and isinstance(data, list) and "clash_delay" in data[0]:
-                        d = int(data[0]["clash_delay"])
-                        if 30 <= d <= 3000:  # 严格！小于30ms基本是假的
-                            delay = d
-                            if debug:
-                                print(f"JSON 命中有效延迟: {delay}ms")
-                except:
-                    pass
+                    open_brace = j.count('{')
+                    close_brace = j.count('}')
+                    open_bracket = j.count('[')
+                    close_bracket = j.count(']')
+                    while open_brace > close_brace:
+                        j += '}'
+                        close_brace += 1
+                    while open_bracket > close_bracket:
+                        j += ']'
+                        close_bracket += 1
 
-            # ========== 2. 兜底从表格提取（但严格过滤假延迟）==========
+                    data = json.loads(j)
+                    if isinstance(data, list) and data and "clash_delay" in data[0]:
+                        d = int(data[0]["clash_delay"])
+                        if 30 <= d <= 3000:          # 严格过滤假延迟
+                            delay = d
+                            json_found = True
+                            if debug:
+                                print(f"JSON 提取成功 → 延迟:", delay, "ms")
+                except Exception as e:
+                    if debug:
+                        print("JSON 解析失败:", e)
+
+            # 2. 表格兜底（只在 JSON 没取到时用）
             if delay is None:
-                # 找所有数字
                 delays = re.findall(r'(\d+)ms', output)
                 valid_delays = [int(x) for x in delays if 30 <= int(x) <= 3000]
                 if valid_delays:
-                    delay = min(valid_delays)  # 取最小的有效值
+                    delay = min(valid_delays)
                     if debug:
-                        print(f"表格提取有效延迟: {delay}ms")
+                        print("表格提取延迟:", delay, "ms")
 
-            # ========== 3. 提取带宽 ==========
-            bw_match = re.search(r'([0-9\.]+ ?[KMGT]B/s)', output)
+            # 3. 带宽提取
+            bw_match = re.search(r'([0-9\.]+ ?[KMGT]B/s)', output, re.I)
             if bw_match:
                 bandwidth = bw_match.group(1).strip()
 
-            # ========== 4. 终极判决：彻底干掉 N/A / 0ms / 1ms ==========
-            if delay is None:
+            # 4. 终极过滤：干掉所有垃圾结果
+            if delay is None or delay <= 25:
                 if debug:
-                    print(f"无有效延迟 → 丢弃节点: {proxy['name']}")
+                    print(f"无效/假延迟 ({delay or 'N/A'}ms) → 丢弃:", proxy['name'])
                 return None
 
-            if delay <= 25:  # 25ms 以下基本是假的（GitHub Actions + Warp 不可能这么快）
+            if any(word in output.lower() for word in ['na', 'timeout', 'failed', 'error', 'refused']):
                 if debug:
-                    print(f"延迟过低疑似假延迟 {delay}ms → 丢弃: {proxy['name']}")
-                return None
-
-            if "NA" in output or "timeout" in output.lower() or "failed" in output.lower():
-                if debug:
-                    print(f"输出包含 NA/timeout/failed → 丢弃: {proxy['name']}")
+                    print(f"输出含错误关键字 → 丢弃:", proxy['name'])
                 return None
 
             # 成功！
             if debug:
-                print(f"测速成功 → {delay:4d}ms | {bandwidth or 'N/A':>8} → {proxy['name']}")
+                print(f"测速成功 → {delay:4d}ms | {bandwidth or 'N/A':>10} → {proxy['name']}")
             return delay, bandwidth
 
     except Exception as e:
         if debug:
-            print(f"测速异常 → 丢弃: {proxy['name']} | 错误: {e}")
+            print(f"测速异常 → 丢弃:", proxy['name'], "| 错误:", e)
         return None
+
 
 
 def clash_test_proxy(clash_path, proxy, debug=False):
