@@ -15,7 +15,7 @@ on:
         default: 'default'
         type: choice
         options:
-          - 默认配置       # 默认配置：抓取用GitHub，测速用Warp
+          - 默认配置       # 默认配置：抓取用GitHub，测速用Warp；具体看下边默认设置
           - 全Warp网络       # 全流程使用Warp网络
           - 全Github网络     # 全流程使用GitHub网络
           - 测速模式:少量频道      # 测试模式（只抓取少量节点）
@@ -42,7 +42,7 @@ env:
   MIHOMO_VERSION: v1.19.17           # Mihomo (Clash Meta) 版本
   SPEEDTEST_VERSION: v0.4.1          # XC Speedtest 版本
   WGCF_VERSION: v2.2.29              # WGCF (Cloudflare Warp) 版本
-  # ==================== 网络控制配置 ====================
+  # ==================== 网络控制配置 默认网络配置====================
   # 这些变量是Python脚本的唯一控制源，控制各阶段是否使用Warp网络
   # true=使用Warp网络，false=使用原始GitHub网络
   # 抓取阶段：使用GitHub网络（速度快）
