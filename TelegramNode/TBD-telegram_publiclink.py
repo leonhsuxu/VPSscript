@@ -82,8 +82,13 @@ TEST_URLS = [
     # 'http://www.baidu.com/generate_204',           # 百度 204，最快最稳
     # 'http://qq.com/generate_204',                    # 腾讯 204
     # 'http://cp.cloudflare.com/generate_204',       # Cloudflare 中国大陆节点
-    'http://www.gstatic.com/generate_204',
+    #'http://www.gstatic.com/generate_204',
     # 'http://connectivitycheck.gstatic.com/generate_204',  # Google 204（国内也通）
+    
+    'http://cdn.jsdelivr.net/gh/steveqing/204',                 # jsDelivr 国内镜像
+    'http://cf.090227.xyz/generate_204',                        # 国内个人搭建的204
+    'http://connectivitycheck.platform.hicloud.com/generate_204',  # 华为官方
+    'http://www.qualcomm.cn/generate_204',
 ]
 
 # ==================== 测速结果_带宽筛选配置（新增） ====================
