@@ -79,10 +79,11 @@ SOCKET_TIMEOUT = 3       # 套接字连接超时时间，单位为秒
 HTTP_TIMEOUT = 5         # HTTP请求超时时间，单位为秒
 # 【关键修改1】测速目标全部换成国内/Cloudflare中国节点
 TEST_URLS = [
-    'http://www.baidu.com/generate_204',           # 百度 204，最快最稳
-    'http://qq.com/generate_204',                    # 腾讯 204
-    'http://cp.cloudflare.com/generate_204',       # Cloudflare 中国大陆节点
-    'http://connectivitycheck.gstatic.com/generate_204',  # Google 204（国内也通）
+    # 'http://www.baidu.com/generate_204',           # 百度 204，最快最稳
+    # 'http://qq.com/generate_204',                    # 腾讯 204
+    # 'http://cp.cloudflare.com/generate_204',       # Cloudflare 中国大陆节点
+    'http://www.gstatic.com/generate_204',
+    # 'http://connectivitycheck.gstatic.com/generate_204',  # Google 204（国内也通）
 ]
 
 # ==================== 测速结果_带宽筛选配置（新增） ====================
