@@ -45,12 +45,13 @@ env:
   # ==================== 网络控制配置 默认网络配置====================
   # 这些变量是Python脚本的唯一控制源，控制各阶段是否使用Warp网络
   # true=使用Warp网络，false=使用原始GitHub网络
+  
   # 抓取阶段：使用GitHub网络（速度快）
   WARP_FOR_SCRAPING: "false"
   # TCP测速阶段：使用Warp网络（模拟国内环境，测速结果更准确）
-  WARP_FOR_TCP: "false"
+  WARP_FOR_TCP: "true"
   # Speedtest测速阶段：使用Warp网络（模拟国内环境，测速结果更准确）
-  WARP_FOR_SPEEDTEST: "false"
+  WARP_FOR_SPEEDTEST: "true"
   # 最终处理阶段：使用GitHub网络（确保提交等操作正常）
   WARP_FOR_FINAL: "false"
   # ==================== 测速策略配置 ====================
@@ -65,7 +66,7 @@ env:
   ENABLE_BANDWIDTH_FILTER: "true"
   # 最低带宽阈值（单位：MB/s）
   # 只保留带宽大于等于此值的节点
-  MIN_BANDWIDTH_MB: "35"
+  MIN_BANDWIDTH_MB: "20"
   # ==================== 日志配置 ====================
   # 是否启用TCP测速详细日志（生产环境建议关闭）
   ENABLE_TCP_LOG: "false"
