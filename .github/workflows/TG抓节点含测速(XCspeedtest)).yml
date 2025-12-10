@@ -48,9 +48,9 @@ env:
   # 抓取阶段：使用GitHub网络（速度快）
   WARP_FOR_SCRAPING: "false"
   # TCP测速阶段：使用Warp网络（模拟国内环境，测速结果更准确）
-  WARP_FOR_TCP: "true"
+  WARP_FOR_TCP: "false"
   # Speedtest测速阶段：使用Warp网络（模拟国内环境，测速结果更准确）
-  WARP_FOR_SPEEDTEST: "true"
+  WARP_FOR_SPEEDTEST: "false"
   # 最终处理阶段：使用GitHub网络（确保提交等操作正常）
   WARP_FOR_FINAL: "false"
   # ==================== 测速策略配置 ====================
