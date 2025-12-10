@@ -42,6 +42,8 @@ from datetime import datetime, timedelta, timezone
 from collections import defaultdict
 from telethon.sync import TelegramClient
 from telethon.sessions import StringSession
+from typing import Optional, Tuple, Dict, Union
+
 
 # --- 环境变量读取 ---
 API_ID = int(os.environ.get('TELEGRAM_API_ID') or 0)
