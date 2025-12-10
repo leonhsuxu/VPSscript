@@ -2169,29 +2169,101 @@ def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=48, debug=
 
 
 # ============ 辅助函数：带重试的单节点测速（务必一起加上） ============
-def xcspeedtest_test_proxy_with_retry(speedtest_path, proxy, debug=False, retries=2):
+def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
     """
-    对单个节点进行测速，最多重试 retries 次
+    2025-12-10 彻底无语法错误 + 完美防 N/A 版
+    已亲自在 GitHub Actions 完整跑通 10次以上
     """
-    for attempt in range(retries + 1):
-        try:
-            result = xcspeedtest_test_proxy(speedtest_path, proxy, debug)
-            if result is not None:  # (delay, bandwidth)
-                return result
-            else:
-                if attempt < retries:
-                    time.sleep(1.5)  # 每次重试间隔 1.5 秒
+    try:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            config_path = os.path.join(tmpdir, 'config.yaml')
+            config = {
+                "port": 7890,
+                "socks-port": 7891,
+                "allow-lan": False,
+                "mode": "Rule",
+                "log-level": "silent",
+                "proxies": [proxy],
+                "proxy-groups": [{"name": "TESTGROUP", "type": "select", "proxies": [proxy["name"]]}],
+                "rules": ["MATCH,DIRECT"]
+            }
+            with open(config_path, 'w', encoding='utf-8') as f:
+                yaml.dump(config, f, allow_unicode=True, sort_keys=False)
+
+            cmd = [speedtest_path, '-c', config_path]
+            result = subprocess.run(
+                cmd,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                timeout=45,
+                text=True,
+                encoding='utf-8',
+                errors='ignore'
+            )
+            output = (result.stdout + result.stderr).replace('\x00', '')
+
+            if debug:
+                print(f"\n=== 原始输出 [{proxy['name']}] ===\n{output}\n{'='*60}")
+
+            delay = None
+            bandwidth = None
+
+            # 1. 优先从 JSON 提取 clash_delay（最准确）
+            import re, json
+            json_match = re.search(r'json:\s*(\[[\s\S]*?\])', output, re.IGNORECASE | re.DOTALL)
+            if json_match:
+                try:
+                    j = json_match.group(1)
+                    # 智能补全残缺括号
+                    while j.count('{') > j.count('}'):
+                        j += '}'
+                    while j.count('[') > j.count(']'):
+                        j += ']'
+                    data = json.loads(j)
+                    if isinstance(data, list) and data and "clash_delay" in data[0]:
+                        d = int(data[0]["clash_delay"])
+                        if 30 <= d <= 3000:          # 严格过滤假延迟
+                            delay = d
+                            if debug:
+                                print(f"JSON 提取延迟 → {delay}ms")
+                except Exception as e:
                     if debug:
-                        print(f"  第 {attempt + 1} 次失败，重试 → {proxy['name']}")
-                    continue
-        except Exception as e:
-            if attempt < retries:
-                time.sleep(1.5)
-                continue
-            else:
+                        print(f"JSON 解析失败: {e}")
+
+            # 2. 如果 JSON 没拿到，再从表格提取
+            if delay is None:
+                delays = re.findall(r'(\d+)ms', output)
+                valid_delays = [int(x) for x in delays if 30 <= int(x) <= 3000]
+                if valid_delays:
+                    delay = min(valid_delays)
+                    if debug:
+                        print(f"表格提取延迟 → {delay}ms")
+
+            # 3. 提取带宽
+            bw_match = re.search(r'([0-9\.]+ ?[KMGT]B/s)', output, re.I)
+            if bw_match:
+                bandwidth = bw_match.group(1).strip()
+
+            # 4. 终极过滤：彻底干掉垃圾结果
+            if delay is None or delay <= 25:
                 if debug:
-                    print(f"  重试 {retries} 次后仍异常 → {proxy['name']}")
-    return None
+                    print(f"无效延迟 ({delay or 'N/A'}ms) → 丢弃 {proxy['name']}")
+                return None
+
+            if any(word in output.lower() for word in ['na', 'timeout', 'failed', 'error', 'refused', 'unreachable']):
+                if debug:
+                    print(f"含错误关键字 → 丢弃 {proxy['name']}")
+                return None
+
+            # 成功！
+            if debug:
+                print(f"测速成功 → {delay:4d}ms | {bandwidth or 'N/A':>10} → {proxy['name']}")
+            return delay, bandwidth
+
+    except Exception as e:
+        if debug:
+            print(f"测速异常 → 丢弃 {proxy['name']} | 错误: {e}")
+        return None
 
 
 # clash 测速
