@@ -79,7 +79,7 @@ env:
   # 是否启用TCP测速详细日志（生产环境建议关闭）
   ENABLE_TCP_LOG: "false"
   # 是否启用Speedtest测速详细日志（生产环境建议关闭）
-  ENABLE_SPEEDTEST_LOG: "false"
+  ENABLE_SPEEDTEST_LOG: "true"
   
   # ==================== Telegram频道配置 ====================
   # 要抓取的Telegram频道列表（每行一个）
