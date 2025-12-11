@@ -2126,22 +2126,24 @@ def batch_tcp_test(proxies, max_workers=TCP_MAX_WORKERS):
 
 
 def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=48, debug=False, test_urls=None):
+    """
+    使用 xcspeedtest 批量测试代理延迟 + 带宽
+    已加入：
+        • 测速前预热测速地址
+        • 自动重试 2 次
+        • 更合理的超时与并发
+        • 根据网络状态动态选择测速地址
+    """
+    # 动态获取测速地址
     if test_urls is None:
         test_urls = get_test_urls()
     
     print(f"使用测速地址: {test_urls}")
-    """
-    使用 xcspeedtest 批量测试代理延迟 + 带宽
-    已加入：
-        • 测速前预热国内 204 地址
-        • 自动重试 2 次
-        • 更合理的超时与并发
-    """
     print(f"开始 speedtest-clash 精测，目标节点数：{len(proxies)}，并发：{max_workers}")
-
-    # ============ 关键优化1：测速前预热所有国内 204 地址 ============
-    print("预热国内测速线路（避免首次请求超时）...")
-    for url in TEST_URLS:
+    
+    # ============ 关键优化1：测速前预热所有测速地址 ============
+    print("预热测速线路（避免首次请求超时）...")
+    for url in test_urls:
         try:
             subprocess.run(
                 ["curl", "-s", "--max-time", "3", "--connect-timeout", "3", url],
@@ -2151,16 +2153,15 @@ def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=48, debug=
         except:
             pass  # 不在乎结果，只为触发线路建立
     print("预热完成\n")
-
+    
     # ============ 并发测速（带重试） ============
     results = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
-        # 先提交所有任务（不带重试）
+        # 先提交所有任务（带测速地址参数）
         future_to_proxy = {
-            executor.submit(xcspeedtest_test_proxy_with_retry, speedtest_path, proxy, debug): proxy
+            executor.submit(xcspeedtest_test_proxy_with_retry, speedtest_path, proxy, debug, test_urls): proxy
             for proxy in proxies
         }
-
         for future in concurrent.futures.as_completed(future_to_proxy):
             proxy = future_to_proxy[future]
             try:
@@ -2172,7 +2173,6 @@ def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=48, debug=
                     if bandwidth:
                         pcopy['bandwidth'] = bandwidth
                     results.append(pcopy)
-
                     if debug:
                         print(f"成功: {delay:4d}ms | {bandwidth or 'N/A':>10} → {proxy.get('name')}")
                 else:
@@ -2181,19 +2181,22 @@ def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=48, debug=
             except Exception as e:
                 if debug:
                     print(f"异常: {proxy.get('name')} → {e}")
-
     print(f"speedtest-clash 精测完成，成功节点：{len(results)} 个")
     return results
 
 
 # ============ 辅助函数：带重试的单节点测速（务必一起加上） ============
-def xcspeedtest_test_proxy_with_retry(speedtest_path, proxy, debug=False, retries=2):
+def xcspeedtest_test_proxy_with_retry(speedtest_path, proxy, debug=False, test_urls=None, retries=2):
     """
     对单个节点进行测速，最多重试 retries 次
+    支持传入自定义测速地址列表
     """
+    if test_urls is None:
+        test_urls = get_test_urls()
+        
     for attempt in range(retries + 1):
         try:
-            result = xcspeedtest_test_proxy(speedtest_path, proxy, debug)
+            result = xcspeedtest_test_proxy(speedtest_path, proxy, debug, test_urls)
             if result is not None:  # (delay, bandwidth)
                 return result
             else:
@@ -2214,14 +2217,10 @@ def xcspeedtest_test_proxy_with_retry(speedtest_path, proxy, debug=False, retrie
 
 # clash 测速
 
-def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
-    """
-    2025-12-06 终极无敌版
-    兼容所有版本 xcspeedtest（有/无 clash_delay、引号残缺、换行截断、带宽表格等）
-    """
-    try:
-        with tempfile.TemporaryDirectory() as tmpdir:
-            config_path = os.path.join(tmpdir, 'config.yaml')
+def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False, test_urls=None):
+                    rules.append(f"DOMAIN,{domain},TESTGROUP")
+            rules.append("MATCH,DIRECT")
+            
             config = {
                 "port": 7890,
                 "socks-port": 7891,
@@ -2230,30 +2229,25 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
                 "log-level": "silent",
                 "proxies": [proxy],
                 "proxy-groups": [{"name": "TESTGROUP", "type": "select", "proxies": [proxy["name"]]}],
-                "rules": ["MATCH,DIRECT"]
+                "rules": rules
             }
             with open(config_path, 'w', encoding='utf-8') as f:
                 yaml.dump(config, f, allow_unicode=True, sort_keys=False)
-
             cmd = [speedtest_path, '-c', config_path]
             result = subprocess.run(
                 cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 timeout=40, text=True, encoding='utf-8', errors='ignore'
             )
             output = result.stdout + result.stderr
-
             if debug:
                 print(f"[speedtest-clash] 原始输出:\n{output}")
-
             delay = None
             bandwidth = None
-
-            # === 1. 优先从 JSON 提取 clash_delay（最准！）===
-            # 适配各种残缺引号、换行、截断情况
+            
+            # 1. 优先从 JSON 提取 clash_delay（最准！）
             json_pattern = re.compile(r'json:\s*(\[[\s\S]*?\])', re.IGNORECASE)
             for match in json_pattern.finditer(output):
                 j = match.group(1)
-                # 补全括号
                 if j.count('{') > j.count('}'): j += '}'
                 if j.count('[') > j.count(']'): j += ']'
                 try:
@@ -2267,8 +2261,8 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
                             break
                 except:
                     continue
-
-            # === 2. 兜底：表格延迟列（一定有）===
+            
+            # 2. 兜底：表格延迟列
             if delay is None:
                 m = re.search(r'延迟.*?([0-9]+)\s*(?:[^0-9]|$)', output, re.DOTALL)
                 if m:
@@ -2280,21 +2274,19 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
                                 print(f"表格延迟兜底 → {delay}ms ← {proxy['name']}")
                     except:
                         pass
-
-            # === 3. 提取带宽 ===
+            
+            # 3. 提取带宽
             bw = re.search(r'([0-9\.]+ ?[KMGT]B/s)', output)
             if bw:
                 bandwidth = bw.group(1).strip()
-
+            
             if delay is not None:
                 if debug:
                     print(f"测速成功 → {delay}ms | 带宽 {bandwidth or 'N/A'} ← {proxy['name']}")
                 return delay, bandwidth
-
             if debug:
                 print(f"测速失败 → 丢弃 {proxy['name']}")
             return None
-
     except Exception as e:
         if debug:
             print(f"测速异常: {e}")
@@ -2303,18 +2295,6 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
 
 
 def clash_test_proxy(clash_path, proxy, test_urls=None, debug=False):
-                    f"DOMAIN,{urlparse(test_url).netloc},TESTGROUP",
-                    "MATCH,DIRECT"
-                ]
-            }
-
-            with open(config_path, 'w', encoding='utf-8') as f:
-                yaml.dump(config, f, allow_unicode=True, sort_keys=False)
-
-            cmd = [clash_path, '-c', config_path, '-fast']
-
-            if debug:
-                print(f"\n=== 使用测速 URL: {test_url} 测试节点: {proxy['name']} ===")
 
             result = subprocess.run(
                 cmd,
@@ -2329,26 +2309,23 @@ def clash_test_proxy(clash_path, proxy, test_urls=None, debug=False):
             if debug:
                 print(f"clash -fast 输出:\n{output}")
 
-            # 用正则匹配最后匹配的延迟 (ms)，一般格式为数字+ms
             match = re.search(r'\b(\d+)ms\b(?=\s*$)', output, re.MULTILINE)
             if match:
                 delay = int(match.group(1))
-                if 1 < delay < 800:  # 延迟合理区间
+                if 1 < delay < 800:
                     if debug:
                         print(f"成功匹配延迟 {delay}ms，保留节点")
                     return delay
 
-            # 如果没匹配到，尝试匹配输出中符合规范的所有延迟，取最小值
             delays = re.findall(r'\b([2-9]\d{1,3})\b', output)
             if delays:
                 delay_values = [int(d) for d in delays if int(d) < 800]
                 if delay_values:
                     delay = min(delay_values)
                     if debug:
-                        print(f"未匹配到固定格式延迟，取最小延迟 {delay}ms，保留节点")
+                        print(f"未匹配固定格式延迟，取最小延迟 {delay}ms，保留节点")
                     return delay
 
-            # 识别无效或超低延迟的输出（0ms/1ms/NA），视为丢弃
             if re.search(r'\b(0\s*ms|1\s*ms|NA)\b', output, re.I):
                 if debug:
                     print("检测到无效延迟值 (0ms/1ms/NA)，丢弃节点")
@@ -2357,7 +2334,6 @@ def clash_test_proxy(clash_path, proxy, test_urls=None, debug=False):
             if debug:
                 print("当前测速 URL 未获得有效延迟，尝试下一个 URL")
 
-        # 所有测速地址都未通过，返回 None
         if debug:
             print(f"所有测速 URL 均未获得有效延迟，丢弃节点: {proxy['name']}")
         return None
