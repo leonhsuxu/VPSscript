@@ -2483,41 +2483,50 @@ async def main():
         # 保底回退机制
         if success_count < 50:
             print(f"测速结果过少（{success_count}个），启动超级保底策略，保留热门地区节点")
+
+            # 先对所有节点进行区域识别，添加 region_info 字段
+            nodes_with_regions = identify_regions_only(all_nodes)
+            print(f"区域识别后节点数量：{len(nodes_with_regions)}")
+
             priority_regions = ['香港', '台湾', '日本', '新加坡', '美国', '韩国', '德国', '加拿大']
-            
+
             backup_nodes = []
             seen_keys = set()
-            
-            for proxy in all_nodes:
-                if len(backup_nodes) >= 600:
-                    break
-                    
-                key = get_proxy_key(proxy)
-                if key in seen_keys:
-                    continue
-                seen_keys.add(key)
-                
-                region = proxy.get('region_info', {}).get('name')
+
+            # 先选热门地区最多每区30个，效果更均衡（可根据需求调整）
+            grouped = defaultdict(list)
+            for p in nodes_with_regions:
+                region = p.get('region_info', {}).get('name')
                 if region in priority_regions:
-                    proxy = proxy.copy()
-                    proxy['clash_delay'] = 9999
-                    backup_nodes.append(proxy)
-            
-            # 如果热门地区还是不够，就从剩余节点里随便补
-            if len(backup_nodes) < 200:
-                for proxy in all_nodes:
-                    if len(backup_nodes) >= 400:
-                        break
+                    grouped[region].append(p)
+
+            for region in priority_regions:
+                for proxy in grouped[region][:30]:
                     key = get_proxy_key(proxy)
-                    if key not in seen_keys:
-                        p = proxy.copy()
-                        p['clash_delay'] = 9999
-                        backup_nodes.append(p)
+            if key in seen_keys:
+                continue
+                    seen_keys.add(key)
+                p_copy = proxy.copy()
+                p_copy['clash_delay'] = 9999  # 标记为未测或保底节点
+                backup_nodes.append(p_copy)
+            if len(backup_nodes) >= 500:
+                break
+
+    # 如果合计还不足500，补充全部地区节点直到500个
+            if len(backup_nodes) < 500:
+                for proxy in nodes_with_regions:
+                    if len(backup_nodes) >= 500:
+                        break
+                     key = get_proxy_key(proxy)
+                     if key not in seen_keys:
+                        p_copy = proxy.copy()
+                        p_copy['clash_delay'] = 9999
+                        backup_nodes.append(p_copy)
                         seen_keys.add(key)
-            
-            final_tested_nodes = backup_nodes
-            success_count = len(final_tested_nodes)
-            print(f"超级保底成功！强制保留 {success_count} 个热门地区节点（未测速，仅用于应急）")
+
+        final_tested_nodes = backup_nodes
+        success_count = len(final_tested_nodes)
+        print(f"超级保底成功！强制保留 {success_count} 个热门地区节点（未测速，仅用于应急）")
     
     # 确保所有节点都是有效的
     final_tested_nodes = [p for p in final_tested_nodes if is_valid_proxy(p)]
