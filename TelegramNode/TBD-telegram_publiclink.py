@@ -2218,6 +2218,24 @@ def xcspeedtest_test_proxy_with_retry(speedtest_path, proxy, debug=False, test_u
 # clash 测速
 
 def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False, test_urls=None):
+    """
+    2025-12-06 终极无敌版
+    兼容所有版本 xcspeedtest（有/无 clash_delay、引号残缺、换行截断、带宽表格等）
+    支持传入自定义测速地址列表
+    """
+    if test_urls is None:
+        test_urls = get_test_urls()
+        
+    try:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            config_path = os.path.join(tmpdir, 'config.yaml')
+            
+            # 使用动态测速地址构建规则
+            rules = []
+            for url in test_urls:
+                from urllib.parse import urlparse
+                domain = urlparse(url).netloc
+                if domain:
                     rules.append(f"DOMAIN,{domain},TESTGROUP")
             rules.append("MATCH,DIRECT")
             
@@ -2233,23 +2251,28 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False, test_urls=None):
             }
             with open(config_path, 'w', encoding='utf-8') as f:
                 yaml.dump(config, f, allow_unicode=True, sort_keys=False)
+                
             cmd = [speedtest_path, '-c', config_path]
             result = subprocess.run(
                 cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                 timeout=40, text=True, encoding='utf-8', errors='ignore'
             )
             output = result.stdout + result.stderr
+            
             if debug:
                 print(f"[speedtest-clash] 原始输出:\n{output}")
+                
             delay = None
             bandwidth = None
             
-            # 1. 优先从 JSON 提取 clash_delay（最准！）
+            # 1. 优先从 JSON 提取 clash_delay
             json_pattern = re.compile(r'json:\s*(\[[\s\S]*?\])', re.IGNORECASE)
             for match in json_pattern.finditer(output):
                 j = match.group(1)
-                if j.count('{') > j.count('}'): j += '}'
-                if j.count('[') > j.count(']'): j += ']'
+                if j.count('{') > j.count('}'): 
+                    j += '}'
+                if j.count('[') > j.count(']'): 
+                    j += ']'
                 try:
                     data = json.loads(j)
                     if isinstance(data, list) and data and "clash_delay" in data[0]:
@@ -2284,9 +2307,11 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False, test_urls=None):
                 if debug:
                     print(f"测速成功 → {delay}ms | 带宽 {bandwidth or 'N/A'} ← {proxy['name']}")
                 return delay, bandwidth
+                
             if debug:
                 print(f"测速失败 → 丢弃 {proxy['name']}")
             return None
+            
     except Exception as e:
         if debug:
             print(f"测速异常: {e}")
