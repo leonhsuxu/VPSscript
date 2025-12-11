@@ -2216,7 +2216,6 @@ def xcspeedtest_test_proxy_with_retry(speedtest_path, proxy, debug=False, test_u
 
 
 # clash 测速
-
 def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False, test_urls=None):
     """
     2025-12-06 终极无敌版
@@ -2233,7 +2232,6 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False, test_urls=None):
             # 使用动态测速地址构建规则
             rules = []
             for url in test_urls:
-                from urllib.parse import urlparse
                 domain = urlparse(url).netloc
                 if domain:
                     rules.append(f"DOMAIN,{domain},TESTGROUP")
@@ -2249,9 +2247,10 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False, test_urls=None):
                 "proxy-groups": [{"name": "TESTGROUP", "type": "select", "proxies": [proxy["name"]]}],
                 "rules": rules
             }
+            
             with open(config_path, 'w', encoding='utf-8') as f:
                 yaml.dump(config, f, allow_unicode=True, sort_keys=False)
-                
+            
             cmd = [speedtest_path, '-c', config_path]
             result = subprocess.run(
                 cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
@@ -2261,7 +2260,7 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False, test_urls=None):
             
             if debug:
                 print(f"[speedtest-clash] 原始输出:\n{output}")
-                
+            
             delay = None
             bandwidth = None
             
@@ -2307,7 +2306,7 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False, test_urls=None):
                 if debug:
                     print(f"测速成功 → {delay}ms | 带宽 {bandwidth or 'N/A'} ← {proxy['name']}")
                 return delay, bandwidth
-                
+            
             if debug:
                 print(f"测速失败 → 丢弃 {proxy['name']}")
             return None
@@ -2316,6 +2315,7 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False, test_urls=None):
         if debug:
             print(f"测速异常: {e}")
         return None
+
 
 
 
