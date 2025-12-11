@@ -71,7 +71,7 @@ TCP_TIMEOUT = 3.5          # 单次 TCP 连接超时时间（秒），建议 3~5
 TCP_MAX_WORKERS = 256     # TCP 测速最大并发（可以比 Clash 高很多，非常快）
 TCP_MAX_DELAY = 1000       # TCP 延迟阈值，超过此值直接丢弃（ms）
 ENABLE_TCP_LOG = False     # 默认关闭TCP日志
-ENABLE_SPEEDTEST_LOG = False  # 默认关闭 speedtest 详细日志False / True打开
+ENABLE_SPEEDTEST_LOG = True  # 默认关闭 speedtest 详细日志False / True打开
 
 
 MAX_TEST_WORKERS = 48    # 速度测试时最大并发工作线程数，控制测试的并行度。建议64-96
