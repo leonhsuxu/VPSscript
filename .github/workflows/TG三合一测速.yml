@@ -53,7 +53,7 @@ env:
   # TCP测速阶段：使用Warp网络（模拟国内环境，测速结果更准确）
   WARP_FOR_TCP: "true"
   # Speedtest测速阶段：使用Warp网络（模拟国内环境，测速结果更准确）
-  WARP_FOR_SPEEDTEST: "false"
+  WARP_FOR_SPEEDTEST: "true"
   # 最终处理阶段：使用GitHub网络（确保提交等操作正常）
   WARP_FOR_FINAL: "false"
   
@@ -66,7 +66,7 @@ env:
   #   clash_only    → 纯 Clash 测速（最准）
   #   xcspeedtest_only → 纯 xcspeedtest 测速
   #SPEEDTEST_MODE: "tcp_first"       # 兼容原有配置，推荐使用 DETAILED_SPEEDTEST_MODE 覆盖；已删除
-  DETAILED_SPEEDTEST_MODE: "tcp_clash_xc"       # 覆盖全部测速选择：tcp_clash_xc, tcp_clash, tcp_xc, tcp_only, clash_only, xcspeedtest_only
+  DETAILED_SPEEDTEST_MODE: "tcp_clash_xc"       # 默认模式，覆盖全部测速选择：tcp_clash_xc, tcp_clash, tcp_xc, tcp_only, clash_only, xcspeedtest_only
  
   # ==================== 带宽筛选配置 ====================
   # 是否启用带宽筛选（True=启用，False=关闭），通过环境变量控制
@@ -76,8 +76,8 @@ env:
   # ==================== 日志配置 ====================
   # 是否启用TCP测速详细日志（生产环境建议关闭）
   ENABLE_TCP_LOG: "false"
-  # 是否启用Speedtest测速详细日志（生产环境建议关闭）
-  ENABLE_SPEEDTEST_LOG: "true"
+  # 是否启用Speedtest测速详细日志（生产环境建议关闭） # false不开启，true开启
+  ENABLE_SPEEDTEST_LOG: "false"
   # ==================== Telegram频道配置 ====================
   # 要抓取的Telegram频道列表（每行一个）
   # 支持频道ID（如 @channel_name）或频道链接
