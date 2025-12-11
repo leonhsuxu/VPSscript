@@ -44,7 +44,7 @@ env:
   MIHOMO_VERSION: v1.19.17           # Mihomo (Clash Meta) 版本
   SPEEDTEST_VERSION: v0.4.1          # XC Speedtest 版本
   WGCF_VERSION: v2.2.29              # WGCF (Cloudflare Warp) 版本
-  CLASH_SPEEDTEST_VERSION: v2.0.0    # Clash-speedtest 核心版本（升级至2.0.0，请根据实际替换）
+  CLASH_SPEEDTEST_VERSION: v1.7.0    # Clash-speedtest 核心版本
 
   # ==================== 网络控制配置 默认网络配置====================
   # 这些变量是Python脚本的唯一控制源，控制各阶段是否使用Warp网络
