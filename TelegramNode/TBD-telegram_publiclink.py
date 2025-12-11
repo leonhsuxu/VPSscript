@@ -2463,8 +2463,6 @@ async def main():
                 print("阶段2：对 TCP 存活节点进行 speedtest-clash 精准测速...")
                 if os.getenv('GITHUB_ACTIONS') == 'true':
                     ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
-                tcp_passed = tcp_passed[:5]  # 强制只测试前5个通过TCP筛选的节点
-                print(f"⚠️ 调试模式：强制仅测试 {len(tcp_passed)} 个节点")
                 
                 final_tested_nodes = batch_test_proxies_speedtest(
                     speedtest_path,
