@@ -2317,9 +2317,46 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False, test_urls=None):
         return None
 
 
-
-
 def clash_test_proxy(clash_path, proxy, test_urls=None, debug=False):
+    """
+    使用 clash 的 -fast 模式对单个代理节点进行测速
+    支持传入自定义测速地址列表
+    """
+    if test_urls is None:
+        test_urls = get_test_urls()
+
+    temp_dir = tempfile.mkdtemp()
+    config_path = os.path.join(temp_dir, 'config.yaml')
+
+    try:
+        for test_url in test_urls:
+            config = {
+                "port": 7890,
+                "socks-port": 7891,
+                "allow-lan": False,
+                "mode": "Rule",
+                "log-level": "silent",
+                "proxies": [proxy],
+                "proxy-groups": [
+                    {
+                        "name": "TESTGROUP",
+                        "type": "select",
+                        "proxies": [proxy["name"]]
+                    }
+                ],
+                "rules": [
+                    f"DOMAIN,{urlparse(test_url).netloc},TESTGROUP",
+                    "MATCH,DIRECT"
+                ]
+            }
+
+            with open(config_path, 'w', encoding='utf-8') as f:
+                yaml.dump(config, f, allow_unicode=True, sort_keys=False)
+
+            cmd = [clash_path, '-c', config_path, '-fast']
+
+            if debug:
+                print(f"\n=== 使用测速 URL: {test_url} 测试节点: {proxy['name']} ===")
 
             result = subprocess.run(
                 cmd,
@@ -2334,6 +2371,7 @@ def clash_test_proxy(clash_path, proxy, test_urls=None, debug=False):
             if debug:
                 print(f"clash -fast 输出:\n{output}")
 
+            # 匹配延迟
             match = re.search(r'\b(\d+)ms\b(?=\s*$)', output, re.MULTILINE)
             if match:
                 delay = int(match.group(1))
@@ -2342,6 +2380,7 @@ def clash_test_proxy(clash_path, proxy, test_urls=None, debug=False):
                         print(f"成功匹配延迟 {delay}ms，保留节点")
                     return delay
 
+            # 尝试匹配所有可能的延迟数值
             delays = re.findall(r'\b([2-9]\d{1,3})\b', output)
             if delays:
                 delay_values = [int(d) for d in delays if int(d) < 800]
@@ -2351,6 +2390,7 @@ def clash_test_proxy(clash_path, proxy, test_urls=None, debug=False):
                         print(f"未匹配固定格式延迟，取最小延迟 {delay}ms，保留节点")
                     return delay
 
+            # 判断无效延迟值
             if re.search(r'\b(0\s*ms|1\s*ms|NA)\b', output, re.I):
                 if debug:
                     print("检测到无效延迟值 (0ms/1ms/NA)，丢弃节点")
@@ -2376,6 +2416,8 @@ def clash_test_proxy(clash_path, proxy, test_urls=None, debug=False):
             pass
 
     return None
+
+
 
 
 
