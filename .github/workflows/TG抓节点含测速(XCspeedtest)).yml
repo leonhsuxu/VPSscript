@@ -54,7 +54,7 @@ env:
   # TCP测速阶段：使用Warp网络（模拟国内环境，测速结果更准确）
   WARP_FOR_TCP: "true"
   # Speedtest测速阶段：使用Warp网络（模拟国内环境，测速结果更准确）
-  WARP_FOR_SPEEDTEST: "true"
+  WARP_FOR_SPEEDTEST: "false"
   # 最终处理阶段：使用GitHub网络（确保提交等操作正常）
   WARP_FOR_FINAL: "false"
   
