@@ -292,9 +292,9 @@ jobs:
           EXIT_CODE=$?
           if [ $EXIT_CODE -eq 0 ]; then
             echo "✅ 节点抓取和测速完成"
-            if [ -f "flclashyaml/Tg-node1.yaml" ]; then
-              FILE_SIZE=$(stat -c%s "flclashyaml/Tg-node1.yaml" 2>/dev/null || stat -f%z "flclashyaml/Tg-node1.yaml" 2>/dev/null || echo "unknown")
-              echo "📁 配置文件生成成功: flclashyaml/Tg-node1.yaml (${FILE_SIZE} bytes)"
+            if [ -f "flclashyaml/Tg-node2.yaml" ]; then
+              FILE_SIZE=$(stat -c%s "flclashyaml/Tg-node2.yaml" 2>/dev/null || stat -f%z "flclashyaml/Tg-node2.yaml" 2>/dev/null || echo "unknown")
+              echo "📁 配置文件生成成功: flclashyaml/Tg-node2.yaml (${FILE_SIZE} bytes)"
             else
               echo "⚠️  配置文件未生成"
             fi
@@ -349,16 +349,16 @@ jobs:
         run: |
           echo "=== 📤 自动提交更改 ==="
           echo "提交时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
-          if [ ! -f "flclashyaml/Tg-node1.yaml" ]; then
+          if [ ! -f "flclashyaml/Tg-node2.yaml" ]; then
             echo "⚠️ 配置文件不存在，跳过提交"
             exit 0
           fi
-          if ! git diff --quiet flclashyaml/Tg-node1.yaml 2>/dev/null; then
+          if ! git diff --quiet flclashyaml/Tg-node2.yaml 2>/dev/null; then
             git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git config --local user.name "github-actions[bot]"
-            git add flclashyaml/Tg-node1.yaml
+            git add flclashyaml/Tg-node2.yaml
             COMMIT_TIME=$(date '+%Y-%m-%d %H:%M:%S')
-            NODE_COUNT=$(python3 -c 'import yaml; d=yaml.safe_load(open("flclashyaml/Tg-node1.yaml",encoding="utf-8")); print(len(d.get("proxies",[])))' 2>/dev/null || echo "?")
+            NODE_COUNT=$(python3 -c 'import yaml; d=yaml.safe_load(open("flclashyaml/Tg-node2.yaml",encoding="utf-8")); print(len(d.get("proxies",[])))' 2>/dev/null || echo "?")
             COMMIT_MESSAGE="🚀 自动更新：Telegram节点配置 (${NODE_COUNT}节点) - ${COMMIT_TIME}"
             echo "提交信息: ${COMMIT_MESSAGE}"
             git commit -m "${COMMIT_MESSAGE}"
