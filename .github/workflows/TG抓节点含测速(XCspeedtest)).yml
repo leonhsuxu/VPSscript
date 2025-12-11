@@ -269,26 +269,29 @@ jobs:
                 echo "使用默认网络配置"
                 ;;
               "all_warp")
-                echo "全流程使用Warp网络"
+                echo "✅ 全Warp模式"
                 echo "WARP_FOR_SCRAPING=true" >> $GITHUB_ENV
                 echo "WARP_FOR_TCP=true" >> $GITHUB_ENV
                 echo "WARP_FOR_SPEEDTEST=true" >> $GITHUB_ENV
                 echo "WARP_FOR_FINAL=true" >> $GITHUB_ENV
                 ;;
               "all_github")
-                echo "全流程使用GitHub网络"
+                echo "✅ 全GitHub模式"
                 echo "WARP_FOR_SCRAPING=false" >> $GITHUB_ENV
                 echo "WARP_FOR_TCP=false" >> $GITHUB_ENV
                 echo "WARP_FOR_SPEEDTEST=false" >> $GITHUB_ENV
                 echo "WARP_FOR_FINAL=false" >> $GITHUB_ENV
                 ;;
               "test_mode")
-                echo "测试模式：减少抓取数量，使用Warp测速"
+                echo "✅ 测试模式：减少抓取数量，使用Warp测速"
                 echo "TELEGRAM_CHANNEL_IDS=@fqDINYUE" >> $GITHUB_ENV
                 echo "WARP_FOR_SCRAPING=false" >> $GITHUB_ENV
                 echo "WARP_FOR_TCP=true" >> $GITHUB_ENV
                 echo "WARP_FOR_SPEEDTEST=true" >> $GITHUB_ENV
                 echo "WARP_FOR_FINAL=false" >> $GITHUB_ENV
+                ;;
+              *)
+                echo "⚠️  未知模式，使用默认配置"
                 ;;
             esac
             if [ -n "${{ inputs.speedtest_mode }}" ]; then
@@ -296,7 +299,7 @@ jobs:
               echo "测速模式覆盖为: ${{ inputs.speedtest_mode }}"
             fi
           else
-            echo "定时触发，使用默认网络配置"
+            echo "✅ 定时触发，使用默认网络配置"
           fi
           echo ""
           echo "📋 最终执行配置:"
