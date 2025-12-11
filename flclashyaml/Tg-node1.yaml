@@ -1,9 +1,9 @@
 # ==================================================
 #  TG 免费节点 · 自动测速精选订阅（Clash 格式）
 # ==================================================
-# 更新时间   : 2025-12-11 12:07:39 (北京时间)
+# 更新时间   : 2025-12-11 12:38:46 (北京时间)
 # 节点总数   : 500 个优质节点
-# 平均质量分 : 15.9/100
+# 平均质量分 : 16.0/100
 # 质量分布   : 🔥极品: 0, ⭐优质: 0, ✅良好: 3, ⚡可用: 497
 # 带宽筛选   : ≥ 20.0MB/s
 # 测速模式   : tcp_first
@@ -776,6 +776,22 @@ proxies:
   clash_delay: 9999
   quality_score: 21
   quality_tag: ⚡可用
+- name: 🇹🇼 台湾 11 [⚡可用]
+  type: trojan
+  server: www.visa.com.tw
+  port: 443
+  password: vip
+  sni: heihu880.pages.dev
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 台湾
+    code: TW
+  clash_delay: 9999
+  quality_score: 21
+  quality_tag: ⚡可用
 - name: 🇯🇵 日本 1 [⚡可用]
   type: ss
   server: ti3hyra4.slashdevslashnetslashtun.net
@@ -994,6 +1010,86 @@ proxies:
   ws-path: /
   ws-headers:
     Host: 161a100561a7293b0bc90077171d6b71.mobgslb.tbcache.com
+  region_info:
+    name: 日本
+    code: JP
+  clash_delay: 9999
+  quality_score: 20
+  quality_tag: ⚡可用
+- name: 🇯🇵 日本 18 [⚡可用]
+  type: trojan
+  server: 52.195.216.100
+  port: 4492
+  password: BxceQaOe
+  sni: t.me/ripaojiedian
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 日本
+    code: JP
+  clash_delay: 9999
+  quality_score: 20
+  quality_tag: ⚡可用
+- name: 🇯🇵 日本 19 [⚡可用]
+  type: trojan
+  server: 160.16.229.223
+  port: 3093
+  password: 76d630f2af6619c4a5de0ef953df3c6a
+  sni: www.nintendogames.net
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 日本
+    code: JP
+  clash_delay: 9999
+  quality_score: 20
+  quality_tag: ⚡可用
+- name: 🇯🇵 日本 20 [⚡可用]
+  type: trojan
+  server: 52.193.180.87
+  port: 3093
+  password: 76d630f2af6619c4a5de0ef953df3c6a
+  sni: www.nintendogames.net
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 日本
+    code: JP
+  clash_delay: 9999
+  quality_score: 20
+  quality_tag: ⚡可用
+- name: 🇯🇵 日本 21 [⚡可用]
+  type: trojan
+  server: i.badboys.gq
+  port: 443
+  password: b35cd4e8-e193-4bbd-9084-91d73d2353f0
+  sni: nl1.digi2023game.com
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 日本
+    code: JP
+  clash_delay: 9999
+  quality_score: 20
+  quality_tag: ⚡可用
+- name: 🇯🇵 日本 22 [⚡可用]
+  type: trojan
+  server: 160.16.136.130
+  port: 4054
+  password: 76d630f2af6619c4a5de0ef953df3c6a
+  sni: www.nintendogames.net
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
   region_info:
     name: 日本
     code: JP
@@ -1245,6 +1341,103 @@ proxies:
     code: SG
   clash_delay: 9999
   quality_score: 19
+  quality_tag: ⚡可用
+- name: 🇸🇬 新加坡 19 [⚡可用]
+  type: trojan
+  server: 13.231.220.185
+  port: 507
+  password: 76d630f2af6619c4a5de0ef953df3c6a
+  sni: www.nintendogames.net
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 新加坡
+    code: SG
+  clash_delay: 9999
+  quality_score: 19
+  quality_tag: ⚡可用
+- name: 🇸🇬 新加坡 20 [⚡可用]
+  type: trojan
+  server: 13.231.220.185
+  port: 3145
+  password: 76d630f2af6619c4a5de0ef953df3c6a
+  sni: www.nintendogames.net
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 新加坡
+    code: SG
+  clash_delay: 9999
+  quality_score: 19
+  quality_tag: ⚡可用
+- name: 🇸🇬 新加坡 21 [⚡可用]
+  type: trojan
+  server: 43.206.220.221
+  port: 3579
+  password: BxceQaOe
+  sni: t.me/ripaojiedian
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 新加坡
+    code: SG
+  clash_delay: 9999
+  quality_score: 19
+  quality_tag: ⚡可用
+- name: 🇸🇬 新加坡 22 [⚡可用]
+  type: trojan
+  server: 160.16.153.13
+  port: 3145
+  password: 76d630f2af6619c4a5de0ef953df3c6a
+  sni: www.nintendogames.net
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 新加坡
+    code: SG
+  clash_delay: 9999
+  quality_score: 19
+  quality_tag: ⚡可用
+- name: 🇰🇷 韩国 1 [⚡可用]
+  type: trojan
+  server: 176.97.210.2
+  port: 12882
+  password: '@Geek_Spot'
+  sni: ''
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 韩国
+    code: KR
+  clash_delay: 9999
+  quality_score: 18
+  quality_tag: ⚡可用
+- name: 🇩🇪 韩国 2 [⚡可用]
+  type: trojan
+  server: 13.50.135.27
+  port: 22222
+  password: telegram-id-privatevpns
+  sni: trj.rollingnext.co.uk
+  skip-cert-verify: false
+  udp: true
+  alpn:
+  - http/1.1
+  tls: true
+  region_info:
+    name: 韩国
+    code: KR
+  clash_delay: 9999
+  quality_score: 18
   quality_tag: ⚡可用
 - name: 🇺🇸 美国 5 [⚡可用]
   server: 141.193.213.106
@@ -8471,506 +8664,6 @@ proxies:
   region_info:
     name: 美国
     code: US
-- name: 🇺🇸 美国 377 [⚡可用]
-  type: vless
-  network: ws
-  server: cloudflare-ip.mofashi.ltd
-  port: 443
-  uuid: dea991b4-696f-4e9e-9761-1e1b31bb02de
-  servername: 2.294294.xyz
-  skip-cert-verify: true
-  tls: true
-  tfo: false
-  client-fingerprint: chrome
-  ws-opts:
-    headers:
-      Host: 2.294294.xyz
-    path: /snippets
-  tcp_delay: 469
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 378 [⚡可用]
-  type: vless
-  network: ws
-  server: registry.cyou
-  port: 443
-  uuid: 01995fbf-d383-154f-98a0-5ff16ca40a79
-  servername: sni.wwxgxn.cfd
-  skip-cert-verify: false
-  tls: true
-  udp: true
-  tfo: false
-  client-fingerprint: chrome
-  ws-opts:
-    headers:
-      Host: sni.wwxgxn.cfd
-    path: /snippets?ip=proxyip:port(443)
-  tcp_delay: 468
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 379 [⚡可用]
-  type: hysteria2
-  server: sanjose.nezhasu.com
-  password: f62dcdd4-a8f8-440e-8cc7-f5bb2f762375
-  sni: SanJose.nezhasu.com
-  skip-cert-verify: true
-  port: 443
-  ports: 50000-65535
-  tcp_delay: 16
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 380 [⚡可用]
-  type: vless
-  network: ws
-  server: zula.ir
-  port: 2087
-  uuid: 35aa5964-9187-4179-9cd5-023cb170593f
-  servername: eDwFUd6Sa8Q0iR8h56.hopebook75zulawu.online
-  skip-cert-verify: false
-  tls: true
-  udp: true
-  tfo: false
-  client-fingerprint: chrome
-  ws-opts:
-    headers:
-      Host: eDwFUd6Sa8Q0iR8h56.hopebook75zulawu.online
-    path: /
-  tcp_delay: 297
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 381 [⚡可用]
-  server: hxa.dashuai.help
-  port: 45052
-  type: vmess
-  uuid: 6b49e262-eab9-40aa-93b3-50a9783ec67c
-  alterId: 0
-  cipher: auto
-  tls: false
-  udp: true
-  tcp_delay: 16
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 382 [⚡可用]
-  type: vless
-  network: grpc
-  server: 86.104.74.155
-  port: 8880
-  uuid: df0680ca-e43c-498d-ed86-8e196eedd012
-  skip-cert-verify: true
-  tls: true
-  udp: true
-  tfo: true
-  client-fingerprint: chrome
-  grpc-opts: {}
-  tcp_delay: 3
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 383 [⚡可用]
-  type: hysteria2
-  server: 1ed54baa-t6ngg0-tkn6t8-1i3g8.us.hyhuawei.com
-  password: 437cef58-f10b-11ef-8eaf-f23c9164ca5d
-  skip-cert-verify: false
-  port: 443
-  ports: 30000-60000
-  tcp_delay: 8
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 384 [⚡可用]
-  type: vmess
-  network: tcp
-  server: 15.235.163.157
-  port: 550
-  uuid: 84481a23-eb24-4fd9-a06b-c54eaf6b905b
-  skip-cert-verify: true
-  udp: true
-  tfo: true
-  alterId: 0
-  cipher: auto
-  tcp_delay: 3
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 385 [⚡可用]
-  type: hysteria2
-  server: d8c4c91b-t6ngg0-t7h9gl-1q15s.us.hyhuawei.com
-  password: 11303a62-9a33-11ee-be7f-f23c9164ca5d
-  skip-cert-verify: false
-  port: 443
-  ports: 30000-60000
-  tcp_delay: 18
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 386 [⚡可用]
-  server: oss-cn-shanghai.solidigm-zxcv.com
-  port: 20047
-  type: trojan
-  password: 3D8B448F-6413-C7E0-D3DA-86D314923446
-  sni: cos.ap-shanghai.myqcloud.com
-  skip-cert-verify: true
-  udp: true
-  tcp_delay: 348
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 387 [⚡可用]
-  server: oss-cn-shanghai.solidigm-zxcv.com
-  port: 20043
-  type: trojan
-  password: 3D8B448F-6413-C7E0-D3DA-86D314923446
-  sni: cos.ap-shanghai.myqcloud.com
-  skip-cert-verify: true
-  udp: true
-  tcp_delay: 349
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 388 [⚡可用]
-  server: hxa.dashuai.help
-  port: 45052
-  type: vmess
-  uuid: 2c7486e8-d350-4dd8-94c4-5dfb508498cc
-  alterId: 0
-  cipher: auto
-  tls: false
-  udp: true
-  tcp_delay: 15
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 389 [⚡可用]
-  type: hysteria2
-  server: gy9.nezhasu.com
-  password: f62dcdd4-a8f8-440e-8cc7-f5bb2f762375
-  sni: gy9.nezhasu.com
-  skip-cert-verify: true
-  port: 443
-  ports: 50000-65535
-  tcp_delay: 13
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 390 [⚡可用]
-  type: vless
-  network: grpc
-  server: 45.12.130.190
-  port: 8880
-  uuid: df0680ca-e43c-498d-ed86-8e196eedd012
-  skip-cert-verify: false
-  tls: true
-  encryption: none
-  grpc-opts: {}
-  tcp_delay: 8
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 391 [⚡可用]
-  type: vless
-  network: ws
-  server: 198.62.62.229
-  port: 443
-  uuid: 6c11247b-6078-461a-93d5-22e4df284e6d
-  servername: mirror.fullmargintraders.com
-  skip-cert-verify: true
-  tls: true
-  udp: true
-  tfo: true
-  client-fingerprint: chrome
-  ws-opts:
-    headers:
-      Host: mirror.fullmargintraders.com
-      User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36
-    path: /wsv/6c11247b-6078-461a-93d5-22e4df284e6d
-  tcp_delay: 4
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 392 [⚡可用]
-  type: ss
-  server: th041.jd.kunlunpx.com
-  port: 45925
-  cipher: aes-128-gcm
-  password: 1a402babc02465f45bea
-  udp: true
-  plugin: obfs
-  plugin-opts:
-    mode: http
-    host: ccc366d43e7ba2b39076.microsoft.com
-  tcp_delay: 14
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 393 [⚡可用]
-  type: vmess
-  network: ws
-  server: 216.173.69.250
-  port: 8443
-  uuid: 91382092-2330-455b-8a1c-9c129cfe661a
-  skip-cert-verify: true
-  udp: true
-  tfo: true
-  alterId: 0
-  cipher: auto
-  ws-opts:
-    headers:
-      Host: google.com
-    path: /
-  tcp_delay: 8
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 394 [⚡可用]
-  type: hysteria2
-  server: a2454553-t6ngg0-tiaexf-ufc0.us.hyhuawei.com
-  password: 22308988-8548-11ea-a22e-f23c91cfbbc9
-  skip-cert-verify: false
-  port: 443
-  ports: 30000-60000
-  tcp_delay: 14
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 395 [⚡可用]
-  type: vmess
-  server: www.zhoubowen.vip
-  port: 443
-  uuid: 71b2655e-07d9-4dad-a770-a2b08275142b
-  alterId: 0
-  cipher: auto
-  network: ws
-  tls: true
-  skip-cert-verify: false
-  ws-opts:
-    path: /biutefor.icu
-    headers:
-      Host: www.zhoubowen.vip
-  tcp_delay: 17
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 396 [⚡可用]
-  type: vless
-  network: grpc
-  server: 54.36.115.88
-  port: 15299
-  uuid: b7ddb083-1195-4d6c-bb01-a453a8a29447
-  skip-cert-verify: false
-  tls: true
-  udp: true
-  tfo: false
-  tcp_delay: 5
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 397 [⚡可用]
-  type: vless
-  network: ws
-  server: cnamefuckxxs.yuchen.icu
-  port: 80
-  uuid: f64bdc57-0f54-4705-bf75-cfd646d98c06
-  tls: false
-  udp: true
-  alterId: 0
-  cipher: auto
-  ws-opts:
-    headers:
-      Host: 01.91md.fun
-    path: /?ed=2048
-  tcp_delay: 382
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 398 [⚡可用]
-  type: trojan
-  server: dfghjklcvghjklsdfghjkdfghjk.kaopujiasu.cfd
-  port: 11452
-  password: 68db231c-4cbd-44dc-b6fc-8507baa062f6
-  udp: true
-  sni: apple.com
-  skip-cert-verify: true
-  network: tcp
-  tcp_delay: 13
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 399 [⚡可用]
-  server: oss-cn-shanghai.solidigm-zxcv.com
-  port: 20045
-  type: trojan
-  password: 3D8B448F-6413-C7E0-D3DA-86D314923446
-  sni: cos.ap-shanghai.myqcloud.com
-  skip-cert-verify: true
-  udp: true
-  tcp_delay: 347
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 400 [⚡可用]
-  server: oss-cn-shanghai.solidigm-zxcv.com
-  port: 20041
-  type: trojan
-  password: 3D8B448F-6413-C7E0-D3DA-86D314923446
-  sni: cos.ap-shanghai.myqcloud.com
-  skip-cert-verify: true
-  udp: true
-  tcp_delay: 348
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 401 [⚡可用]
-  server: oss-cn-guangzhou.solidigm-zxcv.com
-  port: 20070
-  type: trojan
-  password: 3D8B448F-6413-C7E0-D3DA-86D314923446
-  sni: cos.ap-shanghai.myqcloud.com
-  skip-cert-verify: true
-  udp: true
-  tcp_delay: 193
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 402 [⚡可用]
-  server: oss-cn-shanghai.solidigm-zxcv.com
-  port: 20042
-  type: trojan
-  password: 3D8B448F-6413-C7E0-D3DA-86D314923446
-  sni: cos.ap-shanghai.myqcloud.com
-  skip-cert-verify: true
-  udp: true
-  tcp_delay: 349
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 403 [⚡可用]
-  server: oss-cn-shanghai.solidigm-zxcv.com
-  port: 20048
-  type: trojan
-  password: 3D8B448F-6413-C7E0-D3DA-86D314923446
-  sni: cos.ap-shanghai.myqcloud.com
-  skip-cert-verify: true
-  udp: true
-  tcp_delay: 351
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 404 [⚡可用]
-  server: oss-cn-shanghai.solidigm-zxcv.com
-  port: 20046
-  type: trojan
-  password: 3D8B448F-6413-C7E0-D3DA-86D314923446
-  sni: cos.ap-shanghai.myqcloud.com
-  skip-cert-verify: true
-  udp: true
-  tcp_delay: 348
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇺🇸 美国 405 [⚡可用]
-  server: oss-cn-shanghai.solidigm-zxcv.com
-  port: 20044
-  type: trojan
-  password: 3D8B448F-6413-C7E0-D3DA-86D314923446
-  sni: cos.ap-shanghai.myqcloud.com
-  skip-cert-verify: true
-  udp: true
-  tcp_delay: 349
-  clash_delay: 9999
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
 - name: 🇨🇦 加拿大 1 [⚡可用]
   type: trojan
   server: 141.193.213.60
@@ -9050,6 +8743,55 @@ proxies:
   ws-path: /
   ws-headers:
     Host: 161a100561a7293b0bc90077171d6b71.mobgslb.tbcache.com
+  region_info:
+    name: 加拿大
+    code: CA
+  clash_delay: 9999
+  quality_score: 15
+  quality_tag: ⚡可用
+- name: 🇨🇦 加拿大 5 [⚡可用]
+  type: trojan
+  server: 172.67.207.27
+  port: 443
+  password: 5a5d1112-4ae7-431f-bdde-0d008fb473dd
+  sni: 90.tAIpEI108.dpDnS.orG
+  skip-cert-verify: false
+  udp: true
+  alpn:
+  - http/1.1
+  tls: true
+  region_info:
+    name: 加拿大
+    code: CA
+  clash_delay: 9999
+  quality_score: 15
+  quality_tag: ⚡可用
+- name: 🇨🇦 加拿大 6 [⚡可用]
+  type: trojan
+  server: x7-sweden-amazon-v2-ku4u8.devefun.org
+  port: 1935
+  password: ptM0AjehKC
+  sni: x7-sweden-amazon-v2-ku4u8.devefun.org
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 加拿大
+    code: CA
+  clash_delay: 9999
+  quality_score: 15
+  quality_tag: ⚡可用
+- name: 🇨🇦 加拿大 7 [⚡可用]
+  type: trojan
+  server: 38.96.254.102
+  port: 18509
+  password: .ie4rghJuMkcf0oF
+  sni: shoppingmall.electricbanana.click
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
   region_info:
     name: 加拿大
     code: CA
@@ -9304,86 +9046,294 @@ proxies:
   clash_delay: 9999
   quality_score: 14
   quality_tag: ⚡可用
-- name: 🇮🇳 印度 1 [⚡可用]
-  type: vless
-  server: www.speedtest.net
-  port: 2086
-  uuid: d92a8b16-50ee-49ad-a3ed-c756c116b926
-  encryption: none
-  flow: ''
-  tls: false
-  skip-cert-verify: false
-  network: httpupgrade
-  host: cafebazaar.ir.novinsoft.ir.oradoshop.com.persiangsm.ir.digikala.com.abadis.ir.shad.ir.divar.ir.downloadly.com.aparat.com.cafebazar.ir.varzesh3.com.ninisite.com.abadis.ir.bama.ir.p30download.ir.telewebion.bmi.ir.shad.ir.mayket.com.ninisite.top.
-  path: /@spikevpn-@spikevpn-@spikevpn-@spikevpn-@spikevpn-@spikevpn-@spikevpn-@spikevpn-@spikevpn-@spikevpn-@spikevpn-@spikevpn?ed=2086
-  sni: ''
-  tcp_delay: 5
-  clash_delay: 9999
-  quality_score: 13
-  quality_tag: ⚡可用
-  region_info:
-    name: 印度
-    code: IN
-- name: 🇮🇳 印度 2 [⚡可用]
-  type: vless
-  server: www.speedtest.net
-  port: 2095
-  uuid: 2239c741-cd2b-44a0-aa22-7965ef96e3dd
-  encryption: none
-  flow: ''
-  tls: false
-  skip-cert-verify: false
-  network: httpupgrade
-  host: binextv.iransheep.web.tr.
-  path: /telegram,@BINEXTIFY-telegram,@BINEXTIFY-telegram,@BINEXTIFY-telegram,@BINEXTIFY-telegram,@BINEXTIFY-telegram,@BINEXTIFY-telegram,@BINEXTIFY-telegram,@BINEXTIFY-telegram,@BINEXTIFY?ed=2560
-  sni: ''
-  tcp_delay: 10
-  clash_delay: 9999
-  quality_score: 13
-  quality_tag: ⚡可用
-  region_info:
-    name: 印度
-    code: IN
-- name: 🇮🇳 印度 3 [⚡可用]
-  type: vless
-  server: 49.13.29.218
+- name: 🇩🇪 德国 14 [⚡可用]
+  type: trojan
+  server: 203.198.123.249
   port: 443
-  uuid: c332c262-b173-4bb2-aba0-cca85eebc5f6
-  encryption: none
-  flow: ''
-  tls: false
+  password: c53647f3153f784b3c695ffbe5fb43c0
+  sni: www.baidu.com
   skip-cert-verify: false
-  network: ws
-  host: 49.13.29.218
-  path: /linkws?ed
-  sni: ''
-  ws-opts:
-    path: /linkws?ed
-    headers:
-      Host: 49.13.29.218
-  tcp_delay: 6
-  clash_delay: 9999
-  quality_score: 13
-  quality_tag: ⚡可用
+  udp: true
+  alpn: []
+  tls: true
   region_info:
-    name: 印度
-    code: IN
+    name: 德国
+    code: DE
+  clash_delay: 9999
+  quality_score: 14
+  quality_tag: ⚡可用
+- name: 🇩🇪 德国 15 [⚡可用]
+  type: trojan
+  server: twb-zf.jiashumao.net
+  port: 25888
+  password: e2afc128-ca51-39b6-897c-eb2649825df9
+  sni: ''
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 德国
+    code: DE
+  clash_delay: 9999
+  quality_score: 14
+  quality_tag: ⚡可用
+- name: 🇩🇪 德国 16 [⚡可用]
+  type: trojan
+  server: 146.19.230.241
+  port: 443
+  password: xxoo
+  sni: loader.tapsell.ir
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 德国
+    code: DE
+  clash_delay: 9999
+  quality_score: 14
+  quality_tag: ⚡可用
+- name: 🇩🇪 德国 17 [⚡可用]
+  type: trojan
+  server: 210.0.158.220
+  port: 28443
+  password: 750a29bf-0a40-437f-b120-38de74ae7eaf
+  sni: ''
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 德国
+    code: DE
+  clash_delay: 9999
+  quality_score: 14
+  quality_tag: ⚡可用
+- name: 🇩🇪 德国 18 [⚡可用]
+  type: trojan
+  server: 160.16.63.16
+  port: 443
+  password: 253bc477d4e43c209f2d427272968280
+  sni: www.nintendogames.net
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 德国
+    code: DE
+  clash_delay: 9999
+  quality_score: 14
+  quality_tag: ⚡可用
+- name: 🇩🇪 德国 19 [⚡可用]
+  type: trojan
+  server: 51.158.146.183
+  port: 443
+  password: f6a0a650-306e-11ee-b692-1239d0255272
+  sni: Speedtest.net
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 德国
+    code: DE
+  clash_delay: 9999
+  quality_score: 14
+  quality_tag: ⚡可用
+- name: 🇩🇪 德国 20 [⚡可用]
+  type: trojan
+  server: 160.16.130.66
+  port: 3296
+  password: 253bc477d4e43c209f2d427272968280
+  sni: www.nintendogames.net
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 德国
+    code: DE
+  clash_delay: 9999
+  quality_score: 14
+  quality_tag: ⚡可用
+- name: 🇩🇪 德国 21 [⚡可用]
+  type: trojan
+  server: f5465c4.pg.gladns.com
+  port: 3389
+  password: 0c6a3341e8d5ab17
+  sni: ''
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 德国
+    code: DE
+  clash_delay: 9999
+  quality_score: 14
+  quality_tag: ⚡可用
+- name: 🇩🇪 德国 22 [⚡可用]
+  type: trojan
+  server: 104.21.79.246
+  port: 443
+  password: e35026da-e985-49ca-b43b-276062a535a6
+  sni: notdirect.howhealthyistoomajreally.homes
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 德国
+    code: DE
+  clash_delay: 9999
+  quality_score: 14
+  quality_tag: ⚡可用
+- name: 🇩🇪 德国 23 [⚡可用]
+  type: trojan
+  server: 183.236.51.5
+  port: 10826
+  password: 7d223bae-e183-4bf6-89c3-e327b15df490
+  sni: ''
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 德国
+    code: DE
+  clash_delay: 9999
+  quality_score: 14
+  quality_tag: ⚡可用
+- name: 🇩🇪 德国 24 [⚡可用]
+  type: trojan
+  server: 66.228.55.178
+  port: 2083
+  password: O4K-nAbZC4qEnBA0a_9EWQ
+  sni: gstatic.com
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 德国
+    code: DE
+  clash_delay: 9999
+  quality_score: 14
+  quality_tag: ⚡可用
+- name: 🇩🇪 德国 25 [⚡可用]
+  type: trojan
+  server: jp06a.roc-taiwan.org.ua
+  port: 65016
+  password: 96983eb4-c8f1-316e-ab00-500014ed3d8b
+  sni: ''
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 德国
+    code: DE
+  clash_delay: 9999
+  quality_score: 14
+  quality_tag: ⚡可用
+- name: 🇩🇪 德国 26 [⚡可用]
+  type: trojan
+  server: hn.xiaohouzi.club
+  port: 16012
+  password: 64de1de7-e3bb-3dc4-ab04-d1e601e18ac5
+  sni: supsig.xiaohouzi.club
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 德国
+    code: DE
+  clash_delay: 9999
+  quality_score: 14
+  quality_tag: ⚡可用
+- name: 🇩🇪 德国 27 [⚡可用]
+  type: trojan
+  server: 107.189.3.96
+  port: 443
+  password: f42d1b0d-c398-43cb-be37-d739b1477a5d
+  sni: joss.gpj4.web.id
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 德国
+    code: DE
+  clash_delay: 9999
+  quality_score: 14
+  quality_tag: ⚡可用
+- name: 🇩🇪 德国 28 [⚡可用]
+  type: trojan
+  server: 36.150.215.203
+  port: 7177
+  password: 253bc477d4e43c209f2d427272968280
+  sni: ''
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 德国
+    code: DE
+  clash_delay: 9999
+  quality_score: 14
+  quality_tag: ⚡可用
+- name: 🇩🇪 德国 29 [⚡可用]
+  type: trojan
+  server: 51.38.71.175
+  port: 80
+  password: b640d791-ff83-4300-b509-c2a02f97f167
+  sni: uk1.trojanvh.xyz
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 德国
+    code: DE
+  clash_delay: 9999
+  quality_score: 14
+  quality_tag: ⚡可用
+- name: 🇩🇪 德国 30 [⚡可用]
+  type: trojan
+  server: js04.balala2016.xyz
+  port: 20261
+  password: ED177480-E516-11EA-8B44-BBC4E882BA0B
+  sni: ''
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 德国
+    code: DE
+  clash_delay: 9999
+  quality_score: 14
+  quality_tag: ⚡可用
 last_message_ids:
   '@fqDINYUE': 4718
   '@wxdy666': 6279
-  '@freeyule': 1933126
+  '@freeyule': 1933142
   '@ccbaohe': 15032
-  '@duangvpsfs': 3687808
-  '@zzzjjjkkkoi': 626586
+  '@duangvpsfs': 3687869
+  '@zzzjjjkkkoi': 626659
   '@xmdexw': 222001
   '@v2v2clash': 70
   '@dingyue_Center': 3908
   '@tempssrlink': 72
   '@sorenab2': 37463
   '@proxyshareCN': 4754
-update_time: '2025-12-11 12:07:39'
+update_time: '2025-12-11 12:38:46'
 total_nodes: 500
-average_quality: 15.9
+average_quality: 16.0
 quality_stats: '🔥极品: 0, ⭐优质: 0, ✅良好: 3, ⚡可用: 497'
 bandwidth_filter:
   enabled: true
