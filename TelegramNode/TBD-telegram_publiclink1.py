@@ -2377,7 +2377,7 @@ async def main():
     # 初始化网络状态，预处理正则表达式规则
     preprocess_regex_rules()
     print("[1/5] 加载原有节点和抓取状态")
-    existing_proxies, last_message_ids = load_existing_ies_and_state()
+    existing_proxies, last_message_ids = load_existing_proxies_and_state()
     print(f"已有节点数: {len(existing_proxies)}")
     # === 阶段1：Telegram抓取（根据配置使用网络）===
     print("[2/5] 抓取 Telegram 新订阅链接")
