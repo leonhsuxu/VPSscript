@@ -60,13 +60,17 @@ last_warp_start_time = 0
 # 测速模式：
 ENABLE_SPEED_TEST = True  # 是否启用整体速度测试功能，True表示启用。测试顺序如下
 
-SPEEDTEST_MODE = os.getenv('SPEEDTEST_MODE', 'tcp_first').lower()  # 默认推荐 tcp_first,下边的命令
+#SPEEDTEST_MODE = os.getenv('SPEEDTEST_MODE', 'tcp_first').lower()  # 默认推荐 tcp_first,下边的命令
 #   "tcp_only"      → 只用 TCP 测速（最快，最严格，适合节点特别多的情况）
 #   "clash_only"    → 只用 Clash -fast 测速（最准）
 #   "tcp_first"     → 先 TCP 粗筛（<800ms）→ 再 Clash 精测（推荐！平衡速度与质量）
 #   "clash_first"   → 先 Clash → 再 TCP（一般用不上）
 
 DETAILED_SPEEDTEST_MODE = os.getenv('DETAILED_SPEEDTEST_MODE', '').lower().strip()  # 新增详细测速模式控制变量
+if not DETAILED_SPEEDTEST_MODE:
+    print("❗️错误: 未设置环境变量 DETAILED_SPEEDTEST_MODE，程序退出。")
+    sys.exit(1)
+
 
 # TCP 和Clash 测速专属参数
 TCP_TIMEOUT = 3.5          # 单次 TCP 连接超时时间（秒），建议 3~5
@@ -2442,7 +2446,6 @@ def batch_test_proxies_clash(clash_path, proxies, max_workers=MAX_TEST_WORKERS, 
 
 
 # 主函数
-               
 async def main():
     print("=" * 60)
     print("Telegram.Node_Clash-Speedtest测试版 V2.0")
@@ -2516,15 +2519,19 @@ async def main():
     speedtest_path = './xcspeedtest'     # xcspeedtest程序路径
     clash_path = './clash_core/clash'    # clash-speedtest核心路径
 
-    # 使用新增的 DETAILED_SPEEDTEST_MODE 优先，如果没设置则用旧变量
-    mode = DETAILED_SPEEDTEST_MODE if DETAILED_SPEEDTEST_MODE else SPEEDTEST_MODE
+    # 使用最新版变量，仅使用新变量，不兼容旧变量
+    DETAILED_SPEEDTEST_MODE = os.getenv('DETAILED_SPEEDTEST_MODE', '').strip().lower()
+    if not DETAILED_SPEEDTEST_MODE:
+        print("❗️错误: 未设置环境变量 DETAILED_SPEEDTEST_MODE，程序退出。")
+        sys.exit(1)
+
+    mode = DETAILED_SPEEDTEST_MODE
     print(f"使用测速模式: {mode}")
 
     final_tested_nodes = all_nodes.copy()
 
-    # 根据不同测速模式流程处理
     if mode == 'tcp_clash_xc':
-        print("模式：TCP 粗筛 → Clash 精测 → Speedtest 精测")
+        print("【模式】TCP 粗筛 → Clash 精测 → Speedtest 精测")
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('tcp', require_warp=WARP_FOR_TCP)
         tcp_passed = batch_tcp_test(all_nodes)
@@ -2544,11 +2551,9 @@ async def main():
                 print("对 Clash 筛选节点进行 Speedtest 测速")
                 final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, clash_passed, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG)
             else:
-                print("Clash 阶段未筛选任何节点，测速结果为空")
                 final_tested_nodes = []
-
     elif mode == 'tcp_clash':
-        print("模式：TCP 粗筛 → Clash 精测")
+        print("【模式】TCP 粗筛 → Clash 精测")
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('tcp', require_warp=WARP_FOR_TCP)
         tcp_passed = batch_tcp_test(all_nodes)
@@ -2562,9 +2567,8 @@ async def main():
             if os.getenv('GITHUB_ACTIONS') == 'true':
                 ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
             final_tested_nodes = batch_test_proxies_clash(clash_path, tcp_passed, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG)
-
     elif mode == 'tcp_xc':
-        print("模式：TCP 粗筛 → Speedtest 精测")
+        print("【模式】TCP 粗筛 → Speedtest 精测")
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('tcp', require_warp=WARP_FOR_TCP)
         tcp_passed = batch_tcp_test(all_nodes)
@@ -2578,30 +2582,24 @@ async def main():
             if os.getenv('GITHUB_ACTIONS') == 'true':
                 ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
             final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, tcp_passed, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG)
-
     elif mode == 'tcp_only':
-        print("模式：纯 TCP 测速")
+        print("【模式】纯 TCP 测速")
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('tcp', require_warp=WARP_FOR_TCP)
         final_tested_nodes = batch_tcp_test(all_nodes)
-
     elif mode == 'clash_only':
-        print("模式：纯 Clash 测速")
+        print("【模式】纯 Clash 测速")
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
         final_tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG)
-
     elif mode == 'xcspeedtest_only':
-        print("模式：纯 Speedtest (xcspeedtest) 测速")
+        print("【模式】纯 Speedtest 测速")
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
         final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, all_nodes, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG)
-
     else:
-        print(f"未知或未设置测速模式 '{mode}', 使用默认 tcp_first 测速逻辑")
-        # 这里使用你原来 tcp_first 的处理逻辑
-        # 可以复制原脚本相关内容或者调用你定义好的测速流程
-        # 可以是先 TCP 粗筛，后 Speedtest 精测流程
+        print(f"❗️ 未知测速模式 '{mode}', 程序退出。")
+        sys.exit(1)
 
     # 测速完成，检测有效节点数
     success_count = len(final_tested_nodes)
@@ -2730,7 +2728,8 @@ async def main():
     # === 最终清理，确保切换回GitHub网络 ===
     if os.getenv('GITHUB_ACTIONS') == 'true' and not WARP_FOR_FINAL:
         print("🧹 最终清理：确保使用原始GitHub网络")
-        ensure_network_for_stage('cleanup', require_warp=False)
+        ensure_network_for_stage('cleanup', require_warp=False)               
+
            
 
 
