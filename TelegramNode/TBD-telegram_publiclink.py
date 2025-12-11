@@ -2330,11 +2330,9 @@ async def main():
     
     # 初始化网络状态
     preprocess_regex_rules()
-
     print("[1/5] 加载原有节点和抓取状态")
     existing_proxies, last_message_ids = load_existing_proxies_and_state()
     print(f"已有节点数: {len(existing_proxies)}")
-
     # === 阶段1：Telegram抓取（根据配置使用网络）===
     print("[2/5] 抓取 Telegram 新订阅链接")
     # 只检查，不强制切换
@@ -2354,7 +2352,6 @@ async def main():
                 new_proxies.extend(proxies)
                 print(f"  成功解析 {len(proxies)} 个节点")
     print(f"新增节点数: {len(new_proxies)}")
-
     all_proxies_map = {
         get_proxy_key(p): p for p in existing_proxies if is_valid_proxy(p)
     }
@@ -2365,7 +2362,6 @@ async def main():
             all_proxies_map[key] = p
             added_count += 1
     print(f"合并去重后总节点数: {len(all_proxies_map)}，新增有效节点: {added_count}")
-
     all_nodes = list(all_proxies_map.values())
     if not all_nodes:
         sys.exit("❌ 无任何节点可用，程序退出")
@@ -2475,16 +2471,15 @@ async def main():
                     max_workers=MAX_TEST_WORKERS,
                     debug=ENABLE_SPEEDTEST_LOG
                 )
-
         # 测速结果统计
         success_count = len(final_tested_nodes)
         print(f"测速完成，最终存活优质节点：{success_count} 个")
         
-        # 保底回退机制
+        # 保底回退机制：启动前先做区域识别保证region_info存在
         if success_count < 50:
             print(f"测速结果过少（{success_count}个），启动超级保底策略，保留热门地区节点")
 
-            # 先对所有节点进行区域识别，添加 region_info 字段
+            # 先对所有原始节点进行区域识别，保证region_info字段正确
             nodes_with_regions = identify_regions_only(all_nodes)
             print(f"区域识别后节点数量：{len(nodes_with_regions)}")
 
@@ -2493,7 +2488,7 @@ async def main():
             backup_nodes = []
             seen_keys = set()
 
-            # 先选热门地区最多每区30个，效果更均衡（可根据需求调整）
+            # 按地区分组，分别最多选30个，确保地区均匀
             grouped = defaultdict(list)
             for p in nodes_with_regions:
                 region = p.get('region_info', {}).get('name')
@@ -2503,30 +2498,30 @@ async def main():
             for region in priority_regions:
                 for proxy in grouped[region][:30]:
                     key = get_proxy_key(proxy)
-            if key in seen_keys:
-                continue
+                    if key in seen_keys:
+                        continue
                     seen_keys.add(key)
-                p_copy = proxy.copy()
-                p_copy['clash_delay'] = 9999  # 标记为未测或保底节点
-                backup_nodes.append(p_copy)
-            if len(backup_nodes) >= 500:
-                break
+                    p_copy = proxy.copy()
+                    p_copy['clash_delay'] = 9999  # 未测速标记
+                    backup_nodes.append(p_copy)
+                if len(backup_nodes) >= 500:
+                    break
 
-    # 如果合计还不足500，补充全部地区节点直到500个
+            # 如果节点仍不足500，补充其它已识别节点直至500个
             if len(backup_nodes) < 500:
                 for proxy in nodes_with_regions:
                     if len(backup_nodes) >= 500:
                         break
-                     key = get_proxy_key(proxy)
-                     if key not in seen_keys:
+                    key = get_proxy_key(proxy)
+                    if key not in seen_keys:
                         p_copy = proxy.copy()
                         p_copy['clash_delay'] = 9999
                         backup_nodes.append(p_copy)
                         seen_keys.add(key)
 
-        final_tested_nodes = backup_nodes
-        success_count = len(final_tested_nodes)
-        print(f"超级保底成功！强制保留 {success_count} 个热门地区节点（未测速，仅用于应急）")
+            final_tested_nodes = backup_nodes
+            success_count = len(final_tested_nodes)
+            print(f"超级保底成功！强制保留 {success_count} 个热门地区节点（未测速，仅用于应急）")
     
     # 确保所有节点都是有效的
     final_tested_nodes = [p for p in final_tested_nodes if is_valid_proxy(p)]
@@ -2546,7 +2541,6 @@ async def main():
     
     if not final_proxies:
         sys.exit("❌ 节点重命名和限量后无有效节点，程序退出")
-
     # 计算节点质量评分并排序
     print("[4.5/5] 计算节点质量评分")
     
@@ -2587,7 +2581,6 @@ async def main():
     total_count = len(final_proxies)
     update_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
     avg_quality = sum(p.get('quality_score', 0) for p in final_proxies) / total_count if total_count > 0 else 0
-
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     try:
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
@@ -2632,7 +2625,6 @@ async def main():
             }
             
             yaml.dump(final_config, f, allow_unicode=True, sort_keys=False, indent=2, width=4096, default_flow_style=False)
-
     except Exception as e:
         print(f"❌ 写出配置文件失败: {e}")
         sys.exit(1)
