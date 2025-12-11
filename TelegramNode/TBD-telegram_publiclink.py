@@ -82,8 +82,6 @@ TEST_URLS = [
     'http://www.baidu.com/generate_204',           # 永远第1快
     'http://qq.com/generate_204',                  # 第2快
     'http://connect.rom.miui.com/generate_204',    # 小米官方，超稳
-    'http://connectivitycheck.platform.hicloud.com/generate_204',  # 华为官方
-    'http://captive.v2ex.com/generate_204',        # 社区良心
 ]
 
 # ==================== 测速结果_带宽筛选配置（新增） ====================
@@ -1824,7 +1822,7 @@ def filter_by_bandwidth(proxies, min_mb=25, enable=True):
     print(f"带宽筛选完成：≥{min_mb}MB/s 保留 {len(filtered)}/{len(proxies)} 个节点")
     return filtered
 
-def limit_proxy_counts(proxies, max_total=600):
+def limit_proxy_counts(proxies, max_total=300):
     """
     根据指定规则限制节点数量：
     - ['香港', '日本', '美国', '新加坡'] 每区最多60个；
@@ -2530,7 +2528,7 @@ async def main():
             seen_keys = set()
             
             for proxy in all_nodes:
-                if len(backup_nodes) >= 600:
+                if len(backup_nodes) >= 300:
                     break
                     
                 key = get_proxy_key(proxy)
@@ -2574,7 +2572,7 @@ async def main():
     normalized_proxies = normalize_proxy_names(final_tested_nodes)
     
     # 限制节点数量
-    final_proxies = limit_proxy_counts(normalized_proxies, max_total=600)
+    final_proxies = limit_proxy_counts(normalized_proxies, max_total=300)
     
     if not final_proxies:
         sys.exit("❌ 节点重命名和限量后无有效节点，程序退出")
