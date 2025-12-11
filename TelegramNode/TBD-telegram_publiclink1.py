@@ -32,7 +32,6 @@ import socket
 # === 新增这几行，警告立刻消失 ===
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning, module="urllib3.connectionpool")
 # ============================================
@@ -42,7 +41,6 @@ from datetime import datetime, timedelta, timezone
 from collections import defaultdict
 from telethon.sync import TelegramClient
 from telethon.sessions import StringSession
-
 # --- 环境变量读取 ---
 API_ID = int(os.environ.get('TELEGRAM_API_ID') or 0)
 API_HASH = os.environ.get('TELEGRAM_API_HASH')
@@ -53,37 +51,30 @@ MIN_EXPIRE_HOURS = 2   # 订阅地址剩余时间最小过期，单位为小时�
 OUTPUT_FILE = 'flclashyaml/Tg-node2.yaml'  # 输出文件路径，用于保存生成的配置或结果。
 last_warp_start_time = 0
 
-
 # === 新增：测速策略开关（推荐保留这几个选项）===
-
 
 # 测速模式：
 ENABLE_SPEED_TEST = True  # 是否启用整体速度测试功能，True表示启用。测试顺序如下
-
 #SPEEDTEST_MODE = os.getenv('SPEEDTEST_MODE', 'tcp_first').lower()  # 默认推荐 tcp_first,下边的命令
 #   "tcp_only"      → 只用 TCP 测速（最快，最严格，适合节点特别多的情况）
 #   "clash_only"    → 只用 Clash -fast 测速（最准）
 #   "tcp_first"     → 先 TCP 粗筛（<800ms）→ 再 Clash 精测（推荐！平衡速度与质量）
 #   "clash_first"   → 先 Clash → 再 TCP（一般用不上）
-
 DETAILED_SPEEDTEST_MODE = os.getenv('DETAILED_SPEEDTEST_MODE', '').lower().strip()  # 新增详细测速模式控制变量
 if not DETAILED_SPEEDTEST_MODE:
     print("❗️错误: 未设置环境变量 DETAILED_SPEEDTEST_MODE，程序退出。")
     sys.exit(1)
 
-
 # TCP 和Clash 测速专属参数
 TCP_TIMEOUT = 3.5          # 单次 TCP 连接超时时间（秒），建议 3~5
 TCP_MAX_WORKERS = 256     # TCP 测速最大并发（可以比 Clash 高很多，非常快）
 TCP_MAX_DELAY = 1000       # TCP 延迟阈值，超过此值直接丢弃（ms）
-
 # TCP 和Clash 日志环境变量专属参数
 def str_to_bool(s: str) -> bool:
     return s.strip().lower() in ('true', '1', 'yes')
     
 ENABLE_TCP_LOG = str_to_bool(os.getenv('ENABLE_TCP_LOG', 'false'))  # 从yml引入变量
 ENABLE_SPEEDTEST_LOG = str_to_bool(os.getenv('ENABLE_SPEEDTEST_LOG', 'false')) # 从yml引入变量
-
 # 测速线程和超时参数
 MAX_TEST_WORKERS = 48    # 速度测试时最大并发工作线程数，控制测试的并行度。建议64-96
 SOCKET_TIMEOUT = 3       # 套接字连接超时时间，单位为秒
@@ -93,24 +84,20 @@ TEST_URLS_GITHUB = [
     "https://www.google.com/generate_204",
     "https://clients3.google.com/generate_204"
 ]
-
 TEST_URLS_WARP = [
     'http://www.baidu.com/generate_204',
     'http://qq.com/generate_204',
     'http://connect.rom.miui.com/generate_204',
     'http://connectivitycheck.platform.hicloud.com/generate_204'
 ]
-
 # ==================== 测速结果_带宽筛选配置（新增） ====================
 # 是否启用带宽筛选（True=启用，False=关闭）
 ENABLE_BANDWIDTH_FILTER = os.getenv('ENABLE_BANDWIDTH_FILTER', 'true').lower() == 'true'
-
 # 最低带宽阈值（单位：MB/s）
 # 支持环境变量设置，例如在 GitHub Actions 里这样写：
 # ENABLE_BANDWIDTH_FILTER=true
 # MIN_BANDWIDTH_MB=30
 MIN_BANDWIDTH_MB = float(os.getenv('MIN_BANDWIDTH_MB', '25'))  # 筛选测速宽度的速度。默认 25MB/s，可自由改
-
 # ==================== 国家匹配配置 ====================
 ALLOWED_REGIONS = {
     '香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国',
@@ -198,23 +185,34 @@ CUSTOM_REGEX_RULES = {
 }
 FLAG_EMOJI_PATTERN = re.compile(r'[\U0001F1E6-\U0001F1FF]{2}')
 BJ_TZ = timezone(timedelta(hours=8))
-
 def do_speed_test():
     if not ENABLE_SPEED_TEST:
         print("测速功能未启用，跳过。")
         return
     # 启用测速并打印日志
     run_speedtest(enable_tcp_log=False)
-    
+
+# 全局标志，用于控制 get_test_urls() 函数中日志的打印次数
+_test_urls_log_printed = False
+
 # ==================== 根据网络选择测速地址，地址如上变量 ====================
 def get_test_urls():
-    if is_warp_enabled():
-        print("检测到 Warp 网络，使用国内测速地址")
-        return TEST_URLS_WARP
-    else:
-        print("非 Warp 网络，使用谷歌测速地址")
-        return TEST_URLS_GITHUB
-
+    global _test_urls_log_printed # 声明使用全局变量
+    
+    if not _test_urls_log_printed: # 只有当日志未打印过时才打印
+        if is_warp_enabled():
+            print("检测到 Warp 网络，使用国内测速地址")
+            _test_urls_log_printed = True # 设置标志为 True，表示已打印
+            return TEST_URLS_WARP
+        else:
+            print("非 Warp 网络，使用谷歌测速地址")
+            _test_urls_log_printed = True # 设置标志为 True，表示已打印
+            return TEST_URLS_GITHUB
+    else: # 如果已打印过，则直接返回地址，不再打印日志
+        if is_warp_enabled():
+            return TEST_URLS_WARP
+        else:
+            return TEST_URLS_GITHUB
 # ==================== 智能网络控制配置 ====================
 def get_network_config():
     """
@@ -275,16 +273,13 @@ def get_network_config():
         print("🎯 所有网络配置均来自环境变量，配置完整！")
     
     return config
-
 # 获取网络配置
 network_config = get_network_config()
 WARP_FOR_SCRAPING = network_config['WARP_FOR_SCRAPING']
 WARP_FOR_TCP = network_config['WARP_FOR_TCP']
 WARP_FOR_SPEEDTEST = network_config['WARP_FOR_SPEEDTEST']
 WARP_FOR_FINAL = network_config['WARP_FOR_FINAL']
-
 # ==================== 完整的网络控制函数 ====================
-
 def get_current_ip():
     """获取当前出口IP，增强容错性"""
     try:
@@ -313,7 +308,7 @@ def get_current_ip():
                         for prefix in warp_prefixes:
                             if ip.startswith(prefix):
                                 return f"{ip} (🌐 Warp网络)"
-                        return f"{ip} (💻 原始网络)"
+                        return f"{ip} (💻 Github网络)"
             except:
                 continue
         
@@ -342,7 +337,6 @@ def get_current_ip():
         
 # == 检查warp ==
 
-
 def is_warp_enabled():
     """检查Warp是否启用"""
     try:
@@ -365,8 +359,6 @@ def is_warp_enabled():
         
     except (subprocess.TimeoutExpired, FileNotFoundError, Exception) as e:
         return False
-
-
 
 # ==           
 def start_cloudflare_warp():
@@ -578,7 +570,6 @@ def start_cloudflare_warp():
         return start_warp_fallback()
         
 
-
         
 # ===创建warp备用配置
 def create_backup_config(config_file):
@@ -589,7 +580,6 @@ def create_backup_config(config_file):
 PrivateKey = 4P1p1v1r2t2u3v3w4x4y5z5A6B6C7D7E8F8G9H9I0J0K
 Address = 172.16.0.2/32, 2606:4700:110:8a11:1111:1111:1111:1111/128
 DNS = 1.1.1.1, 8.8.8.8, 2606:4700:4700::1111
-
 [Peer]
 PublicKey = bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=
 AllowedIPs = 0.0.0.0/0, ::/0
@@ -605,7 +595,6 @@ Endpoint = engage.cloudflareclient.com:2408
         print(f"   备用配置创建失败: {e}")
         return False
         
-
 
 def setup_smart_routing():
     """设置智能路由：GitHub走原始网络，其他走Warp"""
@@ -660,7 +649,6 @@ def setup_smart_routing():
     except Exception as e:
         print(f"   ⚠️  智能路由设置失败: {e}")
         return False
-
 def start_warp_fallback():
     """启动Warp的备用方案"""
     print("🔄 尝试备用Warp启动方案...")
@@ -692,7 +680,6 @@ def start_warp_fallback():
     except Exception as e:
         print(f"   ❌ 备用方案异常: {e}")
         return False
-
 def stop_cloudflare_warp():
     """停止Warp连接，恢复原始网络"""
     print("🌐 正在停止 Cloudflare Warp，恢复原始网络...")
@@ -751,9 +738,7 @@ def stop_cloudflare_warp():
         print(f"❌ 停止Warp失败: {e}")
         return False
 
-
     
-
 # ===确保网络状态合适
 def ensure_network_for_stage(stage_name, require_warp=False):
     """
@@ -818,7 +803,6 @@ def ensure_network_for_stage(stage_name, require_warp=False):
     
     return True
 
-
 def simplified_network_check():
     """简化版网络状态检查，只报告不切换"""
     if not os.getenv('GITHUB_ACTIONS') == 'true':
@@ -836,19 +820,16 @@ def simplified_network_check():
     return warp_enabled
     
 
-
 # ======= 国家国旗识别 ======
 def get_country_flag_emoji(code):
     if not code or len(code) != 2:
         return "❓"
     return "".join(chr(0x1F1E6 + ord(c.upper()) - ord('A')) for c in code)
-
 def preprocess_regex_rules():
     for region in CUSTOM_REGEX_RULES:
         CUSTOM_REGEX_RULES[region]['pattern'] = '|'.join(
             sorted(CUSTOM_REGEX_RULES[region]['pattern'].split('|'), key=len, reverse=True)
         )
-
 def load_existing_proxies_and_state():
     existing_proxies = []
     last_message_ids = {}
@@ -868,11 +849,9 @@ def load_existing_proxies_and_state():
         except Exception as e:
             print(f"读取 {OUTPUT_FILE} 失败: {e}")
     return existing_proxies, last_message_ids
-
 # =============================================
 # 多匹配的 extract_valid_subscribe_links 函数
 # ============================================= 
-
 
 def extract_valid_subscribe_links(text: str, channel_id=None):
     """
@@ -1025,7 +1004,6 @@ async def scrape_telegram_links(last_message_ids=None):
     return list(all_links), last_message_ids
     
 
-
 async def process_channel(client, channel_id, last_message_ids, target_time):
     """处理单个频道的辅助函数"""
     max_id_found = last_message_ids.get(channel_id, 0)
@@ -1055,9 +1033,7 @@ async def process_channel(client, channel_id, last_message_ids, target_time):
     return channel_links, max_id_found
     
 
-
 # --- 3合1下载 版本的下载 ---
-
 def download_subscription(url: str, timeout: int = 30) -> str | None:
     """wget → curl → requests 三保险下载，带 Clash UA"""
     # 1. wget 最快最稳
@@ -1072,7 +1048,6 @@ def download_subscription(url: str, timeout: int = 30) -> str | None:
             if result.returncode == 0 and result.stdout.strip():
                 return result.stdout
         except: pass
-
     # 2. curl 备用
     if shutil.which('curl'):
         try:
@@ -1081,7 +1056,6 @@ def download_subscription(url: str, timeout: int = 30) -> str | None:
             if result.returncode == 0 and result.stdout.strip():
                 return result.stdout
         except: pass
-
     # 3. requests 兜底
     try:
         headers = {'User-Agent': 'Clash/1.18.0'}
@@ -1090,8 +1064,6 @@ def download_subscription(url: str, timeout: int = 30) -> str | None:
         return r.text
     except:
         return None
-
-
 
 # --- 解析相关函数合入 ---
 def parse_proxies_from_content(content):
@@ -1106,7 +1078,6 @@ def parse_proxies_from_content(content):
     except Exception:
         pass
     return []
-
 def is_base64(text):
     try:
         s = ''.join(text.split())
@@ -1118,7 +1089,6 @@ def is_base64(text):
         return True
     except Exception:
         return False
-
 def parse_vmess_node(line):
     try:
         content_b64 = line[8:]
@@ -1146,7 +1116,6 @@ def parse_vmess_node(line):
         return node
     except Exception:
         return None
-
 def parse_vless_node(line):
     try:
         parsed = urlparse(line.strip())
@@ -1173,7 +1142,6 @@ def parse_vless_node(line):
         return node
     except Exception:
         return None
-
 def parse_ssr_node(line):
     try:
         ssr_b64 = line[6:]
@@ -1203,7 +1171,6 @@ def parse_ssr_node(line):
         return node
     except Exception:
         return None
-
 def parse_ss_node(line):
     try:
         line = line.strip()
@@ -1236,7 +1203,6 @@ def parse_ss_node(line):
             return node
     except Exception:
         return None
-
 def parse_trojan_node(line):
     try:
         parsed = urlparse(line)
@@ -1261,7 +1227,6 @@ def parse_trojan_node(line):
         return node
     except Exception:
         return None
-
 def parse_hysteria_node(line):
     try:
         parsed = urlparse(line)
@@ -1282,7 +1247,6 @@ def parse_hysteria_node(line):
         return node
     except Exception:
         return None
-
 def parse_hysteria2_node(line):
     try:
         parsed = urlparse(line)
@@ -1308,7 +1272,6 @@ def parse_hysteria2_node(line):
         return node
     except Exception:
         return None
-
 def parse_plain_nodes_from_text(text):
     proxies = []
     success_count = defaultdict(int)
@@ -1350,7 +1313,6 @@ def parse_plain_nodes_from_text(text):
     for proto, count in failure_count.items():
         print(f"  - 明文协议解析失败，{proto} 节点失败数：{count}")
     return proxies
-
 def decode_base64_and_parse(content):
     try:
         decoded = base64.b64decode(''.join(content.split())).decode('utf-8', errors='ignore')
@@ -1397,7 +1359,6 @@ def decode_base64_and_parse(content):
     except Exception as e:
         print(f"  - Base64 解码解析异常: {e}")
         return []
-
 # ==================== 下载链接 download_and_parse 函数 ====================
 def download_anti_crawl_subscription(url: str) -> str | None:
     """
@@ -1406,13 +1367,10 @@ def download_anti_crawl_subscription(url: str) -> str | None:
     """
     if 'de5.net' not in url and 'feiniu' not in url and 'oooooooo' not in url:
         return None  # 不是这种机场，直接走普通流程
-
-    print(f"  检测到超级反爬机场，使用终极绕过模式: {url[:70]}...")
-
+    print(f"  检测到超级反爬机场，启用浏览器级绕过: {url[:70]}...")
     try:
         import ssl
         import urllib.request
-
         # 构造最像浏览器的请求头
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36',
@@ -1426,14 +1384,12 @@ def download_anti_crawl_subscription(url: str) -> str | None:
             'Sec-Fetch-Site': 'none',
             'Cache-Control': 'max-age=0',
         }
-
         req = urllib.request.Request(url, headers=headers)
         
         # 完全禁用 SSL 验证 + 伪装 TLS
         ctx = ssl.create_default_context()
         ctx.check_hostname = False
         ctx.verify_mode = ssl.CERT_NONE
-
         with urllib.request.urlopen(req, context=ctx, timeout=40) as response:
             content = response.read().decode('utf-8', errors='ignore')
             if 'vmess://' in content or 'ss://' in content or 'trojan://' in content or len(content) > 1000:
@@ -1446,7 +1402,6 @@ def download_anti_crawl_subscription(url: str) -> str | None:
         print(f"  即使终极绕过也失败了: {e}")
         return None
 #==========
-
 def download_and_parse(url):
     """
     终极版下载+解析函数（2025年12月版）
@@ -1455,61 +1410,49 @@ def download_and_parse(url):
     - 超级反爬机场（ooo.oooooooo.../de5.net/feiniu 等）
     """
     content = None
-
     # === 第一优先级：专杀超级反爬机场 ===
     if any(domain in url.lower() for domain in ['de5.net', 'feiniu', 'oooooooo', 'ooo.ooo', 'ooo.o', 'feiniu', 'sub.free']):
         print(f"  检测到超级反爬机场，启用浏览器级绕过: {url[:70]}...")
         content = download_anti_crawl_subscription(url)
         if content:
             print(f"  反爬绕过成功，获取内容 {len(content)} 字节")
-
     # === 第二优先级：普通机场三保险下载 ===
     if not content:
         content = download_subscription(url)  # 你之前我给的三保险函数（wget→curl→requests）
-
     # === 如果全部失败，直接返回空 ===
     if not content:
         print(f"  所有下载方式均失败，跳过: {url}")
         return []
-
     # ====================== 统一解析逻辑（只走一次！）======================
     proxies = parse_proxies_from_content(content)
     if proxies:
         print(f"  直接 YAML 解析成功: {len(proxies)} 个节点")
         return proxies
-
     proxies = parse_plain_nodes_from_text(content)
     if proxies:
         print(f"  明文链接解析成功: {len(proxies)} 个节点")
         return proxies
-
     if is_base64(content):
         print(f"  检测到 Base64 编码，正在解码...")
         proxies = decode_base64_and_parse(content)
         if proxies:
             print(f"  Base64 解码解析成功: {len(proxies)} 个节点")
             return proxies
-
     print(f"  未知格式，解析失败: {url[:80]}")
     return []
-
 # --- 下面保持原A版测速、去重、排序等逻辑 ---
-
 
 def get_proxy_key(proxy):
     unique_part = proxy.get('uuid') or proxy.get('password') or ''
     return hashlib.md5(
         f"{proxy.get('server','')}:{proxy.get('port',0)}|{unique_part}".encode()
     ).hexdigest()
-
 def is_valid_ss_cipher(cipher):
     """
     判断ss节点cipher字段是否合法，避免被错误的Base64或其它字符串污染。
     这里列举了Clash常见支持的ss加密方法，必要时你可根据实际增加或修改。
-
     参数:
         cipher (str): ss节点中cipher字段
-
     返回:
         bool: 是否有效
     """
@@ -1522,7 +1465,6 @@ def is_valid_ss_cipher(cipher):
     }
     return cipher.lower() in valid_ciphers
 
-
 def is_valid_proxy(proxy):
     """
     超级严格校验 + 自动修复 ss cipher 缺失问题
@@ -1530,19 +1472,15 @@ def is_valid_proxy(proxy):
     """
     if not isinstance(proxy, dict):
         return False
-
     required_keys = ['name', 'server', 'port', 'type']
     if not all(key in proxy for key in required_keys):
         return False
-
     allowed_types = {'vmess', 'vless', 'ss', 'ssr', 'trojan', 'hysteria', 'hysteria2', 'socks5', 'http'}
     if proxy['type'] not in allowed_types:
         return False
-
     port = proxy.get('port')
     if not isinstance(port, (int, float)) or not (1 <= int(port) <= 65535):
         return False
-
     # ==================== 重点：ss 节点 cipher 强制修复 ====================
     if proxy['type'] == 'ss':
         cipher = proxy.get('cipher', '').strip()
@@ -1551,16 +1489,35 @@ def is_valid_proxy(proxy):
             'aes-128-gcm', 'aes-192-gcm', 'aes-256-gcm',
             'chacha20-ietf-poly1305', 'chacha20-poly1305',
             'xchacha20-ietf-poly1305', 'xchacha20-poly1305',
-            '2022-blake3-aes-128-gcm', '2022-blake3-aes-256-gcm',
-            '2022-blake3-chacha20-poly1305', '2022-blake3-chacha8-poly1305'
+            '2022-blake3-aes-128-gcm', '2022-blake3-aes-256-gcm', '2022-blake3-chacha20-poly1305'
         }
-
+        
+        if cipher in valid_ciphers:
+            # print(f"【DEBUG】SS 节点 {proxy['name']} 的 cipher {cipher} 有效。")
+            pass # 已经有效，无需修复
         # 如果 cipher 缺失或非法，强制修复为最通用的
-        if not cipher or cipher.lower() not in valid_ciphers:
+        elif not cipher or cipher.lower() not in valid_ciphers: # 检查是否在有效列表且不为空
             old = proxy.get('cipher', 'None')
-            proxy['cipher'] = 'chacha20-ietf-poly1305'  # 2025 年最万能
-            print(f"【自动修复】ss 节点 cipher 缺失或非法 ({old} → chacha20-ietf-poly1305)：{proxy['name']}")
-
+            # 尝试自动修复常见的错误写法
+            auto_map = {
+                'aes-256-cfb': 'aes-256-gcm',
+                'aes-128-cfb': 'aes-128-gcm',
+                'chacha20': 'chacha20-ietf-poly1305',
+                'chacha20-ietf': 'chacha20-ietf-poly1305',
+                'rc4-md5': None,  # 已废弃，不救
+                'none': None,
+                'plain': None,
+                '': None,
+            }
+            if cipher.lower() in auto_map and auto_map[cipher.lower()]:
+                proxy['cipher'] = auto_map[cipher.lower()]
+                print(f"【自动修复】ss 节点 cipher {old} → {proxy['cipher']} : {proxy['name']}")
+            elif not cipher or len(cipher) > 50 or ' ' in cipher or cipher.lower() not in valid_ciphers:
+                proxy['cipher'] = 'chacha20-ietf-poly1305'  # 2025 年最通用
+                print(f"【强救】ss 节点缺失/乱码或不支持 cipher ({old})，强制使用 chacha20-ietf-poly1305 : {proxy['name']}")
+            else: # 如果是无法修复的非法cipher
+                print(f"【丢弃】ss 节点 cipher 不支持且无法自动映射: {old} → {proxy['name']}")
+                return False # 无法修复的直接丢弃
     return True
 
 def identify_regions_only(proxies):
@@ -1575,7 +1532,6 @@ def identify_regions_only(proxies):
             p['region_info'] = matched_region
             identified.append(p)
     return identified
-
 def process_proxies(proxies):
     identified = []
     for p in proxies:
@@ -1618,12 +1574,10 @@ def process_proxies(proxies):
     return final
 #锚点
 
-
 # 新增的国家代码 转 中文名字典，方便快速映射
 COUNTRY_CODE_TO_CN = {
     v['code']: k for k, v in CUSTOM_REGEX_RULES.items()
 }
-
 def emoji_to_country_code(emoji):
     if len(emoji) != 2:
         return None
@@ -1632,9 +1586,7 @@ def emoji_to_country_code(emoji):
         return ''.join(chr(ord(c) - 0x1F1E6 + ord('A')) for c in emoji)
     except:
         return None
-
 FLAG_EMOJI_UN_FLAG ='🇺🇳'  # 无国家用联合国，按需修改
-
 def strip_starting_flags(s):
     """
     反复检测字符串开头是否为2个区域符号组成的国旗emoji，
@@ -1649,7 +1601,6 @@ def strip_starting_flags(s):
     while len(s) >= 2 and is_flag_emoji(s[:2]):
         s = s[2:]
     return s.strip()
-
 # 再次验证SS节点
 def fix_and_filter_ss_nodes(proxies):
     """彻底解决 ss 节点缺少 cipher 或 cipher 非法的问题"""
@@ -1714,29 +1665,20 @@ def fix_and_filter_ss_nodes(proxies):
     return valid_proxies
 
 
-
-
-
 def normalize_proxy_names(proxies):
     pattern_trailing_number = re.compile(r'\s*\d+\s*$')
     normalized = []
-
     for p in proxies:
         name = p.get('name', '').strip()
-
         # 用循环检测清理开头所有国旗emoji
         name = strip_starting_flags(name)
-
         # 清理尾部数字序号
         name = pattern_trailing_number.sub('', name).strip()
-
         p['name'] = name
-
         # 以下保持现有逻辑不变
         region_info = p.get('region_info', None)
         flag_match = re.search(r'[\U0001F1E6-\U0001F1FF]{2}', name)
         flag_emoji = flag_match.group(0) if flag_match else None
-
         country_cn = None
         if region_info and 'name' in region_info and region_info['name'] in CUSTOM_REGEX_RULES:
             country_cn = region_info['name']
@@ -1760,17 +1702,14 @@ def normalize_proxy_names(proxies):
                     code = k
                     break
             flag_emoji = get_country_flag_emoji(code) if code else FLAG_EMOJI_UN_FLAG
-
         clean_name = country_cn
         p['_norm_flag'] = flag_emoji
         p['_norm_country'] = clean_name
         normalized.append(p)
-
     grouped = {}
     for p in normalized:
         country = p['_norm_country']
         grouped.setdefault(country, []).append(p)
-
     final_list = []
     for country, plist in grouped.items():
         for idx, p in enumerate(plist, 1):
@@ -1779,9 +1718,7 @@ def normalize_proxy_names(proxies):
             del p['_norm_flag']
             del p['_norm_country']
             final_list.append(p)
-
     return final_list
-
 # 在生成最终列表前加这一段（推荐放在 normalize_proxy_names 之后）
 def filter_by_bandwidth(proxies, min_mb=20):
     """只保留带宽 ≥20MB/s 的才保留"""
@@ -1805,7 +1742,6 @@ def filter_by_bandwidth(proxies, min_mb=20):
         else:
             filtered.append(p)
     return filtered
-
 
 # ----根据实测带宽进行二次筛选
 def filter_by_bandwidth(proxies, min_mb=25, enable=True):
@@ -1846,7 +1782,6 @@ def filter_by_bandwidth(proxies, min_mb=25, enable=True):
     
     print(f"带宽筛选完成：≥{min_mb}MB/s 保留 {len(filtered)}/{len(proxies)} 个节点")
     return filtered
-
 def limit_proxy_counts(proxies, max_total=300):
     """
     根据指定规则限制节点数量：
@@ -1862,49 +1797,37 @@ def limit_proxy_counts(proxies, max_total=300):
     
     if len(proxies) <= max_total:
         return proxies
-
     limit_60 = {'香港', '日本', '美国', '新加坡'}
     limit_15 = {'德国', '台湾', '韩国'}
-
     # 按延迟排序，延迟缺失按9999处理
     proxies.sort(key=lambda p: p.get('clash_delay', 9999))
-
     grouped = defaultdict(list)
     for p in proxies:
         rname = p.get('region_info', {}).get('name') if p.get('region_info') else None
         grouped[rname].append(p)
-
     selected = []
-
     # 先选60限制区
     for region in limit_60:
         nodes = grouped.get(region, [])
         selected.extend(nodes[:60])
-
     # 15限制区
     for region in limit_15:
         nodes = grouped.get(region, [])
         selected.extend(nodes[:15])
-
     # 其他区域
     other_regions = set(grouped.keys()) - limit_60 - limit_15 - {None}
     for region in other_regions:
         nodes = grouped.get(region, [])
         selected.extend(nodes[:10])
-
     # 可能有没有地区信息的节点，全部保留
     selected.extend(grouped.get(None, []))
-
     # 如果数量仍超限，则按延迟排序截断
     if len(selected) > max_total:
         selected.sort(key=lambda p: p.get('clash_delay', 9999))
         selected = selected[:max_total]
-
     return selected
     
-
 # 节点评分
-
 def calculate_quality_score(proxy):
     """
     重新设计更合理的质量评分系统（0-100分）
@@ -1989,7 +1912,6 @@ def calculate_quality_score(proxy):
     
     return min(score, 100)
 
-
 def sort_proxies_by_quality(proxies):
     """
     按质量评分排序，同分时按延迟排序
@@ -2017,7 +1939,6 @@ def sort_proxies_by_quality(proxies):
     ))
     
 
-
 # ===节点质量标签
 def add_quality_to_name(proxies):
     """
@@ -2037,8 +1958,6 @@ def add_quality_to_name(proxies):
     
     return proxies
 
-
-
 # ===
 def generate_config(proxies, last_message_ids):
     return {
@@ -2046,12 +1965,10 @@ def generate_config(proxies, last_message_ids):
         'last_message_ids': last_message_ids,
     }
 
-
 #TCP 测速,测速默认关闭
 def run_speedtest(enable_tcp_log=False):
     cmd = ['./xcspeedtest', '--verbose']  # 具体参数视版本而定
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
-
     while True:
         line = process.stdout.readline()
         if line == '' and process.poll() is not None:
@@ -2076,7 +1993,6 @@ def run_speedtest(enable_tcp_log=False):
     
     return process.poll()
 
-
 def tcp_ping(proxy, timeout=TCP_TIMEOUT):
     """
     纯 TCP 连接测延迟，返回延迟（单位ms），失败返回 None。
@@ -2099,17 +2015,13 @@ def tcp_ping(proxy, timeout=TCP_TIMEOUT):
     except:
         return None
         
-
 # 锚点
-
 def test_proxy_with_clash(clash_path, proxy):
     delay = clash_test_proxy(clash_path, proxy)
     if delay is not None:
         proxy['clash_delay'] = delay
         return proxy
     return None
-
-
 
 def batch_tcp_test(proxies, max_workers=TCP_MAX_WORKERS):
     """
@@ -2127,12 +2039,11 @@ def batch_tcp_test(proxies, max_workers=TCP_MAX_WORKERS):
                 pcopy['tcp_delay'] = delay
                 results.append(pcopy)
                 if ENABLE_TCP_LOG:
-                    print(f"TCP PASS: {delay:4d}ms → {pcopy.get('name', '')[:40]}")
+                    print(f"TCP PASS: {delay:4d}ms | {pcopy.get('name', '')[:40]}")
             else:
                 if ENABLE_TCP_LOG:
                     print(f"TCP FAIL → {proxy.get('name', '')[:40]}")
     return results
-
 
 def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=48, debug=False, test_urls=None):
     """
@@ -2163,12 +2074,12 @@ def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=48, debug=
             pass  # 不在乎结果，只为触发线路建立
     print("预热完成\n")
     
-    # ============ 并发测速（带重试） ============
+    # ============ 并发测速（无重试，因为 retries=0） ============
     results = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
         # 先提交所有任务（带测速地址参数）
         future_to_proxy = {
-            executor.submit(xcspeedtest_test_proxy_with_retry, speedtest_path, proxy, debug, test_urls): proxy
+            executor.submit(xcspeedtest_test_proxy_with_retry, speedtest_path, proxy, debug, test_urls, retries=0): proxy # retries=0 here
             for proxy in proxies
         }
         for future in concurrent.futures.as_completed(future_to_proxy):
@@ -2186,16 +2097,15 @@ def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=48, debug=
                         print(f"成功: {delay:4d}ms | {bandwidth or 'N/A':>10} → {proxy.get('name')}")
                 else:
                     if debug:
-                        print(f"失败（已重试） → {proxy.get('name')}")
+                        print(f"失败 → {proxy.get('name')}") # Debug output for failed attempts
             except Exception as e:
                 if debug:
                     print(f"异常: {proxy.get('name')} → {e}")
     print(f"speedtest-clash 精测完成，成功节点：{len(results)} 个")
     return results
 
-
 # ============ 辅助函数：带重试的单节点测速（务必一起加上） ============
-def xcspeedtest_test_proxy_with_retry(speedtest_path, proxy, debug=False, test_urls=None, retries=2):
+def xcspeedtest_test_proxy_with_retry(speedtest_path, proxy, debug=False, test_urls=None, retries=0): # Set retries to 0
     """
     对单个节点进行测速，最多重试 retries 次
     支持传入自定义测速地址列表
@@ -2203,26 +2113,22 @@ def xcspeedtest_test_proxy_with_retry(speedtest_path, proxy, debug=False, test_u
     if test_urls is None:
         test_urls = get_test_urls()
         
-    for attempt in range(retries + 1):
+    for attempt in range(retries + 1): # This loop will run only once for attempt=0
         try:
             result = xcspeedtest_test_proxy(speedtest_path, proxy, debug, test_urls)
             if result is not None:  # (delay, bandwidth)
                 return result
             else:
-                if attempt < retries:
-                    time.sleep(1.5)  # 每次重试间隔 1.5 秒
-                    if debug:
-                        print(f"  第 {attempt + 1} 次失败，重试 → {proxy['name']}")
-                    continue
-        except Exception as e:
-            if attempt < retries:
-                time.sleep(1.5)
-                continue
-            else:
+                # If first attempt fails (and retries is 0), this block executes
                 if debug:
-                    print(f"  重试 {retries} 次后仍异常 → {proxy['name']}")
-    return None
-
+                    print(f"  xcSpeedtest 最终失败 → {proxy.get('name', '')}")
+                return None
+        except Exception as e:
+            # If an exception occurs (and retries is 0), this block executes
+            if debug:
+                print(f"  xcSpeedtest 异常 → {proxy.get('name', '')} ({e})")
+            return None
+    return None # This line should logically not be reached with retries=0
 
 # clash 测速
 def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False, test_urls=None):
@@ -2325,7 +2231,6 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False, test_urls=None):
             print(f"测速异常: {e}")
         return None
 
-
 def clash_test_proxy(clash_path, proxy, test_urls=None, debug=False):
     """
     使用 Clash 核心的 -fast 模式，对单个代理节点测速。
@@ -2398,7 +2303,6 @@ def clash_test_proxy(clash_path, proxy, test_urls=None, debug=False):
         if debug:
             print(f"所有测速URL均未获有效延迟，丢弃节点: {proxy['name']}")
         return None
-
     except subprocess.TimeoutExpired:
         if debug:
             print(f"测速超时，丢弃节点: {proxy['name']}")
@@ -2412,7 +2316,6 @@ def clash_test_proxy(clash_path, proxy, test_urls=None, debug=False):
         except Exception:
             pass
     return None
-
 
 def batch_test_proxies_clash(clash_path, proxies, max_workers=MAX_TEST_WORKERS, debug=False, test_urls=None):
     """
@@ -2443,15 +2346,12 @@ def batch_test_proxies_clash(clash_path, proxies, max_workers=MAX_TEST_WORKERS, 
                     print(f"CLASH EXCEPTION: {proxy.get('name', '')[:40]} → {e}")
     return results
 
-
-
 # 主函数
 async def main():
     print("=" * 60)
     print("Telegram.Node_Clash-Speedtest测试版 V2.0")
     print(datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S"))
     print("=" * 60)
-
     # === 显示网络控制配置 ===
     print("🌐 网络控制配置:")
     print(f"  - 抓取阶段 Warp: {WARP_FOR_SCRAPING}")
@@ -2459,7 +2359,6 @@ async def main():
     print(f"  - Speedtest测速 Warp: {WARP_FOR_SPEEDTEST}")
     print(f"  - 最终阶段 Warp: {WARP_FOR_FINAL}")
     print("-" * 40)
-
     # 只在GitHub Actions中启用网络控制
     if os.getenv('GITHUB_ACTIONS') == 'true':
         print("🏗️ GitHub Actions环境检测到，启用网络控制")
@@ -2467,21 +2366,16 @@ async def main():
         simplified_network_check()
     else:
         print("💻 本地环境，跳过网络控制")
-
     # 初始化网络状态，预处理正则表达式规则
     preprocess_regex_rules()
-
     print("[1/5] 加载原有节点和抓取状态")
     existing_proxies, last_message_ids = load_existing_proxies_and_state()
     print(f"已有节点数: {len(existing_proxies)}")
-
     # === 阶段1：Telegram抓取（根据配置使用网络）===
     print("[2/5] 抓取 Telegram 新订阅链接")
     if os.getenv('GITHUB_ACTIONS') == 'true':
         ensure_network_for_stage('scraping', require_warp=WARP_FOR_SCRAPING)
-
     urls, last_message_ids = await scrape_telegram_links(last_message_ids)
-
     # === 阶段2：下载解析订阅链接（保持当前网络）===
     new_proxies = []
     if urls:
@@ -2495,7 +2389,6 @@ async def main():
     else:
         print("未抓取到有效订阅链接，跳过解析阶段。")
     print(f"新增节点数: {len(new_proxies)}")
-
     all_proxies_map = {
         get_proxy_key(p): p for p in existing_proxies if is_valid_proxy(p)
     }
@@ -2506,49 +2399,51 @@ async def main():
             all_proxies_map[key] = p
             added_count += 1
     print(f"合并去重后总节点数: {len(all_proxies_map)}，新增有效节点: {added_count}")
-
     all_nodes = list(all_proxies_map.values())
-
     if not all_nodes:
         sys.exit("❌ 无任何节点可用，程序退出")
-
     # === 阶段3：测速准备（根据模式选择网络和测速策略）===
     print(f"[3/5] 开始节点测速")
-
     # 定义测速工具路径
     speedtest_path = './xcspeedtest'     # xcspeedtest程序路径
     clash_path = './clash_core/clash'    # clash-speedtest核心路径
-
     # 使用最新版变量，仅使用新变量，不兼容旧变量
     DETAILED_SPEEDTEST_MODE = os.getenv('DETAILED_SPEEDTEST_MODE', '').strip().lower()
     if not DETAILED_SPEEDTEST_MODE:
         print("❗️错误: 未设置环境变量 DETAILED_SPEEDTEST_MODE，程序退出。")
         sys.exit(1)
-
     mode = DETAILED_SPEEDTEST_MODE
     print(f"使用测速模式: {mode}")
-
     final_tested_nodes = all_nodes.copy()
 
+    # Placeholders for intermediate results
+    tcp_passed = []
+    clash_passed = []
+    
     if mode == 'tcp_clash_xc':
         print("【模式】TCP 粗筛 → Clash 精测 → Speedtest 精测")
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('tcp', require_warp=WARP_FOR_TCP)
         tcp_passed = batch_tcp_test(all_nodes)
-        print(f"TCP 粗筛完成：{len(all_nodes)} → {len(tcp_passed)}")
+        print(f"TCP 粗筛完成，通过节点数: {len(tcp_passed)}") # Added result print
         if not tcp_passed:
             print("TCP全部不通，降级使用 Clash + Speedtest 测速")
             if os.getenv('GITHUB_ACTIONS') == 'true':
                 ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
             clash_passed = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG)
-            final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, clash_passed, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG)
+            print(f"Clash 精测完成，通过节点数: {len(clash_passed)}") # Added result print
+            if clash_passed:
+                final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, clash_passed, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG)
+            else:
+                final_tested_nodes = []
         else:
             print("对TCP通过节点进行 Clash 测速")
             if os.getenv('GITHUB_ACTIONS') == 'true':
                 ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
             clash_passed = batch_test_proxies_clash(clash_path, tcp_passed, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG)
+            print(f"Clash 精测完成，通过节点数: {len(clash_passed)}") # Added result print
             if clash_passed:
-                print("对 Clash 筛选节点进行 Speedtest 测速")
+                print("对 Clash 筛选节点进行 Speedtest 精测")
                 final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, clash_passed, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG)
             else:
                 final_tested_nodes = []
@@ -2557,100 +2452,94 @@ async def main():
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('tcp', require_warp=WARP_FOR_TCP)
         tcp_passed = batch_tcp_test(all_nodes)
-        print(f"TCP 粗筛完成：{len(all_nodes)} → {len(tcp_passed)}")
+        print(f"TCP 粗筛完成，通过节点数: {len(tcp_passed)}") # Added result print
         if not tcp_passed:
             print("TCP全部不通，降级使用 Clash 测速")
             if os.getenv('GITHUB_ACTIONS') == 'true':
                 ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
             final_tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG)
+            print(f"Clash 精测完成，通过节点数: {len(final_tested_nodes)}") # Added result print
         else:
             if os.getenv('GITHUB_ACTIONS') == 'true':
                 ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
             final_tested_nodes = batch_test_proxies_clash(clash_path, tcp_passed, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG)
+            print(f"Clash 精测完成，通过节点数: {len(final_tested_nodes)}") # Added result print
     elif mode == 'tcp_xc':
         print("【模式】TCP 粗筛 → Speedtest 精测")
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('tcp', require_warp=WARP_FOR_TCP)
         tcp_passed = batch_tcp_test(all_nodes)
-        print(f"TCP 粗筛完成：{len(all_nodes)} → {len(tcp_passed)}")
+        print(f"TCP 粗筛完成，通过节点数: {len(tcp_passed)}") # Added result print
         if not tcp_passed:
             print("TCP 全部不通，降级使用 Speedtest 测速")
             if os.getenv('GITHUB_ACTIONS') == 'true':
                 ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
             final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, all_nodes, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG)
+            print(f"Speedtest 精测完成，通过节点数: {len(final_tested_nodes)}") # Added result print
         else:
             if os.getenv('GITHUB_ACTIONS') == 'true':
                 ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
             final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, tcp_passed, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG)
+            print(f"Speedtest 精测完成，通过节点数: {len(final_tested_nodes)}") # Added result print
     elif mode == 'tcp_only':
         print("【模式】纯 TCP 测速")
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('tcp', require_warp=WARP_FOR_TCP)
         final_tested_nodes = batch_tcp_test(all_nodes)
+        print(f"TCP 测速完成，通过节点数: {len(final_tested_nodes)}") # Added result print
     elif mode == 'clash_only':
         print("【模式】纯 Clash 测速")
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
         final_tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG)
+        print(f"Clash 测速完成，通过节点数: {len(final_tested_nodes)}") # Added result print
     elif mode == 'xcspeedtest_only':
         print("【模式】纯 Speedtest 测速")
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
         final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, all_nodes, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG)
+        print(f"Speedtest 测速完成，通过节点数: {len(final_tested_nodes)}") # Added result print
     else:
         print(f"❗️ 未知测速模式 '{mode}', 程序退出。")
         sys.exit(1)
-
     # 测速完成，检测有效节点数
     success_count = len(final_tested_nodes)
     print(f"测速完成，最终存活优质节点数量: {success_count}")
-
     # 保底策略 - 低于阈值时强制保留部分热门地区节点（你的原保底逻辑）
     if success_count < 50:
         print(f"测速结果过少（{success_count}），启动超级保底策略，保留热门地区节点")
         # 保底策略实现（同你原脚本）
-
     # 过滤无效节点，保持超级严格检测
     final_tested_nodes = [p for p in final_tested_nodes if is_valid_proxy(p)]
-
     if not final_tested_nodes:
         sys.exit("❌ 测速后无有效节点，程序退出")
-
     # === 阶段4：切换回 GitHub 网络进行最终处理 ===
     print("[4/5] 切换回GitHub网络进行最终处理")
     if os.getenv('GITHUB_ACTIONS') == 'true':
         ensure_network_for_stage('final', require_warp=WARP_FOR_FINAL)
-
     # 节点规范化名称
     normalized_proxies = normalize_proxy_names(final_tested_nodes)
-
     # 限制节点数量（最多300个及分区限制）
     final_proxies = limit_proxy_counts(normalized_proxies, max_total=300)
-
     if not final_proxies:
         sys.exit("❌ 节点重命名和限量后无有效节点，程序退出")
-
     # === 计算质量评分并排序 ===
     print("[4.5/5] 计算节点质量评分")
     final_proxies = sort_proxies_by_quality(final_proxies)
-
     # === 名称中添加质量标签 ===
     final_proxies = add_quality_to_name(final_proxies)
-
     # === 带宽二次筛选 ===
     final_proxies = filter_by_bandwidth(
         final_proxies, 
         min_mb=MIN_BANDWIDTH_MB, 
         enable=ENABLE_BANDWIDTH_FILTER
     )
-
     # === 统计质量分布 ===
     quality_stats = {'🔥极品': 0, '⭐优质': 0, '✅良好': 0, '⚡可用': 0}
     for proxy in final_proxies:
         tag = proxy.get('quality_tag', '⚡可用')
         if tag in quality_stats:
             quality_stats[tag] += 1
-
     print(f"  质量分布: {quality_stats}")
     if final_proxies:
         avg_score = sum(p.get('quality_score', 0) for p in final_proxies) / len(final_proxies)
@@ -2658,16 +2547,13 @@ async def main():
     else:
         print("  警告: 没有有效的节点")
         sys.exit("❌ 没有有效的节点，程序退出")
-
     # 重新按质量排序（可选，保证质量分最高排前）
     final_proxies = sorted(final_proxies, key=lambda p: -p.get('quality_score', 0))
-
     # === 阶段5：生成最终配置文件 ===
     print("[5/5] 生成最终配置文件")
     total_count = len(final_proxies)
     update_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
     avg_quality = sum(p.get('quality_score', 0) for p in final_proxies) / total_count if total_count > 0 else 0
-
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     try:
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
@@ -2677,17 +2563,14 @@ async def main():
             f.write(f"# 更新时间   : {update_time} (北京时间)\n")
             f.write(f"# 节点总数   : {total_count} 个优质节点\n")
             f.write(f"# 平均质量分 : {avg_quality:.1f}/100\n")
-
             quality_stats_str = f"🔥极品: {quality_stats['🔥极品']}, ⭐优质: {quality_stats['⭐优质']}, ✅良好: {quality_stats['✅良好']}, ⚡可用: {quality_stats['⚡可用']}"
             f.write(f"# 质量分布   : {quality_stats_str}\n")
-
             f.write(f"# 带宽筛选   : ≥ {MIN_BANDWIDTH_MB}MB/s\n")
             f.write(f"# 测速模式   : {mode}\n")
             f.write(f"# 网络配置   : TCP_Warp={WARP_FOR_TCP}, Speedtest_Warp={WARP_FOR_SPEEDTEST}\n")
             f.write("# 排序规则   : 质量评分 → 延迟 → 地区优先级\n")
             f.write("# 构建方式   : GitHub Actions 全自动，每4小时更新一次\n")
             f.write("# ==================================================\n\n")
-
             final_config = {
                 'proxies': final_proxies,
                 'last_message_ids': last_message_ids,
@@ -2708,11 +2591,9 @@ async def main():
                 'note': '由 GitHub Actions 自动生成，每4小时更新一次，已按质量评分排序'
             }
             yaml.dump(final_config, f, allow_unicode=True, sort_keys=False, indent=2, width=4096, default_flow_style=False)
-
     except Exception as e:
         print(f"❌ 写出配置文件失败: {e}")
         sys.exit(1)
-
     # 结果展示
     print(f"✅ 配置文件已成功保存至 {OUTPUT_FILE}")
     print(f"📊 本次处理完成:")
@@ -2724,14 +2605,11 @@ async def main():
     print(f"   更新时间   : {update_time}")
     print("=" * 60)
     print("🎉 全部任务圆满完成！")
-
     # === 最终清理，确保切换回GitHub网络 ===
     if os.getenv('GITHUB_ACTIONS') == 'true' and not WARP_FOR_FINAL:
         print("🧹 最终清理：确保使用原始GitHub网络")
         ensure_network_for_stage('cleanup', require_warp=False)               
-
            
-
 
                   
 if __name__ == "__main__":
