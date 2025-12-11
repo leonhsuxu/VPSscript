@@ -2303,9 +2303,6 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
 
 
 def clash_test_proxy(clash_path, proxy, test_urls=None, debug=False):
-                    }
-                ],
-                "rules": [
                     f"DOMAIN,{urlparse(test_url).netloc},TESTGROUP",
                     "MATCH,DIRECT"
                 ]
