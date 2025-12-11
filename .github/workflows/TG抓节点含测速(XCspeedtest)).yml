@@ -1,4 +1,5 @@
 name: TG频道和群抓取节点测速 XC-speedtest测速版
+
 # ==================== 触发条件配置 ====================
 on:
   # 定时执行配置
@@ -15,10 +16,10 @@ on:
         default: 'default'
         type: choice
         options:
-          - default       # 默认配置：抓取用GitHub，测速用Warp；具体看下边默认设置
-          - all_warp       # 全流程使用Warp网络
-          - all_github      # 全流程使用GitHub网络
-          - test_mode      # 测试模式（只抓取少量节点）
+          - default
+          - all_warp
+          - all_github
+          - test_mode
       # 是否强制重新下载工具
       force_download:
         description: '强制重新下载工具（忽略缓存）'
@@ -32,16 +33,18 @@ on:
         default: 'tcp_first'
         type: choice
         options:
-          - tcp_first     # 先TCP粗筛，再Speedtest精测（推荐）
-          - tcp_only      # 只用TCP测速（最快）
-          - clash_only    # 只用Speedtest测速（最准）
-          - clash_first   # 先Speedtest，再TCP验证
+          - tcp_first
+          - tcp_only
+          - clash_only
+          - clash_first
+
 # ==================== 环境变量配置 ====================
 env:
   # ==================== 版本配置 ====================
   MIHOMO_VERSION: v1.19.17           # Mihomo (Clash Meta) 版本
   SPEEDTEST_VERSION: v0.4.1          # XC Speedtest 版本
   WGCF_VERSION: v2.2.29              # WGCF (Cloudflare Warp) 版本
+  
   # ==================== 网络控制配置 默认网络配置====================
   # 这些变量是Python脚本的唯一控制源，控制各阶段是否使用Warp网络
   # true=使用Warp网络，false=使用原始GitHub网络
@@ -54,6 +57,7 @@ env:
   WARP_FOR_SPEEDTEST: "true"
   # 最终处理阶段：使用GitHub网络（确保提交等操作正常）
   WARP_FOR_FINAL: "false"
+  
   # ==================== 测速策略配置 ====================
   # 测速模式选项：
   #   "tcp_only"      → 只用 TCP 测速（最快，最严格，适合节点特别多的情况）
@@ -61,17 +65,22 @@ env:
   #   "tcp_first"     → 先 TCP 粗筛（<800ms）→ 再 Speedtest 精测（推荐！平衡速度与质量）
   #   "clash_first"   → 先 Speedtest → 再 TCP（一般用不上）
   SPEEDTEST_MODE: "tcp_first"
+  
   # ==================== 带宽筛选配置 ====================
   # 是否启用带宽筛选（True=启用，False=关闭）
   ENABLE_BANDWIDTH_FILTER: "true"
   # 最低带宽阈值（单位：MB/s）
-  # 只保留带宽大于等于此值的节点
+  # 支持环境变量设置，例如在 GitHub Actions 里这样写：
+  # ENABLE_BANDWIDTH_FILTER=true
+  # MIN_BANDWIDTH_MB=30
   MIN_BANDWIDTH_MB: "20"
+  
   # ==================== 日志配置 ====================
   # 是否启用TCP测速详细日志（生产环境建议关闭）
   ENABLE_TCP_LOG: "false"
   # 是否启用Speedtest测速详细日志（生产环境建议关闭）
   ENABLE_SPEEDTEST_LOG: "false"
+  
   # ==================== Telegram频道配置 ====================
   # 要抓取的Telegram频道列表（每行一个）
   # 支持频道ID（如 @channel_name）或频道链接
@@ -80,7 +89,7 @@ env:
     @wxdy666
     @freeyule
     @ccbaohe
-    @duangvpsfs         
+    @duangvpsfs
     @zzzjjjkkkoi
     @xmdexw
     @v2v2clash
@@ -88,6 +97,7 @@ env:
     @tempssrlink
     @sorenab2
     @proxyshareCN
+
 # ==================== 工作流任务定义 ====================
 jobs:
   # 主构建任务
@@ -258,111 +268,123 @@ jobs:
           chmod +x xcspeedtest
           ./xcspeedtest --help
       
-      # ==================== 步骤11：智能网络配置 ====================
-      - name: 智能网络配置
-        run: |
-          echo "=== 🌐 智能网络配置 ==="
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-            echo "手动触发工作流，网络配置模式: ${{ inputs.warp_config }}"
-            case "${{ inputs.warp_config }}" in
-              "default")
-                echo "使用默认网络配置"
-                ;;
-              "all_warp")
-                echo "✅ 全Warp模式"
-                echo "WARP_FOR_SCRAPING=true" >> $GITHUB_ENV
-                echo "WARP_FOR_TCP=true" >> $GITHUB_ENV
-                echo "WARP_FOR_SPEEDTEST=true" >> $GITHUB_ENV
-                echo "WARP_FOR_FINAL=true" >> $GITHUB_ENV
-                ;;
-              "all_github")
-                echo "✅ 全GitHub模式"
-                echo "WARP_FOR_SCRAPING=false" >> $GITHUB_ENV
-                echo "WARP_FOR_TCP=false" >> $GITHUB_ENV
-                echo "WARP_FOR_SPEEDTEST=false" >> $GITHUB_ENV
-                echo "WARP_FOR_FINAL=false" >> $GITHUB_ENV
-                ;;
-              "test_mode")
-                echo "✅ 测试模式：减少抓取数量，使用Warp测速"
-                echo "TELEGRAM_CHANNEL_IDS=@fqDINYUE" >> $GITHUB_ENV
-                echo "WARP_FOR_SCRAPING=false" >> $GITHUB_ENV
-                echo "WARP_FOR_TCP=true" >> $GITHUB_ENV
-                echo "WARP_FOR_SPEEDTEST=true" >> $GITHUB_ENV
-                echo "WARP_FOR_FINAL=false" >> $GITHUB_ENV
-                ;;
-              *)
-                echo "⚠️  未知模式，使用默认配置"
-                ;;
-            esac
-            if [ -n "${{ inputs.speedtest_mode }}" ]; then
-              echo "SPEEDTEST_MODE=${{ inputs.speedtest_mode }}" >> $GITHUB_ENV
-              echo "测速模式覆盖为: ${{ inputs.speedtest_mode }}"
-            fi
-          else
-            echo "✅ 定时触发，使用默认网络配置"
-          fi
-          echo ""
-          echo "📋 最终执行配置:"
-          echo "--------------------------------------------------"
-          echo "网络配置:"
-          echo "  - 抓取阶段 Warp: ${{ env.WARP_FOR_SCRAPING }}"
-          echo "  - TCP测速 Warp: ${{ env.WARP_FOR_TCP }}"
-          echo "  - Speedtest测速 Warp: ${{ env.WARP_FOR_SPEEDTEST }}"
-          echo "  - 最终阶段 Warp: ${{ env.WARP_FOR_FINAL }}"
-          echo ""
-          echo "测速配置:"
-          echo "  - 测速模式: ${{ env.SPEEDTEST_MODE }}"
-          echo "  - 带宽筛选: ${{ env.ENABLE_BANDWIDTH_FILTER }} (≥${{ env.MIN_BANDWIDTH_MB }}MB/s)"
-          echo "  - TCP日志: ${{ env.ENABLE_TCP_LOG }}"
-          echo "  - Speedtest日志: ${{ env.ENABLE_SPEEDTEST_LOG }}"
-          echo "--------------------------------------------------"
-          echo "=== ✅ 网络配置完成 ==="
-      
-      # ==================== 步骤12：运行Telegram抓取及测速脚本 ====================
-      - name: 运行 Telegram 抓取及 Clash 测速脚本
+      # ==================== 步骤11：智能网络配置 + 运行测速脚本 ====================
+      - name: 智能网络配置 + 运行测速脚本
         env:
           # Telegram API 凭证
           TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
           TELEGRAM_API_HASH: ${{ secrets.TELEGRAM_API_HASH }}
           TELEGRAM_STRING_SESSION: ${{ secrets.TELEGRAM_STRING_SESSION }}
-          # 网络控制变量
-          WARP_FOR_SCRAPING: ${{ env.WARP_FOR_SCRAPING }}
-          WARP_FOR_TCP: ${{ env.WARP_FOR_TCP }}
-          WARP_FOR_SPEEDTEST: ${{ env.WARP_FOR_SPEEDTEST }}
-          WARP_FOR_FINAL: ${{ env.WARP_FOR_FINAL }}
-          # 测速配置
-          SPEEDTEST_MODE: ${{ env.SPEEDTEST_MODE }}
-          ENABLE_TCP_LOG: ${{ env.ENABLE_TCP_LOG }}
-          ENABLE_SPEEDTEST_LOG: ${{ env.ENABLE_SPEEDTEST_LOG }}
-          # 带宽筛选配置
-          ENABLE_BANDWIDTH_FILTER: ${{ env.ENABLE_BANDWIDTH_FILTER }}
-          MIN_BANDWIDTH_MB: ${{ env.MIN_BANDWIDTH_MB }}
           # 其他环境变量
-          TELEGRAM_CHANNEL_IDS: ${{ env.TELEGRAM_CHANNEL_IDS }}
           GITHUB_ACTIONS: "true"
           PYTHONUNBUFFERED: "1"
         run: |
+          # ============ 智能网络配置 ============
+          echo "=== 🌐 智能网络配置 ==="
+          
+          # 初始化默认值
+          WARP_FOR_SCRAPING="${{ env.WARP_FOR_SCRAPING }}"
+          WARP_FOR_TCP="${{ env.WARP_FOR_TCP }}"
+          WARP_FOR_SPEEDTEST="${{ env.WARP_FOR_SPEEDTEST }}"
+          WARP_FOR_FINAL="${{ env.WARP_FOR_FINAL }}"
+          SPEEDTEST_MODE="${{ env.SPEEDTEST_MODE }}"
+          TELEGRAM_CHANNEL_IDS="${{ env.TELEGRAM_CHANNEL_IDS }}"
+          
+          # 手动触发时根据输入调整配置
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "手动触发工作流，网络配置模式: ${{ inputs.warp_config }}"
+            
+            case "${{ inputs.warp_config }}" in
+              all_warp)
+                echo "✅ 全流程使用Warp网络"
+                WARP_FOR_SCRAPING="true"
+                WARP_FOR_TCP="true"
+                WARP_FOR_SPEEDTEST="true"
+                WARP_FOR_FINAL="true"
+                ;;
+              all_github)
+                echo "✅ 全流程使用GitHub网络"
+                WARP_FOR_SCRAPING="false"
+                WARP_FOR_TCP="false"
+                WARP_FOR_SPEEDTEST="false"
+                WARP_FOR_FINAL="false"
+                ;;
+              test_mode)
+                echo "✅ 测试模式：仅抓取部分频道，使用Warp测速"
+                TELEGRAM_CHANNEL_IDS="@fqDINYUE"
+                WARP_FOR_SCRAPING="false"
+                WARP_FOR_TCP="true"
+                WARP_FOR_SPEEDTEST="true"
+                WARP_FOR_FINAL="false"
+                ;;
+              *)
+                echo "✅ 使用默认网络配置"
+                ;;
+            esac
+            
+            # 如果指定了测速模式，覆盖默认值
+            if [ -n "${{ inputs.speedtest_mode }}" ]; then
+              SPEEDTEST_MODE="${{ inputs.speedtest_mode }}"
+              echo "✅ 测速模式覆盖为: ${{ inputs.speedtest_mode }}"
+            fi
+          else
+            echo "✅ 定时触发，使用默认网络配置"
+          fi
+          
+          # 显示最终配置
+          echo ""
+          echo "📋 最终执行配置："
+          echo "--------------------------------------------------"
+          echo "网络配置："
+          echo "  - 抓取阶段 Warp: ${WARP_FOR_SCRAPING}"
+          echo "  - TCP测速 Warp: ${WARP_FOR_TCP}"
+          echo "  - Speedtest测速 Warp: ${WARP_FOR_SPEEDTEST}"
+          echo "  - 最终阶段 Warp: ${WARP_FOR_FINAL}"
+          echo ""
+          echo "测速配置："
+          echo "  - 测速模式: ${SPEEDTEST_MODE}"
+          echo "  - 带宽筛选: ${{ env.ENABLE_BANDWIDTH_FILTER }} (≥${{ env.MIN_BANDWIDTH_MB }}MB/s)"
+          echo "  - TCP日志: ${{ env.ENABLE_TCP_LOG }}"
+          echo "  - Speedtest日志: ${{ env.ENABLE_SPEEDTEST_LOG }}"
+          echo "--------------------------------------------------"
+          echo "=== ✅ 网络配置完成 ==="
+          
+          # ============ 执行Python脚本 ============
           mkdir -p flclashyaml
+          echo ""
           echo "=== 🚀 开始执行节点抓取和测速 ==="
           echo "开始时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
           echo ""
           echo "📊 执行参数汇总:"
           echo "--------------------------------------------------"
-          echo "网络配置:"
+          echo "网络配置："
           echo "  📡 抓取阶段: $( [ "$WARP_FOR_SCRAPING" = "true" ] && echo "使用Warp" || echo "使用GitHub" )"
           echo "  🚀 TCP测速: $( [ "$WARP_FOR_TCP" = "true" ] && echo "使用Warp" || echo "使用GitHub" )"
           echo "  ⚡ Speedtest: $( [ "$WARP_FOR_SPEEDTEST" = "true" ] && echo "使用Warp" || echo "使用GitHub" )"
           echo "  📝 最终处理: $( [ "$WARP_FOR_FINAL" = "true" ] && echo "使用Warp" || echo "使用GitHub" )"
           echo ""
-          echo "测速配置:"
-          echo "  🎯 测速模式: $SPEEDTEST_MODE"
-          echo "  📶 带宽筛选: $( [ "$ENABLE_BANDWIDTH_FILTER" = "true" ] && echo "启用 (≥${MIN_BANDWIDTH_MB}MB/s)" || echo "关闭" )"
-          echo "  📋 日志级别: TCP=$ENABLE_TCP_LOG, Speedtest=$ENABLE_SPEEDTEST_LOG"
+          echo "测速配置："
+          echo "  🎯 测速模式: ${SPEEDTEST_MODE}"
+          echo "  📶 带宽筛选: $( [ "${{ env.ENABLE_BANDWIDTH_FILTER }}" = "true" ] && echo "启用 (≥${{ env.MIN_BANDWIDTH_MB }}MB/s)" || echo "关闭" )"
+          echo "  📋 日志级别: TCP=${{ env.ENABLE_TCP_LOG }}, Speedtest=${{ env.ENABLE_SPEEDTEST_LOG }}"
           echo "--------------------------------------------------"
           echo ""
           echo "▶️ 开始执行Python脚本..."
           echo "--------------------------------------------------"
+          
+          # 关键：直接在环境中传递配置给Python脚本
+          WARP_FOR_SCRAPING="${WARP_FOR_SCRAPING}" \
+          WARP_FOR_TCP="${WARP_FOR_TCP}" \
+          WARP_FOR_SPEEDTEST="${WARP_FOR_SPEEDTEST}" \
+          WARP_FOR_FINAL="${WARP_FOR_FINAL}" \
+          SPEEDTEST_MODE="${SPEEDTEST_MODE}" \
+          TELEGRAM_CHANNEL_IDS="${TELEGRAM_CHANNEL_IDS}" \
+          ENABLE_BANDWIDTH_FILTER="${{ env.ENABLE_BANDWIDTH_FILTER }}" \
+          MIN_BANDWIDTH_MB="${{ env.MIN_BANDWIDTH_MB }}" \
+          ENABLE_TCP_LOG="${{ env.ENABLE_TCP_LOG }}" \
+          ENABLE_SPEEDTEST_LOG="${{ env.ENABLE_SPEEDTEST_LOG }}" \
           python TelegramNode/TBD-telegram_publiclink.py
+          
           EXIT_CODE=$?
           echo ""
           echo "--------------------------------------------------"
@@ -382,17 +404,17 @@ jobs:
           echo "结束时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
           echo "=== ✅ 脚本执行完成 ==="
       
-      # ==================== 步骤13：确保网络正常（重要修复） ====================
+      # ==================== 步骤12：确保网络正常（重要修复） ====================
       - name: 确保网络正常
         if: always()
         run: |
           echo "=== 🔧 确保网络正常 ==="
-          echo "检查时间: $(date '+%Y-%m-d %H:%M:%S %Z')"
+          echo "检查时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
           echo ""
           
           echo "1️⃣ 停止任何Warp连接..."
-          sudo wg-quick down wgcf 2>/dev/null || echo "   WARP未运行"
-          sudo ip link delete wgcf 2>/dev/null || echo "   接口不存在"
+          sudo wg-quick down wgcf 2>/dev/null || echo "   ℹ️ WARP未运行"
+          sudo ip link delete wgcf 2>/dev/null || echo "   ℹ️ 接口不存在"
           
           echo "2️⃣ 清除Warp相关路由..."
           for cidr in "140.82.112.0/20" "185.199.108.0/22" "185.199.109.0/22" "185.199.110.0/22" "185.199.111.0/22"; do
@@ -401,52 +423,31 @@ jobs:
           
           echo "3️⃣ 测试网络连接..."
           echo "   测试IP查询服务..."
-          IP_SERVERS=(
-            "https://ip.sb"
-            "https://api.ipify.org"
-            "https://checkip.amazonaws.com"
-            "https://ipinfo.io/ip"
-          )
           
-          SUCCESS=false
-          for server in "${IP_SERVERS[@]}"; do
-            echo "   尝试 $server ..."
-            if curl -4 -s --max-time 5 "$server" | grep -qE '^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$'; then
-              CURRENT_IP=$(curl -4 -s --max-time 5 "$server")
-              echo "   ✅ 成功获取IP: $CURRENT_IP (来自 $server)"
-              SUCCESS=true
+          CURRENT_IP=""
+          for server in "https://ip.sb" "https://api.ipify.org" "https://checkip.amazonaws.com" "https://ipinfo.io/ip"; do
+            if CURRENT_IP=$(curl -4 -s --max-time 5 "$server" | grep -E '^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$'); then
+              echo "   ✅ 成功: $CURRENT_IP (来自 $server)"
               break
-            else
-              echo "   ⚠️  $server 不可用"
             fi
           done
           
-          if [ "$SUCCESS" = false ]; then
-            echo "   ❌ 所有IP查询服务都失败，使用备用方法..."
+          if [ -z "$CURRENT_IP" ]; then
             CURRENT_IP=$(hostname -I | awk '{print $1}' 2>/dev/null || echo "unknown")
-            echo "   备用IP: $CURRENT_IP"
+            echo "   ℹ️ 备用IP: $CURRENT_IP"
           fi
           
           echo "4️⃣ 检查GitHub连接..."
-          if curl -I --silent --max-time 10 https://github.com | grep -q "200\|301\|302"; then
+          if curl -I --silent --max-time 10 https://github.com 2>/dev/null | head -1; then
             echo "   ✅ GitHub连接正常"
           else
-            echo "   ⚠️  GitHub连接可能有问题，但继续执行..."
-          fi
-          
-          echo "5️⃣ 验证不是Warp IP..."
-          if echo "$CURRENT_IP" | grep -q "162\.159\." || echo "$CURRENT_IP" | grep -q "172\.64\."; then
-            echo "   ⚠️  检测到Warp IP，尝试强制清理..."
-            echo "   ℹ️  当前IP可能是Cloudflare Warp IP"
-          else
-            echo "   ✅ 当前不是Warp IP"
+            echo "   ⚠️  GitHub连接可能有问题"
           fi
           
           echo ""
           echo "=== 🔧 网络检查完成 ==="
       
-     
-      # ==================== 步骤14：自动提交更改 ====================
+      # ==================== 步骤13：自动提交更改 ====================
       - name: 自动提交更改
         if: success()
         run: |
@@ -454,9 +455,12 @@ jobs:
           echo "提交时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
           echo ""
           
-          if git diff --quiet flclashyaml/Tg-node1.yaml 2>/dev/null; then
-            echo "📝 文件无变化，跳过提交"
-          else
+          if [ ! -f "flclashyaml/Tg-node1.yaml" ]; then
+            echo "⚠️ 配置文件不存在，跳过提交"
+            exit 0
+          fi
+          
+          if ! git diff --quiet flclashyaml/Tg-node1.yaml 2>/dev/null; then
             echo "📝 检测到文件变化，准备提交..."
             
             git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -469,8 +473,10 @@ jobs:
             
             echo "提交信息: ${COMMIT_MESSAGE}"
             git commit -m "${COMMIT_MESSAGE}"
+            echo ""
             echo "开始推送..."
             git push origin HEAD
-            
             echo "✅ 提交完成"
+          else
+            echo "📝 文件无变化，跳过提交"
           fi
