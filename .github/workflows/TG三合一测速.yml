@@ -288,7 +288,7 @@ jobs:
         run: |
           echo "=== 开始执行节点抓取和测速脚本 ==="
           mkdir -p flclashyaml
-          python TelegramNode/TBD-telegram_publiclink.py
+          python TelegramNode/TBD-telegram_publiclink1.py
           EXIT_CODE=$?
           if [ $EXIT_CODE -eq 0 ]; then
             echo "✅ 节点抓取和测速完成"
