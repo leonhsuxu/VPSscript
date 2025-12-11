@@ -1780,7 +1780,7 @@ def filter_by_bandwidth(proxies, min_mb=25, enable=True):
         # else:
         #     print(f"带宽太低丢弃: {num:.1f}MB/s → {p['name']}")
     
-    print(f"带宽筛选完成：≥{min_mb}MB/s 保留 {len(filtered)}/{len(proxies)} 个节点")
+    print(f"🚀带宽筛选完成：≥{min_mb}MB/s 保留 {len(filtered)}/{len(proxies)} 个节点")
     return filtered
 def limit_proxy_counts(proxies, max_total=300):
     """
@@ -2102,7 +2102,7 @@ def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=48, debug=
             except Exception as e:
                 if debug:
                     print(f"异常: {proxy.get('name')} → {e}")
-    print(f"speedtest-clash 精测完成，成功节点：{len(results)} 个")
+    print(f"speedtest-clash 精测完成，成功节点：🛩️{len(results)} 个")
     return results
 
 # ============ 辅助函数：带重试的单节点测速（务必一起加上） ============
@@ -2528,7 +2528,7 @@ async def main():
         sys.exit(1)
     # 测速完成，检测有效节点数
     success_count = len(final_tested_nodes)
-    print(f"测速完成，最终存活优质节点数量: {success_count}")
+    print(f"🆗测速完成，最终存活优质节点数量: 🛩️{success_count}")
     # 保底策略 - 低于阈值时强制保留部分热门地区节点（你的原保底逻辑）
     if success_count < 50:
         print(f"测速结果过少（{success_count}），启动超级保底策略，保留热门地区节点")
