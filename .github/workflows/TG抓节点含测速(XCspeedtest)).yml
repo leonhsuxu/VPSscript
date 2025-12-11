@@ -15,10 +15,10 @@ on:
         default: 'default'
         type: choice
         options:
-          - 默认配置       # 默认配置：抓取用GitHub，测速用Warp；具体看下边默认设置
-          - 全Warp网络       # 全流程使用Warp网络
-          - 全Github网络     # 全流程使用GitHub网络
-          - 测速模式:少量频道      # 测试模式（只抓取少量节点）
+          - 'default'       # 默认配置：抓取用GitHub，测速用Warp；具体看下边默认设置
+          - 'all_warp       # 全流程使用Warp网络
+          - 'all_github'     # 全流程使用GitHub网络
+          - 'test_mode'      # 测试模式（只抓取少量节点）
       # 是否强制重新下载工具
       force_download:
         description: '强制重新下载工具（忽略缓存）'
