@@ -70,6 +70,11 @@ SPEEDTEST_MODE = os.getenv('SPEEDTEST_MODE', 'tcp_first').lower()  # 默认推�
 TCP_TIMEOUT = 3.5          # 单次 TCP 连接超时时间（秒），建议 3~5
 TCP_MAX_WORKERS = 256     # TCP 测速最大并发（可以比 Clash 高很多，非常快）
 TCP_MAX_DELAY = 1000       # TCP 延迟阈值，超过此值直接丢弃（ms）
+
+# TCP 和Clash 日志环境变量专属参数
+def str_to_bool(s: str) -> bool:
+    return s.strip().lower() in ('true', '1', 'yes')
+    
 ENABLE_TCP_LOG = str_to_bool(os.getenv('ENABLE_TCP_LOG', 'false'))
 ENABLE_SPEEDTEST_LOG = str_to_bool(os.getenv('ENABLE_SPEEDTEST_LOG', 'false'))
 
@@ -78,10 +83,16 @@ MAX_TEST_WORKERS = 48    # 速度测试时最大并发工作线程数，控制�
 SOCKET_TIMEOUT = 3       # 套接字连接超时时间，单位为秒
 HTTP_TIMEOUT = 5         # HTTP请求超时时间，单位为秒
 # 【关键修改1】测速目标全部换成国内/Cloudflare中国节点
-TEST_URLS = [
-    'http://www.baidu.com/generate_204',           # 永远第1快
-    'http://qq.com/generate_204',                  # 第2快
-    'http://connect.rom.miui.com/generate_204',    # 小米官方，超稳
+TEST_URLS_GITHUB = [
+    "https://www.google.com/generate_204",
+    "https://clients3.google.com/generate_204"
+]
+
+TEST_URLS_WARP = [
+    'http://www.baidu.com/generate_204',
+    'http://qq.com/generate_204',
+    'http://connect.rom.miui.com/generate_204',
+    'http://connectivitycheck.platform.hicloud.com/generate_204'
 ]
 
 # ==================== 测速结果_带宽筛选配置（新增） ====================
@@ -189,6 +200,14 @@ def do_speed_test():
     # 启用测速并打印日志
     run_speedtest(enable_tcp_log=False)
     
+# ==================== 根据网络选择测速地址，地址如上变量 ====================
+def get_test_urls():
+    if is_warp_enabled():
+        print("检测到 Warp 网络，使用国内测速地址")
+        return TEST_URLS_WARP
+    else:
+        print("非 Warp 网络，使用谷歌测速地址")
+        return TEST_URLS_GITHUB
 
 # ==================== 智能网络控制配置 ====================
 def get_network_config():
@@ -2105,7 +2124,12 @@ def batch_tcp_test(proxies, max_workers=TCP_MAX_WORKERS):
                     print(f"TCP SLOW: {delay:4d}ms → 丢弃 {proxy.get('name', '')[:40]}")
     return results
 
-def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=48, debug=False):
+
+def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=48, debug=False, test_urls=None):
+    if test_urls is None:
+        test_urls = get_test_urls()
+    
+    print(f"使用测速地址: {test_urls}")
     """
     使用 xcspeedtest 批量测试代理延迟 + 带宽
     已加入：
@@ -2278,24 +2302,23 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False):
 
 
 
-def clash_test_proxy(clash_path, proxy, debug=False):
-    temp_dir = tempfile.mkdtemp()
-    config_path = os.path.join(temp_dir, 'config.yaml')
-    try:
-        for test_url in TEST_URLS:
-            config = {
-                "port": 7890,
-                "socks-port": 7891,
-                "allow-lan": False,
-                "mode": "Rule",
-                "log-level": "silent",
-                "proxies": [proxy],
-                "proxy-groups": [{"name": "TESTGROUP", "type": "select", "proxies": [proxy["name"]]}],
-                "rules": [f"DOMAIN,{urlparse(test_url).netloc},TESTGROUP", "MATCH,DIRECT"]
+def clash_test_proxy(clash_path, proxy, test_urls=None, debug=False):
+                    }
+                ],
+                "rules": [
+                    f"DOMAIN,{urlparse(test_url).netloc},TESTGROUP",
+                    "MATCH,DIRECT"
+                ]
             }
+
             with open(config_path, 'w', encoding='utf-8') as f:
                 yaml.dump(config, f, allow_unicode=True, sort_keys=False)
+
             cmd = [clash_path, '-c', config_path, '-fast']
+
+            if debug:
+                print(f"\n=== 使用测速 URL: {test_url} 测试节点: {proxy['name']} ===")
+
             result = subprocess.run(
                 cmd,
                 stdout=subprocess.PIPE,
@@ -2303,40 +2326,57 @@ def clash_test_proxy(clash_path, proxy, debug=False):
                 timeout=30,
                 text=True
             )
+
             output = (result.stdout + result.stderr).replace('\x00', '')
+
             if debug:
-                print(f"\n=== [-fast] 测试 URL: {test_url} [{proxy['name']}] ===\n{output}\n{'='*60}")
-            # 解析延迟，逻辑同之前
+                print(f"clash -fast 输出:\n{output}")
+
+            # 用正则匹配最后匹配的延迟 (ms)，一般格式为数字+ms
             match = re.search(r'\b(\d+)ms\b(?=\s*$)', output, re.MULTILINE)
             if match:
                 delay = int(match.group(1))
-                if 1 < delay < 800:
+                if 1 < delay < 800:  # 延迟合理区间
                     if debug:
-                        print(f"成功抓到延迟: {delay}ms → 保留")
+                        print(f"成功匹配延迟 {delay}ms，保留节点")
                     return delay
+
+            # 如果没匹配到，尝试匹配输出中符合规范的所有延迟，取最小值
             delays = re.findall(r'\b([2-9]\d{1,3})\b', output)
             if delays:
-                delay = min(int(x) for x in delays if int(x) < 800)
-                if delay > 1:
+                delay_values = [int(d) for d in delays if int(d) < 800]
+                if delay_values:
+                    delay = min(delay_values)
+                    if debug:
+                        print(f"未匹配到固定格式延迟，取最小延迟 {delay}ms，保留节点")
                     return delay
+
+            # 识别无效或超低延迟的输出（0ms/1ms/NA），视为丢弃
             if re.search(r'\b(0\s*ms|1\s*ms|NA)\b', output, re.I):
                 if debug:
-                    print("检测到 0ms/1ms/NA → 丢弃")
+                    print("检测到无效延迟值 (0ms/1ms/NA)，丢弃节点")
                 return None
-        # 所有测速地址都无结果时返回 None
+
+            if debug:
+                print("当前测速 URL 未获得有效延迟，尝试下一个 URL")
+
+        # 所有测速地址都未通过，返回 None
         if debug:
-            print(f"所有测速地址均未通过 → 丢弃: {proxy['name']}")
+            print(f"所有测速 URL 均未获得有效延迟，丢弃节点: {proxy['name']}")
+        return None
+
     except subprocess.TimeoutExpired:
         if debug:
-            print(f"[-fast] 测速超时 → 丢弃: {proxy['name']}")
+            print(f"测速超时，丢弃节点: {proxy['name']}")
     except Exception as e:
         if debug:
-            print(f"[-fast] 异常: {proxy['name']} → {e}")
+            print(f"测速异常 {e}，丢弃节点: {proxy['name']}")
     finally:
         try:
             shutil.rmtree(temp_dir)
-        except:
+        except Exception:
             pass
+
     return None
 
 
