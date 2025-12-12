@@ -2387,7 +2387,11 @@ def batch_test_proxies_clash(clash_path, proxies, max_workers=MAX_TEST_WORKERS, 
                 if debug:
                     print(f"CLASH EXCEPTION: {proxy.get('name', '')[:40]} → {e}")
     return results
-# 主函数
+    
+
+
+# 主函数   
+
 async def main():
     print("=" * 60)
     print("Telegram.Node_Clash-Speedtest测试版 V2.0")
@@ -2410,7 +2414,8 @@ async def main():
     # 初始化网络状态，预处理正则表达式规则
     preprocess_regex_rules()
     print("[1/5] 加载原有节点和抓取状态")
-    # 修改 load_existing_proxies_and_state 的调用
+    # load_existing_proxies_and_state 仍然返回 last_file_update_time，
+    # 但此处仅用于后续的 Git 提交判断逻辑，不再影响 Telegram 消息抓取范围。
     existing_proxies, last_message_ids, last_file_update_time = load_existing_proxies_and_state()
     print(f"已有节点数: {len(existing_proxies)}")
     
@@ -2419,8 +2424,8 @@ async def main():
     if os.getenv('GITHUB_ACTIONS') == 'true':
         ensure_network_for_stage('scraping', require_warp=WARP_FOR_SCRAPING)
     
-    # 将上次文件更新时间传递给 scrape_telegram_links
-    urls, last_message_ids = await scrape_telegram_links(last_message_ids, start_time=last_file_update_time)
+    # scrape_telegram_links 函数现在不再接收 start_time 参数，其内部逻辑会自行计算抓取范围
+    urls, last_message_ids = await scrape_telegram_links(last_message_ids)
     
     # === 阶段2：下载解析订阅链接（保持当前网络）===
     new_proxies = []
@@ -2448,6 +2453,7 @@ async def main():
     all_nodes = list(all_proxies_map.values())
     if not all_nodes:
         sys.exit("❌ 无任何节点可用，程序退出")
+
     # === 阶段3：测速准备（根据模式选择网络和测速策略）===
     print(f"[3/5] 开始节点测速")
     # 定义测速工具路径
@@ -2460,6 +2466,7 @@ async def main():
         sys.exit(1)
     mode = DETAILED_SPEEDTEST_MODE
     print(f"使用测速模式: {mode}")
+
     # ===== 关键修改点：在测速阶段开始前，统一获取一次 test_urls =====
     common_test_urls = get_test_urls() 
     print(f"使用的测速地址: {common_test_urls}") # 显式打印一次，替代了batch函数内部的打印
@@ -2572,6 +2579,7 @@ async def main():
     final_tested_nodes = [p for p in final_tested_nodes if is_valid_proxy(p)]
     if not final_tested_nodes:
         sys.exit("❌ 测速后无有效节点，程序退出")
+
     # === 阶段4：切换回 GitHub 网络进行最终处理 ===
     print("[4/5] 切换回GitHub网络进行最终处理")
     if os.getenv('GITHUB_ACTIONS') == 'true':
@@ -2608,6 +2616,7 @@ async def main():
         sys.exit("❌ 没有有效的节点，程序退出")
     # 重新按质量排序（可选，保证质量分最高排前）
     final_proxies = sorted(final_proxies, key=lambda p: -p.get('quality_score', 0))
+
     # === 阶段5：生成最终配置文件 ===
     print("[5/5] 生成最终配置文件")
     total_count = len(final_proxies)
@@ -2616,9 +2625,9 @@ async def main():
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     try:
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
-            f.write("# ==================================================\n")
+            f.write("# ==================================================\n\n") # 添加空行
             f.write("#  TG 免费节点 · 自动测速精选订阅（Clash 格式）\n")
-            f.write("# ==================================================\n")
+            f.write("# ==================================================\n\n") # 添加空行
             f.write(f"# 更新时间   : {update_time} (北京时间)\n")
             f.write(f"# 节点总数   : {total_count} 个优质节点\n")
             f.write(f"# 平均质量分 : {avg_quality:.1f}/100\n")
@@ -2629,7 +2638,7 @@ async def main():
             f.write(f"# 网络配置   : TCP_Warp={WARP_FOR_TCP}, Speedtest_Warp={WARP_FOR_SPEEDTEST}\n")
             f.write("# 排序规则   : 质量评分 → 延迟 → 地区优先级\n")
             f.write("# 构建方式   : GitHub Actions 全自动，每4小时更新一次\n")
-            f.write("# ==================================================\n\n")
+            f.write("# ==================================================\n\n") # 添加空行
             final_config = {
                 'proxies': final_proxies,
                 'last_message_ids': last_message_ids,
@@ -2667,8 +2676,10 @@ async def main():
     # === 最终清理，确保切换回GitHub网络 ===
     if os.getenv('GITHUB_ACTIONS') == 'true' and not WARP_FOR_FINAL:
         print("🧹 最终清理：确保使用原始GitHub网络")
-        ensure_network_for_stage('cleanup', require_warp=False)               
-           
-                  
+        ensure_network_for_stage('cleanup', require_warp=False)    
+        
+
+
 if __name__ == "__main__":
     asyncio.run(main())  # 调用异步主函数
+
