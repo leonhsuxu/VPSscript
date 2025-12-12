@@ -1800,7 +1800,7 @@ def filter_by_bandwidth(proxies, min_mb=25, enable=True):
     
     print(f"🚀带宽筛选完成：≥{min_mb}MB/s 保留 {len(filtered)}/{len(proxies)} 个节点")
     return filtered
-def limit_proxy_counts(proxies, max_total=300):
+def limit_proxy_counts(proxies, max_total=400):
     """
     根据指定规则限制节点数量：
     - ['香港', '日本', '美国', '新加坡'] 每区最多60个；
@@ -2562,7 +2562,7 @@ async def main():
     # 节点规范化名称
     normalized_proxies = normalize_proxy_names(final_tested_nodes)
     # 限制节点数量（最多300个及分区限制）
-    final_proxies = limit_proxy_counts(normalized_proxies, max_total=300)
+    final_proxies = limit_proxy_counts(normalized_proxies, max_total=400)
     if not final_proxies:
         sys.exit("❌ 节点重命名和限量后无有效节点，程序退出")
     # === 计算质量评分并排序 ===
