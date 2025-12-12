@@ -51,9 +51,7 @@ TIME_WINDOW_HOURS = 4  # 抓取多长时间的消息，单位为小时。
 MIN_EXPIRE_HOURS = 2   # 订阅地址剩余时间最小过期，单位为小时。
 OUTPUT_FILE = 'flclashyaml/Tg-node2.yaml'  # 输出文件路径，用于保存生成的配置或结果。
 last_warp_start_time = 0
-
 # === 新增：测速策略开关（推荐保留这几个选项）===
-
 # 测速模式：
 ENABLE_SPEED_TEST = True  # 是否启用整体速度测试功能，True表示启用。测试顺序如下
 #SPEEDTEST_MODE = os.getenv('SPEEDTEST_MODE', 'tcp_first').lower()  # 默认推荐 tcp_first,下边的命令
@@ -65,7 +63,6 @@ DETAILED_SPEEDTEST_MODE = os.getenv('DETAILED_SPEEDTEST_MODE', '').lower().strip
 if not DETAILED_SPEEDTEST_MODE:
     print("❗️错误: 未设置环境变量 DETAILED_SPEEDTEST_MODE，程序退出。")
     sys.exit(1)
-
 # TCP 和Clash 测速专属参数
 TCP_TIMEOUT = 5          # 单次 TCP 连接超时时间（秒），建议 3~5
 TCP_MAX_WORKERS = 256     # TCP 测速最大并发（可以比 Clash 高很多，非常快）
@@ -188,10 +185,8 @@ def do_speed_test():
         return
     # 启用测速并打印日志
     run_speedtest(enable_tcp_log=False)
-
 # 全局标志，用于控制 get_test_urls() 函数中日志的打印次数
 _test_urls_log_printed = False
-
 # ==================== 根据网络选择测速地址，地址如上变量 ====================
 def get_test_urls():
     global _test_urls_log_printed # 声明使用全局变量
@@ -333,7 +328,6 @@ def get_current_ip():
         return f"unknown (异常: {str(e)[:30]})"
         
 # == 检查warp ==
-
 def is_warp_enabled():
     """检查Warp是否启用"""
     try:
@@ -356,7 +350,6 @@ def is_warp_enabled():
         
     except (subprocess.TimeoutExpired, FileNotFoundError, Exception) as e:
         return False
-
 # == 开启warp配置===          
 def start_cloudflare_warp():
     """
@@ -566,7 +559,6 @@ def start_cloudflare_warp():
         print("   尝试最终备用方案...")
         return start_warp_fallback()
         
-
         
 # ===创建warp备用配置
 def create_backup_config(config_file):
@@ -592,7 +584,6 @@ Endpoint = engage.cloudflareclient.com:2408
         print(f"   备用配置创建失败: {e}")
         return False
         
-
 def setup_smart_routing():
     """设置智能路由：GitHub走原始网络，其他走Warp"""
     try:
@@ -734,7 +725,6 @@ def stop_cloudflare_warp():
     except Exception as e:
         print(f"❌ 停止Warp失败: {e}")
         return False
-
     
 # ===确保网络状态合适
 def ensure_network_for_stage(stage_name, require_warp=False):
@@ -799,7 +789,6 @@ def ensure_network_for_stage(stage_name, require_warp=False):
             return False
     
     return True
-
 def simplified_network_check():
     """简化版网络状态检查，只报告不切换"""
     if not os.getenv('GITHUB_ACTIONS') == 'true':
@@ -816,7 +805,6 @@ def simplified_network_check():
     
     return warp_enabled
     
-
 # ======= 国家国旗识别 ======
 def get_country_flag_emoji(code):
     if not code or len(code) != 2:
@@ -827,9 +815,38 @@ def preprocess_regex_rules():
         CUSTOM_REGEX_RULES[region]['pattern'] = '|'.join(
             sorted(CUSTOM_REGEX_RULES[region]['pattern'].split('|'), key=len, reverse=True)
         )
+
+# 新增：从文件中提取上次更新时间
+def get_last_file_update_time(file_path: str) -> datetime | None:
+    """
+    从文件头部注释中提取上次更新时间。
+    期望格式: # 更新时间   : YYYY-MM-DD HH:MM:SS (北京时间)
+    """
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            for line in f:
+                if line.strip().startswith('# 更新时间'):
+                    m = re.search(r'更新时间\s*[:：]\s*(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})', line)
+                    if m:
+                        dt_str = m.group(1).strip()
+                        # 解析为 datetime 对象并强制指定为北京时间
+                        return datetime.strptime(dt_str, '%Y-%m-%d %H:%M:%S').replace(tzinfo=BJ_TZ)
+                    break # 找到匹配行就停止
+                # 假设更新时间在文件头部，读取几行后未找到即可停止
+                if f.tell() > 500: # 比如读取前500字节，防止大文件遍历过久
+                    break
+    except FileNotFoundError:
+        print(f"  ℹ️ 文件 {file_path} 不存在，无法获取上次更新时间。")
+    except Exception as e:
+        print(f"  ⚠️ 读取 {file_path} 上次更新时间异常: {e}")
+    return None
+
+# 修改：load_existing_proxies_and_state 以返回上次文件更新时间
 def load_existing_proxies_and_state():
     existing_proxies = []
     last_message_ids = {}
+    last_file_update_time = None # 新增返回项
+    
     if os.path.exists(OUTPUT_FILE):
         try:
             with open(OUTPUT_FILE, 'r', encoding='utf-8') as f:
@@ -841,15 +858,30 @@ def load_existing_proxies_and_state():
                     last_message_ids = loaded_yaml.get('last_message_ids', {})
                     if not isinstance(last_message_ids, dict):
                         last_message_ids = {}
+                    
+                    # 尝试从 YAML 文件的结构中读取上次更新时间（如果存在）
+                    if 'update_time' in loaded_yaml and isinstance(loaded_yaml['update_time'], str):
+                        try:
+                            # 这里假设文件内部的 update_time 字符串也是北京时间
+                            last_file_update_time = datetime.strptime(loaded_yaml['update_time'], '%Y-%m-%d %H:%M:%S').replace(tzinfo=BJ_TZ)
+                        except ValueError:
+                            print(f"  ⚠️ 文件内 'update_time' 格式错误: {loaded_yaml['update_time']}")
+                            pass # 继续尝试从文件头部注释读取
+                            
                 elif isinstance(loaded_yaml, list):
                     existing_proxies = [p for p in loaded_yaml if isinstance(p, dict)]
         except Exception as e:
             print(f"读取 {OUTPUT_FILE} 失败: {e}")
-    return existing_proxies, last_message_ids
+            
+    # 如果 YAML 结构中未读取到有效时间，则尝试从文件头部注释中读取
+    if last_file_update_time is None:
+        last_file_update_time = get_last_file_update_time(OUTPUT_FILE)
+            
+    return existing_proxies, last_message_ids, last_file_update_time
+
 # =============================================
 # 多匹配的 extract_valid_subscribe_links 函数
 # ============================================= 
-
 def extract_valid_subscribe_links(text, channel_id=None):
     """
     从文本中提取有效的订阅链接，支持带过期时间过滤。
@@ -939,12 +971,11 @@ def extract_valid_subscribe_links(text, channel_id=None):
             else:
                 print(f"🔗 提取有效链接: {link}")
     # 如果 valid_links 为空，则不打印任何内容
-
     return valid_links
    
 # ==========================
-# 替换了 scrape_telegram_links 为 B 版本更完善的实现
-async def scrape_telegram_links(last_message_ids=None):
+# 修改 scrape_telegram_links 函数签名和逻辑
+async def scrape_telegram_links(last_message_ids=None, start_time: datetime | None = None):
     if last_message_ids is None:
         last_message_ids = {}
     if not all([API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS_STR]):
@@ -970,9 +1001,17 @@ async def scrape_telegram_links(last_message_ids=None):
         print(f"❌ 错误: 连接 Telegram 时出错: {e}")
         return [], last_message_ids
     
-    bj_now = datetime.now(BJ_TZ)
-    target_time = (bj_now - timedelta(hours=TIME_WINDOW_HOURS)).astimezone(timezone.utc)
-    
+    # 修改 target_time 的计算逻辑
+    if start_time:
+        # 如果提供了 start_time (上次文件更新时间)，就用它作为消息抓取的起始时间
+        target_time_utc = start_time.astimezone(timezone.utc)
+        print(f"⏳ 基于上次文件更新时间 ({start_time.strftime('%Y-%m-%d %H:%M:%S %Z')}) 抓取更新消息。")
+    else:
+        # 如果没有提供 start_time (例如第一次运行)，则回溯 TIME_WINDOW_HOURS
+        bj_now = datetime.now(BJ_TZ)
+        target_time_utc = (bj_now - timedelta(hours=TIME_WINDOW_HOURS)).astimezone(timezone.utc)
+        print(f"⏳ 文件上次更新时间未找到，回溯 {TIME_WINDOW_HOURS} 小时 ({target_time_utc.strftime('%Y-%m-%d %H:%M:%S %Z')}) 抓取消息。")
+
     # 分批处理频道
     for i in range(0, len(TARGET_CHANNELS), CHANNEL_BATCH_SIZE):
         batch = TARGET_CHANNELS[i:i + CHANNEL_BATCH_SIZE]
@@ -982,7 +1021,7 @@ async def scrape_telegram_links(last_message_ids=None):
         
         tasks = []
         for channel_id in batch:
-            tasks.append(process_channel(client, channel_id, last_message_ids, target_time))
+            tasks.append(process_channel(client, channel_id, last_message_ids, target_time_utc)) # 传递修改后的 target_time_utc
         
         # 并发处理批次内的频道
         results = await asyncio.gather(*tasks, return_exceptions=True)
@@ -1017,8 +1056,7 @@ async def scrape_telegram_links(last_message_ids=None):
     print(f"\n✅ 抓取完成, 共找到 {len(all_links)} 个不重复的有效链接。")
     return list(all_links), last_message_ids
     
-
-async def process_channel(client, channel_id, last_message_ids, target_time):
+async def process_channel(client, channel_id, last_message_ids, target_time_utc): # 接收 target_time_utc
     """处理单个频道的辅助函数"""
     max_id_found = last_message_ids.get(channel_id, 0)
     channel_links = []
@@ -1030,9 +1068,13 @@ async def process_channel(client, channel_id, last_message_ids, target_time):
         return channel_links, max_id_found
     
     try:
+        # 迭代消息时，使用 min_id 和 target_time_utc 共同过滤
         async for message in client.iter_messages(entity, min_id=last_message_ids.get(channel_id, 0) + 1, reverse=False):
-            if message.date < target_time:
-                break
+            # 这里的 message.date 是 UTC 时间，直接与 target_time_utc 比较
+            if message.date < target_time_utc:
+                # print(f"  ℹ️ 频道 {channel_id}: 消息 {message.id} ({message.date.strftime('%Y-%m-%d %H:%M:%S %Z')}) 早于目标时间 {target_time_utc.strftime('%Y-%m-%d %H:%M:%S %Z')}，停止抓取。")
+                break # 消息早于目标时间，停止抓取更早的消息
+            
             if message.text:
                 # 传递频道ID参数
                 links = extract_valid_subscribe_links(message.text, channel_id=channel_id)
@@ -1041,12 +1083,11 @@ async def process_channel(client, channel_id, last_message_ids, target_time):
             if message.id > max_id_found:
                 max_id_found = message.id
     except Exception as e:
-        # 静默处理错误
-        pass
+        print(f"  ⚠️ 处理频道 {channel_id} 异常: {e}")
+        pass # 静默处理错误
     
     return channel_links, max_id_found
     
-
 # --- 3合1下载 版本的下载 ---
 def download_subscription(url: str, timeout: int = 30) -> str | None:
     """wget → curl → requests 三保险下载，带 Clash UA"""
@@ -1078,7 +1119,6 @@ def download_subscription(url: str, timeout: int = 30) -> str | None:
         return r.text
     except:
         return None
-
 # --- 解析相关函数合入 ---
 def parse_proxies_from_content(content):
     try:
@@ -1455,7 +1495,6 @@ def download_and_parse(url):
     print(f"  未知格式，解析失败: {url[:80]}")
     return []
 # --- 下面保持原A版测速、去重、排序等逻辑 ---
-
 def get_proxy_key(proxy):
     unique_part = proxy.get('uuid') or proxy.get('password') or ''
     return hashlib.md5(
@@ -1478,7 +1517,6 @@ def is_valid_ss_cipher(cipher):
         'aes-128-ctr', 'aes-256-ctr', 'rc4-md5'
     }
     return cipher.lower() in valid_ciphers
-
 def is_valid_proxy(proxy):
     """
     超级严格校验 + 自动修复 ss cipher 缺失问题
@@ -1533,7 +1571,6 @@ def is_valid_proxy(proxy):
                 print(f"【丢弃】ss 节点 cipher 不支持且无法自动映射: {old} → {proxy['name']}")
                 return False # 无法修复的直接丢弃
     return True
-
 def identify_regions_only(proxies):
     identified = []
     for p in proxies:
@@ -1587,7 +1624,6 @@ def process_proxies(proxies):
         final.append(p)
     return final
 #锚点
-
 # 新增的国家代码 转 中文名字典，方便快速映射
 COUNTRY_CODE_TO_CN = {
     v['code']: k for k, v in CUSTOM_REGEX_RULES.items()
@@ -1678,7 +1714,6 @@ def fix_and_filter_ss_nodes(proxies):
     print(f"ss 节点检查完成：修复 {fixed_count} 个，丢弃 {dropped_count} 个，剩余有效 ss 节点 {len([p for p in valid_proxies if p.get('type')=='ss'])} 个")
     return valid_proxies
 
-
 def normalize_proxy_names(proxies):
     pattern_trailing_number = re.compile(r'\s*\d+\s*$')
     normalized = []
@@ -1756,7 +1791,6 @@ def filter_by_bandwidth(proxies, min_mb=20):
         else:
             filtered.append(p)
     return filtered
-
 # ----根据实测带宽进行二次筛选
 def filter_by_bandwidth(proxies, min_mb=25, enable=True):
     """
@@ -1925,7 +1959,6 @@ def calculate_quality_score(proxy):
     score += region_bonus.get(region, 0)
     
     return min(score, 100)
-
 def sort_proxies_by_quality(proxies):
     """
     按质量评分排序，同分时按延迟排序
@@ -1952,7 +1985,6 @@ def sort_proxies_by_quality(proxies):
         p.get('clash_delay', p.get('tcp_delay', 9999))  # 延迟升序
     ))
     
-
 # ===节点质量标签
 def add_quality_to_name(proxies):
     """
@@ -1971,14 +2003,12 @@ def add_quality_to_name(proxies):
         proxy['name'] = f"{name} [{quality_tag}]".strip()
     
     return proxies
-
 # ===
 def generate_config(proxies, last_message_ids):
     return {
         'proxies': proxies,
         'last_message_ids': last_message_ids,
     }
-
 #TCP 测速,测速默认关闭
 def run_speedtest(enable_tcp_log=False):
     cmd = ['./xcspeedtest', '--verbose']  # 具体参数视版本而定
@@ -2006,7 +2036,6 @@ def run_speedtest(enable_tcp_log=False):
             print(line.strip())
     
     return process.poll()
-
 def tcp_ping(proxy, timeout=TCP_TIMEOUT):
     """
     纯 TCP 连接测延迟，返回延迟（单位ms），失败返回 None。
@@ -2036,7 +2065,6 @@ def test_proxy_with_clash(clash_path, proxy):
         proxy['clash_delay'] = delay
         return proxy
     return None
-
 def batch_tcp_test(proxies, max_workers=TCP_MAX_WORKERS):
     """
     使用线程池批量进行 TCP 测速。
@@ -2058,7 +2086,6 @@ def batch_tcp_test(proxies, max_workers=TCP_MAX_WORKERS):
                 if ENABLE_TCP_LOG:
                     print(f"TCP FAIL → {proxy.get('name', '')[:40]}")
     return results
-
 def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=48, debug=False, test_urls=None): # test_urls now required
     """
     使用 xcspeedtest 批量测试代理延迟 + 带宽
@@ -2118,7 +2145,6 @@ def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=48, debug=
                     print(f"异常: {proxy.get('name')} → {e}")
     print(f"speedtest-clash 精测完成，成功节点：🛩️{len(results)} 个")
     return results
-
 # ============ 辅助函数：带重试的单节点测速（务必一起加上） ============
 def xcspeedtest_test_proxy_with_retry(speedtest_path, proxy, debug=False, test_urls=None, retries=0): # test_urls now required
     """
@@ -2145,7 +2171,6 @@ def xcspeedtest_test_proxy_with_retry(speedtest_path, proxy, debug=False, test_u
                 print(f"  xcSpeedtest 异常 → {proxy.get('name', '')} ({e})")
             return None
     return None # This line should logically not be reached with retries=0
-
 # clash 测速
 def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False, test_urls=None): # test_urls now required
     """
@@ -2247,7 +2272,6 @@ def xcspeedtest_test_proxy(speedtest_path, proxy, debug=False, test_urls=None): 
         if debug:
             print(f"测速异常: {e}")
         return None
-
 def clash_test_proxy(clash_path, proxy, test_urls=None, debug=False): # test_urls now required
     """
     使用 Clash 核心的 -fast 模式，对单个代理节点测速。
@@ -2334,7 +2358,6 @@ def clash_test_proxy(clash_path, proxy, test_urls=None, debug=False): # test_url
         except Exception:
             pass
     return None
-
 def batch_test_proxies_clash(clash_path, proxies, max_workers=MAX_TEST_WORKERS, debug=False, test_urls=None): # test_urls now required
     """
     使用 Clash 核心批量测速的辅助函数，并发执行。
@@ -2343,7 +2366,6 @@ def batch_test_proxies_clash(clash_path, proxies, max_workers=MAX_TEST_WORKERS, 
     if test_urls is None: # 防御性检查
         print("❗️警告: batch_test_proxies_clash 未收到 test_urls，将自动获取。")
         test_urls = get_test_urls()
-
     results = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
         future_to_proxy = {
@@ -2367,7 +2389,6 @@ def batch_test_proxies_clash(clash_path, proxies, max_workers=MAX_TEST_WORKERS, 
                 if debug:
                     print(f"CLASH EXCEPTION: {proxy.get('name', '')[:40]} → {e}")
     return results
-
 # 主函数
 async def main():
     print("=" * 60)
@@ -2391,13 +2412,18 @@ async def main():
     # 初始化网络状态，预处理正则表达式规则
     preprocess_regex_rules()
     print("[1/5] 加载原有节点和抓取状态")
-    existing_proxies, last_message_ids = load_existing_proxies_and_state()
+    # 修改 load_existing_proxies_and_state 的调用
+    existing_proxies, last_message_ids, last_file_update_time = load_existing_proxies_and_state()
     print(f"已有节点数: {len(existing_proxies)}")
+    
     # === 阶段1：Telegram抓取（根据配置使用网络）===
     print("[2/5] 抓取 Telegram 新订阅链接")
     if os.getenv('GITHUB_ACTIONS') == 'true':
         ensure_network_for_stage('scraping', require_warp=WARP_FOR_SCRAPING)
-    urls, last_message_ids = await scrape_telegram_links(last_message_ids)
+    
+    # 将上次文件更新时间传递给 scrape_telegram_links
+    urls, last_message_ids = await scrape_telegram_links(last_message_ids, start_time=last_file_update_time)
+    
     # === 阶段2：下载解析订阅链接（保持当前网络）===
     new_proxies = []
     if urls:
@@ -2436,14 +2462,11 @@ async def main():
         sys.exit(1)
     mode = DETAILED_SPEEDTEST_MODE
     print(f"使用测速模式: {mode}")
-
     # ===== 关键修改点：在测速阶段开始前，统一获取一次 test_urls =====
     common_test_urls = get_test_urls() 
     print(f"使用的测速地址: {common_test_urls}") # 显式打印一次，替代了batch函数内部的打印
     # =================================================================
-
     final_tested_nodes = all_nodes.copy()
-
     # Placeholders for intermediate results
     tcp_passed = []
     clash_passed = []
@@ -2648,7 +2671,6 @@ async def main():
         print("🧹 最终清理：确保使用原始GitHub网络")
         ensure_network_for_stage('cleanup', require_warp=False)               
            
-
                   
 if __name__ == "__main__":
     asyncio.run(main())  # 调用异步主函数
