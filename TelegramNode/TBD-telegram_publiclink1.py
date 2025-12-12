@@ -41,6 +41,7 @@ from datetime import datetime, timedelta, timezone
 from collections import defaultdict
 from telethon.sync import TelegramClient
 from telethon.sessions import StringSession
+BJ_TZ = timezone(timedelta(hours=8)) 
 # --- 环境变量读取 ---
 API_ID = int(os.environ.get('TELEGRAM_API_ID') or 0)
 API_HASH = os.environ.get('TELEGRAM_API_HASH')
@@ -853,83 +854,94 @@ def load_existing_proxies_and_state():
 # 多匹配的 extract_valid_subscribe_links 函数
 # ============================================= 
 
-import os
-import re
-from datetime import datetime, timedelta, timezone
-
-# 确保这些全局变量在函数外部已定义或被导入
-# 示例定义 (实际使用时应与您的主脚本保持一致)
-MIN_EXPIRE_HOURS = 2
-BJ_TZ = timezone(timedelta(hours=8)) 
-
 def extract_valid_subscribe_links(text, channel_id=None):
     """
     从文本中提取有效的订阅链接，支持带过期时间过滤。
     参数:
         text (str): 待提取的文本内容
-        channel_id (str, optional): 频道ID，仅用于调试打印，不影响提取逻辑
+        channel_id (str, optional): 频道ID，仅用于调试打印，不影响提取逻辑。
+                                    如果提供，会在日志中显示所属频道。
     返回:
-        list[str]: 符合条件的订阅链接列表
+        list[str]: 符合条件的订阅链接列表。
+                   如果未找到有效链接，则返回空列表。
     """
     MIN_HOURS_LEFT = MIN_EXPIRE_HOURS  # 过期最小小时数阈值
+    
     # 匹配带关键字“订阅/链接”前缀的HTTP/HTTPS URL
+    # 这个正则表达式会查找 "订阅链接", "订阅地址", "订阅", "链接" 之后跟随的 HTTP/HTTPS URL。
     link_pattern = re.compile(
         r'(?:订阅链接|订阅地址|订阅|链接)[\s:：`]*?(https?://[A-Za-z0-9\-._~:/?#[\]@!$&\'()*+,;=%]+)'
     )
+    
     # 多种匹配过期时间的正则模式
     expire_patterns = [
+        # 匹配详细日期时间格式，如 "2025-12-31 23:59:59"
         r'到期时间[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2}\s+\d{2}:\d{2}:\d{2})',
         r'过期时间[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2}\s+\d{2}:\d{2}:\d{2})',
+        # 匹配带时区或UTC偏移的详细日期时间格式，并捕获日期时间部分
         r'该订阅将于(\d{4}[-/]\d{1,2}[-/]\d{1,2}\s+\d{2}:\d{2}:\d{2})(?:\s*\+\d{4}\s*[A-Za-z]{3})?过期',
+        # 匹配只包含日期的格式，如 "2025-12-31"
         r'过期[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2})',
         r'到期[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2})',
+        # 匹配表示长期有效或未知过期的关键词
         r'该订阅将于未知过期',
         r'过期时间[:：]\s*长期有效',
         r'过期[:：]\s*未知/无限',
     ]
-    # 将文本合并为单行，方便正则匹配
+    
+    # 将文本合并为单行，方便正则匹配，避免换行符干扰
     text_single_line = text.replace('\n', ' ')
+    
     expire_time = None
+    # 遍历所有过期时间模式，尝试匹配文本中的过期信息
     for patt in expire_patterns:
         match = re.search(patt, text_single_line)
         if match:
-            # 检测未知或长期有效关键词，视为不限制过期时间
+            # 如果匹配到“未知”、“长期有效”或“无限”等关键词，则视为永不过期
             if '未知' in match.group(0) or '长期有效' in match.group(0) or '无限' in match.group(0):
-                expire_time = None
+                expire_time = None  # 设置为 None 表示永不过期
                 break
+            
+            # 如果匹配到具体的日期时间字符串
             if match.lastindex:
-                dt_str = match.group(1)
+                dt_str = match.group(1) # 获取匹配到的日期时间字符串
+                # 尝试多种日期时间格式进行解析
                 fmt_candidates = ['%Y-%m-%d %H:%M:%S', '%Y/%m/%d %H:%M:%S', '%Y-%m-%d', '%Y/%m/%d']
                 for fmt in fmt_candidates:
                     try:
                         dt = datetime.strptime(dt_str, fmt)
-                        # 如果只到日期，默认到当天23:59:59
+                        # 如果只解析到日期，默认将其设置为当天的最后一秒
                         if fmt in ('%Y-%m-%d', '%Y/%m/%d'):
                             dt = dt.replace(hour=23, minute=59, second=59)
+                        # 将解析出的时间设置为北京时区
                         expire_time = dt.replace(tzinfo=BJ_TZ)
-                        break
-                    except Exception:
-                        continue
-            break
-    now = datetime.now(BJ_TZ)
-    valid_links = []
+                        break # 成功解析，跳出格式尝试循环
+                    except ValueError:
+                        continue # 当前格式不匹配，尝试下一个
+            break # 找到匹配项，跳出模式遍历循环
+    
+    now = datetime.now(BJ_TZ) # 获取当前北京时间
+    valid_links = [] # 用于存储最终的有效链接
+    
+    # 查找文本中所有符合 link_pattern 的链接
     links = link_pattern.findall(text)
     for url in links:
+        # 如果设置了过期时间（即不是永不过期）
         if expire_time is not None:
+            # 计算链接剩余的有效小时数
             hours_left = (expire_time - now).total_seconds() / 3600
+            # 如果剩余时间小于设定的最小阈值，则跳过此链接
             if hours_left < MIN_HOURS_LEFT:
-                # 跳过过期时间不足的链接
                 continue
-        valid_links.append(url)
+        valid_links.append(url) # 将符合条件的链接添加到列表中
     
-    # 根据您的要求修改的打印逻辑：只有当有有效链接时才打印日志，并且不带方括号和引号
+    # 根据您的要求修改的打印逻辑：只有当有有效链接时才打印日志，并且每个链接单独一行
     if valid_links:
-        # 将链接列表连接成字符串，不带方括号和引号
-        links_str = ", ".join(valid_links) 
-        if channel_id:
-            print(f"🔗 [频道 {channel_id}] 提取有效链接: {links_str}")
-        else:
-            print(f"🔗 提取有效链接: {links_str}")
+        for link in valid_links:
+            if channel_id:
+                print(f"🔗 [频道 {channel_id}] 提取有效链接: {link}")
+            else:
+                print(f"🔗 提取有效链接: {link}")
     # 如果 valid_links 为空，则不打印任何内容
 
     return valid_links
