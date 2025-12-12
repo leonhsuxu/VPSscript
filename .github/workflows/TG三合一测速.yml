@@ -1,7 +1,7 @@
 name: 🈴 TG抓取节点三合一测速版 v2.0
 # ==================== 触发条件配置 ====================
 on:
-  # 定时执行配置，每4小时10分钟执行一次（例如00:10, 04:10, 08:10...）
+  # 定时执行配置，每4小时20分钟执行一次（例如00:20, 04:20, 08:20...）
   schedule:
     - cron: '20 */4 * * *'
   # 支持手动触发工作流，附带输入参数
@@ -97,29 +97,23 @@ env:
 # ==================== 工作流任务定义 ====================
 jobs:
   build:
-    # 使用最新的Ubuntu运行器
     runs-on: ubuntu-latest
-    # 任务超时时间30分钟
     timeout-minutes: 30
     steps:
-      # === 步骤1：检出代码仓库 ===
       - name: 检出代码仓库
         uses: actions/checkout@v4
         with:
-          # 获取完整历史记录，便于后续提交操作
           fetch-depth: 0
-          # 使用GitHub Token认证
           token: ${{ secrets.GITHUB_TOKEN }}
           submodules: false
-      # === 步骤2：设置 Python 环境 ===
+
       - name: 设置 Python 环境
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-          # 缓存pip依赖以加速
           cache: 'pip'
           cache-dependency-path: '**/requirements.txt'
-      # === 步骤3：缓存 Python 依赖 ===
+
       - name: 缓存 Python 依赖
         uses: actions/cache@v4
         id: cache-pip
@@ -128,14 +122,14 @@ jobs:
           key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
-      # === 步骤4：安装 Python 依赖及系统依赖 ===
+
       - name: 安装 Python 依赖及系统依赖
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           sudo apt-get update -qq
           sudo apt-get install -y wireguard-tools curl resolvconf wget
-      # === 步骤5：缓存 Mihomo 程序 ===
+
       - name: 缓存 Mihomo 程序
         id: cache-mihomo
         uses: actions/cache@v4
@@ -143,7 +137,7 @@ jobs:
           path: mihomo
           key: mihomo-amd64-${{ env.MIHOMO_VERSION }}
           restore-keys: mihomo-amd64-${{ env.MIHOMO_VERSION }}
-      # === 步骤6：下载 Mihomo 指定版本 ===
+
       - name: 下载 Mihomo 指定版本
         if: steps.cache-mihomo.outputs.cache-hit != 'true' || inputs.force_download == 'true'
         run: |
@@ -159,7 +153,7 @@ jobs:
           gunzip -f mihomo.gz
           chmod +x mihomo
           ./mihomo -v
-      # === 步骤7：缓存 wgcf 工具 ===
+
       - name: 缓存 wgcf 工具
         id: cache-wgcf
         uses: actions/cache@v4
@@ -167,7 +161,7 @@ jobs:
           path: wgcf
           key: wgcf-linux-amd64-${{ env.WGCF_VERSION }}
           restore-keys: wgcf-linux-amd64-${{ env.WGCF_VERSION }}
-      # === 步骤8：下载 wgcf 工具 ===
+
       - name: 下载 wgcf 工具
         if: steps.cache-wgcf.outputs.cache-hit != 'true' || inputs.force_download == 'true'
         run: |
@@ -181,16 +175,16 @@ jobs:
           fi
           chmod +x wgcf
           echo "wgcf 下载完成。"
-      # === 步骤9：缓存 xcspeedtest 程序 ===
-      - name: 缓存 xiecang speedtest-clash
+
+      - name: 缓存 xcspeedtest 程序
         id: cache-xc
         uses: actions/cache@v4
         with:
           path: xcspeedtest
           key: xiecang-${{ env.SPEEDTEST_VERSION }}
           restore-keys: xiecang-${{ env.SPEEDTEST_VERSION }}
-      # === 步骤10：下载 xcspeedtest ===
-      - name: 下载 xiecang speedtest-clash
+
+      - name: 下载 xcspeedtest
         if: steps.cache-xc.outputs.cache-hit != 'true' || inputs.force_download == 'true'
         run: |
           set -e
@@ -229,14 +223,14 @@ jobs:
           fi
           chmod +x xcspeedtest
           ./xcspeedtest --help
-      # === 步骤11：缓存 clash-speedtest 核心 ===
+
       - name: 缓存 clash-speedtest 核心 (clash_core/)
         id: cache-clash-speedtest
         uses: actions/cache@v4
         with:
           path: clash_core/
           key: ${{ runner.os }}-clash-speedtest-${{ env.CLASH_SPEEDTEST_VERSION }}
-      # === 步骤12：下载并解压 clash-speedtest 核心 ===
+
       - name: 下载并解压 clash-speedtest 到 clash_core/clash
         if: steps.cache-clash-speedtest.outputs.cache-hit != 'true' || inputs.force_download == 'true'
         run: |
@@ -249,7 +243,7 @@ jobs:
           mv clash_core/clash-speedtest clash_core/clash
           chmod +x clash_core/clash
           echo "clash-speedtest 下载并解压完成。"
-      # === 步骤13：智能网络配置 + 运行测速脚本 ===
+
       - name: 智能网络配置 + 运行测速脚本
         env:
           TELEGRAM_API_ID: ${{ secrets.TELEGRAM_API_ID }}
@@ -285,7 +279,7 @@ jobs:
             echo "❌ Python脚本执行失败，退出码: $EXIT_CODE"
             exit $EXIT_CODE
           fi
-      # === 步骤14：确保网络正常（重要修复）===
+
       - name: 确保网络正常
         if: always()
         run: |
@@ -320,7 +314,7 @@ jobs:
             echo "   ⚠️  GitHub连接可能有问题"
           fi
           echo "=== 网络检查完成 ==="
-      # === 步骤15：自动提交更改，强制覆盖远程分支 ===
+
       - name: 自动提交更改
         if: success()
         run: |
@@ -330,23 +324,36 @@ jobs:
             echo "⚠️ 配置文件不存在，跳过提交"
             exit 0
           fi
-
           # 同步远程 master 分支，保持最新代码
           git fetch origin master
           git reset --hard origin/master
 
-          if ! git diff --quiet flclashyaml/Tg-node2.yaml 2>/dev/null; then
+          # 提取本地文件更新时间
+          local_update_time=$(sed -n '1,20p' flclashyaml/Tg-node2.yaml | grep '更新时间' | head -1 | sed -E 's/.*更新时间[ :：]*([0-9\- :]+).*/\1/')
+
+          # 提取远程文件更新时间
+          remote_update_time=$(git show origin/master:flclashyaml/Tg-node2.yaml 2>/dev/null | sed -n '1,20p' | grep '更新时间' | head -1 | sed -E 's/.*更新时间[ :：]*([0-9\- :]+).*/\1/')
+
+          echo "远程更新时间: $remote_update_time"
+          echo "本地更新时间: $local_update_time"
+
+          if [ "$local_update_time" != "$remote_update_time" ]; then
+            echo "更新时间不一致，认为文件发生变化，准备提交"
+
             git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git config --local user.name "github-actions[bot]"
             git add flclashyaml/Tg-node2.yaml
+
             COMMIT_TIME=$(date '+%Y-%m-%d %H:%M:%S')
             NODE_COUNT=$(python3 -c 'import yaml; d=yaml.safe_load(open("flclashyaml/Tg-node2.yaml",encoding="utf-8")); print(len(d.get("proxies",[])))' 2>/dev/null || echo "?")
+
             COMMIT_MESSAGE="🚀 自动更新：Telegram节点配置 (${NODE_COUNT}节点) - ${COMMIT_TIME}"
             echo "提交信息: ${COMMIT_MESSAGE}"
             git commit -m "${COMMIT_MESSAGE}"
+
             # 强制推送，覆盖远程分支
             git push origin HEAD --force
             echo "✅ 强制提交完成"
           else
-            echo "📝 文件无变化，跳过提交"
+            echo "📝 更新时间相同，文件无变化，跳过提交"
           fi
