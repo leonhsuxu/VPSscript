@@ -853,11 +853,21 @@ def load_existing_proxies_and_state():
 # 多匹配的 extract_valid_subscribe_links 函数
 # ============================================= 
 
-def extract_valid_subscribe_links(text):
-    MIN_HOURS_LEFT = MIN_EXPIRE_HOURS
+def extract_valid_subscribe_links(text, channel_id=None):
+    """
+    从文本中提取有效的订阅链接，支持带过期时间过滤。
+    参数:
+        text (str): 待提取的文本内容
+        channel_id (str, optional): 频道ID，仅用于调试打印，不影响提取逻辑
+    返回:
+        list[str]: 符合条件的订阅链接列表
+    """
+    MIN_HOURS_LEFT = MIN_EXPIRE_HOURS  # 过期最小小时数阈值
+    # 匹配带关键字“订阅/链接”前缀的HTTP/HTTPS URL
     link_pattern = re.compile(
         r'(?:订阅链接|订阅地址|订阅|链接)[\s:：`]*?(https?://[A-Za-z0-9\-._~:/?#[\]@!$&\'()*+,;=%]+)'
     )
+    # 多种匹配过期时间的正则模式
     expire_patterns = [
         r'到期时间[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2}\s+\d{2}:\d{2}:\d{2})',
         r'过期时间[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2}\s+\d{2}:\d{2}:\d{2})',
@@ -868,11 +878,13 @@ def extract_valid_subscribe_links(text):
         r'过期时间[:：]\s*长期有效',
         r'过期[:：]\s*未知/无限',
     ]
+    # 将文本合并为单行，方便正则匹配
     text_single_line = text.replace('\n', ' ')
     expire_time = None
     for patt in expire_patterns:
         match = re.search(patt, text_single_line)
         if match:
+            # 检测未知或长期有效关键词，视为不限制过期时间
             if '未知' in match.group(0) or '长期有效' in match.group(0) or '无限' in match.group(0):
                 expire_time = None
                 break
@@ -882,6 +894,7 @@ def extract_valid_subscribe_links(text):
                 for fmt in fmt_candidates:
                     try:
                         dt = datetime.strptime(dt_str, fmt)
+                        # 如果只到日期，默认到当天23:59:59
                         if fmt in ('%Y-%m-%d', '%Y/%m/%d'):
                             dt = dt.replace(hour=23, minute=59, second=59)
                         expire_time = dt.replace(tzinfo=BJ_TZ)
@@ -896,8 +909,13 @@ def extract_valid_subscribe_links(text):
         if expire_time is not None:
             hours_left = (expire_time - now).total_seconds() / 3600
             if hours_left < MIN_HOURS_LEFT:
+                # 跳过过期时间不足的链接
                 continue
         valid_links.append(url)
+    if channel_id:
+        print(f"🔗 [频道 {channel_id}] 提取有效链接: {valid_links}")
+    else:
+        print(f"🔗 提取有效链接: {valid_links}")
     return valid_links
    
 # ==========================
