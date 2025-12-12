@@ -1024,32 +1024,34 @@ async def scrape_telegram_links(last_message_ids=None):
         # 并发处理批次内的频道
         results = await asyncio.gather(*tasks, return_exceptions=True)
         
-        # 跟踪批次中是否有任何链接
-        batch_has_links = False
-        
+        # 遍历批次中的每个频道结果
         for idx, result in enumerate(results):
             channel_id = batch[idx]
+            channel_display = channel_id.replace('@', '') # 获取用于显示和日志的频道名
+
             if isinstance(result, Exception):
-                # 静默处理错误
-                continue
-                
-            links, new_max_id = result
-            for link in links:
-                if link not in all_links:
-                    all_links.add(link)
-                    batch_has_links = True
-                    # 🔗提取链接已经在extract_valid_subscribe_links中打印了
+                print(f"🔗 [频道 {channel_display}] 提取链接: N/A")
+                if (old_max_id := last_message_ids.get(channel_id, 0)) > 0: # 如果之前有处理过，为了避免重复抓取，保留旧的 max_id_found
+                    print(f"   ℹ️ 频道 {channel_display} 消息ID将保持上次记录：{old_max_id}")
+                continue # 跳过当前频道，处理批次中的下一个频道
             
+            links_from_channel, new_max_id = result
+            
+            if not links_from_channel: # 如果这个特定频道没有提取到任何链接
+                print(f"🔗 [频道 {channel_display}] 提取链接: N/A") # 为该频道明确打印 N/A
+            else:
+                for link in links_from_channel:
+                    if link not in all_links: # 仅当是全局新链接时才添加到总集合
+                        all_links.add(link)
+                        # extract_valid_subscribe_links 函数内部已负责打印每个提取到的链接，
+                        # 因此这里无需重复打印。
+            
+            # 无论是否提取到链接，只要有新的最大消息ID，就更新它
             if new_max_id > last_message_ids.get(channel_id, 0):
                 last_message_ids[channel_id] = new_max_id
         
-        # 如果整个批次都没有提取到链接，显示N/A
-        if not batch_has_links:
-            # 显示该批次每个频道都没有链接
-            for channel_id in batch:
-                channel_display = channel_id.replace('@', '')
-                print(f"🔗 [{channel_display}] 提取链接: N/A")
-    
+        # 移除原有的 `if not batch_has_links:` 逻辑块，因为每个频道的 N/A 状态已独立处理
+
     await client.disconnect()
     print(f"\n✅ 抓取完成, 共找到 {len(all_links)} 个不重复的有效链接。")
     return list(all_links), last_message_ids
