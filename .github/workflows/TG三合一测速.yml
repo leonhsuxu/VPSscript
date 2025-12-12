@@ -320,7 +320,7 @@ jobs:
             echo "   ⚠️  GitHub连接可能有问题"
           fi
           echo "=== 网络检查完成 ==="
-      # === 步骤15：自动提交更改 ===
+      # === 步骤15：自动提交更改，强制覆盖远程分支 ===
       - name: 自动提交更改
         if: success()
         run: |
@@ -330,6 +330,11 @@ jobs:
             echo "⚠️ 配置文件不存在，跳过提交"
             exit 0
           fi
+
+          # 同步远程 master 分支，保持最新代码
+          git fetch origin master
+          git reset --hard origin/master
+
           if ! git diff --quiet flclashyaml/Tg-node2.yaml 2>/dev/null; then
             git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git config --local user.name "github-actions[bot]"
@@ -339,8 +344,9 @@ jobs:
             COMMIT_MESSAGE="🚀 自动更新：Telegram节点配置 (${NODE_COUNT}节点) - ${COMMIT_TIME}"
             echo "提交信息: ${COMMIT_MESSAGE}"
             git commit -m "${COMMIT_MESSAGE}"
-            git push origin HEAD
-            echo "✅ 提交完成"
+            # 强制推送，覆盖远程分支
+            git push origin HEAD --force
+            echo "✅ 强制提交完成"
           else
             echo "📝 文件无变化，跳过提交"
           fi
