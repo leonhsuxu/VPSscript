@@ -853,80 +853,52 @@ def load_existing_proxies_and_state():
 # 多匹配的 extract_valid_subscribe_links 函数
 # ============================================= 
 
-def extract_valid_subscribe_links(text: str, channel_id=None):
-    """
-    2025年12月终极防漏版
-    完美解决：反引号、引号、括号、换行、中文标点污染链接问题
-    
-    参数:
-        text: 消息文本
-        channel_id: 频道ID，用于显示来源
-    """
-    # 第一步：狂暴提取所有疑似链接（超宽松）
-    rough_links = re.findall(r'https?://[^\s<>"\'`\]]+', text)
-    
-    valid_links = set()
-    for link in rough_links:
-        # 清理常见尾巴污染字符
-        link = link.split('&amp;')[0]
-        link = re.sub(r'[`\'")\]，。、！!？\?>\n\r]+$', '', link)  # 重点：干掉反引号、引号、括号、中文标点
-        link = link.strip()
-        
-        if not link:
-            continue
-            
-        url_lower = link.lower()
-        
-        # 白名单关键词（命中即为订阅链接）
-        if any(k in url_lower for k in [
-            '/s/', '/sub', '/link', '/clash', '/raw', '/api/v1/client/subscribe',
-            'token=', 'flag=', 'sub.', 'ghelper', 'kaixincloud', 'mojie.app',
-            'de5.net', 'oooooooo', 'xn--', 'gist.', 'workers.dev'
-        ]):
-            # 排除明显不是订阅的
-            if any(bad in url_lower for bad in ['/t.me/', '/joinchat', '/channel', '/invite']):
-                continue
-            valid_links.add(link)
-            # 显示完整链接地址和频道来源
-            if channel_id:
-                print(f"🔗 [{channel_id}] 提取链接: {link}")
-            else:
-                print(f"🔗 提取链接: {link}")
-    
-    # === 过期时间判断（保持你原来的逻辑）===
+def extract_valid_subscribe_links(text):
     MIN_HOURS_LEFT = MIN_EXPIRE_HOURS
-    text_line = text.replace('\n', ' ')
+    link_pattern = re.compile(
+        r'(?:订阅链接|订阅地址|订阅|链接)[\s:：`]*?(https?://[A-Za-z0-9\-._~:/?#[\]@!$&\'()*+,;=%]+)'
+    )
+    expire_patterns = [
+        r'到期时间[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2}\s+\d{2}:\d{2}:\d{2})',
+        r'过期时间[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2}\s+\d{2}:\d{2}:\d{2})',
+        r'该订阅将于(\d{4}[-/]\d{1,2}[-/]\d{1,2}\s+\d{2}:\d{2}:\d{2})(?:\s*\+\d{4}\s*[A-Za-z]{3})?过期',
+        r'过期[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2})',
+        r'到期[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2})',
+        r'该订阅将于未知过期',
+        r'过期时间[:：]\s*长期有效',
+        r'过期[:：]\s*未知/无限',
+    ]
+    text_single_line = text.replace('\n', ' ')
     expire_time = None
-    
-    # 常见过期关键词
-    if re.search(r'长期有效|未知|无限|2099', text_line, re.I):
-        expire_time = None  # 长期有效
-    else:
-        for patt in [
-            r'过期时间[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2})',
-            r'到期时间[:：]\s*(\d{4}[-/]\d{1,2}[-/]\d{1,2})',
-            r'(\d{4}[-/]\d{1,2}[-/]\d{1,2})\s*(?:到期|过期)',
-        ]:
-            m = re.search(patt, text_line)
-            if m:
-                try:
-                    dt = datetime.strptime(m.group(1), '%Y-%m-%d')
-                    expire_time = dt.replace(hour=23, minute=59, second=59, tzinfo=BJ_TZ)
-                    break
-                except:
-                    continue
-    
+    for patt in expire_patterns:
+        match = re.search(patt, text_single_line)
+        if match:
+            if '未知' in match.group(0) or '长期有效' in match.group(0) or '无限' in match.group(0):
+                expire_time = None
+                break
+            if match.lastindex:
+                dt_str = match.group(1)
+                fmt_candidates = ['%Y-%m-%d %H:%M:%S', '%Y/%m/%d %H:%M:%S', '%Y-%m-%d', '%Y/%m/%d']
+                for fmt in fmt_candidates:
+                    try:
+                        dt = datetime.strptime(dt_str, fmt)
+                        if fmt in ('%Y-%m-%d', '%Y/%m/%d'):
+                            dt = dt.replace(hour=23, minute=59, second=59)
+                        expire_time = dt.replace(tzinfo=BJ_TZ)
+                        break
+                    except Exception:
+                        continue
+            break
     now = datetime.now(BJ_TZ)
-    final_links = []
-    for url in valid_links:
-        if expire_time:
+    valid_links = []
+    links = link_pattern.findall(text)
+    for url in links:
+        if expire_time is not None:
             hours_left = (expire_time - now).total_seconds() / 3600
             if hours_left < MIN_HOURS_LEFT:
-                # 静默跳过过期链接
                 continue
-        final_links.append(url)
-    
-    return final_links 
+        valid_links.append(url)
+    return valid_links
    
 # ==========================
 # 替换了 scrape_telegram_links 为 B 版本更完善的实现
