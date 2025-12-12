@@ -975,7 +975,11 @@ def extract_valid_subscribe_links(text, channel_id=None):
    
 # ==========================
 # 修改 scrape_telegram_links 函数签名和逻辑
-async def scrape_telegram_links(last_message_ids=None, start_time: datetime | None = None):
+async def scrape_telegram_links(last_message_ids=None):
+    """
+    从 Telegram 指定频道抓取带有订阅链接的消息。
+    消息抓取范围始终是 (当前脚本执行时的北京时间 - TIME_WINDOW_HOURS) 到 (当前脚本执行时的北京时间)。
+    """
     if last_message_ids is None:
         last_message_ids = {}
     if not all([API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS_STR]):
@@ -1001,16 +1005,10 @@ async def scrape_telegram_links(last_message_ids=None, start_time: datetime | No
         print(f"❌ 错误: 连接 Telegram 时出错: {e}")
         return [], last_message_ids
     
-    # 修改 target_time 的计算逻辑
-    if start_time:
-        # 如果提供了 start_time (上次文件更新时间)，就用它作为消息抓取的起始时间
-        target_time_utc = start_time.astimezone(timezone.utc)
-        print(f"⏳ 基于上次文件更新时间 ({start_time.strftime('%Y-%m-%d %H:%M:%S %Z')}) 抓取更新消息。")
-    else:
-        # 如果没有提供 start_time (例如第一次运行)，则回溯 TIME_WINDOW_HOURS
-        bj_now = datetime.now(BJ_TZ)
-        target_time_utc = (bj_now - timedelta(hours=TIME_WINDOW_HOURS)).astimezone(timezone.utc)
-        print(f"⏳ 文件上次更新时间未找到，回溯 {TIME_WINDOW_HOURS} 小时 ({target_time_utc.strftime('%Y-%m-%d %H:%M:%S %Z')}) 抓取消息。")
+    # 消息抓取范围始终基于当前北京时间回溯 TIME_WINDOW_HOURS
+    bj_now = datetime.now(BJ_TZ)
+    target_time_utc = (bj_now - timedelta(hours=TIME_WINDOW_HOURS)).astimezone(timezone.utc)
+    print(f"⏳ 抓取最近 {TIME_WINDOW_HOURS} 小时内消息 (截止时间: {target_time_utc.strftime('%Y-%m-%d %H:%M:%S %Z')})。")
 
     # 分批处理频道
     for i in range(0, len(TARGET_CHANNELS), CHANNEL_BATCH_SIZE):
@@ -1021,7 +1019,7 @@ async def scrape_telegram_links(last_message_ids=None, start_time: datetime | No
         
         tasks = []
         for channel_id in batch:
-            tasks.append(process_channel(client, channel_id, last_message_ids, target_time_utc)) # 传递修改后的 target_time_utc
+            tasks.append(process_channel(client, channel_id, last_message_ids, target_time_utc))
         
         # 并发处理批次内的频道
         results = await asyncio.gather(*tasks, return_exceptions=True)
