@@ -320,38 +320,40 @@ jobs:
           fi
           echo "=== 网络检查完成 ==="
 
-      # === 步骤15：自动提交更改，强制覆盖远程分支 ===
+      # === 步骤15：自动提交更改 ===
       - name: 自动提交更改
         if: success()
         run: |
           echo "=== 📤 自动提交更改 ==="
-          # 修改这里，使用 TZ='Asia/Shanghai' 设置时区为北京时间
-          echo "提交时间: $(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S %Z')"
-          if [ ! -f "flclashyaml/Tg-node2.yaml" ]; then
+          # 设置时区为北京时间，确保在整个run块中生效
+          export TZ='Asia/Shanghai'
+          echo "提交时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
+
+          FILE_PATH="flclashyaml/Tg-node2.yaml"
+
+          if [ ! -f "$FILE_PATH" ]; then
             echo "⚠️ 配置文件不存在，跳过提交"
             exit 0
           fi
-          # 同步远程 master 分支，保持最新代码
-          # 先获取远程分支的最新状态
+
+          # 获取远程 master 分支的最新状态，但不重置本地工作区
+          # 这一步是确保 'origin/master' 引用是远程最新的，供 git show 使用
           git fetch origin master
-          # 然后将本地 master 分支强制重置到远程 master 的最新状态
-          # 这样可以确保你的工作目录基于最新的远程代码，避免拉取冲突
-          git reset --hard origin/master
 
-          # 提取本地文件中的更新时间
+          # 提取本地（Python脚本刚刚生成）文件中的更新时间
           # 使用 sed 和 grep 组合，从文件前20行中查找包含“更新时间”的行，并提取时间字符串
-          # 修正 sed 正则表达式中连字符的转义问题
-          local_update_time=$(sed -n '1,20p' flclashyaml/Tg-node2.yaml | grep '更新时间' | head -1 | sed -E 's/.*更新时间[ :：]*([0-9 :\-]+).*/\1/')
+          # 修正 sed 正则表达式中连字符的转义问题，将 '-' 放在字符集的末尾
+          local_update_time=$(sed -n '1,20p' "$FILE_PATH" | grep '更新时间' | head -1 | sed -E 's/.*更新时间[ :：]*([0-9 :\-]+).*/\1/')
 
-          # 提取远程文件中的更新时间
-          # 使用 git show 直接查看远程分支上的文件内容，然后进行同样的提取操作
-          # 修正 sed 正则表达式中连字符的转义问题
-          remote_update_time=$(git show origin/master:flclashyaml/Tg-node2.yaml 2>/dev/null | sed -n '1,20p' | grep '更新时间' | head -1 | sed -E 's/.*更新时间[ :：]*([0-9 :\-]+).*/\1/')
+          # 提取远程 master 分支上（上次提交）的文件更新时间
+          # 使用 git show 直接查看远程分支上的文件内容
+          # 修正 sed 正则表达式中连字符的转义问题，将 '-' 放在字符集的末尾
+          remote_update_time=$(git show origin/master:"$FILE_PATH" 2>/dev/null | sed -n '1,20p' | grep '更新时间' | head -1 | sed -E 's/.*更新时间[ :：]*([0-9 :\-]+).*/\1/')
 
           echo "远程更新时间: $remote_update_time"
           echo "本地更新时间: $local_update_time"
 
-          # 比较本地提取到的更新时间与远程提取到的更新时间
+          # 比较本地提取到的更新时间（Python脚本刚刚生成的）与远程提取到的更新时间（上次提交的）
           if [ "$local_update_time" != "$remote_update_time" ]; then
             echo "更新时间不一致，认为文件发生变化，准备提交"
 
@@ -360,11 +362,11 @@ jobs:
             git config --local user.name "github-actions[bot]"
             
             # 将修改添加到暂存区
-            git add flclashyaml/Tg-node2.yaml
+            git add "$FILE_PATH"
 
-            # 获取当前的提交时间和节点数量，用于生成提交信息
-            # 修改这里，使用 TZ='Asia/Shanghai' 设置时区为北京时间
-            COMMIT_TIME=$(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')
+            # 获取当前的提交时间（会使用上面设置的北京时区）
+            COMMIT_TIME=$(date '+%Y-%m-%d %H:%M:%S')
+            # 获取节点数量，用于生成提交信息
             NODE_COUNT=$(python3 -c 'import yaml; d=yaml.safe_load(open("flclashyaml/Tg-node2.yaml",encoding="utf-8")); print(len(d.get("proxies",[])))' 2>/dev/null || echo "?")
             
             # 生成提交信息
