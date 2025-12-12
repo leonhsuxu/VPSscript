@@ -853,6 +853,15 @@ def load_existing_proxies_and_state():
 # 多匹配的 extract_valid_subscribe_links 函数
 # ============================================= 
 
+import os
+import re
+from datetime import datetime, timedelta, timezone
+
+# 确保这些全局变量在函数外部已定义或被导入
+# 示例定义 (实际使用时应与您的主脚本保持一致)
+MIN_EXPIRE_HOURS = 2
+BJ_TZ = timezone(timedelta(hours=8)) 
+
 def extract_valid_subscribe_links(text, channel_id=None):
     """
     从文本中提取有效的订阅链接，支持带过期时间过滤。
@@ -912,10 +921,17 @@ def extract_valid_subscribe_links(text, channel_id=None):
                 # 跳过过期时间不足的链接
                 continue
         valid_links.append(url)
-    if channel_id:
-        print(f"🔗 [频道 {channel_id}] 提取有效链接: {valid_links}")
-    else:
-        print(f"🔗 提取有效链接: {valid_links}")
+    
+    # 根据您的要求修改的打印逻辑：只有当有有效链接时才打印日志，并且不带方括号和引号
+    if valid_links:
+        # 将链接列表连接成字符串，不带方括号和引号
+        links_str = ", ".join(valid_links) 
+        if channel_id:
+            print(f"🔗 [频道 {channel_id}] 提取有效链接: {links_str}")
+        else:
+            print(f"🔗 提取有效链接: {links_str}")
+    # 如果 valid_links 为空，则不打印任何内容
+
     return valid_links
    
 # ==========================
