@@ -530,7 +530,7 @@ def start_cloudflare_warp():
             
             # 检查启动结果
             if start_result.returncode == 0:
-                print("   🉐 WARP 启动成功")
+                print("       🈶  WARP 启动成功")
             else:
                 # 检查是否已经有其他Warp连接
                 if "already exists" in start_result.stderr:
