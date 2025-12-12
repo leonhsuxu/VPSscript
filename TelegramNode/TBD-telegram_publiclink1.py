@@ -360,7 +360,7 @@ def is_warp_enabled():
     except (subprocess.TimeoutExpired, FileNotFoundError, Exception) as e:
         return False
 
-# ==           
+# == 开启warp配置===          
 def start_cloudflare_warp():
     """
     在 GitHub Actions 中启用 Cloudflare Warp
@@ -544,7 +544,7 @@ def start_cloudflare_warp():
             print(f"   ❌ WARP启动异常: {e}")
             return False
         
-        # 7. 验证启动结果
+        # 7. 验证启动结果, 判断 Warp 是否已经启用
         print("7️⃣ 验证连接状态...")
         time.sleep(2)  # 等待网络稳定
         
