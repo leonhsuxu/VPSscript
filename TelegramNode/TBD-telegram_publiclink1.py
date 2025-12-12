@@ -530,7 +530,7 @@ def start_cloudflare_warp():
             
             # 检查启动结果
             if start_result.returncode == 0:
-                print("   ✅ WARP 启动成功")
+                print("   🉐 WARP 启动成功")
             else:
                 # 检查是否已经有其他Warp连接
                 if "already exists" in start_result.stderr:
@@ -550,7 +550,7 @@ def start_cloudflare_warp():
         
         if is_warp_enabled():
             current_ip = get_current_ip()
-            print(f"   ✅ Warp已成功启用")
+            print(f"   🉐 Warp已成功启用")
             print(f"   📍 当前出口 IP: {current_ip}")
             
             # 8. 设置智能路由（让GitHub走原始网络）
