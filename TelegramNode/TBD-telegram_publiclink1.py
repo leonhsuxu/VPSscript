@@ -1293,7 +1293,7 @@ def parse_ss_node(line: str) -> dict | None:
             remark = unquote(parts[1])
         
         method = None
-        password = None
+        password_from_url = None # 用于存储从 URL 中直接解析出的密码部分
         server = None
         port = None
         
@@ -1304,7 +1304,7 @@ def parse_ss_node(line: str) -> dict | None:
             '2022-blake3-chacha20-poly1305'
         }
         
-        # 判断内容是否为完全Base64编码的字符串
+        # 判断内容是否为完全Base64编码的字符串 (ss://base64encodedstring)
         if '@' not in content:
             try:
                 padded_content = content + '=' * (-len(content) % 4)
@@ -1323,85 +1323,6 @@ def parse_ss_node(line: str) -> dict | None:
                 method_password_part, server_port_part = parts_decoded
                 
                 mp_subparts = method_password_part.split(':', 1)
-                if len(mp_subparts) != 2:
-                    raise ValueError("Invalid decoded SS format: missing ':' in method:password.")
-                method = mp_subparts[0]
-                password = mp_subparts[1]
-                
-                sp_subparts = server_port_part.split(':', 1)
-                if len(sp_subparts) != 2:
-                    raise ValueError("Invalid decoded SS format: missing ':' in server:port.")
-                server = sp_subparts[0]
-                port = int(sp_subparts[1])
-            except Exception:
-                return None
-        else:
-            # 常见格式：ss://method:password@server:port
-            at_split_parts = content.split('@', 1)
-            if len(at_split_parts) != 2:
-                raise ValueError("Invalid SS format: missing '@' for method:password@server:port.")
-            
-            method_password_part_raw, server_port_part_raw = at_split_parts
-            
-            mp_colon_split = method_password_part_raw.split(':', 1)
-            if len(mp_colon_split) != 2:
-                raise ValueError("Invalid SS format: missing ':' in method:password.")
-            
-            method = mp_colon_split[0]
-            password_from_url = mp_colon_split[1]
-            
-            sp_colon_split = server_port_part_raw.split(':', 1)
-            if len(sp_colon_split) != 2:
-                raise ValueError("Invalid SS format: missing ':' in server:port.")
-            
-            server = sp_colon_split[0]
-            port = int(sp_colon_split[1])
-            
-            # 特殊处理现代SS加密方式：其密码部分通常是Base64编码的
-            if method.lower() in modern_ss_ciphers:
-                if is_valid_base64(password_from_url):
-                    try:
-                        password_encoded = password_from_url.strip()
-                        password_encoded = unquote(password_encoded)
-                        password_encoded = password_encoded.replace('\n', '').replace('\r', '').replace(' ', '').replace('\t', '')
-                        
-                        # 先移除尾部填充，再重新计算
-                        password_encoded = password_encoded.rstrip('=')
-                        padding_needed = (-len(password_encoded)) % 4
-                        password_encoded += '=' * padding_needed
-
-                        try:
-                            decoded_pw_bytes = base64.urlsafe_b64decode(password_encoded)
-                        except Exception:
-                            decoded_pw_bytes = base64.b64decode(password_encoded)
-
-                        password = decoded_pw_bytes.decode('utf-8', errors='ignore')
-                    except Exception as e:
-                        # 解码失败时使用原文密码作为备用
-                        password = password_from_url
-                else:
-                    # 不是有效Base64，使用原文密码
-                    password = password_from_url
-            else:
-                # 对于传统加密方式，密码通常是明文
-                password = password_from_url
-        
-        # 确保所有关键信息都已成功提取
-        if not (method and password and server and port):
-            raise ValueError("Missing critical SS proxy components after parsing.")
-        
-        # 构建 Clash 代理节点对象
-        node = {
-            'name': remark or f"ss_{server}",
-            'type': 'ss',
-            'server': server,
-            'port': port,
-            'cipher': method,
-            'password': password,
-            'udp': True,
-        }
-        return node
-    except Exception:
         return None
 
 def parse_trojan_node(line):
