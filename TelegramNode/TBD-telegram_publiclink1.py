@@ -1257,6 +1257,11 @@ def parse_ssr_node(line):
 
 
 def parse_ss_node(line: str) -> dict | None:
+            
+            server = sp_colon_split[0]
+            port = int(sp_colon_split[1])
+
+            # 特殊处理现代SS加密方式：其密码部分通常是Base64编码的
             if method.lower() in modern_ss_ciphers:
                 # 使用 is_valid_base64 检查密码是否是有效的Base64编码
                 if is_valid_base64(password_from_url):
