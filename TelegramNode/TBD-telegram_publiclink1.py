@@ -1257,58 +1257,135 @@ def parse_ssr_node(line):
 
 
 def parse_ss_node(line: str) -> dict | None:
+    """
+    解析 Shadowsocks (ss) 链接。
+    兼容多种 ss 链接格式，特别是针对 2022-blake3 系列加密方式的密码处理。
+    如果链接格式不正确或密码无法解析，则返回 None。
+    """
+    try:
+        line = line.strip()
+        if not line.startswith('ss://'):
+            return None
+        
+        # 移除 'ss://' 前缀
+        content = line[5:] 
+        remark = ''
+        # 如果存在 # 符号，则其后是备注 (remarks)
+        if '#' in content:
+            parts = content.split('#', 1)
+            content = parts[0]  # content现在只包含链接主体部分
+            remark = unquote(parts[1])
+        
+        method = None
+        password = None
+        server = None
+        port = None
+        
+        # 现代 Shadowsocks 加密方式的白名单，这些加密方式的密码通常是 Base64 编码的
+        modern_ss_ciphers = {
+            '2022-blake3-aes-128-gcm',
+            '2022-blake3-aes-256-gcm',
+            '2022-blake3-chacha20-poly1305'
+        }
+        
+        # 判断内容是否为完全Base64编码的字符串 (如 ss://base64_encoded_method_password_server_port)
+        # 这种情况下，content 中通常不包含 '@' 符号
+        if '@' not in content: 
+            try:
+                # 添加填充符，确保Base64解码正确
+                padded_content = content + '=' * (-len(content) % 4)
+                
+                # 尝试 URL 安全解码，如果失败再尝试标准解码
+                try:
+                    decoded_full_string_bytes = base64.urlsafe_b64decode(padded_content)
+                except Exception:
+                    decoded_full_string_bytes = base64.b64decode(padded_content)
+                
+                decoded_full_string = decoded_full_string_bytes.decode('utf-8', errors='ignore')
+                
+                # 解码后的字符串格式应为 method:password@server:port
+                parts_decoded = decoded_full_string.split('@')
+                if len(parts_decoded) != 2:
+                    raise ValueError("Invalid decoded SS format: missing '@' separator.")
+                
+                method_password_part, server_port_part = parts_decoded
+                
+                # 提取加密方法和密码
+                mp_subparts = method_password_part.split(':', 1)
+                if len(mp_subparts) != 2:
+                    raise ValueError("Invalid decoded SS format: missing ':' in method:password.")
+                method = mp_subparts[0]
+                password = mp_subparts[1]  # 此时密码已经是明文
+                
+                # 提取服务器地址和端口
+                sp_subparts = server_port_part.split(':', 1)
+                if len(sp_subparts) != 2:
+                    raise ValueError("Invalid decoded SS format: missing ':' in server:port.")
+                server = sp_subparts[0]
+                port = int(sp_subparts[1])
+            except Exception:
+                # print(f"DEBUG: Failed to parse full base64 SS link '{line}': {e}") # 可选调试
+                return None
+        else:  # 常见格式：ss://method:password@server:port (可能包含Base64编码的密码)
+            # 分割出 method:password 部分和 server:port 部分
+            at_split_parts = content.split('@', 1)
+            if len(at_split_parts) != 2:
+                raise ValueError("Invalid SS format: missing '@' for method:password@server:port.")
+            
+            method_password_part_raw, server_port_part_raw = at_split_parts
+            
+            # 提取加密方法和原始密码字符串
+            mp_colon_split = method_password_part_raw.split(':', 1)
+            if len(mp_colon_split) != 2:
+                raise ValueError("Invalid SS format: missing ':' in method:password.")
+            
+            method = mp_colon_split[0]
+            password_from_url = mp_colon_split[1]  # 这是URL中原始的密码字符串，可能是明文或Base64
+            
+            # 提取服务器地址和端口
+            sp_colon_split = server_port_part_raw.split(':', 1)
+            if len(sp_colon_split) != 2:
+                raise ValueError("Invalid SS format: missing ':' in server:port.")
             
             server = sp_colon_split[0]
             port = int(sp_colon_split[1])
-
+            
             # 特殊处理现代SS加密方式：其密码部分通常是Base64编码的
             if method.lower() in modern_ss_ciphers:
                 # 使用 is_valid_base64 检查密码是否是有效的Base64编码
                 if is_valid_base64(password_from_url):
-                    # 如果是有效的Base64，则对其进行解码，将**明文密码**传递给Clash
                     try:
                         # 尝试 URL 安全解码，如果失败再尝试标准解码
-                        decoded_pw_bytes = None
                         try:
                             decoded_pw_bytes = base64.urlsafe_b64decode(password_from_url + '=' * (-len(password_from_url) % 4))
                         except Exception:
                             decoded_pw_bytes = base64.b64decode(password_from_url + '=' * (-len(password_from_url) % 4))
                         
                         password = decoded_pw_bytes.decode('utf-8', errors='ignore')
-                        # print(f"DEBUG: Base64 decoded SS password for {method}: '{password_from_url}' -> '{password[:5]}...'") # 调试信息，可选
-                    except Exception as e:
-                        # 理论上 is_valid_base64 已经过滤了大部分错误，这里只是双重保险。
-                        # 如果解码失败，说明密码有问题，丢弃节点。
-                        # print(f"DEBUG: Failed to base64 decode password for SS link '{line}': {e}") # 调试信息，可选
+                    except Exception:
                         return None 
                 else:
-                    # 如果是现代加密方式，但密码不是有效的Base64编码，
-                    # 那么这个节点就是 malformed（格式错误）的，直接丢弃。
-                    # 这是解决 "illegal base64 data at input byte 8" 错误的关键。
-                    # print(f"DEBUG: Modern SS cipher '{method}' but password is not valid base64: '{password_from_url}'. Skipping.") # 调试信息，可选
                     return None
             else:
                 # 对于传统加密方式，密码通常是明文，直接使用 URL 中提取的字符串作为密码
                 password = password_from_url 
-
+        
         # 确保所有关键信息都已成功提取
         if not (method and password and server and port):
             raise ValueError("Missing critical SS proxy components after parsing.")
-
+        
         # 构建 Clash 代理节点对象
         node = {
-            'name': remark or f"ss_{server}", # 如果没有备注，则使用默认名称
+            'name': remark or f"ss_{server}",
             'type': 'ss',
             'server': server,
             'port': port,
             'cipher': method,
             'password': password,
-            'udp': True # SS 节点通常支持 UDP，默认为 True (Clash Meta默认行为)
+            'udp': True,
         }
         return node
-    except Exception as e:
-        # 捕获所有解析异常，并返回 None，表示该链接无法解析
-        # print(f"DEBUG: General SS parsing error for line '{line}': {e}") # 调试信息，可选
+    except Exception:
         return None
 
 def parse_trojan_node(line):
