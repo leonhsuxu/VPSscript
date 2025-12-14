@@ -1120,6 +1120,35 @@ def download_subscription(url: str, timeout: int = 30) -> str | None:
     except:
         return None
 # --- 解析相关函数合入 ---
+def is_valid_base64(s: str) -> bool:
+    """
+    检查字符串是否是有效的Base64编码（包括URL安全变体）。
+    """
+    s = s.strip()
+    if not s:
+        return False
+    # 允许的Base64字符集：A-Z, a-z, 0-9, +, /, =, - (URL safe)
+    # 对于URL安全Base64，'+' 和 '/' 替换为 '-' 和 '_'
+    # re.match 确保字符串只包含这些合法字符
+    if not re.match(r'^[A-Za-z0-9\-_=+/]+$', s):
+        return False
+    
+    # 检查Base64编码的长度特性
+    # 理论上 Base64 编码的字符串长度不能是 4 的倍数加 1 (len % 4 == 1 是不合法的)
+    if len(s) % 4 == 1:
+        return False
+    
+    try:
+        # 尝试解码。为了兼容URL安全和非URL安全的Base64，
+        # 统一替换回标准Base64字符集再尝试解码。
+        # 同时，添加必要的填充 '=' 以确保解码器正确处理。
+        s_standard = s.replace('-', '+').replace('_', '/')
+        base64.b64decode(s_standard + '=' * (-len(s_standard) % 4))
+        return True
+    except (base64.bincii.Error, UnicodeDecodeError):
+        # 如果解码过程中发生错误，则认为不是有效的Base64
+        return False
+
 def parse_proxies_from_content(content):
     try:
         data = yaml.safe_load(content)
@@ -1225,38 +1254,58 @@ def parse_ssr_node(line):
         return node
     except Exception:
         return None
-def parse_ss_node(line):
-    try:
-        line = line.strip()
-        if not line.startswith('ss://'):
-            return None
-        content = line[5:]
-        if '@' in content:
-            # 标准格式: ss://method:password@server:port#remarks
-            parsed = urlparse('ss://' + content)
-            user_pass = parsed.netloc.split('@')[0]
-            method, password = user_pass.split(':', 1)
-            server = parsed.hostname
-            port = parsed.port
-            name = unquote(parsed.fragment) if parsed.fragment else f"ss_{server}"
-            node = {'name': name, 'type': 'ss', 'server': server, 'port': port,
-                    'cipher': method, 'password': password, 'udp': True}
-            return node
-        else:
-            # base64格式 ss://base64(method:password@server:port) 或带备注
-            ss_b64 = content.split('#')[0]
-            remark = ''
-            if '#' in content:
-                remark = unquote(content.split('#')[1])
-            decoded = base64.urlsafe_b64decode(ss_b64 + '=' * (-len(ss_b64) % 4)).decode('utf-8', errors='ignore')
-            method_password, server_port = decoded.split('@')
-            method, password = method_password.split(':')
-            server, port = server_port.split(':')
-            node = {'name': remark or f"ss_{server}", 'type': 'ss', 'server': server,
-                    'port': int(port), 'cipher': method, 'password': password, 'udp': True}
-            return node
-    except Exception:
+
+
+def parse_ss_node(line: str) -> dict | None:
+            if method.lower() in modern_ss_ciphers:
+                # 使用 is_valid_base64 检查密码是否是有效的Base64编码
+                if is_valid_base64(password_from_url):
+                    # 如果是有效的Base64，则对其进行解码，将**明文密码**传递给Clash
+                    try:
+                        # 尝试 URL 安全解码，如果失败再尝试标准解码
+                        decoded_pw_bytes = None
+                        try:
+                            decoded_pw_bytes = base64.urlsafe_b64decode(password_from_url + '=' * (-len(password_from_url) % 4))
+                        except Exception:
+                            decoded_pw_bytes = base64.b64decode(password_from_url + '=' * (-len(password_from_url) % 4))
+                        
+                        password = decoded_pw_bytes.decode('utf-8', errors='ignore')
+                        # print(f"DEBUG: Base64 decoded SS password for {method}: '{password_from_url}' -> '{password[:5]}...'") # 调试信息，可选
+                    except Exception as e:
+                        # 理论上 is_valid_base64 已经过滤了大部分错误，这里只是双重保险。
+                        # 如果解码失败，说明密码有问题，丢弃节点。
+                        # print(f"DEBUG: Failed to base64 decode password for SS link '{line}': {e}") # 调试信息，可选
+                        return None 
+                else:
+                    # 如果是现代加密方式，但密码不是有效的Base64编码，
+                    # 那么这个节点就是 malformed（格式错误）的，直接丢弃。
+                    # 这是解决 "illegal base64 data at input byte 8" 错误的关键。
+                    # print(f"DEBUG: Modern SS cipher '{method}' but password is not valid base64: '{password_from_url}'. Skipping.") # 调试信息，可选
+                    return None
+            else:
+                # 对于传统加密方式，密码通常是明文，直接使用 URL 中提取的字符串作为密码
+                password = password_from_url 
+
+        # 确保所有关键信息都已成功提取
+        if not (method and password and server and port):
+            raise ValueError("Missing critical SS proxy components after parsing.")
+
+        # 构建 Clash 代理节点对象
+        node = {
+            'name': remark or f"ss_{server}", # 如果没有备注，则使用默认名称
+            'type': 'ss',
+            'server': server,
+            'port': port,
+            'cipher': method,
+            'password': password,
+            'udp': True # SS 节点通常支持 UDP，默认为 True (Clash Meta默认行为)
+        }
+        return node
+    except Exception as e:
+        # 捕获所有解析异常，并返回 None，表示该链接无法解析
+        # print(f"DEBUG: General SS parsing error for line '{line}': {e}") # 调试信息，可选
         return None
+
 def parse_trojan_node(line):
     try:
         parsed = urlparse(line)
