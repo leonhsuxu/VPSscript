@@ -892,13 +892,13 @@ def extract_valid_subscribe_links(text, channel_id=None):
     
     # 模式1：有关键字前缀的链接（原逻辑）
     link_pattern_with_prefix = re.compile(
-        r'(?:订阅链接|订阅地址|订阅|链接)[\s:：`]*?(https?://[A-Za-z0-9\-._~:/?#[\]@!$&\'()*+,;=%]+)'
+        r'.*?(?:订阅链接|订阅地址|订阅|链接)[\s:：`=<>-]*?(https?://[A-Za-z0-9\-._~:/?#[\]@!$&\'()*+,;=%]+)'
     )
     
     # 模式2：直接匹配HTTP/HTTPS链接（无需前缀）
     # 但只匹配 subscribe 相关的链接，避免误抓其他链接
     link_pattern_direct = re.compile(
-        r'(https?://[A-Za-z0-9\-._~:/?#[\]@!$&\'()*+,;=%]*(?:subscribe|token|/s/)[A-Za-z0-9\-._~:/?#[\]@!$&\'()*+,;=%]*)'
+        r'(https?://[A-Za-z0-9\-._~:/?#[\]@!$&\'()*+,;=%]*(?:subscribe|token|/s/|sub|api|config|v2ray|trojan|ssr|get|link|client)[A-Za-z0-9\-._~:/?#[\]@!$&\'()*+,;=%]*)'
     )
     
     # 多种匹配过期时间的正则模式
