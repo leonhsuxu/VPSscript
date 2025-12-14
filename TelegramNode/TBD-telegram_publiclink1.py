@@ -1256,6 +1256,8 @@ def parse_ssr_node(line):
         return None
 
 
+
+
 def parse_ss_node(line: str) -> dict | None:
     """
     解析 Shadowsocks (ss) 链接。
@@ -1324,7 +1326,6 @@ def parse_ss_node(line: str) -> dict | None:
                 server = sp_subparts[0]
                 port = int(sp_subparts[1])
             except Exception:
-                # print(f"DEBUG: Failed to parse full base64 SS link '{line}': {e}") # 可选调试
                 return None
         else:  # 常见格式：ss://method:password@server:port (可能包含Base64编码的密码)
             # 分割出 method:password 部分和 server:port 部分
@@ -1355,11 +1356,17 @@ def parse_ss_node(line: str) -> dict | None:
                 # 使用 is_valid_base64 检查密码是否是有效的Base64编码
                 if is_valid_base64(password_from_url):
                     try:
-                        # 尝试 URL 安全解码，如果失败再尝试标准解码
+                        password_encoded = password_from_url.strip()
+                        password_encoded = unquote(password_encoded)
+                        password_encoded = password_encoded.replace('\n', '').replace('\r', '').replace(' ', '')
+                        
+                        padding_needed = (-len(password_encoded)) % 4
+                        password_encoded += '=' * padding_needed
+
                         try:
-                            decoded_pw_bytes = base64.urlsafe_b64decode(password_from_url + '=' * (-len(password_from_url) % 4))
+                            decoded_pw_bytes = base64.urlsafe_b64decode(password_encoded)
                         except Exception:
-                            decoded_pw_bytes = base64.b64decode(password_from_url + '=' * (-len(password_from_url) % 4))
+                            decoded_pw_bytes = base64.b64decode(password_encoded)
                         
                         password = decoded_pw_bytes.decode('utf-8', errors='ignore')
                     except Exception:
