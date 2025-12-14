@@ -1273,56 +1273,65 @@ def parse_ssr_node(line):
 
 
 def parse_ss_node(line: str) -> dict | None:
-    """
-    解析 Shadowsocks (ss) 链接。
-    兼容多种 ss 链接格式，特别是针对 2022-blake3 系列加密方式的密码处理。
-    如果链接格式不正确或密码无法解析，则返回 None。
-    """
     try:
-        line = line.strip()
-        if not line.startswith('ss://'):
-            return None
-        
-        # 移除 'ss://' 前缀
-        content = line[5:]
-        remark = ''
-        # 如果存在 # 符号，则其后是备注 (remarks)
-        if '#' in content:
-            parts = content.split('#', 1)
-            content = parts[0]
-            remark = unquote(parts[1])
-        
-        method = None
-        password_from_url = None # 用于存储从 URL 中直接解析出的密码部分
-        server = None
-        port = None
-        
-        # 现代 Shadowsocks 加密方式的白名单
-        modern_ss_ciphers = {
-            '2022-blake3-aes-128-gcm',
-            '2022-blake3-aes-256-gcm',
-            '2022-blake3-chacha20-poly1305'
-        }
-        
-        # 判断内容是否为完全Base64编码的字符串 (ss://base64encodedstring)
-        if '@' not in content:
+        if method and method.lower() in modern_ss_ciphers:
+            if password_from_url is None:  # 防御性检查
+                print(f"❌ 警告: SS节点 ({method}) 缺少密码。该节点将因无效配置被丢弃。")
+                return None
+            
+            password_encoded_str = password_from_url.strip()
+            password_encoded_str = unquote(password_encoded_str)  # 先进行 URL 解码
+            # 移除常见的空白字符，以免干扰 Base64 解码
+            password_encoded_str = password_encoded_str.replace('\n', '').replace('\r', '').replace(' ', '').replace('\t', '')
+            
+            if not password_encoded_str:  # 如果清理后密码为空
+                print(f"❌ 警告: SS节点 ({method}) 密码为空。该节点将因无效配置被丢弃。")
+                return None
+            
             try:
-                padded_content = content + '=' * (-len(content) % 4)
-                
+                # 尝试 URL-safe Base64 解码
+                # 确保正确填充 '='
+                padded_urlsafe = password_encoded_str + '=' * (-len(password_encoded_str) % 4)
+                decoded_pw_bytes = base64.urlsafe_b64decode(padded_urlsafe)
+                actual_password = decoded_pw_bytes.decode('utf-8', errors='ignore')
+            except (base64.binascii.Error, UnicodeDecodeError):
                 try:
-                    decoded_full_string_bytes = base64.urlsafe_b64decode(padded_content)
-                except Exception:
-                    decoded_full_string_bytes = base64.b64decode(padded_content)
-                
-                decoded_full_string = decoded_full_string_bytes.decode('utf-8', errors='ignore')
-                
-                parts_decoded = decoded_full_string.split('@')
-                if len(parts_decoded) != 2:
-                    raise ValueError("Invalid decoded SS format: missing '@' separator.")
-                
-                method_password_part, server_port_part = parts_decoded
-                
-                mp_subparts = method_password_part.split(':', 1)
+                    # 如果 URL-safe 解码失败，尝试标准 Base64 解码
+                    # （将 URL-safe 字符替换回标准 Base64 字符）
+                    password_standard_base64 = password_encoded_str.replace('-', '+').replace('_', '/')
+                    # 确保正确填充 '='
+                    padded_standard = password_standard_base64 + '=' * (-len(password_standard_base64) % 4)
+                    decoded_pw_bytes = base64.b64decode(padded_standard)
+                    actual_password = decoded_pw_bytes.decode('utf-8', errors='ignore')
+                except (base64.binascii.Error, UnicodeDecodeError) as e_final_decode:
+                    # 两次解码尝试都失败，说明密码确实不是有效的 Base64
+                    print(f"❌ 警告: SS节点 ({method}) 密码 Base64 解码失败。原始密码片段: '{password_from_url[:50]}...' 错误: {e_final_decode}。该节点将因密码格式不正确被丢弃。")
+                    return None  # 如果密码无法正确 Base64 解码，则直接丢弃该节点
+        else:
+            # 对于传统加密方式，密码通常是明文，直接使用 password_from_url
+            actual_password = password_from_url
+        
+        # 确保所有关键信息都已成功提取
+        # 注意：这里我们同时检查 actual_password 是否为 None，因为如果解码失败会返回 None
+        if not (method and actual_password is not None and server and port):
+            print(f"❌ 错误: SS节点 '{remark or f'ss_{server}'}' 缺少关键组件 (method, password, server, port)。该节点将被丢弃。")
+            return None  # 丢弃缺少关键信息的节点
+        
+        # 构建 Clash 代理节点对象
+        node = {
+            'name': remark or f"ss_{server}",
+            'type': 'ss',
+            'server': server,
+            'port': port,
+            'cipher': method,
+            'password': actual_password,  # 使用已经解码或直接取得的密码
+            'udp': True,  # SS 节点通常支持 UDP
+        }
+        return node
+        
+    except Exception as e:
+        # 捕获其他解析过程中可能出现的异常
+        print(f"❌ 解析SS节点时发生未知错误: {e}。链接: {line[:100]}...。该节点将被丢弃。")
         return None
 
 def parse_trojan_node(line):
