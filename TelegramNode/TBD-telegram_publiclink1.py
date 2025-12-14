@@ -976,8 +976,6 @@ async def scrape_telegram_links(last_message_ids=None):
     从 Telegram 指定频道抓取带有订阅链接的消息。
     消息抓取范围始终是 (当前脚本执行时的北京时间 - TIME_WINDOW_HOURS) 到 (当前脚本执行时的北京时间)。
     """
-    global last_message_id_timestamps
-    
     if last_message_ids is None:
         last_message_ids = {}
     if not all([API_ID, API_HASH, STRING_SESSION, TELEGRAM_CHANNEL_IDS_STR]):
@@ -1015,7 +1013,6 @@ async def scrape_telegram_links(last_message_ids=None):
     # 追踪实际抓取的消息时间范围
     earliest_message_time = None
     latest_message_time = None
-    actual_messages_count = 0
     
     # 分批处理频道
     for i in range(0, len(TARGET_CHANNELS), CHANNEL_BATCH_SIZE):
@@ -1034,11 +1031,9 @@ async def scrape_telegram_links(last_message_ids=None):
             channel_display = channel_id.replace('@', '')
             if isinstance(result, Exception):
                 print(f"🔗 [频道 {channel_display}] 提取链接: N/A")
-                if (old_max_id := last_message_ids.get(channel_id, 0)) > 0:
-                    print(f"   ℹ️ 频道 {channel_display} 已到达上次消息点 (ID: {old_max_id})")
                 continue
             
-            links_from_channel, new_max_id, channel_msg_times, msg_count, last_msg_id_time = result
+            links_from_channel, new_max_id, channel_msg_times, msg_count = result
             
             if not links_from_channel:
                 print(f"🔗 [频道 {channel_display}] 提取链接: N/A")
@@ -1054,87 +1049,47 @@ async def scrape_telegram_links(last_message_ids=None):
                     earliest_message_time = ch_earliest
                 if latest_message_time is None or ch_latest > latest_message_time:
                     latest_message_time = ch_latest
-                actual_messages_count += msg_count
             
             if new_max_id > last_message_ids.get(channel_id, 0):
                 last_message_ids[channel_id] = new_max_id
     
     await client.disconnect()
     
-    # 显示实际抓取的消息时间范围
-    print(f"\n📊 实际抓取情况:")
-    print(f"   共找到 {len(all_links)} 个不重复的有效链接")
-    print(f"   检查消息总数: {actual_messages_count} 条")
-    
-    # 显示上次消息ID的时间点
-    if last_message_id_timestamps:
-        print(f"\n📍 各频道上次消息ID时间点 (北京时间):")
-        for ch_id, msg_time in last_message_id_timestamps.items():
-            ch_display = ch_id.replace('@', '')
-            msg_time_bj = msg_time.astimezone(BJ_TZ)
-            print(f"   [频道 {ch_display}] ID: {last_message_ids.get(ch_id, 0)} | 时间: {msg_time_bj.strftime('%Y-%m-%d %H:%M:%S')}")
-    
+    # 仅显示实际消息时间范围
     if earliest_message_time and latest_message_time:
         earliest_bj = earliest_message_time.astimezone(BJ_TZ)
         latest_bj = latest_message_time.astimezone(BJ_TZ)
-        print(f"\n   实际消息时间范围 (北京时间): {earliest_bj.strftime('%Y-%m-%d %H:%M:%S')} ~ {latest_bj.strftime('%Y-%m-%d %H:%M:%S')}")
-        
-        # 判断实际时间范围是否覆盖完整的TIME_WINDOW_HOURS
-        time_span = (latest_bj - earliest_bj).total_seconds() / 3600
-        print(f"   实际消息跨度: {time_span:.1f} 小时")
-        
-        if time_span < TIME_WINDOW_HOURS * 0.5:
-            print(f"   ⚠️ 警告: 实际消息跨度 ({time_span:.1f} 小时) 少于预期窗口 ({TIME_WINDOW_HOURS} 小时) 的50%")
-            print(f"           可能部分频道消息较少或配置不当，建议检查!")
-        elif time_span < TIME_WINDOW_HOURS:
-            print(f"   ℹ️ 提示: 实际消息跨度 ({time_span:.1f} 小时) 少于预期窗口 ({TIME_WINDOW_HOURS} 小时)")
-            print(f"          这可能是因为部分频道近期消息较少")
-        else:
-            print(f"   ✅ 实际消息跨度覆盖完整的时间窗口")
-    else:
-        print(f"   ⚠️ 警告: 未抓取到任何有效消息，无法确定消息时间范围")
+        print(f"\n📍 实际消息时间范围 (北京时间): {earliest_bj.strftime('%Y-%m-%d %H:%M:%S')} ~ {latest_bj.strftime('%Y-%m-%d %H:%M:%S')}")
     
     print(f"\n✅ 抓取完成, 共找到 {len(all_links)} 个不重复的有效链接。")
     return list(all_links), last_message_ids
     
 async def process_channel(client, channel_id, last_message_ids, target_time_utc):
     """处理单个频道的辅助函数"""
-    global last_message_id_timestamps
-    
     max_id_found = last_message_ids.get(channel_id, 0)
     channel_links = []
     earliest_time = None
     latest_time = None
     messages_checked = 0
-    last_msg_id_time = None  # 上次消息ID的时间点
     
     try:
         entity = await client.get_entity(channel_id)
     except Exception as e:
-        return channel_links, max_id_found, None, 0, None
+        return channel_links, max_id_found, None, 0
     
     try:
-        # 迭代消息时，使用 min_id 和 target_time_utc 共同过滤
         async for message in client.iter_messages(entity, min_id=last_message_ids.get(channel_id, 0) + 1, reverse=False):
-            # 这里的 message.date 是 UTC 时间，直接与 target_time_utc 比较
             if message.date < target_time_utc:
-                break  # 消息早于目标时间，停止抓取更早的消息
+                break
             
             messages_checked += 1
             
-            # 追踪消息时间范围
             if earliest_time is None or message.date < earliest_time:
                 earliest_time = message.date
             if latest_time is None or message.date > latest_time:
                 latest_time = message.date
             
-            # 如果这是上次消息ID的消息，记录其时间
-            if message.id == max_id_found:
-                last_msg_id_time = message.date
-                last_message_id_timestamps[channel_id] = message.date
-            
             if message.text:
-                # 传递频道ID参数
                 links = extract_valid_subscribe_links(message.text, channel_id=channel_id)
                 for link in links:
                     channel_links.append(link)
@@ -1144,9 +1099,8 @@ async def process_channel(client, channel_id, last_message_ids, target_time_utc)
         print(f"  ⚠️ 处理频道 {channel_id} 异常: {e}")
         pass
     
-    # 返回消息时间范围元组或None，以及检查的消息数，以及上次消息ID时间
     msg_time_range = (earliest_time, latest_time) if earliest_time and latest_time else None
-    return channel_links, max_id_found, msg_time_range, messages_checked, last_msg_id_time
+    return channel_links, max_id_found, msg_time_range, messages_checked
     
 # --- 3合1下载 版本的下载 ---
 def download_subscription(url: str, timeout: int = 30) -> str | None:
