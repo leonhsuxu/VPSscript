@@ -1284,12 +1284,12 @@ def parse_ss_node(line: str) -> dict | None:
             return None
         
         # 移除 'ss://' 前缀
-        content = line[5:] 
+        content = line[5:]
         remark = ''
         # 如果存在 # 符号，则其后是备注 (remarks)
         if '#' in content:
             parts = content.split('#', 1)
-            content = parts[0]  # content现在只包含链接主体部分
+            content = parts[0]
             remark = unquote(parts[1])
         
         method = None
@@ -1297,21 +1297,18 @@ def parse_ss_node(line: str) -> dict | None:
         server = None
         port = None
         
-        # 现代 Shadowsocks 加密方式的白名单，这些加密方式的密码通常是 Base64 编码的
+        # 现代 Shadowsocks 加密方式的白名单
         modern_ss_ciphers = {
             '2022-blake3-aes-128-gcm',
             '2022-blake3-aes-256-gcm',
             '2022-blake3-chacha20-poly1305'
         }
         
-        # 判断内容是否为完全Base64编码的字符串 (如 ss://base64_encoded_method_password_server_port)
-        # 这种情况下，content 中通常不包含 '@' 符号
-        if '@' not in content: 
+        # 判断内容是否为完全Base64编码的字符串
+        if '@' not in content:
             try:
-                # 添加填充符，确保Base64解码正确
                 padded_content = content + '=' * (-len(content) % 4)
                 
-                # 尝试 URL 安全解码，如果失败再尝试标准解码
                 try:
                     decoded_full_string_bytes = base64.urlsafe_b64decode(padded_content)
                 except Exception:
@@ -1319,21 +1316,18 @@ def parse_ss_node(line: str) -> dict | None:
                 
                 decoded_full_string = decoded_full_string_bytes.decode('utf-8', errors='ignore')
                 
-                # 解码后的字符串格式应为 method:password@server:port
                 parts_decoded = decoded_full_string.split('@')
                 if len(parts_decoded) != 2:
                     raise ValueError("Invalid decoded SS format: missing '@' separator.")
                 
                 method_password_part, server_port_part = parts_decoded
                 
-                # 提取加密方法和密码
                 mp_subparts = method_password_part.split(':', 1)
                 if len(mp_subparts) != 2:
                     raise ValueError("Invalid decoded SS format: missing ':' in method:password.")
                 method = mp_subparts[0]
-                password = mp_subparts[1]  # 此时密码已经是明文
+                password = mp_subparts[1]
                 
-                # 提取服务器地址和端口
                 sp_subparts = server_port_part.split(':', 1)
                 if len(sp_subparts) != 2:
                     raise ValueError("Invalid decoded SS format: missing ':' in server:port.")
@@ -1341,23 +1335,21 @@ def parse_ss_node(line: str) -> dict | None:
                 port = int(sp_subparts[1])
             except Exception:
                 return None
-        else:  # 常见格式：ss://method:password@server:port (可能包含Base64编码的密码)
-            # 分割出 method:password 部分和 server:port 部分
+        else:
+            # 常见格式：ss://method:password@server:port
             at_split_parts = content.split('@', 1)
             if len(at_split_parts) != 2:
                 raise ValueError("Invalid SS format: missing '@' for method:password@server:port.")
             
             method_password_part_raw, server_port_part_raw = at_split_parts
             
-            # 提取加密方法和原始密码字符串
             mp_colon_split = method_password_part_raw.split(':', 1)
             if len(mp_colon_split) != 2:
                 raise ValueError("Invalid SS format: missing ':' in method:password.")
             
             method = mp_colon_split[0]
-            password_from_url = mp_colon_split[1]  # 这是URL中原始的密码字符串，可能是明文或Base64
+            password_from_url = mp_colon_split[1]
             
-            # 提取服务器地址和端口
             sp_colon_split = server_port_part_raw.split(':', 1)
             if len(sp_colon_split) != 2:
                 raise ValueError("Invalid SS format: missing ':' in server:port.")
@@ -1367,13 +1359,14 @@ def parse_ss_node(line: str) -> dict | None:
             
             # 特殊处理现代SS加密方式：其密码部分通常是Base64编码的
             if method.lower() in modern_ss_ciphers:
-                # 使用 is_valid_base64 检查密码是否是有效的Base64编码
                 if is_valid_base64(password_from_url):
                     try:
                         password_encoded = password_from_url.strip()
                         password_encoded = unquote(password_encoded)
-                        password_encoded = password_encoded.replace('\n', '').replace('\r', '').replace(' ', '')
+                        password_encoded = password_encoded.replace('\n', '').replace('\r', '').replace(' ', '').replace('\t', '')
                         
+                        # 先移除尾部填充，再重新计算
+                        password_encoded = password_encoded.rstrip('=')
                         padding_needed = (-len(password_encoded)) % 4
                         password_encoded += '=' * padding_needed
 
@@ -1381,15 +1374,17 @@ def parse_ss_node(line: str) -> dict | None:
                             decoded_pw_bytes = base64.urlsafe_b64decode(password_encoded)
                         except Exception:
                             decoded_pw_bytes = base64.b64decode(password_encoded)
-                        
+
                         password = decoded_pw_bytes.decode('utf-8', errors='ignore')
-                    except Exception:
-                        return None 
+                    except Exception as e:
+                        # 解码失败时使用原文密码作为备用
+                        password = password_from_url
                 else:
-                    return None
+                    # 不是有效Base64，使用原文密码
+                    password = password_from_url
             else:
-                # 对于传统加密方式，密码通常是明文，直接使用 URL 中提取的字符串作为密码
-                password = password_from_url 
+                # 对于传统加密方式，密码通常是明文
+                password = password_from_url
         
         # 确保所有关键信息都已成功提取
         if not (method and password and server and port):
