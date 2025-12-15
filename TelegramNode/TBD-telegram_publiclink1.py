@@ -1459,51 +1459,82 @@ def parse_trojan_node(line):
         return node
     except Exception:
         return None
+        
 def parse_hysteria_node(line):
+    """
+    修正后的 Hysteria (v1) 解析函数。
+    - 强制添加 up/down 字段，并提供默认值。
+    - 修正了布尔值解析。
+    - 使用更符合 Clash 规范的字段名。
+    """
     try:
         parsed = urlparse(line)
         if parsed.scheme != 'hysteria':
             return None
         params = parse_qs(parsed.query)
+
+        # --- 核心修改：为 Hysteria (v1) 添加必需的 up/down 字段 ---
+        # 尝试从 URL 参数中获取 up/down 速度，如果不存在，则提供一个合理的默认值。
+        # Clash 核心要求 up/down 字段必须存在。
+        up_speed_str = params.get('up', ['10'])[0]
+        down_speed_str = params.get('down', ['50'])[0]
+        
+        up_speed = int(''.join(filter(str.isdigit, up_speed_str)) or 10)
+        down_speed = int(''.join(filter(str.isdigit, down_speed_str)) or 50)
+
         node = {
             'name': unquote(parsed.fragment) or f"hysteria_{parsed.hostname}",
             'type': 'hysteria',
             'server': parsed.hostname,
             'port': int(parsed.port or 0),
-            'auth': params.get('auth', [''])[0],
+            'auth_str': params.get('auth', [''])[0],
+            'up': up_speed,                          # 添加 up 字段
+            'down': down_speed,                      # 添加 down 字段
             'protocol': params.get('protocol', ['udp'])[0],
-            'insecure': params.get('insecure', ['false'])[0].lower() == 'true',
+            'skip-cert-verify': params.get('insecure', ['0'])[0] in ('1', 'true'), # 更稳妥的布尔值转换
+            'sni': params.get('sni', [''])[0],
             'obfs': params.get('obfs', [''])[0],
-            'udp': True,
+            'fast-open': True, # 推荐开启
         }
+        # 为了兼容 Clash，将 'auth_str' 字段重命名为 'auth'
+        node['auth'] = node.pop('auth_str')
+        
         return node
-    except Exception:
+    except Exception as e:
+        print(f"【错误】解析 Hysteria 节点时失败: {e} -> {line[:80]}...")
         return None
+        
 def parse_hysteria2_node(line):
+    """
+    修正后的 Hysteria2 解析函数。
+    - 移除了不必要的 'protocol' 和 'udp' 字段。
+    - 增加了 'fast-open' 和 'sni' 字段。
+    """
     try:
         parsed = urlparse(line)
         if parsed.scheme != 'hysteria2':
             return None
+            
         params = parse_qs(parsed.query)
-        auth = parsed.username or ''
-        obfs_password = params.get('obfs-password', [''])[0]
-        insecure_val = params.get('insecure', ['false'])[0].lower()
-        insecure = insecure_val in ('1', 'true', 'yes')
+        insecure_val = params.get('insecure', ['0'])[0].lower()
+
         node = {
             'name': unquote(parsed.fragment) if parsed.fragment else f"hysteria2_{parsed.hostname}",
             'type': 'hysteria2',
             'server': parsed.hostname,
             'port': int(parsed.port or 0),
-            'auth': auth,
-            'protocol': params.get('protocol', ['udp'])[0],
-            'insecure': insecure,
+            'auth': parsed.username or '',
             'obfs': params.get('obfs', [''])[0],
-            'obfs-password': obfs_password,
-            'udp': params.get('udp', ['true'])[0].lower() == 'true',
+            'obfs-password': params.get('obfs-password', [''])[0],
+            'sni': params.get('sni', [''])[0],
+            'skip-cert-verify': insecure_val in ('1', 'true', 'yes'),
+            'fast-open': True, # 推荐开启
         }
         return node
-    except Exception:
+    except Exception as e:
+        print(f"【错误】解析 Hysteria2 节点时失败: {e} -> {line[:80]}...")
         return None
+        
 def parse_plain_nodes_from_text(text):
     proxies = []
     success_count = defaultdict(int)
