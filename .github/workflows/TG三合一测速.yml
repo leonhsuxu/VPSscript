@@ -320,67 +320,21 @@ jobs:
           fi
           echo "=== 网络检查完成 ==="
 
-      # === 步骤15：自动提交更改 ===
-      - name: 自动提交更改
+      # === 步骤15：自动提交所有生成的YAML文件 ===
+      - name: 自动提交所有生成的YAML文件
         if: success()
-        run: |
-          echo "=== 📤 自动提交更改 ==="
-          # 设置时区为北京时间，确保在整个run块中生效
-          export TZ='Asia/Shanghai'
-          echo "提交时间: $(date '+%Y-%m-%d %H:%M:%S %Z')"
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          # 提交信息
+          commit_message: "🚀 (Auto-Update) 更新节点与调试文件"
+          
+          # 要提交的文件或目录的通配符模式。
+          # 'flclashyaml/' 会提交该目录下所有的新增、修改、删除。
+          # 这是最推荐的方式，可以确保所有生成的文件都被包含。
+          file_pattern: flclashyaml/
 
-          FILE_PATH="flclashyaml/Tg-node2.yaml"
+          # 如果您只想提交 yaml 文件，也可以使用下面的模式：
+          # file_pattern: flclashyaml/*.yaml
 
-          if [ ! -f "$FILE_PATH" ]; then
-            echo "⚠️ 配置文件不存在，跳过提交"
-            exit 0
-          fi
-
-          # 获取远程 master 分支的最新状态，但不重置本地工作区
-          # 这一步是确保 'origin/master' 引用是远程最新的，供 git show 使用
-          git fetch origin master
-
-          # 提取本地（Python脚本刚刚生成）文件中的更新时间
-          # 使用 sed 和 grep 组合，从文件前20行中查找包含“更新时间”的行，并提取时间字符串
-          # 修正 sed 正则表达式中连字符的转义问题，将 '-' 放在字符集的末尾
-          local_update_time=$(sed -n '1,20p' "$FILE_PATH" | grep '更新时间' | head -1 | sed -E 's/.*更新时间[ :：]*([0-9 :\-]+).*/\1/')
-
-          # 提取远程 master 分支上（上次提交）的文件更新时间
-          # 使用 git show 直接查看远程分支上的文件内容
-          # 修正 sed 正则表达式中连字符的转义问题，将 '-' 放在字符集的末尾
-          remote_update_time=$(git show origin/master:"$FILE_PATH" 2>/dev/null | sed -n '1,20p' | grep '更新时间' | head -1 | sed -E 's/.*更新时间[ :：]*([0-9 :\-]+).*/\1/')
-
-          echo "远程更新时间: $remote_update_time"
-          echo "本地更新时间: $local_update_time"
-
-          # 比较本地提取到的更新时间（Python脚本刚刚生成的）与远程提取到的更新时间（上次提交的）
-          if [ "$local_update_time" != "$remote_update_time" ]; then
-            echo "更新时间不一致，认为文件发生变化，准备提交"
-
-            # 配置 Git 用户信息，用于提交
-            git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git config --local user.name "github-actions[bot]"
-            
-            # 将修改添加到暂存区
-            git add "$FILE_PATH"
-
-            # 获取当前的提交时间（会使用上面设置的北京时区）
-            COMMIT_TIME=$(date '+%Y-%m-%d %H:%M:%S')
-            # 获取节点数量，用于生成提交信息
-            NODE_COUNT=$(python3 -c 'import yaml; d=yaml.safe_load(open("flclashyaml/Tg-node2.yaml",encoding="utf-8")); print(len(d.get("proxies",[])))' 2>/dev/null || echo "?")
-            
-            # 生成提交信息
-            COMMIT_MESSAGE="🚀 自动更新：Telegram节点配置 (${NODE_COUNT}节点) - ${COMMIT_TIME}"
-            echo "提交信息: ${COMMIT_MESSAGE}"
-            
-            # 执行 Git 提交
-            git commit -m "${COMMIT_MESSAGE}"
-
-            # 强制推送本地 HEAD 到远程分支
-            # --force 参数会覆盖远程分支的历史记录，请谨慎使用。
-            # 这里使用是因为每次生成的文件都是最新的快照，不需要保留中间历史。
-            git push origin HEAD --force
-            echo "✅ 强制提交完成"
-          else
-            echo "📝 更新时间相同，文件无变化，跳过提交"
-          fi
+          # 指定要推送的分支，通常是 main 或 master
+          # push_options: '--force' # 如果您需要强制推送，可以取消此行注释
