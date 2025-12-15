@@ -2664,124 +2664,151 @@ async def main():
     all_nodes = list(all_proxies_map.values())
     if not all_nodes:
         sys.exit("❌ 无任何节点可用，程序退出")
-
+        
     # === 阶段3：测速准备（根据模式选择网络和测速策略）===
     print(f"[3/5] 开始节点测速")
     # 定义测速工具路径
     speedtest_path = './xcspeedtest'     # xcspeedtest程序路径
     clash_path = './clash_core/clash'    # clash-speedtest核心路径
+    
     # 使用最新版变量，仅使用新变量，不兼容旧变量
     DETAILED_SPEEDTEST_MODE = os.getenv('DETAILED_SPEEDTEST_MODE', '').strip().lower()
     if not DETAILED_SPEEDTEST_MODE:
         print("❗️错误: 未设置环境变量 DETAILED_SPEEDTEST_MODE，程序退出。")
         sys.exit(1)
+        
     mode = DETAILED_SPEEDTEST_MODE
     print(f"使用测速模式: {mode}")
-
-    # ===== 关键修改点：在测速阶段开始前，统一获取一次 test_urls =====
-    common_test_urls = get_test_urls() 
-    print(f"使用的测速地址: {common_test_urls}") # 显式打印一次，替代了batch函数内部的打印
-    # =================================================================
+    
+    # <--- 关键修改：移除在这里对 get_test_urls() 的调用
+    
     final_tested_nodes = all_nodes.copy()
     # Placeholders for intermediate results
     tcp_passed = []
     clash_passed = []
     
+    # 根据不同的测速模式，在各自的逻辑块内获取测速地址
     if mode == 'tcp_clash_xc':
         print("【模式】TCP 粗筛 → Clash 精测 → Speedtest 精测")
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('tcp', require_warp=WARP_FOR_TCP)
         tcp_passed = batch_tcp_test(all_nodes)
-        print(f"🆗TCP 粗筛完成，通过节点数: 🛩️{len(tcp_passed)}") # Added result print
+        print(f"🆗 TCP 粗筛完成，通过节点数: 🛩️ {len(tcp_passed)}")
+        
         if not tcp_passed:
             print("TCP全部不通，降级使用 Clash + Speedtest 测速")
             if os.getenv('GITHUB_ACTIONS') == 'true':
                 ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
-            # 传递 common_test_urls
-            clash_passed = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=common_test_urls)
-            print(f"🆗Clash 精测完成，通过节点数: 🛩️{len(clash_passed)}") # Added result print
+            
+            # <--- 关键修改：在这里获取测速地址
+            clash_test_urls = get_test_urls()
+            print(f"Clash测速使用地址: {clash_test_urls}")
+            clash_passed = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=clash_test_urls)
+            print(f"🆗 Clash 精测完成，通过节点数: 🛩️ {len(clash_passed)}")
+            
             if clash_passed:
-                # 传递 common_test_urls
-                final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, clash_passed, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=common_test_urls)
+                # <--- 关键修改：在这里获取测速地址
+                speedtest_urls = get_test_urls()
+                print(f"Speedtest测速使用地址: {speedtest_urls}")
+                final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, clash_passed, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=speedtest_urls)
             else:
                 final_tested_nodes = []
         else:
-            print("🔔对TCP通过节点进行 Clash 测速")
+            print("🔔 对TCP通过节点进行 Clash 测速")
             if os.getenv('GITHUB_ACTIONS') == 'true':
                 ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
-            # 传递 common_test_urls
-            clash_passed = batch_test_proxies_clash(clash_path, tcp_passed, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=common_test_urls)
-            print(f"🆗Clash 精测完成，通过节点数: 🛩️{len(clash_passed)}") # Added result print
+                
+            # <--- 关键修改：在这里获取测速地址
+            clash_test_urls = get_test_urls()
+            print(f"Clash测速使用地址: {clash_test_urls}")
+            clash_passed = batch_test_proxies_clash(clash_path, tcp_passed, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=clash_test_urls)
+            print(f"🆗 Clash 精测完成，通过节点数: 🛩️ {len(clash_passed)}")
+            
             if clash_passed:
-                print("🔔对 Clash 筛选节点进行 Speedtest 精测")
-                # 传递 common_test_urls
-                final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, clash_passed, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=common_test_urls)
+                print("🔔 对 Clash 筛选节点进行 Speedtest 精测")
+                # <--- 关键修改：在这里获取测速地址
+                speedtest_urls = get_test_urls()
+                print(f"Speedtest测速使用地址: {speedtest_urls}")
+                final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, clash_passed, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=speedtest_urls)
             else:
                 final_tested_nodes = []
+
     elif mode == 'tcp_clash':
         print("【模式】TCP 粗筛 → Clash 精测")
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('tcp', require_warp=WARP_FOR_TCP)
         tcp_passed = batch_tcp_test(all_nodes)
-        print(f"🆗TCP 粗筛完成，通过节点数: 🛩️{len(tcp_passed)}") # Added result print
+        print(f"🆗 TCP 粗筛完成，通过节点数: 🛩️ {len(tcp_passed)}")
+        
+        nodes_for_clash_test = tcp_passed if tcp_passed else all_nodes
         if not tcp_passed:
-            print("TCP全部不通，降级使用 Clash 测速")
-            if os.getenv('GITHUB_ACTIONS') == 'true':
-                ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
-            # 传递 common_test_urls
-            final_tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=common_test_urls)
-            print(f"🆗Clash 精测完成，通过节点数: 🛩️{len(final_tested_nodes)}") # Added result print
-        else:
-            if os.getenv('GITHUB_ACTIONS') == 'true':
-                ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
-            # 传递 common_test_urls
-            final_tested_nodes = batch_test_proxies_clash(clash_path, tcp_passed, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=common_test_urls)
-            print(f"🆗Clash 精测完成，通过节点数: 🛩️{len(final_tested_nodes)}") # Added result print
+             print("TCP全部不通，降级对所有节点使用 Clash 测速")
+             
+        if os.getenv('GITHUB_ACTIONS') == 'true':
+            ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
+        
+        # <--- 关键修改：在这里获取测速地址
+        clash_test_urls = get_test_urls()
+        print(f"Clash测速使用地址: {clash_test_urls}")
+        final_tested_nodes = batch_test_proxies_clash(clash_path, nodes_for_clash_test, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=clash_test_urls)
+        print(f"🆗 Clash 精测完成，通过节点数: 🛩️ {len(final_tested_nodes)}")
+
     elif mode == 'tcp_xc':
         print("【模式】TCP 粗筛 → Speedtest 精测")
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('tcp', require_warp=WARP_FOR_TCP)
         tcp_passed = batch_tcp_test(all_nodes)
-        print(f"🆗TCP 粗筛完成，通过节点数: 🛩️{len(tcp_passed)}") # Added result print
+        print(f"🆗 TCP 粗筛完成，通过节点数: 🛩️ {len(tcp_passed)}")
+        
+        nodes_for_speedtest = tcp_passed if tcp_passed else all_nodes
         if not tcp_passed:
-            print("TCP 全部不通，降级使用 Speedtest 测速")
-            if os.getenv('GITHUB_ACTIONS') == 'true':
-                ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
-            # 传递 common_test_urls
-            final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, all_nodes, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=common_test_urls)
-            print(f"🆗Speedtest 精测完成，通过节点数: 🛩️{len(final_tested_nodes)}") # Added result print
-        else:
-            if os.getenv('GITHUB_ACTIONS') == 'true':
-                ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
-            # 传递 common_test_urls
-            final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, tcp_passed, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=common_test_urls)
-            print(f"🆗Speedtest 精测完成，通过节点数: 🛩️{len(final_tested_nodes)}") # Added result print
+             print("TCP全部不通，降级对所有节点使用 Speedtest 测速")
+        
+        if os.getenv('GITHUB_ACTIONS') == 'true':
+            ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
+            
+        # <--- 关键修改：在这里获取测速地址
+        speedtest_urls = get_test_urls()
+        print(f"Speedtest测速使用地址: {speedtest_urls}")
+        final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, nodes_for_speedtest, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=speedtest_urls)
+        print(f"🆗 Speedtest 精测完成，通过节点数: 🛩️ {len(final_tested_nodes)}")
+
     elif mode == 'tcp_only':
         print("【模式】纯 TCP 测速")
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('tcp', require_warp=WARP_FOR_TCP)
         final_tested_nodes = batch_tcp_test(all_nodes)
-        print(f"🆗TCP 测速完成，通过节点数: 🛩️{len(final_tested_nodes)}") # Added result print
+        print(f"🆗 TCP 测速完成，通过节点数: 🛩️ {len(final_tested_nodes)}")
+
     elif mode == 'clash_only':
         print("【模式】纯 Clash 测速")
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
-        # 传递 common_test_urls
-        final_tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=common_test_urls)
-        print(f"🆗Clash 测速完成，通过节点数: 🛩️{len(final_tested_nodes)}") # Added result print
+            
+        # <--- 关键修改：在这里获取测速地址
+        clash_test_urls = get_test_urls()
+        print(f"Clash测速使用地址: {clash_test_urls}")
+        final_tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=clash_test_urls)
+        print(f"🆗 Clash 测速完成，通过节点数: 🛩️ {len(final_tested_nodes)}")
+
     elif mode == 'xcspeedtest_only':
         print("【模式】纯 Speedtest 测速")
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
-        # 传递 common_test_urls
-        final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, all_nodes, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=common_test_urls)
-        print(f"🆗Speedtest 测速完成，通过节点数: 🛩️{len(final_tested_nodes)}") # Added result print
+            
+        # <--- 关键修改：在这里获取测速地址
+        speedtest_urls = get_test_urls()
+        print(f"Speedtest测速使用地址: {speedtest_urls}")
+        final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, all_nodes, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=speedtest_urls)
+        print(f"🆗 Speedtest 测速完成，通过节点数: 🛩️ {len(final_tested_nodes)}")
+        
     else:
         print(f"❗️ 未知测速模式 '{mode}', 程序退出。")
         sys.exit(1)
+        
     # 测速完成，检测有效节点数
     success_count = len(final_tested_nodes)
-    print(f"🆗测速完成，最终存活优质节点数量: 🛩️{success_count}")
+    print(f"🆗 测速完成，最终存活优质节点数量: 🛩️ {success_count}")
     # 保底策略 - 低于阈值时强制保留部分热门地区节点（你的原保底逻辑）
     if success_count < 50:
         print(f"测速结果过少（{success_count}），启动超级保底策略，保留热门地区节点")
@@ -2790,14 +2817,13 @@ async def main():
     final_tested_nodes = [p for p in final_tested_nodes if is_valid_proxy(p)]
     if not final_tested_nodes:
         sys.exit("❌ 测速后无有效节点，程序退出")
-
     # === 阶段4：切换回 GitHub 网络进行最终处理 ===
     print("[4/5] 切换回GitHub网络进行最终处理")
     if os.getenv('GITHUB_ACTIONS') == 'true':
         ensure_network_for_stage('final', require_warp=WARP_FOR_FINAL)
     # 节点规范化名称
     normalized_proxies = normalize_proxy_names(final_tested_nodes)
-    # 限制节点数量（最多300个及分区限制）
+    # 限制节点数量（最多400个及分区限制）
     final_proxies = limit_proxy_counts(normalized_proxies, max_total=400)
     if not final_proxies:
         sys.exit("❌ 节点重命名和限量后无有效节点，程序退出")
@@ -2827,7 +2853,6 @@ async def main():
         sys.exit("❌ 没有有效的节点，程序退出")
     # 重新按质量排序（可选，保证质量分最高排前）
     final_proxies = sorted(final_proxies, key=lambda p: -p.get('quality_score', 0))
-
     # === 阶段5：生成最终配置文件 ===
     print("[5/5] 生成最终配置文件")
     total_count = len(final_proxies)
