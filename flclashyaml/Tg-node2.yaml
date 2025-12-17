@@ -3,10 +3,10 @@
 #  TG 免费节点 · 自动测速精选订阅（Clash 格式）
 # ==================================================
 
-# 更新时间   : 2025-12-17 00:54:11 (北京时间)
-# 节点总数   : 336 个优质节点
-# 平均质量分 : 14.9/100
-# 质量分布   : 🔥极品: 11, ⭐优质: 2, ✅良好: 2, ⚡可用: 321
+# 更新时间   : 2025-12-17 12:49:23 (北京时间)
+# 节点总数   : 234 个优质节点
+# 平均质量分 : 15.4/100
+# 质量分布   : 🔥极品: 9, ⭐优质: 0, ✅良好: 3, ⚡可用: 222
 # 带宽筛选   : ≥ 20.0MB/s
 # 测速模式   : tcp_clash_xc
 # 网络配置   : TCP_Warp=True, Speedtest_Warp=True
@@ -15,193 +15,100 @@
 # ==================================================
 
 proxies:
-- name: 🇫🇷 法国 73 [🔥极品]
-  server: platform.wise.com
-  port: 2053
-  type: vless
-  uuid: 69413f01-c5ae-edb7-66e7-0a9e11caf2c9
-  tls: true
-  client-fingerprint: chrome
+- name: 🇺🇸 美国 18 [🔥极品]
+  server: 104.21.14.54
+  port: 443
+  type: trojan
+  password: e4cbe8b8-37db-4aaa-8469-b84f34c51ebc
+  sni: 6666YHjU.777159.xYz
+  skip-cert-verify: true
   network: ws
   ws-opts:
-    path: /proxyip=sjc.o00o.ooo
+    path: '%2FdilyfCPEmLvYr5hYXD'
     headers:
-      Host: ss.saaas.de5.net
-  udp: true
-  servername: ss.saaas.de5.net
-  tcp_delay: 18
+      Host: 6666YHjU.777159.xYz
+  tcp_delay: 10
+  clash_delay: 37
+  quality_score: 90
+  quality_tag: 🔥极品
+  bandwidth: 102.28MB/s
+- name: 🇺🇸 美国 95 [🔥极品]
+  type: vless
+  server: 104.167.199.95
+  port: 80
+  uuid: 558393ec-d70d-4a05-b412-e59f2436cc14
+  encryption: none
+  flow: ''
+  tls: false
+  skip-cert-verify: false
+  network: ws
+  host: '---@External_Net---@External_Net---@External_Net---@External_Net---@External_Net'
+  path: /vless/
+  sni: ''
+  ws-opts:
+    path: /vless/
+    headers:
+      Host: '---@External_Net---@External_Net---@External_Net---@External_Net---@External_Net'
+  tcp_delay: 7
   clash_delay: 1
-  bandwidth: 128.76MB/s
-  quality_score: 90
-  quality_tag: 🔥极品
-- name: 🇺🇸 美国 100 [🔥极品]
-  type: ss
-  server: 37.19.198.160
-  port: 443
-  cipher: aes-128-gcm
-  password: shadowsocks
-  udp: true
-  tcp_delay: 6
-  clash_delay: 3
-  bandwidth: 174.72MB/s
-  quality_score: 90
-  quality_tag: 🔥极品
-- name: 🇮🇳 印度 526 [🔥极品]
-  type: vmess
-  server: 165.140.216.141
-  port: 443
-  uuid: e7d72a8d-26f2-4b54-b366-0c43e0bcba7d
-  alterId: 0
-  cipher: auto
-  network: tcp
-  tls: false
-  skip-cert-verify: false
-  ws-opts: {}
-  tcp_delay: 5
-  clash_delay: 8
-  bandwidth: 162.79MB/s
-  quality_score: 90
-  quality_tag: 🔥极品
-- name: 🇮🇳 印度 528 [🔥极品]
-  type: vmess
-  server: 38.14.99.179
-  port: 59807
-  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
-  alterId: 0
-  cipher: auto
-  network: tcp
-  tls: false
-  skip-cert-verify: false
-  ws-opts: {}
-  tcp_delay: 5
-  clash_delay: 5
-  bandwidth: 88.41MB/s
   quality_score: 85
   quality_tag: 🔥极品
-- name: 🇺🇸 美国 168 [🔥极品]
-  server: 162.159.254.137
-  port: 2053
+  bandwidth: 62.24MB/s
+- name: 🇺🇳 ss 2 [🔥极品]
+  type: ss
+  server: 107.148.225.121
+  port: 29306
+  cipher: 2022-blake3-aes-256-gcm
+  password: TdNyz8fNoV4PCTlTU/AuLNXkU/C/8EJ9727Uo2qolIY=
+  tcp_delay: 8
+  clash_delay: 7
+  bandwidth: 50.20MB/s
+  quality_score: 85
+  quality_tag: 🔥极品
+- name: 🇮🇹 意大利 1 [🔥极品]
+  type: ss
+  server: 145.249.109.121
+  port: 25512
+  cipher: chacha20-ietf-poly1305
+  password: smSMfR9jqLgMkHuQtxSIWh
+  udp: true
+  tcp_delay: 8
+  clash_delay: 9
+  bandwidth: 58.09MB/s
+  quality_score: 85
+  quality_tag: 🔥极品
+- name: 🇺🇸 美国 109 [🔥极品]
+  server: 173.245.58.58
+  port: 80
   type: vless
-  uuid: 69413f01-c5ae-edb7-66e7-0a9e11caf2c9
-  tls: true
-  client-fingerprint: chrome
+  uuid: 53342b53-157e-4475-9f3a-40439434e689
+  tls: false
   network: ws
   ws-opts:
-    path: /proxyip=sjc.o00o.ooo
+    path: /
     headers:
-      Host: ss.saaas.de5.net
+      Host: c.iamdt.dpdns.org
+    early-data-header-name: Sec-WebSocket-Protocol
+    max-early-data: 2048
   udp: true
-  servername: ss.saaas.de5.net
-  tcp_delay: 6
-  clash_delay: 6
-  bandwidth: 71.23MB/s
+  tcp_delay: 9
+  clash_delay: 47
   quality_score: 85
   quality_tag: 🔥极品
-- name: 🇺🇸 美国 79 [🔥极品]
+  bandwidth: 83.20MB/s
+- name: 🇺🇸 美国 96 [🔥极品]
   type: ss
   server: 205.209.109.194
   port: 17277
   cipher: aes-128-gcm
   password: d2fkgzsdu5sturjs8f19
   udp: true
-  tcp_delay: 6
-  clash_delay: 69
-  bandwidth: 127.59MB/s
+  tcp_delay: 7
+  clash_delay: 97
+  bandwidth: 109.27MB/s
   quality_score: 85
   quality_tag: 🔥极品
-- type: vless
-  name: 🇺🇸 美国 129 [🔥极品]
-  server: us01-vlr01.tcp-reset-club.net
-  port: 443
-  uuid: f0383138-8329-40cf-8b68-dabcd1b6c754
-  network: tcp
-  servername: hls-svod.itunes.apple.com
-  tls: true
-  encryption: none
-  reality-opts:
-    public-key: mLmBhbVFfNuo2eUgBh6r9-5Koz9mUCn3aSzlR6IejUg
-    short-id: '31'
-    spider-x: /
-  client-fingerprint: chrome
-  flow: xtls-rprx-vision
-  tcp_delay: 29
-  clash_delay: 5
-  bandwidth: 40.85MB/s
-  quality_score: 80
-  quality_tag: 🔥极品
-- name: 🇺🇸 美国 173 [🔥极品]
-  server: 104.16.241.241
-  port: 2053
-  type: vless
-  uuid: 69413f01-c5ae-edb7-66e7-0a9e11caf2c9
-  tls: true
-  client-fingerprint: chrome
-  network: ws
-  ws-opts:
-    path: /proxyip=sjc.o00o.ooo
-    headers:
-      Host: ss.saaas.de5.net
-  udp: true
-  servername: ss.saaas.de5.net
-  tcp_delay: 5
-  clash_delay: 9
-  bandwidth: 35.41MB/s
-  quality_score: 80
-  quality_tag: 🔥极品
-- name: 🇬🇧 英国 1 [🔥极品]
-  server: 209.38.168.122
-  port: 21250
-  type: vless
-  uuid: 69239696-f17e-4eb2-a337-7ce07d65d23d
-  tls: false
-  network: grpc
-  grpc-opts:
-    grpc-mode: gun
-    grpc-service-name: ZEDMODEON-ZEDMODEON-bia-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON
-  tcp_delay: 60
-  clash_delay: 7
-  bandwidth: 28.39MB/s
-  quality_score: 75
-  quality_tag: 🔥极品
-- name: 🇩🇪 德国 65 [🔥极品]
-  server: notability.com
-  port: 2053
-  type: vless
-  uuid: 69413f01-c5ae-edb7-66e7-0a9e11caf2c9
-  tls: true
-  client-fingerprint: chrome
-  network: ws
-  ws-opts:
-    path: /proxyip=sjc.o00o.ooo
-    headers:
-      Host: ss.saaas.de5.net
-  udp: true
-  servername: ss.saaas.de5.net
-  tcp_delay: 13
-  clash_delay: 75
-  bandwidth: 37.37MB/s
-  quality_score: 75
-  quality_tag: 🔥极品
-- name: 🇺🇸 美国 187 [🔥极品]
-  server: 104.17.53.155
-  port: 2053
-  type: vless
-  uuid: 69413f01-c5ae-edb7-66e7-0a9e11caf2c9
-  tls: true
-  client-fingerprint: chrome
-  network: ws
-  ws-opts:
-    path: /proxyip=sjc.o00o.ooo
-    headers:
-      Host: ss.saaas.de5.net
-  udp: true
-  servername: ss.saaas.de5.net
-  tcp_delay: 5
-  clash_delay: 82
-  bandwidth: 38.00MB/s
-  quality_score: 75
-  quality_tag: 🔥极品
-- name: 🇺🇸 美国 179 [⭐优质]
+- name: 🇺🇸 美国 44 [🔥极品]
   server: go2.lenovo.com
   port: 2053
   type: vless
@@ -215,13 +122,71 @@ proxies:
       Host: ss.saaas.de5.net
   udp: true
   servername: ss.saaas.de5.net
-  tcp_delay: 26
-  clash_delay: 159
-  bandwidth: 46.27MB/s
-  quality_score: 65
-  quality_tag: ⭐优质
+  tcp_delay: 13
+  clash_delay: 2
+  bandwidth: 48.19MB/s
+  quality_score: 80
+  quality_tag: 🔥极品
+- name: 🇩🇪 德国 3 [🔥极品]
+  server: notability.com
+  port: 2053
+  type: vless
+  uuid: 69413f01-c5ae-edb7-66e7-0a9e11caf2c9
+  tls: true
+  client-fingerprint: chrome
+  network: ws
+  ws-opts:
+    path: /proxyip=sjc.o00o.ooo
+    headers:
+      Host: ss.saaas.de5.net
+  udp: true
+  servername: ss.saaas.de5.net
+  tcp_delay: 15
+  clash_delay: 5
+  bandwidth: 34.53MB/s
+  quality_score: 80
+  quality_tag: 🔥极品
+- name: 🇺🇳 hy 1 [🔥极品]
+  type: hysteria2
+  server: 107.148.225.121
+  port: 14176
+  obfs: salamander
+  obfs-password: aDtPR7j0IEWkuRpYwlzl2g==
+  password: n6jDpttBTa6xcC29Dl9rPvHDmQrN7pALAAQnV0P/1zk=
+  sni: www.microsoft.com
+  skip-cert-verify: true
+  alpn:
+  - h3
+  tcp_delay: 6
+  clash_delay: 6
+  bandwidth: 40.96MB/s
+  quality_score: 80
+  quality_tag: 🔥极品
+- name: 🇺🇳 ss 1 [✅良好]
+  type: ss
+  server: 107.148.225.121
+  port: 30506
+  cipher: aes-256-gcm
+  password: 9_PjVQJVYrBMT1WgdNjjfIglmTU60Hur
+  tcp_delay: 6
+  clash_delay: 609
+  bandwidth: 34.41MB/s
+  quality_score: 40
+  quality_tag: ✅良好
+- name: 🇭🇰 香港 1 [✅良好]
+  server: 112.118.116.178
+  port: 443
+  type: trojan
+  password: e2722c0fb503f8a592436c12bce0509a
+  sni: www.nintendogames.net
+  skip-cert-verify: false
+  tcp_delay: 6
+  clash_delay: 923
+  bandwidth: 53.30MB/s
+  quality_score: 40
+  quality_tag: ✅良好
 - type: vless
-  name: 🇮🇳 印度 39 [⭐优质]
+  name: 🇮🇳 印度 4 [✅良好]
   server: us01-gmn-vlr01.tcp-reset-club.net
   port: 443
   uuid: f0383138-8329-40cf-8b68-dabcd1b6c754
@@ -235,73 +200,13 @@ proxies:
     spider-x: /
   client-fingerprint: chrome
   flow: xtls-rprx-vision
-  tcp_delay: 33
-  clash_delay: 686
-  bandwidth: 251.92MB/s
-  quality_score: 50
-  quality_tag: ⭐优质
-- name: 🇯🇵 日本 17 [✅良好]
-  server: cloudflare.tv
-  port: 2053
-  type: vless
-  uuid: 69413f01-c5ae-edb7-66e7-0a9e11caf2c9
-  tls: true
-  client-fingerprint: chrome
-  network: ws
-  ws-opts:
-    path: /proxyip=sjc.o00o.ooo
-    headers:
-      Host: ss.saaas.de5.net
-  udp: true
-  servername: ss.saaas.de5.net
-  tcp_delay: 17
-  clash_delay: 860
-  bandwidth: 45.83MB/s
+  tcp_delay: 20
+  clash_delay: 1717
+  bandwidth: 147.96MB/s
   quality_score: 35
   quality_tag: ✅良好
-- name: 🇩🇪 德国 63 [✅良好]
-  server: docker.1panel.live
-  port: 2053
-  type: vless
-  uuid: 69413f01-c5ae-edb7-66e7-0a9e11caf2c9
-  tls: true
-  client-fingerprint: chrome
-  network: ws
-  ws-opts:
-    path: /proxyip=sjc.o00o.ooo
-    headers:
-      Host: ss.saaas.de5.net
-  udp: true
-  servername: ss.saaas.de5.net
-  tcp_delay: 17
-  clash_delay: 1518
-  bandwidth: 69.62MB/s
-  quality_score: 30
-  quality_tag: ✅良好
 - cipher: aes-256-gcm
-  name: 🇫🇷 法国 42 [⚡可用]
-  password: amazonskr05
-  port: 443
-  server: 15.237.246.157
-  type: ss
-  tcp_delay: 6
-  clash_delay: 2025
-  bandwidth: 80.50MB/s
-  quality_score: 27
-  quality_tag: ⚡可用
-- cipher: aes-256-gcm
-  name: 🇫🇷 法国 49 [⚡可用]
-  password: amazonskr05
-  port: 443
-  server: 13.38.79.160
-  type: ss
-  tcp_delay: 6
-  clash_delay: 2025
-  bandwidth: 88.42MB/s
-  quality_score: 27
-  quality_tag: ⚡可用
-- cipher: aes-256-gcm
-  name: 🇫🇷 法国 54 [⚡可用]
+  name: 🇫🇷 法国 6 [⚡可用]
   password: amazonskr05
   port: 443
   server: 15.236.142.160
@@ -312,7 +217,29 @@ proxies:
   quality_score: 27
   quality_tag: ⚡可用
 - cipher: aes-256-gcm
-  name: 🇫🇷 法国 65 [⚡可用]
+  name: 🇫🇷 法国 10 [⚡可用]
+  password: amazonskr05
+  port: 443
+  server: 13.38.79.160
+  type: ss
+  tcp_delay: 6
+  clash_delay: 2025
+  bandwidth: 88.42MB/s
+  quality_score: 27
+  quality_tag: ⚡可用
+- cipher: aes-256-gcm
+  name: 🇫🇷 法国 14 [⚡可用]
+  password: amazonskr05
+  port: 443
+  server: 15.237.246.157
+  type: ss
+  tcp_delay: 6
+  clash_delay: 2025
+  bandwidth: 80.50MB/s
+  quality_score: 27
+  quality_tag: ⚡可用
+- cipher: aes-256-gcm
+  name: 🇫🇷 法国 18 [⚡可用]
   password: amazonskr05
   port: 443
   server: 13.39.112.212
@@ -322,52 +249,21 @@ proxies:
   bandwidth: 88.33MB/s
   quality_score: 27
   quality_tag: ⚡可用
-- name: 🇺🇸 美国 91 [⚡可用]
+- name: 🇺🇸 美国 99 [⚡可用]
   type: hysteria2
   server: 974e2823-t6ngg0-t7j1ub-g3b3.us.hyhuawei.com
   password: 9ad05870-d8c5-11ef-9f1c-f23c913c8d2b
   skip-cert-verify: false
   port: 443
   ports: 30000-60000
-  tcp_delay: 29
+  tcp_delay: 28
   clash_delay: 2025
   quality_score: 15
   quality_tag: ⚡可用
   region_info:
     name: 美国
     code: US
-- name: 🇺🇸 美国 106 [⚡可用]
-  type: hysteria2
-  server: b50e8cc1-t6ngg0-t7t5pe-1s0a7.us.hyhuawei.com
-  password: 1b9c460e-f026-11ef-b737-f23c91cfbbc9
-  skip-cert-verify: false
-  port: 443
-  ports: 30000-60000
-  tcp_delay: 29
-  clash_delay: 2025
-  quality_score: 15
-  quality_tag: ⚡可用
-  region_info:
-    name: 美国
-    code: US
-- name: 🇩🇪 德国 3 [⚡可用]
-  type: trojan
-  server: 107.189.3.96
-  port: 443
-  password: f42d1b0d-c398-43cb-be37-d739b1477a5d
-  sni: joss.gpj4.web.id
-  skip-cert-verify: false
-  udp: true
-  alpn: []
-  tls: true
-  region_info:
-    name: 德国
-    code: DE
-  clash_delay: 2025
-  quality_score: 14
-  quality_tag: ⚡可用
-  tcp_delay: 7
-- name: 🇩🇪 德国 18 [⚡可用]
+- name: 🇩🇪 德国 1 [⚡可用]
   type: trojan
   server: 51.158.146.183
   port: 443
@@ -384,7 +280,24 @@ proxies:
   quality_score: 14
   quality_tag: ⚡可用
   tcp_delay: 6
-- name: 🇩🇪 德国 39 [⚡可用]
+- name: 🇩🇪 德国 2 [⚡可用]
+  type: trojan
+  server: 107.189.3.96
+  port: 443
+  password: f42d1b0d-c398-43cb-be37-d739b1477a5d
+  sni: joss.gpj4.web.id
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  region_info:
+    name: 德国
+    code: DE
+  clash_delay: 2025
+  quality_score: 14
+  quality_tag: ⚡可用
+  tcp_delay: 6
+- name: 🇩🇪 德国 4 [⚡可用]
   type: ss
   server: 45.154.207.246
   port: 20030
@@ -396,21 +309,10 @@ proxies:
   clash_delay: 2025
   quality_score: 14
   quality_tag: ⚡可用
-  tcp_delay: 5
-- name: 🇫🇷 法国 1 [⚡可用]
-  password: c2de1269-17cb-41f6-ab97-f8c11a6f0f4f
-  port: 8443
-  server: 158.178.206.197
-  skip-cert-verify: false
-  sni: joss.gpj1.web.id
-  type: trojan
   tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 2 [⚡可用]
+- name: 🇫🇷 法国 1 [⚡可用]
   type: vless
-  server: 104.18.128.229
+  server: 104.26.11.3
   port: 443
   uuid: 219d848d-60f2-4321-8275-72b9b575b37e
   encryption: none
@@ -429,7 +331,7 @@ proxies:
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇫🇷 法国 3 [⚡可用]
+- name: 🇫🇷 法国 2 [⚡可用]
   type: vless
   server: 198.41.223.246
   port: 443
@@ -450,235 +352,30 @@ proxies:
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
+- name: 🇫🇷 法国 3 [⚡可用]
+  type: vless
+  server: 104.24.196.104
+  port: 443
+  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
+  encryption: none
+  flow: ''
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  host: qaa.zhuk.us.kg
+  path: /?ed=2560&proxyip=185.133.35.223:443
+  sni: qaa.zhuk.us.kg
+  ws-opts:
+    path: /?ed=2560&proxyip=185.133.35.223:443
+    headers:
+      Host: qaa.zhuk.us.kg
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
 - name: 🇫🇷 法国 4 [⚡可用]
   type: vless
-  server: 104.19.46.158
-  port: 443
-  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: qaa.zhuk.us.kg
-  path: /?ed=2560&proxyip=proxyip.oracle.fxxk.dedyn.io
-  sni: qaa.zhuk.us.kg
-  ws-opts:
-    path: /?ed=2560&proxyip=proxyip.oracle.fxxk.dedyn.io
-    headers:
-      Host: qaa.zhuk.us.kg
-  tcp_delay: 6
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 5 [⚡可用]
-  type: vless
-  server: 104.19.47.223
-  port: 443
-  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: qaa.zhuk.us.kg
-  path: /?ed=2560&proxyip=proxyip.oracle.fxxk.dedyn.io
-  sni: qaa.zhuk.us.kg
-  ws-opts:
-    path: /?ed=2560&proxyip=proxyip.oracle.fxxk.dedyn.io
-    headers:
-      Host: qaa.zhuk.us.kg
-  tcp_delay: 8
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 6 [⚡可用]
-  type: vless
-  server: 45.131.208.16
-  port: 80
-  uuid: 8334979f-2f04-4f49-8ead-bbceed373ecb
-  encryption: none
-  flow: ''
-  tls: false
-  skip-cert-verify: false
-  network: ws
-  host: esetsecuritylicense.roobdi.workers.dev
-  path: Telegram@WangCai2/?ed=2048
-  sni: esetsecuritylicense.roobdi.workers.dev
-  ws-opts:
-    path: Telegram@WangCai2/?ed=2048
-    headers:
-      Host: esetsecuritylicense.roobdi.workers.dev
-  tcp_delay: 6
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 7 [⚡可用]
-  type: trojan
-  server: 109.234.211.66
-  port: 8443
-  password: trojan
-  sni: store.timimi.dpdns.org
-  skip-cert-verify: false
-  udp: true
-  alpn: []
-  tls: true
-  tcp_delay: 5
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 8 [⚡可用]
-  type: vless
-  server: 190.93.247.129
-  port: 443
-  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: qaa.zhuk.us.kg
-  path: /?ed=2560&proxyip=185.133.35.223:443
-  sni: qaa.zhuk.us.kg
-  ws-opts:
-    path: /?ed=2560&proxyip=185.133.35.223:443
-    headers:
-      Host: qaa.zhuk.us.kg
-  tcp_delay: 5
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 9 [⚡可用]
-  type: vless
-  server: 104.19.59.127
-  port: 443
-  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: qaa.zhuk.us.kg
-  path: /?ed=2560&proxyip=proxyip.oracle.fxxk.dedyn.io
-  sni: qaa.zhuk.us.kg
-  ws-opts:
-    path: /?ed=2560&proxyip=proxyip.oracle.fxxk.dedyn.io
-    headers:
-      Host: qaa.zhuk.us.kg
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇫🇷 法国 10 [⚡可用]
-  network: ws
-  port: 443
-  server: 57.128.189.240
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
-  ws-opts:
-    path: /
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 11 [⚡可用]
-  type: vless
-  server: 188.114.96.3
-  port: 80
-  uuid: e927c61f-8a00-45a5-9d43-06ac4f1b8b0e
-  encryption: none
-  flow: ''
-  tls: false
-  skip-cert-verify: false
-  network: ws
-  host: VpNkenZo7.vpnKeNzO0.wORKerS.DeV
-  path: /QyAbjEiGvmffRF36?ed=2560
-  sni: ''
-  ws-opts:
-    path: /QyAbjEiGvmffRF36?ed=2560
-    headers:
-      Host: VpNkenZo7.vpnKeNzO0.wORKerS.DeV
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 12 [⚡可用]
-  type: vless
-  server: 147135001195.sec22org.com
-  port: 443
-  uuid: ea286109-d20f-415e-849e-4af20ab04b65
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: tcp
-  host: ''
-  path: ''
-  sni: ''
-  tcp_delay: 26
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 13 [⚡可用]
-  type: vless
-  server: 104.20.157.212
-  port: 443
-  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: qaa.zhuk.us.kg
-  path: /?ed=2560&proxyip=185.133.35.223:443
-  sni: qaa.zhuk.us.kg
-  ws-opts:
-    path: /?ed=2560&proxyip=185.133.35.223:443
-    headers:
-      Host: qaa.zhuk.us.kg
-  tcp_delay: 6
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 14 [⚡可用]
-  password: 973ed2e0-c4d8-4737-a093-71629148086d
-  port: 443
-  server: 51.77.213.197
-  skip-cert-verify: false
-  sni: frt2.sshocean.net
-  type: trojan
-  tcp_delay: 6
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 15 [⚡可用]
-  type: vless
-  server: 104.19.56.151
-  port: 443
-  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: qaa.zhuk.us.kg
-  path: /?ed=2560&proxyip=proxyip.oracle.fxxk.dedyn.io
-  sni: qaa.zhuk.us.kg
-  ws-opts:
-    path: /?ed=2560&proxyip=proxyip.oracle.fxxk.dedyn.io
-    headers:
-      Host: qaa.zhuk.us.kg
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 16 [⚡可用]
-  type: vless
-  server: 192.0.54.0
+  server: 206.238.236.175
   port: 443
   uuid: 219d848d-60f2-4321-8275-72b9b575b37e
   encryption: none
@@ -693,94 +390,13 @@ proxies:
     path: /?ed=2560
     headers:
       Host: qaa.zhuk.us.kg
-  tcp_delay: 8
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 17 [⚡可用]
-  type: vless
-  server: 185.16.110.0
-  port: 443
-  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: qaa.zhuk.us.kg
-  path: /?ed=2560&proxyip=185.16.110.0:443
-  sni: qaa.zhuk.us.kg
-  ws-opts:
-    path: /?ed=2560&proxyip=185.16.110.0:443
-    headers:
-      Host: qaa.zhuk.us.kg
   tcp_delay: 6
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇫🇷 法国 18 [⚡可用]
+- name: 🇫🇷 法国 5 [⚡可用]
   type: vless
-  server: 104.24.168.9
-  port: 443
-  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: qaa.zhuk.us.kg
-  path: /?ed=2560&proxyip=185.133.35.223:443
-  sni: qaa.zhuk.us.kg
-  ws-opts:
-    path: /?ed=2560&proxyip=185.133.35.223:443
-    headers:
-      Host: qaa.zhuk.us.kg
-  tcp_delay: 8
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 19 [⚡可用]
-  type: vless
-  server: 108.162.192.203
-  port: 443
-  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: qaa.zhuk.us.kg
-  path: /?ed=2560&proxyip=185.133.35.223:443
-  sni: qaa.zhuk.us.kg
-  ws-opts:
-    path: /?ed=2560&proxyip=185.133.35.223:443
-    headers:
-      Host: qaa.zhuk.us.kg
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇫🇷 法国 20 [⚡可用]
-  network: ws
-  port: 443
-  server: 91.134.8.93
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
-  ws-opts:
-    headers:
-      Host: pelang.org
-    path: /
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 21 [⚡可用]
-  type: vless
-  server: 190.93.245.50
+  server: 190.93.247.86
   port: 443
   uuid: 219d848d-60f2-4321-8275-72b9b575b37e
   encryption: none
@@ -799,28 +415,7 @@ proxies:
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇫🇷 法国 22 [⚡可用]
-  type: vless
-  server: 45.81.58.145
-  port: 80
-  uuid: 2c79b667-b103-4d22-86d0-5ef23f303c06
-  encryption: none
-  flow: ''
-  tls: false
-  skip-cert-verify: false
-  network: ws
-  host: japan.freenods-8d6.workers.dev
-  path: Telegram@WangCai2/?ed=2048
-  sni: japan.freenods-8d6.workers.dev
-  ws-opts:
-    path: Telegram@WangCai2/?ed=2048
-    headers:
-      Host: japan.freenods-8d6.workers.dev
-  tcp_delay: 5
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 23 [⚡可用]
+- name: 🇫🇷 法国 7 [⚡可用]
   type: vless
   server: 104.24.168.52
   port: 443
@@ -837,13 +432,13 @@ proxies:
     path: /?ed=2560&proxyip=185.133.35.223:443
     headers:
       Host: qaa.zhuk.us.kg
-  tcp_delay: 7
+  tcp_delay: 6
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇫🇷 法国 24 [⚡可用]
+- name: 🇫🇷 法国 8 [⚡可用]
   type: vless
-  server: 104.19.133.92
+  server: 104.27.72.160
   port: 443
   uuid: 219d848d-60f2-4321-8275-72b9b575b37e
   encryption: none
@@ -858,13 +453,13 @@ proxies:
     path: /?ed=2560&proxyip=185.133.35.223:443
     headers:
       Host: qaa.zhuk.us.kg
-  tcp_delay: 6
+  tcp_delay: 8
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇫🇷 法国 25 [⚡可用]
+- name: 🇫🇷 法国 9 [⚡可用]
   type: vless
-  server: 45.131.6.222
+  server: 45.131.210.91
   port: 80
   uuid: 7f037831-591d-4067-9c8c-39f07d12858a
   encryption: none
@@ -879,235 +474,11 @@ proxies:
     path: Telegram@WangCai2/?ed=2048
     headers:
       Host: yuming.kkllllkkkk95.workers.dev
-  tcp_delay: 5
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 26 [⚡可用]
-  type: vless
-  server: 172.67.253.241
-  port: 443
-  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: qaa.zhuk.us.kg
-  path: /?ed=2560&proxyip=185.133.35.223:443
-  sni: qaa.zhuk.us.kg
-  ws-opts:
-    path: /?ed=2560&proxyip=185.133.35.223:443
-    headers:
-      Host: qaa.zhuk.us.kg
-  tcp_delay: 8
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 27 [⚡可用]
-  type: vless
-  server: 162.159.207.28
-  port: 443
-  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: qaa.zhuk.us.kg
-  path: /?ed=2560&proxyip=185.133.35.223:443
-  sni: qaa.zhuk.us.kg
-  ws-opts:
-    path: /?ed=2560&proxyip=185.133.35.223:443
-    headers:
-      Host: qaa.zhuk.us.kg
   tcp_delay: 7
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇫🇷 法国 28 [⚡可用]
-  type: vless
-  server: 173.245.58.81
-  port: 443
-  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: qaa.zhuk.us.kg
-  path: /?ed=2560&proxyip=185.133.35.223:443
-  sni: qaa.zhuk.us.kg
-  ws-opts:
-    path: /?ed=2560&proxyip=185.133.35.223:443
-    headers:
-      Host: qaa.zhuk.us.kg
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 29 [⚡可用]
-  type: vless
-  server: 129.151.225.228
-  port: 2053
-  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: qaa.zhuk.us.kg
-  path: /?ed=2560
-  sni: qaa.zhuk.us.kg
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: qaa.zhuk.us.kg
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 30 [⚡可用]
-  type: vless
-  server: 151.101.65.6
-  port: 80
-  uuid: d85346a9-ba7b-5c83-8c84-c3d54e42e9d1
-  encryption: none
-  flow: ''
-  tls: false
-  skip-cert-verify: false
-  network: ws
-  host: PABLOO-MOSTAFA.COM
-  path: /ProxyIP=ProxyIP.US.fxxk.dedyn.io
-  sni: ''
-  ws-opts:
-    path: /ProxyIP=ProxyIP.US.fxxk.dedyn.io
-    headers:
-      Host: PABLOO-MOSTAFA.COM
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 31 [⚡可用]
-  type: vless
-  server: 141.101.113.93
-  port: 443
-  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: qaa.zhuk.us.kg
-  path: /?ed=2560&proxyip=185.133.35.223:443
-  sni: qaa.zhuk.us.kg
-  ws-opts:
-    path: /?ed=2560&proxyip=185.133.35.223:443
-    headers:
-      Host: qaa.zhuk.us.kg
-  tcp_delay: 8
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 32 [⚡可用]
-  type: vless
-  server: 173.245.49.64
-  port: 443
-  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: qaa.zhuk.us.kg
-  path: /?ed=2560&proxyip=185.133.35.223:443
-  sni: qaa.zhuk.us.kg
-  ws-opts:
-    path: /?ed=2560&proxyip=185.133.35.223:443
-    headers:
-      Host: qaa.zhuk.us.kg
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alpn:
-  - http%2F1.1
-  name: 🇫🇷 法国 33 [⚡可用]
-  password: telegram-id-privatevpns
-  port: 22222
-  server: 51.44.190.237
-  skip-cert-verify: false
-  sni: trojan.burgerip.co.uk
-  type: trojan
-  tcp_delay: 6
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- grpc-opts:
-    grpc-service-name: M9hnxw1wCQSfVHaiznU
-  name: 🇫🇷 法国 34 [⚡可用]
-  network: grpc
-  password: 79770a32-9607-4919-9483-0f1794559390
-  port: 443
-  server: 95.179.217.221
-  skip-cert-verify: false
-  sni: nika2.hdfy2.foriran.trade
-  type: trojan
-  tcp_delay: 6
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 35 [⚡可用]
-  password: telegram-id-privatevpns
-  port: 22222
-  server: 15.237.50.200
-  skip-cert-verify: false
-  sni: trj.rollingnext.co.uk
-  type: trojan
-  tcp_delay: 6
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 36 [⚡可用]
-  type: vless
-  server: 45.131.209.117
-  port: 80
-  uuid: 9ce5dc57-bfa3-4e9e-be9b-ca685d826feb
-  encryption: none
-  flow: ''
-  tls: false
-  skip-cert-verify: false
-  network: ws
-  host: worker-soft-mouse-6965.hevapey267.workers.Dev
-  path: Telegram@WangCai2/?ed=2048
-  sni: worker-soft-mouse-6965.hevapey267.workers.Dev
-  ws-opts:
-    path: Telegram@WangCai2/?ed=2048
-    headers:
-      Host: worker-soft-mouse-6965.hevapey267.workers.Dev
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 37 [⚡可用]
-  server: 62.210.196.68
-  port: 26691
-  type: hysteria
-  auth_str: dongtaiwang.com
-  auth-str: dongtaiwang.com
-  up: 11 Mbps
-  down: 55 Mbps
-  protocol: udp
-  sni: apple.com
-  skip-cert-verify: true
-  alpn:
-  - h3
-  udp: true
-  tcp_delay: 53
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 38 [⚡可用]
+- name: 🇫🇷 法国 11 [⚡可用]
   type: vless
   server: 162.159.152.4
   port: 443
@@ -1128,82 +499,62 @@ proxies:
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇫🇷 法国 39 [⚡可用]
+- name: 🇫🇷 法国 12 [⚡可用]
   type: vless
-  server: 160.79.105.97
-  port: 443
-  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
+  server: 45.131.208.247
+  port: 80
+  uuid: c1d22711-2adf-4ffa-a5d8-439e665bb951
   encryption: none
   flow: ''
-  tls: true
+  tls: false
   skip-cert-verify: false
   network: ws
-  host: qaa.zhuk.us.kg
-  path: /?ed=2560
-  sni: qaa.zhuk.us.kg
+  host: 656654647567245851483768538765962936476541237567854816545176587.11feea65a1d70a.workers.dev
+  path: Telegram@WangCai2/?ed=2048
+  sni: 656654647567245851483768538765962936476541237567854816545176587.11feea65a1d70a.workers.dev
   ws-opts:
-    path: /?ed=2560
+    path: Telegram@WangCai2/?ed=2048
     headers:
-      Host: qaa.zhuk.us.kg
+      Host: 656654647567245851483768538765962936476541237567854816545176587.11feea65a1d70a.workers.dev
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇫🇷 法国 13 [⚡可用]
+  type: vless
+  server: 45.81.58.145
+  port: 80
+  uuid: 2c79b667-b103-4d22-86d0-5ef23f303c06
+  encryption: none
+  flow: ''
+  tls: false
+  skip-cert-verify: false
+  network: ws
+  host: japan.freenods-8d6.workers.dev
+  path: Telegram@WangCai2/?ed=2048
+  sni: japan.freenods-8d6.workers.dev
+  ws-opts:
+    path: Telegram@WangCai2/?ed=2048
+    headers:
+      Host: japan.freenods-8d6.workers.dev
   tcp_delay: 6
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇫🇷 法国 40 [⚡可用]
-  type: vless
-  server: 104.26.11.3
-  port: 443
-  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
-  encryption: none
-  flow: ''
-  tls: true
+- name: 🇫🇷 法国 15 [⚡可用]
+  password: c2de1269-17cb-41f6-ab97-f8c11a6f0f4f
+  port: 8443
+  server: 158.178.206.197
   skip-cert-verify: false
-  network: ws
-  host: qaa.zhuk.us.kg
-  path: /?ed=2560&proxyip=185.133.35.223:443
-  sni: qaa.zhuk.us.kg
-  ws-opts:
-    path: /?ed=2560&proxyip=185.133.35.223:443
-    headers:
-      Host: qaa.zhuk.us.kg
-  tcp_delay: 11
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 41 [⚡可用]
-  type: vless
-  server: 104.27.72.160
-  port: 443
-  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: qaa.zhuk.us.kg
-  path: /?ed=2560&proxyip=185.133.35.223:443
-  sni: qaa.zhuk.us.kg
-  ws-opts:
-    path: /?ed=2560&proxyip=185.133.35.223:443
-    headers:
-      Host: qaa.zhuk.us.kg
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 43 [⚡可用]
-  password: 4f2c305b-9a03-4493-b3e4-2dff2f1af8c9
-  port: 1145
-  server: 141.95.61.209
-  skip-cert-verify: false
+  sni: joss.gpj1.web.id
   type: trojan
-  tcp_delay: 7
+  tcp_delay: 6
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇫🇷 法国 44 [⚡可用]
+- name: 🇫🇷 法国 16 [⚡可用]
   type: vless
-  server: 129.159.34.122
+  server: 185.133.35.106
   port: 443
   uuid: 219d848d-60f2-4321-8275-72b9b575b37e
   encryption: none
@@ -1212,52 +563,17 @@ proxies:
   skip-cert-verify: false
   network: ws
   host: qaa.zhuk.us.kg
-  path: /?ed=2560&proxyip=129.159.34.122:443
+  path: /?ed=2560&proxyip=185.133.35.106:443
   sni: qaa.zhuk.us.kg
   ws-opts:
-    path: /?ed=2560&proxyip=129.159.34.122:443
-    headers:
-      Host: qaa.zhuk.us.kg
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 45 [⚡可用]
-  server: 89.168.32.96
-  port: 50000
-  ports: 50000-53000
-  mport: 50000-53000
-  udp: true
-  skip-cert-verify: true
-  sni: www.microsoft.com
-  type: hysteria2
-  password: 8d02d562-3e38-4f79-a11d-10ebb322ffdc
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 46 [⚡可用]
-  type: vless
-  server: 162.159.152.110
-  port: 443
-  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: qaa.zhuk.us.kg
-  path: /?ed=2560&proxyip=proxyip.oracle.fxxk.dedyn.io
-  sni: qaa.zhuk.us.kg
-  ws-opts:
-    path: /?ed=2560&proxyip=proxyip.oracle.fxxk.dedyn.io
+    path: /?ed=2560&proxyip=185.133.35.106:443
     headers:
       Host: qaa.zhuk.us.kg
   tcp_delay: 7
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇫🇷 法国 47 [⚡可用]
+- name: 🇫🇷 法国 17 [⚡可用]
   type: vless
   server: 104.20.19.168
   port: 8880
@@ -1274,13 +590,219 @@ proxies:
     path: /ProxyIP=ProxyIP.US.fxxk.dedyn.io
     headers:
       Host: drvenom-tehran.lipoxag351.workers.dev
-  tcp_delay: 6
+  tcp_delay: 8
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇫🇷 法国 19 [⚡可用]
+  type: vless
+  server: 160.79.105.97
+  port: 443
+  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
+  encryption: none
+  flow: ''
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  host: qaa.zhuk.us.kg
+  path: /?ed=2560
+  sni: qaa.zhuk.us.kg
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: qaa.zhuk.us.kg
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇫🇷 法国 20 [⚡可用]
+  type: vless
+  server: 162.159.207.28
+  port: 443
+  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
+  encryption: none
+  flow: ''
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  host: qaa.zhuk.us.kg
+  path: /?ed=2560&proxyip=185.133.35.223:443
+  sni: qaa.zhuk.us.kg
+  ws-opts:
+    path: /?ed=2560&proxyip=185.133.35.223:443
+    headers:
+      Host: qaa.zhuk.us.kg
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇫🇷 法国 21 [⚡可用]
+  type: vless
+  server: 162.159.152.245
+  port: 443
+  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
+  encryption: none
+  flow: ''
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  host: qaa.zhuk.us.kg
+  path: /?ed=2560
+  sni: qaa.zhuk.us.kg
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: qaa.zhuk.us.kg
+  tcp_delay: 10
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇫🇷 法国 22 [⚡可用]
+  type: vless
+  server: 151.101.65.6
+  port: 80
+  uuid: d85346a9-ba7b-5c83-8c84-c3d54e42e9d1
+  encryption: none
+  flow: ''
+  tls: false
+  skip-cert-verify: false
+  network: ws
+  host: PABLOO-MOSTAFA.COM
+  path: /ProxyIP=ProxyIP.US.fxxk.dedyn.io
+  sni: ''
+  ws-opts:
+    path: /ProxyIP=ProxyIP.US.fxxk.dedyn.io
+    headers:
+      Host: PABLOO-MOSTAFA.COM
+  tcp_delay: 5
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇫🇷 法国 23 [⚡可用]
+  type: vless
+  server: 190.93.245.50
+  port: 443
+  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
+  encryption: none
+  flow: ''
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  host: qaa.zhuk.us.kg
+  path: /?ed=2560&proxyip=185.133.35.223:443
+  sni: qaa.zhuk.us.kg
+  ws-opts:
+    path: /?ed=2560&proxyip=185.133.35.223:443
+    headers:
+      Host: qaa.zhuk.us.kg
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇫🇷 法国 24 [⚡可用]
+  type: vless
+  server: 173.245.49.64
+  port: 443
+  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
+  encryption: none
+  flow: ''
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  host: qaa.zhuk.us.kg
+  path: /?ed=2560&proxyip=185.133.35.223:443
+  sni: qaa.zhuk.us.kg
+  ws-opts:
+    path: /?ed=2560&proxyip=185.133.35.223:443
+    headers:
+      Host: qaa.zhuk.us.kg
+  tcp_delay: 8
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇫🇷 法国 25 [⚡可用]
+  type: vless
+  server: www.ipget.net
+  port: 8080
+  uuid: b6cea380-cc8c-4e33-ab32-fc4d284ab5db
+  encryption: none
+  flow: ''
+  tls: false
+  skip-cert-verify: false
+  network: ws
+  host: bei2.8l-0dfay.workers.dev
+  path: /ProxyIP=ProxyIP.US.fxxk.dedyn.io
+  sni: bei2.8l-0dfay.workers.dev
+  ws-opts:
+    path: /ProxyIP=ProxyIP.US.fxxk.dedyn.io
+    headers:
+      Host: bei2.8l-0dfay.workers.dev
+  tcp_delay: 21
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇫🇷 法国 26 [⚡可用]
+  type: vless
+  server: 45.131.6.222
+  port: 80
+  uuid: 7f037831-591d-4067-9c8c-39f07d12858a
+  encryption: none
+  flow: ''
+  tls: false
+  skip-cert-verify: false
+  network: ws
+  host: yuming.kkllllkkkk95.workers.dev
+  path: Telegram@WangCai2/?ed=2048
+  sni: yuming.kkllllkkkk95.workers.dev
+  ws-opts:
+    path: Telegram@WangCai2/?ed=2048
+    headers:
+      Host: yuming.kkllllkkkk95.workers.dev
+  tcp_delay: 9
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇫🇷 法国 27 [⚡可用]
+  type: vless
+  server: 45.131.209.117
+  port: 80
+  uuid: 9ce5dc57-bfa3-4e9e-be9b-ca685d826feb
+  encryption: none
+  flow: ''
+  tls: false
+  skip-cert-verify: false
+  network: ws
+  host: worker-soft-mouse-6965.hevapey267.workers.Dev
+  path: Telegram@WangCai2/?ed=2048
+  sni: worker-soft-mouse-6965.hevapey267.workers.Dev
+  ws-opts:
+    path: Telegram@WangCai2/?ed=2048
+    headers:
+      Host: worker-soft-mouse-6965.hevapey267.workers.Dev
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇫🇷 法国 28 [⚡可用]
+  type: vless
+  server: 147135004002.sec20org.com
+  port: 443
+  uuid: 54694a33-a8dc-47dd-bc38-acd3971e0055
+  encryption: none
+  flow: ''
+  tls: true
+  skip-cert-verify: false
+  network: tcp
+  host: ''
+  path: ''
+  sni: ''
+  tcp_delay: 16
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
 - alterId: 0
   cipher: auto
-  name: 🇫🇷 法国 48 [⚡可用]
+  name: 🇫🇷 法国 29 [⚡可用]
   network: ws
   port: 443
   server: 146.59.55.50
@@ -1297,38 +819,24 @@ proxies:
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇫🇷 法国 50 [⚡可用]
-  password: origin
-  port: 443
-  server: 176.31.83.90
-  skip-cert-verify: false
-  type: trojan
-  tcp_delay: 6
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 51 [⚡可用]
+- name: 🇫🇷 法国 30 [⚡可用]
   type: vless
-  server: 104.24.196.104
+  server: 147135001195.sec22org.com
   port: 443
-  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
+  uuid: ea286109-d20f-415e-849e-4af20ab04b65
   encryption: none
   flow: ''
   tls: true
   skip-cert-verify: false
-  network: ws
-  host: qaa.zhuk.us.kg
-  path: /?ed=2560&proxyip=185.133.35.223:443
-  sni: qaa.zhuk.us.kg
-  ws-opts:
-    path: /?ed=2560&proxyip=185.133.35.223:443
-    headers:
-      Host: qaa.zhuk.us.kg
-  tcp_delay: 5
+  network: tcp
+  host: ''
+  path: ''
+  sni: ''
+  tcp_delay: 15
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇫🇷 法国 52 [⚡可用]
+- name: 🇫🇷 法国 31 [⚡可用]
   type: vless
   server: 45.131.210.59
   port: 80
@@ -1349,25 +857,9 @@ proxies:
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇫🇷 法国 53 [⚡可用]
-  network: ws
-  port: 8880
-  server: 51.159.2.152
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: a2ecce43-c6fb-4978-8b1d-8018ddd9faf4
-  ws-opts:
-    path: /
-  tcp_delay: 6
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 55 [⚡可用]
+- name: 🇫🇷 法国 33 [⚡可用]
   type: vless
-  server: 206.238.236.175
+  server: 129.159.34.122
   port: 443
   uuid: 219d848d-60f2-4321-8275-72b9b575b37e
   encryption: none
@@ -1376,173 +868,19 @@ proxies:
   skip-cert-verify: false
   network: ws
   host: qaa.zhuk.us.kg
-  path: /?ed=2560
+  path: /?ed=2560&proxyip=129.159.34.122:443
   sni: qaa.zhuk.us.kg
   ws-opts:
-    path: /?ed=2560
+    path: /?ed=2560&proxyip=129.159.34.122:443
     headers:
       Host: qaa.zhuk.us.kg
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 56 [⚡可用]
-  type: vless
-  server: 185.133.35.106
-  port: 443
-  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: qaa.zhuk.us.kg
-  path: /?ed=2560&proxyip=185.133.35.106:443
-  sni: qaa.zhuk.us.kg
-  ws-opts:
-    path: /?ed=2560&proxyip=185.133.35.106:443
-    headers:
-      Host: qaa.zhuk.us.kg
-  tcp_delay: 6
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 57 [⚡可用]
-  type: vless
-  server: 162.159.152.245
-  port: 443
-  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: qaa.zhuk.us.kg
-  path: /?ed=2560
-  sni: qaa.zhuk.us.kg
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: qaa.zhuk.us.kg
-  tcp_delay: 6
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 58 [⚡可用]
-  type: vless
-  server: www.ipget.net
-  port: 8080
-  uuid: b6cea380-cc8c-4e33-ab32-fc4d284ab5db
-  encryption: none
-  flow: ''
-  tls: false
-  skip-cert-verify: false
-  network: ws
-  host: bei2.8l-0dfay.workers.dev
-  path: /ProxyIP=ProxyIP.US.fxxk.dedyn.io
-  sni: bei2.8l-0dfay.workers.dev
-  ws-opts:
-    path: /ProxyIP=ProxyIP.US.fxxk.dedyn.io
-    headers:
-      Host: bei2.8l-0dfay.workers.dev
-  tcp_delay: 23
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 59 [⚡可用]
-  password: telegram-id-privatevpns
-  port: 22222
-  server: 13.37.144.126
-  skip-cert-verify: false
-  sni: trojan.burgerip.co.uk
-  type: trojan
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 60 [⚡可用]
-  type: vless
-  server: 147135004002.sec20org.com
-  port: 443
-  uuid: 54694a33-a8dc-47dd-bc38-acd3971e0055
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: tcp
-  host: ''
-  path: ''
-  sni: ''
-  tcp_delay: 19
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 61 [⚡可用]
-  password: telegram-id-directvpn
-  port: 22222
-  server: 13.39.112.204
-  skip-cert-verify: false
-  sni: trj.rollingnext.co.uk
-  type: trojan
-  tcp_delay: 6
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 62 [⚡可用]
-  password: 6e3b4240-38f9-4321-9b3c-bc669a34b848
-  port: 443
-  server: 141.94.76.177
-  skip-cert-verify: false
-  type: trojan
-  tcp_delay: 6
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 63 [⚡可用]
-  type: vless
-  server: 45.131.210.91
-  port: 80
-  uuid: 7f037831-591d-4067-9c8c-39f07d12858a
-  encryption: none
-  flow: ''
-  tls: false
-  skip-cert-verify: false
-  network: ws
-  host: yuming.kkllllkkkk95.workers.dev
-  path: Telegram@WangCai2/?ed=2048
-  sni: yuming.kkllllkkkk95.workers.dev
-  ws-opts:
-    path: Telegram@WangCai2/?ed=2048
-    headers:
-      Host: yuming.kkllllkkkk95.workers.dev
-  tcp_delay: 6
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 64 [⚡可用]
-  type: vless
-  server: 45.131.208.247
-  port: 80
-  uuid: c1d22711-2adf-4ffa-a5d8-439e665bb951
-  encryption: none
-  flow: ''
-  tls: false
-  skip-cert-verify: false
-  network: ws
-  host: 656654647567245851483768538765962936476541237567854816545176587.11feea65a1d70a.workers.dev
-  path: Telegram@WangCai2/?ed=2048
-  sni: 656654647567245851483768538765962936476541237567854816545176587.11feea65a1d70a.workers.dev
-  ws-opts:
-    path: Telegram@WangCai2/?ed=2048
-    headers:
-      Host: 656654647567245851483768538765962936476541237567854816545176587.11feea65a1d70a.workers.dev
   tcp_delay: 8
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇫🇷 法国 66 [⚡可用]
+- name: 🇫🇷 法国 34 [⚡可用]
   type: vless
-  server: 190.93.247.86
+  server: 141.101.113.93
   port: 443
   uuid: 219d848d-60f2-4321-8275-72b9b575b37e
   encryption: none
@@ -1561,66 +899,55 @@ proxies:
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇫🇷 法国 67 [⚡可用]
-  password: telegram-id-directvpn
-  port: 22223
-  server: 13.39.61.165
+- name: 🇫🇷 法国 35 [⚡可用]
+  password: 973ed2e0-c4d8-4737-a093-71629148086d
+  port: 443
+  server: 51.77.213.197
   skip-cert-verify: false
-  sni: trojan.burgerip.co.uk
+  sni: frt2.sshocean.net
   type: trojan
   tcp_delay: 6
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇫🇷 法国 68 [⚡可用]
-  password: 0f5e6d9a-49af-4bc0-b04b-503102382144
+- name: 🇫🇷 法国 36 [⚡可用]
+  type: vless
+  server: 162.159.152.110
   port: 443
-  server: 51.195.219.173
+  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
+  encryption: none
+  flow: ''
+  tls: true
   skip-cert-verify: false
-  sni: ukt1.sshocean.net
-  type: trojan
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 69 [⚡可用]
-  password: telegram-id-privatevpns
-  port: 22222
-  server: 13.37.103.10
-  skip-cert-verify: false
-  sni: trojan.burgerip.co.uk
-  type: trojan
+  network: ws
+  host: qaa.zhuk.us.kg
+  path: /?ed=2560&proxyip=proxyip.oracle.fxxk.dedyn.io
+  sni: qaa.zhuk.us.kg
+  ws-opts:
+    path: /?ed=2560&proxyip=proxyip.oracle.fxxk.dedyn.io
+    headers:
+      Host: qaa.zhuk.us.kg
   tcp_delay: 8
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇫🇷 法国 70 [⚡可用]
-  server: hxa.dashuai.help
-  port: 45072
-  type: vmess
-  uuid: f75458aa-c598-4da8-9330-6944a43ef049
-  alterId: 0
+- alterId: 0
   cipher: auto
-  tls: false
-  udp: true
-  tcp_delay: 17
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇫🇷 法国 71 [⚡可用]
-  server: hxb.dashuai.help
-  port: 45071
+  name: 🇫🇷 法国 37 [⚡可用]
+  network: ws
+  port: 443
+  server: 57.128.189.240
+  skip-cert-verify: false
+  tls: true
   type: vmess
-  uuid: f75458aa-c598-4da8-9330-6944a43ef049
-  alterId: 0
-  cipher: auto
-  tls: false
-  udp: true
+  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
+  ws-opts:
+    path: /
   tcp_delay: 6
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇫🇷 法国 72 [⚡可用]
+- name: 🇫🇷 法国 38 [⚡可用]
   server: hxa.dashuai.help
   port: 45072
   type: vmess
@@ -1629,1377 +956,348 @@ proxies:
   cipher: auto
   tls: false
   udp: true
-  tcp_delay: 10
+  tcp_delay: 26
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- type: vless
-  name: 🇯🇵 日本 1 [⚡可用]
-  server: 185.146.173.185
-  port: 2052
-  uuid: 5a3e6548-a706-4f50-ab13-a913eb33283f
-  skip-cert-verify: true
-  udp: true
-  tls: true
-  network: ws
-  servername: fggvggvvvv.fggghbvhh-ghvghggg-fgvg-mahdi-net-irancel.BLOG
-  ws-opts:
-    path: Telegramjoin:@V2Ray_Rolly-Telegramjoin:@V2Ray_Rolly-Telegramjoin:@V2Ray_Rolly-Telegramjoin:@V2Ray_Rolly-Telegramjoin:@V2Ray_Rolly-Telegramjoin:@V2Ray_Rolly-Telegramjoin:@V2Ray_Rolly-Telegramjoin:@V2Ray_Rolly-Telegramjoin:@V2Ray_Rolly-Telegramjoin:@V2Ray_Rolly-Telegramjoin:@V2Ray_Rolly-
-    headers:
-      host: fggvggvvvv.fggghbvhh-ghvghggg-fgvg-mahdi-net-irancel.BLOG
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- type: vless
-  name: 🇯🇵 日本 2 [⚡可用]
-  server: 194.182.79.105
-  port: 23919
-  uuid: 6440c04a-a2b5-41b7-9f23-545456f6cba2
-  skip-cert-verify: true
-  udp: true
-  network: grpc
-  tls: true
-  grpc-opts:
-    grpc-service-name: ZEDMODEON-ZEDMODEON-bia-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON
-  servername: ZEDMODEON-ZEDMODEON-bia-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON-ZEDMODEON
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- type: vless
-  name: 🇯🇵 日本 3 [⚡可用]
-  server: 89.116.193.40
-  port: 34045
-  uuid: d8dd94fd-540e-461d-b5d4-acebef02c22a
-  skip-cert-verify: true
-  network: tcp
-  servername: visit-this-invitation-link-to-join-tg-enkelte-notif.ekt.me
-  tls: false
-  udp: true
-  tcp_delay: 12
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇯🇵 日本 4 [⚡可用]
-  server: 199.232.24.2
-  port: 80
-  type: vless
-  tls: true
-  packet-encoding: xudp
-  uuid: b727aa5e-27bd-4fe5-bd95-7db682992637
-  network: ws
-  ws-opts:
-    path: /Join----HAJIMAMADVPN---Join----HAJIMAMADVPN---Join----HAJIMAMADVPN---Join----HAJIMAMADVPN---Join----HAJIMAMADVPN---Join----HAJIMAMADVPN---Join----HAJIMAMADVPN
-    headers:
-      Host: downloadha.global.ssl.fastly.net
-  skip-cert-verify: true
-  udp: true
-  tfo: true
-  tcp_delay: 5
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇯🇵 日本 5 [⚡可用]
-  type: vless
-  server: 138.2.50.155
-  port: 44073
-  uuid: 11d29ec6-be66-4f59-97c6-7cff836ea318
-  encryption: none
-  flow: xtls-rprx-vision
-  tls: true
+- name: 🇫🇷 法国 39 [⚡可用]
+  password: origin
+  port: 443
+  server: 176.31.83.90
   skip-cert-verify: false
-  network: tcp
-  host: ''
-  path: ''
-  sni: www.icloud.com
-  tcp_delay: 8
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇯🇵 日本 6 [⚡可用]
-  server: 172.67.203.94
-  port: 2086
-  type: vless
-  tls: true
-  packet-encoding: xudp
-  uuid: 7890ce31-9a25-4fd4-90e7-80e5823ff510
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: iioo.iioou.workers.dev
-  skip-cert-verify: true
-  udp: true
-  tfo: true
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇯🇵 日本 7 [⚡可用]
-  server: freea.glyphara.com
-  port: 30301
-  type: vless
-  uuid: 869abca7-aad3-41ae-b155-915eb907d645
-  tls: true
-  tfo: false
-  flow: xtls-rprx-vision
-  skip-cert-verify: true
-  reality-opts:
-    public-key: IoW1RqD-BzW9oxaM4KtHx5ap6haIENhYyZt_oMZqlCM
-    short-id: 950cee8a
-  servername: lol.secure.dyn.riotcdn.net
-  client-fingerprint: firefox
-  network: tcp
-  udp: true
-  tcp_delay: 30
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇯🇵 日本 8 [⚡可用]
-  server: rb.kaixincloud.top
-  port: 25200
-  type: hysteria2
-  password: 8b0afc8a-bff5-4657-8dfd-0ee371824027
-  auth: 8b0afc8a-bff5-4657-8dfd-0ee371824027
-  sni: rb.kaixincloud.top
-  skip-cert-verify: true
-  ports: 25200-26200
-  udp: true
-  tcp_delay: 285
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇯🇵 日本 9 [⚡可用]
-  server: jp.xn--tfrza798rop1a.site
-  port: 54321
-  type: ss
-  cipher: 2022-blake3-aes-128-gcm
-  password: MDhmOGM0MGQ5NjZhNTQ1NA==:MmI4OWRiYjgtYmM3OC00Ng==
-  udp: true
-  tcp_delay: 24
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇯🇵 日本 10 [⚡可用]
-  server: ss.027.node-for-bigairport.win
-  port: 10079
-  type: ss
-  cipher: aes-256-gcm
-  password: 792e0bdb-01db-450c-94c4-925151eb396e
-  udp: true
-  tcp_delay: 19
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇯🇵 日本 11 [⚡可用]
-  server: green2.cdntencentmusic.com
-  port: 34411
   type: trojan
-  password: 2ef76da0-5347-4ae7-9a2b-c86e1cf1d887
-  sni: green2.cdntencentmusic.com
-  skip-cert-verify: true
-  udp: true
   tcp_delay: 6
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇯🇵 日本 12 [⚡可用]
-  server: green2.cdntencentmusic.com
-  port: 34411
+- name: 🇫🇷 法国 40 [⚡可用]
+  password: 6e3b4240-38f9-4321-9b3c-bc669a34b848
+  port: 443
+  server: 141.94.76.177
+  skip-cert-verify: false
   type: trojan
-  password: 08d6ffaa-8813-4a96-b1fc-203bc55f2700
-  sni: green2.cdntencentmusic.com
-  skip-cert-verify: true
-  udp: true
-  tcp_delay: 5
+  tcp_delay: 8
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇯🇵 日本 13 [⚡可用]
-  server: rb.kaixincloud.top
-  port: 25200
-  type: hysteria2
-  password: c4d32d4a-9b49-4ba8-a4a2-e517f1902219
-  auth: c4d32d4a-9b49-4ba8-a4a2-e517f1902219
-  sni: rb.kaixincloud.top
+- name: 🇫🇷 法国 41 [⚡可用]
+  password: telegram-id-directvpn
+  port: 22222
+  server: 13.39.112.204
   skip-cert-verify: false
-  ports: 25200-26200
-  udp: true
-  tcp_delay: 5
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇯🇵 日本 14 [⚡可用]
-  server: freea.glyphara.com
-  port: 30301
-  type: vless
-  uuid: 259791c8-db71-4afa-b1e8-f81ba025fd7b
-  tls: true
-  flow: xtls-rprx-vision
-  reality-opts:
-    public-key: IoW1RqD-BzW9oxaM4KtHx5ap6haIENhYyZt_oMZqlCM
-    short-id: 950cee8a
-  client-fingerprint: firefox
-  network: tcp
-  udp: true
-  servername: lol.secure.dyn.riotcdn.net
-  tcp_delay: 5
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇯🇵 日本 15 [⚡可用]
-  server: freea.glyphara.com
-  port: 30303
-  type: vless
-  uuid: e762cdc5-75aa-4fe8-abe0-22721544a367
-  tls: true
-  flow: xtls-rprx-vision
-  reality-opts:
-    public-key: RuNAMARjcI4VNAkqWazbFm4sa3Kc-uViiruuByx2TiM
-    short-id: 4d77021d
-  client-fingerprint: firefox
-  network: tcp
-  udp: true
-  servername: mensura.cdn-apple.com
-  tcp_delay: 5
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇯🇵 日本 16 [⚡可用]
-  server: rb.kaixincloud.top
-  port: 25200
-  type: hysteria2
-  password: ab6f2c9a-a4ea-4483-adb0-b24faf13caa5
-  auth: ab6f2c9a-a4ea-4483-adb0-b24faf13caa5
-  sni: rb.kaixincloud.top
-  skip-cert-verify: false
-  ports: 25200-26200
-  udp: true
+  sni: trj.rollingnext.co.uk
+  type: trojan
   tcp_delay: 11
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇯🇵 日本 18 [⚡可用]
-  server: freea.glyphara.com
-  port: 30303
-  type: vless
-  uuid: f0b5e70e-4b34-4130-ae99-8faa5e61dce3
+- alterId: 0
+  cipher: auto
+  name: 🇫🇷 法国 42 [⚡可用]
+  network: ws
+  port: 443
+  server: 91.134.8.93
+  skip-cert-verify: false
   tls: true
-  flow: xtls-rprx-vision
-  reality-opts:
-    public-key: RuNAMARjcI4VNAkqWazbFm4sa3Kc-uViiruuByx2TiM
-    short-id: 4d77021d
-  client-fingerprint: firefox
-  network: tcp
-  udp: true
-  servername: mensura.cdn-apple.com
+  type: vmess
+  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
+  ws-opts:
+    headers:
+      Host: pelang.org
+    path: /
   tcp_delay: 5
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇯🇵 日本 19 [⚡可用]
-  server: 161.33.185.230
-  port: 28253
+- name: 🇫🇷 法国 43 [⚡可用]
+  type: vless
+  server: 104.19.56.151
+  port: 443
+  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
+  encryption: none
+  flow: ''
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  host: qaa.zhuk.us.kg
+  path: /?ed=2560&proxyip=proxyip.oracle.fxxk.dedyn.io
+  sni: qaa.zhuk.us.kg
+  ws-opts:
+    path: /?ed=2560&proxyip=proxyip.oracle.fxxk.dedyn.io
+    headers:
+      Host: qaa.zhuk.us.kg
+  tcp_delay: 6
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇫🇷 法国 44 [⚡可用]
+  password: 4f2c305b-9a03-4493-b3e4-2dff2f1af8c9
+  port: 1145
+  server: 141.95.61.209
+  skip-cert-verify: false
+  type: trojan
+  tcp_delay: 8
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇫🇷 法国 45 [⚡可用]
+  password: telegram-id-privatevpns
+  port: 22222
+  server: 13.37.144.126
+  skip-cert-verify: false
+  sni: trojan.burgerip.co.uk
+  type: trojan
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇫🇷 法国 46 [⚡可用]
+  type: vless
+  server: 104.19.133.92
+  port: 443
+  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
+  encryption: none
+  flow: ''
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  host: qaa.zhuk.us.kg
+  path: /?ed=2560&proxyip=185.133.35.223:443
+  sni: qaa.zhuk.us.kg
+  ws-opts:
+    path: /?ed=2560&proxyip=185.133.35.223:443
+    headers:
+      Host: qaa.zhuk.us.kg
+  tcp_delay: 6
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇫🇷 法国 47 [⚡可用]
+  password: telegram-id-privatevpns
+  port: 22222
+  server: 15.237.50.200
+  skip-cert-verify: false
+  sni: trj.rollingnext.co.uk
+  type: trojan
+  tcp_delay: 9
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇫🇷 法国 48 [⚡可用]
+  password: telegram-id-privatevpns
+  port: 22222
+  server: 13.37.103.10
+  skip-cert-verify: false
+  sni: trojan.burgerip.co.uk
+  type: trojan
+  tcp_delay: 9
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇫🇷 法国 49 [⚡可用]
+  password: 0f5e6d9a-49af-4bc0-b04b-503102382144
+  port: 443
+  server: 51.195.219.173
+  skip-cert-verify: false
+  sni: ukt1.sshocean.net
+  type: trojan
+  tcp_delay: 6
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇫🇷 法国 50 [⚡可用]
+  type: vless
+  server: 173.245.58.81
+  port: 443
+  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
+  encryption: none
+  flow: ''
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  host: qaa.zhuk.us.kg
+  path: /?ed=2560&proxyip=185.133.35.223:443
+  sni: qaa.zhuk.us.kg
+  ws-opts:
+    path: /?ed=2560&proxyip=185.133.35.223:443
+    headers:
+      Host: qaa.zhuk.us.kg
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇫🇷 法国 51 [⚡可用]
+  type: vless
+  server: 129.151.225.228
+  port: 2053
+  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
+  encryption: none
+  flow: ''
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  host: qaa.zhuk.us.kg
+  path: /?ed=2560
+  sni: qaa.zhuk.us.kg
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: qaa.zhuk.us.kg
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 0
+  cipher: auto
+  name: 🇫🇷 法国 52 [⚡可用]
+  network: ws
+  port: 8880
+  server: 51.159.2.152
+  skip-cert-verify: false
+  tls: false
+  type: vmess
+  uuid: a2ecce43-c6fb-4978-8b1d-8018ddd9faf4
+  ws-opts:
+    path: /
+  tcp_delay: 9
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇫🇷 法国 53 [⚡可用]
+  type: vless
+  server: 172.67.253.241
+  port: 443
+  uuid: 219d848d-60f2-4321-8275-72b9b575b37e
+  encryption: none
+  flow: ''
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  host: qaa.zhuk.us.kg
+  path: /?ed=2560&proxyip=185.133.35.223:443
+  sni: qaa.zhuk.us.kg
+  ws-opts:
+    path: /?ed=2560&proxyip=185.133.35.223:443
+    headers:
+      Host: qaa.zhuk.us.kg
+  tcp_delay: 8
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇫🇷 法国 54 [⚡可用]
+  server: hxa.dashuai.help
+  port: 45072
+  type: vmess
+  uuid: f75458aa-c598-4da8-9330-6944a43ef049
+  alterId: 0
+  cipher: auto
+  tls: false
+  udp: true
+  tcp_delay: 23
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇫🇷 法国 55 [⚡可用]
+  server: 89.168.32.96
+  port: 50000
+  ports: 50000-53000
+  mport: 50000-53000
+  udp: true
+  skip-cert-verify: true
+  sni: www.microsoft.com
   type: hysteria2
-  password: 7a88d322-eb4a-4a59-8c62-8c60d76abf4b
-  auth: 7a88d322-eb4a-4a59-8c62-8c60d76abf4b
-  sni: www.bing.com
+  password: 8d02d562-3e38-4f79-a11d-10ebb322ffdc
+  tcp_delay: 9
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇫🇷 法国 56 [⚡可用]
+  server: 62.210.196.68
+  port: 26691
+  type: hysteria
+  auth_str: dongtaiwang.com
+  auth-str: dongtaiwang.com
+  up: 11 Mbps
+  down: 55 Mbps
+  protocol: udp
+  sni: apple.com
   skip-cert-verify: true
   alpn:
   - h3
   udp: true
-  tcp_delay: 5
+  tcp_delay: 10
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇺🇳 节点 1 [⚡可用]
-  type: ss
-  server: dafeizhu.whtjdasha.com
-  port: 39203
-  cipher: 2022-blake3-aes-128-gcm
-  password: 08a17cd24226ede6
-  udp: true
-  tcp_delay: 20
+- name: 🇫🇷 法国 57 [⚡可用]
+  password: telegram-id-directvpn
+  port: 22223
+  server: 13.39.61.165
+  skip-cert-verify: false
+  sni: trojan.burgerip.co.uk
+  type: trojan
+  tcp_delay: 7
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇺🇳 节点 2 [⚡可用]
-  type: ss
-  server: xiaofeizhu.idsduf.com
-  port: 40022
-  cipher: 2022-blake3-aes-128-gcm
-  password: 08a17cd24226ede6
-  udp: true
-  tcp_delay: 23
+- alpn:
+  - http%2F1.1
+  name: 🇫🇷 法国 58 [⚡可用]
+  password: telegram-id-privatevpns
+  port: 22222
+  server: 51.44.190.237
+  skip-cert-verify: false
+  sni: trojan.burgerip.co.uk
+  type: trojan
+  tcp_delay: 6
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇺🇳 节点 3 [⚡可用]
-  type: ss
-  server: xiaofeizhu.idsduf.com
-  port: 39981
-  cipher: 2022-blake3-aes-128-gcm
-  password: 08a17cd24226ede6
-  udp: true
-  tcp_delay: 24
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 4 [⚡可用]
-  type: ss
-  server: dafeizhu.whtjdasha.com
-  port: 49207
-  cipher: 2022-blake3-aes-256-gcm
-  password: 08a17cd24226ede6199d2461f3520498
+- name: 🇫🇷 法国 59 [⚡可用]
+  server: hxb.dashuai.help
+  port: 45071
+  type: vmess
+  uuid: f75458aa-c598-4da8-9330-6944a43ef049
+  alterId: 0
+  cipher: auto
+  tls: false
   udp: true
   tcp_delay: 21
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇺🇳 节点 5 [⚡可用]
-  type: ss
-  server: dafeizhu.whtjdasha.com
-  port: 12983
-  cipher: 2022-blake3-aes-128-gcm
-  password: 08a17cd24226ede6
-  udp: true
-  tcp_delay: 21
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 6 [⚡可用]
-  type: ss
-  server: dafeizhu.whtjdasha.com
-  port: 39985
-  cipher: 2022-blake3-aes-128-gcm
-  password: 08a17cd24226ede6
-  udp: true
-  tcp_delay: 23
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 7 [⚡可用]
-  type: ss
-  server: xiaofeizhu.idsduf.com
-  port: 40020
-  cipher: 2022-blake3-aes-256-gcm
-  password: 08a17cd24226ede6199d2461f3520498
-  udp: true
-  tcp_delay: 23
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 8 [⚡可用]
-  type: ss
-  server: xiaofeizhu.idsduf.com
-  port: 39986
-  cipher: 2022-blake3-aes-128-gcm
-  password: 08a17cd24226ede6
-  udp: true
-  tcp_delay: 28
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 9 [⚡可用]
-  type: ss
-  server: dafeizhu.whtjdasha.com
-  port: 19529
-  cipher: 2022-blake3-aes-128-gcm
-  password: 08a17cd24226ede6
-  udp: true
-  tcp_delay: 23
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 10 [⚡可用]
-  type: ss
-  server: xiaofeizhu.idsduf.com
-  port: 12981
-  cipher: 2022-blake3-aes-128-gcm
-  password: 08a17cd24226ede6
-  udp: true
-  tcp_delay: 24
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 11 [⚡可用]
-  type: ss
-  server: xiaofeizhu.idsduf.com
-  port: 40019
-  cipher: 2022-blake3-aes-128-gcm
-  password: 08a17cd24226ede6
-  udp: true
-  tcp_delay: 29
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 12 [⚡可用]
-  type: ss
-  server: dafeizhu.whtjdasha.com
-  port: 39987
-  cipher: 2022-blake3-aes-128-gcm
-  password: 08a17cd24226ede6
-  udp: true
-  tcp_delay: 20
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 13 [⚡可用]
-  type: ss
-  server: xiaofeizhu.idsduf.com
-  port: 12984
-  cipher: 2022-blake3-aes-128-gcm
-  password: 08a17cd24226ede6
-  udp: true
-  tcp_delay: 22
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 14 [⚡可用]
-  type: ss
-  server: dafeizhu.whtjdasha.com
-  port: 19527
-  cipher: 2022-blake3-aes-128-gcm
-  password: 08a17cd24226ede6
-  udp: true
-  tcp_delay: 24
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 15 [⚡可用]
-  type: ss
-  server: xiaofeizhu.idsduf.com
-  port: 40021
-  cipher: 2022-blake3-aes-128-gcm
-  password: 08a17cd24226ede6
-  udp: true
-  tcp_delay: 22
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 16 [⚡可用]
-  type: vless
-  server: us12.miyazono-kaori.com
+- grpc-opts:
+    grpc-service-name: M9hnxw1wCQSfVHaiznU
+  name: 🇫🇷 法国 60 [⚡可用]
+  network: grpc
+  password: 79770a32-9607-4919-9483-0f1794559390
   port: 443
-  uuid: 937f8940-ad8a-409f-93c3-4d6249af628f
-  encryption: none
-  flow: xtls-rprx-vision
-  tls: true
+  server: 95.179.217.221
   skip-cert-verify: false
-  network: tcp
-  host: ''
-  path: ''
-  sni: download-porter.hoyoverse.com
-  tcp_delay: 25
+  sni: nika2.hdfy2.foriran.trade
+  type: trojan
+  tcp_delay: 7
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇺🇳 节点 17 [⚡可用]
-  type: ss
-  server: dafeizhu.whtjdasha.com
-  port: 39505
-  cipher: 2022-blake3-aes-128-gcm
-  password: 08a17cd24226ede6
-  udp: true
-  tcp_delay: 25
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 18 [⚡可用]
-  type: ss
-  server: xiaofeizhu.idsduf.com
-  port: 40013
-  cipher: 2022-blake3-aes-128-gcm
-  password: 08a17cd24226ede6
-  udp: true
-  tcp_delay: 26
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 19 [⚡可用]
-  type: vless
-  server: de1.miyazono-kaori.com
-  port: 443
-  uuid: 937f8940-ad8a-409f-93c3-4d6249af628f
-  encryption: none
-  flow: xtls-rprx-vision
-  tls: true
-  skip-cert-verify: false
-  network: tcp
-  host: ''
-  path: ''
-  sni: www.amazon.de
-  tcp_delay: 30
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 20 [⚡可用]
-  type: ss
-  server: dafeizhu.whtjdasha.com
-  port: 32207
-  cipher: 2022-blake3-aes-128-gcm
-  password: 65a1a6bef7881700
-  udp: true
-  tcp_delay: 22
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 21 [⚡可用]
-  type: ss
-  server: dafeizhu.whtjdasha.com
-  port: 39206
-  cipher: 2022-blake3-aes-128-gcm
-  password: 65a1a6bef7881700
-  udp: true
-  tcp_delay: 23
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 22 [⚡可用]
-  type: ss
-  server: xiaofeizhu.idsduf.com
-  port: 20116
-  cipher: 2022-blake3-aes-128-gcm
-  password: 65a1a6bef7881700
-  udp: true
-  tcp_delay: 25
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 23 [⚡可用]
-  type: vless
-  server: de2.miyazono-kaori.com
-  port: 443
-  uuid: 937f8940-ad8a-409f-93c3-4d6249af628f
-  encryption: none
-  flow: xtls-rprx-vision
-  tls: true
-  skip-cert-verify: false
-  network: tcp
-  host: ''
-  path: ''
-  sni: www.amazon.de
-  tcp_delay: 25
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 24 [⚡可用]
-  type: vless
-  server: us9.miyazono-kaori.com
-  port: 443
-  uuid: 937f8940-ad8a-409f-93c3-4d6249af628f
-  encryption: none
-  flow: xtls-rprx-vision
-  tls: true
-  skip-cert-verify: false
-  network: tcp
-  host: ''
-  path: ''
-  sni: download-porter.hoyoverse.com
-  tcp_delay: 27
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 25 [⚡可用]
-  type: ss
-  server: dafeizhu.whtjdasha.com
-  port: 39204
-  cipher: 2022-blake3-aes-128-gcm
-  password: 08a17cd24226ede6
-  udp: true
-  tcp_delay: 24
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 26 [⚡可用]
-  type: vless
-  server: us10.miyazono-kaori.com
-  port: 443
-  uuid: 937f8940-ad8a-409f-93c3-4d6249af628f
-  encryption: none
-  flow: xtls-rprx-vision
-  tls: true
-  skip-cert-verify: false
-  network: tcp
-  host: ''
-  path: ''
-  sni: download-porter.hoyoverse.com
-  tcp_delay: 31
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 27 [⚡可用]
-  type: ss
-  server: xiaofeizhu.idsduf.com
-  port: 40017
-  cipher: 2022-blake3-aes-128-gcm
-  password: 65a1a6bef7881700
-  udp: true
-  tcp_delay: 25
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 28 [⚡可用]
-  type: ss
-  server: xiaofeizhu.idsduf.com
-  port: 40011
-  cipher: 2022-blake3-aes-128-gcm
-  password: 08a17cd24226ede6
-  udp: true
-  tcp_delay: 24
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 29 [⚡可用]
-  type: ss
-  server: dafeizhu.whtjdasha.com
-  port: 29527
-  cipher: 2022-blake3-aes-128-gcm
-  password: 08a17cd24226ede6
-  udp: true
-  tcp_delay: 23
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 30 [⚡可用]
-  type: ss
-  server: xiaofeizhu.idsduf.com
-  port: 44014
-  cipher: 2022-blake3-aes-128-gcm
-  password: 08a17cd24226ede6
-  udp: true
-  tcp_delay: 24
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 31 [⚡可用]
-  type: ss
-  server: xiaofeizhu.idsduf.com
-  port: 40023
-  cipher: 2022-blake3-aes-128-gcm
-  password: 08a17cd24226ede6
-  udp: true
-  tcp_delay: 26
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 32 [⚡可用]
-  type: ss
-  server: dafeizhu.whtjdasha.com
-  port: 39209
-  cipher: 2022-blake3-aes-128-gcm
-  password: 08a17cd24226ede6
-  udp: true
-  tcp_delay: 25
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 33 [⚡可用]
-  type: ss
-  server: dafeizhu.whtjdasha.com
-  port: 39301
-  cipher: 2022-blake3-aes-128-gcm
-  password: 08a17cd24226ede6
-  udp: true
-  tcp_delay: 25
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 34 [⚡可用]
-  type: ss
-  server: xiaofeizhu.idsduf.com
-  port: 40010
-  cipher: 2022-blake3-aes-128-gcm
-  password: 08a17cd24226ede6
-  udp: true
-  tcp_delay: 26
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 35 [⚡可用]
-  type: vless
-  server: uk2.miyazono-kaori.com
-  port: 443
-  uuid: 937f8940-ad8a-409f-93c3-4d6249af628f
-  encryption: none
-  flow: xtls-rprx-vision
-  tls: true
-  skip-cert-verify: false
-  network: tcp
-  host: ''
-  path: ''
-  sni: www.bp.com
-  tcp_delay: 32
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 36 [⚡可用]
-  type: vmess
-  server: best.cdn.sqeven.cn
-  port: 8080
-  uuid: dc211e6f-8ccc-4677-9f9c-db229d172979
-  alterId: 0
-  cipher: auto
-  network: ws
-  tls: false
-  skip-cert-verify: false
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: best.cdn.sqeven.cn
-  tcp_delay: 910
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 37 [⚡可用]
-  type: vmess
-  server: best.cdn.sqeven.cn
-  port: 8080
-  uuid: 175c0f44-6a89-4e48-a827-af1e8cf1d485
-  alterId: 0
-  cipher: auto
-  network: ws
-  tls: false
-  skip-cert-verify: false
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: best.cdn.sqeven.cn
-  tcp_delay: 908
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇳 节点 38 [⚡可用]
-  type: vmess
-  server: best.cdn.sqeven.cn
-  port: 8080
-  uuid: 00bf726b-2ab6-47e1-98a7-af8497634257
-  alterId: 0
-  cipher: auto
-  network: ws
-  tls: false
-  skip-cert-verify: false
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: best.cdn.sqeven.cn
-  tcp_delay: 909
+- name: 🇫🇷 法国 61 [⚡可用]
+  server: 195.154.200.40
+  port: 15010
+  type: hysteria
+  auth_str: dongtaiwang.com
+  auth-str: dongtaiwang.com
+  up: 100
+  down: 100
+  protocol: udp
+  sni: apple.com
+  skip-cert-verify: true
+  alpn:
+  - h3
+  tcp_delay: 8
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
 - name: 🇺🇸 美国 1 [⚡可用]
-  type: vless
-  server: vcfgdsf.fastnew199.hosting-ip.com
-  port: 80
-  uuid: d8732149-4810-43be-b095-f1754debfd98
-  encryption: none
-  flow: ''
-  tls: false
-  skip-cert-verify: false
-  network: xhttp
-  host: maxfr156.global.ssl.fastly.net
-  path: /?ed=2560
-  sni: ''
-  tcp_delay: 25
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 2 [⚡可用]
-  network: ws
-  port: 2095
-  server: 172.67.86.190
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 417d27fb-cb93-3bd8-9bf7-71cd91319821
-  ws-opts:
-    path: /hgcefomn
-  tcp_delay: 14
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 3 [⚡可用]
-  network: ws
-  port: 443
-  server: 192.200.160.214
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 05641cf5-58d2-4ba4-a9f1-b3cda0b1fb1d
-  ws-opts:
-    headers:
-      Host: e130917c-1b58-4136-b2d9-76dc920e0add.add97ee8-0f14-48a3-b2cd-979c56742e64.loseyourip.com
-    path: /
-  tcp_delay: 12
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 4 [⚡可用]
-  type: vless
-  server: 64.188.96.208
-  port: 34045
-  uuid: d8dd94fd-540e-461d-b5d4-acebef02c22a
-  encryption: none
-  flow: ''
-  tls: false
-  skip-cert-verify: false
-  network: tcp
-  host: ''
-  path: ''
-  sni: visit-this-invitation-link-to-join-tg-enkelte-notif.ekt.me
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 5 [⚡可用]
-  network: ws
-  port: 443
-  server: 141.101.114.30
-  servername: lg1.trump2023.us
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 40d496a6-ceeb-4096-baeb-4cc52b205621
-  ws-opts:
-    headers:
-      Host: lg1.trump2023.us
-    path: /ECTCJ0DF
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 6 [⚡可用]
-  network: ws
-  port: 443
-  server: 172.67.156.210
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 76221bfb-e92f-4e80-81c5-6fe48f50ac0b
-  ws-opts:
-    headers:
-      Host: glweidf.sbs
-    path: /
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 7 [⚡可用]
-  network: ws
-  port: 443
-  server: 141.193.213.21
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 2b214122-1906-428a-bbb7-a039cbb7cd5c
-  ws-opts:
-    path: /9JZFDTKE
-  tcp_delay: 16
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 8 [⚡可用]
-  server: 104.129.165.254
-  port: 8880
-  type: vless
-  uuid: 34c01e61-f4f3-4afb-a83b-406caf8caa33
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /Telegram🇨🇳
-    headers:
-      Host: yg.bantony199.top
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 9 [⚡可用]
-  server: 198.62.62.4
-  port: 443
-  type: vless
-  uuid: d6b8011a-c725-435a-9fec-bf6d3530392c
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: vle.amclubsdns.dpdns.org
-  client-fingerprint: randomized
-  network: ws
-  ws-opts:
-    path: /?ed=2560&PROT_TYPE=vless&NAT64=true
-    headers:
-      Host: vle.amclubsdns.dpdns.org
-  tcp_delay: 11
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 10 [⚡可用]
-  server: 156.238.18.106
-  port: 8880
-  type: vless
-  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  servername: yd.laoyoutiao.link
-  network: ws
-  ws-opts:
-    path: /TelegramU0001F1E8U0001F1F3 @MxlShare @WangCai2 /?ed=2560
-    headers:
-      Host: yd.laoyoutiao.link
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 11 [⚡可用]
-  server: 104.18.2.108
-  port: 8443
-  type: trojan
-  password: slch2024
-  sni: ocost-dy.wmlefl.cc
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: '%2F'
-    headers:
-      Host: ocost-dy.wmlefl.cc
-  tcp_delay: 11
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 12 [⚡可用]
-  network: ws
-  port: 443
-  server: 203.30.190.190
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 40d496a6-ceeb-4096-baeb-4cc52b205621
-  ws-opts:
-    path: /ECTCJ0DF
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 13 [⚡可用]
-  network: ws
-  port: 80
-  server: 172.67.222.46
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 6fea1649-425b-4092-bf53-29792152c925
-  ws-opts:
-    headers:
-      Host: us-lb.sshkit.org
-    path: /
-  tcp_delay: 13
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 14 [⚡可用]
-  network: ws
-  port: 443
-  server: 23.227.38.39
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 56a2188b-2ab7-402c-b9b8-34847fdf0958
-  ws-opts:
-    path: /5QNROSRV
-  tcp_delay: 11
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- type: trojan
-  name: 🇺🇸 美国 15 [⚡可用]
-  server: 205.185.115.223
-  port: 19258
-  password: iWnFtzMiac
-  udp: true
-  skip-cert-verify: true
-  sni: cloudflare.com
-  network: grpc
-  tcp_delay: 11
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 16 [⚡可用]
-  server: 156.238.18.13
-  port: 8880
-  type: vless
-  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /Telegram🇨🇳 @MxlShare @WangCai2 /?ed=2560
-    headers:
-      Host: yd.laoyoutiao.link
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 17 [⚡可用]
-  server: 25.25.25.213
-  port: 8880
-  type: vless
-  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: jp.laoyoutiao.link
-  tcp_delay: 8
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 18 [⚡可用]
-  server: 212.183.88.168
-  port: 8880
-  type: vless
-  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  servername: kjgx.laoyoutiao.link
-  network: ws
-  ws-opts:
-    path: /Telegram@freecodes/?ed=2560
-    headers:
-      Host: kjgx.laoyoutiao.link
-  tcp_delay: 12
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 19 [⚡可用]
-  server: 172.67.165.122
-  port: 443
-  type: vmess
-  uuid: 20e89a95-cedf-4fe3-9421-517ce66be170
-  alterId: 0
-  cipher: auto
-  tls: true
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /SHToRcqfiraYkzOdf
-    headers:
-      Host: pppploiu.4444936.xyz
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 20 [⚡可用]
-  server: 69.84.182.18
-  port: 8443
-  type: trojan
-  password: b1fec179-3d5a-4ec5-bf3c-e10668543b4b
-  sni: cdn-node-oss-62.anycdn.de
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /profile/us2
-    headers:
-      Host: cdn-node-oss-62.anycdn.de
-  udp: true
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 21 [⚡可用]
-  server: 185.162.230.213
-  port: 8880
-  type: vless
-  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: jp.laoyoutiao.link
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 22 [⚡可用]
-  server: 172.67.209.79
-  port: 443
-  type: vmess
-  uuid: 91362cdb-81f8-4fd3-9b9f-2b24a8146a25
-  alterId: 0
-  cipher: auto
-  tls: true
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /ODznTT5fgkUw3VH0GJ
-    headers:
-      Host: ggggbbhyuuui.999834.xyz
-  tcp_delay: 13
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 23 [⚡可用]
-  server: 45.149.12.186
-  port: 8880
-  type: vless
-  uuid: 583ceab3-4022-4553-9158-9bedc625ad4e
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  servername: Telegram-channel-WangCai2
-  network: ws
-  ws-opts:
-    path: /TelegramU0001F1E8U0001F1F3 @WangCai2
-    headers:
-      Host: Telegram-channel-WangCai2
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 24 [⚡可用]
-  network: ws
-  port: 443
-  server: 104.18.53.172
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: b3a21def-5fcc-47a8-a6a0-a34e29d5288a
-  ws-opts:
-    path: /wss51068
-  tcp_delay: 12
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 25 [⚡可用]
-  network: ws
-  port: 80
-  server: 154.92.9.69
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: dd41b5cb-b72e-4a8c-c75a-3ecc928d6eb3
-  ws-opts:
-    path: /blue
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 26 [⚡可用]
-  network: ws
-  port: 80
-  server: 104.31.16.34
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 8abe9496-5e24-4e49-b566-dcf86116017d
-  ws-opts:
-    path: /i99LgvSaslbsPLLQQ7j6Z
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 64
-  cipher: auto
-  name: 🇺🇸 美国 27 [⚡可用]
-  network: ws
-  port: 30004
-  server: 192.74.236.155
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
-  ws-opts:
-    headers:
-      Host: www.91334565.xyz
-    path: /
-  tcp_delay: 12
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 28 [⚡可用]
-  server: green2.cdntencentmusic.com
-  port: 35502
-  type: trojan
-  password: fb0ebb8e-b467-4c48-8145-e5b3b06a0415
-  sni: green2.cdntencentmusic.com
-  skip-cert-verify: true
-  udp: true
-  tcp_delay: 26
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 29 [⚡可用]
-  server: 185.174.138.143
-  port: 8880
-  type: vless
-  uuid: 34c01e61-f4f3-4afb-a83b-406caf8caa33
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  servername: Telegram-channel-WangCai2
-  network: ws
-  ws-opts:
-    path: /Telegram🇨🇳 @WangCai2 /?ed=2560
-    headers:
-      Host: Telegram-channel-WangCai2
-  tcp_delay: 8
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 30 [⚡可用]
-  network: ws
-  port: 80
-  server: 104.31.16.37
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 8abe9496-5e24-4e49-b566-dcf86116017d
-  ws-opts:
-    path: /i99LgvSaslbsPLLQQ7j6Z
-  tcp_delay: 14
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 31 [⚡可用]
-  server: 199.181.197.29
-  port: 8880
-  type: vless
-  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /Telegram🇨🇳 @MxlShare @WangCai2 /?ed=2560
-    headers:
-      Host: hk.laoyoutiao.link
-  tcp_delay: 8
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 32 [⚡可用]
-  server: 154.83.2.54
-  port: 2096
-  type: vless
-  uuid: d6b8011a-c725-435a-9fec-bf6d3530392c
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: vle.amclubsapp.dpdns.org
-  client-fingerprint: randomized
-  network: ws
-  ws-opts:
-    path: /?ed=2560&PROT_TYPE=vless&NAT64=true
-    headers:
-      Host: vle.amclubsapp.dpdns.org
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 33 [⚡可用]
-  network: ws
-  port: 443
-  server: six.r33.fun
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 9bb0e2e3-c5b9-4606-9cbb-a3c36f2d01d7
-  ws-opts:
-    headers:
-      Host: fr2-full.privateip.net
-    path: /racevpn
-  tcp_delay: 156
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 34 [⚡可用]
-  network: ws
-  port: 443
-  server: 188.114.99.11
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 17b2a313-37a0-4945-a8e4-e63375506b4a
-  ws-opts:
-    path: /A2DJOPFT
-  tcp_delay: 15
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 35 [⚡可用]
-  network: ws
-  port: 443
-  server: 154.92.9.115
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: dd41b5cb-b72e-4a8c-c75a-3ecc928d6eb3
-  ws-opts:
-    path: /blue
-  tcp_delay: 13
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 36 [⚡可用]
-  server: 104.21.238.94
-  port: 443
-  type: vless
-  uuid: d88937d0-ce43-4bf8-9df6-d632810ba9ff
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: 007.xingfu.qzz.io
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: 007.xingfu.qzz.io
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 37 [⚡可用]
   server: 66.253.7.79
   port: 443
   type: vless
@@ -3012,433 +1310,13 @@ proxies:
       Host: kk66.tc6666.netlib.re
   udp: true
   servername: kk66.tc6666.netlib.re
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 64
-  cipher: auto
-  name: 🇺🇸 美国 38 [⚡可用]
-  network: ws
-  port: 37002
-  server: 38.11.71.76
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
-  ws-opts:
-    headers:
-      Host: www.64786755.xyz
-    path: /
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 39 [⚡可用]
-  network: ws
-  password: vip
-  port: 443
-  server: www.pcmag.com
-  skip-cert-verify: false
-  sni: heihu880.pages.dev
-  type: trojan
-  ws-opts:
-    headers:
-      Host: heihu880.pages.dev
-    path: /?ed=2560
-  tcp_delay: 22
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 40 [⚡可用]
-  server: 45.67.215.95
-  port: 443
-  type: trojan
-  password: tg-fq521free
-  sni: torjan.xn--xhq44j.eu.org
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: '%2F'
-    headers:
-      Host: torjan.xn--xhq44j.eu.org
-  tcp_delay: 8
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 41 [⚡可用]
-  server: 185.251.83.168
-  port: 8880
-  type: vless
-  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  servername: kjgx.laoyoutiao.link
-  network: ws
-  ws-opts:
-    path: /Telegram@WangCai2/?ed=2560
-    headers:
-      Host: kjgx.laoyoutiao.link
-  tcp_delay: 8
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 42 [⚡可用]
-  server: 88.210.36.107
-  port: 2377
-  type: ss
-  cipher: chacha20-ietf-poly1305
-  password: t0srmdxrm3xyjnvqz9ewlxb2myq7rjuv
-  plugin: obfs
-  plugin-opts:
-    mode: tls
-    host: feb7fa9:154948
   tcp_delay: 11
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇺🇸 美国 43 [⚡可用]
-  network: ws
-  password: vip
-  port: 443
-  server: iplocation.io
-  skip-cert-verify: false
-  sni: heihu880.pages.dev
-  type: trojan
-  ws-opts:
-    headers:
-      Host: heihu880.pages.dev
-    path: /?ed=2560
-  tcp_delay: 25
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
 - alterId: 0
   cipher: auto
-  name: 🇺🇸 美国 44 [⚡可用]
-  network: ws
-  port: 2095
-  server: 172.67.9.200
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 417d27fb-cb93-3bd8-9bf7-71cd91319821
-  ws-opts:
-    path: /hgcefomn
-  tcp_delay: 13
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 45 [⚡可用]
-  password: psycho
-  port: 443
-  server: 104.21.80.1
-  skip-cert-verify: false
-  sni: PSYchO.SueX12.Ir
-  type: trojan
-  tcp_delay: 13
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 46 [⚡可用]
-  server: 46.254.93.29
-  port: 8880
-  type: vless
-  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  servername: hk.laoyoutiao.link
-  network: ws
-  ws-opts:
-    path: /TelegramU0001F1E8U0001F1F3
-    headers:
-      Host: hk.laoyoutiao.link
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 47 [⚡可用]
-  server: 156.238.18.211
-  port: 8880
-  type: vless
-  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: Telegram🇨🇳 @MxlShare @WangCai2 /?ed=2560
-    headers:
-      Host: us.laoyoutiao.link
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 48 [⚡可用]
-  server: 185.162.230.168
-  port: 8880
-  type: vless
-  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  servername: kjgx.laoyoutiao.link
-  network: ws
-  ws-opts:
-    path: /Telegram@WangCai2/
-    headers:
-      Host: kjgx.laoyoutiao.link
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 49 [⚡可用]
-  server: 86.38.214.213
-  port: 8880
-  type: vless
-  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  servername: jp.laoyoutiao.link
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: jp.laoyoutiao.link
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 50 [⚡可用]
-  password: c0fde6ac-a07c-4f60-84ae-e7ed4da78a6f
-  port: 80
-  server: 15.204.210.176
-  skip-cert-verify: false
-  sni: telewebion.com
-  type: trojan
-  tcp_delay: 13
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 51 [⚡可用]
-  server: 63.141.128.251
-  port: 8880
-  type: vless
-  uuid: 0132166f-e702-48ed-a9e7-b07af768faf8
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /Telegram🇨🇳 @WangCai2 /?ed=2560fp=chrome
-    headers:
-      Host: cf.d3z.net
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 52 [⚡可用]
-  network: ws
-  port: 443
-  server: news.microsoft.com
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 615a1285-5848-42a1-9859-d4cb37b1fbd8
-  ws-opts:
-    headers:
-      Host: us.awsbest.com
-    path: /share
-  tcp_delay: 22
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 53 [⚡可用]
-  server: cdnfire.xiaomispeed.com
-  port: 25502
-  type: trojan
-  password: b25ba535-3fbd-47e7-b21a-48544dc01718
-  sni: cdnfire.xiaomispeed.com
-  skip-cert-verify: true
-  udp: true
-  tcp_delay: 28
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 54 [⚡可用]
-  network: ws
-  password: vip
-  port: 443
-  server: log.bpminecraft.com
-  skip-cert-verify: false
-  sni: heihu880.pages.dev
-  type: trojan
-  ws-opts:
-    headers:
-      Host: heihu880.pages.dev
-    path: /?ed=2560
-  tcp_delay: 26
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 55 [⚡可用]
-  network: ws
-  port: 443
-  server: 172.66.44.197
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: fa4cb529-3ac9-4268-bb04-ed4253813508
-  ws-opts:
-    path: /mR17oBKzZ7
-  tcp_delay: 15
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 56 [⚡可用]
-  server: 173.245.58.58
-  port: 80
-  type: vless
-  uuid: 53342b53-157e-4475-9f3a-40439434e689
-  tls: false
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: c.iamdt.dpdns.org
-    early-data-header-name: Sec-WebSocket-Protocol
-    max-early-data: 2048
-  udp: true
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 57 [⚡可用]
-  network: ws
-  port: 8443
-  server: 173.245.49.23
-  servername: us-171-78.shoptunnel.live
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: a6a37e04-5e81-44c9-be53-baa3ff46eb8b
-  ws-opts:
-    headers:
-      Host: us-171-78.shoptunnel.live
-    path: /
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 58 [⚡可用]
-  server: 195.85.23.20
-  port: 8880
-  type: vless
-  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /Telegram🇨🇳 @MxlShare @WangCai2 /?ed=2560
-    headers:
-      Host: us.laoyoutiao.link
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 59 [⚡可用]
-  network: ws
-  port: 80
-  server: 154.92.9.133
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: dd41b5cb-b72e-4a8c-c75a-3ecc928d6eb3
-  ws-opts:
-    path: /blue
-  tcp_delay: 11
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 60 [⚡可用]
-  network: ws
-  password: b1fec179-3d5a-4ec5-bf3c-e10668543b4b
-  port: 8443
-  server: 69.84.182.108
-  skip-cert-verify: false
-  sni: cdn-node-oss-61.anycdn.de
-  type: trojan
-  udp: true
-  ws-opts:
-    headers:
-      Host: cdn-node-oss-61.anycdn.de
-    path: /profile/us1
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 61 [⚡可用]
-  server: 45.135.235.216
-  port: 2096
-  type: trojan
-  password: ttfang
-  sni: ttfang.fange.me
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: Telegram%F0%9F%87%A8%F0%9F%87%B3
-    headers:
-      Host: ttfang.fange.me
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- cipher: aes-256-gcm
-  name: 🇺🇸 美国 62 [⚡可用]
-  password: zDNVedRFPQexG9v
-  port: 445
-  server: 142.202.48.74
-  type: ss
-  tcp_delay: 13
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 63 [⚡可用]
-  server: 104.21.24.195
-  port: 443
-  type: vless
-  uuid: a4291a2a-d62c-4eb9-ac7a-ac7355d1eda2
-  tls: true
-  alpn:
-  - http/1.1
-  tfo: false
-  skip-cert-verify: true
-  servername: 9999UUuU.999836.XYZ
-  client-fingerprint: chrome
-  network: ws
-  ws-opts:
-    path: /MIrEVIUviSe8ydvnmRKWDa8
-    headers:
-      Host: 9999UUuU.999836.XYZ
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 64 [⚡可用]
+  name: 🇺🇸 美国 2 [⚡可用]
   network: ws
   port: 443
   server: 203.24.108.8
@@ -3448,11 +1326,11 @@ proxies:
   uuid: 40d496a6-ceeb-4096-baeb-4cc52b205621
   ws-opts:
     path: /ECTCJ0DF
-  tcp_delay: 15
+  tcp_delay: 6
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇺🇸 美国 65 [⚡可用]
+- name: 🇺🇸 美国 3 [⚡可用]
   type: vless
   server: 185.176.220.154
   port: 443
@@ -3469,91 +1347,61 @@ proxies:
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇺🇸 美国 66 [⚡可用]
-  server: 45.136.245.177
-  port: 23160
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 4 [⚡可用]
+  network: ws
+  port: 443
+  server: 172.67.145.166
+  skip-cert-verify: false
+  tls: true
   type: vmess
-  uuid: 6f3f1928-7f92-4918-a1a5-d81c7e06091e
+  uuid: c5a2d7b8-bf84-4f97-8577-b9b87f2baaf7
+  ws-opts:
+    path: /AUIKN8AU
+  tcp_delay: 14
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 5 [⚡可用]
+  server: 185.162.230.168
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: kjgx.laoyoutiao.link
+  network: ws
+  ws-opts:
+    path: /Telegram@WangCai2/
+    headers:
+      Host: kjgx.laoyoutiao.link
+  tcp_delay: 8
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 6 [⚡可用]
+  server: 172.67.170.147
+  port: 443
+  type: vmess
+  uuid: ffcf7ec1-3e09-4821-b3d9-b426a107b73b
   alterId: 0
   cipher: auto
-  tls: false
+  tls: true
   skip-cert-verify: true
   network: ws
   ws-opts:
-    path: /
-  tcp_delay: 11
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 67 [⚡可用]
-  server: 185.193.48.157
-  port: 443
-  type: ss
-  cipher: chacha20-ietf-poly1305
-  password: zwBLM6bBE5YxvwvnKgxAq3ErXpqMYv20
-  udp: true
-  tcp_delay: 13
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 68 [⚡可用]
-  password: 6d64570c-81d4-30fa-b2e2-dce73e1a2702
-  port: 44301
-  server: 173.82.240.199
-  skip-cert-verify: false
-  sni: lav002.jd0001.top
-  type: trojan
-  tcp_delay: 15
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 69 [⚡可用]
-  server: green2.cdntencentmusic.com
-  port: 35502
-  type: trojan
-  password: d6578078-04d1-40a0-a8e5-4ad931f31f77
-  sni: green2.cdntencentmusic.com
-  skip-cert-verify: true
-  udp: true
-  tcp_delay: 28
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 70 [⚡可用]
-  server: 208.87.242.97
-  port: 35000
-  type: hysteria2
-  password: e4dbde8d-b194-4a64-afe0-093ffd258e8e
-  auth: e4dbde8d-b194-4a64-afe0-093ffd258e8e
-  sni: www.apple.com
-  skip-cert-verify: true
-  ports: 35000-39000
-  udp: true
+    path: /4Bp70NdrJV3xr1D40NK
+    headers:
+      Host: xcvfgt6.999854.xyz
   tcp_delay: 7
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
 - alterId: 0
   cipher: auto
-  name: 🇺🇸 美国 71 [⚡可用]
-  network: ws
-  port: 443
-  server: vus3.0bad.com
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 927094d3-d678-4763-8591-e240d0bcae87
-  ws-opts:
-    headers:
-      Host: vus3.0bad.com
-    path: /chat
-  tcp_delay: 28
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 72 [⚡可用]
+  name: 🇺🇸 美国 7 [⚡可用]
   network: ws
   port: 8443
   server: 172.67.1.182
@@ -3563,51 +1411,29 @@ proxies:
   uuid: a6a37e04-5e81-44c9-be53-baa3ff46eb8b
   ws-opts:
     path: /8cda48b3
-  tcp_delay: 15
+  tcp_delay: 9
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- cipher: aes-256-gcm
-  name: 🇺🇸 美国 73 [⚡可用]
-  password: KixLvKzwjekG00rm
-  port: 5500
-  server: 38.64.138.145
-  type: ss
-  tcp_delay: 13
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 74 [⚡可用]
-  network: ws
+- name: 🇺🇸 美国 8 [⚡可用]
+  server: 199.181.197.29
   port: 8880
-  server: 172.64.229.223
-  skip-cert-verify: false
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
   tls: false
-  type: vmess
-  uuid: 4b5e4565-322f-4223-a891-78a84f189726
-  ws-opts:
-    path: /RpT6kZjkw45EenmTcDYWs
-  tcp_delay: 8
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 75 [⚡可用]
-  server: 45.136.245.177
-  port: 33079
-  type: hysteria2
-  password: 1e3a572b-7355-4daf-a274-84946f203ebf
-  auth: 1e3a572b-7355-4daf-a274-84946f203ebf
+  tfo: false
   skip-cert-verify: true
-  obfs: salamander
-  obfs-password: salamander
-  tcp_delay: 10
+  network: ws
+  ws-opts:
+    path: /Telegram🇨🇳 @MxlShare @WangCai2 /?ed=2560
+    headers:
+      Host: hk.laoyoutiao.link
+  tcp_delay: 6
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇺🇸 美国 76 [⚡可用]
-  server: 141.193.213.106
+- name: 🇺🇸 美国 9 [⚡可用]
+  server: 141.193.213.63
   port: 80
   type: vless
   uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
@@ -3624,338 +1450,42 @@ proxies:
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇺🇸 美国 77 [⚡可用]
-  type: vless
-  server: 104.167.199.95
-  port: 80
-  uuid: 558393ec-d70d-4a05-b412-e59f2436cc14
-  encryption: none
-  flow: ''
-  tls: false
-  skip-cert-verify: false
-  network: ws
-  host: '---@External_Net---@External_Net---@External_Net---@External_Net---@External_Net'
-  path: /vless/
-  sni: ''
-  ws-opts:
-    path: /vless/
-    headers:
-      Host: '---@External_Net---@External_Net---@External_Net---@External_Net---@External_Net'
-  tcp_delay: 8
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 64
-  cipher: auto
-  name: 🇺🇸 美国 78 [⚡可用]
-  network: ws
-  port: 37002
-  server: 192.74.224.163
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
-  ws-opts:
-    headers:
-      Host: www.68584158.xyz
-    path: /
-  tcp_delay: 12
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 80 [⚡可用]
-  network: ws
-  port: 443
-  server: 15.204.64.214
-  servername: yichueng.org
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
-  ws-opts:
-    headers:
-      Host: yichueng.org
-    path: linkvws
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 81 [⚡可用]
-  network: ws
-  port: 8443
-  server: 173.245.49.10
-  servername: us-171-78.shoptunnel.live
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: a6a37e04-5e81-44c9-be53-baa3ff46eb8b
-  ws-opts:
-    headers:
-      Host: us-171-78.shoptunnel.live
-    path: /
-  tcp_delay: 8
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 82 [⚡可用]
-  network: ws
-  port: 80
-  server: 154.92.9.174
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: dd41b5cb-b72e-4a8c-c75a-3ecc928d6eb3
-  ws-opts:
-    path: /blue
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 83 [⚡可用]
-  server: 103.160.204.36
-  port: 2087
-  type: vless
-  uuid: d6b8011a-c725-435a-9fec-bf6d3530392c
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: vle.amclubsdns.dpdns.org
-  client-fingerprint: randomized
-  network: ws
-  ws-opts:
-    path: /?ed=2560&PROT_TYPE=vless&NAT64=true
-    headers:
-      Host: vle.amclubsdns.dpdns.org
-  tcp_delay: 13
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 84 [⚡可用]
-  server: 180.131.145.161
-  port: 23274
-  type: trojan
-  password: FodSUXysuS
-  sni: cloudflare.com
-  skip-cert-verify: true
-  network: grpc
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 85 [⚡可用]
-  server: 3.93.196.82
-  port: 443
-  type: ss
-  cipher: aes-256-gcm
-  password: amazonskr05
-  udp: true
-  tcp_delay: 6
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 86 [⚡可用]
-  server: 159.112.235.156
+- name: 🇺🇸 美国 10 [⚡可用]
+  server: 185.174.138.143
   port: 8880
   type: vless
-  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  uuid: 34c01e61-f4f3-4afb-a83b-406caf8caa33
   tls: false
   tfo: false
   skip-cert-verify: true
   servername: Telegram-channel-WangCai2
   network: ws
   ws-opts:
-    path: /Telegram🇨🇳 @WangCai2 /
+    path: /Telegram🇨🇳 @WangCai2 /?ed=2560
     headers:
       Host: Telegram-channel-WangCai2
-  tcp_delay: 8
+  tcp_delay: 12
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇺🇸 美国 87 [⚡可用]
-  server: 156.238.18.246
-  port: 8880
+- name: 🇺🇸 美国 11 [⚡可用]
   type: vless
-  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  servername: yd.laoyoutiao.link
-  network: ws
-  ws-opts:
-    path: /TelegramU0001F1E8U0001F1F3
-    headers:
-      Host: yd.laoyoutiao.link
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 88 [⚡可用]
-  server: 176.124.223.213
-  port: 8880
-  type: vless
-  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  servername: jp.laoyoutiao.link
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: jp.laoyoutiao.link
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 89 [⚡可用]
-  server: 104.17.148.22
-  port: 443
-  type: vless
-  uuid: 86c50e3a-5b87-49dd-bd20-03c7f2735e40
+  server: 144.31.1.197
+  port: 8443
+  uuid: eb7c7631-6c7c-4f34-a65a-974b4565d01d
+  encryption: none
+  flow: xtls-rprx-vision
   tls: true
-  alpn:
-  - h2%2Chttp%2F1.1
-  tfo: false
-  skip-cert-verify: true
-  servername: jaegbsem36.cfd
-  client-fingerprint: chrome
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: jaegbsem36.cfd
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 90 [⚡可用]
-  server: staticdelivery.nexusmods.com
-  port: 443
-  type: vless
-  uuid: 32b41f9e-dfa4-45f4-add9-ab321e00fe0a
-  tls: true
-  servername: snip.webp.de5.net
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /?ed=2560
-    headers:
-      Host: snip.webp.de5.net
-  tcp_delay: 23
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 92 [⚡可用]
-  network: ws
-  port: 443
-  server: 203.30.189.190
   skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 56a2188b-2ab7-402c-b9b8-34847fdf0958
-  ws-opts:
-    path: /5QNROSRV
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 93 [⚡可用]
-  network: ws
-  port: 443
-  server: 141.101.115.2
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: a5ba8b2b-8fc5-4521-a35e-9281be61c1c3
-  ws-opts:
-    headers:
-      Host: lg1.zhujicn2.com
-    path: /dongtaiwang.com
-  tcp_delay: 18
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 94 [⚡可用]
-  server: 188.42.89.251
-  port: 8880
-  type: vless
-  uuid: 0132166f-e702-48ed-a9e7-b07af768faf8
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /Telegram🇨🇳 @WangCai2 /?ed=2560fp=chrome
-    headers:
-      Host: cf.d3z.net
+  network: tcp
+  host: ''
+  path: ''
+  sni: music.yandex.ru
   tcp_delay: 9
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 95 [⚡可用]
-  network: ws
-  port: 443
-  server: 108.162.193.198
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
-  ws-opts:
-    headers:
-      Host: cs.putihb.org
-    path: /
-  tcp_delay: 8
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 96 [⚡可用]
-  server: 104.21.238.116
-  port: 80
-  type: vless
-  uuid: 53342b53-157e-4475-9f3a-40439434e689
-  tls: false
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: c.iamdt.dpdns.org
-    early-data-header-name: Sec-WebSocket-Protocol
-    max-early-data: 2048
-  udp: true
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 97 [⚡可用]
-  server: 156.238.18.199
-  port: 8880
-  type: vless
-  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /Telegram@WangCai2/?ed=2560
-    headers:
-      Host: jp.laoyoutiao.link
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 98 [⚡可用]
+- name: 🇺🇸 美国 12 [⚡可用]
   server: 104.21.24.195
   port: 443
   type: vless
@@ -3976,75 +1506,317 @@ proxies:
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 99 [⚡可用]
-  network: ws
-  port: 443
-  server: 203.30.188.120
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 4612618c-24cd-4379-9924-cfdf3d61fa5a
-  ws-opts:
-    path: /IYKLD53M
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 101 [⚡可用]
-  server: 45.12.31.63
+- name: 🇺🇸 美国 13 [⚡可用]
+  server: 156.238.18.199
   port: 8880
   type: vless
   uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
   tls: false
   tfo: false
   skip-cert-verify: true
-  servername: jp.laoyoutiao.link
   network: ws
   ws-opts:
-    path: /Telegram🇨🇳
+    path: /Telegram@WangCai2/?ed=2560
     headers:
       Host: jp.laoyoutiao.link
-  tcp_delay: 8
+  tcp_delay: 11
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇺🇸 美国 102 [⚡可用]
-  server: 104.21.14.54
+- name: 🇺🇸 美国 14 [⚡可用]
+  server: 198.62.62.4
   port: 443
-  type: trojan
-  password: e4cbe8b8-37db-4aaa-8469-b84f34c51ebc
-  sni: 6666YHjU.777159.xYz
+  type: vless
+  uuid: d6b8011a-c725-435a-9fec-bf6d3530392c
+  tls: true
+  tfo: false
   skip-cert-verify: true
+  servername: vle.amclubsdns.dpdns.org
+  client-fingerprint: randomized
   network: ws
   ws-opts:
-    path: '%2FdilyfCPEmLvYr5hYXD'
+    path: /?ed=2560&PROT_TYPE=vless&NAT64=true
     headers:
-      Host: 6666YHjU.777159.xYz
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 103 [⚡可用]
-  type: vmess
-  server: v29.heduian.link
-  port: 30829
-  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
-  cipher: auto
-  network: ws
-  ws-opts:
-    path: /oooo
-    headers:
-      Host: ocbc.com
-  alterId: 2
-  tcp_delay: 28
+      Host: vle.amclubsdns.dpdns.org
+  tcp_delay: 12
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
 - alterId: 0
   cipher: auto
-  name: 🇺🇸 美国 104 [⚡可用]
+  name: 🇺🇸 美国 15 [⚡可用]
+  network: ws
+  port: 443
+  server: 188.114.99.11
+  skip-cert-verify: false
+  tls: true
+  type: vmess
+  uuid: 17b2a313-37a0-4945-a8e4-e63375506b4a
+  ws-opts:
+    path: /A2DJOPFT
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 16 [⚡可用]
+  server: 154.83.2.54
+  port: 2096
+  type: vless
+  uuid: d6b8011a-c725-435a-9fec-bf6d3530392c
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: vle.amclubsapp.dpdns.org
+  client-fingerprint: randomized
+  network: ws
+  ws-opts:
+    path: /?ed=2560&PROT_TYPE=vless&NAT64=true
+    headers:
+      Host: vle.amclubsapp.dpdns.org
+  tcp_delay: 8
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 17 [⚡可用]
+  server: 188.42.89.251
+  port: 8880
+  type: vless
+  uuid: 0132166f-e702-48ed-a9e7-b07af768faf8
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /Telegram🇨🇳 @WangCai2 /?ed=2560fp=chrome
+    headers:
+      Host: cf.d3z.net
+  tcp_delay: 13
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 19 [⚡可用]
+  type: vless
+  server: vcfgdsf.fastnew199.hosting-ip.com
+  port: 80
+  uuid: d8732149-4810-43be-b095-f1754debfd98
+  encryption: none
+  flow: ''
+  tls: false
+  skip-cert-verify: false
+  network: xhttp
+  host: maxfr156.global.ssl.fastly.net
+  path: /?ed=2560
+  sni: ''
+  tcp_delay: 22
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 20 [⚡可用]
+  network: ws
+  port: 80
+  server: 104.31.16.37
+  skip-cert-verify: false
+  tls: false
+  type: vmess
+  uuid: 8abe9496-5e24-4e49-b566-dcf86116017d
+  ws-opts:
+    path: /i99LgvSaslbsPLLQQ7j6Z
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 21 [⚡可用]
+  server: green2.cdntencentmusic.com
+  port: 35502
+  type: trojan
+  password: fb0ebb8e-b467-4c48-8145-e5b3b06a0415
+  sni: green2.cdntencentmusic.com
+  skip-cert-verify: true
+  udp: true
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 22 [⚡可用]
+  network: ws
+  port: 80
+  server: 172.67.222.46
+  skip-cert-verify: false
+  tls: false
+  type: vmess
+  uuid: 6fea1649-425b-4092-bf53-29792152c925
+  ws-opts:
+    headers:
+      Host: us-lb.sshkit.org
+    path: /
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 23 [⚡可用]
+  server: 63.141.128.251
+  port: 8880
+  type: vless
+  uuid: 0132166f-e702-48ed-a9e7-b07af768faf8
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /Telegram🇨🇳 @WangCai2 /?ed=2560fp=chrome
+    headers:
+      Host: cf.d3z.net
+  tcp_delay: 6
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 24 [⚡可用]
+  network: ws
+  port: 443
+  server: vus3.0bad.com
+  skip-cert-verify: false
+  tls: true
+  type: vmess
+  uuid: 927094d3-d678-4763-8591-e240d0bcae87
+  ws-opts:
+    headers:
+      Host: vus3.0bad.com
+    path: /chat
+  tcp_delay: 26
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 25 [⚡可用]
+  network: ws
+  port: 443
+  server: news.microsoft.com
+  skip-cert-verify: false
+  tls: true
+  type: vmess
+  uuid: 615a1285-5848-42a1-9859-d4cb37b1fbd8
+  ws-opts:
+    headers:
+      Host: us.awsbest.com
+    path: /share
+  tcp_delay: 20
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 26 [⚡可用]
+  server: 104.129.165.254
+  port: 8880
+  type: vless
+  uuid: 34c01e61-f4f3-4afb-a83b-406caf8caa33
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /Telegram🇨🇳
+    headers:
+      Host: yg.bantony199.top
+  tcp_delay: 6
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 27 [⚡可用]
+  network: ws
+  port: 443
+  server: 192.200.160.214
+  skip-cert-verify: false
+  tls: true
+  type: vmess
+  uuid: 05641cf5-58d2-4ba4-a9f1-b3cda0b1fb1d
+  ws-opts:
+    headers:
+      Host: e130917c-1b58-4136-b2d9-76dc920e0add.add97ee8-0f14-48a3-b2cd-979c56742e64.loseyourip.com
+    path: /
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 28 [⚡可用]
+  server: 154.26.186.178
+  port: 12380
+  type: vless
+  uuid: eca3f76a-2e2f-4143-9852-e2a74a848f77
+  tls: true
+  network: ws
+  ws-opts:
+    path: /proxyip=sjc.o00o.ooo
+    headers:
+      Host: kk66.tc6666.netlib.re
+  udp: true
+  servername: kk66.tc6666.netlib.re
+  tcp_delay: 8
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 29 [⚡可用]
+  network: ws
+  port: 443
+  server: 154.92.9.115
+  skip-cert-verify: false
+  tls: true
+  type: vmess
+  uuid: dd41b5cb-b72e-4a8c-c75a-3ecc928d6eb3
+  ws-opts:
+    path: /blue
+  tcp_delay: 10
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 30 [⚡可用]
+  server: 45.149.12.186
+  port: 8880
+  type: vless
+  uuid: 583ceab3-4022-4553-9158-9bedc625ad4e
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: Telegram-channel-WangCai2
+  network: ws
+  ws-opts:
+    path: /TelegramU0001F1E8U0001F1F3 @WangCai2
+    headers:
+      Host: Telegram-channel-WangCai2
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 31 [⚡可用]
+  server: 195.85.23.156
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: Telegram-channel-WangCai2
+  network: ws
+  ws-opts:
+    path: /Telegram🇨🇳 @WangCai2 /
+    headers:
+      Host: Telegram-channel-WangCai2
+  tcp_delay: 12
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 32 [⚡可用]
   network: ws
   port: 443
   server: 190.93.246.195
@@ -4054,106 +1826,774 @@ proxies:
   uuid: 4612618c-24cd-4379-9924-cfdf3d61fa5a
   ws-opts:
     path: /IYKLD53M
-  tcp_delay: 14
+  tcp_delay: 12
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 105 [⚡可用]
-  network: ws
+- name: 🇺🇸 美国 33 [⚡可用]
+  server: 104.21.238.94
   port: 443
-  server: 104.21.83.115
-  servername: hms02.fxiaomi.sbs
-  skip-cert-verify: false
+  type: vless
+  uuid: d88937d0-ce43-4bf8-9df6-d632810ba9ff
   tls: true
-  type: vmess
-  uuid: 6c168fcc-2231-4f3b-8c1e-f6391692df4a
+  tfo: false
+  skip-cert-verify: true
+  servername: 007.xingfu.qzz.io
+  client-fingerprint: random
+  network: ws
   ws-opts:
+    path: /
     headers:
-      Host: hms02.fxiaomi.sbs
-    path: /link
-  tcp_delay: 13
+      Host: 007.xingfu.qzz.io
+  tcp_delay: 9
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
 - alterId: 0
   cipher: auto
-  name: 🇺🇸 美国 107 [⚡可用]
+  name: 🇺🇸 美国 34 [⚡可用]
   network: ws
-  port: 2052
-  server: 104.16.67.38
+  port: 80
+  server: 154.92.9.69
   skip-cert-verify: false
   tls: false
   type: vmess
-  uuid: a1655f51-1e20-4a92-8a11-b7ca30a7a353
+  uuid: dd41b5cb-b72e-4a8c-c75a-3ecc928d6eb3
   ws-opts:
-    headers:
-      Host: 7hss-butterfly-d4c3.fijetem432.workers.dev
-    path: /
-  tcp_delay: 11
+    path: /blue
+  tcp_delay: 8
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- alterId: 1
+- alterId: 0
   cipher: auto
-  name: 🇺🇸 美国 108 [⚡可用]
+  name: 🇺🇸 美国 35 [⚡可用]
   network: ws
   port: 443
-  server: 172.67.155.134
-  servername: ritchier.info
+  server: 172.66.44.197
+  skip-cert-verify: false
+  tls: true
+  type: vmess
+  uuid: fa4cb529-3ac9-4268-bb04-ed4253813508
+  ws-opts:
+    path: /mR17oBKzZ7
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- type: trojan
+  name: 🇺🇸 美国 36 [⚡可用]
+  server: 205.185.115.223
+  port: 19258
+  password: iWnFtzMiac
+  udp: true
+  skip-cert-verify: true
+  sni: cloudflare.com
+  network: grpc
+  tcp_delay: 9
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 37 [⚡可用]
+  server: 104.21.10.97
+  port: 443
+  type: vless
+  uuid: 662e38ba-8427-4955-94aa-76f5347a0ce8
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: rrRRrrrRrnNNNNnnmM.222767.xyz
+  client-fingerprint: chrome
+  network: ws
+  ws-opts:
+    path: /6DuxYMYmrGrnGKRtF5UvWyyVQu
+    headers:
+      Host: rrRRrrrRrnNNNNnnmM.222767.xyz
+  tcp_delay: 9
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 38 [⚡可用]
+  network: ws
+  port: 443
+  server: 108.162.193.198
   skip-cert-verify: false
   tls: true
   type: vmess
   uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
   ws-opts:
     headers:
-      Host: ritchier.info
-    path: linkvws
-  tcp_delay: 12
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 109 [⚡可用]
-  type: vless
-  server: 104.18.46.46
-  port: 443
-  uuid: 8d02d562-3e38-4f79-a11d-10ebb322ffdc
-  udp: true
-  tls: true
-  skip-cert-verify: false
-  flow: ''
-  client-fingerprint: chrome
-  servername: uIua1.jsjc-download.top
-  network: ws
-  ws-opts:
-    path: /jsjc/us1
-    headers:
-      Host: ulua1.jsjc-download.top
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 110 [⚡可用]
-  server: 46.254.92.2
-  port: 8880
-  type: vless
-  uuid: 0132166f-e702-48ed-a9e7-b07af768faf8
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  servername: cf.d3z.net
-  network: ws
-  ws-opts:
-    path: /TelegramU0001F1E8U0001F1F3 @WangCai2 /?ed=2560
-    headers:
-      Host: cf.d3z.net
+      Host: cs.putihb.org
+    path: /
   tcp_delay: 8
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇺🇸 美国 111 [⚡可用]
-  server: 45.159.216.168
+- name: 🇺🇸 美国 39 [⚡可用]
+  server: 104.17.148.22
+  port: 443
+  type: vless
+  uuid: 86c50e3a-5b87-49dd-bd20-03c7f2735e40
+  tls: true
+  alpn:
+  - h2%2Chttp%2F1.1
+  tfo: false
+  skip-cert-verify: true
+  servername: jaegbsem36.cfd
+  client-fingerprint: chrome
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: jaegbsem36.cfd
+  tcp_delay: 8
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 40 [⚡可用]
+  network: ws
+  port: 443
+  server: 141.101.115.2
+  skip-cert-verify: false
+  tls: true
+  type: vmess
+  uuid: a5ba8b2b-8fc5-4521-a35e-9281be61c1c3
+  ws-opts:
+    headers:
+      Host: lg1.zhujicn2.com
+    path: /dongtaiwang.com
+  tcp_delay: 14
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 41 [⚡可用]
+  network: ws
+  password: vip
+  port: 443
+  server: log.bpminecraft.com
+  skip-cert-verify: false
+  sni: heihu880.pages.dev
+  type: trojan
+  ws-opts:
+    headers:
+      Host: heihu880.pages.dev
+    path: /?ed=2560
+  tcp_delay: 27
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 64
+  cipher: auto
+  name: 🇺🇸 美国 42 [⚡可用]
+  network: ws
+  port: 30004
+  server: 192.74.236.155
+  skip-cert-verify: false
+  tls: true
+  type: vmess
+  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
+  ws-opts:
+    headers:
+      Host: www.91334565.xyz
+    path: /
+  tcp_delay: 9
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 43 [⚡可用]
+  network: ws
+  port: 443
+  server: 203.30.188.120
+  skip-cert-verify: false
+  tls: true
+  type: vmess
+  uuid: 4612618c-24cd-4379-9924-cfdf3d61fa5a
+  ws-opts:
+    path: /IYKLD53M
+  tcp_delay: 8
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- encryption: none
+  name: 🇺🇸 美国 45 [⚡可用]
+  network: ws
+  port: 2096
+  server: 108.162.198.24
+  servername: kuangbao.xiejiang.dpdns.org
+  tls: true
+  type: vless
+  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
+  ws-opts:
+    headers:
+      Host: kuangbao.xiejiang.dpdns.org
+    path: /?ed=2560
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 64
+  cipher: auto
+  name: 🇺🇸 美国 46 [⚡可用]
+  network: ws
+  port: 37002
+  server: 38.11.71.76
+  skip-cert-verify: false
+  tls: true
+  type: vmess
+  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
+  ws-opts:
+    headers:
+      Host: www.64786755.xyz
+    path: /
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 47 [⚡可用]
+  network: ws
+  port: 80
+  server: 104.31.16.34
+  skip-cert-verify: false
+  tls: false
+  type: vmess
+  uuid: 8abe9496-5e24-4e49-b566-dcf86116017d
+  ws-opts:
+    path: /i99LgvSaslbsPLLQQ7j6Z
+  tcp_delay: 8
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 48 [⚡可用]
+  server: green2.cdntencentmusic.com
+  port: 35502
+  type: trojan
+  password: d6578078-04d1-40a0-a8e5-4ad931f31f77
+  sni: green2.cdntencentmusic.com
+  skip-cert-verify: true
+  udp: true
+  tcp_delay: 12
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 49 [⚡可用]
+  type: vless
+  server: 77.105.137.100
+  port: 4443
+  uuid: edb3d24d-1a55-42f7-8752-6ae216f18cf4
+  encryption: none
+  flow: xtls-rprx-vision
+  tls: true
+  skip-cert-verify: false
+  network: tcp
+  host: ''
+  path: ''
+  sni: github.com
+  tcp_delay: 13
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 50 [⚡可用]
+  server: 172.67.209.79
+  port: 443
+  type: vmess
+  uuid: 91362cdb-81f8-4fd3-9b9f-2b24a8146a25
+  alterId: 0
+  cipher: auto
+  tls: true
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /ODznTT5fgkUw3VH0GJ
+    headers:
+      Host: ggggbbhyuuui.999834.xyz
+  tcp_delay: 9
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 51 [⚡可用]
+  network: ws
+  port: 80
+  server: 154.92.9.133
+  skip-cert-verify: false
+  tls: false
+  type: vmess
+  uuid: dd41b5cb-b72e-4a8c-c75a-3ecc928d6eb3
+  ws-opts:
+    path: /blue
+  tcp_delay: 12
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 64
+  cipher: auto
+  name: 🇺🇸 美国 52 [⚡可用]
+  network: ws
+  port: 37002
+  server: 192.74.224.163
+  skip-cert-verify: false
+  tls: true
+  type: vmess
+  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
+  ws-opts:
+    headers:
+      Host: www.68584158.xyz
+    path: /
+  tcp_delay: 9
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 53 [⚡可用]
+  server: 69.84.182.18
+  port: 8443
+  type: trojan
+  password: b1fec179-3d5a-4ec5-bf3c-e10668543b4b
+  sni: cdn-node-oss-62.anycdn.de
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /profile/us2
+    headers:
+      Host: cdn-node-oss-62.anycdn.de
+  udp: true
+  tcp_delay: 8
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 54 [⚡可用]
+  server: 195.85.23.20
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /Telegram🇨🇳 @MxlShare @WangCai2 /?ed=2560
+    headers:
+      Host: us.laoyoutiao.link
+  tcp_delay: 11
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 55 [⚡可用]
+  server: 104.16.83.8
+  port: 443
+  type: trojan
+  password: Ng35283528
+  sni: c2.validbv3528.eu.org
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: '%2F'
+    headers:
+      Host: c2.validbv3528.eu.org
+  tcp_delay: 11
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 56 [⚡可用]
+  network: ws
+  port: 443
+  server: 104.18.53.172
+  skip-cert-verify: false
+  tls: true
+  type: vmess
+  uuid: b3a21def-5fcc-47a8-a6a0-a34e29d5288a
+  ws-opts:
+    path: /wss51068
+  tcp_delay: 8
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 57 [⚡可用]
+  server: cdnfire.xiaomispeed.com
+  port: 25502
+  type: trojan
+  password: b25ba535-3fbd-47e7-b21a-48544dc01718
+  sni: cdnfire.xiaomispeed.com
+  skip-cert-verify: true
+  udp: true
+  tcp_delay: 29
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 58 [⚡可用]
+  password: c0fde6ac-a07c-4f60-84ae-e7ed4da78a6f
+  port: 80
+  server: 15.204.210.176
+  skip-cert-verify: false
+  sni: telewebion.com
+  type: trojan
+  tcp_delay: 12
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 59 [⚡可用]
+  server: 88.210.36.107
+  port: 2377
+  type: ss
+  cipher: chacha20-ietf-poly1305
+  password: t0srmdxrm3xyjnvqz9ewlxb2myq7rjuv
+  plugin: obfs
+  plugin-opts:
+    mode: tls
+    host: feb7fa9:154948
+  tcp_delay: 8
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 60 [⚡可用]
+  server: 45.67.215.95
+  port: 443
+  type: trojan
+  password: tg-fq521free
+  sni: torjan.xn--xhq44j.eu.org
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: '%2F'
+    headers:
+      Host: torjan.xn--xhq44j.eu.org
+  tcp_delay: 10
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 61 [⚡可用]
+  password: ee2bccd3-0f30-42d4-86d6-3d393ad230bd
+  port: 80
+  server: 135.148.148.4
+  skip-cert-verify: false
+  sni: us3.trojanvh.xyz
+  type: trojan
+  tcp_delay: 9
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 62 [⚡可用]
+  server: 176.124.223.213
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: jp.laoyoutiao.link
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: jp.laoyoutiao.link
+  tcp_delay: 9
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 63 [⚡可用]
+  network: ws
+  password: vip
+  port: 443
+  server: iplocation.io
+  skip-cert-verify: false
+  sni: heihu880.pages.dev
+  type: trojan
+  ws-opts:
+    headers:
+      Host: heihu880.pages.dev
+    path: /?ed=2560
+  tcp_delay: 24
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 64 [⚡可用]
+  password: psycho
+  port: 443
+  server: 104.21.80.1
+  skip-cert-verify: false
+  sni: PSYchO.SueX12.Ir
+  type: trojan
+  tcp_delay: 5
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 65 [⚡可用]
+  network: ws
+  port: 8443
+  server: 173.245.49.10
+  servername: us-171-78.shoptunnel.live
+  skip-cert-verify: false
+  tls: true
+  type: vmess
+  uuid: a6a37e04-5e81-44c9-be53-baa3ff46eb8b
+  ws-opts:
+    headers:
+      Host: us-171-78.shoptunnel.live
+    path: /
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 66 [⚡可用]
+  server: 159.112.235.156
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: Telegram-channel-WangCai2
+  network: ws
+  ws-opts:
+    path: /Telegram🇨🇳 @WangCai2 /
+    headers:
+      Host: Telegram-channel-WangCai2
+  tcp_delay: 9
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 67 [⚡可用]
+  server: 103.160.204.36
+  port: 2087
+  type: vless
+  uuid: d6b8011a-c725-435a-9fec-bf6d3530392c
+  tls: true
+  tfo: false
+  skip-cert-verify: true
+  servername: vle.amclubsdns.dpdns.org
+  client-fingerprint: randomized
+  network: ws
+  ws-opts:
+    path: /?ed=2560&PROT_TYPE=vless&NAT64=true
+    headers:
+      Host: vle.amclubsdns.dpdns.org
+  tcp_delay: 8
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 68 [⚡可用]
+  network: ws
+  port: 80
+  server: 154.92.9.174
+  skip-cert-verify: false
+  tls: false
+  type: vmess
+  uuid: dd41b5cb-b72e-4a8c-c75a-3ecc928d6eb3
+  ws-opts:
+    path: /blue
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 69 [⚡可用]
+  server: 156.238.18.211
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: Telegram🇨🇳 @MxlShare @WangCai2 /?ed=2560
+    headers:
+      Host: us.laoyoutiao.link
+  tcp_delay: 8
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 70 [⚡可用]
+  server: 104.21.24.195
+  port: 443
+  type: vless
+  uuid: a4291a2a-d62c-4eb9-ac7a-ac7355d1eda2
+  tls: true
+  alpn:
+  - http/1.1
+  tfo: false
+  skip-cert-verify: true
+  servername: 9999UUuU.999836.XYZ
+  client-fingerprint: chrome
+  network: ws
+  ws-opts:
+    path: /MIrEVIUviSe8ydvnmRKWDa8
+    headers:
+      Host: 9999UUuU.999836.XYZ
+  tcp_delay: 6
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 71 [⚡可用]
+  network: ws
+  port: 443
+  server: 15.204.64.214
+  servername: yichueng.org
+  skip-cert-verify: false
+  tls: true
+  type: vmess
+  uuid: 03fcc618-b93d-6796-6aed-8a38c975d581
+  ws-opts:
+    headers:
+      Host: yichueng.org
+    path: linkvws
+  tcp_delay: 8
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 72 [⚡可用]
+  network: ws
+  port: 8880
+  server: 172.64.229.223
+  skip-cert-verify: false
+  tls: false
+  type: vmess
+  uuid: 4b5e4565-322f-4223-a891-78a84f189726
+  ws-opts:
+    path: /RpT6kZjkw45EenmTcDYWs
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 73 [⚡可用]
+  network: ws
+  port: 8443
+  server: 173.245.49.23
+  servername: us-171-78.shoptunnel.live
+  skip-cert-verify: false
+  tls: true
+  type: vmess
+  uuid: a6a37e04-5e81-44c9-be53-baa3ff46eb8b
+  ws-opts:
+    headers:
+      Host: us-171-78.shoptunnel.live
+    path: /
+  tcp_delay: 10
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 74 [⚡可用]
+  server: staticdelivery.nexusmods.com
+  port: 443
+  type: vless
+  uuid: 32b41f9e-dfa4-45f4-add9-ab321e00fe0a
+  tls: true
+  servername: snip.webp.de5.net
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: snip.webp.de5.net
+  tcp_delay: 22
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 75 [⚡可用]
+  server: 86.38.214.213
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: jp.laoyoutiao.link
+  network: ws
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: jp.laoyoutiao.link
+  tcp_delay: 6
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 76 [⚡可用]
+  network: ws
+  port: 443
+  server: 141.101.114.32
+  skip-cert-verify: false
+  tls: true
+  type: vmess
+  uuid: 17b2a313-37a0-4945-a8e4-e63375506b4a
+  ws-opts:
+    path: /A2DJOPFT
+  tcp_delay: 11
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 77 [⚡可用]
+  server: 45.135.235.216
+  port: 2096
+  type: trojan
+  password: ttfang
+  sni: ttfang.fange.me
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: Telegram%F0%9F%87%A8%F0%9F%87%B3
+    headers:
+      Host: ttfang.fange.me
+  tcp_delay: 6
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 78 [⚡可用]
+  server: 45.136.245.177
+  port: 23160
+  type: vmess
+  uuid: 6f3f1928-7f92-4918-a1a5-d81c7e06091e
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /
+  tcp_delay: 9
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 79 [⚡可用]
+  server: 141.193.213.106
+  port: 80
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  servername: cs.laoyoutiao.link
+  network: ws
+  ws-opts:
+    path: /TelegramU0001F1E8U0001F1F3
+    headers:
+      Host: cs.laoyoutiao.link
+  tcp_delay: 11
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 80 [⚡可用]
+  server: 185.251.83.168
   port: 8880
   type: vless
   uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
@@ -4170,970 +2610,66 @@ proxies:
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- alterId: 0
-  cipher: none
-  name: 🇺🇸 美国 112 [⚡可用]
-  network: ws
-  port: 80
-  server: 188.114.97.3
+- name: 🇺🇸 美国 81 [⚡可用]
+  password: 6d64570c-81d4-30fa-b2e2-dce73e1a2702
+  port: 44301
+  server: 173.82.240.199
   skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: b25f8da6-54a2-49b3-bacf-8403b4c36556
-  ws-opts:
-    path: /vmess#DONT-FORGET-TO-SUPPORT-SSHMAX.NET-TO-KEEP-THIS-SERVER-ALIVE
+  sni: lav002.jd0001.top
+  type: trojan
   tcp_delay: 9
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇺🇸 美国 113 [⚡可用]
-  server: fk31lndm4w8uj0yp1drwltdtdko6y-cu.pages.dev
+- name: 🇺🇸 美国 82 [⚡可用]
+  server: 185.193.48.157
   port: 443
-  type: vless
-  uuid: 826f524a-cea1-4e44-9b49-3381d13b7593
-  tls: true
-  alpn:
-  - http%2F1.1
-  tfo: false
-  skip-cert-verify: true
-  servername: fk31lnDM4W8UJ0yP1dRwlTDTDKo6y-cU.PaGeS.DeV
-  client-fingerprint: chrome
-  network: ws
-  ws-opts:
-    path: /XHPTFMTFoBNv6IV6
-    headers:
-      Host: fk31lnDM4W8UJ0yP1dRwlTDTDKo6y-cU.PaGeS.DeV
-  tcp_delay: 43
+  type: ss
+  cipher: chacha20-ietf-poly1305
+  password: zwBLM6bBE5YxvwvnKgxAq3ErXpqMYv20
+  udp: true
+  tcp_delay: 6
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇺🇸 美国 114 [⚡可用]
-  server: 172.67.170.147
-  port: 443
-  type: vmess
-  uuid: ffcf7ec1-3e09-4821-b3d9-b426a107b73b
-  alterId: 0
-  cipher: auto
-  tls: true
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /4Bp70NdrJV3xr1D40NK
-    headers:
-      Host: xcvfgt6.999854.xyz
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 115 [⚡可用]
-  type: vless
-  server: 144.31.1.197
-  port: 8443
-  uuid: eb7c7631-6c7c-4f34-a65a-974b4565d01d
-  encryption: none
-  flow: xtls-rprx-vision
-  tls: true
-  skip-cert-verify: false
-  network: tcp
-  host: ''
-  path: ''
-  sni: music.yandex.ru
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 116 [⚡可用]
-  network: ws
-  port: 2095
-  server: 172.64.173.70
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 417d27fb-cb93-3bd8-9bf7-71cd91319821
-  ws-opts:
-    path: /hgcefomn
-  tcp_delay: 8
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 117 [⚡可用]
-  network: ws
-  port: 443
-  server: 104.21.83.208
-  servername: afrhms16v.bestxray.buzz
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: f584de15-2034-4170-a723-f48c2bae5e0f
-  ws-opts:
-    headers:
-      Host: afrhms16v.bestxray.buzz
-    path: /linkws
-  tcp_delay: 11
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 118 [⚡可用]
-  server: 195.85.23.156
+- name: 🇺🇸 美国 83 [⚡可用]
+  server: 46.254.93.29
   port: 8880
   type: vless
   uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
   tls: false
   tfo: false
   skip-cert-verify: true
-  servername: Telegram-channel-WangCai2
-  network: ws
-  ws-opts:
-    path: /Telegram🇨🇳 @WangCai2 /
-    headers:
-      Host: Telegram-channel-WangCai2
-  tcp_delay: 11
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 119 [⚡可用]
-  password: 7dafe71e-2be6-302f-bdfc-e6319a3299bc
-  port: 443
-  server: 15.204.20.229
-  skip-cert-verify: false
-  type: trojan
-  tcp_delay: 12
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 120 [⚡可用]
-  server: 45.136.245.177
-  port: 80
-  type: hysteria2
-  password: c8631767-f45c-4f48-bf19-5405e6d18679
-  auth: c8631767-f45c-4f48-bf19-5405e6d18679
-  skip-cert-verify: true
-  obfs: salamander
-  obfs-password: salamander
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 121 [⚡可用]
-  server: 129.153.76.186
-  port: 50000
-  ports: 50000-53000
-  mport: 50000-53000
-  udp: true
-  skip-cert-verify: true
-  sni: fastcdn.hoyoverse.com
-  type: hysteria2
-  password: 8d02d562-3e38-4f79-a11d-10ebb322ffdc
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 122 [⚡可用]
-  server: 45.136.245.177
-  port: 33079
-  type: hysteria2
-  password: 1209fd51-bf42-4ed0-bd15-c1ff130c69df
-  auth: 1209fd51-bf42-4ed0-bd15-c1ff130c69df
-  skip-cert-verify: true
-  obfs: salamander
-  obfs-password: salamander
-  tcp_delay: 13
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 123 [⚡可用]
-  server: 141.193.213.63
-  port: 80
-  type: vless
-  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  servername: cs.laoyoutiao.link
+  servername: hk.laoyoutiao.link
   network: ws
   ws-opts:
     path: /TelegramU0001F1E8U0001F1F3
     headers:
-      Host: cs.laoyoutiao.link
-  tcp_delay: 13
+      Host: hk.laoyoutiao.link
+  tcp_delay: 12
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇺🇸 美国 124 [⚡可用]
-  server: 108.181.23.231
-  port: 50000
-  ports: 50000-53000
-  mport: 50000-53000
-  udp: true
-  skip-cert-verify: true
-  sni: www.microsoft.com
-  type: hysteria2
-  password: 8d02d562-3e38-4f79-a11d-10ebb322ffdc
-  tcp_delay: 11
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 125 [⚡可用]
-  network: ws
-  port: 18393
-  server: 149.30.232.103
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 2c1807ce-6a63-4451-9add-a778d2507160
-  ws-opts:
-    path: /arki?ed=2048
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 126 [⚡可用]
-  type: hysteria2
-  server: a2454553-t6ngg0-tiaexf-ufc0.us.hyhuawei.com
-  password: 22308988-8548-11ea-a22e-f23c91cfbbc9
-  skip-cert-verify: false
-  port: 443
-  ports: 30000-60000
-  tcp_delay: 23
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 127 [⚡可用]
-  server: 104.129.164.39
+- name: 🇺🇸 美国 84 [⚡可用]
+  server: 156.238.18.246
   port: 8880
   type: vless
-  uuid: 583ceab3-4022-4553-9158-9bedc625ad4e
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
   tls: false
   tfo: false
   skip-cert-verify: true
+  servername: yd.laoyoutiao.link
   network: ws
   ws-opts:
-    path: /Telegram🇨🇳 @MxlShare @WangCai2 /?ed=2560
+    path: /TelegramU0001F1E8U0001F1F3
     headers:
-      Host: ip.langmanshanxi.top
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 128 [⚡可用]
-  type: vless
-  server: 77.105.137.100
-  port: 4443
-  uuid: edb3d24d-1a55-42f7-8752-6ae216f18cf4
-  encryption: none
-  flow: xtls-rprx-vision
-  tls: true
-  skip-cert-verify: false
-  network: tcp
-  host: ''
-  path: ''
-  sni: github.com
+      Host: yd.laoyoutiao.link
   tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 130 [⚡可用]
-  network: ws
-  port: 80
-  server: 154.92.9.96
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: dd41b5cb-b72e-4a8c-c75a-3ecc928d6eb3
-  ws-opts:
-    path: /blue
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 131 [⚡可用]
-  network: ws
-  port: 80
-  server: 104.31.16.35
-  skip-cert-verify: false
-  tls: false
-  type: vmess
-  uuid: 8abe9496-5e24-4e49-b566-dcf86116017d
-  ws-opts:
-    path: /i99LgvSaslbsPLLQQ7j6Z
-  tcp_delay: 12
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 132 [⚡可用]
-  network: ws
-  port: 443
-  server: 141.101.114.32
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 17b2a313-37a0-4945-a8e4-e63375506b4a
-  ws-opts:
-    path: /A2DJOPFT
-  tcp_delay: 11
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 133 [⚡可用]
-  server: 45.131.211.216
-  port: 2096
-  type: trojan
-  password: ttfang
-  sni: ttfang.fange.me
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: Telegram%F0%9F%87%A8%F0%9F%87%B3
-    headers:
-      Host: ttfang.fange.me
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 134 [⚡可用]
-  network: ws
-  port: 443
-  server: 203.34.80.107
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 824c58b1-65ba-4680-a609-663a000dbb92
-  ws-opts:
-    path: /wss13889
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 1
-  cipher: auto
-  name: 🇺🇸 美国 135 [⚡可用]
-  network: ws
-  port: 443
-  server: 104.17.21.243
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 4cdb016f-f14e-30b3-97d6-453c741a5c80
-  ws-opts:
-    headers:
-      Host: 104.17.21.243
-    path: /y475
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 136 [⚡可用]
-  server: 104.16.83.8
-  port: 443
-  type: trojan
-  password: Ng35283528
-  sni: c2.validbv3528.eu.org
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: '%2F'
-    headers:
-      Host: c2.validbv3528.eu.org
-  tcp_delay: 8
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 137 [⚡可用]
-  network: ws
-  password: 61374417-9218-4065-909b-ad1e3b50aa83
-  port: 443
-  server: 172.67.168.193
-  skip-cert-verify: false
-  sni: gamang.gpj2.dpdns.org
-  type: trojan
-  ws-opts:
-    headers:
-      Host: gamang.gpj2.dpdns.org
-    path: /Free-VPN-Geo-Project/80.66.85.115-2053
-  tcp_delay: 8
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 138 [⚡可用]
-  password: ee2bccd3-0f30-42d4-86d6-3d393ad230bd
-  port: 80
-  server: 135.148.148.4
-  skip-cert-verify: false
-  sni: us3.trojanvh.xyz
-  type: trojan
-  tcp_delay: 13
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- cipher: aes-256-gcm
-  name: 🇺🇸 美国 139 [⚡可用]
-  password: Y6R9pAtvxxzmGC
-  port: 5601
-  server: 167.88.61.14
-  type: ss
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 140 [⚡可用]
-  server: 154.26.186.178
-  port: 12380
-  type: vless
-  uuid: eca3f76a-2e2f-4143-9852-e2a74a848f77
-  tls: true
-  network: ws
-  ws-opts:
-    path: /proxyip=sjc.o00o.ooo
-    headers:
-      Host: kk66.tc6666.netlib.re
-  udp: true
-  servername: kk66.tc6666.netlib.re
-  tcp_delay: 12
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 141 [⚡可用]
-  server: 212.183.88.188
-  port: 8880
-  type: vless
-  uuid: 583ceab3-4022-4553-9158-9bedc625ad4e
-  tls: false
-  tfo: false
-  skip-cert-verify: true
-  servername: Telegram-channel-WangCai2
-  network: ws
-  ws-opts:
-    path: /TelegramU0001F1E8U0001F1F3 @WangCai2 /?ed=2560
-    headers:
-      Host: Telegram-channel-WangCai2
-  tcp_delay: 6
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 142 [⚡可用]
-  server: 104.21.10.97
-  port: 443
-  type: vless
-  uuid: 662e38ba-8427-4955-94aa-76f5347a0ce8
-  tls: true
-  tfo: false
-  skip-cert-verify: true
-  servername: rrRRrrrRrnNNNNnnmM.222767.xyz
-  client-fingerprint: chrome
-  network: ws
-  ws-opts:
-    path: /6DuxYMYmrGrnGKRtF5UvWyyVQu
-    headers:
-      Host: rrRRrrrRrnNNNNnnmM.222767.xyz
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 143 [⚡可用]
-  password: 9772ecf2-6732-4bfb-a8b1-f48af577c76c
-  port: 63979
-  server: 113.192.61.19
-  skip-cert-verify: true
-  sni: www.bing.com
-  tls: false
-  type: hysteria2
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 144 [⚡可用]
-  network: ws
-  port: 443
-  server: 203.30.191.8
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: c5a2d7b8-bf84-4f97-8577-b9b87f2baaf7
-  ws-opts:
-    path: /AUIKN8AU
-  tcp_delay: 6
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 145 [⚡可用]
-  password: f39bd244-f5fe-415c-8b98-a1e5250bf178
-  port: 443
-  server: 129.146.255.158
-  skip-cert-verify: false
-  type: trojan
-  tcp_delay: 8
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 146 [⚡可用]
-  network: ws
-  port: 443
-  server: 185.162.228.229
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: c5a2d7b8-bf84-4f97-8577-b9b87f2baaf7
-  ws-opts:
-    headers:
-      Host: oplg1.cfcdn2.xyz
-    path: /AUIKN8AU
-  tcp_delay: 13
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- cipher: aes-256-gcm
-  name: 🇺🇸 美国 147 [⚡可用]
-  password: Y6R9pAtvxxzmGC
-  port: 8888
-  server: 38.86.135.36
-  type: ss
-  tcp_delay: 14
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 148 [⚡可用]
-  network: ws
-  port: 443
-  server: 172.67.219.194
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: b321fd5d-e6ec-4293-a644-164e3885f52e
-  ws-opts:
-    headers:
-      Host: adenc36v.xtooltech.cfd
-    path: /
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 149 [⚡可用]
-  network: ws
-  port: 443
-  server: 172.67.145.166
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: c5a2d7b8-bf84-4f97-8577-b9b87f2baaf7
-  ws-opts:
-    path: /AUIKN8AU
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 150 [⚡可用]
-  type: vless
-  server: 88.210.6.49
-  port: 4443
-  uuid: edb3d24d-1a55-42f7-8752-6ae216f18cf4
-  encryption: none
-  flow: xtls-rprx-vision
-  tls: true
-  skip-cert-verify: false
-  network: tcp
-  host: ''
-  path: ''
-  sni: github.com
-  tcp_delay: 12
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 64
-  cipher: auto
-  name: 🇺🇸 美国 151 [⚡可用]
-  network: ws
-  port: 443
-  server: 23.224.101.102
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 946ba5df-5771-4873-a3cb-892378526147
-  ws-opts:
-    headers:
-      Host: 23.224.101.102
-    path: /footers
-  tcp_delay: 13
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 152 [⚡可用]
-  type: hysteria2
-  server: 167.234.222.167
-  password: 767ed51d-2358-4981-9447-a807c1419e93
-  sni: fastcdn.hoyoverse.com
-  skip-cert-verify: true
-  port: 443
-  ports: 50000-53000
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 0
-  cipher: auto
-  name: 🇺🇸 美国 153 [⚡可用]
-  network: ws
-  port: 443
-  server: v2ray.online
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 2F094845-E2BD-EBF7-DEB7-995992436FAF
-  ws-opts:
-    headers:
-      Host: Phoenix.v2ray.online
-    path: /speedtest
-  tcp_delay: 92
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 154 [⚡可用]
-  type: vless
-  server: 62.84.100.225
-  port: 4443
-  uuid: edb3d24d-1a55-42f7-8752-6ae216f18cf4
-  encryption: none
-  flow: xtls-rprx-vision
-  tls: true
-  skip-cert-verify: false
-  network: tcp
-  host: ''
-  path: ''
-  sni: github.com
-  tcp_delay: 6
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- encryption: none
-  name: 🇺🇸 美国 155 [⚡可用]
-  network: ws
-  port: 8880
-  server: wangcai115.cloudflare.182682.xyz
-  servername: Telegram-channel-WangCai2
-  type: vless
-  uuid: 7890ce31-9a25-4fd4-90e7-80e5823ff510
-  ws-opts:
-    headers:
-      Host: frejd.11258.workers.dev
-    path: /Telegram🇨🇳@WangCai2/?ed=2560
-  tcp_delay: 708
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 156 [⚡可用]
-  server: 45.136.245.177
-  port: 23160
-  type: vmess
-  uuid: 759252b5-876f-48dd-9a92-cc2f5e8cb625
-  alterId: 0
-  cipher: auto
-  tls: false
-  skip-cert-verify: true
-  network: ws
-  ws-opts:
-    path: /
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 157 [⚡可用]
-  server: 45.136.245.177
-  port: 80
-  type: hysteria2
-  password: 1e3a572b-7355-4daf-a274-84946f203ebf
-  auth: 1e3a572b-7355-4daf-a274-84946f203ebf
-  skip-cert-verify: true
-  obfs: salamander
-  obfs-password: salamander
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- alterId: 64
-  cipher: auto
-  name: 🇺🇸 美国 158 [⚡可用]
-  network: ws
-  port: 30003
-  server: 38.11.69.35
-  skip-cert-verify: false
-  tls: true
-  type: vmess
-  uuid: 418048af-a293-4b99-9b0c-98ca3580dd24
-  ws-opts:
-    headers:
-      Host: www.52140341.xyz
-    path: /
-  tcp_delay: 11
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- cipher: aes-256-gcm
-  name: 🇺🇸 美国 159 [⚡可用]
-  password: FoOiGlkAA9yPEGP
-  port: 7306
-  server: 38.75.137.9
-  type: ss
-  tcp_delay: 8
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 160 [⚡可用]
-  server: 45.136.245.177
-  port: 33079
-  type: hysteria2
-  password: f2d69e01-d968-47d9-bd81-38575b54059e
-  auth: f2d69e01-d968-47d9-bd81-38575b54059e
-  skip-cert-verify: true
-  obfs: salamander
-  obfs-password: salamander
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- cipher: aes-256-gcm
-  name: 🇺🇸 美国 161 [⚡可用]
-  password: XKFKl2rULjIp74
-  port: 8008
-  server: 167.88.61.14
-  type: ss
-  tcp_delay: 12
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 162 [⚡可用]
-  server: 45.136.245.177
-  port: 33079
-  type: hysteria2
-  password: 8ce743e2-2347-4e48-ab21-f7d0a6457536
-  auth: 8ce743e2-2347-4e48-ab21-f7d0a6457536
-  skip-cert-verify: true
-  obfs: salamander
-  obfs-password: salamander
-  tcp_delay: 8
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 163 [⚡可用]
-  type: trojan
-  server: bestcdn3.868863.xyz
-  port: 2083
-  password: e569b922-1a37-4f5e-8f8f-6e5869eb2460
-  sni: 17657757935362.796813.xyz
-  skip-cert-verify: false
-  udp: true
-  alpn: []
-  tls: true
-  tcp_delay: 4935
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 164 [⚡可用]
-  server: us1.kaixincloud.top
-  port: 25200
-  type: hysteria2
-  password: 57605582-2de6-47a4-8ebd-b4d9d1a8fd8b
-  auth: 57605582-2de6-47a4-8ebd-b4d9d1a8fd8b
-  sni: us1.kaixincloud.top
-  skip-cert-verify: true
-  ports: 25200-26200
-  udp: true
-  tcp_delay: 281
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 165 [⚡可用]
-  server: us.xn--tfrza798rop1a.site
-  port: 54321
-  type: ss
-  cipher: 2022-blake3-aes-128-gcm
-  password: MDhmOGM0MGQ5NjZhNTQ1NA==:ODViNzczYjQtMjU3MS00YQ==
-  udp: true
-  tcp_delay: 18
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 166 [⚡可用]
-  server: green2.cdntencentmusic.com
-  port: 35501
-  type: trojan
-  password: 9772f170-3238-43ac-a2cf-09a81902648f
-  sni: green2.cdntencentmusic.com
-  skip-cert-verify: true
-  udp: true
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 167 [⚡可用]
-  server: freea.glyphara.com
-  port: 30701
-  type: vless
-  uuid: 65845eae-7780-446d-97eb-2d483b474500
-  tls: true
-  flow: xtls-rprx-vision
-  reality-opts:
-    public-key: cgGav3P_PeaM4grdSECGj4Tt9IsCmSqhGo_EJ0_KdWY
-    short-id: e62db878
-  client-fingerprint: firefox
-  network: tcp
-  udp: true
-  servername: www.amd.com
-  tcp_delay: 5
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 169 [⚡可用]
-  server: 172.66.44.230
-  port: 8443
-  type: trojan
-  password: 8r<[9'l6hAO#8ZQi
-  sni: Koma-YT.PAGeS.Dev
-  network: ws
-  ws-opts:
-    path: /tro8sFW1S91B6sZrM1
-    headers:
-      Host: Koma-YT.PAGeS.Dev
-  udp: true
-  tcp_delay: 5
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 170 [⚡可用]
-  server: freea.glyphara.com
-  port: 30703
-  type: vless
-  uuid: 65845eae-7780-446d-97eb-2d483b474500
-  tls: true
-  flow: xtls-rprx-vision
-  reality-opts:
-    public-key: Fpcp8ed_KjL5rnn0gstMa0AQPL8GcYMtArb--r1AhnI
-    short-id: 845532fa
-  client-fingerprint: firefox
-  network: tcp
-  udp: true
-  servername: mensura.cdn-apple.com
-  tcp_delay: 5
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 171 [⚡可用]
-  server: hxb.dashuai.help
-  port: 45053
-  type: vmess
-  uuid: e4ecd23e-2364-4fd5-9233-81997dd17fd1
-  alterId: 0
-  cipher: auto
-  tls: false
-  udp: true
-  tcp_delay: 5
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- encryption: none
-  name: 🇺🇸 美国 174 [⚡可用]
-  network: ws
-  port: 2096
-  server: 108.162.198.24
-  servername: kuangbao.xiejiang.dpdns.org
-  tls: true
-  type: vless
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
-  ws-opts:
-    headers:
-      Host: kuangbao.xiejiang.dpdns.org
-    path: /?ed=2560
-  tcp_delay: 5
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 175 [⚡可用]
-  server: freea.glyphara.com
-  port: 30703
-  type: vless
-  uuid: aec15a22-e415-4147-bae0-ecceb83ffc75
-  tls: true
-  flow: xtls-rprx-vision
-  reality-opts:
-    public-key: Fpcp8ed_KjL5rnn0gstMa0AQPL8GcYMtArb--r1AhnI
-    short-id: 845532fa
-  client-fingerprint: firefox
-  network: tcp
-  udp: true
-  servername: mensura.cdn-apple.com
-  tcp_delay: 5
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 176 [⚡可用]
-  type: vless
-  server: us-phxplus-ddns.xn--4gqza090la383cba657a9rw23a362bz35amu9c.link
-  port: 12053
-  uuid: ace8aee5-a5ea-4cdd-81c0-d0b185c6f12f
-  encryption: none
-  flow: xtls-rprx-vision
-  tls: true
-  skip-cert-verify: false
-  network: tcp
-  host: ''
-  path: ''
-  sni: gw.alicdn.com
-  tcp_delay: 361
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- encryption: none
-  name: 🇺🇸 美国 177 [⚡可用]
-  network: ws
-  port: 443
-  server: 142.132.140.130
-  servername: kuangbao.xiejiang.dpdns.org
-  tls: true
-  type: vless
-  uuid: 5aba5b77-48eb-4ae2-b60d-5bfee7ac169e
-  ws-opts:
-    headers:
-      Host: kuangbao.xiejiang.dpdns.org
-    path: /?ed=2560
-  tcp_delay: 5
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇺🇸 美国 178 [⚡可用]
-  server: hxa.dashuai.help
-  port: 45052
-  type: vmess
-  uuid: f75458aa-c598-4da8-9330-6944a43ef049
-  alterId: 0
-  cipher: auto
-  tls: false
-  udp: true
-  tcp_delay: 5
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
 - type: vless
-  name: 🇺🇸 美国 180 [⚡可用]
+  name: 🇺🇸 美国 85 [⚡可用]
   server: 104.18.110.255
   port: 443
   uuid: adeaebbe-5719-4c28-9b11-5df0d3331c88
@@ -5146,252 +2682,888 @@ proxies:
     headers:
       Host: Freedom32.Pages.DEV
   client-fingerprint: chrome
-  tcp_delay: 5
+  tcp_delay: 11
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇺🇸 美国 181 [⚡可用]
-  server: freea.glyphara.com
-  port: 30701
-  type: vless
-  uuid: e762cdc5-75aa-4fe8-abe0-22721544a367
+- alterId: 64
+  cipher: auto
+  name: 🇺🇸 美国 86 [⚡可用]
+  network: ws
+  port: 443
+  server: 23.224.101.102
+  skip-cert-verify: false
   tls: true
-  flow: xtls-rprx-vision
-  reality-opts:
-    public-key: cgGav3P_PeaM4grdSECGj4Tt9IsCmSqhGo_EJ0_KdWY
-    short-id: e62db878
-  client-fingerprint: firefox
-  network: tcp
-  udp: true
-  servername: www.amd.com
+  type: vmess
+  uuid: 946ba5df-5771-4873-a3cb-892378526147
+  ws-opts:
+    headers:
+      Host: 23.224.101.102
+    path: /footers
   tcp_delay: 6
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇺🇸 美国 182 [⚡可用]
-  server: v24.hdacd.com
-  port: 30824
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 87 [⚡可用]
+  network: ws
+  port: 2095
+  server: 172.67.9.200
+  skip-cert-verify: false
+  tls: false
+  type: vmess
+  uuid: 417d27fb-cb93-3bd8-9bf7-71cd91319821
+  ws-opts:
+    path: /hgcefomn
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 88 [⚡可用]
+  server: 185.162.230.213
+  port: 8880
+  type: vless
+  uuid: fab7bf9c-ddb9-4563-8a04-fb01ce6c0fbf
+  tls: false
+  tfo: false
+  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: jp.laoyoutiao.link
+  tcp_delay: 11
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 89 [⚡可用]
+  network: ws
+  password: vip
+  port: 443
+  server: www.pcmag.com
+  skip-cert-verify: false
+  sni: heihu880.pages.dev
+  type: trojan
+  ws-opts:
+    headers:
+      Host: heihu880.pages.dev
+    path: /?ed=2560
+  tcp_delay: 18
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 90 [⚡可用]
+  type: vless
+  server: 64.188.96.208
+  port: 34045
+  uuid: d8dd94fd-540e-461d-b5d4-acebef02c22a
+  encryption: none
+  flow: ''
+  tls: false
+  skip-cert-verify: false
+  network: tcp
+  host: ''
+  path: ''
+  sni: visit-this-invitation-link-to-join-tg-enkelte-notif.ekt.me
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 91 [⚡可用]
+  network: ws
+  port: 443
+  server: 203.30.189.190
+  skip-cert-verify: false
+  tls: true
+  type: vmess
+  uuid: 56a2188b-2ab7-402c-b9b8-34847fdf0958
+  ws-opts:
+    path: /5QNROSRV
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 92 [⚡可用]
+  network: ws
+  password: b1fec179-3d5a-4ec5-bf3c-e10668543b4b
+  port: 8443
+  server: 69.84.182.108
+  skip-cert-verify: false
+  sni: cdn-node-oss-61.anycdn.de
+  type: trojan
+  udp: true
+  ws-opts:
+    headers:
+      Host: cdn-node-oss-61.anycdn.de
+    path: /profile/us1
+  tcp_delay: 9
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 93 [⚡可用]
+  network: ws
+  password: 61374417-9218-4065-909b-ad1e3b50aa83
+  port: 443
+  server: 172.67.168.193
+  skip-cert-verify: false
+  sni: gamang.gpj2.dpdns.org
+  type: trojan
+  ws-opts:
+    headers:
+      Host: gamang.gpj2.dpdns.org
+    path: /Free-VPN-Geo-Project/80.66.85.115-2053
+  tcp_delay: 10
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- cipher: aes-256-gcm
+  name: 🇺🇸 美国 94 [⚡可用]
+  password: zDNVedRFPQexG9v
+  port: 445
+  server: 142.202.48.74
+  type: ss
+  tcp_delay: 8
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- cipher: aes-256-gcm
+  name: 🇺🇸 美国 97 [⚡可用]
+  password: KixLvKzwjekG00rm
+  port: 5500
+  server: 38.64.138.145
+  type: ss
+  tcp_delay: 10
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 98 [⚡可用]
+  server: 180.131.145.161
+  port: 23274
+  type: trojan
+  password: FodSUXysuS
+  sni: cloudflare.com
+  skip-cert-verify: true
+  network: grpc
+  tcp_delay: 9
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 100 [⚡可用]
+  server: 82.198.246.97
+  port: 180
+  type: vmess
+  uuid: d13fc2f5-3e05-4795-81eb-44143a09e552
+  alterId: 0
+  cipher: auto
+  tls: false
+  skip-cert-verify: true
+  udp: true
+  tcp_delay: 6
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 101 [⚡可用]
+  server: 3.93.196.82
+  port: 443
+  type: ss
+  cipher: aes-256-gcm
+  password: amazonskr05
+  udp: true
+  tcp_delay: 9
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 102 [⚡可用]
+  server: 208.87.242.97
+  port: 35000
+  type: hysteria2
+  password: e4dbde8d-b194-4a64-afe0-093ffd258e8e
+  auth: e4dbde8d-b194-4a64-afe0-093ffd258e8e
+  sni: www.apple.com
+  skip-cert-verify: true
+  ports: 35000-39000
+  udp: true
+  tcp_delay: 9
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 103 [⚡可用]
+  server: 45.136.245.177
+  port: 33079
+  type: hysteria2
+  password: 1e3a572b-7355-4daf-a274-84946f203ebf
+  auth: 1e3a572b-7355-4daf-a274-84946f203ebf
+  skip-cert-verify: true
+  obfs: salamander
+  obfs-password: salamander
+  tcp_delay: 10
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- alterId: 0
+  cipher: auto
+  name: 🇺🇸 美国 104 [⚡可用]
+  network: ws
+  port: 443
+  server: six.r33.fun
+  skip-cert-verify: false
+  tls: true
+  type: vmess
+  uuid: 9bb0e2e3-c5b9-4606-9cbb-a3c36f2d01d7
+  ws-opts:
+    headers:
+      Host: fr2-full.privateip.net
+    path: /racevpn
+  tcp_delay: 346
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 105 [⚡可用]
+  type: trojan
+  server: bestcdn3.868863.xyz
+  port: 2083
+  password: e569b922-1a37-4f5e-8f8f-6e5869eb2460
+  sni: 17657757935362.796813.xyz
+  skip-cert-verify: false
+  udp: true
+  alpn: []
+  tls: true
+  tcp_delay: 2015
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 106 [⚡可用]
+  type: vless
+  server: us-phxplus-ddns.xn--4gqza090la383cba657a9rw23a362bz35amu9c.link
+  port: 12053
+  uuid: ace8aee5-a5ea-4cdd-81c0-d0b185c6f12f
+  encryption: none
+  flow: xtls-rprx-vision
+  tls: true
+  skip-cert-verify: false
+  network: tcp
+  host: ''
+  path: ''
+  sni: gw.alicdn.com
+  tcp_delay: 344
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 107 [⚡可用]
+  server: v4.hdacd.com
+  port: 30804
   type: vmess
   uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
   alterId: 2
   cipher: auto
   tls: false
   skip-cert-verify: true
+  tcp_delay: 19
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国 108 [⚡可用]
+  server: v29.hdacd.com
+  port: 30829
+  type: vmess
+  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
+  alterId: 2
+  cipher: auto
+  tls: false
+  tcp_delay: 17
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 1 [⚡可用]
+  type: ss
+  server: xiaofeizhu.idsduf.com
+  port: 44014
+  cipher: 2022-blake3-aes-128-gcm
+  password: 08a17cd24226ede6
+  udp: true
+  tcp_delay: 17
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 2 [⚡可用]
+  type: vless
+  server: us12.miyazono-kaori.com
+  port: 443
+  uuid: 937f8940-ad8a-409f-93c3-4d6249af628f
+  encryption: none
+  flow: xtls-rprx-vision
+  tls: true
+  skip-cert-verify: false
+  network: tcp
+  host: ''
+  path: ''
+  sni: download-porter.hoyoverse.com
+  tcp_delay: 21
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 3 [⚡可用]
+  type: ss
+  server: xiaofeizhu.idsduf.com
+  port: 40022
+  cipher: 2022-blake3-aes-128-gcm
+  password: 08a17cd24226ede6
+  udp: true
+  tcp_delay: 21
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 4 [⚡可用]
+  type: ss
+  server: dafeizhu.whtjdasha.com
+  port: 39985
+  cipher: 2022-blake3-aes-128-gcm
+  password: 08a17cd24226ede6
+  udp: true
+  tcp_delay: 20
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 5 [⚡可用]
+  type: ss
+  server: dafeizhu.whtjdasha.com
+  port: 39204
+  cipher: 2022-blake3-aes-128-gcm
+  password: 08a17cd24226ede6
+  udp: true
+  tcp_delay: 12
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 6 [⚡可用]
+  type: ss
+  server: xiaofeizhu.idsduf.com
+  port: 40017
+  cipher: 2022-blake3-aes-128-gcm
+  password: 65a1a6bef7881700
+  udp: true
+  tcp_delay: 21
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 7 [⚡可用]
+  type: ss
+  server: dafeizhu.whtjdasha.com
+  port: 39209
+  cipher: 2022-blake3-aes-128-gcm
+  password: 08a17cd24226ede6
+  udp: true
+  tcp_delay: 15
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 8 [⚡可用]
+  type: ss
+  server: dafeizhu.whtjdasha.com
+  port: 29527
+  cipher: 2022-blake3-aes-128-gcm
+  password: 08a17cd24226ede6
+  udp: true
+  tcp_delay: 14
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 9 [⚡可用]
+  type: vless
+  server: de1.miyazono-kaori.com
+  port: 443
+  uuid: 937f8940-ad8a-409f-93c3-4d6249af628f
+  encryption: none
+  flow: xtls-rprx-vision
+  tls: true
+  skip-cert-verify: false
+  network: tcp
+  host: ''
+  path: ''
+  sni: www.amazon.de
+  tcp_delay: 25
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 10 [⚡可用]
+  type: ss
+  server: dafeizhu.whtjdasha.com
+  port: 39206
+  cipher: 2022-blake3-aes-128-gcm
+  password: 65a1a6bef7881700
+  udp: true
+  tcp_delay: 12
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 11 [⚡可用]
+  type: ss
+  server: xiaofeizhu.idsduf.com
+  port: 20116
+  cipher: 2022-blake3-aes-128-gcm
+  password: 65a1a6bef7881700
+  udp: true
+  tcp_delay: 20
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 12 [⚡可用]
+  type: ss
+  server: dafeizhu.whtjdasha.com
+  port: 39203
+  cipher: 2022-blake3-aes-128-gcm
+  password: 08a17cd24226ede6
+  udp: true
+  tcp_delay: 18
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 13 [⚡可用]
+  type: ss
+  server: dafeizhu.whtjdasha.com
+  port: 39301
+  cipher: 2022-blake3-aes-128-gcm
+  password: 08a17cd24226ede6
+  udp: true
+  tcp_delay: 11
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 14 [⚡可用]
+  type: ss
+  server: xiaofeizhu.idsduf.com
+  port: 40020
+  cipher: 2022-blake3-aes-256-gcm
+  password: 08a17cd24226ede6199d2461f3520498
+  udp: true
+  tcp_delay: 20
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 15 [⚡可用]
+  type: vless
+  server: uk2.miyazono-kaori.com
+  port: 443
+  uuid: 937f8940-ad8a-409f-93c3-4d6249af628f
+  encryption: none
+  flow: xtls-rprx-vision
+  tls: true
+  skip-cert-verify: false
+  network: tcp
+  host: ''
+  path: ''
+  sni: www.bp.com
+  tcp_delay: 19
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 16 [⚡可用]
+  type: ss
+  server: dafeizhu.whtjdasha.com
+  port: 32207
+  cipher: 2022-blake3-aes-128-gcm
+  password: 65a1a6bef7881700
+  udp: true
+  tcp_delay: 15
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 17 [⚡可用]
+  type: ss
+  server: xiaofeizhu.idsduf.com
+  port: 40021
+  cipher: 2022-blake3-aes-128-gcm
+  password: 08a17cd24226ede6
   udp: true
   tcp_delay: 24
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇺🇸 美国 183 [⚡可用]
-  server: freea.glyphara.com
-  port: 30701
+- name: 🇺🇳 节点 18 [⚡可用]
+  type: ss
+  server: dafeizhu.whtjdasha.com
+  port: 12983
+  cipher: 2022-blake3-aes-128-gcm
+  password: 08a17cd24226ede6
+  udp: true
+  tcp_delay: 15
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 19 [⚡可用]
+  type: ss
+  server: dafeizhu.whtjdasha.com
+  port: 39987
+  cipher: 2022-blake3-aes-128-gcm
+  password: 08a17cd24226ede6
+  udp: true
+  tcp_delay: 14
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 20 [⚡可用]
+  type: ss
+  server: xiaofeizhu.idsduf.com
+  port: 40019
+  cipher: 2022-blake3-aes-128-gcm
+  password: 08a17cd24226ede6
+  udp: true
+  tcp_delay: 20
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 21 [⚡可用]
+  type: ss
+  server: dafeizhu.whtjdasha.com
+  port: 19527
+  cipher: 2022-blake3-aes-128-gcm
+  password: 08a17cd24226ede6
+  udp: true
+  tcp_delay: 15
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 22 [⚡可用]
+  type: ss
+  server: xiaofeizhu.idsduf.com
+  port: 12981
+  cipher: 2022-blake3-aes-128-gcm
+  password: 08a17cd24226ede6
+  udp: true
+  tcp_delay: 19
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 23 [⚡可用]
+  type: ss
+  server: dafeizhu.whtjdasha.com
+  port: 39505
+  cipher: 2022-blake3-aes-128-gcm
+  password: 08a17cd24226ede6
+  udp: true
+  tcp_delay: 12
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 24 [⚡可用]
+  type: ss
+  server: xiaofeizhu.idsduf.com
+  port: 40023
+  cipher: 2022-blake3-aes-128-gcm
+  password: 08a17cd24226ede6
+  udp: true
+  tcp_delay: 22
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 25 [⚡可用]
+  type: ss
+  server: xiaofeizhu.idsduf.com
+  port: 39986
+  cipher: 2022-blake3-aes-128-gcm
+  password: 08a17cd24226ede6
+  udp: true
+  tcp_delay: 20
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 26 [⚡可用]
+  type: ss
+  server: dafeizhu.whtjdasha.com
+  port: 49207
+  cipher: 2022-blake3-aes-256-gcm
+  password: 08a17cd24226ede6199d2461f3520498
+  udp: true
+  tcp_delay: 18
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 27 [⚡可用]
   type: vless
-  uuid: af780f90-a77d-4884-b00c-f1cf1aa61464
-  tls: true
+  server: us9.miyazono-kaori.com
+  port: 443
+  uuid: 937f8940-ad8a-409f-93c3-4d6249af628f
+  encryption: none
   flow: xtls-rprx-vision
-  reality-opts:
-    public-key: cgGav3P_PeaM4grdSECGj4Tt9IsCmSqhGo_EJ0_KdWY
-    short-id: e62db878
-  client-fingerprint: firefox
+  tls: true
+  skip-cert-verify: false
   network: tcp
-  udp: true
-  servername: www.amd.com
-  tcp_delay: 5
+  host: ''
+  path: ''
+  sni: download-porter.hoyoverse.com
+  tcp_delay: 23
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- auth: e9bc7ffe-04fa-448c-813e-f3f730989d4c
-  name: 🇺🇸 美国 184 [⚡可用]
-  password: e9bc7ffe-04fa-448c-813e-f3f730989d4c
-  port: 51011
-  server: 209.141.42.49
-  skip-cert-verify: true
-  sni: www.bing.com
-  type: hysteria2
-  udp: true
-  tcp_delay: 5
+- name: 🇺🇳 节点 28 [⚡可用]
+  type: vless
+  server: de2.miyazono-kaori.com
+  port: 443
+  uuid: 937f8940-ad8a-409f-93c3-4d6249af628f
+  encryption: none
+  flow: xtls-rprx-vision
+  tls: true
+  skip-cert-verify: false
+  network: tcp
+  host: ''
+  path: ''
+  sni: www.amazon.de
+  tcp_delay: 22
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- auth: e9bc7ffe-04fa-448c-813e-f3f730989d4c
-  name: 🇺🇸 美国 185 [⚡可用]
-  password: e9bc7ffe-04fa-448c-813e-f3f730989d4c
-  port: 51098
-  server: 205.185.125.20
-  skip-cert-verify: true
-  sni: apps.apple.com
-  type: hysteria2
+- name: 🇺🇳 节点 29 [⚡可用]
+  type: ss
+  server: xiaofeizhu.idsduf.com
+  port: 39981
+  cipher: 2022-blake3-aes-128-gcm
+  password: 08a17cd24226ede6
   udp: true
-  tcp_delay: 5
+  tcp_delay: 22
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 30 [⚡可用]
+  type: ss
+  server: xiaofeizhu.idsduf.com
+  port: 12984
+  cipher: 2022-blake3-aes-128-gcm
+  password: 08a17cd24226ede6
+  udp: true
+  tcp_delay: 21
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 31 [⚡可用]
+  type: ss
+  server: xiaofeizhu.idsduf.com
+  port: 40013
+  cipher: 2022-blake3-aes-128-gcm
+  password: 08a17cd24226ede6
+  udp: true
+  tcp_delay: 19
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 32 [⚡可用]
+  type: ss
+  server: xiaofeizhu.idsduf.com
+  port: 40010
+  cipher: 2022-blake3-aes-128-gcm
+  password: 08a17cd24226ede6
+  udp: true
+  tcp_delay: 16
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 33 [⚡可用]
+  type: vless
+  server: us10.miyazono-kaori.com
+  port: 443
+  uuid: 937f8940-ad8a-409f-93c3-4d6249af628f
+  encryption: none
+  flow: xtls-rprx-vision
+  tls: true
+  skip-cert-verify: false
+  network: tcp
+  host: ''
+  path: ''
+  sni: download-porter.hoyoverse.com
+  tcp_delay: 22
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 34 [⚡可用]
+  type: ss
+  server: xiaofeizhu.idsduf.com
+  port: 40011
+  cipher: 2022-blake3-aes-128-gcm
+  password: 08a17cd24226ede6
+  udp: true
+  tcp_delay: 21
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 35 [⚡可用]
+  type: ss
+  server: dafeizhu.whtjdasha.com
+  port: 19529
+  cipher: 2022-blake3-aes-128-gcm
+  password: 08a17cd24226ede6
+  udp: true
+  tcp_delay: 14
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 36 [⚡可用]
+  type: vmess
+  server: best.cdn.sqeven.cn
+  port: 8080
+  uuid: 175c0f44-6a89-4e48-a827-af1e8cf1d485
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: best.cdn.sqeven.cn
+  tcp_delay: 1090
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 37 [⚡可用]
+  type: vmess
+  server: best.cdn.sqeven.cn
+  port: 8080
+  uuid: 00bf726b-2ab6-47e1-98a7-af8497634257
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: best.cdn.sqeven.cn
+  tcp_delay: 1090
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 节点 38 [⚡可用]
+  type: vmess
+  server: best.cdn.sqeven.cn
+  port: 8080
+  uuid: dc211e6f-8ccc-4677-9f9c-db229d172979
+  alterId: 0
+  cipher: auto
+  network: ws
+  tls: false
+  skip-cert-verify: false
+  ws-opts:
+    path: /?ed=2560
+    headers:
+      Host: best.cdn.sqeven.cn
+  tcp_delay: 1090
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- type: vless
+  name: 🇯🇵 日本 1 [⚡可用]
+  server: 89.116.193.40
+  port: 34045
+  uuid: d8dd94fd-540e-461d-b5d4-acebef02c22a
+  skip-cert-verify: true
+  network: tcp
+  servername: visit-this-invitation-link-to-join-tg-enkelte-notif.ekt.me
+  tls: false
+  udp: true
+  tcp_delay: 6
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇯🇵 日本 2 [⚡可用]
+  server: 199.232.24.2
+  port: 80
+  type: vless
+  tls: true
+  packet-encoding: xudp
+  uuid: b727aa5e-27bd-4fe5-bd95-7db682992637
+  network: ws
+  ws-opts:
+    path: /Join----HAJIMAMADVPN---Join----HAJIMAMADVPN---Join----HAJIMAMADVPN---Join----HAJIMAMADVPN---Join----HAJIMAMADVPN---Join----HAJIMAMADVPN---Join----HAJIMAMADVPN
+    headers:
+      Host: downloadha.global.ssl.fastly.net
+  skip-cert-verify: true
+  udp: true
+  tfo: true
+  tcp_delay: 8
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇯🇵 日本 3 [⚡可用]
+  type: vless
+  server: 138.2.50.155
+  port: 44073
+  uuid: 11d29ec6-be66-4f59-97c6-7cff836ea318
+  encryption: none
+  flow: xtls-rprx-vision
+  tls: true
+  skip-cert-verify: false
+  network: tcp
+  host: ''
+  path: ''
+  sni: www.icloud.com
+  tcp_delay: 8
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇯🇵 日本 4 [⚡可用]
+  server: v6.hdacd.com
+  port: 30806
+  type: vmess
+  uuid: cbb3f877-d1fb-344c-87a9-d153bffd5484
+  alterId: 2
+  cipher: auto
+  tls: false
+  skip-cert-verify: true
+  tcp_delay: 21
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇩🇪 德国 16 [⚡可用]
+  server: 85.209.53.170
+  port: 443
+  type: hysteria2
+  password: d39fcc67-2047-4799-bc49-d014200a754f
+  auth: d39fcc67-2047-4799-bc49-d014200a754f
+  up: 2
+  down: 2
+  skip-cert-verify: true
+  obfs: salamander
+  obfs-password: NDhhNmY5YTY0MGYzOTgxYQ==
+  udp: true
+  tcp_delay: 12
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇩🇪 德国 42 [⚡可用]
+  server: 85.209.53.170
+  port: 443
+  type: hysteria2
+  password: 1e524783-1134-4360-9a9e-cb42a647b1f2
+  auth: 1e524783-1134-4360-9a9e-cb42a647b1f2
+  up: 2
+  down: 2
+  skip-cert-verify: true
+  obfs: salamander
+  obfs-password: NDhhNmY5YTY0MGYzOTgxYQ==
+  udp: true
+  tcp_delay: 9
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇩🇪 德国 46 [⚡可用]
+  server: 85.209.53.170
+  port: 80
+  type: hysteria2
+  password: d27f6f1b-0c91-4420-a543-16fa73ef1e8a
+  auth: d27f6f1b-0c91-4420-a543-16fa73ef1e8a
+  up: 2
+  down: 2
+  skip-cert-verify: true
+  obfs: salamander
+  obfs-password: NDhhNmY5YTY0MGYzOTgxYQ==
+  udp: true
+  tcp_delay: 7
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
 - name: 🇮🇳 印度 1 [⚡可用]
-  type: vless
-  server: 134.209.190.163
-  port: 443
-  uuid: 6a2f8236-d5e1-467d-8aca-9248ddb025c5
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: ''
-  path: /sitjppws
-  sni: www.vk.com
-  ws-opts:
-    path: /sitjppws
-    headers: {}
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇮🇳 印度 2 [⚡可用]
-  type: vless
-  server: 65.109.118.175
-  port: 443
-  uuid: fa72a38c-56bf-4f3b-9735-e96e9840ae54
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: tcp
-  host: ''
-  path: ''
-  sni: app.chandplus.com
-  tcp_delay: 10
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇮🇳 印度 3 [⚡可用]
-  type: vless
-  server: 194.76.18.46
-  port: 2052
-  uuid: d15f68f6-9163-4a38-b3ef-3941e05550d8
-  encryption: none
-  flow: ''
-  tls: false
-  skip-cert-verify: false
-  network: httpupgrade
-  host: join.v2rayfast7.iran.ir.arvancloud.ir.nett.focusontrade.ir
-  path: /@V2RAYFAST_7@V2RAYFAST_7@V2RAYFAST_7@V2RAYFAST_7@V2RAYFAST_7@V2RAYFAST_7@V2RAYFAST_7@V2RAYFAST_7@V2RAYFAST_7@V2RAYFAST_7@V2RAYFAST_7@V2RAYFAST_7@V2RAYFAST_7@V2RAYFAST_7@V2RAYFAST_7@V2RAYFAST_7@V2RAYFAST_7@V2RAYFAST_7@V2RAYFAST_7@V2RAYFAST_7@V2RAYFAST_7@V2RAYFAST_7@V2RAYFAST_7@V2RAYFAST_7?ed=2048
-  sni: ''
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇮🇳 印度 4 [⚡可用]
-  type: vless
-  server: 185.42.163.177
-  port: 1888
-  uuid: 0f3c5d1e-21e7-4f5d-b57e-a308686e22f3
-  encryption: none
-  flow: xtls-rprx-vision
-  tls: true
-  skip-cert-verify: false
-  network: tcp
-  host: '---@External_Net---@External_Net---@External_Net---@External_Net---@External_Net'
-  path: ''
-  sni: www.kernel.org
-  tcp_delay: 8
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇮🇳 印度 5 [⚡可用]
-  type: vless
-  server: 143.110.172.232
-  port: 443
-  uuid: ca78d2ae-e837-467e-bd89-91b98968f987
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: ''
-  path: /lafnojws
-  sni: github.com
-  ws-opts:
-    path: /lafnojws
-    headers: {}
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇮🇳 印度 6 [⚡可用]
-  type: vless
-  server: 95.217.206.161
-  port: 443
-  uuid: 01d68a9b-be48-4c7b-b4f9-71b29c4cfaca
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: tcp
-  host: ''
-  path: ''
-  sni: api.chandplus.com
-  tcp_delay: 7
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇮🇳 印度 7 [⚡可用]
-  type: vless
-  server: 54.38.137.111
-  port: 2053
-  uuid: 08cb0591-5193-4a0c-9105-ceb09fba67fe
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: ws
-  host: ''
-  path: /
-  sni: ''
-  ws-opts:
-    path: /
-    headers: {}
-  tcp_delay: 9
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇮🇳 印度 8 [⚡可用]
-  type: vless
-  server: 65.109.182.239
-  port: 443
-  uuid: ae21b3e7-1694-4efe-bb21-69497843142f
-  encryption: none
-  flow: ''
-  tls: false
-  skip-cert-verify: false
-  network: ws
-  host: ''
-  path: /
-  sni: ''
-  ws-opts:
-    path: /
-    headers: {}
-  tcp_delay: 8
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇮🇳 印度 9 [⚡可用]
-  type: vless
-  server: 68.183.36.198
-  port: 443
-  uuid: 68f751f0-a653-43c2-97fc-0e0f4404d2ff
-  encryption: none
-  flow: ''
-  tls: true
-  skip-cert-verify: false
-  network: tcp
-  host: ''
-  path: /xbzwjaws
-  sni: ''
-  tcp_delay: 11
-  clash_delay: 2025
-  quality_score: 12
-  quality_tag: ⚡可用
-- name: 🇮🇳 印度 10 [⚡可用]
   type: vless
   server: 165.232.98.129
   port: 443
@@ -5407,11 +3579,99 @@ proxies:
   ws-opts:
     path: /gjqezzws
     headers: {}
-  tcp_delay: 9
+  tcp_delay: 10
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
-- name: 🇮🇳 印度 11 [⚡可用]
+- name: 🇮🇳 印度 2 [⚡可用]
+  type: vless
+  server: 65.109.209.95
+  port: 443
+  uuid: 15f64399-ebb4-4b82-9b9f-33b09638bc7f
+  encryption: none
+  flow: ''
+  tls: false
+  skip-cert-verify: false
+  network: xhttp
+  host: 65.109.209.95
+  path: /@freeOnlineVPN
+  sni: ''
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇮🇳 印度 3 [⚡可用]
+  type: vless
+  server: 65.109.182.239
+  port: 443
+  uuid: ae21b3e7-1694-4efe-bb21-69497843142f
+  encryption: none
+  flow: ''
+  tls: false
+  skip-cert-verify: false
+  network: ws
+  host: ''
+  path: /
+  sni: ''
+  ws-opts:
+    path: /
+    headers: {}
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇮🇳 印度 5 [⚡可用]
+  type: vless
+  server: 185.42.163.177
+  port: 1888
+  uuid: 0f3c5d1e-21e7-4f5d-b57e-a308686e22f3
+  encryption: none
+  flow: xtls-rprx-vision
+  tls: true
+  skip-cert-verify: false
+  network: tcp
+  host: '---@External_Net---@External_Net---@External_Net---@External_Net---@External_Net'
+  path: ''
+  sni: www.kernel.org
+  tcp_delay: 6
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇮🇳 印度 6 [⚡可用]
+  type: vless
+  server: 65.109.118.175
+  port: 443
+  uuid: fa72a38c-56bf-4f3b-9735-e96e9840ae54
+  encryption: none
+  flow: ''
+  tls: true
+  skip-cert-verify: false
+  network: tcp
+  host: ''
+  path: ''
+  sni: app.chandplus.com
+  tcp_delay: 11
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇮🇳 印度 7 [⚡可用]
+  type: vless
+  server: 68.183.36.198
+  port: 443
+  uuid: 68f751f0-a653-43c2-97fc-0e0f4404d2ff
+  encryption: none
+  flow: ''
+  tls: true
+  skip-cert-verify: false
+  network: tcp
+  host: ''
+  path: /xbzwjaws
+  sni: ''
+  tcp_delay: 12
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇮🇳 印度 8 [⚡可用]
   type: vless
   server: 138.68.159.32
   port: 443
@@ -5427,44 +3687,84 @@ proxies:
   ws-opts:
     path: /cbgvtxws
     headers: {}
-  tcp_delay: 10
+  tcp_delay: 8
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇮🇳 印度 9 [⚡可用]
+  type: vless
+  server: 95.217.206.161
+  port: 443
+  uuid: 01d68a9b-be48-4c7b-b4f9-71b29c4cfaca
+  encryption: none
+  flow: ''
+  tls: true
+  skip-cert-verify: false
+  network: tcp
+  host: ''
+  path: ''
+  sni: api.chandplus.com
+  tcp_delay: 6
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇮🇳 印度 10 [⚡可用]
+  type: vless
+  server: 134.209.190.163
+  port: 443
+  uuid: 6a2f8236-d5e1-467d-8aca-9248ddb025c5
+  encryption: none
+  flow: ''
+  tls: true
+  skip-cert-verify: false
+  network: ws
+  host: ''
+  path: /sitjppws
+  sni: www.vk.com
+  ws-opts:
+    path: /sitjppws
+    headers: {}
+  tcp_delay: 8
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
 - name: 🇮🇳 印度 12 [⚡可用]
   type: vless
-  server: 65.109.209.95
+  server: 143.110.172.232
   port: 443
-  uuid: 15f64399-ebb4-4b82-9b9f-33b09638bc7f
+  uuid: ca78d2ae-e837-467e-bd89-91b98968f987
   encryption: none
   flow: ''
-  tls: false
+  tls: true
   skip-cert-verify: false
-  network: xhttp
-  host: 65.109.209.95
-  path: /@freeOnlineVPN
-  sni: ''
+  network: ws
+  host: ''
+  path: /lafnojws
+  sni: github.com
+  ws-opts:
+    path: /lafnojws
+    headers: {}
   tcp_delay: 10
   clash_delay: 2025
   quality_score: 12
   quality_tag: ⚡可用
 last_message_ids:
-  '@fqDINYUE': 4774
-  '@wxdy666': 6354
-  '@freeyule': 1940765
-  '@ccbaohe': 15112
-  '@duangvpsfs': 3703937
-  '@zzzjjjkkkoi': 653876
-  '@xmdexw': 224057
+  '@fqDINYUE': 4781
+  '@wxdy666': 6362
+  '@freeyule': 1941266
+  '@ccbaohe': 15114
+  '@duangvpsfs': 3704584
+  '@zzzjjjkkkoi': 656214
+  '@xmdexw': 224188
   '@v2v2clash': 70
   '@dingyue_Center': 3922
   '@tempssrlink': 109
-  '@sorenab2': 38176
+  '@sorenab2': 38210
   '@proxyshareCN': 4801
-update_time: '2025-12-17 00:54:11'
-total_nodes: 336
-average_quality: 14.9
-quality_stats: '🔥极品: 11, ⭐优质: 2, ✅良好: 2, ⚡可用: 321'
+update_time: '2025-12-17 12:49:23'
+total_nodes: 234
+average_quality: 15.4
+quality_stats: '🔥极品: 9, ⭐优质: 0, ✅良好: 3, ⚡可用: 222'
 bandwidth_filter:
   enabled: true
   min_mb: 20.0
