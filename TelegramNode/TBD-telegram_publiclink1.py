@@ -1932,35 +1932,67 @@ def fix_and_filter_ss_nodes(proxies):
     return valid_proxies
 
 def normalize_proxy_names(proxies):
+    """
+    改进版节点名称规范化函数，避免重复名称
+    保留原始名称中的关键特征（如 @CaV2ray），确保同国家内的节点可以区分
+    """
     pattern_trailing_number = re.compile(r'\s*\d+\s*$')
     normalized = []
+    
+    # 第一步：提取原始名称的特征部分
     for p in proxies:
         name = p.get('name', '').strip()
-        # 用循环检测清理开头所有国旗emoji
+        
+        # 清理开头所有国旗emoji
         name = strip_starting_flags(name)
+        
+        # 提取原始名称中的特征标识符（如 @CaV2ray、ISP名称等）
+        # 从名称中提取 @ 后面的部分或保留有意义的部分
+        feature_match = re.search(r'@([A-Za-z0-9_-]+)', name)
+        if feature_match:
+            feature = feature_match.group(1)  # 提取 @ 后的部分
+        else:
+            # 如果没有 @ 标记，则从整个名称中提取首个非空白、非emoji的单词
+            clean_temp = re.sub(r'[\u4E00-\u9FFF\u3040-\u309F\u30A0-\u30FF]+', '', name)
+            clean_temp = re.sub(r'[^\w\s-]', '', clean_temp).strip()
+            words = clean_temp.split()
+            feature = words[0] if words else ""
+        
         # 清理尾部数字序号
         name = pattern_trailing_number.sub('', name).strip()
-        p['name'] = name
-        # 以下保持现有逻辑不变
+        
+        # 存储原始特征供后续使用
+        p['_original_name'] = name
+        p['_feature'] = feature
+        
+        normalized.append(p)
+    
+    # 第二步：地区识别
+    for p in normalized:
+        name = p['_original_name']
         region_info = p.get('region_info', None)
         flag_match = re.search(r'[\U0001F1E6-\U0001F1FF]{2}', name)
         flag_emoji = flag_match.group(0) if flag_match else None
         country_cn = None
+        
         if region_info and 'name' in region_info and region_info['name'] in CUSTOM_REGEX_RULES:
             country_cn = region_info['name']
         elif flag_emoji:
             code = emoji_to_country_code(flag_emoji)
             if code and code in COUNTRY_CODE_TO_CN:
                 country_cn = COUNTRY_CODE_TO_CN[code]
+        
         if not country_cn:
             for cname, info in CUSTOM_REGEX_RULES.items():
                 if re.search(info['pattern'], name, re.IGNORECASE):
                     country_cn = cname
                     break
+        
         if not country_cn:
             short_name = name[:2] if len(name) >= 2 else name
             country_cn = short_name if short_name else "未知"
             flag_emoji = FLAG_EMOJI_UN_FLAG
+        
         if not flag_emoji:
             code = None
             for k, v in COUNTRY_CODE_TO_CN.items():
@@ -1968,23 +2000,56 @@ def normalize_proxy_names(proxies):
                     code = k
                     break
             flag_emoji = get_country_flag_emoji(code) if code else FLAG_EMOJI_UN_FLAG
-        clean_name = country_cn
+        
         p['_norm_flag'] = flag_emoji
-        p['_norm_country'] = clean_name
-        normalized.append(p)
+        p['_norm_country'] = country_cn
+    
+    # 第三步：按国家分组并生成最终名称
     grouped = {}
     for p in normalized:
         country = p['_norm_country']
-        grouped.setdefault(country, []).append(p)
+        if country not in grouped:
+            grouped[country] = []
+        grouped[country].append(p)
+    
     final_list = []
     for country, plist in grouped.items():
+        # 对同一国家的节点进行去重和编号
+        seen_names = {}
+        
         for idx, p in enumerate(plist, 1):
-            new_name = f"{p['_norm_flag']} {country} {idx}"
-            p['name'] = new_name
+            flag = p['_norm_flag']
+            feature = p.get('_feature', '').strip()
+            
+            # 构建最终名称，优先使用特征标识
+            if feature:
+                # 如果有特征标识（如 @CaV2ray），使用它来区分
+                base_name = f"{flag} {country} @{feature}"
+            else:
+                # 否则就使用纯序号
+                base_name = f"{flag} {country}"
+            
+            # 检查是否重复
+            if base_name in seen_names:
+                # 如果重复，添加序号进行区分
+                seen_names[base_name] += 1
+                final_name = f"{base_name} #{seen_names[base_name]}"
+            else:
+                seen_names[base_name] = 1
+                final_name = f"{base_name} #1" if idx > 1 else base_name
+            
+            p['name'] = final_name
+            
+            # 清理临时字段
             del p['_norm_flag']
             del p['_norm_country']
+            del p['_original_name']
+            del p['_feature']
+            
             final_list.append(p)
+    
     return final_list
+    
 # 在生成最终列表前加这一段（推荐放在 normalize_proxy_names 之后）
 def filter_by_bandwidth(proxies, min_mb=20):
     """只保留带宽 ≥20MB/s 的才保留"""
@@ -2008,6 +2073,7 @@ def filter_by_bandwidth(proxies, min_mb=20):
         else:
             filtered.append(p)
     return filtered
+    
 # ----根据实测带宽进行二次筛选
 def filter_by_bandwidth(proxies, min_mb=25, enable=True):
     """
