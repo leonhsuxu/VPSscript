@@ -1276,10 +1276,10 @@ import re
 import base64
 from urllib.parse import unquote
 
+
 def parse_ss_node(line: str) -> dict | None:
     """
     一个完整、健壮的 Shadowsocks (ss) 链接解析与修复函数。
-
     功能:
     1.  兼容两种 SS 链接格式：
         - ss://<method>:<password>@<server>:<port>#<remark>
@@ -1292,10 +1292,8 @@ def parse_ss_node(line: str) -> dict | None:
         - 现代加密方式的密码必须是有效的 Base64 编码，否则节点将被丢弃。
         - 支持标准和 URL-safe 两种 Base64 格式的自动解码。
     4.  提供详细的日志输出，方便追踪每个节点的处理情况。
-
     参数:
         line (str): 包含 ss:// 前缀的完整 SS 链接。
-
     返回:
         dict | None: 如果解析和修复成功，返回一个 Clash 兼容的节点字典；否则返回 None。
     """
@@ -1352,7 +1350,6 @@ def parse_ss_node(line: str) -> dict | None:
             except (ValueError, IndexError):
                 # 分割失败，说明格式不正确，丢弃
                 return None
-
         # --- Cipher (加密方法) 校验与修复 ---
         original_cipher = method
         valid_ciphers = {
@@ -1383,18 +1380,15 @@ def parse_ss_node(line: str) -> dict | None:
             else:
                 print(f"【强救】SS节点 cipher 缺失/未知 ('{original_cipher}'), 强制设为 'chacha20-ietf-poly1305' : {remark or server}")
                 method = 'chacha20-ietf-poly1305'
-
         # --- Password (密码) 校验与解码 ---
         actual_password = None
         modern_ss_ciphers = {
             '2022-blake3-aes-128-gcm', '2022-blake3-aes-256-gcm', '2022-blake3-chacha20-poly1305'
         }
-
         if method and method.lower() in modern_ss_ciphers:
             if not password_from_url:
                 print(f"【丢弃】SS节点 ({method}) 缺少密码。 → {remark or server}")
                 return None
-
             password_encoded_str = unquote(password_from_url).strip().replace('\n', '').replace('\r', '').replace(' ', '').replace('\t', '')
             
             try:
@@ -1410,10 +1404,24 @@ def parse_ss_node(line: str) -> dict | None:
                 except (base64.binascii.Error, UnicodeDecodeError) as e:
                     print(f"【丢弃】SS节点 ({method}) 密码非有效Base64。错误: {e} → {remark or server}")
                     return None
+            
+            # --- 添加：针对现代加密方法的密钥长度验证 ---
+            password_byte_length = len(actual_password.encode('utf-8'))
+            
+            if method.lower() == '2022-blake3-aes-128-gcm':
+                if password_byte_length != 16:
+                    print(f"【丢弃】SS节点 ({method}) 密码字节长度不正确，要求 16，实际 {password_byte_length}。 → {remark or server}")
+                    return None
+            elif method.lower() in ('2022-blake3-aes-256-gcm', '2022-blake3-chacha20-poly1305'):
+                # 256位AES和ChaCha20通常需要32字节密钥
+                if password_byte_length != 32:
+                    print(f"【丢弃】SS节点 ({method}) 密码字节长度不正确，要求 32，实际 {password_byte_length}。 → {remark or server}")
+                    return None
+            # --- 结束添加 ---
+
         else:
             # 对于传统加密方式，密码是明文
             actual_password = password_from_url
-
         # --- 最终校验和构建节点 ---
         if not (method and actual_password is not None and server and port and 1 <= port <= 65535):
             print(f"【丢弃】SS节点 '{remark or f'ss_{server}'}' 缺少关键组件。")
