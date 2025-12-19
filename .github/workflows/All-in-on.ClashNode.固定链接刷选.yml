@@ -3,7 +3,7 @@ name: ✈️ 固定订阅链接.节点更新
 on:
   schedule:
     # 每天 (北京时间 6:30) 自动运行 （UTC时间为22:30）
-    - cron: '30 22 * * *'
+    - cron: '30 22/12 * * *'
   workflow_dispatch: # 允许手动触发
   push:
     branches:
