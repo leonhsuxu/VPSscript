@@ -1281,67 +1281,50 @@ from urllib.parse import unquote
 def parse_ss_node(line: str) -> dict | None:
     try:
         line = line.strip()
-        if not line.startswith('ss://'):
-            return None
+        if not line.startswith('ss://'): return None
         
         content = line[5:]
-        remark = ''
-        if '#' in content:
-            parts = content.split('#', 1)
-            content = parts[0]
-            remark = unquote(parts[1])
+        remark = unquote(content.split('#')[1]) if '#' in content else ''
+        content = content.split('#')[0]
         
-        method, password_raw, server, port = None, None, None, None
+        modern_ciphers = {'2022-blake3-aes-128-gcm', '2022-blake3-aes-256-gcm', '2022-blake3-chacha20-poly1305'}
+        method, password, server, port = "", "", "", 0
 
-        # 格式1: ss://<base64_encoded_part>
-        if '@' not in content:
-            try:
-                padded_content = content + '=' * (-len(content) % 4)
-                decoded_full = base64.urlsafe_b64decode(padded_content).decode('utf-8', errors='ignore')
-                if '@' in decoded_full:
-                    mp_part, sp_part = decoded_full.split('@', 1)
-                    method, password_raw = mp_part.split(':', 1)
-                    server, port = sp_part.rsplit(':', 1)
-                else: return None
-            except: return None
-        # 格式2: ss://<method>:<password>@<server>:<port>
+        if '@' in content:
+            # 格式: method:pass@server:port
+            prefix, addr = content.split('@', 1)
+            if ':' in prefix:
+                method, password = prefix.split(':', 1)
+            else:
+                # 处理 method 在 base64 里的情况
+                dec_prefix = base64.urlsafe_b64decode(prefix + '=' * (-len(prefix)%4)).decode('utf-8', 'ignore')
+                method, password = dec_prefix.split(':', 1)
+            server, port = addr.rsplit(':', 1)
         else:
-            try:
-                at_split = content.split('@', 1)
-                mp_part, sp_part = at_split[0], at_split[1]
-                if ':' in mp_part:
-                    method, password_raw = mp_part.split(':', 1)
-                else:
-                    # 处理部分机场 method 也在 base64 里的情况
-                    padded_mp = mp_part + '=' * (-len(mp_part) % 4)
-                    decoded_mp = base64.urlsafe_b64decode(padded_mp).decode('utf-8', errors='ignore')
-                    method, password_raw = decoded_mp.split(':', 1)
-                server, port = sp_part.rsplit(':', 1)
-            except: return None
+            # 全 Base64 格式
+            decoded = base64.urlsafe_b64decode(content + '=' * (-len(content)%4)).decode('utf-8', 'ignore')
+            prefix, addr = decoded.split('@', 1)
+            method, password = prefix.split(':', 1)
+            server, port = addr.rsplit(':', 1)
 
-        port = int(port)
-        modern_ss_ciphers = {'2022-blake3-aes-128-gcm', '2022-blake3-aes-256-gcm', '2022-blake3-chacha20-poly1305'}
-        
-        # --- 关键修复：2022 协议不解码密码 ---
-        if method.lower() in modern_ss_ciphers:
-            # 仅移除引用字符，保留 Base64 原样
-            actual_password = unquote(password_raw).strip()
+        # 核心修复点：如果是 2022 协议，确保密码是合法的 Base64 字符串且不进行 UTF-8 转码
+        # 很多报错是因为 unquote 之后破坏了 Base64 结构
+        if method.lower() in modern_ciphers:
+            # 2022 协议密码必须清理掉所有非 Base64 字符
+            password = re.sub(r'[^A-Za-z0-9+/=]', '', unquote(password))
         else:
-            # 普通协议，尝试解码（如果是base64的话）或直接使用
-            actual_password = unquote(password_raw)
+            password = unquote(password)
 
-        node = {
+        return {
             'name': remark or f"ss_{server}",
             'type': 'ss',
             'server': server,
-            'port': port,
+            'port': int(port),
             'cipher': method,
-            'password': actual_password,
-            'udp': True,
+            'password': password,
+            'udp': True
         }
-        return node
-    except:
-        return None
+    except: return None
 
 def parse_trojan_node(line):
     try:
@@ -1773,38 +1756,37 @@ def strip_starting_flags(s):
 # 再次验证SS节点
 def fix_and_filter_ss_nodes(proxies):
     valid_proxies = []
-    modern_ss_ciphers = {'2022-blake3-aes-128-gcm', '2022-blake3-aes-256-gcm', '2022-blake3-chacha20-poly1305'}
+    modern_ciphers = {'2022-blake3-aes-128-gcm', '2022-blake3-aes-256-gcm', '2022-blake3-chacha20-poly1305'}
     
     for p in proxies:
         if p.get('type') != 'ss':
             valid_proxies.append(p)
             continue
             
-        method = p.get('cipher', '').strip().lower()
-        password = p.get('password', '')
+        cipher = p.get('cipher', '').lower()
+        pwd = p.get('password', '')
 
-        # 如果是 2022 协议，校验密码是否为合法 Base64
-        if method in modern_ss_ciphers:
-            if not is_valid_base64(password):
-                print(f"【丢弃】SS 2022 节点密码非法(非Base64): {p['name']}")
+        # 如果是 2022 协议，校验 Base64 完整性
+        if cipher in modern_ciphers:
+            # 如果密码长度不对或包含非法字符，直接丢弃，防止 Clash 报错
+            if not re.match(r'^[A-Za-z0-9+/=]+$', pwd) or len(pwd) < 16:
+                print(f"【拦截】丢弃非法 SS-2022 节点(Base64损坏): {p['name']}")
                 continue
         
-        # 通用加密方式白名单
-        valid_ciphers = {
+        # 只有在白名单内的 cipher 才允许通过
+        allowed = {
             'aes-128-gcm', 'aes-192-gcm', 'aes-256-gcm',
             'chacha20-ietf-poly1305', 'chacha20-poly1305',
-            'xchacha20-ietf-poly1305', 'xchacha20-poly1305'
-        } | modern_ss_ciphers
+            'xchacha20-ietf-poly1305'
+        } | modern_ciphers
         
-        if method in valid_ciphers:
+        if cipher in allowed:
             valid_proxies.append(p)
         else:
-            # 尝试强救
-            if 'cfb' in method or 'ctr' in method:
+            # 强救传统协议
+            if 'cfb' in cipher or 'ctr' in cipher:
                 p['cipher'] = 'chacha20-ietf-poly1305'
                 valid_proxies.append(p)
-            else:
-                print(f"【丢弃】不支持的加密方式: {method} in {p['name']}")
                 
     return valid_proxies
 
@@ -2592,6 +2574,16 @@ async def main():
     print("Telegram.Node_Clash-Speedtest测试版 V2.0")
     print(datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S"))
     print("=" * 60)
+
+    # === 新增：强制清理历史中间件，防止旧数据污染 ===
+    output_dir = os.path.dirname(OUTPUT_FILE)
+    for stale_file in ['TCP.yaml', 'clash.yaml', 'speedtest.yaml']:
+        stale_path = os.path.join(output_dir, stale_file)
+        if os.path.exists(stale_path):
+            try:
+                os.remove(stale_path)
+                print(f"🧹 已强制删除历史残留文件: {stale_file}")
+            except: pass
 
     # === [1/7] 初始化与网络控制检查 ===
     print("🌐 网络控制配置:")
