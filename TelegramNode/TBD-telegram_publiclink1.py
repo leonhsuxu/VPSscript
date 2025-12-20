@@ -57,7 +57,7 @@ last_warp_start_time = 0
 # === 核心控制变量 ===
 # 是否在启动时清理旧的中间件文件 (TCP.yaml, clash.yaml, speedtest.yaml)
 # 设置为 True 则每次运行都清理，设置为 False 则保留
-CLEAN_STALE_FILES = os.getenv('CLEAN_STALE_FILES', 'true').lower() == 'true'
+CLEAN_STALE_FILES = os.getenv('CLEAN_STALE_FILES', 'true').lower() == 'False'
 
 
 # === 新增：测速策略开关（推荐保留这几个选项）===
@@ -68,24 +68,34 @@ ENABLE_SPEED_TEST = True  # 是否启用整体速度测试功能，True表示启
 #   "clash_only"    → 只用 Clash -fast 测速（最准）
 #   "tcp_first"     → 先 TCP 粗筛（<800ms）→ 再 Clash 精测（推荐！平衡速度与质量）
 #   "clash_first"   → 先 Clash → 再 TCP（一般用不上）
+
+
 DETAILED_SPEEDTEST_MODE = os.getenv('DETAILED_SPEEDTEST_MODE', '').lower().strip()  # 新增详细测速模式控制变量
 if not DETAILED_SPEEDTEST_MODE:
     print("❗️错误: 未设置环境变量 DETAILED_SPEEDTEST_MODE，程序退出。")
     sys.exit(1)
+
+
 # TCP 和Clash 测速专属参数
 TCP_TIMEOUT = 5          # 单次 TCP 连接超时时间（秒），建议 3~5
 TCP_MAX_WORKERS = 256     # TCP 测速最大并发（可以比 Clash 高很多，非常快）
 TCP_MAX_DELAY = 1500       # TCP 延迟阈值，超过此值直接丢弃（ms）
+
+
 # TCP 和Clash 日志环境变量专属参数
 def str_to_bool(s: str) -> bool:
     return s.strip().lower() in ('true', '1', 'yes')
     
 ENABLE_TCP_LOG = str_to_bool(os.getenv('ENABLE_TCP_LOG', 'false'))  # 从yml引入变量
 ENABLE_SPEEDTEST_LOG = str_to_bool(os.getenv('ENABLE_SPEEDTEST_LOG', 'false')) # 从yml引入变量
+
+
 # 测速线程和超时参数
 MAX_TEST_WORKERS = 64    # 速度测试时最大并发工作线程数，控制测试的并行度。建议64-96
 SOCKET_TIMEOUT = 3       # 套接字连接超时时间，单位为秒
 HTTP_TIMEOUT = 5         # HTTP请求超时时间，单位为秒
+
+
 # 【关键修改1】测速目标全部换成国内/Cloudflare中国节点
 TEST_URLS_GITHUB = [
     "https://www.google.com/generate_204",
@@ -93,6 +103,8 @@ TEST_URLS_GITHUB = [
 TEST_URLS_WARP = [
     'http://www.baidu.com/generate_204',
 ]
+
+
 # ==================== 测速结果_带宽筛选配置（新增） ====================
 # 是否启用带宽筛选（True=启用，False=关闭）
 ENABLE_BANDWIDTH_FILTER = os.getenv('ENABLE_BANDWIDTH_FILTER', 'true').lower() == 'true'
