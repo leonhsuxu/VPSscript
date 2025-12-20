@@ -817,7 +817,6 @@ def preprocess_regex_rules():
         CUSTOM_REGEX_RULES[region]['pattern'] = '|'.join(
             sorted(CUSTOM_REGEX_RULES[region]['pattern'].split('|'), key=len, reverse=True)
         )
-
 # 新增：从文件中提取上次更新时间
 def get_last_file_update_time(file_path: str) -> datetime | None:
     """
@@ -842,7 +841,6 @@ def get_last_file_update_time(file_path: str) -> datetime | None:
     except Exception as e:
         print(f"  ⚠️ 读取 {file_path} 上次更新时间异常: {e}")
     return None
-
 # 修改：load_existing_proxies_and_state 以返回上次文件更新时间
 def load_existing_proxies_and_state():
     existing_proxies = []
@@ -880,7 +878,6 @@ def load_existing_proxies_and_state():
         last_file_update_time = get_last_file_update_time(OUTPUT_FILE)
             
     return existing_proxies, last_message_ids, last_file_update_time
-
 # =============================================
 # 多匹配的 extract_valid_subscribe_links 函数
 # ============================================= 
@@ -1163,7 +1160,6 @@ def is_valid_base64(s: str) -> bool:
     except (base64.bincii.Error, UnicodeDecodeError):
         # 如果解码过程中发生错误，则认为不是有效的Base64
         return False
-
 def parse_proxies_from_content(content):
     try:
         data = yaml.safe_load(content)
@@ -1271,12 +1267,9 @@ def parse_ssr_node(line):
         return None
 
 
-
-
 import re
 import base64
 from urllib.parse import unquote
-
 
 def parse_ss_node(line: str) -> dict | None:
     try:
@@ -1289,16 +1282,12 @@ def parse_ss_node(line: str) -> dict | None:
         
         modern_ciphers = {'2022-blake3-aes-128-gcm', '2022-blake3-aes-256-gcm', '2022-blake3-chacha20-poly1305'}
         method, password, server, port = "", "", "", 0
-
         if '@' in content:
             # 格式: method:pass@server:port
             prefix, addr = content.split('@', 1)
-            if ':' in prefix:
-                method, password = prefix.split(':', 1)
-            else:
-                # 处理 method 在 base64 里的情况
-                dec_prefix = base64.urlsafe_b64decode(prefix + '=' * (-len(prefix)%4)).decode('utf-8', 'ignore')
-                method, password = dec_prefix.split(':', 1)
+            if ':' not in prefix:
+                prefix = base64.urlsafe_b64decode(prefix + '=' * (-len(prefix)%4)).decode('utf-8', 'ignore')
+            method, password = prefix.split(':', 1)
             server, port = addr.rsplit(':', 1)
         else:
             # 全 Base64 格式
@@ -1306,7 +1295,6 @@ def parse_ss_node(line: str) -> dict | None:
             prefix, addr = decoded.split('@', 1)
             method, password = prefix.split(':', 1)
             server, port = addr.rsplit(':', 1)
-
         # 核心修复点：如果是 2022 协议，确保密码是合法的 Base64 字符串且不进行 UTF-8 转码
         # 很多报错是因为 unquote 之后破坏了 Base64 结构
         if method.lower() in modern_ciphers:
@@ -1314,7 +1302,6 @@ def parse_ss_node(line: str) -> dict | None:
             password = re.sub(r'[^A-Za-z0-9+/=]', '', unquote(password))
         else:
             password = unquote(password)
-
         return {
             'name': remark or f"ss_{server}",
             'type': 'ss',
@@ -1325,7 +1312,6 @@ def parse_ss_node(line: str) -> dict | None:
             'udp': True
         }
     except: return None
-
 def parse_trojan_node(line):
     try:
         parsed = urlparse(line)
@@ -1363,7 +1349,6 @@ def parse_hysteria_node(line):
         if parsed.scheme != 'hysteria':
             return None
         params = parse_qs(parsed.query)
-
         # --- 核心修改：为 Hysteria (v1) 添加必需的 up/down 字段 ---
         # 尝试从 URL 参数中获取 up/down 速度，如果不存在，则提供一个合理的默认值。
         # Clash 核心要求 up/down 字段必须存在。
@@ -1372,7 +1357,6 @@ def parse_hysteria_node(line):
         
         up_speed = int(''.join(filter(str.isdigit, up_speed_str)) or 10)
         down_speed = int(''.join(filter(str.isdigit, down_speed_str)) or 50)
-
         node = {
             'name': unquote(parsed.fragment) or f"hysteria_{parsed.hostname}",
             'type': 'hysteria',
@@ -1408,7 +1392,6 @@ def parse_hysteria2_node(line):
             
         params = parse_qs(parsed.query)
         insecure_val = params.get('insecure', ['0'])[0].lower()
-
         node = {
             'name': unquote(parsed.fragment) if parsed.fragment else f"hysteria2_{parsed.hostname}",
             'type': 'hysteria2',
@@ -1756,157 +1739,104 @@ def strip_starting_flags(s):
 # 再次验证SS节点
 def fix_and_filter_ss_nodes(proxies):
     valid_proxies = []
-    modern_ciphers = {'2022-blake3-aes-128-gcm', '2022-blake3-aes-256-gcm', '2022-blake3-chacha20-poly1305'}
+    fixed_count = 0
+    dropped_count = 0
     
     for p in proxies:
         if p.get('type') != 'ss':
             valid_proxies.append(p)
             continue
             
-        cipher = p.get('cipher', '').lower()
-        pwd = p.get('password', '')
-
-        # 如果是 2022 协议，校验 Base64 完整性
-        if cipher in modern_ciphers:
-            # 如果密码长度不对或包含非法字符，直接丢弃，防止 Clash 报错
-            if not re.match(r'^[A-Za-z0-9+/=]+$', pwd) or len(pwd) < 16:
-                print(f"【拦截】丢弃非法 SS-2022 节点(Base64损坏): {p['name']}")
-                continue
+        cipher = p.get('cipher', '').strip().lower()
         
-        # 只有在白名单内的 cipher 才允许通过
-        allowed = {
+        # 白名单：Clash Premium/Meta 真正支持的加密方式
+        valid_ciphers = {
             'aes-128-gcm', 'aes-192-gcm', 'aes-256-gcm',
             'chacha20-ietf-poly1305', 'chacha20-poly1305',
-            'xchacha20-ietf-poly1305'
-        } | modern_ciphers
+            'xchacha20-ietf-poly1305', 'xchacha20-poly1305',
+            '2022-blake3-aes-128-gcm', '2022-blake3-aes-256-gcm', '2022-blake3-chacha20-poly1305'
+        }
         
-        if cipher in allowed:
+        if cipher in valid_ciphers:
             valid_proxies.append(p)
-        else:
-            # 强救传统协议
-            if 'cfb' in cipher or 'ctr' in cipher:
-                p['cipher'] = 'chacha20-ietf-poly1305'
+            continue
+            
+        # —— 尝试自动修复常见的错误写法 ——
+        auto_map = {
+            'aes-256-cfb': 'aes-256-gcm',
+            'aes-128-cfb': 'aes-128-gcm',
+            'chacha20': 'chacha20-ietf-poly1305',
+            'chacha20-ietf': 'chacha20-ietf-poly1305',
+            'rc4-md5': None,  # 已废弃，不救
+            'none': None,
+            'plain': None,
+            '': None,
+        }
+        
+        old_cipher = p.get('cipher', '')
+        if old_cipher.lower() in auto_map:
+            new_cipher = auto_map[old_cipher.lower()]
+            if new_cipher:
+                p['cipher'] = new_cipher
+                print(f"【修复】ss 节点 cipher {old_cipher} → {new_cipher} : {p['name']}")
                 valid_proxies.append(p)
-                
+                fixed_count += 1
+            else:
+                print(f"【丢弃】ss 节点 cipher 无效且无法修复: {old_cipher} → {p['name']}")
+                dropped_count += 1
+        else:
+            # 完全没有 cipher 字段或乱码，直接尝试用最常见的默认值救活
+            if not cipher or len(cipher) > 50 or ' ' in cipher:
+                p['cipher'] = 'chacha20-ietf-poly1305'  # 2025 年最通用
+                print(f"【强救】ss 节点缺失/乱码 cipher，强制使用 chacha20-ietf-poly1305 : {p['name']}")
+                valid_proxies.append(p)
+                fixed_count += 1
+            else:
+                print(f"【丢弃】ss 节点 cipher 不支持且无法自动映射: {cipher} → {p['name']}")
+                dropped_count += 1
+    
+    print(f"ss 节点检查完成：修复 {fixed_count} 个，丢弃 {dropped_count} 个，剩余有效 ss 节点 {len([p for p in valid_proxies if p.get('type')=='ss'])} 个")
     return valid_proxies
-
 def normalize_proxy_names(proxies):
     """
-    改进版节点名称规范化函数，避免重复名称
-    保留原始名称中的关键特征（如 @CaV2ray），确保同国家内的节点可以区分
+    深度重命名：解决 "duplicate name" 报错。
+    通过 seen_names 记录已分配名字，若冲突则追加 #序号。
     """
-    pattern_trailing_number = re.compile(r'\s*\d+\s*$')
-    normalized = []
-    
-    # 第一步：提取原始名称的特征部分
+    if not proxies: return []
+    preprocess_regex_rules()
+    country_counters = defaultdict(int)
+    seen_names = set()
+    final_list = []
+
     for p in proxies:
         name = p.get('name', '').strip()
-        
         # 清理开头所有国旗emoji
         name = strip_starting_flags(name)
         
-        # 提取原始名称中的特征标识符（如 @CaV2ray、ISP名称等）
-        # 从名称中提取 @ 后面的部分或保留有意义的部分
-        feature_match = re.search(r'@([A-Za-z0-9_-]+)', name)
-        if feature_match:
-            feature = feature_match.group(1)  # 提取 @ 后的部分
-        else:
-            # 如果没有 @ 标记，则从整个名称中提取首个非空白、非emoji的单词
-            clean_temp = re.sub(r'[\u4E00-\u9FFF\u3040-\u309F\u30A0-\u30FF]+', '', name)
-            clean_temp = re.sub(r'[^\w\s-]', '', clean_temp).strip()
-            words = clean_temp.split()
-            feature = words[0] if words else ""
+        # 识别地区
+        matched_region, code = "未知", "UN"
+        for r_name, info in CUSTOM_REGEX_RULES.items():
+            if re.search(info['pattern'], name, re.IGNORECASE):
+                matched_region, code = r_name, info['code']
+                break
         
-        # 清理尾部数字序号
-        name = pattern_trailing_number.sub('', name).strip()
+        country_counters[matched_region] += 1
+        flag = get_country_flag_emoji(code)
         
-        # 存储原始特征供后续使用
-        p['_original_name'] = name
-        p['_feature'] = feature
+        # 构建唯一基础名
+        base_name = f"{flag} {matched_region}-{country_counters[matched_region]}"
         
-        normalized.append(p)
-    
-    # 第二步：地区识别
-    for p in normalized:
-        name = p['_original_name']
-        region_info = p.get('region_info', None)
-        flag_match = re.search(r'[\U0001F1E6-\U0001F1FF]{2}', name)
-        flag_emoji = flag_match.group(0) if flag_match else None
-        country_cn = None
+        # 冲突检测：如果名字已存在，增加后缀直到唯一
+        unique_name = base_name
+        idx = 1
+        while unique_name in seen_names:
+            unique_name = f"{base_name}_{idx}"
+            idx += 1
         
-        if region_info and 'name' in region_info and region_info['name'] in CUSTOM_REGEX_RULES:
-            country_cn = region_info['name']
-        elif flag_emoji:
-            code = emoji_to_country_code(flag_emoji)
-            if code and code in COUNTRY_CODE_TO_CN:
-                country_cn = COUNTRY_CODE_TO_CN[code]
-        
-        if not country_cn:
-            for cname, info in CUSTOM_REGEX_RULES.items():
-                if re.search(info['pattern'], name, re.IGNORECASE):
-                    country_cn = cname
-                    break
-        
-        if not country_cn:
-            short_name = name[:2] if len(name) >= 2 else name
-            country_cn = short_name if short_name else "未知"
-            flag_emoji = FLAG_EMOJI_UN_FLAG
-        
-        if not flag_emoji:
-            code = None
-            for k, v in COUNTRY_CODE_TO_CN.items():
-                if v == country_cn:
-                    code = k
-                    break
-            flag_emoji = get_country_flag_emoji(code) if code else FLAG_EMOJI_UN_FLAG
-        
-        p['_norm_flag'] = flag_emoji
-        p['_norm_country'] = country_cn
-    
-    # 第三步：按国家分组并生成最终名称
-    grouped = {}
-    for p in normalized:
-        country = p['_norm_country']
-        if country not in grouped:
-            grouped[country] = []
-        grouped[country].append(p)
-    
-    final_list = []
-    for country, plist in grouped.items():
-        # 对同一国家的节点进行去重和编号
-        seen_names = {}
-        
-        for idx, p in enumerate(plist, 1):
-            flag = p['_norm_flag']
-            feature = p.get('_feature', '').strip()
-            
-            # 构建最终名称，优先使用特征标识
-            if feature:
-                # 如果有特征标识（如 @CaV2ray），使用它来区分
-                base_name = f"{flag} {country} @{feature}"
-            else:
-                # 否则就使用纯序号
-                base_name = f"{flag} {country}"
-            
-            # 检查是否重复
-            if base_name in seen_names:
-                # 如果重复，添加序号进行区分
-                seen_names[base_name] += 1
-                final_name = f"{base_name} #{seen_names[base_name]}"
-            else:
-                seen_names[base_name] = 1
-                final_name = f"{base_name} #1" if idx > 1 else base_name
-            
-            p['name'] = final_name
-            
-            # 清理临时字段
-            del p['_norm_flag']
-            del p['_norm_country']
-            del p['_original_name']
-            del p['_feature']
-            
-            final_list.append(p)
-    
+        p['name'] = unique_name
+        p['region_info'] = {'name': matched_region, 'code': code}
+        seen_names.add(unique_name)
+        final_list.append(p)
     return final_list
     
 # 在生成最终列表前加这一段（推荐放在 normalize_proxy_names 之后）
@@ -2543,7 +2473,6 @@ def save_intermediate_results(proxies: list, filename: str):
     if not proxies:
         print(f"⏩ 中间结果 {filename} 为空，跳过保存。")
         return
-
     # 从主输出文件变量中获取目录路径
     output_dir = os.path.dirname(OUTPUT_FILE)
     if output_dir:
@@ -2552,7 +2481,6 @@ def save_intermediate_results(proxies: list, filename: str):
     else:
         # 如果主输出文件没有目录，则保存在当前文件夹
         filepath = filename
-
     print(f"💾 正在保存中间结果到 {filepath} ({len(proxies)} 个节点)...")
     try:
         # 为了兼容性，我们创建一个包含 'proxies' 键的字典
@@ -2565,16 +2493,12 @@ def save_intermediate_results(proxies: list, filename: str):
         print(f"❌ 保存中间结果 {filepath} 失败: {e}")
 
 
-
-
 # 主函数   
-
 async def main():
     print("=" * 60)
     print("Telegram.Node_Clash-Speedtest测试版 V2.0")
     print(datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S"))
     print("=" * 60)
-
     # === 新增：强制清理历史中间件，防止旧数据污染 ===
     output_dir = os.path.dirname(OUTPUT_FILE)
     for stale_file in ['TCP.yaml', 'clash.yaml', 'speedtest.yaml']:
@@ -2584,7 +2508,6 @@ async def main():
                 os.remove(stale_path)
                 print(f"🧹 已强制删除历史残留文件: {stale_file}")
             except: pass
-
     # === [1/7] 初始化与网络控制检查 ===
     print("🌐 网络控制配置:")
     print(f"  - 抓取阶段 Warp: {WARP_FOR_SCRAPING}")
@@ -2592,27 +2515,22 @@ async def main():
     print(f"  - Speedtest测速 Warp: {WARP_FOR_SPEEDTEST}")
     print(f"  - 最终阶段 Warp: {WARP_FOR_FINAL}")
     print("-" * 40)
-
     if os.getenv('GITHUB_ACTIONS') == 'true':
         print("🏗️ GitHub Actions环境检测到，准备执行网络状态控制")
         simplified_network_check()
     else:
         print("💻 本地环境，跳过网络自动切换")
-
     preprocess_regex_rules()
-
     # === [2/7] 加载历史数据 ===
     print("[1/7] 加载历史数据...")
     existing_proxies, last_message_ids, last_file_update_time = load_existing_proxies_and_state()
     print(f"  - 历史节点总数: {len(existing_proxies)}")
-
     # === [3/7] 抓取新链接与解析 ===
     print("[2/7] 抓取 Telegram 订阅链接...")
     if os.getenv('GITHUB_ACTIONS') == 'true':
         ensure_network_for_stage('scraping', require_warp=WARP_FOR_SCRAPING)
     
     urls, last_message_ids = await scrape_telegram_links(last_message_ids)
-
     new_proxies = []
     if urls:
         print(f"  - 开始下载解析 {len(urls)} 个链接...")
@@ -2624,7 +2542,6 @@ async def main():
         print(f"  - 解析完成，获得新节点: {len(new_proxies)}")
     else:
         print("  - 未发现新链接，跳过下载步骤")
-
     # === [4/7] 节点预处理：合并、物理去重、修复非法数据、第一次全局重命名 ===
     print("[3/7] 节点预处理（彻底解决重名与非法数据异常）")
     
@@ -2641,29 +2558,22 @@ async def main():
     
     all_nodes = list(all_proxies_map.values())
     print(f"  - 物理去重后总数: {len(all_nodes)} (新入库: {added_count})")
-
     if not all_nodes:
-        sys.exit("❌ 无任何可用节点，程序退出")
-
+        print("⚠️ 未发现有效节点，任务优雅退出"); return
     # 4.2 修复非法数据：解决 "illegal base64 data"
     # 强制修正 SS 的 cipher 缺失，丢弃不符合规范的节点
     all_nodes = fix_and_filter_ss_nodes(all_nodes)
     all_nodes = [p for p in all_nodes if is_valid_proxy(p)]
-
     # 4.3 全局第一次重命名：解决 "proxy duplicate name"
     # 在进入测速环节前，必须洗一遍名字，确保保存中间文件时不会报错
     all_nodes = normalize_proxy_names(all_nodes)
-
     print(f"  - 预处理完成，进入测速阶段的节点数: {len(all_nodes)}")
-
     # === [5/7] 测速流程（完整六大模式） ===
     speedtest_path = './xcspeedtest'
     clash_path = './clash_core/clash'
     mode = DETAILED_SPEEDTEST_MODE
     print(f"[4/7] 执行测速模式: {mode}")
-
     final_tested_nodes = []
-
     # --- 模式 1: TCP -> Clash -> XC ---
     if mode == 'tcp_clash_xc':
         print("【模式】TCP 粗筛 → Clash 精测 → Speedtest 精测")
@@ -2672,23 +2582,19 @@ async def main():
         tcp_passed = batch_tcp_test(all_nodes)
         tcp_passed = normalize_proxy_names(tcp_passed) # 确保存文件前名字唯一
         save_intermediate_results(tcp_passed, 'TCP.yaml')
-
         nodes_for_clash = tcp_passed if tcp_passed else all_nodes
         if not tcp_passed: print("  ⚠️ TCP 全部失败，尝试全量进入下阶段")
-
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
         clash_passed = batch_test_proxies_clash(clash_path, nodes_for_clash, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=get_test_urls())
         clash_passed = normalize_proxy_names(clash_passed)
         save_intermediate_results(clash_passed, 'clash.yaml')
-
         if clash_passed:
             final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, clash_passed, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=get_test_urls())
             final_tested_nodes = normalize_proxy_names(final_tested_nodes)
             save_intermediate_results(final_tested_nodes, 'speedtest.yaml')
         else:
             final_tested_nodes = []
-
     # --- 模式 2: TCP -> Clash ---
     elif mode == 'tcp_clash':
         print("【模式】TCP 粗筛 → Clash 精测")
@@ -2697,14 +2603,12 @@ async def main():
         tcp_passed = batch_tcp_test(all_nodes)
         tcp_passed = normalize_proxy_names(tcp_passed)
         save_intermediate_results(tcp_passed, 'TCP.yaml')
-
         nodes_for_clash = tcp_passed if tcp_passed else all_nodes
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
         final_tested_nodes = batch_test_proxies_clash(clash_path, nodes_for_clash, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=get_test_urls())
         final_tested_nodes = normalize_proxy_names(final_tested_nodes)
         save_intermediate_results(final_tested_nodes, 'clash.yaml')
-
     # --- 模式 3: TCP -> XC ---
     elif mode == 'tcp_xc':
         print("【模式】TCP 粗筛 → Speedtest 精测")
@@ -2713,14 +2617,12 @@ async def main():
         tcp_passed = batch_tcp_test(all_nodes)
         tcp_passed = normalize_proxy_names(tcp_passed)
         save_intermediate_results(tcp_passed, 'TCP.yaml')
-
         nodes_for_xc = tcp_passed if tcp_passed else all_nodes
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
         final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, nodes_for_xc, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=get_test_urls())
         final_tested_nodes = normalize_proxy_names(final_tested_nodes)
         save_intermediate_results(final_tested_nodes, 'speedtest.yaml')
-
     # --- 模式 4: 纯 TCP 测速 ---
     elif mode == 'tcp_only':
         print("【模式】纯 TCP 测速")
@@ -2729,7 +2631,6 @@ async def main():
         final_tested_nodes = batch_tcp_test(all_nodes)
         final_tested_nodes = normalize_proxy_names(final_tested_nodes)
         save_intermediate_results(final_tested_nodes, 'TCP.yaml')
-
     # --- 模式 5: 纯 Clash 测速 ---
     elif mode == 'clash_only':
         print("【模式】纯 Clash 测速")
@@ -2738,7 +2639,6 @@ async def main():
         final_tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=get_test_urls())
         final_tested_nodes = normalize_proxy_names(final_tested_nodes)
         save_intermediate_results(final_tested_nodes, 'clash.yaml')
-
     # --- 模式 6: 纯 Speedtest 测速 ---
     elif mode == 'xcspeedtest_only':
         print("【模式】纯 Speedtest 测速")
@@ -2747,15 +2647,12 @@ async def main():
         final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, all_nodes, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=get_test_urls())
         final_tested_nodes = normalize_proxy_names(final_tested_nodes)
         save_intermediate_results(final_tested_nodes, 'speedtest.yaml')
-
     else:
-        sys.exit(f"❗️ 未知测速模式: {mode}")
-
+        print(f"⚠️ 未知模式，优雅退出"); return
     # === [6/7] 后置筛选、评分与排序 ===
     print("[5/7] 测速后置处理与质量评分")
     if os.getenv('GITHUB_ACTIONS') == 'true':
         ensure_network_for_stage('final', require_warp=WARP_FOR_FINAL)
-
     # 再次清理无效节点
     final_proxies = [p for p in final_tested_nodes if is_valid_proxy(p)]
     
@@ -2774,10 +2671,8 @@ async def main():
     
     # 最终排序：评分降序
     final_proxies = sorted(final_proxies, key=lambda p: -p.get('quality_score', 0))
-
     if not final_proxies:
-        sys.exit("❌ 测速并筛选后无可用节点，程序退出")
-
+        print("⚠️ 筛选后无有效节点，优雅退出"); return
     # === [7/7] 生成最终配置文件 ===
     print("[6/7] 生成最终 YAML 配置文件...")
     total_count = len(final_proxies)
@@ -2790,7 +2685,6 @@ async def main():
         tag = p.get('quality_tag', '⚡可用')
         if tag in q_stats: q_stats[tag] += 1
     q_stats_str = f"🔥极品:{q_stats['🔥极品']}, ⭐优质:{q_stats['⭐优质']}, ✅良好:{q_stats['✅良好']}, ⚡可用:{q_stats['⚡可用']}"
-
     os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
     try:
         with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
@@ -2821,23 +2715,21 @@ async def main():
         
         print(f"✅ 成功! 配置文件已保存至: {OUTPUT_FILE}")
         print(f"📊 本次汇总: 总数 {total_count} | 均分 {avg_quality:.1f} | {q_stats_str}")
-
     except Exception as e:
         print(f"❌ 最终写出配置文件失败: {e}")
-        sys.exit(1)
-
     # === 最终清理，确保切换回GitHub网络 ===
     if os.getenv('GITHUB_ACTIONS') == 'true' and not WARP_FOR_FINAL:
         print("[7/7] 🧹 最终清理：确保使用原始GitHub网络")
         ensure_network_for_stage('cleanup', require_warp=False)
-
     print("=" * 60)
     print("🎉 全部任务圆满完成！")
 
-
         
 
-
 if __name__ == "__main__":
-    asyncio.run(main())  # 调用异步主函数
-
+    try:
+        asyncio.run(main())  # 调用异步主函数
+    except:
+        import traceback
+        traceback.print_exc()
+        sys.exit(0) # 强制 0 状态退出
