@@ -2750,7 +2750,7 @@ async def main():
     preprocess_regex_rules()
     # === [2/7] 加载历史数据 ===
     print("[1/7] 加载历史数据...")
-    existing_proxies, last_message_ids, last_file_update_time = load_existing_proxies_and_state()
+    existing_proxies, last_message_ids, last_file_update_time = load_existing_proxies_and_state('flclashyaml/TCP.yaml')
     print(f"  - 历史节点总数: {len(existing_proxies)}")
     # === [3/7] 抓取新链接与解析 ===
     print("[2/7] 抓取 Telegram 订阅链接...")
