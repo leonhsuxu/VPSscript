@@ -1805,6 +1805,29 @@ def fix_and_filter_ss_nodes(proxies):
     
     print(f"ss 节点检查完成：修复 {fixed_count} 个，丢弃 {dropped_count} 个，剩余有效 ss 节点 {len([p for p in valid_proxies if p.get('type')=='ss'])} 个")
     return valid_proxies
+
+
+
+def clean_name_base(name: str) -> str:
+    """
+    完全递归剥离名称尾部所有 "-数字" 或 "_数字" 形式的后缀，直到无数字后缀。
+    例如：
+      "香港-1-1" -> "香港"
+      "日本_2_3" -> "日本"
+      "美国-12"  -> "美国"
+    """
+    pattern = re.compile(r'(.*?)([-_]\d+)$')
+    max_iter = 20  # 最多剥离多少次避免死循环
+    
+    count = 0
+    while count < max_iter:
+        m = pattern.match(name)
+        if not m:
+            break
+        name = m.group(1)
+        count += 1
+    return name.strip()
+
 def normalize_proxy_names(proxies):
     """
     深度重命名：解决 "duplicate name" 报错。
@@ -1815,11 +1838,10 @@ def normalize_proxy_names(proxies):
     country_counters = defaultdict(int)
     seen_names = set()
     final_list = []
-
     for p in proxies:
-        name = p.get('name', '').strip()
+        orig_name = p.get('name', '').strip()
         # 清理开头所有国旗emoji
-        name = strip_starting_flags(name)
+        name = strip_starting_flags(orig_name)
         
         # 识别地区
         matched_region, code = "未知", "UN"
@@ -1827,7 +1849,10 @@ def normalize_proxy_names(proxies):
             if re.search(info['pattern'], name, re.IGNORECASE):
                 matched_region, code = r_name, info['code']
                 break
-        
+
+        # 全面清理尾部所有 -数字 或 _数字 后缀，避免无限后缀累加
+        base_clean_name = clean_name_base(name)
+
         country_counters[matched_region] += 1
         flag = get_country_flag_emoji(code)
         
