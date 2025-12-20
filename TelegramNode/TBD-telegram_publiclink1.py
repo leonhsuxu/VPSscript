@@ -2635,7 +2635,11 @@ def write_yaml_with_header(filepath, data, update_time, total_count, avg_quality
         f"#  带宽筛选   : ≥ {min_bandwidth_mb}MB/s",
         "# ==================================================\n"
     ]
-    os.makedirs(os.path.dirname(filepath), exist_ok=True)
+
+    dir_path = os.path.dirname(filepath)
+    if dir_path:
+        os.makedirs(dir_path, exist_ok=True)
+
     try:
         with open(filepath, 'w', encoding='utf-8') as f:
             for line in header_lines:
