@@ -2621,10 +2621,9 @@ def save_intermediate_results(proxies: list, filename: str, last_message_ids: di
 
 
 
+
+
 def write_yaml_with_header(filepath, data, update_time, total_count, avg_quality, q_stats_str, mode, min_bandwidth_mb):
-    """
-    写 YAML 文件，并附加统一格式的头部注释
-    """
     header_lines = [
         "# ==================================================",
         "#  TG 免费节点 · 自动测速精选订阅 三合一测速版",
@@ -2646,32 +2645,55 @@ def write_yaml_with_header(filepath, data, update_time, total_count, avg_quality
     except Exception as e:
         print(f"❌ 写入文件失败 {filepath}: {e}")
 
-def save_intermediate_results(proxies: list, filename: str):
+def save_intermediate_results(proxies: list, filename: str, last_message_ids: dict | None = None):
     """
-    负责保存中间测速结果（TCP.yaml、clash.yaml、speedtest.yaml）
-    会根据配置的最大节点数限制来截断节点列表
+    将中间测速结果保存到指定的 YAML 文件中。
+    可选写入 last_message_ids，需全局变量 [WRITE_LAST_MESSAGE_IDS_IN_INTERMEDIATE] 允许且有值时才写入。
+
+    参数:
+        proxies (list): 节点列表
+        filename (str): 文件名，如 TCP.yaml
+        last_message_ids (dict | None): 可选，last_message_ids 字典
+    
     """
     if not proxies:
         print(f"⏩ 中间结果 {filename} 为空，跳过保存。")
         return
-    
-    max_nodes = MAX_NODES_PER_FILE.get(filename, 500)  # 默认限制500个节点
+
+    max_nodes = MAX_NODES_PER_FILE.get(filename, 500)
     if len(proxies) > max_nodes:
         print(f"📌 节点数量超过限制，{filename} 只保留前 {max_nodes} 个节点保存")
         proxies = proxies[:max_nodes]
 
+    output_dir = os.path.dirname(filename)
+    if output_dir and not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+
+    filepath = os.path.join(output_dir, filename) if output_dir else filename
+
     update_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
     total_count = len(proxies)
-    avg_quality = 0         # 中间结果通常无质量分
-    q_stats_str = ''        # 可额外统计质量标签再填充此参数
-    mode = DETAILED_SPEEDTEST_MODE
-    min_bandwidth_mb = MIN_BANDWIDTH_MB
+    avg_quality = 0
+    q_stats_str = ''
+    mode = '未知模式'  # 你可以传入具体模式参数代替
+    min_bandwidth_mb = 0  # 同上
 
-    filepath = os.path.join(os.path.dirname(OUTPUT_FILE), filename)
-    data = {'proxies': proxies}
+    output_data = {'proxies': proxies}
 
+    # 条件写入 last_message_ids
+    if WRITE_LAST_MESSAGE_IDS_IN_INTERMEDIATE and last_message_ids is not None:
+        output_data['last_message_ids'] = last_message_ids
+
+    # 写文件
     write_yaml_with_header(
-        filepath, data, update_time, total_count, avg_quality, q_stats_str, mode, min_bandwidth_mb
+        filepath=filename if not output_dir else os.path.join(output_dir, filename),
+        data=output_data,
+        update_time=update_time,
+        total_count=total_count,
+        avg_quality=avg_quality,
+        q_stats_str=q_stats_str,
+        mode=mode,
+        min_bandwidth_mb=min_bandwidth_mb
     )
 
 def save_final_config(final_proxies, last_message_ids, q_stats):
