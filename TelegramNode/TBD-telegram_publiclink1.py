@@ -43,6 +43,7 @@ from telethon.sync import TelegramClient
 from telethon.sessions import StringSession
 BJ_TZ = timezone(timedelta(hours=8)) 
 last_message_id_timestamps = {}
+
 # --- 环境变量读取 ---
 API_ID = int(os.environ.get('TELEGRAM_API_ID') or 0)
 API_HASH = os.environ.get('TELEGRAM_API_HASH')
@@ -52,6 +53,13 @@ TIME_WINDOW_HOURS = 10  # 抓取多长时间的消息，单位为小时。
 MIN_EXPIRE_HOURS = 2   # 订阅地址剩余时间最小过期，单位为小时。
 OUTPUT_FILE = 'flclashyaml/Tg-node2.yaml'  # 输出文件路径，用于保存生成的配置或结果。
 last_warp_start_time = 0
+
+# === 核心控制变量 ===
+# 是否在启动时清理旧的中间件文件 (TCP.yaml, clash.yaml, speedtest.yaml)
+# 设置为 True 则每次运行都清理，设置为 False 则保留
+CLEAN_STALE_FILES = os.getenv('CLEAN_STALE_FILES', 'true').lower() == 'true'
+
+
 # === 新增：测速策略开关（推荐保留这几个选项）===
 # 测速模式：
 ENABLE_SPEED_TEST = True  # 是否启用整体速度测试功能，True表示启用。测试顺序如下
@@ -2495,19 +2503,22 @@ def save_intermediate_results(proxies: list, filename: str):
 
 # 主函数   
 async def main():
+    # [0] 环境初始化与残留清理
+    # 设为 True（每次启动物理清理 TCP.yaml 等中间件）或 False（保留上次结果）
+    output_dir = os.path.dirname(OUTPUT_FILE)
+    if output_dir: os.makedirs(output_dir, exist_ok=True)
+    
+    if CLEAN_STALE_FILES:
+        print("🧹 已启用中间件清理，物理删除旧文件防止 Byte 11 污染...")
+        for f in ['TCP.yaml', 'clash.yaml', 'speedtest.yaml']:
+            p = os.path.join(output_dir, f)
+            if os.path.exists(p): os.remove(p)
+    
     print("=" * 60)
     print("Telegram.Node_Clash-Speedtest测试版 V2.0")
     print(datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S"))
     print("=" * 60)
-    # === 新增：强制清理历史中间件，防止旧数据污染 ===
-    output_dir = os.path.dirname(OUTPUT_FILE)
-    for stale_file in ['TCP.yaml', 'clash.yaml', 'speedtest.yaml']:
-        stale_path = os.path.join(output_dir, stale_file)
-        if os.path.exists(stale_path):
-            try:
-                os.remove(stale_path)
-                print(f"🧹 已强制删除历史残留文件: {stale_file}")
-            except: pass
+
     # === [1/7] 初始化与网络控制检查 ===
     print("🌐 网络控制配置:")
     print(f"  - 抓取阶段 Warp: {WARP_FOR_SCRAPING}")
