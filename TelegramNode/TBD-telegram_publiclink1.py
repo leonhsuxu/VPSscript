@@ -1745,65 +1745,94 @@ def strip_starting_flags(s):
         s = s[2:]
     return s.strip()
 # 再次验证SS节点
+
+
+
+# 2024年以后主流且安全的SS加密协议白名单
+VALID_SS_CIPHERS_2024 = {
+    'aes-128-gcm',
+    'aes-192-gcm',
+    'aes-256-gcm',
+    'chacha20-ietf-poly1305',
+    'chacha20-poly1305',
+    'xchacha20-ietf-poly1305',
+    'xchacha20-poly1305',
+    '2022-blake3-aes-128-gcm',
+    '2022-blake3-aes-256-gcm',
+    '2022-blake3-chacha20-poly1305'
+}
+
+def is_password_valid(password: str) -> bool:
+    """密码合法性检查，长度和ASCII打印字符+简单黑名单"""
+    if not password:
+        return False
+    if len(password) < 8 or len(password) > 128:
+        return False
+    if not re.match(r'^[\x20-\x7E]+$', password):
+        return False
+    blacklist = {'12345678', 'password', 'admin', 'default', '123456789'}
+    if password.lower() in blacklist:
+        return False
+    if not (re.search(r'[A-Za-z]', password) or re.search(r'\d', password)):
+        return False
+    if '"' in password or "'" in password or '\n' in password or '\r' in password:
+        return False
+    return True
+
+def is_valid_ss_cipher(cipher: str) -> bool:
+    """检查是否是2024年以后主流SS加密协议"""
+    if not cipher:
+        return False
+    return cipher.lower() in VALID_SS_CIPHERS_2024
+
 def fix_and_filter_ss_nodes(proxies):
+    """
+    严格筛选 ss 节点，过滤不符合2024主流协议、密码及服务器端口异常的节点
+    """
     valid_proxies = []
-    fixed_count = 0
     dropped_count = 0
-    
+
+    ascii_printable_re = re.compile(r'^[\x20-\x7E]+$')
+
     for p in proxies:
         if p.get('type') != 'ss':
             valid_proxies.append(p)
             continue
-            
-        cipher = p.get('cipher', '').strip().lower()
-        
-        # 白名单：Clash Premium/Meta 真正支持的加密方式
-        valid_ciphers = {
-            'aes-128-gcm', 'aes-192-gcm', 'aes-256-gcm',
-            'chacha20-ietf-poly1305', 'chacha20-poly1305',
-            'xchacha20-ietf-poly1305', 'xchacha20-poly1305',
-            '2022-blake3-aes-128-gcm', '2022-blake3-aes-256-gcm', '2022-blake3-chacha20-poly1305'
-        }
-        
-        if cipher in valid_ciphers:
-            valid_proxies.append(p)
+
+        cipher = p.get('cipher', '').strip()
+        password = p.get('password', '')
+        server = p.get('server', '')
+        port = p.get('port', 0)
+
+        # 1. cipher 白名单校验
+        if not is_valid_ss_cipher(cipher):
+            dropped_count += 1
             continue
-            
-        # —— 尝试自动修复常见的错误写法 ——
-        auto_map = {
-            'aes-256-cfb': 'aes-256-gcm',
-            'aes-128-cfb': 'aes-128-gcm',
-            'chacha20': 'chacha20-ietf-poly1305',
-            'chacha20-ietf': 'chacha20-ietf-poly1305',
-            'rc4-md5': None,  # 已废弃，不救
-            'none': None,
-            'plain': None,
-            '': None,
-        }
-        
-        old_cipher = p.get('cipher', '')
-        if old_cipher.lower() in auto_map:
-            new_cipher = auto_map[old_cipher.lower()]
-            if new_cipher:
-                p['cipher'] = new_cipher
-                print(f"【修复】ss 节点 cipher {old_cipher} → {new_cipher} : {p['name']}")
-                valid_proxies.append(p)
-                fixed_count += 1
-            else:
-                print(f"【丢弃】ss 节点 cipher 无效且无法修复: {old_cipher} → {p['name']}")
+
+        # 2. 密码合法性校验
+        if not is_password_valid(password):
+            dropped_count += 1
+            continue
+
+        # 3. 服务器地址简单校验（IPv4/域名格式简略匹配）
+        # 只允许数字、字母、点、横杠，排除空字符串
+        if not server or not re.match(r'^[0-9a-zA-Z\.\-]+$', server):
+            dropped_count += 1
+            continue
+
+        # 4. 端口号合法1~65535
+        try:
+            port_int = int(port)
+            if not (1 <= port_int <= 65535):
                 dropped_count += 1
-        else:
-            # 完全没有 cipher 字段或乱码，直接尝试用最常见的默认值救活
-            if not cipher or len(cipher) > 50 or ' ' in cipher:
-                p['cipher'] = 'chacha20-ietf-poly1305'  # 2025 年最通用
-                print(f"【强救】ss 节点缺失/乱码 cipher，强制使用 chacha20-ietf-poly1305 : {p['name']}")
-                valid_proxies.append(p)
-                fixed_count += 1
-            else:
-                print(f"【丢弃】ss 节点 cipher 不支持且无法自动映射: {cipher} → {p['name']}")
-                dropped_count += 1
-    
-    print(f"ss 节点检查完成：修复 {fixed_count} 个，丢弃 {dropped_count} 个，剩余有效 ss 节点 {len([p for p in valid_proxies if p.get('type')=='ss'])} 个")
+                continue
+        except (ValueError, TypeError):
+            dropped_count += 1
+            continue
+
+        valid_proxies.append(p)
+
+    print(f"[fix_and_filter_ss_nodes] ss 节点过滤完成：丢弃 {dropped_count} 个，保留 {len(valid_proxies)} 个")
     return valid_proxies
 
 
