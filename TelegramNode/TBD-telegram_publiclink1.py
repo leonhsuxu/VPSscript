@@ -2619,8 +2619,11 @@ def save_intermediate_results(proxies: list, filename: str, last_message_ids: di
 
 
 def write_yaml_with_header(filepath, data, update_time, total_count, avg_quality, q_stats_str, mode, min_bandwidth_mb):
+    # 【核心修复】获取目录路径
     dir_path = os.path.dirname(filepath)
-    if dir_path:   # 只有目录非空，才创建目录
+    
+    # 【核心修复】只有当目录路径不为空字符串时，才执行创建目录的操作
+    if dir_path:
         os.makedirs(dir_path, exist_ok=True)
 
     header_lines = [
@@ -2628,6 +2631,8 @@ def write_yaml_with_header(filepath, data, update_time, total_count, avg_quality
         "#  TG 免费节点 · 自动测速精选订阅 三合一测速版",
         f"#  更新时间   : {update_time} (北京时间)",
         f"#  节点总数   : {total_count} 个节点",
+        f"#  平均质量分 : {avg_quality:.1f}/100",
+        f"#  质量分布   : {q_stats_str if q_stats_str else '无'}",
         f"#  测速模式   : {mode}",
         f"#  带宽筛选   : ≥ {min_bandwidth_mb}MB/s",
         "# ==================================================\n"
@@ -2638,7 +2643,7 @@ def write_yaml_with_header(filepath, data, update_time, total_count, avg_quality
             for line in header_lines:
                 f.write(line + '\n')
             yaml.dump(data, f, allow_unicode=True, sort_keys=False, indent=2, width=4096)
-        print(f"✅ 文件已保存（含头部注释）: {filepath}")
+        print(f"✅ 文件已保存: {filepath}")
     except Exception as e:
         print(f"❌ 写入文件失败 {filepath}: {e}")
 
@@ -2721,27 +2726,6 @@ def save_final_config(final_proxies, last_message_ids, q_stats):
 
 
 
-def write_yaml_with_header(filepath, data, update_time, total_count, avg_quality, q_stats_str, mode, min_bandwidth_mb):
-    header_lines = [
-        "# ==================================================",
-        "#  TG 免费节点 · 自动测速精选订阅 三合一测速版",
-        f"#  更新时间   : {update_time} (北京时间)",
-        f"#  节点总数   : {total_count} 个节点",
-        f"#  平均质量分 : {avg_quality:.1f}/100",
-        f"#  质量分布   : {q_stats_str if q_stats_str else '无'}",
-        f"#  测速模式   : {mode}",
-        f"#  带宽筛选   : ≥ {min_bandwidth_mb}MB/s",
-        "# ==================================================\n"
-    ]
-    os.makedirs(os.path.dirname(filepath), exist_ok=True)
-    try:
-        with open(filepath, 'w', encoding='utf-8') as f:
-            for line in header_lines:
-                f.write(line + '\n')
-            yaml.dump(data, f, allow_unicode=True, sort_keys=False, indent=2, width=4096)
-        print(f"✅ 文件已保存（含头部注释）: {filepath}")
-    except Exception as e:
-        print(f"❌ 写入文件失败 {filepath}: {e}")
 
 
 # 主函数   
@@ -2943,9 +2927,9 @@ async def main():
     avg_quality = sum(p.get('quality_score', 0) for p in final_proxies) / total_count if total_count > 0 else 0
 
     # 保存 阶段测速结果
-    save_intermediate_results(tcp_passed, os.path.join('flclashyaml', 'TCP.yaml'), last_message_ids)
-    save_intermediate_results(clash_passed, os.path.join('flclashyaml', 'clash.yaml'), last_message_ids)
-    save_intermediate_results(speedtest_passed, os.path.join('flclashyaml', 'speedtest.yaml'), last_message_ids)
+    save_intermediate_results(tcp_passed, os.path.join(output_dir, 'TCP.yaml'), last_message_ids)
+    save_intermediate_results(clash_passed, os.path.join(output_dir, 'clash.yaml'), last_message_ids)
+    save_intermediate_results(speedtest_passed, os.path.join(output_dir, 'speedtest.yaml'), last_message_ids)
     # 保存最终结果（带详细统计等）
     save_final_config(final_proxies, last_message_ids, q_stats)
     
