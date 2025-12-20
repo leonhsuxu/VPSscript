@@ -2503,16 +2503,19 @@ def save_intermediate_results(proxies: list, filename: str):
 
 # 主函数   
 async def main():
-    # [0] 环境初始化与残留清理
-    # 设为 True（每次启动物理清理 TCP.yaml 等中间件）或 False（保留上次结果）
+    # [0] 目录初始化与按需清理
     output_dir = os.path.dirname(OUTPUT_FILE)
     if output_dir: os.makedirs(output_dir, exist_ok=True)
     
     if CLEAN_STALE_FILES:
-        print("🧹 已启用中间件清理，物理删除旧文件防止 Byte 11 污染...")
+        print("🧹 已开启中间件清理模式...")
         for f in ['TCP.yaml', 'clash.yaml', 'speedtest.yaml']:
             p = os.path.join(output_dir, f)
-            if os.path.exists(p): os.remove(p)
+            if os.path.exists(p):
+                try: os.remove(p); print(f"  - 已删除旧文件: {f}")
+                except: pass
+    else:
+        print("📁 已关闭中间件清理模式，保留上次运行结果。")
     
     print("=" * 60)
     print("Telegram.Node_Clash-Speedtest测试版 V2.0")
