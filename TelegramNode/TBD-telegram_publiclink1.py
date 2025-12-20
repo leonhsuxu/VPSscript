@@ -2712,9 +2712,9 @@ def save_final_config(final_proxies, last_message_ids, q_stats):
 
 # 使用示例（在主流程中调用，变量需保证存在）
 # save_final_config(final_proxies, last_message_ids, q_stats)
-#save_intermediate_results(tcp_proxies, 'TCP.yaml', last_message_ids)
-#save_intermediate_results(clash_proxies, 'clash.yaml', last_message_ids)
-#save_intermediate_results(speedtest_proxies, 'speedtest.yaml', last_message_ids)
+#save_intermediate_results(tcp_passed, 'TCP.yaml', last_message_ids)
+#save_intermediate_results(clash_passed, 'clash.yaml', last_message_ids)
+#save_intermediate_results(speedtest_passed, 'speedtest.yaml', last_message_ids)
 
 
 
@@ -2934,11 +2934,11 @@ async def main():
     avg_quality = sum(p.get('quality_score', 0) for p in final_proxies) / total_count if total_count > 0 else 0
 
     # 保存 TCP 阶段测速结果
-    save_intermediate_results(tcp_proxies, 'TCP.yaml', last_message_ids)
+    save_intermediate_results(tcp_passed, 'TCP.yaml', last_message_ids)
     # 保存 Clash 阶段测速结果
-    save_intermediate_results(clash_proxies, 'clash.yaml', last_message_ids)
+    save_intermediate_results(clash_passed, 'clash.yaml', last_message_ids)
     # 保存 Speedtest 阶段测速结果
-    save_intermediate_results(speedtest_proxies, 'speedtest.yaml', last_message_ids)
+    save_intermediate_results(speedtest_passed, 'speedtest.yaml', last_message_ids)
     # 保存最终结果（带详细统计等）
     save_final_config(final_proxies, last_message_ids, q_stats)
     
