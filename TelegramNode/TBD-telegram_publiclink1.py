@@ -2614,11 +2614,6 @@ def save_intermediate_results(proxies: list, filename: str, last_message_ids: di
     if WRITE_LAST_MESSAGE_IDS_IN_INTERMEDIATE and last_message_ids is not None:
         output_data['last_message_ids'] = last_message_ids
 
-    write_yaml_with_header(
-        filepath, output_data, update_time, total_count, avg_quality, q_stats_str, mode, min_bandwidth_mb
-    )
-
-
 
 
 
@@ -2635,7 +2630,6 @@ def write_yaml_with_header(filepath, data, update_time, total_count, avg_quality
         f"#  带宽筛选   : ≥ {min_bandwidth_mb}MB/s",
         "# ==================================================\n"
     ]
-
     dir_path = os.path.dirname(filepath)
     if dir_path:
         os.makedirs(dir_path, exist_ok=True)
@@ -2653,44 +2647,36 @@ def save_intermediate_results(proxies: list, filename: str, last_message_ids: di
     """
     将中间测速结果保存到指定的 YAML 文件中。
     可选写入 last_message_ids，需全局变量 [WRITE_LAST_MESSAGE_IDS_IN_INTERMEDIATE] 允许且有值时才写入。
-
     参数:
         proxies (list): 节点列表
-        filename (str): 文件名，如 TCP.yaml
+        filename (str): 文件名，如 'flclashyaml/TCP.yaml'，建议带相对目录
         last_message_ids (dict | None): 可选，last_message_ids 字典
-    
     """
     if not proxies:
         print(f"⏩ 中间结果 {filename} 为空，跳过保存。")
         return
-
-    max_nodes = MAX_NODES_PER_FILE.get(filename, 500)
+    max_nodes = MAX_NODES_PER_FILE.get(os.path.basename(filename), 500)
     if len(proxies) > max_nodes:
         print(f"📌 节点数量超过限制，{filename} 只保留前 {max_nodes} 个节点保存")
         proxies = proxies[:max_nodes]
 
-    output_dir = os.path.dirname(filename)
-    if output_dir and not os.path.exists(output_dir):
-        os.makedirs(output_dir)
-
-    filepath = os.path.join(output_dir, filename) if output_dir else filename
+    dir_path = os.path.dirname(filename)
+    if dir_path and not os.path.exists(dir_path):
+        os.makedirs(dir_path, exist_ok=True)
 
     update_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
     total_count = len(proxies)
     avg_quality = 0
     q_stats_str = ''
-    mode = '未知模式'  # 你可以传入具体模式参数代替
-    min_bandwidth_mb = 0  # 同上
+    mode = DETAILED_SPEEDTEST_MODE or '未知模式'
+    min_bandwidth_mb = MIN_BANDWIDTH_MB or 0
 
     output_data = {'proxies': proxies}
-
-    # 条件写入 last_message_ids
     if WRITE_LAST_MESSAGE_IDS_IN_INTERMEDIATE and last_message_ids is not None:
         output_data['last_message_ids'] = last_message_ids
 
-    # 写文件
     write_yaml_with_header(
-        filepath=filename if not output_dir else os.path.join(output_dir, filename),
+        filepath=filename,
         data=output_data,
         update_time=update_time,
         total_count=total_count,
@@ -2732,15 +2718,7 @@ def save_final_config(final_proxies, last_message_ids, q_stats):
         }
     }
 
-    write_yaml_with_header(
-        OUTPUT_FILE, final_config, update_time, total_count, avg_quality, q_stats_str, mode, min_bandwidth_mb
-    )
 
-# 使用示例（在主流程中调用，变量需保证存在）
-# save_final_config(final_proxies, last_message_ids, q_stats)
-#save_intermediate_results(tcp_passed, 'TCP.yaml', last_message_ids)
-#save_intermediate_results(clash_passed, 'clash.yaml', last_message_ids)
-#save_intermediate_results(speedtest_passed, 'speedtest.yaml', last_message_ids)
 
 
 
@@ -2769,6 +2747,12 @@ def write_yaml_with_header(filepath, data, update_time, total_count, avg_quality
 
 # 主函数   
 async def main():
+    tcp_passed = []
+    clash_passed = []
+    speedtest_passed = []
+    final_proxies = []
+    q_stats = {'🔥极品': 0, '⭐优质': 0, '✅良好': 0, '⚡可用': 0}
+    
     # [0] 目录初始化与按需清理
     output_dir = os.path.dirname(OUTPUT_FILE)
     if output_dir: os.makedirs(output_dir, exist_ok=True)
@@ -2959,12 +2943,10 @@ async def main():
     update_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
     avg_quality = sum(p.get('quality_score', 0) for p in final_proxies) / total_count if total_count > 0 else 0
 
-    # 保存 TCP 阶段测速结果
-    save_intermediate_results(tcp_passed, 'TCP.yaml', last_message_ids)
-    # 保存 Clash 阶段测速结果
-    save_intermediate_results(clash_passed, 'clash.yaml', last_message_ids)
-    # 保存 Speedtest 阶段测速结果
-    save_intermediate_results(speedtest_passed, 'speedtest.yaml', last_message_ids)
+    # 保存 阶段测速结果
+    save_intermediate_results(tcp_passed, os.path.join('flclashyaml', 'TCP.yaml'), last_message_ids)
+    save_intermediate_results(clash_passed, os.path.join('flclashyaml', 'clash.yaml'), last_message_ids)
+    save_intermediate_results(speedtest_passed, os.path.join('flclashyaml', 'speedtest.yaml'), last_message_ids)
     # 保存最终结果（带详细统计等）
     save_final_config(final_proxies, last_message_ids, q_stats)
     
