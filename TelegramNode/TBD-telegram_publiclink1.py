@@ -1279,25 +1279,6 @@ from urllib.parse import unquote
 
 
 def parse_ss_node(line: str) -> dict | None:
-    """
-    一个完整、健壮的 Shadowsocks (ss) 链接解析与修复函数。
-    功能:
-    1.  兼容两种 SS 链接格式：
-        - ss://<method>:<password>@<server>:<port>#<remark>
-        - ss://<base64_encoded_part>#<remark>
-    2.  自动修复或丢弃不规范的加密方法 (cipher):
-        - 对常见的错误写法（如 aes-256-cfb）进行自动修正。
-        - 对已废弃或不支持的加密方法进行丢弃。
-        - 对缺失或乱码的加密方法，强制使用通用配置进行“抢救”。
-    3.  严格校验现代加密方式 (2022-blake3-*) 的密码：
-        - 现代加密方式的密码必须是有效的 Base64 编码，否则节点将被丢弃。
-        - 支持标准和 URL-safe 两种 Base64 格式的自动解码。
-    4.  提供详细的日志输出，方便追踪每个节点的处理情况。
-    参数:
-        line (str): 包含 ss:// 前缀的完整 SS 链接。
-    返回:
-        dict | None: 如果解析和修复成功，返回一个 Clash 兼容的节点字典；否则返回 None。
-    """
     try:
         line = line.strip()
         if not line.startswith('ss://'):
@@ -1310,124 +1291,45 @@ def parse_ss_node(line: str) -> dict | None:
             content = parts[0]
             remark = unquote(parts[1])
         
-        method = None
-        password_from_url = None
-        server = None
-        port = None
-        
+        method, password_raw, server, port = None, None, None, None
+
         # 格式1: ss://<base64_encoded_part>
         if '@' not in content:
             try:
                 padded_content = content + '=' * (-len(content) % 4)
-                decoded_full_string = base64.urlsafe_b64decode(padded_content).decode('utf-8', errors='ignore')
-                
-                parts_decoded = decoded_full_string.split('@')
-                if len(parts_decoded) != 2:
-                    raise ValueError("Decoded SS format invalid: missing '@'")
-                
-                method_password_part, server_port_part = parts_decoded
-                
-                mp_subparts = method_password_part.split(':', 1)
-                method, password_from_url = mp_subparts[0], mp_subparts[1]
-                
-                sp_subparts = server_port_part.split(':', 1)
-                server, port_str = sp_subparts[0], sp_subparts[1]
-                port = int(port_str)
-            except Exception:
-                # Base64解码失败或后续分割失败，则此节点无效
-                return None
+                decoded_full = base64.urlsafe_b64decode(padded_content).decode('utf-8', errors='ignore')
+                if '@' in decoded_full:
+                    mp_part, sp_part = decoded_full.split('@', 1)
+                    method, password_raw = mp_part.split(':', 1)
+                    server, port = sp_part.rsplit(':', 1)
+                else: return None
+            except: return None
         # 格式2: ss://<method>:<password>@<server>:<port>
         else:
             try:
-                at_split_parts = content.split('@', 1)
-                method_password_part_raw, server_port_part_raw = at_split_parts[0], at_split_parts[1]
-                
-                mp_colon_split = method_password_part_raw.split(':', 1)
-                method, password_from_url = mp_colon_split[0], mp_colon_split[1]
-                
-                sp_colon_split = server_port_part_raw.split(':', 1)
-                server, port_str = sp_colon_split[0], sp_colon_split[1]
-                port = int(port_str)
-            except (ValueError, IndexError):
-                # 分割失败，说明格式不正确，丢弃
-                return None
-        # --- Cipher (加密方法) 校验与修复 ---
-        original_cipher = method
-        valid_ciphers = {
-            'aes-128-gcm', 'aes-192-gcm', 'aes-256-gcm',
-            'chacha20-ietf-poly1305', 'chacha20-poly1305',
-            'xchacha20-ietf-poly1305', 'xchacha20-poly1305',
-            '2022-blake3-aes-128-gcm', '2022-blake3-aes-256-gcm', '2022-blake3-chacha20-poly1305'
-        }
-        
-        if not method or method.lower() not in valid_ciphers:
-            auto_map = {
-                'aes-256-cfb': 'aes-256-gcm', 'aes-128-cfb': 'aes-128-gcm',
-                'chacha20': 'chacha20-ietf-poly1305', 'chacha20-ietf': 'chacha20-ietf-poly1305',
-                'rc4-md5': None, 'none': None, 'plain': None
-            }
-            
-            method_lower = method.lower() if method else ''
-            
-            if method_lower in auto_map:
-                new_cipher = auto_map[method_lower]
-                if new_cipher:
-                    print(f"【修复】SS节点 cipher '{original_cipher}' -> '{new_cipher}' : {remark or server}")
-                    method = new_cipher
+                at_split = content.split('@', 1)
+                mp_part, sp_part = at_split[0], at_split[1]
+                if ':' in mp_part:
+                    method, password_raw = mp_part.split(':', 1)
                 else:
-                    print(f"【丢弃】SS节点 cipher 不支持且无法修复: '{original_cipher}' → {remark or server}")
-                    return None
-            # 对于其他所有未知、缺失或乱码的 cipher
-            else:
-                print(f"【强救】SS节点 cipher 缺失/未知 ('{original_cipher}'), 强制设为 'chacha20-ietf-poly1305' : {remark or server}")
-                method = 'chacha20-ietf-poly1305'
-        # --- Password (密码) 校验与解码 ---
-        actual_password = None
-        modern_ss_ciphers = {
-            '2022-blake3-aes-128-gcm', '2022-blake3-aes-256-gcm', '2022-blake3-chacha20-poly1305'
-        }
-        if method and method.lower() in modern_ss_ciphers:
-            if not password_from_url:
-                print(f"【丢弃】SS节点 ({method}) 缺少密码。 → {remark or server}")
-                return None
-            password_encoded_str = unquote(password_from_url).strip().replace('\n', '').replace('\r', '').replace(' ', '').replace('\t', '')
-            
-            try:
-                # 尝试 URL-safe Base64 解码
-                decoded_pw_bytes = base64.urlsafe_b64decode(password_encoded_str + '=' * (-len(password_encoded_str) % 4))
-                actual_password = decoded_pw_bytes.decode('utf-8', errors='ignore')
-            except (base64.binascii.Error, UnicodeDecodeError):
-                try:
-                    # 失败则尝试标准 Base64 解码
-                    password_standard_base64 = password_encoded_str.replace('-', '+').replace('_', '/')
-                    decoded_pw_bytes = base64.b64decode(password_standard_base64 + '=' * (-len(password_standard_base64) % 4))
-                    actual_password = decoded_pw_bytes.decode('utf-8', errors='ignore')
-                except (base64.binascii.Error, UnicodeDecodeError) as e:
-                    print(f"【丢弃】SS节点 ({method}) 密码非有效Base64。错误: {e} → {remark or server}")
-                    return None
-            
-            # --- 添加：针对现代加密方法的密钥长度验证 ---
-            password_byte_length = len(actual_password.encode('utf-8'))
-            
-            if method.lower() == '2022-blake3-aes-128-gcm':
-                if password_byte_length != 16:
-                    print(f"【丢弃】SS节点 ({method}) 密码字节长度不正确，要求 16，实际 {password_byte_length}。 → {remark or server}")
-                    return None
-            elif method.lower() in ('2022-blake3-aes-256-gcm', '2022-blake3-chacha20-poly1305'):
-                # 256位AES和ChaCha20通常需要32字节密钥
-                if password_byte_length != 32:
-                    print(f"【丢弃】SS节点 ({method}) 密码字节长度不正确，要求 32，实际 {password_byte_length}。 → {remark or server}")
-                    return None
-            # --- 结束添加 ---
+                    # 处理部分机场 method 也在 base64 里的情况
+                    padded_mp = mp_part + '=' * (-len(mp_part) % 4)
+                    decoded_mp = base64.urlsafe_b64decode(padded_mp).decode('utf-8', errors='ignore')
+                    method, password_raw = decoded_mp.split(':', 1)
+                server, port = sp_part.rsplit(':', 1)
+            except: return None
 
-        else:
-            # 对于传统加密方式，密码是明文
-            actual_password = password_from_url
-        # --- 最终校验和构建节点 ---
-        if not (method and actual_password is not None and server and port and 1 <= port <= 65535):
-            print(f"【丢弃】SS节点 '{remark or f'ss_{server}'}' 缺少关键组件。")
-            return None
+        port = int(port)
+        modern_ss_ciphers = {'2022-blake3-aes-128-gcm', '2022-blake3-aes-256-gcm', '2022-blake3-chacha20-poly1305'}
         
+        # --- 关键修复：2022 协议不解码密码 ---
+        if method.lower() in modern_ss_ciphers:
+            # 仅移除引用字符，保留 Base64 原样
+            actual_password = unquote(password_raw).strip()
+        else:
+            # 普通协议，尝试解码（如果是base64的话）或直接使用
+            actual_password = unquote(password_raw)
+
         node = {
             'name': remark or f"ss_{server}",
             'type': 'ss',
@@ -1438,10 +1340,7 @@ def parse_ss_node(line: str) -> dict | None:
             'udp': True,
         }
         return node
-        
-    except Exception as e:
-        # 捕获所有未预料的异常
-        print(f"【严重错误】解析SS链接时发生未知异常: {e}。链接: '{line[:100]}...'")
+    except:
         return None
 
 def parse_trojan_node(line):
@@ -1873,65 +1772,40 @@ def strip_starting_flags(s):
     return s.strip()
 # 再次验证SS节点
 def fix_and_filter_ss_nodes(proxies):
-    """彻底解决 ss 节点缺少 cipher 或 cipher 非法的问题"""
     valid_proxies = []
-    fixed_count = 0
-    dropped_count = 0
+    modern_ss_ciphers = {'2022-blake3-aes-128-gcm', '2022-blake3-aes-256-gcm', '2022-blake3-chacha20-poly1305'}
     
     for p in proxies:
         if p.get('type') != 'ss':
             valid_proxies.append(p)
             continue
             
-        cipher = p.get('cipher', '').strip().lower()
+        method = p.get('cipher', '').strip().lower()
+        password = p.get('password', '')
+
+        # 如果是 2022 协议，校验密码是否为合法 Base64
+        if method in modern_ss_ciphers:
+            if not is_valid_base64(password):
+                print(f"【丢弃】SS 2022 节点密码非法(非Base64): {p['name']}")
+                continue
         
-        # 白名单：Clash Premium/Meta 真正支持的加密方式
+        # 通用加密方式白名单
         valid_ciphers = {
             'aes-128-gcm', 'aes-192-gcm', 'aes-256-gcm',
             'chacha20-ietf-poly1305', 'chacha20-poly1305',
-            'xchacha20-ietf-poly1305', 'xchacha20-poly1305',
-            '2022-blake3-aes-128-gcm', '2022-blake3-aes-256-gcm', '2022-blake3-chacha20-poly1305'
-        }
+            'xchacha20-ietf-poly1305', 'xchacha20-poly1305'
+        } | modern_ss_ciphers
         
-        if cipher in valid_ciphers:
+        if method in valid_ciphers:
             valid_proxies.append(p)
-            continue
-            
-        # —— 尝试自动修复常见的错误写法 ——
-        auto_map = {
-            'aes-256-cfb': 'aes-256-gcm',
-            'aes-128-cfb': 'aes-128-gcm',
-            'chacha20': 'chacha20-ietf-poly1305',
-            'chacha20-ietf': 'chacha20-ietf-poly1305',
-            'rc4-md5': None,  # 已废弃，不救
-            'none': None,
-            'plain': None,
-            '': None,
-        }
-        
-        old_cipher = p.get('cipher', '')
-        if old_cipher.lower() in auto_map:
-            new_cipher = auto_map[old_cipher.lower()]
-            if new_cipher:
-                p['cipher'] = new_cipher
-                print(f"【修复】ss 节点 cipher {old_cipher} → {new_cipher} : {p['name']}")
-                valid_proxies.append(p)
-                fixed_count += 1
-            else:
-                print(f"【丢弃】ss 节点 cipher 无效且无法修复: {old_cipher} → {p['name']}")
-                dropped_count += 1
         else:
-            # 完全没有 cipher 字段或乱码，直接尝试用最常见的默认值救活
-            if not cipher or len(cipher) > 50 or ' ' in cipher:
-                p['cipher'] = 'chacha20-ietf-poly1305'  # 2025 年最通用
-                print(f"【强救】ss 节点缺失/乱码 cipher，强制使用 chacha20-ietf-poly1305 : {p['name']}")
+            # 尝试强救
+            if 'cfb' in method or 'ctr' in method:
+                p['cipher'] = 'chacha20-ietf-poly1305'
                 valid_proxies.append(p)
-                fixed_count += 1
             else:
-                print(f"【丢弃】ss 节点 cipher 不支持且无法自动映射: {cipher} → {p['name']}")
-                dropped_count += 1
-    
-    print(f"ss 节点检查完成：修复 {fixed_count} 个，丢弃 {dropped_count} 个，剩余有效 ss 节点 {len([p for p in valid_proxies if p.get('type')=='ss'])} 个")
+                print(f"【丢弃】不支持的加密方式: {method} in {p['name']}")
+                
     return valid_proxies
 
 def normalize_proxy_names(proxies):
