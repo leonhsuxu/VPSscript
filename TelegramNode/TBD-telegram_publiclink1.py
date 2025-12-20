@@ -1448,33 +1448,41 @@ def parse_hysteria_node(line):
         return None
         
 def parse_hysteria2_node(line):
-    """
-    修正后的 Hysteria2 解析函数。
-    - 移除了不必要的 'protocol' 和 'udp' 字段。
-    - 增加了 'fast-open' 和 'sni' 字段。
-    """
     try:
         parsed = urlparse(line)
         if parsed.scheme != 'hysteria2':
             return None
-            
         params = parse_qs(parsed.query)
         insecure_val = params.get('insecure', ['0'])[0].lower()
+        
+        # 提取混淆参数
+        obfs = params.get('obfs', [''])[0]
+        obfs_pw = params.get('obfs-password', [''])[0]
+        
         node = {
             'name': unquote(parsed.fragment) if parsed.fragment else f"hysteria2_{parsed.hostname}",
             'type': 'hysteria2',
             'server': parsed.hostname,
             'port': int(parsed.port or 0),
             'auth': parsed.username or '',
-            'obfs': params.get('obfs', [''])[0],
-            'obfs-password': params.get('obfs-password', [''])[0],
             'sni': params.get('sni', [''])[0],
             'skip-cert-verify': insecure_val in ('1', 'true', 'yes'),
-            'fast-open': True, # 推荐开启
+            'fast-open': True,
         }
+        
+        # 【核心修复逻辑】
+        # 如果混淆方式为 salamander 或其他，必须同时有密码
+        if obfs:
+            if obfs_pw:
+                node['obfs'] = obfs
+                node['obfs-password'] = obfs_pw
+            else:
+                # 如果有混淆但没密码，为了防止 Clash 报错，不添加混淆字段
+                print(f"⚠️ 节点 {node['name']} 缺少 obfs-password，已自动跳过混淆设置")
+        
         return node
     except Exception as e:
-        print(f"【错误】解析 Hysteria2 节点时失败: {e} -> {line[:80]}...")
+        print(f"【错误】解析 Hysteria2 节点失败: {e}")
         return None
         
 def parse_plain_nodes_from_text(text):
