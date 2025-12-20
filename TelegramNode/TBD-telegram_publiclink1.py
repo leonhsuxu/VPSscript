@@ -49,7 +49,7 @@ API_ID = int(os.environ.get('TELEGRAM_API_ID') or 0)
 API_HASH = os.environ.get('TELEGRAM_API_HASH')
 STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')
 TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS', '')
-TIME_WINDOW_HOURS = 10  # 抓取多长时间的消息，单位为小时。
+TIME_WINDOW_HOURS = 2  # 抓取多长时间的消息，单位为小时。
 MIN_EXPIRE_HOURS = 2   # 订阅地址剩余时间最小过期，单位为小时。
 OUTPUT_FILE = 'flclashyaml/Tg-node2.yaml'  # 输出文件路径，用于保存生成的配置或结果。
 last_warp_start_time = 0
@@ -58,6 +58,15 @@ last_warp_start_time = 0
 # 是否在启动时清理旧的中间件文件 (TCP.yaml, clash.yaml, speedtest.yaml)
 # 设置为 True 则每次运行都清理，设置为 False 则保留
 CLEAN_STALE_FILES = os.getenv('CLEAN_STALE_FILES', 'true').lower() == 'False'
+
+
+# 各 YAML 文件对应的最大节点数限制
+MAX_NODES_PER_FILE = {
+    'TCP.yaml': 2000,           # TCP测速中间结果最大XX节点
+    'clash.yaml': 2000,         # Clash测速中间结果最大XXX节点
+    'speedtest.yaml': 2000,     # Speedtest测速中间结果最大XX节点
+    'Tg-node2.yaml': 1000       # 主输出文件最大XX节点（示例）
+}
 
 
 # === 新增：测速策略开关（推荐保留这几个选项）===
@@ -113,6 +122,7 @@ ENABLE_BANDWIDTH_FILTER = os.getenv('ENABLE_BANDWIDTH_FILTER', 'true').lower() =
 # ENABLE_BANDWIDTH_FILTER=true
 # MIN_BANDWIDTH_MB=30
 MIN_BANDWIDTH_MB = float(os.getenv('MIN_BANDWIDTH_MB', '25'))  # 筛选测速宽度的速度。默认 25MB/s，可自由改
+
 # ==================== 国家匹配配置 ====================
 ALLOWED_REGIONS = {
     '香港', '台湾', '日本', '新加坡', '韩国', '马来西亚', '泰国',
@@ -2604,7 +2614,12 @@ def save_intermediate_results(proxies: list, filename: str):
         print(f"❌ 保存中间结果 {filepath} 失败: {e}")
 
 
+
+
 def write_yaml_with_header(filepath, data, update_time, total_count, avg_quality, q_stats_str, mode, min_bandwidth_mb):
+    """
+    写 YAML 文件，并附加统一格式的头部注释
+    """
     header_lines = [
         "# ==================================================",
         "#  TG 免费节点 · 自动测速精选订阅 三合一测速版",
@@ -2627,31 +2642,44 @@ def write_yaml_with_header(filepath, data, update_time, total_count, avg_quality
         print(f"❌ 写入文件失败 {filepath}: {e}")
 
 def save_intermediate_results(proxies: list, filename: str):
+    """
+    负责保存中间测速结果（TCP.yaml、clash.yaml、speedtest.yaml）
+    会根据配置的最大节点数限制来截断节点列表
+    """
     if not proxies:
         print(f"⏩ 中间结果 {filename} 为空，跳过保存。")
         return
+    
+    max_nodes = MAX_NODES_PER_FILE.get(filename, 500)  # 默认限制500个节点
+    if len(proxies) > max_nodes:
+        print(f"📌 节点数量超过限制，{filename} 只保留前 {max_nodes} 个节点保存")
+        proxies = proxies[:max_nodes]
+
     update_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
     total_count = len(proxies)
-    avg_quality = 0  # 中间结果通常不含质量分
-    q_stats_str = ''
+    avg_quality = 0         # 中间结果通常无质量分
+    q_stats_str = ''        # 可额外统计质量标签再填充此参数
     mode = DETAILED_SPEEDTEST_MODE
     min_bandwidth_mb = MIN_BANDWIDTH_MB
 
     filepath = os.path.join(os.path.dirname(OUTPUT_FILE), filename)
     data = {'proxies': proxies}
-    
+
     write_yaml_with_header(
-        filepath,
-        data,
-        update_time,
-        total_count,
-        avg_quality,
-        q_stats_str,
-        mode,
-        min_bandwidth_mb
+        filepath, data, update_time, total_count, avg_quality, q_stats_str, mode, min_bandwidth_mb
     )
 
 def save_final_config(final_proxies, last_message_ids, q_stats):
+    """
+    负责保存最终的订阅配置文件（如 Tg-node2.yaml）
+    同样限制最大节点数，默认从配置字典获取
+    """
+    filename = os.path.basename(OUTPUT_FILE)
+    max_nodes = MAX_NODES_PER_FILE.get(filename, 500)
+    if len(final_proxies) > max_nodes:
+        print(f"📌 节点数量超过限制，最终文件只保留前 {max_nodes} 个节点保存")
+        final_proxies = final_proxies[:max_nodes]
+
     update_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
     total_count = len(final_proxies)
     avg_quality = (sum(p.get('quality_score', 0) for p in final_proxies) / total_count) if total_count else 0
@@ -2668,19 +2696,13 @@ def save_final_config(final_proxies, last_message_ids, q_stats):
         'quality_stats': q_stats_str,
         'speedtest_config': {
             'mode': mode,
-            'warp_for_tcp': WARP_FOR_TCP,
-            'warp_for_speedtest': WARP_FOR_SPEEDTEST,
+            'warp_for_tcp': None,
+            'warp_for_speedtest': None,
         }
     }
+
     write_yaml_with_header(
-        OUTPUT_FILE,
-        final_config,
-        update_time,
-        total_count,
-        avg_quality,
-        q_stats_str,
-        mode,
-        min_bandwidth_mb
+        OUTPUT_FILE, final_config, update_time, total_count, avg_quality, q_stats_str, mode, min_bandwidth_mb
     )
 
 # 使用示例（在主流程中调用，变量需保证存在）
