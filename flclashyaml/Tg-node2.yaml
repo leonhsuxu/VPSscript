@@ -1,730 +1,38 @@
+# ==================================================
+#  TG 免费节点 · 自动测速精选订阅 三合一测速版
+#  更新时间   : 2025-12-20 15:45:00 (北京时间)
+#  节点总数   : 46 个优质节点
+#  平均质量分 : 12.7/100
+#  质量分布   : 🔥极品:0, ⭐优质:0, ✅良好:0, ⚡可用:46
+#  测速模式   : tcp_clash_xc
+#  带宽筛选   : ≥ 20.0MB/s
+# ==================================================
+
 proxies:
-- name: 🇺🇳 未知-1
-  server: 172.67.64.122
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 5
-  clash_delay: 31
-- name: 🇺🇳 未知-2
-  server: 104.17.130.218
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 3
-  clash_delay: 32
-- name: 🇺🇳 未知-3
-  server: 104.19.38.161
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 3
-  clash_delay: 24
-- name: 🇺🇳 未知-4
-  server: store.ubi.com
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 7
-  clash_delay: 26
-- name: 🇺🇳 未知-5
-  server: 27.50.48.13
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 3
-  clash_delay: 27
-- name: 🇺🇳 未知-6
-  server: 104.19.62.102
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 3
-  clash_delay: 28
-- name: 🇺🇳 未知-7
-  server: 27.50.48.2
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 2
-  clash_delay: 21
-- name: 🇺🇳 未知-8
-  server: 104.19.51.229
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 4
-  clash_delay: 22
-- name: 🇺🇳 未知-9
-  server: 104.19.32.215
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 3
-  clash_delay: 29
-- name: 🇺🇳 未知-10
-  server: 154.211.8.18
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 3
-  clash_delay: 37
-- name: 🇺🇳 未知-11
-  server: 103.160.204.4
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 2
-  clash_delay: 23
-- name: 🇺🇳 未知-12
-  server: 162.159.39.201
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 3
-  clash_delay: 30
-- name: 🇺🇳 未知-13
-  server: 108.162.198.207
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 4
-  clash_delay: 20
-- name: 🇺🇳 未知-14
-  server: 104.19.36.112
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 4
-  clash_delay: 35
-- name: 🇺🇳 未知-15
-  server: 104.17.103.99
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 4
-  clash_delay: 36
-- name: 🇺🇳 未知-16
-  server: 162.159.38.157
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 3
-  clash_delay: 38
-- name: 🇺🇳 未知-17
-  server: 27.50.48.6
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 3
-  clash_delay: 33
-- name: 🇺🇳 未知-18
-  server: 27.50.49.104
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 2
-  clash_delay: 39
-- name: 🇺🇳 未知-19
-  server: 104.19.48.30
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 5
-  clash_delay: 34
-- name: 🇺🇳 未知-20
-  server: 162.159.38.85
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 3
-  clash_delay: 25
-- name: 🇺🇳 未知-21
-  server: 104.19.52.126
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 5
-  clash_delay: 43
-- name: 🇺🇳 未知-22
-  server: 104.19.42.170
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 3
-  clash_delay: 40
-- name: 🇺🇳 未知-23
-  server: 172.67.64.164
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 5
-  clash_delay: 42
-- name: 🇺🇳 未知-24
-  server: 27.50.48.102
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 2
-  clash_delay: 41
-- name: 🇺🇳 未知-25
-  server: 162.159.32.8
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 3
-  clash_delay: 44
-- name: 🇺🇳 未知-26
-  server: 172.67.64.125
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 2
-  clash_delay: 45
-- name: 🇺🇳 未知-27
-  server: www.shopify.com
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 7
-  clash_delay: 48
-- name: 🇺🇳 未知-28
-  server: www.visa.cn
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 8
-  clash_delay: 47
-- name: 🇺🇳 未知-29
-  server: icook.tw
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 8
-  clash_delay: 46
-- name: 🇺🇳 未知-30
-  server: 104.19.56.238
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 6
-  clash_delay: 50
-- name: 🇺🇳 未知-31
-  server: 104.17.238.34
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 5
-  clash_delay: 49
-- name: 🇺🇳 未知-32
-  server: mfa.gov.ua
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 22
-  clash_delay: 52
-- name: 🇺🇳 未知-33
-  server: 172.64.154.133
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 7
-  clash_delay: 51
-- name: 🇺🇳 未知-34
-  type: trojan
-  server: ppg-other.kunlun05dns.com
-  port: 10845
-  password: f6c6c896-05d5-49cd-9fba-042cb91f63ee
+- name: 🇭🇰 香港-1 [⚡可用]
+  type: vmess
+  server: planb.mojcn.com
+  port: 16632
+  uuid: 20987350-2575-4ecc-aa11-907f8439571d
+  alterId: 0
+  cipher: auto
   udp: true
-  sni: openssl.nodesni.com
-  skip-cert-verify: true
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: eb940e795a8986b0cc368cd3a13f9030.mobgslb.tbcache.com
+  ws-path: /
+  ws-headers:
+    Host: eb940e795a8986b0cc368cd3a13f9030.mobgslb.tbcache.com
   region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 32
-  clash_delay: 53
-- name: 🇺🇳 未知-35
-  type: trojan
-  server: ppg-other.kunlun05dns.com
-  port: 10847
-  password: f6c6c896-05d5-49cd-9fba-042cb91f63ee
-  udp: true
-  sni: openssl.nodesni.com
-  skip-cert-verify: true
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 32
-  clash_delay: 54
-- name: 🇺🇳 未知-36
-  type: trojan
-  server: ppg-other.kunlun05dns.com
-  port: 10850
-  password: f6c6c896-05d5-49cd-9fba-042cb91f63ee
-  udp: true
-  sni: openssl.nodesni.com
-  skip-cert-verify: true
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 33
-  clash_delay: 55
-- name: 🇺🇳 未知-37
-  type: trojan
-  server: ppg-other.kunlun05dns.com
-  port: 10848
-  password: f6c6c896-05d5-49cd-9fba-042cb91f63ee
-  udp: true
-  sni: openssl.nodesni.com
-  skip-cert-verify: true
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 32
-  clash_delay: 56
-- name: 🇺🇳 未知-38
-  type: trojan
-  server: ppg-other.kunlun05dns.com
-  port: 10841
-  password: f6c6c896-05d5-49cd-9fba-042cb91f63ee
-  udp: true
-  sni: openssl.nodesni.com
-  skip-cert-verify: true
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 34
-  clash_delay: 57
-- name: 🇭🇰 香港-1
+    name: 香港
+    code: HK
+  tcp_delay: 265
+  clash_delay: 2025
+  quality_score: 22
+  quality_tag: ⚡可用
+- name: 🇭🇰 香港-2 [⚡可用]
   type: vmess
   server: t.cnmjcn.cyou
   port: 16632
@@ -744,24 +52,10 @@ proxies:
     name: 香港
     code: HK
   tcp_delay: 86
-  clash_delay: 20
-- name: 🇺🇸 美国-1
-  type: vmess
-  server: ct.877774.xyz
-  port: 443
-  uuid: 62933af8-b1de-4ea7-9dd3-e981d8965c69
-  alterId: 0
-  cipher: auto
-  udp: true
-  tls: true
-  skip-cert-verify: false
-  servername: ''
-  region_info:
-    name: 美国
-    code: US
-  tcp_delay: 624
-  clash_delay: 42
-- name: 🇭🇰 香港-2
+  clash_delay: 2025
+  quality_score: 22
+  quality_tag: ⚡可用
+- name: 🇭🇰 香港-3 [⚡可用]
   type: vmess
   server: planb.mojcn.com
   port: 16622
@@ -781,30 +75,29 @@ proxies:
     name: 香港
     code: HK
   tcp_delay: 265
-  clash_delay: 21
-- name: 🇭🇰 香港-3
+  clash_delay: 2025
+  quality_score: 22
+  quality_tag: ⚡可用
+- name: 🇺🇸 美国-1 [⚡可用]
   type: vmess
-  server: planb.mojcn.com
-  port: 16632
-  uuid: 20987350-2575-4ecc-aa11-907f8439571d
+  server: ct.877774.xyz
+  port: 443
+  uuid: 62933af8-b1de-4ea7-9dd3-e981d8965c69
   alterId: 0
   cipher: auto
   udp: true
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: eb940e795a8986b0cc368cd3a13f9030.mobgslb.tbcache.com
-  ws-path: /
-  ws-headers:
-    Host: eb940e795a8986b0cc368cd3a13f9030.mobgslb.tbcache.com
+  tls: true
+  skip-cert-verify: false
+  servername: ''
   region_info:
-    name: 香港
-    code: HK
-  tcp_delay: 265
-  clash_delay: 22
-- name: 🇺🇳 未知-39
-  server: cloudflare.182682.xyz
+    name: 美国
+    code: US
+  tcp_delay: 624
+  clash_delay: 2025
+  quality_score: 15
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-1 [⚡可用]
+  server: 172.67.64.122
   port: 443
   type: vless
   uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
@@ -821,9 +114,768 @@ proxies:
   region_info:
     name: 未知
     code: UN
-  tcp_delay: 443
-  clash_delay: 60
-- name: 🇺🇳 未知-40
+  tcp_delay: 5
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-2 [⚡可用]
+  server: store.ubi.com
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-3 [⚡可用]
+  server: 104.19.62.102
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 3
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-4 [⚡可用]
+  server: 104.19.51.229
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 4
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-5 [⚡可用]
+  server: 104.19.32.215
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 3
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-6 [⚡可用]
+  server: 104.17.130.218
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 3
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-7 [⚡可用]
+  server: 104.19.38.161
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 3
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-8 [⚡可用]
+  server: 103.160.204.4
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 2
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-9 [⚡可用]
+  server: 27.50.48.13
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 3
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-10 [⚡可用]
+  server: 27.50.48.2
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 2
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-11 [⚡可用]
+  server: 162.159.39.201
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 3
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-12 [⚡可用]
+  server: 154.211.8.18
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 3
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-13 [⚡可用]
+  server: 108.162.198.207
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 4
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-14 [⚡可用]
+  server: 104.19.36.112
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 4
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-15 [⚡可用]
+  server: 162.159.38.157
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 3
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-16 [⚡可用]
+  server: 104.17.103.99
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 4
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-17 [⚡可用]
+  server: 27.50.48.6
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 3
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-18 [⚡可用]
+  server: 27.50.49.104
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 2
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-19 [⚡可用]
+  server: 162.159.38.85
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 3
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-20 [⚡可用]
+  server: 104.19.48.30
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 5
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-21 [⚡可用]
+  server: 172.67.64.164
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 5
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-22 [⚡可用]
+  server: 104.19.52.126
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 5
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-23 [⚡可用]
+  server: 104.19.42.170
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 3
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-24 [⚡可用]
+  server: 172.67.64.125
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 2
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-25 [⚡可用]
+  server: 162.159.32.8
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 3
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-26 [⚡可用]
+  server: 27.50.48.102
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 2
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-27 [⚡可用]
+  server: icook.tw
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 8
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-28 [⚡可用]
+  server: 104.19.56.238
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 6
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-29 [⚡可用]
+  server: www.shopify.com
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-30 [⚡可用]
+  server: 104.17.238.34
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 5
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-31 [⚡可用]
+  server: mfa.gov.ua
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 22
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-32 [⚡可用]
+  type: trojan
+  server: ppg-other.kunlun05dns.com
+  port: 10847
+  password: f6c6c896-05d5-49cd-9fba-042cb91f63ee
+  udp: true
+  sni: openssl.nodesni.com
+  skip-cert-verify: true
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 32
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-33 [⚡可用]
+  type: trojan
+  server: ppg-other.kunlun05dns.com
+  port: 10845
+  password: f6c6c896-05d5-49cd-9fba-042cb91f63ee
+  udp: true
+  sni: openssl.nodesni.com
+  skip-cert-verify: true
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 32
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-34 [⚡可用]
+  server: 172.64.154.133
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 7
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-35 [⚡可用]
+  type: trojan
+  server: ppg-other.kunlun05dns.com
+  port: 10850
+  password: f6c6c896-05d5-49cd-9fba-042cb91f63ee
+  udp: true
+  sni: openssl.nodesni.com
+  skip-cert-verify: true
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 33
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-36 [⚡可用]
+  type: trojan
+  server: ppg-other.kunlun05dns.com
+  port: 10848
+  password: f6c6c896-05d5-49cd-9fba-042cb91f63ee
+  udp: true
+  sni: openssl.nodesni.com
+  skip-cert-verify: true
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 32
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-37 [⚡可用]
+  type: trojan
+  server: ppg-other.kunlun05dns.com
+  port: 10841
+  password: f6c6c896-05d5-49cd-9fba-042cb91f63ee
+  udp: true
+  sni: openssl.nodesni.com
+  skip-cert-verify: true
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 34
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-38 [⚡可用]
   server: cf.001315.xyz
   port: 443
   type: vless
@@ -842,28 +894,10 @@ proxies:
     name: 未知
     code: UN
   tcp_delay: 609
-  clash_delay: 61
-- name: 🇺🇳 未知-41
-  server: blog.811520.xyz
-  port: 443
-  type: vless
-  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
-  tls: true
-  tfo: false
-  skip-cert-verify: false
-  servername: kivi.mrconfigur.site
-  client-fingerprint: random
-  network: ws
-  ws-opts:
-    path: /
-    headers:
-      Host: kivi.mrconfigur.site
-  region_info:
-    name: 未知
-    code: UN
-  tcp_delay: 409
-  clash_delay: 58
-- name: 🇺🇳 未知-42
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-39 [⚡可用]
   server: zrf.cf.090227.xyz
   port: 443
   type: vless
@@ -882,4 +916,90 @@ proxies:
     name: 未知
     code: UN
   tcp_delay: 418
-  clash_delay: 59
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-40 [⚡可用]
+  server: blog.811520.xyz
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 409
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-41 [⚡可用]
+  server: www.visa.cn
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 8
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+- name: 🇺🇳 未知-42 [⚡可用]
+  server: cloudflare.182682.xyz
+  port: 443
+  type: vless
+  uuid: 88538870-5626-4cd7-9cda-1e0b6253c9ce
+  tls: true
+  tfo: false
+  skip-cert-verify: false
+  servername: kivi.mrconfigur.site
+  client-fingerprint: random
+  network: ws
+  ws-opts:
+    path: /
+    headers:
+      Host: kivi.mrconfigur.site
+  region_info:
+    name: 未知
+    code: UN
+  tcp_delay: 443
+  clash_delay: 2025
+  quality_score: 12
+  quality_tag: ⚡可用
+last_message_ids:
+  '@fqDINYUE': 4810
+  '@wxdy666': 6404
+  '@freeyule': 1946375
+  '@ccbaohe': 15154
+  '@duangvpsfs': 3711406
+  '@zzzjjjkkkoi': 668618
+  '@dingyue_Center': 3929
+  '@sorenab2': 38634
+  '@proxyshareCN': 4837
+update_time: '2025-12-20 15:45:00'
+total_nodes: 46
+average_quality: 12.7
+quality_stats: 🔥极品:0, ⭐优质:0, ✅良好:0, ⚡可用:46
+speedtest_config:
+  mode: tcp_clash_xc
+  warp_for_tcp: true
+  warp_for_speedtest: true
