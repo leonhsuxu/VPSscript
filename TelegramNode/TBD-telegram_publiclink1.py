@@ -59,7 +59,6 @@ last_warp_start_time = 0
 # 设置为 True 则每次运行都清理，设置为 False 则保留
 CLEAN_STALE_FILES = os.getenv('CLEAN_STALE_FILES', 'true').lower() == 'False'
 
-
 # 各 YAML 文件对应的最大节点数限制
 MAX_NODES_PER_FILE = {
     'TCP.yaml': 2000,           # TCP测速中间结果最大XX节点
@@ -67,6 +66,8 @@ MAX_NODES_PER_FILE = {
     'speedtest.yaml': 2000,     # Speedtest测速中间结果最大XX节点
     'Tg-node2.yaml': 1000       # 主输出文件最大XX节点（示例）
 }
+
+WRITE_LAST_MESSAGE_IDS_IN_INTERMEDIATE = True  # # 是否给中间文件写入 last_message_ids，默认开启
 
 
 # === 新增：测速策略开关（推荐保留这几个选项）===
@@ -2583,35 +2584,39 @@ def batch_test_proxies_clash(clash_path, proxies, max_workers=MAX_TEST_WORKERS, 
                     print(f"CLASH EXCEPTION: {proxy.get('name', '')[:40]} → {e}")
     return results
     
-def save_intermediate_results(proxies: list, filename: str):
+def save_intermediate_results(proxies: list, filename: str, last_message_ids: dict | None = None):
     """
-    将中间测速结果保存到指定的 YAML 文件中。
-    
-    参数:
-        proxies (list): 要保存的代理节点列表。
-        filename (str): 输出的文件名 (例如 'TCP.yaml')。
+    保存中间测速结果。
+    仅当 WRITE_LAST_MESSAGE_IDS_IN_INTERMEDIATE 为 True 并且传入了 last_message_ids 时，才写入。
     """
     if not proxies:
         print(f"⏩ 中间结果 {filename} 为空，跳过保存。")
         return
-    # 从主输出文件变量中获取目录路径
+
+    max_nodes = MAX_NODES_PER_FILE.get(filename, 500)
+    if len(proxies) > max_nodes:
+        print(f"📌 节点数量超过限制，{filename} 只保留前 {max_nodes} 个节点保存")
+        proxies = proxies[:max_nodes]
+
     output_dir = os.path.dirname(OUTPUT_FILE)
-    if output_dir:
-        os.makedirs(output_dir, exist_ok=True)
-        filepath = os.path.join(output_dir, filename)
-    else:
-        # 如果主输出文件没有目录，则保存在当前文件夹
-        filepath = filename
-    print(f"💾 正在保存中间结果到 {filepath} ({len(proxies)} 个节点)...")
-    try:
-        # 为了兼容性，我们创建一个包含 'proxies' 键的字典
-        output_data = {'proxies': proxies}
-        with open(filepath, 'w', encoding='utf-8') as f:
-            # 使用 sort_keys=False 保持节点原始顺序
-            yaml.dump(output_data, f, allow_unicode=True, sort_keys=False, indent=2)
-        print(f"✅ 中间结果 {filepath} 保存成功。")
-    except Exception as e:
-        print(f"❌ 保存中间结果 {filepath} 失败: {e}")
+    filepath = os.path.join(output_dir, filename) if output_dir else filename
+
+    update_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
+    total_count = len(proxies)
+    avg_quality = 0
+    q_stats_str = ''
+    mode = DETAILED_SPEEDTEST_MODE
+    min_bandwidth_mb = MIN_BANDWIDTH_MB
+
+    output_data = {'proxies': proxies}
+
+    # 统一判断，变量开启且传入了last_message_ids就写入
+    if WRITE_LAST_MESSAGE_IDS_IN_INTERMEDIATE and last_message_ids is not None:
+        output_data['last_message_ids'] = last_message_ids
+
+    write_yaml_with_header(
+        filepath, output_data, update_time, total_count, avg_quality, q_stats_str, mode, min_bandwidth_mb
+    )
 
 
 
@@ -2707,9 +2712,9 @@ def save_final_config(final_proxies, last_message_ids, q_stats):
 
 # 使用示例（在主流程中调用，变量需保证存在）
 # save_final_config(final_proxies, last_message_ids, q_stats)
-# save_intermediate_results(tcp_proxies, 'TCP.yaml')
-# save_intermediate_results(clash_proxies, 'clash.yaml')
-# save_intermediate_results(speedtest_proxies, 'speedtest.yaml')
+#save_intermediate_results(tcp_proxies, 'TCP.yaml', last_message_ids)
+#save_intermediate_results(clash_proxies, 'clash.yaml', last_message_ids)
+#save_intermediate_results(speedtest_proxies, 'speedtest.yaml', last_message_ids)
 
 
 
@@ -2929,11 +2934,11 @@ async def main():
     avg_quality = sum(p.get('quality_score', 0) for p in final_proxies) / total_count if total_count > 0 else 0
 
     # 保存 TCP 阶段测速结果
-    save_intermediate_results(tcp_proxies, 'TCP.yaml')
+    save_intermediate_results(tcp_proxies, 'TCP.yaml', last_message_ids)
     # 保存 Clash 阶段测速结果
-    save_intermediate_results(clash_proxies, 'clash.yaml')
+    save_intermediate_results(clash_proxies, 'clash.yaml', last_message_ids)
     # 保存 Speedtest 阶段测速结果
-    save_intermediate_results(speedtest_proxies, 'speedtest.yaml')
+    save_intermediate_results(speedtest_proxies, 'speedtest.yaml', last_message_ids)
     # 保存最终结果（带详细统计等）
     save_final_config(final_proxies, last_message_ids, q_stats)
     
