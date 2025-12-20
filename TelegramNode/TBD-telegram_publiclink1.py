@@ -2619,20 +2619,19 @@ def save_intermediate_results(proxies: list, filename: str, last_message_ids: di
 
 
 def write_yaml_with_header(filepath, data, update_time, total_count, avg_quality, q_stats_str, mode, min_bandwidth_mb):
+    dir_path = os.path.dirname(filepath)
+    if dir_path:   # 只有目录非空，才创建目录
+        os.makedirs(dir_path, exist_ok=True)
+
     header_lines = [
         "# ==================================================",
         "#  TG 免费节点 · 自动测速精选订阅 三合一测速版",
         f"#  更新时间   : {update_time} (北京时间)",
         f"#  节点总数   : {total_count} 个节点",
-        f"#  平均质量分 : {avg_quality:.1f}/100",
-        f"#  质量分布   : {q_stats_str if q_stats_str else '无'}",
         f"#  测速模式   : {mode}",
         f"#  带宽筛选   : ≥ {min_bandwidth_mb}MB/s",
         "# ==================================================\n"
     ]
-    dir_path = os.path.dirname(filepath)
-    if dir_path:
-        os.makedirs(dir_path, exist_ok=True)
 
     try:
         with open(filepath, 'w', encoding='utf-8') as f:
