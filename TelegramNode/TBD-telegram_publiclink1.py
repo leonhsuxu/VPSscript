@@ -850,42 +850,79 @@ def get_last_file_update_time(file_path: str) -> datetime | None:
         print(f"  ⚠️ 读取 {file_path} 上次更新时间异常: {e}")
     return None
 # 修改：load_existing_proxies_and_state 以返回上次文件更新时间
-def load_existing_proxies_and_state():
+def load_existing_proxies_and_state(file_path):
+    """
+    从指定 YAML 文件中加载历史代理节点列表和 last_message_ids 以及上次更新时间（如果有）。
+    参数:
+        file_path (str): YAML 文件路径，例如 'flclashyaml/TCP.yaml'
+    返回:
+        tuple: (existing_proxies (list), last_message_ids (dict), last_file_update_time (datetime | None))
+    """
     existing_proxies = []
     last_message_ids = {}
-    last_file_update_time = None # 新增返回项
+    last_file_update_time = None
+    import yaml
+    import re
+    from datetime import datetime, timezone, timedelta
+
+    # 本地时区和时间解析需要，你可以根据项目需求调整
+    BJ_TZ = timezone(timedelta(hours=8))
     
-    if os.path.exists(OUTPUT_FILE):
+    def get_last_file_update_time_inner(path: str):
         try:
-            with open(OUTPUT_FILE, 'r', encoding='utf-8') as f:
+            with open(path, 'r', encoding='utf-8') as f:
+                for line in f:
+                    if line.strip().startswith('# 更新时间'):
+                        m = re.search(r'更新时间\s*[:：]\s*(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})', line)
+                        if m:
+                            dt_str = m.group(1).strip()
+                            return datetime.strptime(dt_str, '%Y-%m-%d %H:%M:%S').replace(tzinfo=BJ_TZ)
+                        break
+                    if f.tell() > 500:
+                        break
+        except FileNotFoundError:
+            pass
+        except Exception as e:
+            print(f"⚠️ 读取 {path} 上次更新时间异常: {e}")
+        return None
+
+    if not file_path or not isinstance(file_path, str):
+        print(f"⚠️ 传入的文件路径无效: {file_path}")
+        return existing_proxies, last_message_ids, last_file_update_time
+
+    try:
+        if os.path.exists(file_path):
+            with open(file_path, 'r', encoding='utf-8') as f:
                 loaded_yaml = yaml.safe_load(f)
                 if isinstance(loaded_yaml, dict):
-                    existing_proxies = loaded_yaml.get('proxies', [])
-                    if not isinstance(existing_proxies, list):
-                        existing_proxies = []
-                    last_message_ids = loaded_yaml.get('last_message_ids', {})
-                    if not isinstance(last_message_ids, dict):
-                        last_message_ids = {}
-                    
-                    # 尝试从 YAML 文件的结构中读取上次更新时间（如果存在）
+                    proxies = loaded_yaml.get('proxies', [])
+                    if isinstance(proxies, list):
+                        existing_proxies = proxies
+                    lmids = loaded_yaml.get('last_message_ids', {})
+                    if isinstance(lmids, dict):
+                        last_message_ids = lmids
+                    # 尝试读取内部更新时间字段
                     if 'update_time' in loaded_yaml and isinstance(loaded_yaml['update_time'], str):
                         try:
-                            # 这里假设文件内部的 update_time 字符串也是北京时间
-                            last_file_update_time = datetime.strptime(loaded_yaml['update_time'], '%Y-%m-%d %H:%M:%S').replace(tzinfo=BJ_TZ)
+                            last_file_update_time = datetime.strptime(
+                                loaded_yaml['update_time'], '%Y-%m-%d %H:%M:%S'
+                            ).replace(tzinfo=BJ_TZ)
                         except ValueError:
-                            print(f"  ⚠️ 文件内 'update_time' 格式错误: {loaded_yaml['update_time']}")
-                            pass # 继续尝试从文件头部注释读取
-                            
+                            pass
                 elif isinstance(loaded_yaml, list):
+                    # 如果纯列表格式，直接赋值为节点列表
                     existing_proxies = [p for p in loaded_yaml if isinstance(p, dict)]
-        except Exception as e:
-            print(f"读取 {OUTPUT_FILE} 失败: {e}")
-            
-    # 如果 YAML 结构中未读取到有效时间，则尝试从文件头部注释中读取
+        else:
+            print(f"⚠️ 文件不存在: {file_path}")
+    except Exception as e:
+        print(f"❌ 读取 {file_path} 失败: {e}")
+    
+    # 如果文件内未找到更新时间，尝试从注释头部读取
     if last_file_update_time is None:
-        last_file_update_time = get_last_file_update_time(OUTPUT_FILE)
-            
+        last_file_update_time = get_last_file_update_time_inner(file_path)
+
     return existing_proxies, last_message_ids, last_file_update_time
+    
 # =============================================
 # 多匹配的 extract_valid_subscribe_links 函数
 # ============================================= 
@@ -2555,6 +2592,116 @@ def save_intermediate_results(proxies: list, filename: str):
         print(f"❌ 保存中间结果 {filepath} 失败: {e}")
 
 
+def write_yaml_with_header(filepath, data, update_time, total_count, avg_quality, q_stats_str, mode, min_bandwidth_mb):
+    header_lines = [
+        "# ==================================================",
+        "#  TG 免费节点 · 自动测速精选订阅 三合一测速版",
+        f"#  更新时间   : {update_time} (北京时间)",
+        f"#  节点总数   : {total_count} 个节点",
+        f"#  平均质量分 : {avg_quality:.1f}/100",
+        f"#  质量分布   : {q_stats_str if q_stats_str else '无'}",
+        f"#  测速模式   : {mode}",
+        f"#  带宽筛选   : ≥ {min_bandwidth_mb}MB/s",
+        "# ==================================================\n"
+    ]
+    os.makedirs(os.path.dirname(filepath), exist_ok=True)
+    try:
+        with open(filepath, 'w', encoding='utf-8') as f:
+            for line in header_lines:
+                f.write(line + '\n')
+            yaml.dump(data, f, allow_unicode=True, sort_keys=False, indent=2, width=4096)
+        print(f"✅ 文件已保存（含头部注释）: {filepath}")
+    except Exception as e:
+        print(f"❌ 写入文件失败 {filepath}: {e}")
+
+def save_intermediate_results(proxies: list, filename: str):
+    if not proxies:
+        print(f"⏩ 中间结果 {filename} 为空，跳过保存。")
+        return
+    update_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
+    total_count = len(proxies)
+    avg_quality = 0  # 中间结果通常不含质量分
+    q_stats_str = ''
+    mode = DETAILED_SPEEDTEST_MODE
+    min_bandwidth_mb = MIN_BANDWIDTH_MB
+
+    filepath = os.path.join(os.path.dirname(OUTPUT_FILE), filename)
+    data = {'proxies': proxies}
+    
+    write_yaml_with_header(
+        filepath,
+        data,
+        update_time,
+        total_count,
+        avg_quality,
+        q_stats_str,
+        mode,
+        min_bandwidth_mb
+    )
+
+def save_final_config(final_proxies, last_message_ids, q_stats):
+    update_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
+    total_count = len(final_proxies)
+    avg_quality = (sum(p.get('quality_score', 0) for p in final_proxies) / total_count) if total_count else 0
+    q_stats_str = f"🔥极品:{q_stats.get('🔥极品',0)}, ⭐优质:{q_stats.get('⭐优质',0)}, ✅良好:{q_stats.get('✅良好',0)}, ⚡可用:{q_stats.get('⚡可用',0)}"
+    mode = DETAILED_SPEEDTEST_MODE
+    min_bandwidth_mb = MIN_BANDWIDTH_MB
+
+    final_config = {
+        'proxies': final_proxies,
+        'last_message_ids': last_message_ids,
+        'update_time': update_time,
+        'total_nodes': total_count,
+        'average_quality': round(avg_quality, 1),
+        'quality_stats': q_stats_str,
+        'speedtest_config': {
+            'mode': mode,
+            'warp_for_tcp': WARP_FOR_TCP,
+            'warp_for_speedtest': WARP_FOR_SPEEDTEST,
+        }
+    }
+    write_yaml_with_header(
+        OUTPUT_FILE,
+        final_config,
+        update_time,
+        total_count,
+        avg_quality,
+        q_stats_str,
+        mode,
+        min_bandwidth_mb
+    )
+
+# 使用示例（在主流程中调用，变量需保证存在）
+# save_final_config(final_proxies, last_message_ids, q_stats)
+# save_intermediate_results(tcp_proxies, 'TCP.yaml')
+# save_intermediate_results(clash_proxies, 'clash.yaml')
+# save_intermediate_results(speedtest_proxies, 'speedtest.yaml')
+
+
+
+def write_yaml_with_header(filepath, data, update_time, total_count, avg_quality, q_stats_str, mode, min_bandwidth_mb):
+    header_lines = [
+        "# ==================================================",
+        "#  TG 免费节点 · 自动测速精选订阅 三合一测速版",
+        f"#  更新时间   : {update_time} (北京时间)",
+        f"#  节点总数   : {total_count} 个节点",
+        f"#  平均质量分 : {avg_quality:.1f}/100",
+        f"#  质量分布   : {q_stats_str if q_stats_str else '无'}",
+        f"#  测速模式   : {mode}",
+        f"#  带宽筛选   : ≥ {min_bandwidth_mb}MB/s",
+        "# ==================================================\n"
+    ]
+    os.makedirs(os.path.dirname(filepath), exist_ok=True)
+    try:
+        with open(filepath, 'w', encoding='utf-8') as f:
+            for line in header_lines:
+                f.write(line + '\n')
+            yaml.dump(data, f, allow_unicode=True, sort_keys=False, indent=2, width=4096)
+        print(f"✅ 文件已保存（含头部注释）: {filepath}")
+    except Exception as e:
+        print(f"❌ 写入文件失败 {filepath}: {e}")
+
+
 # 主函数   
 async def main():
     # [0] 目录初始化与按需清理
@@ -2746,6 +2893,15 @@ async def main():
     total_count = len(final_proxies)
     update_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
     avg_quality = sum(p.get('quality_score', 0) for p in final_proxies) / total_count if total_count > 0 else 0
+
+    # 保存 TCP 阶段测速结果
+    save_intermediate_results(tcp_proxies, 'TCP.yaml')
+    # 保存 Clash 阶段测速结果
+    save_intermediate_results(clash_proxies, 'clash.yaml')
+    # 保存 Speedtest 阶段测速结果
+    save_intermediate_results(speedtest_proxies, 'speedtest.yaml')
+    # 保存最终结果（带详细统计等）
+    save_final_config(final_proxies, last_message_ids, q_stats)
     
     # 统计质量分布
     q_stats = {'🔥极品': 0, '⭐优质': 0, '✅良好': 0, '⚡可用': 0}
