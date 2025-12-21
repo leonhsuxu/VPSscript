@@ -2756,7 +2756,7 @@ async def main():
     
     all_nodes = list(all_proxies_map.values())
     # 【核心修复：在这里添加全局清洗】
-    all_nodes = fix_and_filter_ss_nodes(all_nodes)  # 过滤 SS
+    all_nodes = fix_and_filter_ss_nodes(all_nodes, verbose=False)  # 过滤 SS
     all_nodes = sanitize_hysteria_nodes(all_nodes)  # 修复 Hysteria (解决历史数据报错)
     all_nodes = [p for p in all_nodes if is_valid_proxy(p)]
     
