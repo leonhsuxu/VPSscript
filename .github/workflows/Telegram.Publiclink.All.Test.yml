@@ -332,10 +332,12 @@ jobs:
           # 要提交的文件或目录的通配符模式。
           # 'flclashyaml/' 会提交该目录下所有的新增、修改、删除。
           # 这是最推荐的方式，可以确保所有生成的文件都被包含。
-          file_pattern: flclashyaml/
+          #file_pattern: flclashyaml/
 
           # 如果您只想提交 yaml 文件，也可以使用下面的模式：
-          # file_pattern: flclashyaml/*.yaml
+          file_pattern: flclashyaml/*.yaml
 
           # 指定要推送的分支，通常是 main 或 master
           # push_options: '--force' # 如果您需要强制推送，可以取消此行注释
+
+          pull: true
