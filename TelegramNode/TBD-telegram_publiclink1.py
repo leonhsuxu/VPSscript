@@ -850,23 +850,16 @@ def preprocess_regex_rules():
         )
 # 新增：从文件中提取上次更新时间
 def get_last_file_update_time(file_path: str) -> datetime | None:
-    """
-    从文件头部注释中提取上次更新时间。
-    期望格式: # 更新时间   : YYYY-MM-DD HH:MM:SS (北京时间)
-    """
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
-            for line in f:
-                if line.strip().startswith('# 更新时间'):
-                    m = re.search(r'更新时间\s*[:：]\s*(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})', line)
-                    if m:
-                        dt_str = m.group(1).strip()
-                        # 解析为 datetime 对象并强制指定为北京时间
-                        return datetime.strptime(dt_str, '%Y-%m-%d %H:%M:%S').replace(tzinfo=BJ_TZ)
-                    break # 找到匹配行就停止
-                # 假设更新时间在文件头部，读取几行后未找到即可停止
-                if f.tell() > 500: # 比如读取前500字节，防止大文件遍历过久
-                    break
+            # 只读取前512字节，避免大文件内存开销
+            head = f.read(512)
+        for line in head.splitlines():
+            if line.strip().startswith('# 更新时间'):
+                m = re.search(r'更新时间\s*[:：]\s*(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})', line)
+                if m:
+                    dt_str = m.group(1).strip()
+                    return datetime.strptime(dt_str, '%Y-%m-%d %H:%M:%S').replace(tzinfo=BJ_TZ)
     except FileNotFoundError:
         print(f"  ℹ️ 文件 {file_path} 不存在，无法获取上次更新时间。")
     except Exception as e:
