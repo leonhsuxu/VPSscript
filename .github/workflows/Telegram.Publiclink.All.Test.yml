@@ -1,5 +1,6 @@
-name: 🈴 TG抓取节点三合一测速版 v2.0
+name: 🈴 Tg.Publiclink.All.Test_Final
 # ==================== 触发条件配置 ====================
+# TCP、Clash、XCspeedtest 三合一测速版
 on:
   # 定时执行配置，每4小时20分钟执行一次（例如00:20, 04:20, 08:20...）
   schedule:
