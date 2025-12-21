@@ -1909,7 +1909,20 @@ def fix_and_filter_ss_nodes(proxies):
     print(f"[fix_and_filter_ss_nodes] ss 节点过滤完成：丢弃 {dropped_count} 个，保留 {len(valid_proxies)} 个")
     return valid_proxies
 
-
+def sanitize_hysteria_nodes(proxies):
+    """
+    全局清洗：强制修复所有 Hysteria2 节点，确保 obfs 和 obfs-password 成对出现。
+    解决历史残留数据导致的 'missing obfs password' 报错。
+    """
+    cleaned = []
+    for p in proxies:
+        if p.get('type') == 'hysteria2':
+            # 如果有混淆但没密码，直接删除混淆配置
+            if p.get('obfs') and not p.get('obfs-password'):
+                p.pop('obfs', None)
+                p.pop('obfs-password', None) # 确保彻底移除
+        cleaned.append(p)
+    return cleaned
 
 def clean_name_base(name: str) -> str:
     """
@@ -2293,7 +2306,11 @@ def batch_tcp_test(proxies, max_workers=TCP_MAX_WORKERS):
             else:
                 if ENABLE_TCP_LOG:
                     print(f"TCP FAIL → {proxy.get('name', '')[:40]}")
+    
+    # 【新增打印】
+    print(f"TCP测速完成，成功节点：🛩️{len(results)}个")
     return results
+    
 def batch_test_proxies_speedtest(speedtest_path, proxies, max_workers=48, debug=False, test_urls=None): # test_urls now required
     """
     使用 xcspeedtest 批量测试代理延迟 + 带宽
@@ -2566,18 +2583,18 @@ def clash_test_proxy(clash_path, proxy, test_urls=None, debug=False): # test_url
         except Exception:
             pass
     return None
-def batch_test_proxies_clash(clash_path, proxies, max_workers=MAX_TEST_WORKERS, debug=False, test_urls=None): # test_urls now required
+    
+def batch_test_proxies_clash(clash_path, proxies, max_workers=MAX_TEST_WORKERS, debug=False, test_urls=None):
     """
     使用 Clash 核心批量测速的辅助函数，并发执行。
     返回测速完成后带有 clash_delay 字段的列表。
     """
-    if test_urls is None: # 防御性检查
-        print("❗️警告: batch_test_proxies_clash 未收到 test_urls，将自动获取。")
+    if test_urls is None:
         test_urls = get_test_urls()
     results = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
         future_to_proxy = {
-            executor.submit(clash_test_proxy, clash_path, proxy, test_urls, debug): proxy # test_urls passed
+            executor.submit(clash_test_proxy, clash_path, proxy, test_urls, debug): proxy
             for proxy in proxies
         }
         for future in as_completed(future_to_proxy):
@@ -2596,6 +2613,9 @@ def batch_test_proxies_clash(clash_path, proxies, max_workers=MAX_TEST_WORKERS, 
             except Exception as e:
                 if debug:
                     print(f"CLASH EXCEPTION: {proxy.get('name', '')[:40]} → {e}")
+    
+    # 【新增打印】
+    print(f"clash 测速完成，成功节点：🛩️{len(results)}个")
     return results
     
 def save_intermediate_results(proxies: list, filename: str, last_message_ids: dict | None = None):
@@ -2633,13 +2653,9 @@ def save_intermediate_results(proxies: list, filename: str, last_message_ids: di
 
 
 def write_yaml_with_header(filepath, data, update_time, total_count, avg_quality, q_stats_str, mode, min_bandwidth_mb):
-    # 【核心修复】获取目录路径
     dir_path = os.path.dirname(filepath)
-    
-    # 【核心修复】只有当目录路径不为空字符串时，才执行创建目录的操作
     if dir_path:
         os.makedirs(dir_path, exist_ok=True)
-
     header_lines = [
         "# ==================================================",
         "#  TG 免费节点 · 自动测速精选订阅 三合一测速版",
@@ -2651,90 +2667,49 @@ def write_yaml_with_header(filepath, data, update_time, total_count, avg_quality
         f"#  带宽筛选   : ≥ {min_bandwidth_mb}MB/s",
         "# ==================================================\n"
     ]
-
     try:
         with open(filepath, 'w', encoding='utf-8') as f:
             for line in header_lines:
                 f.write(line + '\n')
             yaml.dump(data, f, allow_unicode=True, sort_keys=False, indent=2, width=4096)
-        print(f"✅ 文件已保存: {filepath}")
+        print(f"✅ 文件已保存: {os.path.basename(filepath)} | 节点数: {total_count}")
     except Exception as e:
         print(f"❌ 写入文件失败 {filepath}: {e}")
 
 def save_intermediate_results(proxies: list, filename: str, last_message_ids: dict | None = None):
-    """
-    将中间测速结果保存到指定的 YAML 文件中。
-    可选写入 last_message_ids，需全局变量 [WRITE_LAST_MESSAGE_IDS_IN_INTERMEDIATE] 允许且有值时才写入。
-    参数:
-        proxies (list): 节点列表
-        filename (str): 文件名，如 'flclashyaml/TCP.yaml'，建议带相对目录
-        last_message_ids (dict | None): 可选，last_message_ids 字典
-    """
     if not proxies:
-        print(f"⏩ 中间结果 {filename} 为空，跳过保存。")
         return
     max_nodes = MAX_NODES_PER_FILE.get(os.path.basename(filename), 500)
-    if len(proxies) > max_nodes:
-        print(f"📌 节点数量超过限制，{filename} 只保留前 {max_nodes} 个节点保存")
-        proxies = proxies[:max_nodes]
-
-    dir_path = os.path.dirname(filename)
-    if dir_path and not os.path.exists(dir_path):
-        os.makedirs(dir_path, exist_ok=True)
-
+    save_proxies = proxies[:max_nodes]
     update_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
-    total_count = len(proxies)
-    avg_quality = 0
-    q_stats_str = ''
-    mode = DETAILED_SPEEDTEST_MODE or '未知模式'
-    min_bandwidth_mb = MIN_BANDWIDTH_MB or 0
-
-    output_data = {'proxies': proxies}
+    output_data = {'proxies': save_proxies}
     if WRITE_LAST_MESSAGE_IDS_IN_INTERMEDIATE and last_message_ids is not None:
         output_data['last_message_ids'] = last_message_ids
-
-    write_yaml_with_header(
-        filepath=filename,
-        data=output_data,
-        update_time=update_time,
-        total_count=total_count,
-        avg_quality=avg_quality,
-        q_stats_str=q_stats_str,
-        mode=mode,
-        min_bandwidth_mb=min_bandwidth_mb
-    )
+    
+    write_yaml_with_header(filename, output_data, update_time, len(save_proxies), 0, "", DETAILED_SPEEDTEST_MODE, MIN_BANDWIDTH_MB)
 
 def save_final_config(final_proxies, last_message_ids, q_stats):
-    """
-    负责保存最终的订阅配置文件（如 Tg-node2.yaml）
-    同样限制最大节点数，默认从配置字典获取
-    """
-    filename = os.path.basename(OUTPUT_FILE)
-    max_nodes = MAX_NODES_PER_FILE.get(filename, 500)
-    if len(final_proxies) > max_nodes:
-        print(f"📌 节点数量超过限制，最终文件只保留前 {max_nodes} 个节点保存")
-        final_proxies = final_proxies[:max_nodes]
-
+    max_nodes = MAX_NODES_PER_FILE.get(os.path.basename(OUTPUT_FILE), 500)
+    save_proxies = final_proxies[:max_nodes]
     update_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
-    total_count = len(final_proxies)
-    avg_quality = (sum(p.get('quality_score', 0) for p in final_proxies) / total_count) if total_count else 0
+    total_count = len(save_proxies)
+    avg_quality = (sum(p.get('quality_score', 0) for p in save_proxies) / total_count) if total_count else 0
     q_stats_str = f"🔥极品:{q_stats.get('🔥极品',0)}, ⭐优质:{q_stats.get('⭐优质',0)}, ✅良好:{q_stats.get('✅良好',0)}, ⚡可用:{q_stats.get('⚡可用',0)}"
-    mode = DETAILED_SPEEDTEST_MODE
-    min_bandwidth_mb = MIN_BANDWIDTH_MB
-
+    
     final_config = {
-        'proxies': final_proxies,
+        'proxies': save_proxies,
         'last_message_ids': last_message_ids,
         'update_time': update_time,
         'total_nodes': total_count,
         'average_quality': round(avg_quality, 1),
         'quality_stats': q_stats_str,
         'speedtest_config': {
-            'mode': mode,
-            'warp_for_tcp': None,
-            'warp_for_speedtest': None,
+            'mode': DETAILED_SPEEDTEST_MODE,
+            'warp_for_tcp': WARP_FOR_TCP,
+            'warp_for_speedtest': WARP_FOR_SPEEDTEST
         }
     }
+    write_yaml_with_header(OUTPUT_FILE, final_config, update_time, total_count, avg_quality, q_stats_str, DETAILED_SPEEDTEST_MODE, MIN_BANDWIDTH_MB)
 
 
 
@@ -2818,9 +2793,21 @@ async def main():
             added_count += 1
     
     all_nodes = list(all_proxies_map.values())
+    # 【核心修复：在这里添加全局清洗】
+    all_nodes = fix_and_filter_ss_nodes(all_nodes)  # 过滤 SS
+    all_nodes = sanitize_hysteria_nodes(all_nodes)  # 修复 Hysteria (解决历史数据报错)
+    all_nodes = [p for p in all_nodes if is_valid_proxy(p)]
+    
+    all_nodes = normalize_proxy_names(all_nodes)
+    print(f"  - 预处理完成，进入测速阶段的节点数: {len(all_nodes)}")
+
+    
     print(f"  - 物理去重后总数: {len(all_nodes)} (新入库: {added_count})")
     if not all_nodes:
         print("⚠️ 未发现有效节点，任务优雅退出"); return
+
+    
+    
     # 4.2 修复非法数据：解决 "illegal base64 data"
     # 强制修正 SS 的 cipher 缺失，丢弃不符合规范的节点
     all_nodes = fix_and_filter_ss_nodes(all_nodes)
