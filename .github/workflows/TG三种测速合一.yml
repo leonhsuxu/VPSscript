@@ -116,21 +116,21 @@ jobs:
           python-version: '3.11'
           # 缓存pip依赖以加速
           cache: 'pip'
-          cache-dependency-path: '**/requirements.txt'
+          cache-dependency-path: 'TelegramNode/requirements.txt'
       # === 步骤3：缓存 Python 依赖 ===
       - name: 缓存 Python 依赖
         uses: actions/cache@v4
         id: cache-pip
         with:
           path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('TelegramNode/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
       # === 步骤4：安装 Python 依赖及系统依赖 ===
       - name: 安装 Python 依赖及系统依赖
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install -r TelegramNode/requirements.txt
           sudo apt-get update -qq
           sudo apt-get install -y wireguard-tools curl resolvconf wget
       # === 步骤5：缓存 Mihomo 程序 ===
