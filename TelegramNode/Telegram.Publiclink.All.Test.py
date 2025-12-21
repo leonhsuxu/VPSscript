@@ -933,7 +933,7 @@ def extract_valid_subscribe_links(text, channel_id=None):
     
     # 模式1：有关键字前缀的链接（原逻辑）
     link_pattern_with_prefix = re.compile(
-        r'.*?(?:订阅链接|订阅地址|订阅|链接)[\s:：`=<>-]*?(https?://[A-Za-z0-9\-._~:/?#[\]@!$&\'()*+,;=%]+)'
+        r'.*?(?:订阅链接|订阅地址|订阅|链接)[\s:：`=<>-]*?(https?://[A-Za-z0-9\-._~:/?#@!$&\'*+,;=%]+)'
     )
     
     # 模式2：直接匹配HTTP/HTTPS链接（无需前缀）
