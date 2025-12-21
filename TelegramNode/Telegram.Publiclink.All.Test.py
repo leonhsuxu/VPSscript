@@ -1829,41 +1829,34 @@ def is_valid_ss_cipher(cipher: str) -> bool:
         return False
     return cipher.lower() in VALID_SS_CIPHERS_2024
 
-def fix_and_filter_ss_nodes(proxies):
+def fix_and_filter_ss_nodes(proxies, verbose=True):
     """
     严格筛选 ss 节点，过滤不符合2024主流协议、密码及服务器端口异常的节点
+    可通过 verbose 参数控制是否打印过滤结果日志。
     """
     valid_proxies = []
     dropped_count = 0
-
     ascii_printable_re = re.compile(r'^[\x20-\x7E]+$')
-
     for p in proxies:
         if p.get('type') != 'ss':
             valid_proxies.append(p)
             continue
-
         cipher = p.get('cipher', '').strip()
         password = p.get('password', '')
         server = p.get('server', '')
         port = p.get('port', 0)
-
         # 1. cipher 白名单校验
         if not is_valid_ss_cipher(cipher):
             dropped_count += 1
             continue
-
         # 2. 密码合法性校验
         if not is_password_valid(password):
             dropped_count += 1
             continue
-
-        # 3. 服务器地址简单校验（IPv4/域名格式简略匹配）
-        # 只允许数字、字母、点、横杠，排除空字符串
+        # 3. 服务器地址简单校验（只允许数字、字母、点、横杠）
         if not server or not re.match(r'^[0-9a-zA-Z\.\-]+$', server):
             dropped_count += 1
             continue
-
         # 4. 端口号合法1~65535
         try:
             port_int = int(port)
@@ -1873,10 +1866,9 @@ def fix_and_filter_ss_nodes(proxies):
         except (ValueError, TypeError):
             dropped_count += 1
             continue
-
         valid_proxies.append(p)
-
-    print(f"[fix_and_filter_ss_nodes] ss 节点过滤完成：丢弃 {dropped_count} 个，保留 {len(valid_proxies)} 个")
+    if verbose:
+        print(f"SS节点过滤完成：✔️保留 {len(valid_proxies)} 个，❌丢弃 {dropped_count} 个")
     return valid_proxies
 
 def sanitize_hysteria_nodes(proxies):
