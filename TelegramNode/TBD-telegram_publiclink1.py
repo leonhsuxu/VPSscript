@@ -848,43 +848,9 @@ def preprocess_regex_rules():
         CUSTOM_REGEX_RULES[region]['pattern'] = '|'.join(
             sorted(CUSTOM_REGEX_RULES[region]['pattern'].split('|'), key=len, reverse=True)
         )
+        
 # 新增：从文件中提取上次更新时间
-def get_last_file_update_time(file_path: str) -> datetime | None:
-    try:
-        with open(file_path, 'r', encoding='utf-8') as f:
-            # 只读取前512字节，避免大文件内存开销
-            head = f.read(512)
-        for line in head.splitlines():
-            if line.strip().startswith('# 更新时间'):
-                m = re.search(r'更新时间\s*[:：]\s*(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})', line)
-                if m:
-                    dt_str = m.group(1).strip()
-                    return datetime.strptime(dt_str, '%Y-%m-%d %H:%M:%S').replace(tzinfo=BJ_TZ)
-    except FileNotFoundError:
-        print(f"  ℹ️ 文件 {file_path} 不存在，无法获取上次更新时间。")
-    except Exception as e:
-        print(f"  ⚠️ 读取 {file_path} 上次更新时间异常: {e}")
-    return None
-# 修改：load_existing_proxies_and_state 以返回上次文件更新时间
-def load_existing_proxies_and_state(file_path):
-    """
-    从指定 YAML 文件中加载历史代理节点列表和 last_message_ids 以及上次更新时间（如果有）。
-    参数:
-        file_path (str): YAML 文件路径，例如 'flclashyaml/TCP.yaml'
-    返回:
-        tuple: (existing_proxies (list), last_message_ids (dict), last_file_update_time (datetime | None))
-    """
-    existing_proxies = []
-    last_message_ids = {}
-    last_file_update_time = None
-    import yaml
-    import re
-    from datetime import datetime, timezone, timedelta
-
-    # 本地时区和时间解析需要，你可以根据项目需求调整
-    BJ_TZ = timezone(timedelta(hours=8))
-    
-    def get_last_file_update_time_inner(path: str):
+def get_last_file_update_time_inner(path: str):
     try:
         with open(path, 'r', encoding='utf-8') as f:
             content = f.read(512)  # 读取前512字节
@@ -901,6 +867,18 @@ def load_existing_proxies_and_state(file_path):
         print(f"⚠️ 读取 {path} 上次更新时间异常: {e}")
     return None
 
+def load_existing_proxies_and_state(file_path):
+    """
+    从指定 YAML 文件中加载历史代理节点列表和 last_message_ids 以及上次更新时间（如果有）。
+    参数:
+        file_path (str): YAML 文件路径，例如 'flclashyaml/TCP.yaml'
+    返回:
+        tuple: (existing_proxies (list), last_message_ids (dict), last_file_update_time (datetime | None))
+    """
+    existing_proxies = []
+    last_message_ids = {}
+    last_file_update_time = None
+
     if not file_path or not isinstance(file_path, str):
         print(f"⚠️ 传入的文件路径无效: {file_path}")
         return existing_proxies, last_message_ids, last_file_update_time
@@ -909,29 +887,29 @@ def load_existing_proxies_and_state(file_path):
         if os.path.exists(file_path):
             with open(file_path, 'r', encoding='utf-8') as f:
                 loaded_yaml = yaml.safe_load(f)
-                if isinstance(loaded_yaml, dict):
-                    proxies = loaded_yaml.get('proxies', [])
-                    if isinstance(proxies, list):
-                        existing_proxies = proxies
-                    lmids = loaded_yaml.get('last_message_ids', {})
-                    if isinstance(lmids, dict):
-                        last_message_ids = lmids
-                    # 尝试读取内部更新时间字段
-                    if 'update_time' in loaded_yaml and isinstance(loaded_yaml['update_time'], str):
-                        try:
-                            last_file_update_time = datetime.strptime(
-                                loaded_yaml['update_time'], '%Y-%m-%d %H:%M:%S'
-                            ).replace(tzinfo=BJ_TZ)
-                        except ValueError:
-                            pass
-                elif isinstance(loaded_yaml, list):
-                    # 如果纯列表格式，直接赋值为节点列表
-                    existing_proxies = [p for p in loaded_yaml if isinstance(p, dict)]
+            if isinstance(loaded_yaml, dict):
+                proxies = loaded_yaml.get('proxies', [])
+                if isinstance(proxies, list):
+                    existing_proxies = proxies
+                lmids = loaded_yaml.get('last_message_ids', {})
+                if isinstance(lmids, dict):
+                    last_message_ids = lmids
+                # 尝试读取内部更新时间字段
+                if 'update_time' in loaded_yaml and isinstance(loaded_yaml['update_time'], str):
+                    try:
+                        last_file_update_time = datetime.strptime(
+                            loaded_yaml['update_time'], '%Y-%m-%d %H:%M:%S'
+                        ).replace(tzinfo=BJ_TZ)
+                    except ValueError:
+                        pass
+            elif isinstance(loaded_yaml, list):
+                # 如果纯列表格式，直接赋值为节点列表
+                existing_proxies = [p for p in loaded_yaml if isinstance(p, dict)]
         else:
             print(f"⚠️ 文件不存在: {file_path}")
     except Exception as e:
         print(f"❌ 读取 {file_path} 失败: {e}")
-    
+
     # 如果文件内未找到更新时间，尝试从注释头部读取
     if last_file_update_time is None:
         last_file_update_time = get_last_file_update_time_inner(file_path)
