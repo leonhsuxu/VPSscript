@@ -845,11 +845,7 @@ def simplified_network_check():
 # ======= 国家国旗识别 ======
 
 def get_country_flag_emoji(code: str) -> str:
-    """
-    根据国家代码生成对应国旗 Emoji。
-    """
-    if not code or len(code) != 2:
-        return "❓"
+    if not code or len(code) != 2: return "❓"
     return "".join(chr(0x1F1E6 + ord(c.upper()) - ord('A')) for c in code)
     
 def preprocess_regex_rules():
@@ -1896,90 +1892,68 @@ def clean_name_base(name: str) -> str:
 # --- 国旗识别及名称重写 ---
 def process_proxies_with_fallback(proxies):
     """
-    先用 CUSTOM_REGEX_RULES 正则匹配国家信息，
-    如果未匹配，fallback到 COUNTRY_NAME_TO_CODE_MAP 字典匹配。
-    统一处理节点名称：
-    - 去除开头重复国旗
-    - 重新构造名称为：flag + 地区中文名 + 残余净名
+    利用正则 + COUNTRY_NAME_TO_CODE_MAP 字典识别国家。
+    识别后将结果存入 region_info，但不在这里改名。
     """
     processed = []
     for p in proxies:
         orig_name = p.get('name', '').strip()
-        name_no_flag = strip_starting_flags(orig_name)
+        # 预处理：去掉开头已有国旗方便匹配
+        clean_tmp = strip_starting_flags(orig_name)
         
         matched_region = None
-        # 正则匹配
+        # 第一步：正则匹配 CUSTOM_REGEX_RULES
         for region_name, info in CUSTOM_REGEX_RULES.items():
-            if re.search(info['pattern'], name_no_flag, re.IGNORECASE):
+            if re.search(info['pattern'], clean_tmp, re.IGNORECASE):
                 matched_region = {'name': region_name, 'code': info['code']}
                 break
-        # 回退匹配
+        
+        # 第二步：如果正则没中，查 COUNTRY_NAME_TO_CODE_MAP 字典
         if matched_region is None:
-            fb = fallback_country_match(name_no_flag)
-            if fb:
-                matched_region = fb
-            else:
-                matched_region = {'name': '未知', 'code': 'UN'}
+            for cn_name, code in COUNTRY_NAME_TO_CODE_MAP.items():
+                if cn_name in clean_tmp:
+                    matched_region = {'name': cn_name, 'code': code}
+                    break
         
-        flag = get_country_flag_emoji(matched_region['code'])
-        cleaned_name = name_no_flag.strip()
-        
-        new_name = f"{flag} {matched_region['name']} {cleaned_name}".strip()
-        p['name'] = new_name
+        # 第三步：实在没匹配到，标记未知
+        if matched_region is None:
+            matched_region = {'name': '未知', 'code': 'UN'}
+            
         p['region_info'] = matched_region
         processed.append(p)
     return processed
 
 # --- 统一去尾缀 + 唯一命名 ---
+
 def normalize_proxy_names(proxies):
     """
-    深度重命名，解决“重复名”问题且保持名称稳定。
-    逻辑：
-    - 去除开头国旗 emoji
-    - 去尾部所有数字后缀（递归）
-    - 基础名拼接国家标识
-    - 对重复名称通过添加“-序号”后缀处理。
+    严格重构名字：完全抛弃原名干扰项。
+    只保留：[Emoji] [国家名]-[序号]
     """
-    if not proxies:
-        return []
+    if not proxies: return []
     
-    seen_names = set()
+    country_counters = defaultdict(int)
     final_list = []
     
     for p in proxies:
-        orig_name = p.get('name', '').strip()
-        # 去除国旗
-        name = strip_starting_flags(orig_name)
-        # 去尾部数字后缀
-        base_name = clean_name_base(name)
+        # 获取之前识别好的信息
+        region_info = p.get('region_info', {'name': '未知', 'code': 'UN'})
+        region_name = region_info['name']
+        code = region_info['code']
         
-        # 读取地区
-        region_name = '未知'
-        region_code = 'UN'
-        if p.get('region_info') and isinstance(p['region_info'], dict):
-            region_name = p['region_info'].get('name', region_name)
-            region_code = p['region_info'].get('code', region_code)
-        else:
-            # 兜底再做一次匹配（保险用）
-            for r_name, info in CUSTOM_REGEX_RULES.items():
-                if re.search(info['pattern'], base_name, re.IGNORECASE):
-                    region_name, region_code = r_name, info['code']
-                    break
+        # 累加该国家的计数器
+        country_counters[region_name] += 1
+        num = country_counters[region_name]
         
-        flag = get_country_flag_emoji(region_code)
-        base_full_name = f"{flag} {region_name} {base_name}".strip()
+        # 生成国旗
+        flag = get_country_flag_emoji(code)
         
-        unique_name = base_full_name
-        idx = 1
-        while unique_name in seen_names:
-            unique_name = f"{base_full_name}-{idx}"
-            idx += 1
+        # 【关键改动】：强制重写 p['name']，不引用原名的任何字符
+        # 结果：🇰🇷 韩国-1, 🇯🇵 日本-5
+        p['name'] = f"{flag} {region_name}-{num}"
         
-        p['name'] = unique_name
-        p['region_info'] = {'name': region_name, 'code': region_code}
-        seen_names.add(unique_name)
         final_list.append(p)
-    
+        
     return final_list
     
 # ----根据实测带宽进行二次筛选
@@ -2021,6 +1995,7 @@ def filter_by_bandwidth(proxies, min_mb=25, enable=True):
     
     print(f"🚀带宽筛选完成：≥{min_mb}MB/s 保留 {len(filtered)}/{len(proxies)} 个节点")
     return filtered
+    
 def limit_proxy_counts(proxies, max_total=400):
     """
     根据指定规则限制节点数量：
@@ -2744,18 +2719,14 @@ async def main():
             all_proxies_map[key] = p
             added_count += 1
     
-    all_nodes = list(all_proxies_map.values())
-
-    all_nodes = process_proxies_with_fallback(all_nodes)
-    # 【核心修复：在这里添加全局清洗】
+    all_nodes = list(all_proxies_map.values()) # 合并新旧节点
+    all_nodes = process_proxies_with_fallback(all_nodes)   # 【核心识别】：利用字典识别国家并存入 region_info
     all_nodes = fix_and_filter_ss_nodes(all_nodes, verbose=False)  # 过滤 SS
     all_nodes = sanitize_hysteria_nodes(all_nodes)  # 修复 Hysteria (解决历史数据报错)
-    all_nodes = [p for p in all_nodes if is_valid_proxy(p)]
-    
-    all_nodes = normalize_proxy_names(all_nodes)
-    print(f"  - 预处理完成，进入测速阶段的节点数: {len(all_nodes)}")
-
-    
+    all_nodes = normalize_proxy_names(all_nodes) # 【强制重命名】
+    all_nodes = [p for p in all_nodes if is_valid_proxy(p)]    
+   
+    print(f"  - 预处理完成，进入测速阶段的节点数: {len(all_nodes)}")    
     print(f"  - 物理去重后总数: {len(all_nodes)} (新入库: {added_count})")
     if not all_nodes:
         print("⚠️ 未发现有效节点，任务优雅退出"); return
@@ -2868,9 +2839,11 @@ async def main():
     final_proxies = limit_proxy_counts(final_proxies, max_total=400)
     
     # 质量评分与打质量标签
+    final_proxies = normalize_proxy_names(tested_nodes)  # final_proxies 再次调用一次重命名
     final_proxies = sort_proxies_by_quality(final_proxies)
-    final_proxies = add_quality_to_name(final_proxies)
+    final_proxies = add_quality_to_name(final_proxies)  # 最后添加评分标签
     
+        
     # 最终排序：评分降序
     final_proxies = sorted(final_proxies, key=lambda p: -p.get('quality_score', 0))
     if not final_proxies:
