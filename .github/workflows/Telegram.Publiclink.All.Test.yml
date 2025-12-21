@@ -275,9 +275,9 @@ jobs:
           EXIT_CODE=$?
           if [ $EXIT_CODE -eq 0 ]; then
             echo "✅ 节点抓取和测速完成"
-            if [ -f "flclashyaml/Tg-node2.yaml" ]; then
-              FILE_SIZE=$(stat -c%s "flclashyaml/Tg-node2.yaml" 2>/dev/null || stat -f%z "flclashyaml/Tg-node2.yaml" 2>/dev/null || echo "unknown")
-              echo "📁 配置文件生成成功: flclashyaml/Tg-node2.yaml (${FILE_SIZE} bytes)"
+            if [ -f "flclashyaml/TelePuliclick-Node.yaml" ]; then
+              FILE_SIZE=$(stat -c%s "flclashyaml/TelePuliclick-Node.yaml" 2>/dev/null || stat -f%z "flclashyaml/TelePuliclick-Node.yaml" 2>/dev/null || echo "unknown")
+              echo "📁 配置文件生成成功: flclashyaml/TelePuliclick-Node.yaml (${FILE_SIZE} bytes)"
             else
               echo "⚠️  配置文件未生成"
             fi
