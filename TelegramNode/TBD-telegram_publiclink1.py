@@ -850,22 +850,20 @@ def preprocess_regex_rules():
         )
 # 新增：从文件中提取上次更新时间
 def get_last_file_update_time(file_path: str) -> datetime | None:
-    """
-    从文件头部注释中提取上次更新时间。
-    期望格式: # 更新时间   : YYYY-MM-DD HH:MM:SS (北京时间)
-    """
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
-            for line in f:
+            total_read = 0
+            while True:
+                line = f.readline()
+                if not line:
+                    break
+                total_read += len(line.encode('utf-8'))  # 计算字节数或更保守用字符数
                 if line.strip().startswith('# 更新时间'):
                     m = re.search(r'更新时间\s*[:：]\s*(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})', line)
                     if m:
                         dt_str = m.group(1).strip()
-                        # 解析为 datetime 对象并强制指定为北京时间
                         return datetime.strptime(dt_str, '%Y-%m-%d %H:%M:%S').replace(tzinfo=BJ_TZ)
-                    break # 找到匹配行就停止
-                # 假设更新时间在文件头部，读取几行后未找到即可停止
-                if f.tell() > 500: # 比如读取前500字节，防止大文件遍历过久
+                if total_read > 500:  # 超过500字节退出
                     break
     except FileNotFoundError:
         print(f"  ℹ️ 文件 {file_path} 不存在，无法获取上次更新时间。")
@@ -2731,20 +2729,24 @@ async def main():
     q_stats = {'🔥极品': 0, '⭐优质': 0, '✅良好': 0, '⚡可用': 0}
     
     output_dir = os.path.dirname(OUTPUT_FILE)
-    if output_dir: os.makedirs(output_dir, exist_ok=True)
+    if output_dir:
+        os.makedirs(output_dir, exist_ok=True)
     
+    # 是否清理中间文件
     if CLEAN_STALE_FILES:
         print("🧹 已开启中间件清理模式...")
         for f in ['TCP.yaml', 'clash.yaml', 'speedtest.yaml']:
             p = os.path.join(output_dir, f)
             if os.path.exists(p):
-                try: os.remove(p)
-                except: pass
-
+                try:
+                    os.remove(p)
+                except Exception:
+                    pass
+    
     print("=" * 60)
     print(f"Telegram.Node_Clash-Speedtest 测试版 V2.0 | {datetime.now(BJ_TZ).strftime('%Y-%m-%d %H:%M:%S')}")
     print("=" * 60)
-
+    
     preprocess_regex_rules()
     
     # 2. 加载历史数据
@@ -2760,8 +2762,9 @@ async def main():
     new_proxies = []
     for url in urls:
         proxies = download_and_parse(url)
-        if proxies: new_proxies.extend(proxies)
-
+        if proxies:
+            new_proxies.extend(proxies)
+    
     # 4. 预处理
     print("[3/7] 节点预处理（去重与清洗）")
     all_proxies_map = {get_proxy_key(p): p for p in existing_proxies if is_valid_proxy(p)}
@@ -2775,53 +2778,97 @@ async def main():
     all_nodes = normalize_proxy_names(all_nodes)
     
     if not all_nodes:
-        print("⚠️ 无有效节点，任务退出"); return
-
+        print("⚠️ 无有效节点，任务退出")
+        return
+    
     # 5. 测速流程
-    speedtest_path, clash_path = './xcspeedtest', './clash_core/clash'
+    speedtest_path = './xcspeedtest'
+    clash_path = './clash_core/clash'
     mode = DETAILED_SPEEDTEST_MODE
+    
     print(f"[4/7] 执行测速模式: {mode}")
-
-    # --- 模式逻辑核心修复 ---
+    
+    # 统一先获取测试URL，所有测速传入同一列表，避免多次获取和警告
+    test_urls = get_test_urls()
+    print(f"使用测速地址: {test_urls}")
+    
+    # 根据不同模式调用，确保传入 test_urls 参数
     if mode == 'tcp_clash_xc':
         tcp_passed = batch_tcp_test(all_nodes)
         save_intermediate_results(tcp_passed, 'TCP.yaml', last_message_ids)
-        clash_passed = batch_test_proxies_clash(clash_path, tcp_passed if tcp_passed else all_nodes, debug=ENABLE_SPEEDTEST_LOG)
+        
+        clash_passed = batch_test_proxies_clash(
+            clash_path,
+            tcp_passed if tcp_passed else all_nodes,
+            debug=ENABLE_SPEEDTEST_LOG,
+            test_urls=test_urls
+        )
         save_intermediate_results(clash_passed, 'clash.yaml', last_message_ids)
+        
         if clash_passed:
-            speedtest_passed = batch_test_proxies_speedtest(speedtest_path, clash_passed, debug=ENABLE_SPEEDTEST_LOG)
+            speedtest_passed = batch_test_proxies_speedtest(
+                speedtest_path,
+                clash_passed,
+                debug=ENABLE_SPEEDTEST_LOG,
+                test_urls=test_urls
+            )
             final_tested_nodes = speedtest_passed
             save_intermediate_results(speedtest_passed, 'speedtest.yaml', last_message_ids)
-
+    
     elif mode == 'tcp_clash':
         tcp_passed = batch_tcp_test(all_nodes)
         save_intermediate_results(tcp_passed, 'TCP.yaml', last_message_ids)
-        clash_passed = batch_test_proxies_clash(clash_path, tcp_passed if tcp_passed else all_nodes, debug=ENABLE_SPEEDTEST_LOG)
+        
+        clash_passed = batch_test_proxies_clash(
+            clash_path,
+            tcp_passed if tcp_passed else all_nodes,
+            debug=ENABLE_SPEEDTEST_LOG,
+            test_urls=test_urls
+        )
         final_tested_nodes = clash_passed
         save_intermediate_results(clash_passed, 'clash.yaml', last_message_ids)
-
+    
     elif mode == 'tcp_xc':
         tcp_passed = batch_tcp_test(all_nodes)
         save_intermediate_results(tcp_passed, 'TCP.yaml', last_message_ids)
-        speedtest_passed = batch_test_proxies_speedtest(speedtest_path, tcp_passed if tcp_passed else all_nodes, debug=ENABLE_SPEEDTEST_LOG)
+        
+        speedtest_passed = batch_test_proxies_speedtest(
+            speedtest_path,
+            tcp_passed if tcp_passed else all_nodes,
+            debug=ENABLE_SPEEDTEST_LOG,
+            test_urls=test_urls
+        )
         final_tested_nodes = speedtest_passed
         save_intermediate_results(speedtest_passed, 'speedtest.yaml', last_message_ids)
-
+    
     elif mode == 'tcp_only':
         tcp_passed = batch_tcp_test(all_nodes)
         final_tested_nodes = tcp_passed
         save_intermediate_results(tcp_passed, 'TCP.yaml', last_message_ids)
-
+    
     elif mode == 'clash_only':
-        clash_passed = batch_test_proxies_clash(clash_path, all_nodes, debug=ENABLE_SPEEDTEST_LOG)
+        clash_passed = batch_test_proxies_clash(
+            clash_path,
+            all_nodes,
+            debug=ENABLE_SPEEDTEST_LOG,
+            test_urls=test_urls
+        )
         final_tested_nodes = clash_passed
         save_intermediate_results(clash_passed, 'clash.yaml', last_message_ids)
-
+    
     elif mode == 'xcspeedtest_only':
-        speedtest_passed = batch_test_proxies_speedtest(speedtest_path, all_nodes, debug=ENABLE_SPEEDTEST_LOG)
+        speedtest_passed = batch_test_proxies_speedtest(
+            speedtest_path,
+            all_nodes,
+            debug=ENABLE_SPEEDTEST_LOG,
+            test_urls=test_urls
+        )
         final_tested_nodes = speedtest_passed
         save_intermediate_results(speedtest_passed, 'speedtest.yaml', last_message_ids)
-
+    else:
+        print(f"❌ 未知测速模式: {mode}，直接跳过测速")
+        final_tested_nodes = all_nodes
+    
     # 6. 后置处理
     print("[5/7] 质量评分与排序")
     final_proxies = [p for p in final_tested_nodes if is_valid_proxy(p)]
@@ -2830,16 +2877,19 @@ async def main():
     final_proxies = limit_proxy_counts(final_proxies, max_total=400)
     final_proxies = sort_proxies_by_quality(final_proxies)
     final_proxies = add_quality_to_name(final_proxies)
-
+    
     # 7. 统计与保存
     for p in final_proxies:
         tag = p.get('quality_tag', '⚡可用')
-        if tag in q_stats: q_stats[tag] += 1
+        if tag in q_stats:
+            q_stats[tag] += 1
     
     save_final_config(final_proxies, last_message_ids, q_stats)
     
+    # 8. 最后清理或恢复网络
     if os.getenv('GITHUB_ACTIONS') == 'true' and not WARP_FOR_FINAL:
         ensure_network_for_stage('cleanup', require_warp=False)
+    
     print("=" * 60 + "\n🎉 全部任务圆满完成！")
 
         
