@@ -56,7 +56,7 @@ last_warp_start_time = 0
 # === 核心控制变量 ===
 # 是否在启动时清理旧的中间件文件 (TCP.yaml, clash.yaml, speedtest.yaml)
 # 设置为 True 则每次运行都清理，设置为 False 则保留
-CLEAN_STALE_FILES = os.getenv('CLEAN_STALE_FILES', 'true').lower() == 'False'
+CLEAN_STALE_FILES = os.getenv('CLEAN_STALE_FILES', 'true').strip().lower() == 'False'
 
 # 各 YAML 文件对应的最大节点数限制
 MAX_NODES_PER_FILE = {
@@ -66,7 +66,7 @@ MAX_NODES_PER_FILE = {
     'TelePuliclick-Node.yaml': 1000       # 主输出文件最大XX节点（示例）
 }
 
-WRITE_LAST_MESSAGE_IDS_IN_INTERMEDIATE = True  # # 是否给中间文件写入 last_message_ids，默认开启
+WRITE_LAST_MESSAGE_IDS_IN_INTERMEDIATE = True  #  是否给中间文件写入 last_message_ids，tg信息id位置默认开启
 
 
 # === 新增：测速策略开关（推荐保留这几个选项）===
@@ -843,10 +843,14 @@ def simplified_network_check():
     return warp_enabled
     
 # ======= 国家国旗识别 ======
-def get_country_flag_emoji(code):
+def get_country_flag_emoji(code: str) -> str:
+    """
+    根据国家代码生成对应国旗 Emoji。
+    """
     if not code or len(code) != 2:
         return "❓"
     return "".join(chr(0x1F1E6 + ord(c.upper()) - ord('A')) for c in code)
+    
 def preprocess_regex_rules():
     for region in CUSTOM_REGEX_RULES:
         CUSTOM_REGEX_RULES[region]['pattern'] = '|'.join(
@@ -1724,51 +1728,17 @@ def identify_regions_only(proxies):
             p['region_info'] = matched_region
             identified.append(p)
     return identified
-def process_proxies(proxies):
-    identified = []
-    for p in proxies:
-        matched_region = None
-        for region_name, info in CUSTOM_REGEX_RULES.items():
-            if re.search(info['pattern'], p.get('name', ''), re.IGNORECASE):
-                matched_region = {'name': region_name, 'code': info['code']}
-                break
-        if matched_region is None:
-            continue
-        if matched_region['name'] not in ALLOWED_REGIONS:
-            continue
-        p['region_info'] = matched_region
-        identified.append(p)
-    counters = defaultdict(lambda: defaultdict(int))
-    master_pattern = re.compile(
-        '|'.join(sorted([p for r in CUSTOM_REGEX_RULES.values() for p in r['pattern'].split('|')], key=len, reverse=True)),
-        re.IGNORECASE
-    )
-    final = []
-    for p in identified:
-        info = p['region_info']
-        match = FLAG_EMOJI_PATTERN.search(p['name'])
-        flag = match.group(0) if match else get_country_flag_emoji(info['code'])
-        clean_name = master_pattern.sub('', FLAG_EMOJI_PATTERN.sub('', p['name'], 1)).strip()
-        clean_name = re.sub(r'^\W+|\W+$', '', clean_name)
-        feature = re.sub(r'\s+', ' ', clean_name).strip()
-        if not feature:
-            count = sum(1 for fp in final if fp['region_info']['name'] == info['name']) + 1
-            feature = f"{info['code']}{count:02d}"
-        base_name = f"{flag} {info['name']} {feature}".strip()
-        counters[info['name']][base_name] += 1
-        count_ = counters[info['name']][base_name]
-        if count_ > 1:
-            new_name = f"{base_name} {count_}"
-        else:
-            new_name = base_name
-        p['name'] = new_name
-        final.append(p)
-    return final
+    
+
+
+
 #锚点
 # 新增的国家代码 转 中文名字典，方便快速映射
 COUNTRY_CODE_TO_CN = {
     v['code']: k for k, v in CUSTOM_REGEX_RULES.items()
 }
+
+
 def emoji_to_country_code(emoji):
     if len(emoji) != 2:
         return None
@@ -1778,24 +1748,34 @@ def emoji_to_country_code(emoji):
     except:
         return None
 FLAG_EMOJI_UN_FLAG ='🇺🇳'  # 无国家用联合国，按需修改
-def strip_starting_flags(s):
+
+
+def strip_starting_flags(s: str) -> str:
     """
-    反复检测字符串开头是否为2个区域符号组成的国旗emoji，
-    若是，则去除，直到开头无此国旗emoji。
+    去除字符串开头的国旗emoji（由两个Unicode区域字符组成），直到开头无国旗。
     """
     def is_flag_emoji(substr):
-        # 判断 substr 是否两个unicode字符都位于国旗unicode区域
         if len(substr) != 2:
             return False
         return all(0x1F1E6 <= ord(c) <= 0x1F1FF for c in substr)
-    
+    s = s.strip()
     while len(s) >= 2 and is_flag_emoji(s[:2]):
-        s = s[2:]
-    return s.strip()
+        s = s[2:].strip()
+    return s
+
+def fallback_country_match(name: str):
+    """
+    使用 COUNTRY_NAME_TO_CODE_MAP，尝试根据节点名称包含关键词进行回退匹配。
+    返回 {'name': 中文名, 'code': 代码} 或 None。
+    """
+    for cn_name, code in COUNTRY_NAME_TO_CODE_MAP.items():
+        if cn_name in name:
+            return {'name': cn_name, 'code': code}
+    return None
+
+
+
 # 再次验证SS节点
-
-
-
 # 2024年以后主流且安全的SS加密协议白名单
 VALID_SS_CIPHERS_2024 = {
     'aes-128-gcm',
@@ -1912,71 +1892,68 @@ def clean_name_base(name: str) -> str:
 
 def normalize_proxy_names(proxies):
     """
-    深度重命名：解决 "duplicate name" 报错。
-    通过 seen_names 记录已分配名字，若冲突则追加 #序号。
+    统一地区识别和节点名格式化的函数。
+    功能整合了 fallback 与国旗添加，同时保证名称唯一。
     """
-    if not proxies: return []
-    preprocess_regex_rules()
-    country_counters = defaultdict(int)
+    if not proxies:
+        return []
+
+    # 预先排序 pattern，保证长模式先匹配
+    for region in CUSTOM_REGEX_RULES:
+        CUSTOM_REGEX_RULES[region]['pattern'] = '|'.join(
+            sorted(CUSTOM_REGEX_RULES[region]['pattern'].split('|'), key=len, reverse=True)
+        )
+
+    region_counters = defaultdict(int)
     seen_names = set()
-    final_list = []
+    final_proxies = []
+
     for p in proxies:
         orig_name = p.get('name', '').strip()
-        # 清理开头所有国旗emoji
-        name = strip_starting_flags(orig_name)
-        
-        # 识别地区
-        matched_region, code = "未知", "UN"
-        for r_name, info in CUSTOM_REGEX_RULES.items():
-            if re.search(info['pattern'], name, re.IGNORECASE):
-                matched_region, code = r_name, info['code']
+        # 去除已有国旗，避免重复
+        base_name = strip_starting_flags(orig_name)
+
+        matched_region = None
+        code = None
+        # 优先用正则匹配
+        for region_name, info in CUSTOM_REGEX_RULES.items():
+            if re.search(info['pattern'], base_name, re.IGNORECASE):
+                matched_region = region_name
+                code = info['code']
                 break
 
-        # 全面清理尾部所有 -数字 或 _数字 后缀，避免无限后缀累加
-        base_clean_name = clean_name_base(name)
+        # fallback 包含匹配
+        if matched_region is None:
+            fallback = fallback_country_match(base_name)
+            if fallback:
+                matched_region = fallback['name']
+                code = fallback['code']
+            else:
+                matched_region = '未知'
+                code = 'UN'
 
-        country_counters[matched_region] += 1
+        region_counters[matched_region] += 1
+        index = region_counters[matched_region]
+
         flag = get_country_flag_emoji(code)
-        
-        # 构建唯一基础名
-        base_name = f"{flag} {matched_region}-{country_counters[matched_region]}"
-        
-        # 冲突检测：如果名字已存在，增加后缀直到唯一
-        unique_name = base_name
-        idx = 1
+        # 清理尾部多层数字后缀，防止无限堆叠
+        clean_base_name = clean_name_base(base_name)
+        # 构造名字格式：  🇭🇰 香港-1 OriginalName
+        new_name = f"{flag} {matched_region}-{index} {clean_base_name}".strip()
+
+        # 保证全局唯一，再追加下划线数字，避免重复（极端情况）
+        unique_name = new_name
+        suffix_idx = 1
         while unique_name in seen_names:
-            unique_name = f"{base_name}_{idx}"
-            idx += 1
-        
+            unique_name = f"{new_name}_{suffix_idx}"
+            suffix_idx += 1
+
         p['name'] = unique_name
         p['region_info'] = {'name': matched_region, 'code': code}
         seen_names.add(unique_name)
-        final_list.append(p)
-    return final_list
-    
-# 在生成最终列表前加这一段（推荐放在 normalize_proxy_names 之后）
-def filter_by_bandwidth(proxies, min_mb=20):
-    """只保留带宽 ≥20MB/s 的才保留"""
-    filtered = []
-    for p in proxies:
-        bw = p.get('bandwidth', '')
-        if not bw:
-            filtered.append(p)
-            continue
-        # 提取数字部分
-        import re
-        m = re.search(r'([0-9\.]+)', bw)
-        if m:
-            num = float(m.group(1))
-            if 'GB/s' in bw:
-                num *= 1000
-            elif 'KB/s' in bw:
-                num /= 1000
-            if num >= min_mb:  # 20MB/s 以上
-                filtered.append(p)
-        else:
-            filtered.append(p)
-    return filtered
+        final_proxies.append(p)
+
+    return final_proxies
     
 # ----根据实测带宽进行二次筛选
 def filter_by_bandwidth(proxies, min_mb=25, enable=True):
@@ -2585,34 +2562,16 @@ def batch_test_proxies_clash(clash_path, proxies, max_workers=MAX_TEST_WORKERS, 
     return results
     
 def save_intermediate_results(proxies: list, filename: str, last_message_ids: dict | None = None):
-    """
-    保存中间测速结果。
-    仅当 WRITE_LAST_MESSAGE_IDS_IN_INTERMEDIATE 为 True 并且传入了 last_message_ids 时，才写入。
-    """
     if not proxies:
         print(f"⏩ 中间结果 {filename} 为空，跳过保存。")
         return
-
-    max_nodes = MAX_NODES_PER_FILE.get(filename, 500)
-    if len(proxies) > max_nodes:
-        print(f"📌 节点数量超过限制，{filename} 只保留前 {max_nodes} 个节点保存")
-        proxies = proxies[:max_nodes]
-
-    output_dir = os.path.dirname(OUTPUT_FILE)
-    filepath = os.path.join(output_dir, filename) if output_dir else filename
-
+    max_nodes = MAX_NODES_PER_FILE.get(os.path.basename(filename), 500)
+    save_proxies = proxies[:max_nodes]
     update_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
-    total_count = len(proxies)
-    avg_quality = 0
-    q_stats_str = ''
-    mode = DETAILED_SPEEDTEST_MODE
-    min_bandwidth_mb = MIN_BANDWIDTH_MB
-
-    output_data = {'proxies': proxies}
-
-    # 统一判断，变量开启且传入了last_message_ids就写入
+    output_data = {'proxies': save_proxies}
     if WRITE_LAST_MESSAGE_IDS_IN_INTERMEDIATE and last_message_ids is not None:
         output_data['last_message_ids'] = last_message_ids
+    write_yaml_with_header(filename, output_data, update_time, len(save_proxies), 0, "", DETAILED_SPEEDTEST_MODE, MIN_BANDWIDTH_MB)
 
 
 
