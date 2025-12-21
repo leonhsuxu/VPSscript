@@ -1039,7 +1039,7 @@ async def scrape_telegram_links(last_message_ids=None):
         client = TelegramClient(StringSession(STRING_SESSION), API_ID, API_HASH)
         await client.connect()
         me = await client.get_me()
-        print(f"✅ 以 {me.first_name} (@{me.username}) 的身份成功连接")
+        print(f"👤 以 {me.first_name} 的身份成功连接")
     except Exception as e:
         print(f"❌ 错误: 连接 Telegram 时出错: {e}")
         return [], last_message_ids
@@ -2665,7 +2665,7 @@ async def main():
         print("📁 已关闭中间件清理模式，保留上次运行结果。")
     
     print("=" * 60)
-    print("Telegram.Node_Clash-Speedtest测试版 V2.0")
+    print("Telegram.Node_Publiclink.All.SpeedTest.Final V1 ")
     print(datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S"))
     print("=" * 60)
 
