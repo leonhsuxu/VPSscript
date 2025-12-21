@@ -2649,6 +2649,7 @@ async def main():
     tcp_passed = []
     clash_passed = []
     speedtest_passed = []
+    final_tested_nodes = []
     final_proxies = []
     q_stats = {'🔥极品': 0, '⭐优质': 0, '✅良好': 0, '⚡可用': 0}
     
@@ -2839,7 +2840,7 @@ async def main():
     final_proxies = limit_proxy_counts(final_proxies, max_total=400)
     
     # 质量评分与打质量标签
-    final_proxies = normalize_proxy_names(tested_nodes)  # final_proxies 再次调用一次重命名
+    final_proxies = normalize_proxy_names(final_tested_nodes)  # final_proxies 再次调用一次重命名
     final_proxies = sort_proxies_by_quality(final_proxies)
     final_proxies = add_quality_to_name(final_proxies)  # 最后添加评分标签
     
