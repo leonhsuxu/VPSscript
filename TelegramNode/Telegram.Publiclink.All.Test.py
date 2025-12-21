@@ -51,7 +51,7 @@ STRING_SESSION = os.environ.get('TELEGRAM_STRING_SESSION')
 TELEGRAM_CHANNEL_IDS_STR = os.environ.get('TELEGRAM_CHANNEL_IDS', '')
 TIME_WINDOW_HOURS = 5  # 抓取多长时间的消息，单位为小时。
 MIN_EXPIRE_HOURS = 2   # 订阅地址剩余时间最小过期，单位为小时。
-OUTPUT_FILE = 'flclashyaml/Tg-node2.yaml'  # 输出文件路径，用于保存生成的配置或结果。
+OUTPUT_FILE = 'flclashyaml/TelePuliclick-Node.yaml'  # 输出文件路径，用于保存生成的配置或结果。
 last_warp_start_time = 0
 
 # === 核心控制变量 ===
@@ -64,7 +64,7 @@ MAX_NODES_PER_FILE = {
     'TCP.yaml': 2000,           # TCP测速中间结果最大XX节点
     'clash.yaml': 2000,         # Clash测速中间结果最大XXX节点
     'speedtest.yaml': 2000,     # Speedtest测速中间结果最大XX节点
-    'Tg-node2.yaml': 1000       # 主输出文件最大XX节点（示例）
+    'TelePuliclick-Node.yaml': 1000       # 主输出文件最大XX节点（示例）
 }
 
 WRITE_LAST_MESSAGE_IDS_IN_INTERMEDIATE = True  # # 是否给中间文件写入 last_message_ids，默认开启
