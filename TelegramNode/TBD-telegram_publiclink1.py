@@ -885,22 +885,21 @@ def load_existing_proxies_and_state(file_path):
     BJ_TZ = timezone(timedelta(hours=8))
     
     def get_last_file_update_time_inner(path: str):
-        try:
-            with open(path, 'r', encoding='utf-8') as f:
-                for line in f:
-                    if line.strip().startswith('# 更新时间'):
-                        m = re.search(r'更新时间\s*[:：]\s*(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})', line)
-                        if m:
-                            dt_str = m.group(1).strip()
-                            return datetime.strptime(dt_str, '%Y-%m-%d %H:%M:%S').replace(tzinfo=BJ_TZ)
-                        break
-                    if f.tell() > 500:
-                        break
-        except FileNotFoundError:
-            pass
-        except Exception as e:
-            print(f"⚠️ 读取 {path} 上次更新时间异常: {e}")
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            content = f.read(512)  # 读取前512字节
+        for line in content.splitlines():
+            if line.strip().startswith('# 更新时间'):
+                m = re.search(r'更新时间\s*[:：]\s*(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})', line)
+                if m:
+                    dt_str = m.group(1).strip()
+                    return datetime.strptime(dt_str, '%Y-%m-%d %H:%M:%S').replace(tzinfo=BJ_TZ)
         return None
+    except FileNotFoundError:
+        pass
+    except Exception as e:
+        print(f"⚠️ 读取 {path} 上次更新时间异常: {e}")
+    return None
 
     if not file_path or not isinstance(file_path, str):
         print(f"⚠️ 传入的文件路径无效: {file_path}")
