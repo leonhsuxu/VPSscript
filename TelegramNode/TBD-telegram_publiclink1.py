@@ -2825,38 +2825,79 @@ async def main():
     # --- 模式 1: TCP -> Clash -> XC ---
     if mode == 'tcp_clash_xc':
         print("【模式】TCP 粗筛 → Clash 精测 → Speedtest 精测")
+        
+        # 1. TCP 粗筛阶段
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('tcp', require_warp=WARP_FOR_TCP)
+        
         tcp_passed = batch_tcp_test(all_nodes)
-        tcp_passed = normalize_proxy_names(tcp_passed) # 确保存文件前名字唯一
-        save_intermediate_results(tcp_passed, 'TCP.yaml')
+        tcp_passed = normalize_proxy_names(tcp_passed) # 确保名字唯一
+        # 保存 TCP 中间结果
+        save_intermediate_results(tcp_passed, os.path.join(output_dir, 'TCP.yaml'), last_message_ids)
+        
+        # 2. Clash 精测阶段
+        # 如果 TCP 筛完没节点了，尝试全量进入（或者你可以选择直接退出）
         nodes_for_clash = tcp_passed if tcp_passed else all_nodes
-        if not tcp_passed: print("  ⚠️ TCP 全部失败，尝试全量进入下阶段")
+        if not tcp_passed: 
+            print("  ⚠️ TCP 全部失败，尝试全量进入下阶段")
+            
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
-        clash_passed = batch_test_proxies_clash(clash_path, nodes_for_clash, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=get_test_urls())
+        
+        clash_passed = batch_test_proxies_clash(
+            clash_path, 
+            nodes_for_clash, 
+            max_workers=MAX_TEST_WORKERS, 
+            debug=ENABLE_SPEEDTEST_LOG, 
+            test_urls=get_test_urls()
+        )
         clash_passed = normalize_proxy_names(clash_passed)
-        save_intermediate_results(clash_passed, 'clash.yaml')
+        # 保存 Clash 中间结果
+        save_intermediate_results(clash_passed, os.path.join(output_dir, 'clash.yaml'), last_message_ids)
+        
+        # 3. Speedtest (XC) 带宽精测阶段
         if clash_passed:
-            final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, clash_passed, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=get_test_urls())
-            final_tested_nodes = normalize_proxy_names(final_tested_nodes)
-            save_intermediate_results(final_tested_nodes, 'speedtest.yaml')
+            speedtest_passed = batch_test_proxies_speedtest(
+                speedtest_path, 
+                clash_passed, 
+                max_workers=MAX_TEST_WORKERS, 
+                debug=ENABLE_SPEEDTEST_LOG, 
+                test_urls=get_test_urls()
+            )
+            speedtest_passed = normalize_proxy_names(speedtest_passed)
+            # 关键：将最终结果同步给 final_tested_nodes 以供后续评分排序
+            final_tested_nodes = speedtest_passed
+            # 保存 Speedtest 中间结果
+            save_intermediate_results(speedtest_passed, os.path.join(output_dir, 'speedtest.yaml'), last_message_ids)
         else:
+            print("  ⚠️ Clash 阶段无存活节点，跳过 Speedtest。")
             final_tested_nodes = []
     # --- 模式 2: TCP -> Clash ---
     elif mode == 'tcp_clash':
-        print("【模式】TCP 粗筛 → Clash 精测")
+       print("【模式】TCP 粗筛 → Clash 精测")
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('tcp', require_warp=WARP_FOR_TCP)
+        
+        # 1. 执行 TCP 测速
         tcp_passed = batch_tcp_test(all_nodes)
         tcp_passed = normalize_proxy_names(tcp_passed)
-        save_intermediate_results(tcp_passed, 'TCP.yaml')
+        # 实时保存中间件
+        save_intermediate_results(tcp_passed, os.path.join(output_dir, 'TCP.yaml'), last_message_ids)
+        
+        # 2. 准备进入 Clash 测速
         nodes_for_clash = tcp_passed if tcp_passed else all_nodes
         if os.getenv('GITHUB_ACTIONS') == 'true':
             ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
-        final_tested_nodes = batch_test_proxies_clash(clash_path, nodes_for_clash, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=get_test_urls())
-        final_tested_nodes = normalize_proxy_names(final_tested_nodes)
-        save_intermediate_results(final_tested_nodes, 'clash.yaml')
+        
+        # 3. 执行 Clash 测速 (核心修复：赋值给 clash_passed)
+        clash_passed = batch_test_proxies_clash(clash_path, nodes_for_clash, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=get_test_urls())
+        clash_passed = normalize_proxy_names(clash_passed)
+        
+        # 4. 同步给最终变量
+        final_tested_nodes = clash_passed
+        
+        # 实时保存中间件
+        save_intermediate_results(clash_passed, os.path.join(output_dir, 'clash.yaml'), last_message_ids)
     # --- 模式 3: TCP -> XC ---
     elif mode == 'tcp_xc':
         print("【模式】TCP 粗筛 → Speedtest 精测")
