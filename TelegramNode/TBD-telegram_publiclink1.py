@@ -850,20 +850,22 @@ def preprocess_regex_rules():
         )
 # 新增：从文件中提取上次更新时间
 def get_last_file_update_time(file_path: str) -> datetime | None:
+    """
+    从文件头部注释中提取上次更新时间。
+    期望格式: # 更新时间   : YYYY-MM-DD HH:MM:SS (北京时间)
+    """
     try:
         with open(file_path, 'r', encoding='utf-8') as f:
-            total_read = 0
-            while True:
-                line = f.readline()
-                if not line:
-                    break
-                total_read += len(line.encode('utf-8'))  # 计算字节数或更保守用字符数
+            for line in f:
                 if line.strip().startswith('# 更新时间'):
                     m = re.search(r'更新时间\s*[:：]\s*(\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}:\d{2})', line)
                     if m:
                         dt_str = m.group(1).strip()
+                        # 解析为 datetime 对象并强制指定为北京时间
                         return datetime.strptime(dt_str, '%Y-%m-%d %H:%M:%S').replace(tzinfo=BJ_TZ)
-                if total_read > 500:  # 超过500字节退出
+                    break # 找到匹配行就停止
+                # 假设更新时间在文件头部，读取几行后未找到即可停止
+                if f.tell() > 500: # 比如读取前500字节，防止大文件遍历过久
                     break
     except FileNotFoundError:
         print(f"  ℹ️ 文件 {file_path} 不存在，无法获取上次更新时间。")
@@ -2677,21 +2679,17 @@ def write_yaml_with_header(filepath, data, update_time, total_count, avg_quality
 def save_intermediate_results(proxies: list, filename: str, last_message_ids: dict | None = None):
     if not proxies:
         return
-    # 自动补全路径
-    output_dir = os.path.dirname(OUTPUT_FILE)
-    full_path = os.path.join(output_dir, filename) if output_dir else filename
-    
-    max_nodes = MAX_NODES_PER_FILE.get(filename, 500)
+    max_nodes = MAX_NODES_PER_FILE.get(os.path.basename(filename), 500)
     save_proxies = proxies[:max_nodes]
     update_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
     output_data = {'proxies': save_proxies}
     if WRITE_LAST_MESSAGE_IDS_IN_INTERMEDIATE and last_message_ids is not None:
         output_data['last_message_ids'] = last_message_ids
     
-    write_yaml_with_header(full_path, output_data, update_time, len(save_proxies), 0, "", DETAILED_SPEEDTEST_MODE, MIN_BANDWIDTH_MB)
+    write_yaml_with_header(filename, output_data, update_time, len(save_proxies), 0, "", DETAILED_SPEEDTEST_MODE, MIN_BANDWIDTH_MB)
 
 def save_final_config(final_proxies, last_message_ids, q_stats):
-    max_nodes = MAX_NODES_PER_FILE.get(os.path.basename(OUTPUT_FILE), 1000)
+    max_nodes = MAX_NODES_PER_FILE.get(os.path.basename(OUTPUT_FILE), 500)
     save_proxies = final_proxies[:max_nodes]
     update_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
     total_count = len(save_proxies)
@@ -2721,176 +2719,265 @@ def save_final_config(final_proxies, last_message_ids, q_stats):
 
 # 主函数   
 async def main():
-    # 1. 变量初始化
     tcp_passed = []
     clash_passed = []
     speedtest_passed = []
-    final_tested_nodes = []
+    final_proxies = []
     q_stats = {'🔥极品': 0, '⭐优质': 0, '✅良好': 0, '⚡可用': 0}
     
+    # [0] 目录初始化与按需清理
     output_dir = os.path.dirname(OUTPUT_FILE)
-    if output_dir:
-        os.makedirs(output_dir, exist_ok=True)
+    if output_dir: os.makedirs(output_dir, exist_ok=True)
     
-    # 是否清理中间文件
     if CLEAN_STALE_FILES:
         print("🧹 已开启中间件清理模式...")
         for f in ['TCP.yaml', 'clash.yaml', 'speedtest.yaml']:
             p = os.path.join(output_dir, f)
             if os.path.exists(p):
-                try:
-                    os.remove(p)
-                except Exception:
-                    pass
+                try: os.remove(p); print(f"  - 已删除旧文件: {f}")
+                except: pass
+    else:
+        print("📁 已关闭中间件清理模式，保留上次运行结果。")
     
     print("=" * 60)
-    print(f"Telegram.Node_Clash-Speedtest 测试版 V2.0 | {datetime.now(BJ_TZ).strftime('%Y-%m-%d %H:%M:%S')}")
+    print("Telegram.Node_Clash-Speedtest测试版 V2.0")
+    print(datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S"))
     print("=" * 60)
-    
+
+    # === [1/7] 初始化与网络控制检查 ===
+    print("🌐 网络控制配置:")
+    print(f"  - 抓取阶段 Warp: {WARP_FOR_SCRAPING}")
+    print(f"  - TCP测速 Warp: {WARP_FOR_TCP}")
+    print(f"  - Speedtest测速 Warp: {WARP_FOR_SPEEDTEST}")
+    print(f"  - 最终阶段 Warp: {WARP_FOR_FINAL}")
+    print("-" * 40)
+    if os.getenv('GITHUB_ACTIONS') == 'true':
+        print("🏗️ GitHub Actions环境检测到，准备执行网络状态控制")
+        simplified_network_check()
+    else:
+        print("💻 本地环境，跳过网络自动切换")
     preprocess_regex_rules()
-    
-    # 2. 加载历史数据
+    # === [2/7] 加载历史数据 ===
     print("[1/7] 加载历史数据...")
-    existing_proxies, last_message_ids, _ = load_existing_proxies_and_state(os.path.join(output_dir, 'TCP.yaml'))
-    
-    # 3. 抓取与解析
+    existing_proxies, last_message_ids, last_file_update_time = load_existing_proxies_and_state('flclashyaml/TCP.yaml')
+    print(f"  - 历史节点总数: {len(existing_proxies)}")
+    # === [3/7] 抓取新链接与解析 ===
     print("[2/7] 抓取 Telegram 订阅链接...")
     if os.getenv('GITHUB_ACTIONS') == 'true':
         ensure_network_for_stage('scraping', require_warp=WARP_FOR_SCRAPING)
     
     urls, last_message_ids = await scrape_telegram_links(last_message_ids)
     new_proxies = []
-    for url in urls:
-        proxies = download_and_parse(url)
-        if proxies:
-            new_proxies.extend(proxies)
+    if urls:
+        print(f"  - 开始下载解析 {len(urls)} 个链接...")
+        for i, url in enumerate(urls, 1):
+            print(f"    进度: {i}/{len(urls)} | {url[:70]}...")
+            proxies = download_and_parse(url)
+            if proxies:
+                new_proxies.extend(proxies)
+        print(f"  - 解析完成，获得新节点: {len(new_proxies)}")
+    else:
+        print("  - 未发现新链接，跳过下载步骤")
+    # === [4/7] 节点预处理：合并、物理去重、修复非法数据、第一次全局重命名 ===
+    print("[3/7] 节点预处理（彻底解决重名与非法数据异常）")
     
-    # 4. 预处理
-    print("[3/7] 节点预处理（去重与清洗）")
-    all_proxies_map = {get_proxy_key(p): p for p in existing_proxies if is_valid_proxy(p)}
+    # 4.1 物理去重：基于 Server/Port/Secret 生成 MD5 Key
+    all_proxies_map = {
+        get_proxy_key(p): p for p in existing_proxies if is_valid_proxy(p)
+    }
+    added_count = 0
     for p in new_proxies:
-        all_proxies_map[get_proxy_key(p)] = p
+        key = get_proxy_key(p)
+        if key not in all_proxies_map:
+            all_proxies_map[key] = p
+            added_count += 1
     
     all_nodes = list(all_proxies_map.values())
-    all_nodes = fix_and_filter_ss_nodes(all_nodes)
-    all_nodes = sanitize_hysteria_nodes(all_nodes)
+    # 【核心修复：在这里添加全局清洗】
+    all_nodes = fix_and_filter_ss_nodes(all_nodes)  # 过滤 SS
+    all_nodes = sanitize_hysteria_nodes(all_nodes)  # 修复 Hysteria (解决历史数据报错)
     all_nodes = [p for p in all_nodes if is_valid_proxy(p)]
+    
     all_nodes = normalize_proxy_names(all_nodes)
+    print(f"  - 预处理完成，进入测速阶段的节点数: {len(all_nodes)}")
+
     
+    print(f"  - 物理去重后总数: {len(all_nodes)} (新入库: {added_count})")
     if not all_nodes:
-        print("⚠️ 无有效节点，任务退出")
-        return
+        print("⚠️ 未发现有效节点，任务优雅退出"); return
+
     
-    # 5. 测速流程
+    
+    # 4.2 修复非法数据：解决 "illegal base64 data"
+    # 强制修正 SS 的 cipher 缺失，丢弃不符合规范的节点
+    all_nodes = fix_and_filter_ss_nodes(all_nodes)
+    all_nodes = [p for p in all_nodes if is_valid_proxy(p)]
+    # 4.3 全局第一次重命名：解决 "proxy duplicate name"
+    # 在进入测速环节前，必须洗一遍名字，确保保存中间文件时不会报错
+    all_nodes = normalize_proxy_names(all_nodes)
+    print(f"  - 预处理完成，进入测速阶段的节点数: {len(all_nodes)}")
+    # === [5/7] 测速流程（完整六大模式） ===
     speedtest_path = './xcspeedtest'
     clash_path = './clash_core/clash'
     mode = DETAILED_SPEEDTEST_MODE
-    
     print(f"[4/7] 执行测速模式: {mode}")
-    
-    # 统一先获取测试URL，所有测速传入同一列表，避免多次获取和警告
-    test_urls = get_test_urls()
-    print(f"使用测速地址: {test_urls}")
-    
-    # 根据不同模式调用，确保传入 test_urls 参数
+    final_tested_nodes = []
+    # --- 模式 1: TCP -> Clash -> XC ---
     if mode == 'tcp_clash_xc':
+        print("【模式】TCP 粗筛 → Clash 精测 → Speedtest 精测")
+        if os.getenv('GITHUB_ACTIONS') == 'true':
+            ensure_network_for_stage('tcp', require_warp=WARP_FOR_TCP)
         tcp_passed = batch_tcp_test(all_nodes)
-        save_intermediate_results(tcp_passed, 'TCP.yaml', last_message_ids)
-        
-        clash_passed = batch_test_proxies_clash(
-            clash_path,
-            tcp_passed if tcp_passed else all_nodes,
-            debug=ENABLE_SPEEDTEST_LOG,
-            test_urls=test_urls
-        )
-        save_intermediate_results(clash_passed, 'clash.yaml', last_message_ids)
-        
+        tcp_passed = normalize_proxy_names(tcp_passed) # 确保存文件前名字唯一
+        save_intermediate_results(tcp_passed, 'TCP.yaml')
+        nodes_for_clash = tcp_passed if tcp_passed else all_nodes
+        if not tcp_passed: print("  ⚠️ TCP 全部失败，尝试全量进入下阶段")
+        if os.getenv('GITHUB_ACTIONS') == 'true':
+            ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
+        clash_passed = batch_test_proxies_clash(clash_path, nodes_for_clash, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=get_test_urls())
+        clash_passed = normalize_proxy_names(clash_passed)
+        save_intermediate_results(clash_passed, 'clash.yaml')
         if clash_passed:
-            speedtest_passed = batch_test_proxies_speedtest(
-                speedtest_path,
-                clash_passed,
-                debug=ENABLE_SPEEDTEST_LOG,
-                test_urls=test_urls
-            )
-            final_tested_nodes = speedtest_passed
-            save_intermediate_results(speedtest_passed, 'speedtest.yaml', last_message_ids)
-    
+            final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, clash_passed, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=get_test_urls())
+            final_tested_nodes = normalize_proxy_names(final_tested_nodes)
+            save_intermediate_results(final_tested_nodes, 'speedtest.yaml')
+        else:
+            final_tested_nodes = []
+    # --- 模式 2: TCP -> Clash ---
     elif mode == 'tcp_clash':
+        print("【模式】TCP 粗筛 → Clash 精测")
+        if os.getenv('GITHUB_ACTIONS') == 'true':
+            ensure_network_for_stage('tcp', require_warp=WARP_FOR_TCP)
         tcp_passed = batch_tcp_test(all_nodes)
-        save_intermediate_results(tcp_passed, 'TCP.yaml', last_message_ids)
-        
-        clash_passed = batch_test_proxies_clash(
-            clash_path,
-            tcp_passed if tcp_passed else all_nodes,
-            debug=ENABLE_SPEEDTEST_LOG,
-            test_urls=test_urls
-        )
-        final_tested_nodes = clash_passed
-        save_intermediate_results(clash_passed, 'clash.yaml', last_message_ids)
-    
+        tcp_passed = normalize_proxy_names(tcp_passed)
+        save_intermediate_results(tcp_passed, 'TCP.yaml')
+        nodes_for_clash = tcp_passed if tcp_passed else all_nodes
+        if os.getenv('GITHUB_ACTIONS') == 'true':
+            ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
+        final_tested_nodes = batch_test_proxies_clash(clash_path, nodes_for_clash, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=get_test_urls())
+        final_tested_nodes = normalize_proxy_names(final_tested_nodes)
+        save_intermediate_results(final_tested_nodes, 'clash.yaml')
+    # --- 模式 3: TCP -> XC ---
     elif mode == 'tcp_xc':
+        print("【模式】TCP 粗筛 → Speedtest 精测")
+        if os.getenv('GITHUB_ACTIONS') == 'true':
+            ensure_network_for_stage('tcp', require_warp=WARP_FOR_TCP)
         tcp_passed = batch_tcp_test(all_nodes)
-        save_intermediate_results(tcp_passed, 'TCP.yaml', last_message_ids)
-        
-        speedtest_passed = batch_test_proxies_speedtest(
-            speedtest_path,
-            tcp_passed if tcp_passed else all_nodes,
-            debug=ENABLE_SPEEDTEST_LOG,
-            test_urls=test_urls
-        )
-        final_tested_nodes = speedtest_passed
-        save_intermediate_results(speedtest_passed, 'speedtest.yaml', last_message_ids)
-    
+        tcp_passed = normalize_proxy_names(tcp_passed)
+        save_intermediate_results(tcp_passed, 'TCP.yaml')
+        nodes_for_xc = tcp_passed if tcp_passed else all_nodes
+        if os.getenv('GITHUB_ACTIONS') == 'true':
+            ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
+        final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, nodes_for_xc, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=get_test_urls())
+        final_tested_nodes = normalize_proxy_names(final_tested_nodes)
+        save_intermediate_results(final_tested_nodes, 'speedtest.yaml')
+    # --- 模式 4: 纯 TCP 测速 ---
     elif mode == 'tcp_only':
-        tcp_passed = batch_tcp_test(all_nodes)
-        final_tested_nodes = tcp_passed
-        save_intermediate_results(tcp_passed, 'TCP.yaml', last_message_ids)
-    
+        print("【模式】纯 TCP 测速")
+        if os.getenv('GITHUB_ACTIONS') == 'true':
+            ensure_network_for_stage('tcp', require_warp=WARP_FOR_TCP)
+        final_tested_nodes = batch_tcp_test(all_nodes)
+        final_tested_nodes = normalize_proxy_names(final_tested_nodes)
+        save_intermediate_results(final_tested_nodes, 'TCP.yaml')
+    # --- 模式 5: 纯 Clash 测速 ---
     elif mode == 'clash_only':
-        clash_passed = batch_test_proxies_clash(
-            clash_path,
-            all_nodes,
-            debug=ENABLE_SPEEDTEST_LOG,
-            test_urls=test_urls
-        )
-        final_tested_nodes = clash_passed
-        save_intermediate_results(clash_passed, 'clash.yaml', last_message_ids)
-    
+        print("【模式】纯 Clash 测速")
+        if os.getenv('GITHUB_ACTIONS') == 'true':
+            ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
+        final_tested_nodes = batch_test_proxies_clash(clash_path, all_nodes, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=get_test_urls())
+        final_tested_nodes = normalize_proxy_names(final_tested_nodes)
+        save_intermediate_results(final_tested_nodes, 'clash.yaml')
+    # --- 模式 6: 纯 Speedtest 测速 ---
     elif mode == 'xcspeedtest_only':
-        speedtest_passed = batch_test_proxies_speedtest(
-            speedtest_path,
-            all_nodes,
-            debug=ENABLE_SPEEDTEST_LOG,
-            test_urls=test_urls
-        )
-        final_tested_nodes = speedtest_passed
-        save_intermediate_results(speedtest_passed, 'speedtest.yaml', last_message_ids)
+        print("【模式】纯 Speedtest 测速")
+        if os.getenv('GITHUB_ACTIONS') == 'true':
+            ensure_network_for_stage('speedtest', require_warp=WARP_FOR_SPEEDTEST)
+        final_tested_nodes = batch_test_proxies_speedtest(speedtest_path, all_nodes, max_workers=MAX_TEST_WORKERS, debug=ENABLE_SPEEDTEST_LOG, test_urls=get_test_urls())
+        final_tested_nodes = normalize_proxy_names(final_tested_nodes)
+        save_intermediate_results(final_tested_nodes, 'speedtest.yaml')
     else:
-        print(f"❌ 未知测速模式: {mode}，直接跳过测速")
-        final_tested_nodes = all_nodes
-    
-    # 6. 后置处理
-    print("[5/7] 质量评分与排序")
+        print(f"⚠️ 未知模式，优雅退出"); return
+    # === [6/7] 后置筛选、评分与排序 ===
+    print("[5/7] 测速后置处理与质量评分")
+    if os.getenv('GITHUB_ACTIONS') == 'true':
+        ensure_network_for_stage('final', require_warp=WARP_FOR_FINAL)
+    # 再次清理无效节点
     final_proxies = [p for p in final_tested_nodes if is_valid_proxy(p)]
+    
+    # 根据测速存活情况再次归一化名字（确保如 DE-1, DE-2 顺序排列）
     final_proxies = normalize_proxy_names(final_proxies)
+    
+    # 带宽二次筛选
     final_proxies = filter_by_bandwidth(final_proxies, min_mb=MIN_BANDWIDTH_MB, enable=ENABLE_BANDWIDTH_FILTER)
+    
+    # 数量限制与分区限额
     final_proxies = limit_proxy_counts(final_proxies, max_total=400)
+    
+    # 质量评分与打质量标签
     final_proxies = sort_proxies_by_quality(final_proxies)
     final_proxies = add_quality_to_name(final_proxies)
     
-    # 7. 统计与保存
-    for p in final_proxies:
-        tag = p.get('quality_tag', '⚡可用')
-        if tag in q_stats:
-            q_stats[tag] += 1
-    
+    # 最终排序：评分降序
+    final_proxies = sorted(final_proxies, key=lambda p: -p.get('quality_score', 0))
+    if not final_proxies:
+        print("⚠️ 筛选后无有效节点，优雅退出"); return
+    # === [7/7] 生成最终配置文件 ===
+    print("[6/7] 生成最终 YAML 配置文件...")
+    total_count = len(final_proxies)
+    update_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
+    avg_quality = sum(p.get('quality_score', 0) for p in final_proxies) / total_count if total_count > 0 else 0
+
+    # 保存 阶段测速结果
+    save_intermediate_results(tcp_passed, os.path.join(output_dir, 'TCP.yaml'), last_message_ids)
+    save_intermediate_results(clash_passed, os.path.join(output_dir, 'clash.yaml'), last_message_ids)
+    save_intermediate_results(speedtest_passed, os.path.join(output_dir, 'speedtest.yaml'), last_message_ids)
+    # 保存最终结果（带详细统计等）
     save_final_config(final_proxies, last_message_ids, q_stats)
     
-    # 8. 最后清理或恢复网络
+    # 统计质量分布
+    q_stats = {'🔥极品': 0, '⭐优质': 0, '✅良好': 0, '⚡可用': 0}
+    for p in final_proxies:
+        tag = p.get('quality_tag', '⚡可用')
+        if tag in q_stats: q_stats[tag] += 1
+    q_stats_str = f"🔥极品:{q_stats['🔥极品']}, ⭐优质:{q_stats['⭐优质']}, ✅良好:{q_stats['✅良好']}, ⚡可用:{q_stats['⚡可用']}"
+    os.makedirs(os.path.dirname(OUTPUT_FILE), exist_ok=True)
+    try:
+        with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
+            f.write("# ==================================================\n")
+            f.write("#  TG 免费节点 · 自动测速精选订阅 三合一测速版\n")
+            f.write(f"#  更新时间   : {update_time} (北京时间)\n")
+            f.write(f"#  节点总数   : {total_count} 个优质节点\n")
+            f.write(f"#  平均质量分 : {avg_quality:.1f}/100\n")
+            f.write(f"#  质量分布   : {q_stats_str}\n")
+            f.write(f"#  测速模式   : {mode}\n")
+            f.write(f"#  带宽筛选   : ≥ {MIN_BANDWIDTH_MB}MB/s\n")
+            f.write("# ==================================================\n\n")
+            
+            final_config = {
+                'proxies': final_proxies,
+                'last_message_ids': last_message_ids,
+                'update_time': update_time,
+                'total_nodes': total_count,
+                'average_quality': round(avg_quality, 1),
+                'quality_stats': q_stats_str,
+                'speedtest_config': {
+                    'mode': mode,
+                    'warp_for_tcp': WARP_FOR_TCP,
+                    'warp_for_speedtest': WARP_FOR_SPEEDTEST
+                }
+            }
+            yaml.dump(final_config, f, allow_unicode=True, sort_keys=False, indent=2, width=4096, default_flow_style=False)
+        
+        print(f"✅ 成功! 配置文件已保存至: {OUTPUT_FILE}")
+        print(f"📊 本次汇总: 总数 {total_count} | 均分 {avg_quality:.1f} | {q_stats_str}")
+    except Exception as e:
+        print(f"❌ 最终写出配置文件失败: {e}")
+    # === 最终清理，确保切换回GitHub网络 ===
     if os.getenv('GITHUB_ACTIONS') == 'true' and not WARP_FOR_FINAL:
+        print("[7/7] 🧹 最终清理：确保使用原始GitHub网络")
         ensure_network_for_stage('cleanup', require_warp=False)
-    
-    print("=" * 60 + "\n🎉 全部任务圆满完成！")
+    print("=" * 60)
+    print("🎉 全部任务圆满完成！")
 
         
 
