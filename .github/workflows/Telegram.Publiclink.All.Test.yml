@@ -339,5 +339,4 @@ jobs:
 
           # 指定要推送的分支，通常是 main 或 master
           # push_options: '--force' # 如果您需要强制推送，可以取消此行注释
-
-          pull: true
+          
