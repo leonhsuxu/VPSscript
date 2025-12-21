@@ -843,6 +843,7 @@ def simplified_network_check():
     return warp_enabled
     
 # ======= 国家国旗识别 ======
+
 def get_country_flag_emoji(code: str) -> str:
     """
     根据国家代码生成对应国旗 Emoji。
@@ -1750,6 +1751,7 @@ def emoji_to_country_code(emoji):
 FLAG_EMOJI_UN_FLAG ='🇺🇳'  # 无国家用联合国，按需修改
 
 
+# --- 去除字符串开头所有国旗 Emoji ---
 def strip_starting_flags(s: str) -> str:
     """
     去除字符串开头的国旗emoji（由两个Unicode区域字符组成），直到开头无国旗。
@@ -1765,8 +1767,7 @@ def strip_starting_flags(s: str) -> str:
 
 def fallback_country_match(name: str):
     """
-    使用 COUNTRY_NAME_TO_CODE_MAP，尝试根据节点名称包含关键词进行回退匹配。
-    返回 {'name': 中文名, 'code': 代码} 或 None。
+    通过关键词匹配回退国家，返回 {'name': 中文名, 'code': 代码} 或 None。
     """
     for cn_name, code in COUNTRY_NAME_TO_CODE_MAP.items():
         if cn_name in name:
@@ -1870,16 +1871,17 @@ def sanitize_hysteria_nodes(proxies):
         cleaned.append(p)
     return cleaned
 
+# --- 递归清理名称尾部所有 "-数字" 或 "_数字" 后缀 ---
 def clean_name_base(name: str) -> str:
     """
-    完全递归剥离名称尾部所有 "-数字" 或 "_数字" 形式的后缀，直到无数字后缀。
+    递归剥离名称尾部所有 "-数字" 或 "_数字" 形式的后缀，直到无数字后缀。
     例如：
       "香港-1-1" -> "香港"
       "日本_2_3" -> "日本"
       "美国-12"  -> "美国"
     """
     pattern = re.compile(r'(.*?)([-_]\d+)$')
-    max_iter = 20  # 最多剥离多少次避免死循环
+    max_iter = 20  # 避免死循环
     
     count = 0
     while count < max_iter:
@@ -1890,70 +1892,95 @@ def clean_name_base(name: str) -> str:
         count += 1
     return name.strip()
 
+
+# --- 国旗识别及名称重写 ---
+def process_proxies_with_fallback(proxies):
+    """
+    先用 CUSTOM_REGEX_RULES 正则匹配国家信息，
+    如果未匹配，fallback到 COUNTRY_NAME_TO_CODE_MAP 字典匹配。
+    统一处理节点名称：
+    - 去除开头重复国旗
+    - 重新构造名称为：flag + 地区中文名 + 残余净名
+    """
+    processed = []
+    for p in proxies:
+        orig_name = p.get('name', '').strip()
+        name_no_flag = strip_starting_flags(orig_name)
+        
+        matched_region = None
+        # 正则匹配
+        for region_name, info in CUSTOM_REGEX_RULES.items():
+            if re.search(info['pattern'], name_no_flag, re.IGNORECASE):
+                matched_region = {'name': region_name, 'code': info['code']}
+                break
+        # 回退匹配
+        if matched_region is None:
+            fb = fallback_country_match(name_no_flag)
+            if fb:
+                matched_region = fb
+            else:
+                matched_region = {'name': '未知', 'code': 'UN'}
+        
+        flag = get_country_flag_emoji(matched_region['code'])
+        cleaned_name = name_no_flag.strip()
+        
+        new_name = f"{flag} {matched_region['name']} {cleaned_name}".strip()
+        p['name'] = new_name
+        p['region_info'] = matched_region
+        processed.append(p)
+    return processed
+
+# --- 统一去尾缀 + 唯一命名 ---
 def normalize_proxy_names(proxies):
     """
-    统一地区识别和节点名格式化的函数。
-    功能整合了 fallback 与国旗添加，同时保证名称唯一。
+    深度重命名，解决“重复名”问题且保持名称稳定。
+    逻辑：
+    - 去除开头国旗 emoji
+    - 去尾部所有数字后缀（递归）
+    - 基础名拼接国家标识
+    - 对重复名称通过添加“-序号”后缀处理。
     """
     if not proxies:
         return []
-
-    # 预先排序 pattern，保证长模式先匹配
-    for region in CUSTOM_REGEX_RULES:
-        CUSTOM_REGEX_RULES[region]['pattern'] = '|'.join(
-            sorted(CUSTOM_REGEX_RULES[region]['pattern'].split('|'), key=len, reverse=True)
-        )
-
-    region_counters = defaultdict(int)
+    
     seen_names = set()
-    final_proxies = []
-
+    final_list = []
+    
     for p in proxies:
         orig_name = p.get('name', '').strip()
-        # 去除已有国旗，避免重复
-        base_name = strip_starting_flags(orig_name)
-
-        matched_region = None
-        code = None
-        # 优先用正则匹配
-        for region_name, info in CUSTOM_REGEX_RULES.items():
-            if re.search(info['pattern'], base_name, re.IGNORECASE):
-                matched_region = region_name
-                code = info['code']
-                break
-
-        # fallback 包含匹配
-        if matched_region is None:
-            fallback = fallback_country_match(base_name)
-            if fallback:
-                matched_region = fallback['name']
-                code = fallback['code']
-            else:
-                matched_region = '未知'
-                code = 'UN'
-
-        region_counters[matched_region] += 1
-        index = region_counters[matched_region]
-
-        flag = get_country_flag_emoji(code)
-        # 清理尾部多层数字后缀，防止无限堆叠
-        clean_base_name = clean_name_base(base_name)
-        # 构造名字格式：  🇭🇰 香港-1 OriginalName
-        new_name = f"{flag} {matched_region}-{index} {clean_base_name}".strip()
-
-        # 保证全局唯一，再追加下划线数字，避免重复（极端情况）
-        unique_name = new_name
-        suffix_idx = 1
+        # 去除国旗
+        name = strip_starting_flags(orig_name)
+        # 去尾部数字后缀
+        base_name = clean_name_base(name)
+        
+        # 读取地区
+        region_name = '未知'
+        region_code = 'UN'
+        if p.get('region_info') and isinstance(p['region_info'], dict):
+            region_name = p['region_info'].get('name', region_name)
+            region_code = p['region_info'].get('code', region_code)
+        else:
+            # 兜底再做一次匹配（保险用）
+            for r_name, info in CUSTOM_REGEX_RULES.items():
+                if re.search(info['pattern'], base_name, re.IGNORECASE):
+                    region_name, region_code = r_name, info['code']
+                    break
+        
+        flag = get_country_flag_emoji(region_code)
+        base_full_name = f"{flag} {region_name} {base_name}".strip()
+        
+        unique_name = base_full_name
+        idx = 1
         while unique_name in seen_names:
-            unique_name = f"{new_name}_{suffix_idx}"
-            suffix_idx += 1
-
+            unique_name = f"{base_full_name}-{idx}"
+            idx += 1
+        
         p['name'] = unique_name
-        p['region_info'] = {'name': matched_region, 'code': code}
+        p['region_info'] = {'name': region_name, 'code': region_code}
         seen_names.add(unique_name)
-        final_proxies.append(p)
-
-    return final_proxies
+        final_list.append(p)
+    
+    return final_list
     
 # ----根据实测带宽进行二次筛选
 def filter_by_bandwidth(proxies, min_mb=25, enable=True):
@@ -2718,6 +2745,8 @@ async def main():
             added_count += 1
     
     all_nodes = list(all_proxies_map.values())
+
+    all_nodes = process_proxies_with_fallback(all_nodes)
     # 【核心修复：在这里添加全局清洗】
     all_nodes = fix_and_filter_ss_nodes(all_nodes, verbose=False)  # 过滤 SS
     all_nodes = sanitize_hysteria_nodes(all_nodes)  # 修复 Hysteria (解决历史数据报错)
