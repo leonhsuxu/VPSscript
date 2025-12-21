@@ -270,7 +270,7 @@ jobs:
           echo "=== 开始执行节点抓取和测速脚本 ==="
           mkdir -p flclashyaml
           # 调用您的Python脚本。此脚本现在将根据上次写入文件的时间来确定Telegram消息的抓取范围。
-          python TelegramNode/TBD-telegram_publiclink1.py
+          python TelegramNode/Telegram.Publiclink.All.Test.py
           EXIT_CODE=$?
           if [ $EXIT_CODE -eq 0 ]; then
             echo "✅ 节点抓取和测速完成"
