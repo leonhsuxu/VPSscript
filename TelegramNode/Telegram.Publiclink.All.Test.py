@@ -2881,6 +2881,25 @@ async def main():
     print(datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S"))
     print("=" * 60)
 
+
+        width = 60  # 总宽度
+    
+    print("=" * width)
+    
+    # 标题文字
+    title = "Telegram.Node_Publiclink.All.SpeedTest.Final V1"
+    # 获取当前北京时间
+    curr_time = datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S")
+
+    # \033[1;31m -> 加粗 (1) 且 红色 (31)
+    # \033[1;36m -> 加粗 (1) 且 青蓝色 (36) (常用于时间，可根据喜好选择)
+    # \033[0m    -> 重置样式
+    
+    print(f"\033[1;31m{title.center(width)}\033[0m") # 红色加粗居中
+    print(f"\033[1m{curr_time.center(width)}\033[0m")  # 标准加粗居中
+    
+    print("=" * width)
+
     # === [1/7] 初始化与网络控制检查 ===
     print("🌐 网络控制配置:")
     print(f"  - 抓取阶段 Warp: {WARP_FOR_SCRAPING}")
