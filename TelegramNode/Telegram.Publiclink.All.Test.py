@@ -2876,12 +2876,7 @@ async def main():
     else:
         print("📁 已关闭中间件清理模式，保留上次运行结果。")
     
-    print("=" * 60)
-    print("Telegram.Node_Publiclink.All.SpeedTest.Final V1 ")
-    print(datetime.now(BJ_TZ).strftime("%Y-%m-%d %H:%M:%S"))
-    print("=" * 60)
-
-
+    # 提示文字
     width = 60  # 总宽度    
     print("=" * width)    
     # 标题文字
@@ -2894,7 +2889,7 @@ async def main():
     # \033[0m    -> 重置样式
     
     print(f"\033[1;31m{title.center(width)}\033[0m") # 红色加粗居中
-    print(f"\033[1m{curr_time.center(width)}\033[0m")  # 标准加粗居中    
+    print(f"\033[1;36m{curr_time.center(width)}\033[0m")  # 标准加粗居中    
     print("=" * width)
 
     # === [1/7] 初始化与网络控制检查 ===
