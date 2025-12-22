@@ -2882,10 +2882,8 @@ async def main():
     print("=" * 60)
 
 
-        width = 60  # 总宽度
-    
-    print("=" * width)
-    
+    width = 60  # 总宽度    
+    print("=" * width)    
     # 标题文字
     title = "Telegram.Node_Publiclink.All.SpeedTest.Final V1"
     # 获取当前北京时间
@@ -2896,8 +2894,7 @@ async def main():
     # \033[0m    -> 重置样式
     
     print(f"\033[1;31m{title.center(width)}\033[0m") # 红色加粗居中
-    print(f"\033[1m{curr_time.center(width)}\033[0m")  # 标准加粗居中
-    
+    print(f"\033[1m{curr_time.center(width)}\033[0m")  # 标准加粗居中    
     print("=" * width)
 
     # === [1/7] 初始化与网络控制检查 ===
