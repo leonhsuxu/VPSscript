@@ -1491,32 +1491,53 @@ def parse_ss_node(line: str) -> dict | None:
         line = line.strip()
         if not line.startswith('ss://'): return None
         
+        # 处理混淆/备注
+        remark = ""
+        if '#' in line:
+            line, remark = line.split('#', 1)
+            remark = unquote(remark)
+            
         content = line[5:]
-        remark = unquote(content.split('#')[1]) if '#' in content else ''
-        content = content.split('#')[0]
-        
         modern_ciphers = {'2022-blake3-aes-128-gcm', '2022-blake3-aes-256-gcm', '2022-blake3-chacha20-poly1305'}
+        
         method, password, server, port = "", "", "", 0
+        
         if '@' in content:
-            # 格式: method:pass@server:port
-            prefix, addr = content.split('@', 1)
+            # 格式: [base64(method:pass)]@server:port 或 method:pass@server:port
+            prefix, addr = content.rsplit('@', 1)
             if ':' not in prefix:
-                prefix = base64.urlsafe_b64decode(prefix + '=' * (-len(prefix)%4)).decode('utf-8', 'ignore')
-            method, password = prefix.split(':', 1)
+                try:
+                    # 补齐 padding 并解码
+                    missing_padding = len(prefix) % 4
+                    if missing_padding: prefix += '=' * (4 - missing_padding)
+                    prefix = base64.b64decode(prefix).decode('utf-8')
+                except:
+                    return None
+            
+            if ':' in prefix:
+                method, password = prefix.split(':', 1)
             server, port = addr.rsplit(':', 1)
         else:
             # 全 Base64 格式
-            decoded = base64.urlsafe_b64decode(content + '=' * (-len(content)%4)).decode('utf-8', 'ignore')
-            prefix, addr = decoded.split('@', 1)
-            method, password = prefix.split(':', 1)
-            server, port = addr.rsplit(':', 1)
-        # 核心修复点：如果是 2022 协议，确保密码是合法的 Base64 字符串且不进行 UTF-8 转码
-        # 很多报错是因为 unquote 之后破坏了 Base64 结构
+            try:
+                missing_padding = len(content) % 4
+                if missing_padding: content += '=' * (4 - missing_padding)
+                decoded = base64.b64decode(content).decode('utf-8')
+                prefix, addr = decoded.rsplit('@', 1)
+                method, password = prefix.split(':', 1)
+                server, port = addr.rsplit(':', 1)
+            except:
+                return None
+
+        # --- 核心修复：针对 2022 协议的密码清洗 ---
         if method.lower() in modern_ciphers:
-            # 2022 协议密码必须清理掉所有非 Base64 字符
-            password = re.sub(r'[^A-Za-z0-9+/=]', '', unquote(password))
+            # 2022 协议的密码必须是标准的 Base64，处理 URL 编码转义（如 %2B -> +）
+            password = unquote(password)
+            # 移除所有非 Base64 字符（换行、空格等）
+            password = re.sub(r'[^A-Za-z0-9+/=]', '', password)
         else:
             password = unquote(password)
+
         return {
             'name': remark or f"ss_{server}",
             'type': 'ss',
@@ -1526,7 +1547,9 @@ def parse_ss_node(line: str) -> dict | None:
             'password': password,
             'udp': True
         }
-    except: return None
+    except:
+        return None
+        
 def parse_trojan_node(line):
     try:
         parsed = urlparse(line)
@@ -1814,6 +1837,8 @@ def get_proxy_key(proxy):
     return hashlib.md5(
         f"{proxy.get('server','')}:{proxy.get('port',0)}|{unique_part}".encode()
     ).hexdigest()
+
+
 def is_valid_ss_cipher(cipher):
     """
     判断ss节点cipher字段是否合法，避免被错误的Base64或其它字符串污染。
@@ -1832,59 +1857,51 @@ def is_valid_ss_cipher(cipher):
     }
     return cipher.lower() in valid_ciphers
 def is_valid_proxy(proxy):
-    """
-    超级严格校验 + 自动修复 ss cipher 缺失问题
-    2025 年 12 月终极版，彻底杜绝 key 'cipher' missing
-    """
-    if not isinstance(proxy, dict):
-        return False
+    if not isinstance(proxy, dict): return False
     required_keys = ['name', 'server', 'port', 'type']
-    if not all(key in proxy for key in required_keys):
-        return False
-    allowed_types = {'vmess', 'vless', 'ss', 'ssr', 'trojan', 'hysteria', 'hysteria2', 'socks5', 'http'}
-    if proxy['type'] not in allowed_types:
-        return False
-    port = proxy.get('port')
-    if not isinstance(port, (int, float)) or not (1 <= int(port) <= 65535):
-        return False
-    # ==================== 重点：ss 节点 cipher 强制修复 ====================
+    if not all(key in proxy for key in required_keys): return False
+    
+    # 端口校验
+    try:
+        if not (1 <= int(proxy['port']) <= 65535): return False
+    except: return False
+
     if proxy['type'] == 'ss':
-        cipher = proxy.get('cipher', '').strip()
-        # 合法的加密方式（Clash Meta 2025 最新支持列表）
+        cipher = proxy.get('cipher', '').lower()
+        password = proxy.get('password', '')
+        
+        # SS 2022 专项校验
+        if '2022-blake3' in cipher:
+            try:
+                # 尝试 Base64 解码
+                decoded_key = base64.b64decode(password)
+                key_len = len(decoded_key)
+                
+                # 校验不同加密方式所需的 Key 长度
+                if 'aes-128' in cipher and key_len != 16:
+                    # print(f"❌ {proxy['name']} Key长度错误: 128位需要16字节，实测 {key_len}")
+                    return False
+                if 'aes-256' in cipher and key_len != 32:
+                    # print(f"❌ {proxy['name']} Key长度错误: 256位需要32字节，实测 {key_len}")
+                    return False
+            except Exception:
+                # print(f"❌ {proxy['name']} 密码不是有效的 Base64")
+                return False
+        
+        # 传统 SS 节点 Cipher 修复 (保持你原有的逻辑)
         valid_ciphers = {
             'aes-128-gcm', 'aes-192-gcm', 'aes-256-gcm',
             'chacha20-ietf-poly1305', 'chacha20-poly1305',
             'xchacha20-ietf-poly1305', 'xchacha20-poly1305',
             '2022-blake3-aes-128-gcm', '2022-blake3-aes-256-gcm', '2022-blake3-chacha20-poly1305'
         }
-        
-        if cipher in valid_ciphers:
-            # print(f"【DEBUG】SS 节点 {proxy['name']} 的 cipher {cipher} 有效。")
-            pass # 已经有效，无需修复
-        # 如果 cipher 缺失或非法，强制修复为最通用的
-        elif not cipher or cipher.lower() not in valid_ciphers: # 检查是否在有效列表且不为空
-            old = proxy.get('cipher', 'None')
-            # 尝试自动修复常见的错误写法
-            auto_map = {
-                'aes-256-cfb': 'aes-256-gcm',
-                'aes-128-cfb': 'aes-128-gcm',
-                'chacha20': 'chacha20-ietf-poly1305',
-                'chacha20-ietf': 'chacha20-ietf-poly1305',
-                'rc4-md5': None,  # 已废弃，不救
-                'none': None,
-                'plain': None,
-                '': None,
-            }
-            if cipher.lower() in auto_map and auto_map[cipher.lower()]:
-                proxy['cipher'] = auto_map[cipher.lower()]
-                print(f"【自动修复】ss 节点 cipher {old} → {proxy['cipher']} : {proxy['name']}")
-            elif not cipher or len(cipher) > 50 or ' ' in cipher or cipher.lower() not in valid_ciphers:
-                proxy['cipher'] = 'chacha20-ietf-poly1305'  # 2025 年最通用
-                print(f"【强救】ss 节点缺失/乱码或不支持 cipher ({old})，强制使用 chacha20-ietf-poly1305 : {proxy['name']}")
-            else: # 如果是无法修复的非法cipher
-                print(f"【丢弃】ss 节点 cipher 不支持且无法自动映射: {old} → {proxy['name']}")
-                return False # 无法修复的直接丢弃
+        if cipher not in valid_ciphers:
+            # 如果是非 2022 的旧协议，尝试强制转为常用加密，或者在此直接丢弃
+            proxy['cipher'] = 'chacha20-ietf-poly1305' 
+
     return True
+
+
 def identify_regions_only(proxies):
     identified = []
     for p in proxies:
